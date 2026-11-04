@@ -1,0 +1,43 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: SIS-AFILIADOS
+strategy: http_pattern
+publisher: SIS
+dataset_title: Datos de afiliados al Seguro Integral de Salud en estado activo
+access_url: https://www.datosabiertos.gob.pe/group/seguro-integral-de-salud-sis
+url_patron: https://www.datosabiertos.gob.pe/sites/default/files/OPENDATA_AFILIADOS_DS01_{anio}{mes}.zip
+documentation_url: https://www.datosabiertos.gob.pe/sites/default/files/Diccionario_Datos%20-%20DS-01%20-%20SIS%20-%20Afiliados.pdf
+temporal:
+  inicio: 2021
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Corte transversal (stock); afiliación ≠ uso; ubigeo de afiliación puede estar desactualizado. Conteos agregados
+  (sin DNI). Ubigeo del domicilio codificado según INEI (diccionario oficial). Ruta del ZIP por confirmar en la
+  prueba de humo.
+espera:
+  formato:
+  - csv
+  - pdf
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- Definir cómo se eligen los valores del patrón (ver notas).
+notas: 'Recurso ''Data Completa de Afiliados'' (archivo grande). Otros datasets SIS: afiliados con diabetes mellitus,
+  etc. Plataforma Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga en /sites/default/files/...
+  o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug> (API CKAN-compatible de DKAN; confirmar).
+  Desde este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright.'

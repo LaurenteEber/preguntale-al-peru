@@ -1,0 +1,43 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINEDU-SIAGIE-DATOS-ABIERTOS
+strategy: manual
+publisher: MINEDU
+dataset_title: Matriculación y Trayectoria Estudiantil (SIAGIE) – datos abiertos
+access_url: https://www.datosabiertos.gob.pe/group/ministerio-de-educaci%C3%B3n-minedu
+temporal:
+  inicio: 2021
+  fin: 2024
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY
+license_basis: declarada_en_pagina
+known_issues:
+- Solo EBR/EB con registro en SIAGIE; IIEE privadas con registro incompleto; los datos nominales (DNI) no son públicos.
+manual:
+  pasos:
+  - Abrir https://www.datosabiertos.gob.pe/group/ministerio-de-educaci%C3%B3n-minedu y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/matriculaci%C3%B3n-y-trayectoria-estudiantil-2021-2024'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/MINEDU-SIAGIE-DATOS-ABIERTOS/
+  - 'Ejecutar: pap registrar MINEDU-SIAGIE-DATOS-ABIERTOS --issued <fecha>'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Plataforma Nacional de Datos Abiertos (datosabiertos.gob.pe, DKAN/Drupal). El endpoint CKAN /api/3/action/package_search
+  devolvió 404 en esta sesión: descargar recursos vía URL directa de cada recurso o scraping de la página del dataset.'

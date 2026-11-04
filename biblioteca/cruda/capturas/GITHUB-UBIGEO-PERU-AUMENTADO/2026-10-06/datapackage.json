@@ -1,0 +1,59 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "github-ubigeo-peru-aumentado-2026-10-06",
+  "title": "ubigeo-peru-aumentado (jmcastagnetto)",
+  "created": "2026-10-06T09:31:51-05:00",
+  "keywords": [
+    "GITHUB-UBIGEO-PERU-AUMENTADO"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "github-ubigeo-peru-aumentado",
+      "title": "ubigeo-peru-aumentado (jmcastagnetto)",
+      "original_filename": "ubigeo_distrito.csv",
+      "path": "almacen/sha256/6a/2c/6a2cde8fb82e336285da4d684241450e8a36630e42799652c8d72b596ec252e4",
+      "hash": "sha256:6a2cde8fb82e336285da4d684241450e8a36630e42799652c8d72b596ec252e4",
+      "bytes": 409857,
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "source_id": "GITHUB-UBIGEO-PERU-AUMENTADO",
+      "publisher": "desarrollador independiente",
+      "dataset_title": "ubigeo-peru-aumentado (jmcastagnetto)",
+      "access_url": "https://github.com/jmcastagnetto/ubigeo-peru-aumentado",
+      "download_url": "https://raw.githubusercontent.com/jmcastagnetto/ubigeo-peru-aumentado/main/ubigeo_distrito.csv",
+      "source_version_basis": "ninguna",
+      "temporal": "2021",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T09:31:51-05:00",
+      "http_etag": "W/\"f36682cd11609d6e700f94235b55e66d51dbd660ee96fed3be28e77536c47300\"",
+      "method": "http_directo",
+      "recipe": "GITHUB-UBIGEO-PERU-AUMENTADO@f6f18da",
+      "attributed_to": "pap 0.1.0",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "MIT",
+          "title": "MIT"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "centro_poblado"
+      },
+      "known_issues": [
+        "Indicadores congelados en años específicos (2019/2020); no oficial. Corte 2021: no incluye distritos creados después. Usar solo como puente INEI↔RENIEC, validado contra la tabla INEI vigente. Solo 111 códigos son idénticos en INEI y RENIEC y 997 existen en ambos sistemas pero apuntan a distritos distintos: nunca unir por código sin indicar el sistema. Filas a corregir: 150144 Huachipa (centro poblado, no distrito), San Antonio (Moquegua, Ley 31216) sin código INEI, códigos antiguos duplicados 160109/160114. Falta Alto Trujillo (Ley 31644, 2022). Falta también Santa Rosa de Loreto (Ley 32403, 2025, segregado de Yavarí), el distrito 1 892."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

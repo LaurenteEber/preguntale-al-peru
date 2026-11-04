@@ -1,0 +1,58 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "ins-cenan-sien-2026-10-06",
+  "title": "Sistema de Información del Estado Nutricional de niños y gestantes",
+  "created": "2026-10-06T12:12:28-05:00",
+  "keywords": [
+    "INS-CENAN-SIEN"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "ins-cenan-sien",
+      "title": "Sistema de Información del Estado Nutricional de niños y gestantes",
+      "original_filename": "BD SIEN-HIS Niños menores de 5 años 2025.zip",
+      "path": "almacen/sha256/b0/5f/b05f29b160841198785afebb9bea4b72f84fa00b0c4eebbf6b2186981868469e",
+      "hash": "sha256:b05f29b160841198785afebb9bea4b72f84fa00b0c4eebbf6b2186981868469e",
+      "bytes": 88697270,
+      "format": "zip",
+      "mediatype": "application/zip",
+      "source_id": "INS-CENAN-SIEN",
+      "publisher": "INS/CENAN",
+      "dataset_title": "Sistema de Información del Estado Nutricional de niños y gestantes",
+      "access_url": "https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional",
+      "download_url": "https://www.datosabiertos.gob.pe/sites/default/files/BD%20SIEN-HIS%20Ni%C3%B1os%20menores%20de%205%20a%C3%B1os%202025.zip",
+      "source_version": "Niños menores de 5 años 2025",
+      "source_version_basis": "declarada",
+      "temporal": "2012–2026",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T12:12:24-05:00",
+      "method": "manual_navegador",
+      "recipe": "INS-CENAN-SIEN@378d816",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "ODC-By-1.0",
+          "title": "ODC-BY (Open Data Commons Attribution)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "nacional (EESS MINSA/GORE)",
+        "nivel_minimo": "establecimiento"
+      },
+      "known_issues": [
+        "Solo niños que acuden a EESS (sesgo de selección: no es prevalencia poblacional como ENDES); cobertura de tamizaje variable; cambio de puntos de corte de anemia OMS 2024 rompe serie. Mide niños tamizados en EESS: rotular \"proporción de tamizados con anemia\", no prevalencia."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

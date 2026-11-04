@@ -1,0 +1,48 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINSA-SINADEF
+strategy: manual
+publisher: MINSA
+dataset_title: Sistema Informático Nacional de Defunciones – Información de fallecidos
+access_url: https://www.minsa.gob.pe/defunciones/
+documentation_url: https://www.minsa.gob.pe/defunciones
+temporal:
+  inicio: 2017
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Subregistro de defunciones (~20–30% en zonas rurales/Amazonía según estudios); datos preliminares; ubigeo puede
+  ser texto (nombres) más que código. El "~49 %" de 2018 era la proporción de certificados en línea, no la cobertura
+  del registro.
+manual:
+  pasos:
+  - Abrir https://www.minsa.gob.pe/defunciones/ y descargar el archivo.
+  - 'Enlace de datos conocido: https://drive.minsa.gob.pe/s/PigmdwnCGEdyqos/download'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/MINSA-SINADEF/
+  - 'Ejecutar: pap registrar MINSA-SINADEF --issued <fecha>'
+espera:
+  formato:
+  - csv
+  - xlsx
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'GET directo al enlace compartido de Nextcloud del MINSA; el token puede rotar: volver a leerlo de la ficha
+  PNDA en cada corrida. Diccionario: Diccionario_Datos_SINADEF.xlsx. Confirmar en la descarga si trae código de
+  ubigeo o solo nombres (si solo nombres, normalizar nombre → ubigeo INEI).'

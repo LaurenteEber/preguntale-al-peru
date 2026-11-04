@@ -1,0 +1,46 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: WASIMIKUNA-IIEE
+strategy: manual
+publisher: Programa Nacional de Alimentación Escolar Comunitaria Wasi Mikuna (ex Qali Warma) – MIDIS
+dataset_title: Programa Nacional de Alimentación Escolar (Qali Warma / Wasi Mikuna) – IIEE atendidas
+access_url: https://www.gob.pe/wasimikuna
+temporal:
+  inicio: 2021
+  fin: 2021
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Cambio institucional a Wasi Mikuna (2025) puede romper la serie; publicación 2025+ no confirmada.
+manual:
+  pasos:
+  - Abrir https://www.gob.pe/wasimikuna y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/programa-nacional-de-alimentaci%C3%B3n-escolar-qali-warma-iiee'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/WASIMIKUNA-IIEE/
+  - 'Ejecutar: pap registrar WASIMIKUNA-IIEE --issued <fecha>'
+espera:
+  formato:
+  - csv
+  - xlsx
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Datasets anuales: programa-nacional-de-alimentación-escolar-qali-warma-iiee(-2022|-2023|-2024). Plataforma
+  Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga en /sites/default/files/...
+  o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug> (API CKAN-compatible de DKAN; confirmar).
+  Desde este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright.'

@@ -1,0 +1,8 @@
+- capa: capa2.mas_contexto[0].texto
+  antes: Para todo Puno se estima que 56,1 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). La
+    encuesta no permite dar una cifra para Ayaviri.
+  despues: Para todo Puno se estima que 56,1 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). La
+    encuesta no permite dar una cifra para Ayaviri (Melgar, Puno).
+  motivo: 'Nombre largo del distrito («Melgar, Puno») la primera vez que se nombra, solo en la capa 2 (T-02: provincia y departamento).
+    Misma información de lugar que antes, sin ninguna afirmación nueva; la capa 1 queda igual (Q2 está en 124 de 125 palabras).'
+  aprobado_por: agente

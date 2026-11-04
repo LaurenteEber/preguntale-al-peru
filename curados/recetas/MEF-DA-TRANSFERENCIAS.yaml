@@ -1,0 +1,38 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MEF-DA-TRANSFERENCIAS
+strategy: http_file
+publisher: MEF
+dataset_title: Transferencias de fondos y asignaciones financieras (datos abiertos MEF)
+access_url: https://www.datosabiertos.gob.pe/dataset/transferencias-de-fondos-y-asignaciones-financieras
+download_url: https://fs.datosabiertos.mef.gob.pe/datastorefiles/2024-Transferencias.csv
+url_patron: https://fs.datosabiertos.mef.gob.pe/datastorefiles/{anio}-Transferencias.csv
+documentation_url: https://fs.datosabiertos.mef.gob.pe/datastorefiles/Transferencias_Diccionario.csv
+temporal:
+  inicio: 2004
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: otra-abierta
+  title: Otro (abierto)
+license_basis: declarada_en_pagina
+known_issues:
+- Montos transferidos (autorizados/depositados) ≠ ejecutados; los índices de distribución de canon dependen de población/NBI
+  y cambian anualmente. No sumar con el gasto del receptor (doble conteo).
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+notas: 'Patrón: https://fs.datosabiertos.mef.gob.pe/datastorefiles/{AÑO}-Transferencias.csv para 2004–2026; diccionario
+  Transferencias_Diccionario.csv.'

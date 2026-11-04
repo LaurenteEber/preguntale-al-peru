@@ -1,0 +1,44 @@
+# Textos comunes de las plantillas por intención (S1-04). Todo lo que la persona lee sale de estos archivos
+# (plantillas/<intención>.yaml, este y bloques.yaml); el código solo los une. Los lee el dueño sin leer Python.
+# Variables {así} las rellena la plantilla; los marcadores {{c:…}} {{v:…}} {{u:…}} {{e:…}} {{p:…}} se dejan tal cual
+# (R-LENGUAJE-03: ninguna cifra entra al texto si no es por marcador). {{u:x}} = universo (sección `universos`) y
+# {{p:x}} = texto fijo protegido (sección `protegidos` de este archivo, de la intención o de un bloque).
+version: 1.0.0
+numeros: {1: un, 2: dos, 3: tres, 4: cuatro, 5: cinco, 6: seis, 7: siete, 8: ocho, 9: nueve}
+varios: varios
+conjuncion: y
+nivel_palabra: {distrito: distrito, provincia: provincia, departamento: departamento}
+nivel_plural: {distrito: distritos, provincia: provincias, departamento: departamentos, defecto: territorios}
+nivel_del: {distrito: "del distrito", provincia: "de la provincia", departamento: "del departamento"}
+nivel_en: {distrito: "en el distrito", provincia: "en la provincia", departamento: "en el departamento"}
+region_art: {departamento: "el departamento de {lugar}", otro: "{lugar}"}      # «Todo el departamento de Puno» / «Todo Lima Metropolitana»
+region_de: {departamento: "del departamento de {lugar}", otro: "de {lugar}"}
+region_gen: {departamento: "del departamento", otro: "de {lugar}"}
+lugar_ficha:                      # el lugar en la línea «Territorio» de la ficha (S1-09, A-H4, A-H7)
+  departamento: "departamento de {lugar}"
+  provincia: "provincia de {lugar}"
+  distrito: "distrito de {lugar}"
+  nacional: "todo el país"
+  defecto: "{lugar}"
+territorio_dos_lugares: "{a} y {b}"
+no_se_compara: "Otra fuente u otro territorio: no se compara con la cifra clave."
+fuentes:                          # «(ENDES 2025, INEI)»: por fuente_principal del indicador
+  INEI-ENDES: "ENDES {anio}, INEI"
+  INEI-ENAHO: "ENAHO {anio}, INEI"
+  INS-CENAN-SIEN: "SIEN {anio}, INS"
+  MEF-DA-PRESUPUESTO-EJECUCION-GASTO: "MEF {anio}"
+  INEI-MAPA-POBREZA: "Mapa de Pobreza {anio}, INEI"
+  defecto: "{fuente_principal} {anio}"
+universos:
+  ninos: "las niñas y los niños de 6 a 35 meses"
+  ninos_n: "niñas y niños de 6 a 35 meses"
+  ninos_region: "los niños de 6 a 35 meses {region_de}"
+  ninos_residen: "los niños de 6 a 35 meses que viven allí"
+ojo_generico:                     # «Ojo al leer» cuando el tema no trae el suyo (R-04: de 1 a 3, en imperativo)
+  encuesta_muestral: "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+  registro_administrativo: "No la leas como la cifra de toda la población: solo cuenta lo que se registró."
+  presupuestal_financiero: "No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó."
+  estimacion_modelada: "No leas esta cifra como exacta: es una estimación con modelo, con un rango."
+  otro: "No leas esta cifra como exacta: tiene un margen de error."
+ojo_sin_cambio: "«Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
+umbral_en_palabras: {50: "la mitad", defecto: "{umbral} %"}   # el umbral de tamizaje (R-REG-07, sien_umbral_tamizaje_pct) dicho en palabras; si no figura, «N %»

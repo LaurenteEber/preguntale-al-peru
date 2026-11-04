@@ -1,0 +1,19 @@
+anio,estado,detalle,reconstruible_con
+2008,estructura_no_comparable,programas estratégicos 2008-2011; estructura funcional programática no comparable producto a producto,no
+2009,estructura_no_comparable,programas estratégicos 2008-2011; estructura funcional programática no comparable producto a producto,no
+2010,estructura_no_comparable,programas estratégicos 2008-2011; estructura funcional programática no comparable producto a producto,no
+2011,estructura_no_comparable,programas estratégicos 2008-2011; estructura funcional programática no comparable producto a producto,no
+2012,documentado_parcial,listas MEF 2013-2015 y 2018 (programas); productos no verificados; falta 2012-Gasto.csv (esquema por verificar),archivo anual MEF
+2013,documentado_parcial,listas MEF 2013-2015 y 2018 (programas); productos no verificados; falta 2013-Gasto.csv (esquema por verificar),archivo anual MEF
+2014,documentado_parcial,listas MEF 2013-2015 y 2018 (programas); productos no verificados; falta 2014-Gasto.csv (esquema por verificar),archivo anual MEF
+2015,documentado_parcial,listas MEF 2013-2015 y 2018 (programas); productos no verificados; falta 2015-Gasto.csv (esquema por verificar),archivo anual MEF
+2016,documentado_parcial,listas MEF 2013-2015 y 2018 (programas); productos no verificados; falta 2016-Gasto.csv (esquema por verificar),archivo anual MEF
+2017,documentado_sin_montos,listas de productos y actividades (articulados MEF 2017-2019); PIM por producto en reportes MINSA 2020-2022; falta 2017-Gasto.csv,archivo anual MEF
+2018,documentado_sin_montos,listas de productos y actividades (articulados MEF 2017-2019); PIM por producto en reportes MINSA 2020-2022; falta 2018-Gasto.csv,archivo anual MEF
+2019,documentado_sin_montos,listas de productos y actividades (articulados MEF 2017-2019); PIM por producto en reportes MINSA 2020-2022; falta 2019-Gasto.csv,archivo anual MEF
+2020,documentado_sin_montos,listas de productos y actividades (articulados MEF 2017-2019); PIM por producto en reportes MINSA 2020-2022; falta 2020-Gasto.csv,archivo anual MEF
+2021,documentado_sin_montos,listas de productos y actividades (articulados MEF 2017-2019); PIM por producto en reportes MINSA 2020-2022; falta 2021-Gasto.csv,archivo anual MEF
+2022,documentado_sin_montos,listas de productos y actividades (articulados MEF 2017-2019); PIM por producto en reportes MINSA 2020-2022; falta 2022-Gasto.csv,archivo anual MEF
+2023,con_montos,base MEF 2023-2025 (actividades y proyectos),—
+2024,con_montos,base MEF 2023-2025 (actividades y proyectos),—
+2025,con_montos,base MEF 2023-2025 (actividades y proyectos),—

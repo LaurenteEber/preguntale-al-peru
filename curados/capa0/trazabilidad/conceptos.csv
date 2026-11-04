@@ -1,0 +1,24 @@
+concepto_id,nombre_ciudadano,nivel,definicion,alcance,nota_alcance
+vacunas,Vacunas de niñas y niños,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+cred_sin_suplemento_hierro,"Control de crecimiento y desarrollo (CRED), sin el suplemento de hierro",hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+suplemento_hierro_vitA_nino,Entrega de hierro y vitamina A a niños,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+atencion_anemia_nino,Atención de niños con anemia,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+suplemento_hierro_adolescente,Hierro y ácido fólico para adolescentes,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+suplemento_hierro_gestante,Hierro y ácido fólico para gestantes (separable solo hasta 2020),hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+ira_eda,Atención de diarreas e infecciones respiratorias,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+ira_eda_complicada,Atención de diarreas e infecciones respiratorias con complicaciones,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+consejeria_familias,"Consejería a familias (lactancia, alimentación, cuidado)",hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+parasitosis,Atención de parasitosis intestinal,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+otras_prevalentes,Atención de otras enfermedades prevalentes,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+control_calidad_alimentos,Control de calidad nutricional en servicios de cuidado diurno,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+gestion_nutricion,Gestión del programa (salud y nutrición),hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+agua_consumo_humano,Vigilancia y tratamiento del agua para consumo humano,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+comunicacion_anemia,Comunicación para el cuidado infantil y la prevención de la anemia,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+cuna_mas_acompanamiento_familias,Cuna Más: acompañamiento a familias,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+cuna_mas_cuidado_diurno,Cuna Más: cuidado diurno,hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+cuidado_diurno_otros_ejecutores,"Cuidado diurno a cargo de otras entidades (MINEDU, gobiernos regionales y el programa de alimentación escolar: Qali Warma en 2024, Wasi Mikuna en 2025)",hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+gestion_cuidado_infantil,"Gestión del programa (cuidado infantil, no salud)",hoja,nodos,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+grupo_expan,Servicios de salud y nutrición infantil que tenía el Programa Articulado Nutricional,grupo,grupo,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+grupo_opcion_c,"Opción C de la ronda 1: grupo_expan, solo la parte registrada en el PP 1001",grupo,grupo_restringido_por_programa,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+grupo_anemia_estricta,Opción D de la ronda 1: hierro para niños y adolescentes y atención de la anemia,grupo,grupo,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio
+grupo_cuna_mas,Programa Nacional Cuna Más (servicios del PP 1001),grupo,grupo,concepto,no se suma con el alcance programa_social ni con dim_tema_gasto amplio

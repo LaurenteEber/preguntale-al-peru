@@ -1,0 +1,59 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-proyecciones-poblacion-distrital-2026-10-06",
+  "title": "Perú: Población total proyectada al 30 de junio de cada año, según departamento, provincia y distrito, 2018-2026",
+  "created": "2026-10-06T09:31:49-05:00",
+  "keywords": [
+    "INEI-PROYECCIONES-POBLACION-DISTRITAL"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "inei-proyecciones-poblacion-distrital",
+      "title": "Perú: Población total proyectada al 30 de junio de cada año, según departamento, provincia y distrito, 2018-2026",
+      "original_filename": "6894980-peru-poblacion-total-proyectada-al-30-de-junio-de-cada-ano-segun-departamento-provincia-y-distrito-2018-2026.xlsx",
+      "path": "almacen/sha256/94/36/9436df29b883fd4a9db3705040a6668ff4efe7047c2643249b6b6bedd90d5c8b",
+      "hash": "sha256:9436df29b883fd4a9db3705040a6668ff4efe7047c2643249b6b6bedd90d5c8b",
+      "bytes": 212580,
+      "format": "xlsx",
+      "mediatype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "source_id": "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+      "publisher": "INEI",
+      "dataset_title": "Perú: Población total proyectada al 30 de junio de cada año, según departamento, provincia y distrito, 2018-2026",
+      "access_url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital",
+      "download_url": "https://cdn.www.gob.pe/uploads/document/file/8261096/6894980-peru-poblacion-total-proyectada-al-30-de-junio-de-cada-ano-segun-departamento-provincia-y-distrito-2018-2026.xlsx",
+      "source_version_basis": "ninguna",
+      "temporal": "2018–2026",
+      "data_cutoff_basis": "desconocida",
+      "issued": "2025-12-31",
+      "retrieved_at": "2026-10-06T09:31:49-05:00",
+      "method": "manual_navegador",
+      "recipe": "INEI-PROYECCIONES-POBLACION-DISTRITAL@f6f18da",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "uso libre con cita"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito"
+      },
+      "known_issues": [
+        "Solo población total: el INEI declara que a nivel provincial y distrital no proyecta por sexo ni edad. Base Censo 2017; el INEI la valida y actualiza al cierre de cada año (se usa para distribuir FONCOMUN). Deberá rebasarse con el Censo 2025."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

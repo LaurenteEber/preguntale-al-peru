@@ -1,0 +1,1114 @@
+{
+ "ambito": "encuestas",
+ "reglas": [
+  {
+   "id": "R-ENC-01",
+   "ambito": "encuestas",
+   "titulo": "Toda cifra de encuesta se calcula con el diseño muestral completo",
+   "enunciado": "Toda estimación de una encuesta por muestreo debe calcularse con el factor de expansión oficial del módulo y con el estrato y el conglomerado del diseño (linealización de Taylor), y debe guardar n sin ponderar, n efectivo, error estándar, CV, IC 95 % y grados de libertad. No se publica ninguna cifra calculada sin diseño (muestra aleatoria simple) ni sin factor.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "naturaleza_dato == 'encuesta_muestral' AND (variables_diseno.estrato IS NULL OR variables_diseno.conglomerado IS NULL OR variables_diseno.factor IS NULL)",
+   "accion": "suprimir",
+   "parametros": {
+    "metodo_varianza": "linealizacion_taylor",
+    "nivel_confianza": 0.95,
+    "gl": "n_conglomerados - n_estratos (del dominio)",
+    "estratos_con_un_conglomerado": "survey.lonely.psu='adjust'",
+    "deff_minimo": 1.0
+   },
+   "mensaje_usuario": null,
+   "justificacion": "Las encuestas del INEI son probabilísticas, estratificadas y por conglomerados (ENAHO bietápica con ~5 359 conglomerados; ENDES bietápica con factores HV005/V005). Ignorar estrato y conglomerado subestima el error estándar (efecto de diseño típico >1) y haría pasar como 'confiables' cifras que no lo son. El INEI declara un nivel de confianza de 95 % en la ficha técnica.",
+   "referencias": [
+    {
+     "titulo": "INEI – ENAHO 2024, Ficha técnica (diseño probabilístico, estratificado, bietápico; niveles de inferencia; factor de expansión)",
+     "url": "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-63/01_Ficha_Tecnica.pdf"
+    },
+    {
+     "titulo": "INEI – ENDES 2021, Apéndice A: diseño y cobertura de la muestra (bietápica, conglomerados; factores HV005 y V005)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1838/pdf/ApendiceA.pdf"
+    },
+    {
+     "titulo": "Paquete R 'survey' (T. Lumley) – svyciprop: IC para proporciones con diseño complejo (logit, beta/Korn-Graubard)",
+     "url": "https://r-survey.r-forge.r-project.org/survey/html/svyciprop.html"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-03",
+    "INF-22"
+   ],
+   "ejemplo": "Anemia en niños de 6–35 meses, Huancavelica, ENDES 2024: svydesign(ids=~HV001 (conglomerado), strata=~HV022, weights=~HV005/1e6); svyciprop(~anemia, método 'beta'). Se guarda p, ee, cv, ic_inf, ic_sup, n_sin_ponderar, n_efectivo=p(1-p)/ee², gl.",
+   "implementacion": "Por fuente y módulo, el catálogo declara variables_diseno {estrato, conglomerado, factor, divisor_factor}. El motor (R 'survey' o Python 'samplics') construye el diseño sobre la base nacional completa y usa subset()/dominio, nunca filtra antes de declarar el diseño (filtrar antes altera la varianza). Salida obligatoria por celda: estimacion, ee, cv=ee/estimacion, ic_inf, ic_sup, metodo_ic, n_sin_ponderar, n_efectivo, gl, deff.",
+   "casos_borde": "Estratos con un solo conglomerado en el dominio: usar 'adjust' (centrar en la media general) y registrarlo. ENDES: el factor viene multiplicado por 1 000 000. ENAHO tiene factores distintos por módulo (hogar vs persona; FACTOR07 vs FACPOB07 o el que indique el diccionario del año): el catálogo debe declararlo por módulo y año. Si la base pública no trae estrato o conglomerado: revisión humana (no se publica con varianza de muestreo simple).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-02",
+   "ambito": "encuestas",
+   "titulo": "Mínimo de casos sin ponderar por celda",
+   "enunciado": "Una cifra de encuesta con menos de 25 casos sin ponderar en el denominador no debe publicarse; con 25 a 49 casos solo puede publicarse como referencial, entre paréntesis.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "n_sin_ponderar < 25 → suprimir; 25 <= n_sin_ponderar <= 49 → publicar_referencial; n_sin_ponderar >= 50 → pasa a R-ENC-03/R-ENC-04",
+   "accion": "suprimir",
+   "parametros": {
+    "n_min_suprimir": 25,
+    "n_min_publicar": 50
+   },
+   "mensaje_usuario": "(25–49 casos) 'Cifra referencial: se basa en pocas personas encuestadas en este grupo y puede variar mucho.' (<25 casos) 'No hay suficientes personas encuestadas en este grupo para dar una cifra confiable.'",
+   "justificacion": "Es la convención DHS que el INEI aplica en todos los cuadros de la ENDES: '( ) basado en 25–49 casos sin ponderar' y '* basado en menos de 25 casos sin ponderar' (suprimido). Con pocos casos el CV estimado es inestable, así que el piso de n protege incluso cuando el CV parece bajo.",
+   "referencias": [
+    {
+     "titulo": "The DHS Program – Reading and Understanding DHS Tables (DM37): 25–49 casos sin ponderar entre paréntesis; <25 suprimido con asterisco",
+     "url": "https://dhsprogram.com/pubs/pdf/DM37/DM37.pdf"
+    },
+    {
+     "titulo": "INEI – Perú: ENDES 2024, Resumen (notas '( ) basado en 25-49 casos sin ponderar' y '* basado en menos de 25 casos sin ponderar'; anemia con dos criterios)",
+     "url": "https://cdn.www.gob.pe/uploads/document/file/8133969/6813623-resumen-peru-encuesta-demografica-y-de-salud-familiar-endes-2024.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-03"
+   ],
+   "ejemplo": "Desnutrición crónica en niños menores de 5 años de lengua materna nativa en Tumbes, ENDES 2024: n_sin_ponderar=11 → se suprime y el motor intenta R-ENC-10 (agrupar años) o R-ENC-09 (subir al nivel nacional del subgrupo).",
+   "implementacion": "n_sin_ponderar = conteo de registros con denominador válido (no missing) en la celda. Se evalúa sobre el denominador del indicador (p. ej., niños de 6–35 meses con hemoglobina medida, no todos los niños).",
+   "casos_borde": "Totales expandidos y medias: se usa el mismo piso. Si la celda sale de un agrupamiento de años (R-ENC-10), el n es la suma de los años. Si el numerador es 0 o igual al denominador, ver R-ENC-04.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-03",
+   "ambito": "encuestas",
+   "titulo": "Umbrales de coeficiente de variación",
+   "enunciado": "Con 50 casos o más, una cifra con CV ≤ 15 % se publica; con 15 % < CV ≤ 30 % se publica como referencial con su intervalo; con CV > 30 % se suprime (y se intenta agrupar años o subir de nivel). Para proporciones fuera de 10 %–90 % rige R-ENC-04 en lugar del CV.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "n_sin_ponderar >= 50 AND (tipo_estimacion IN ('media','total','razon') OR 0.10 <= p <= 0.90): cv <= 0.15 → publicar; 0.15 < cv <= 0.30 → publicar_referencial; cv > 0.30 → suprimir",
+   "accion": "publicar_referencial",
+   "parametros": {
+    "cv_publicar": 0.15,
+    "cv_suprimir": 0.3,
+    "p_min_regla_cv": 0.1,
+    "p_max_regla_cv": 0.9
+   },
+   "mensaje_usuario": "(15–30 %) 'Cifra referencial: el margen de error es amplio; el valor real podría estar entre {ic_inf} y {ic_sup}.' (>30 %) 'La encuesta no tiene precisión suficiente para dar esta cifra en este territorio o grupo.'",
+   "justificacion": "El INEI marca como referenciales los resultados con CV mayor al 15 % 'porque el número de casos en la muestra para este nivel de desagregación no es suficiente'. El INEI no fija un techo de supresión; se propone 30 % porque a partir de ahí el IC 95 % es más ancho que ±59 % del valor y la cifra deja de ser informativa para un público no especialista. El CV no se aplica a proporciones extremas porque se dispara cerca de 0 y se achica artificialmente cerca de 1.",
+   "referencias": [
+    {
+     "titulo": "INEI – Informe técnico Condiciones de Vida, ene-feb-mar 2025 (nota: 'resultados con coeficiente de variación mayor al 15 % deben ser considerados referenciales'; marcas de diferencia significativa)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/boletines/informe-tecnico_condicionesdevida_ene-feb-mar2025.pdf"
+    },
+    {
+     "titulo": "NCHS (2017) – Data Presentation Standards for Proportions, Vital Health Stat 2(175): n y n efectivo ≥30, IC Korn-Graubard, ancho absoluto ≥0,30 suprimir, ancho relativo >130 % suprimir, gl <8 revisión",
+     "url": "https://stacks.cdc.gov/view/cdc/47786"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-03",
+    "INF-18"
+   ],
+   "ejemplo": "Pobreza monetaria en Moquegua, ENAHO 2024: p=0,15 con cv=0,19 (ilustrativo) → 'referencial' con IC. Gasto real per cápita en Lima Metropolitana: cv=0,03 → publicar.",
+   "implementacion": "cv = ee/estimacion calculado por R-ENC-01. Orden de evaluación: R-ENC-06 (nivel) → R-ENC-02 (n) → R-ENC-03 o R-ENC-04 → si suprimido, R-ENC-10 (agrupar) → R-ENC-09/agregar_nivel. Estado resultante en resultado.estado_precision ∈ {publicable, referencial, suprimido}.",
+   "casos_borde": "Medias o totales negativos o cercanos a 0 (p. ej., variación de ingresos): CV no definido → usar ancho del IC y revisión humana. Celdas con cv exactamente 0,15 → publicar. Si el INEI publica la misma cifra oficial sin marca de referencial, prevalece el CV calculado por el motor y se advierte la discrepancia en el registro de validación (no al usuario).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-04",
+   "ambito": "encuestas",
+   "titulo": "Proporciones cercanas a 0 % o 100 %: intervalo asimétrico en vez de CV",
+   "enunciado": "Para proporciones menores de 10 % o mayores de 90 % el motor debe usar un IC asimétrico (Korn-Graubard/Clopper-Pearson con n efectivo, o logit) y decidir por su ancho: suprimir si el ancho absoluto ≥ 30 puntos o el ancho relativo > 130 %; referencial si n efectivo < 50 o gl < 8; si el numerador es 0 o igual al denominador, no publicar '0 %' ni '100 %' sino el límite del intervalo.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "tipo_estimacion == 'proporcion' AND (p < 0.10 OR p > 0.90) AND n_sin_ponderar >= 50: (ic_sup - ic_inf) >= 0.30 OR (ic_sup - ic_inf)/min(p,1-p) > 1.30 → suprimir; n_efectivo < 50 OR gl < 8 → publicar_referencial; numerador == 0 → rotular 'menos de {ic_sup}'; numerador == n → rotular 'más de {ic_inf}'; si no → publicar",
+   "accion": "publicar_referencial",
+   "parametros": {
+    "metodo_ic": "beta (Korn-Graubard) con n_efectivo; alternativa logit",
+    "ancho_abs_max": 0.3,
+    "ancho_rel_max": 1.3,
+    "n_efectivo_min": 50,
+    "gl_min": 8
+   },
+   "mensaje_usuario": "(numerador 0) 'Ninguna persona encuestada en este grupo reportó esto; la cifra real sería menor a {ic_sup} %.' (referencial) 'Cifra referencial: es un valor pequeño y la encuesta lo mide con poca precisión.'",
+   "justificacion": "El IC de Wald (p ± 1,96·ee) da límites negativos o >100 % cerca de los extremos, y el CV es engañoso en proporciones pequeñas. La norma del NCHS para proporciones usa IC Korn-Graubard con n efectivo y suprime con ancho absoluto ≥0,30 o ancho relativo >130 %, y pide revisión con <8 gl o 0 eventos. Se adapta el n efectivo mínimo a 50 para ser coherente con R-ENC-02. El ancho relativo se calcula sobre min(p,1−p) para que la regla sea simétrica (90 % de cobertura = 10 % sin cobertura).",
+   "referencias": [
+    {
+     "titulo": "NCHS (2017) – Data Presentation Standards for Proportions, Vital Health Stat 2(175): n y n efectivo ≥30, IC Korn-Graubard, ancho absoluto ≥0,30 suprimir, ancho relativo >130 % suprimir, gl <8 revisión",
+     "url": "https://stacks.cdc.gov/view/cdc/47786"
+    },
+    {
+     "titulo": "Paquete R 'survey' (T. Lumley) – svyciprop: IC para proporciones con diseño complejo (logit, beta/Korn-Graubard)",
+     "url": "https://r-survey.r-forge.r-project.org/survey/html/svyciprop.html"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-03"
+   ],
+   "ejemplo": "Hogares rurales con internet fijo en Huancavelica, ENAHO 2024: p=0,02, IC Korn-Graubard 0,008–0,045; ancho abs 0,037, ancho rel 1,85 (cifras ilustrativas) → suprimir y probar R-ENC-10. Hogares de Lima Metropolitana con electricidad: p=0,995 → aplicar sobre 1−p.",
+   "implementacion": "n_efectivo = p(1−p)/ee² (acotado a ≤ n_sin_ponderar); IC beta: ic_inf = Beta⁻¹(α/2; x, n_ef−x+1), ic_sup = Beta⁻¹(1−α/2; x+1, n_ef−x) con x = p·n_ef, y opcionalmente el ajuste por gl de Korn-Graubard. En R: svyciprop(method='beta'); en Python: implementar con scipy.stats.beta.",
+   "casos_borde": "p exactamente 0,10 o 0,90: usar la regla del CV (R-ENC-03). Si ee=0 (todas las observaciones iguales): n_efectivo = n_sin_ponderar. Prevalencias raras de interés público (p. ej., VIH, trata) con numerador ≤ 5: revisión humana aunque pase los anchos.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-05",
+   "ambito": "encuestas",
+   "titulo": "Cómo se muestra una cifra de encuesta",
+   "enunciado": "Toda cifra de encuesta debe mostrarse con su IC 95 %, el año (o periodo), el territorio o dominio válido, la fuente y el número de personas u hogares encuestados; las referenciales van entre paréntesis y con su rótulo. Los porcentajes se redondean a 1 decimal y los totales expandidos a miles.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "estado_precision IN ('publicable','referencial')",
+   "accion": "rotular",
+   "parametros": {
+    "decimales_porcentaje": 1,
+    "redondeo_totales": 1000,
+    "formato_referencial": "(xx,x)"
+   },
+   "mensaje_usuario": "'{valor} % (entre {ic_inf} % y {ic_sup} %), {fuente} {anio}, {territorio}; basado en {n_sin_ponderar} {unidad} encuestados.'",
+   "justificacion": "El INEI y la ENDES reportan errores muestrales e IC al 95 % y marcan las cifras con paréntesis/asterisco; mostrar el intervalo evita que el público lea una estimación muestral como un conteo exacto. Totales expandidos en unidades dan una falsa precisión.",
+   "referencias": [
+    {
+     "titulo": "INEI – Perú: ENDES 2024, Resumen (notas '( ) basado en 25-49 casos sin ponderar' y '* basado en menos de 25 casos sin ponderar'; anemia con dos criterios)",
+     "url": "https://cdn.www.gob.pe/uploads/document/file/8133969/6813623-resumen-peru-encuesta-demografica-y-de-salud-familiar-endes-2024.pdf"
+    },
+    {
+     "titulo": "INEI – ENAHO 2024, Ficha técnica (diseño probabilístico, estratificado, bietápico; niveles de inferencia; factor de expansión)",
+     "url": "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-63/01_Ficha_Tecnica.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-03"
+   ],
+   "ejemplo": "'Pobreza monetaria en Cajamarca, 2024: 38,1 % (entre 33,5 % y 42,9 %), ENAHO – INEI; basado en 1 412 hogares encuestados.' (cifras ilustrativas)",
+   "implementacion": "Plantilla en el contrato motor→LLM: el LLM recibe valor, ic, n, rótulo y solo puede copiar estos campos (ver ámbito lenguaje). Totales: round(total, -3) y IC también redondeado.",
+   "casos_borde": "Si el IC redondeado colapsa (ic_inf == valor), mostrar 2 decimales. Totales menores a 1 000 tras redondeo: ver R-ENC-17.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-06",
+   "ambito": "encuestas",
+   "titulo": "Publicar solo al nivel de inferencia de la encuesta",
+   "enunciado": "Una encuesta no debe estimarse a un nivel territorial más fino que su nivel_territorial_inferencia (y sus dominios_inferencia); si se pide una provincia o un distrito, el motor debe responder con la cifra del departamento (o dominio) que lo contiene, rotulada como tal, y nunca agregar el microdato por el UBIGEO distrital o por conglomerado.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL",
+     "INEI-ENCO",
+     "SUSALUD-ENSUSALUD",
+     "INEI-EPE-LIMA"
+    ]
+   },
+   "condicion": "nivel_solicitado más fino que nivel_territorial_inferencia (orden: nacional > dominio/region_natural/area > departamento > provincia > distrito) OR nivel_solicitado NOT IN dominios_inferencia[periodicidad_estimacion]",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "jerarquia": [
+     "nacional",
+     "area_urbano_rural",
+     "region_natural",
+     "dominio",
+     "departamento",
+     "provincia",
+     "distrito"
+    ],
+    "llaves_solo_diseno": [
+     "conglomerado_vivienda"
+    ],
+    "trimestral_dominios": [
+     "nacional",
+     "urbano",
+     "rural"
+    ]
+   },
+   "mensaje_usuario": "'La encuesta no permite dar una cifra confiable para {territorio_pedido}. Mostramos la del departamento de {departamento}, que incluye a {territorio_pedido}; la situación en {territorio_pedido} puede ser distinta.'",
+   "justificacion": "La ficha técnica de la ENAHO declara inferencia nacional, urbano/rural, 24 departamentos (más Lima Metropolitana y Callao según el año) y región natural; los trimestrales solo nacional y urbano/rural. La ENDES es departamental anual. Que la base traiga el UBIGEO distrital no la vuelve representativa por distrito: en un distrito puede haber 0–2 conglomerados. El conglomerado sirve para la varianza, no como llave de cruce.",
+   "referencias": [
+    {
+     "titulo": "INEI – ENAHO 2024, Ficha técnica (diseño probabilístico, estratificado, bietápico; niveles de inferencia; factor de expansión)",
+     "url": "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-63/01_Ficha_Tecnica.pdf"
+    },
+    {
+     "titulo": "INEI – ENAHO 2021, Ficha técnica (dominios de inferencia; entrevista mixta presencial/telefónica por COVID-19)",
+     "url": "https://www.inei.gob.pe/media/encuestas/documentos/enaho/Ficha_tecnica_2021.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-22",
+    "INF-12",
+    "INF-10",
+    "INF-11",
+    "INF-03"
+   ],
+   "ejemplo": "'¿Cuánta anemia hay en la provincia de Huanta?' → ENDES por provincia está bloqueada; se devuelve Ayacucho (departamento) con la advertencia; el ámbito estimaciones puede ofrecer además un indicador modelado o administrativo provincial (SIEN rotulado como tamizados), nunca como si fuera ENDES.",
+   "implementacion": "Antes de consultar: nivel_permitido = nivel_territorial_inferencia; si el ubigeo pedido tiene longitud 4 o 6 → ubigeo_destino = mapeo_dominio(fuente, anio, ubigeo) (R-ENC-07). El motor no expone ninguna función que haga GROUP BY ubigeo distrital/provincial sobre microdatos de encuestas. INEI-ENCO (inferencia provincia, 2006) es la excepción declarada y solo con fines históricos.",
+   "casos_borde": "Provincia Lima (1501) con ENAHO: coincide con el dominio Lima Metropolitana → se publica como dominio, no como provincia genérica. Provincia Constitucional del Callao: es departamento en las encuestas. Si existe una estimación de áreas pequeñas propia, se publica como 'estimación modelada' bajo el ámbito estimaciones, no bajo esta regla.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-07",
+   "ambito": "encuestas",
+   "titulo": "Dominios: Lima Metropolitana, Lima Provincias, Callao y ámbitos solo urbanos",
+   "enunciado": "Los resultados de encuesta deben asociarse a territorios mediante la tabla dominio→ubigeos de cada encuesta y año, no por los dos primeros dígitos del ubigeo; un indicador medido solo en área urbana o en ciudades no debe presentarse como cifra del departamento entero.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-EPE-LIMA",
+     "INSM-EESM"
+    ]
+   },
+   "condicion": "ubigeo_departamento IN ('15','07') OR poblacion_objetivo_dominio IN ('urbano','ciudades')",
+   "accion": "rotular",
+   "parametros": {
+    "dominios_lima": [
+     "Lima Metropolitana (prov. 1501)",
+     "Lima Provincias / Región Lima (15 sin 1501)",
+     "Callao (07)",
+     "Lima Metropolitana y Callao (cuando la encuesta los une)"
+    ]
+   },
+   "mensaje_usuario": "(Lima) 'Esta cifra corresponde a {dominio} (definido por la encuesta), no a todo el departamento de Lima.' (urbano) 'La encuesta mide este tema solo en zonas urbanas de {territorio}; no incluye las zonas rurales.'",
+   "justificacion": "La ENAHO 2021 define como dominio el 'Área Metropolitana de Lima y Callao' y en otros años separa Lima Metropolitana, Lima Provincias y Callao; ENLA/UMC reporta por región (p. ej., Lima Provincias, Lima Metropolitana); ENAPRES mide victimización solo en área urbana. Un join por código de departamento asigna mal Lima y Callao y extiende al rural cifras urbanas.",
+   "referencias": [
+    {
+     "titulo": "INEI – ENAHO 2021, Ficha técnica (dominios de inferencia; entrevista mixta presencial/telefónica por COVID-19)",
+     "url": "https://www.inei.gob.pe/media/encuestas/documentos/enaho/Ficha_tecnica_2021.pdf"
+    },
+    {
+     "titulo": "INEI – ENAHO 2024, Ficha técnica (diseño probabilístico, estratificado, bietápico; niveles de inferencia; factor de expansión)",
+     "url": "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-63/01_Ficha_Tecnica.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-12"
+   ],
+   "ejemplo": "'Victimización en Tumbes' con ENAPRES → se publica como 'población urbana de Tumbes' y se bloquea el cruce con denominadores de población total del departamento.",
+   "implementacion": "Tabla dominio_ubigeo(fuente, anio, dominio, lista_ubigeos, poblacion_objetivo) construida a partir de la ficha técnica de cada año; el motor resuelve primero el dominio y luego calcula. Campo poblacion_objetivo_dominio en el indicador.",
+   "casos_borde": "Años en que la encuesta une Lima Metropolitana y Callao: no separar; si se pide Callao, publicar el agregado rotulado. Cambios de dominio entre años → la serie se corta (ver R-ENC-13).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-08",
+   "ambito": "encuestas",
+   "titulo": "Nivel de inferencia no verificado: solo nacional",
+   "enunciado": "Si el nivel de inferencia de una encuesta no está confirmado con su ficha técnica, sus cifras no deben publicarse por debajo del nivel nacional; y si la encuesta representa a usuarios de servicios o a ciudades estudiadas, debe rotularse así.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENEDU",
+     "MINEDU-ENDO",
+     "INEI-ENEDIS",
+     "OSIPTEL-ERESTEL",
+     "INEI-ENPHR-2014",
+     "INSM-EESM",
+     "INEI-EPEN",
+     "SUSALUD-ENSUSALUD"
+    ]
+   },
+   "condicion": "naturaleza_dato == 'encuesta_muestral' AND (inferencia_verificada == false OR inferencia_verificada IS NULL) AND nivel_solicitado != 'nacional'",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "nivel_maximo_sin_verificar": "nacional"
+   },
+   "mensaje_usuario": "'Por ahora solo mostramos el dato nacional de esta encuesta: no hemos confirmado que sea representativa por departamento.' / (ENSUSALUD) 'Mide a usuarios atendidos en establecimientos, no a toda la población.'",
+   "justificacion": "Varios niveles de inferencia del catálogo son supuestos ('asumido', 'probable', 'inferida del nombre'). La ficha ENSUSALUD 2016 declara inferencia nacional y 'regional' solo para algunos cuestionarios. Publicar un supuesto como representatividad departamental es el error más difícil de detectar por el usuario.",
+   "referencias": [],
+   "hallazgos_auditoria": [
+    "INF-13",
+    "INF-11",
+    "INF-10"
+   ],
+   "ejemplo": "EPEN: hasta verificar la ficha técnica, 'informalidad laboral en Apurímac' devuelve el dato nacional con la advertencia.",
+   "implementacion": "Campos inferencia_verificada (bool) y cita_ficha_inferencia (URL + página). La compuerta de ingesta no exige el campo, pero el validador sí antes de publicar subnacional.",
+   "casos_borde": "Encuestas con inferencia distinta por módulo o cuestionario (ENSUSALUD, ENAPRES): el campo dominios_inferencia se define por módulo. Encuestas con diseño no probabilístico (p. ej., ediciones remotas por autoselección): bloquear toda cifra (revisión humana).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-09",
+   "ambito": "encuestas",
+   "titulo": "Subgrupos (sexo, edad, lengua, quintil, área) dentro de un departamento",
+   "enunciado": "Un subgrupo dentro de un departamento se publica solo si su propia celda pasa R-ENC-02 a R-ENC-04; en el MVP se permite como máximo una desagregación adicional al territorio (p. ej., departamento × sexo), y si la celda no pasa se ofrece, en este orden: agrupar años, el subgrupo a nivel nacional o de región natural, o el departamento sin desagregar.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "nivel_territorial IN ('departamento','dominio') AND n_desagregaciones_adicionales >= 1: evaluar R-ENC-02..04 sobre la celda; n_desagregaciones_adicionales > 1 → suprimir (MVP)",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "max_desagregaciones_bajo_departamento": 1,
+    "orden_alternativas": [
+     "agrupar_anios",
+     "subgrupo_nacional_o_region_natural",
+     "departamento_total"
+    ],
+    "quintiles": "quintiles nacionales de gasto per cápita del mismo año (no recalcular quintiles dentro del departamento)"
+   },
+   "mensaje_usuario": "'No hay suficientes encuestados de {subgrupo} en {departamento} para dar una cifra. Mostramos {alternativa}.'",
+   "justificacion": "La representatividad departamental vale para el diseño y los indicadores principales, no para cualquier subgrupo: el tamaño muestral se fija por departamento y los subgrupos reciben una fracción. La práctica ENDES/DHS evalúa el piso de casos por celda, no por dominio.",
+   "referencias": [
+    {
+     "titulo": "The DHS Program – Reading and Understanding DHS Tables (DM37): 25–49 casos sin ponderar entre paréntesis; <25 suprimido con asterisco",
+     "url": "https://dhsprogram.com/pubs/pdf/DM37/DM37.pdf"
+    },
+    {
+     "titulo": "INEI – Informe técnico Condiciones de Vida, ene-feb-mar 2025 (nota: 'resultados con coeficiente de variación mayor al 15 % deben ser considerados referenciales'; marcas de diferencia significativa)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/boletines/informe-tecnico_condicionesdevida_ene-feb-mar2025.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-03"
+   ],
+   "ejemplo": "'Anemia en niños de 6–35 meses de hogares con lengua materna quechua en Madre de Dios': n<25 → no se publica; se ofrece 'niños con lengua materna quechua, nacional' o 'Madre de Dios, todos los niños'.",
+   "implementacion": "n_desagregaciones_adicionales = número de variables de corte distintas del territorio y del universo del indicador. La celda se estima con subset sobre el diseño completo (R-ENC-01). Quintil: usar la variable de quintil nacional que publica el INEI o calcularla sobre la base nacional.",
+   "casos_borde": "Área urbano/rural dentro del departamento es dominio de estudio en ENAHO (no cuenta como desagregación adicional si la ficha lo declara). Edad: si el universo del indicador ya es un grupo de edad (6–35 meses), no cuenta como desagregación. Desagregaciones con categorías 'otra/no sabe': no se publican salvo revisión.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-10",
+   "ambito": "encuestas",
+   "titulo": "Agrupar años cuando no alcanza la precisión",
+   "enunciado": "Si una celda anual se suprime por n o CV, el motor puede agrupar hasta 3 años consecutivos de la misma encuesta, solo si no hay quiebre metodológico entre ellos ni cambio en la definición del indicador, con el factor dividido entre el número de años; la cifra se rotula como promedio del periodo y no se usa para tendencias junto con años sueltos.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "INEI-EPEN"
+    ]
+   },
+   "condicion": "estado_precision(anual) == 'suprimido' AND k <= 3 AND anios consecutivos AND ningún anio IN anios_con_quiebre(fuente, indicador) AND misma definicion/criterio AND estado_precision(agrupado) IN ('publicable','referencial')",
+   "accion": "agrupar_anios",
+   "parametros": {
+    "k_max": 3,
+    "factor_agrupado": "factor_original / k",
+    "estrato_agrupado": "anio × estrato",
+    "conglomerado_agrupado": "identificador de conglomerado estable entre años (si la muestra es panel o repite conglomerados) para no subestimar la varianza",
+    "periodo_mas_reciente": true
+   },
+   "mensaje_usuario": "'Esta cifra es un promedio de {anio_ini}–{anio_fin}: un solo año no tiene suficientes encuestados en {territorio}. Describe la situación del periodo, no de un año en particular.'",
+   "justificacion": "El INEI usa en sus publicaciones de pobreza agregaciones multianuales cuando el año no da precisión, y la práctica de NCHS para combinar ciclos es dividir el factor entre el número de ciclos y verificar que las preguntas sean comparables. Más de 3 años diluye la referencia temporal y mezcla contextos (3 años es suficiente para duplicar o triplicar el n).",
+   "referencias": [
+    {
+     "titulo": "NCHS – NHANES Tutorials, Weighting: combinar ciclos dividiendo el factor entre el número de ciclos y verificar comparabilidad",
+     "url": "https://wwwn.cdc.gov/nchs/nhanes/tutorials/weighting.aspx"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-16",
+    "INF-03"
+   ],
+   "ejemplo": "Anemia en niños de 6–35 meses del área rural de Tumbes: 2024 suprimido (n=31, cv=0,34; cifras ilustrativas) → ENDES 2024 pero no 2023 si cambia el criterio de anemia (RM 251-2024): el agrupamiento se hace con ambos años recalculados con el mismo criterio o no se hace. Pobreza en un subgrupo de Moquegua: ENAHO 2022–2024 agrupado.",
+   "implementacion": "Apilar las bases de los k años más recientes; factor_k = factor/k; estrato = paste(anio, estrato); id_conglomerado conservado si se repite entre años (ENAHO panel). Re-evaluar R-ENC-02..04 sobre la celda agrupada. Guardar resultado.periodo_agrupado=[anios].",
+   "casos_borde": "Si incluso con 3 años no pasa: agregar_nivel (R-ENC-09). Nunca agrupar a través de 2020 (salvo indicadores con comparable_en_quiebre que incluya 2020) ni a través de un cambio de criterio. No comparar un periodo agrupado con un año suelto que forma parte de él.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-11",
+   "ambito": "encuestas",
+   "titulo": "Diferencias entre años o territorios: solo con prueba estadística",
+   "enunciado": "El motor solo puede afirmar que una cifra 'subió', 'bajó' o 'es mayor/menor' que otra si la prueba de diferencia con diseño complejo da p < 0,05; si no, debe decir que no hay diferencia estadísticamente significativa. No se usa la superposición de intervalos como prueba ni se compara una cifra suprimida.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "comparacion entre (anio_a, anio_b) o (territorio_a, territorio_b): z = (est_a − est_b)/sqrt(ee_a² + ee_b² − 2·cov_ab); p < 0.05 → declarar dirección; p >= 0.05 → rotular 'sin diferencia significativa'; cualquiera con estado 'suprimido' → no comparar",
+   "accion": "rotular",
+   "parametros": {
+    "alfa": 0.05,
+    "cov_ab": "0 entre departamentos o entre años con muestras independientes; estimada con base apilada si hay panel/conglomerados repetidos",
+    "gl_prueba": "min(gl_a, gl_b)",
+    "comparaciones_multiples": "máx. 1 comparación por cifra en la respuesta; tendencias: primer vs último año del tramo sin quiebre"
+   },
+   "mensaje_usuario": "(p<0,05) 'La cifra {bajó/subió} de {a} % a {b} %; el cambio es estadísticamente significativo.' (p≥0,05) 'La diferencia entre {a} % y {b} % puede deberse al azar de la muestra: no se puede afirmar que haya cambiado.'",
+   "justificacion": "Los informes técnicos del INEI marcan las variaciones con pruebas de diferencia (p<0,10; p<0,05; p<0,01). Se adopta p<0,05 como umbral único para afirmar un cambio ante público no especialista. Dos IC que se superponen pueden corresponder a una diferencia significativa, por lo que la superposición no es una prueba válida.",
+   "referencias": [
+    {
+     "titulo": "INEI – Informe técnico Condiciones de Vida, ene-feb-mar 2025 (nota: 'resultados con coeficiente de variación mayor al 15 % deben ser considerados referenciales'; marcas de diferencia significativa)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/boletines/informe-tecnico_condicionesdevida_ene-feb-mar2025.pdf"
+    },
+    {
+     "titulo": "INEI – Perú: Perfil de la pobreza por dominios geográficos 2008-2018, cap. 3 (grupos de departamentos con niveles de pobreza estadísticamente semejantes, IC 95 %)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1699/cap03.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-16"
+   ],
+   "ejemplo": "Pobreza en Puno 2023 vs 2024 (ENAHO): diferencia de 1,8 pp con p=0,41 (ilustrativo) → 'no se puede afirmar que haya cambiado'. Anemia Lima Metropolitana 2024 RM 363 (32,9 %) vs 2024 RM 251 (24,0 %): no es comparación entre años sino entre criterios → bloqueada por R-ENC-14.",
+   "implementacion": "Calcular ambas celdas con R-ENC-01; para cov≠0 apilar bases y usar svyby + svycontrast. Guardar resultado.p_valor_diferencia y resultado.diferencia_significativa. El LLM recibe solo el rótulo, no puede inferir dirección por su cuenta (ámbito lenguaje).",
+   "casos_borde": "Celdas referenciales: se permite la prueba, pero el rótulo agrega 'con cifras referenciales'. Comparación a través de un quiebre (R-ENC-13/14): bloqueada. Muchas comparaciones (series largas): no se declaran 'picos' año a año.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-12",
+   "ambito": "encuestas",
+   "titulo": "Rankings de departamentos solo por grupos estadísticamente semejantes",
+   "enunciado": "El motor no debe publicar posiciones ordinales ('1.º', 'el más alto') de departamentos con cifras de encuesta; debe presentar grupos de departamentos con niveles estadísticamente semejantes (método INEI) y solo puede decir 'el más alto' si su diferencia con el siguiente es significativa (R-ENC-11).",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "pregunta_tipo == 'ranking' OR respuesta contiene orden de >= 3 territorios con cifras de encuesta",
+   "accion": "rotular",
+   "parametros": {
+    "metodo_grupos": "ordenar por estimación; abrir nuevo grupo cuando la diferencia con el primer miembro del grupo actual sea significativa (p<0,05, R-ENC-11)",
+    "excluir_de_grupos": "celdas suprimidas; las referenciales se incluyen marcadas",
+    "max_grupos": 6
+   },
+   "mensaje_usuario": "'Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno.'",
+   "justificacion": "El INEI no publica rankings puntuales de pobreza departamental: agrupa los departamentos en grupos con niveles de pobreza estadísticamente semejantes usando IC al 95 % y pruebas de diferencia (5 grupos en 2018). Un ranking puntual induce a conclusiones falsas ('Huancavelica pasó del 2.º al 4.º lugar').",
+   "referencias": [
+    {
+     "titulo": "INEI – Perú: Perfil de la pobreza por dominios geográficos 2008-2018, cap. 3 (grupos de departamentos con niveles de pobreza estadísticamente semejantes, IC 95 %)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1699/cap03.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-16",
+    "INF-18"
+   ],
+   "ejemplo": "'¿Qué región tiene más pobreza?' → 'Grupo 1 (pobreza entre X % y Y %): Cajamarca, Puno, Huánuco…' en vez de una lista numerada.",
+   "implementacion": "Algoritmo greedy secuencial sobre estimaciones ordenadas con la prueba de R-ENC-11; alternativamente usar los grupos oficiales del INEI cuando estén publicados para ese año e indicador (preferidos).",
+   "casos_borde": "Si el INEI publica grupos oficiales y el algoritmo propio difiere, prevalecen los oficiales. Indicadores con todos los departamentos en un solo grupo: decir que no hay diferencias significativas entre departamentos.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-13",
+   "ambito": "encuestas",
+   "titulo": "Quiebres metodológicos y el año 2020",
+   "enunciado": "Una serie de encuesta no debe unir años separados por un quiebre declarado en anios_con_quiebre; los años con modo de entrevista distinto (2020 y, donde aplique, 2021) quedan fuera de las tendencias por defecto, salvo indicadores que el INEI declare comparables, y siempre llevan una marca.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "INEI-EPEN"
+    ]
+   },
+   "condicion": "serie solicitada abarca anio IN anios_con_quiebre(fuente) AND indicador.comparable_en_quiebre NOT CONTAINS anio",
+   "accion": "advertir",
+   "parametros": {
+    "anios_modo_mixto": {
+     "INEI-ENAHO": [
+      2020,
+      2021
+     ],
+     "INEI-ENDES": [
+      2020
+     ],
+     "INEI-ENAPRES": [
+      2020,
+      2021
+     ]
+    },
+    "comparable_en_quiebre_por_defecto": {
+     "INEI-ENAHO.pobreza_monetaria": [
+      2020,
+      2021
+     ]
+    },
+    "biomedicos_endes_2020": "revision_humana"
+   },
+   "mensaje_usuario": "'En 2020 la encuesta se hizo en parte por teléfono por la pandemia; esa cifra no es del todo comparable con los demás años y no se usa para calcular la tendencia.'",
+   "justificacion": "ENAHO 2020: 49 % de entrevistas telefónicas con cuestionario reducido (mar–set); el INEI declara que las preguntas de pobreza monetaria no se excluyeron y que la pobreza 2020 se calculó con la misma metodología 2004-2019 (por eso es la excepción). ENAHO 2021: entrevista mixta y cuestionario reducido telefónico en 15 regiones en febrero. ENDES 2020: entrevistas telefónicas y recuperación de pruebas biomédicas de julio a setiembre, con efecto en peso, talla y hemoglobina.",
+   "referencias": [
+    {
+     "titulo": "INEI – Declaración de la Comisión Consultiva para la estimación de la pobreza monetaria 2020 (49 % entrevistas telefónicas; preguntas de pobreza no excluidas; misma metodología 2004-2019)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/pobreza2020/Declaracion_Estimacion_Pobreza_Monetaria_2020.pdf"
+    },
+    {
+     "titulo": "INEI – ENAHO 2021, Ficha técnica (dominios de inferencia; entrevista mixta presencial/telefónica por COVID-19)",
+     "url": "https://www.inei.gob.pe/media/encuestas/documentos/enaho/Ficha_tecnica_2021.pdf"
+    },
+    {
+     "titulo": "INEI – Perú: ENDES 2020, Presentación (entrevistas telefónicas; recuperación de pruebas biomédicas jul–set)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1795/presenta.html"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-17",
+    "INF-18"
+   ],
+   "ejemplo": "Tendencia de desnutrición crónica en Loreto 2015–2024 (ENDES): el punto 2020 se muestra con marca y no entra al cálculo del cambio; la tendencia se informa 2019 vs 2024 si no hay otro quiebre. Pobreza monetaria 2019–2021: se muestra con nota pero sí entra a la serie.",
+   "implementacion": "anios_con_quiebre se normaliza a una lista estructurada quiebres[{anio, tipo (modo_entrevista|criterio|marco|cuestionario), indicadores_afectados, comparable_si}]; el validador corta la serie en tramos y aplica R-ENC-11 solo dentro de un tramo.",
+   "casos_borde": "ENAPRES 2020–2021 no confirmado en ficha: se trata como quiebre hasta verificar (conservador). Cambio de marco muestral o de proyecciones de población (re-ponderación) también es quiebre si el INEI no re-pondera la serie (ver R-ENC-18).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-14",
+   "ambito": "encuestas",
+   "titulo": "Anemia: criterio obligatorio y series sin mezclar RM 363-2022 y RM 251-2024",
+   "enunciado": "Toda cifra de anemia debe llevar su criterio (RM 363-2022-MINSA/OMS 2001 o RM 251-2024-MINSA/OMS 2024 con nuevo ajuste por altitud); no deben compararse ni unirse en una serie cifras con criterios distintos, y desde 2024 se publica por defecto el criterio vigente (RM 251-2024) mostrando el anterior solo como referencia.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral",
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [
+     "prevalencia",
+     "notificacion_vigilancia",
+     "atenciones_produccion"
+    ],
+    "base_geografica": [
+     "muestra",
+     "establecimiento"
+    ],
+    "fuentes": [
+     "INEI-ENDES",
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS"
+    ]
+   },
+   "condicion": "indicador.tema == 'anemia' AND (criterio_medicion IS NULL → suprimir) OR (serie/comparación con COUNT(DISTINCT criterio_medicion) > 1 → bloquear)",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "criterios": [
+     "RM363-2022/OMS2001",
+     "RM251-2024/OMS2024"
+    ],
+    "criterio_por_defecto_desde": 2024,
+    "serie_retroactiva": "solo si se recalcula desde microdatos (hemoglobina sin ajustar + altitud del conglomerado) con el criterio RM 251-2024 para todos los años"
+   },
+   "mensaje_usuario": "'Desde 2024 la anemia se mide con un criterio nuevo (Norma del MINSA de 2024, basada en la OMS), que da cifras más bajas, sobre todo en zonas de altura. Las cifras de antes de 2024 no se pueden comparar directamente con las nuevas.'",
+   "justificacion": "La ENDES 2024 publica la anemia con los dos criterios y la diferencia es grande (Lima Metropolitana, 6–35 meses: 32,9 % con RM 363-2022 vs 24,0 % con RM 251-2024). La RM 251-2024/MINSA aprueba la NTS 213 basada en la guía OMS 2024, que cambia puntos de corte y el ajuste por altitud. Mezclar criterios fabrica una caída artificial.",
+   "referencias": [
+    {
+     "titulo": "INEI – ENDES 2024, Lima Metropolitana, cap. 9 (anemia 6–35 meses: 32,9 % con RM 363-2022 vs 24,0 % con RM 251-2024)",
+     "url": "https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes15/pdf/Cap09.pdf"
+    },
+    {
+     "titulo": "RM N.° 251-2024/MINSA – aprueba la NTS N.° 213-MINSA/DGIESP-2024, prevención y control de la anemia (El Peruano)",
+     "url": "https://busquedas.elperuano.pe/dispositivo/NL/2277624-1"
+    },
+    {
+     "titulo": "OMS (2024) – Guideline on haemoglobin cutoffs to define anaemia in individuals and populations",
+     "url": "https://www.who.int/publications-detail-redirect/9789240088542"
+    },
+    {
+     "titulo": "INEI – Perú: ENDES 2024, Resumen (notas '( ) basado en 25-49 casos sin ponderar' y '* basado en menos de 25 casos sin ponderar'; anemia con dos criterios)",
+     "url": "https://cdn.www.gob.pe/uploads/document/file/8133969/6813623-resumen-peru-encuesta-demografica-y-de-salud-familiar-endes-2024.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-08"
+   ],
+   "ejemplo": "'¿Bajó la anemia en Puno entre 2022 y 2024?' → solo se compara 2022 vs 2024 con el mismo criterio (RM 363-2022, disponible en ambos años); el valor 2024 con RM 251 se muestra aparte como 'criterio vigente'.",
+   "implementacion": "Atributo obligatorio indicador.criterio_medicion; el validador rechaza consultas de serie con criterios mezclados. Fase posterior: recalcular la serie ENDES desde microdatos con ambos criterios (hemoglobina observada y altitud del conglomerado) y validar contra las cifras 2024 publicadas por el INEI (diferencia ≤ 0,5 pp).",
+   "casos_borde": "SIEN/REUNIS: además del criterio, rige la regla de no presentarla como prevalencia (ámbito registros). Si el INEI publica en el futuro una serie retroactiva oficial con el nuevo criterio, esa serie reemplaza al recálculo propio.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-15",
+   "ambito": "encuestas",
+   "titulo": "ENLA (evaluación muestral de aprendizajes): nivel válido y método",
+   "enunciado": "Los resultados de la ENLA deben calcularse con sus pesos y con las medidas de la escala oficial (y con valores plausibles si la base los trae) y publicarse solo a nivel nacional, por estratos declarados (área, gestión, sexo) y por región según la definición de la UMC; nunca por UGEL, distrito o IE, ni empalmarse con la ECE censal por debajo del nivel regional.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "MINEDU-UMC-ENLA"
+    ]
+   },
+   "condicion": "fuente == 'MINEDU-UMC-ENLA' AND (nivel_solicitado IN ('provincia','distrito','ugel','establecimiento') → agregar_nivel a region_umc) OR (serie incluye MINEDU-UMC-ECE AND nivel < region → bloquear_cruce)",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "niveles_validos": [
+     "nacional",
+     "estrato (área, gestión, sexo)",
+     "region_umc"
+    ],
+    "metodo_valores_plausibles": "calcular el estadístico con cada valor plausible y combinar con las reglas de Rubin (varianza total = media de varianzas + (1+1/M)·varianza entre)",
+    "precision": "aplicar R-ENC-02..04 a cada celda región×grado×área"
+   },
+   "mensaje_usuario": "'Esta evaluación se aplica a una muestra de escuelas: da resultados para el país y cada región, no para cada colegio o distrito.'",
+   "justificacion": "La ENLA es muestral y el catálogo registra que requiere pesos y medidas Rasch/valores plausibles; la UMC reporta por región (incluye dominios como Lima Metropolitana y Lima Provincias). Desde 2022 la evaluación es muestral, con otra población y otros grados que la ECE censal (hasta 2019), por lo que no se puede empalmar a nivel de IE o distrito. El código modular puede venir anonimizado en la base muestral.",
+   "referencias": [
+    {
+     "titulo": "Minedu-UMC – Reporte técnico de la ENLA 2023 (repositorio institucional)",
+     "url": "https://repositorio.minedu.gob.pe/handle/20.500.12799/10650"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-20",
+    "INF-12",
+    "EXA-B-22"
+   ],
+   "ejemplo": "'¿Cómo le va en lectura a los alumnos de 2.º de secundaria en mi distrito de Ayacucho?' → resultado regional Ayacucho (ENLA) con la advertencia; no se usa el código modular para filtrar escuelas del distrito.",
+   "implementacion": "Diseño declarado en variables_diseno de ENLA (estrato, IE como conglomerado, peso del estudiante). Porcentaje en nivel 'satisfactorio' = proporción ponderada; medida promedio con valores plausibles si existen. Validar contra el reporte oficial de la UMC del año antes de publicar (diferencia ≤ 0,5 pp).",
+   "casos_borde": "Si la base pública no trae pesos o estrato → revisión humana (no se publica). Comparaciones entre años ENLA solo si la UMC declara la escala comparable (campo comparable_en_quiebre); si no, no hay tendencia.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-16",
+   "ambito": "encuestas",
+   "titulo": "ECE censal (hasta 2019): mínimo de evaluados por escuela y fin de serie",
+   "enunciado": "Los resultados de la ECE por IE solo se muestran si la IE tuvo 10 o más estudiantes evaluados (10–19 como referencial); con menos se agrega a UGEL, distrito o provincia; siempre se advierte que la serie censal terminó en 2019 y no se construye tendencia ECE→ENLA por debajo del nivel regional.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "censo",
+     "registro_administrativo"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "establecimiento"
+    ],
+    "fuentes": [
+     "MINEDU-UMC-ECE"
+    ]
+   },
+   "condicion": "fuente == 'MINEDU-UMC-ECE' AND nivel == 'establecimiento': n_evaluados < 10 → agregar_nivel; 10 <= n_evaluados < 20 → publicar_referencial; tasa_evaluados/matricula < 0.80 → advertir",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "n_evaluados_min": 10,
+    "n_evaluados_referencial": 20,
+    "cobertura_evaluacion_min": 0.8,
+    "ultimo_anio": 2019
+   },
+   "mensaje_usuario": "'En esta escuela se evaluó a pocos estudiantes ({n}); un par de alumnos cambian mucho el porcentaje. Mostramos el resultado de {ugel/distrito}. Esta evaluación censal se aplicó hasta 2019.'",
+   "justificacion": "La ECE es censal: no tiene error de muestreo, pero en escuelas unidocentes o multigrado con pocos evaluados un solo estudiante mueve el porcentaje más de 5–10 puntos. El umbral 10/20 es una propuesta del proyecto (no es un umbral oficial confirmado de la UMC) coherente con prácticas de protección de celdas pequeñas; queda como pregunta abierta.",
+   "referencias": [],
+   "hallazgos_auditoria": [
+    "INF-20"
+   ],
+   "ejemplo": "IE unidocente en Huancavelica con 4 evaluados en 2.º de primaria (ECE 2016): no se muestra el % satisfactorio de la IE; se muestra el de la UGEL.",
+   "implementacion": "n_evaluados por IE-grado-área de la base ECE; agregación a UGEL/distrito sumando estudiantes (no promediando porcentajes de IE).",
+   "casos_borde": "ECE 2017–2019 con cambios de grado evaluado: la serie se corta por grado. Escuelas con cobertura de evaluación < 80 %: advertir sesgo. Años sin ECE (2020–2021): no imputar.",
+   "prioridad": "posterior"
+  },
+  {
+   "id": "R-ENC-17",
+   "ambito": "encuestas",
+   "titulo": "Totales expandidos ('cuántas personas') desde encuestas",
+   "enunciado": "Un total expandido de encuesta (número de personas u hogares) solo se publica si pasa las reglas de precisión, redondeado a miles, con IC y rotulado como 'estimado por encuesta'; no debe sumarse, restarse ni dividirse con conteos de registros administrativos o del censo como si fueran la misma población.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "tipo_estimacion == 'total' AND estado_precision IN ('publicable','referencial')",
+   "accion": "rotular",
+   "parametros": {
+    "redondeo": 1000,
+    "total_minimo_publicable": 1000
+   },
+   "mensaje_usuario": "'Aproximadamente {total} personas (entre {ic_inf} y {ic_sup}), estimado a partir de la encuesta; no es un conteo.'",
+   "justificacion": "Los factores de expansión están calibrados a las proyecciones de población vigentes (base Censo 2017) y cambiarán con el Censo 2025; un total expandido hereda ese denominador y su error muestral, y suele tener CV mayor que la proporción. Mezclarlo con conteos administrativos produce brechas falsas.",
+   "referencias": [
+    {
+     "titulo": "INEI – ENAHO 2024, Ficha técnica (diseño probabilístico, estratificado, bietápico; niveles de inferencia; factor de expansión)",
+     "url": "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-63/01_Ficha_Tecnica.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-18",
+    "INF-03"
+   ],
+   "ejemplo": "'¿Cuántos niños con anemia hay en Cusco?' → total ENDES expandido con IC, redondeado; el cruce con atendidos en SIS o REUNIS se deriva al ámbito cruces/denominadores.",
+   "implementacion": "svytotal sobre el diseño; aplicar R-ENC-02/03 con el CV del total; redondear estimación e IC.",
+   "casos_borde": "Totales menores a 1 000: suprimir aunque el CV pase (precisión aparente). Totales de un periodo agrupado (R-ENC-10): son promedio anual del periodo, rotular así.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-ENC-18",
+   "ambito": "encuestas",
+   "titulo": "Factores de expansión, versión de la base y validación contra cifras oficiales",
+   "enunciado": "Cada cifra de encuesta debe registrar la versión de la base (fecha de descarga, nombre del factor usado, huella del archivo) y, antes de publicar un indicador por primera vez, el motor debe reproducir la cifra oficial del INEI/UMC para nacional y al menos 3 departamentos; si el INEI publica bases re-ponderadas o actualizadas, se recalcula toda la serie afectada.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "indicador.validado_contra_oficial == false OR |estimacion_motor − cifra_oficial| > tolerancia OR version_base != version_vigente_inei",
+   "accion": "revision_humana",
+   "parametros": {
+    "tolerancia_pp": 0.1,
+    "tolerancia_pp_anemia_enla": 0.5,
+    "departamentos_validacion_min": 3,
+    "recalculo_si_reponderacion": "serie completa"
+   },
+   "mensaje_usuario": null,
+   "justificacion": "La ficha técnica de la ENAHO define el factor final como factor básico por el ajuste de no entrevista; cada módulo y año tiene su factor y el INEI publica bases actualizadas cuando cambia proyecciones (lo hará tras el Censo 2025). Sin versión no se puede reproducir ni explicar una diferencia con la cifra oficial; la reproducción de cifras publicadas es la prueba de humo natural del cálculo con diseño.",
+   "referencias": [
+    {
+     "titulo": "INEI – ENAHO 2024, Ficha técnica (diseño probabilístico, estratificado, bietápico; niveles de inferencia; factor de expansión)",
+     "url": "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-63/01_Ficha_Tecnica.pdf"
+    },
+    {
+     "titulo": "INEI – ENDES 2021, Apéndice A: diseño y cobertura de la muestra (bietápica, conglomerados; factores HV005 y V005)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1838/pdf/ApendiceA.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-18",
+    "EXA-B-22"
+   ],
+   "ejemplo": "Pobreza monetaria ENAHO 2024: si la cifra nacional del motor difiere en más de 0,1 pp de la del Informe Técnico oficial del INEI, el indicador queda en revisión (factor equivocado, módulo mal unido o base desactualizada).",
+   "implementacion": "Campos resultado.version_base {url, fecha_descarga, sha256, factor_usado, version_inei}; tabla validaciones(indicador, anio, nivel, cifra_oficial, url_oficial, estimacion_motor, diferencia). Job que compara mensualmente fechas/tamaños de las bases en el portal del INEI.",
+   "casos_borde": "Indicadores sin cifra oficial publicada (construcciones propias): revisión humana del código por un segundo analista y rótulo 'cálculo propio de Pregunta al Perú con datos de {fuente}'. Si el INEI publica corrección de una base ya usada, se marcan como desactualizadas las respuestas en caché.",
+   "prioridad": "mvp"
+  }
+ ],
+ "campos_nuevos": [
+  {
+   "campo": "dominios_inferencia",
+   "tipo": "dict[periodicidad -> list[str]] (vocabulario: nacional, urbano, rural, region_natural, departamento, lima_metropolitana, lima_provincias, callao, lima_metropolitana_y_callao, ciudades_principales, region_umc)",
+   "donde": "catalogo",
+   "para_que": "R-ENC-06/07: saber a qué dominios se puede publicar por año y periodicidad (anual vs trimestral) y por módulo"
+  },
+  {
+   "campo": "tabla dominio_ubigeo (fuente, anio, dominio, ubigeos, poblacion_objetivo)",
+   "tipo": "tabla",
+   "donde": "catalogo",
+   "para_que": "R-ENC-07: mapear dominios de encuesta a ubigeos sin usar los 2 primeros dígitos"
+  },
+  {
+   "campo": "inferencia_verificada / cita_ficha_inferencia",
+   "tipo": "bool / str (URL + página)",
+   "donde": "catalogo",
+   "para_que": "R-ENC-08: bloquear subnacional si el nivel de inferencia es un supuesto"
+  },
+  {
+   "campo": "variables_diseno",
+   "tipo": "dict por módulo y año {estrato, conglomerado, factor, divisor_factor, peso_replicado?}",
+   "donde": "catalogo",
+   "para_que": "R-ENC-01: calcular varianza con diseño complejo"
+  },
+  {
+   "campo": "poblacion_objetivo_dominio",
+   "tipo": "enum {total, urbano, rural, ciudades, usuarios_servicio, estudiantes_grado}",
+   "donde": "indicador",
+   "para_que": "R-ENC-07/08: impedir extender cifras urbanas o de usuarios a toda la población"
+  },
+  {
+   "campo": "criterio_medicion",
+   "tipo": "str (p. ej., RM363-2022/OMS2001, RM251-2024/OMS2024)",
+   "donde": "indicador",
+   "para_que": "R-ENC-14: no mezclar criterios en series"
+  },
+  {
+   "campo": "quiebres (estructura de anios_con_quiebre)",
+   "tipo": "list[{anio, tipo, indicadores_afectados, comparable_si}]",
+   "donde": "catalogo",
+   "para_que": "R-ENC-10/11/13: cortar series automáticamente"
+  },
+  {
+   "campo": "comparable_en_quiebre",
+   "tipo": "list[int]",
+   "donde": "indicador",
+   "para_que": "R-ENC-13: excepciones declaradas por el INEI (pobreza monetaria 2020)"
+  },
+  {
+   "campo": "tipo_estimacion",
+   "tipo": "enum {proporcion, media, total, razon, mediana}",
+   "donde": "indicador",
+   "para_que": "R-ENC-03/04/17: elegir regla de precisión"
+  },
+  {
+   "campo": "n_sin_ponderar, n_efectivo, ee, cv, ic_inf, ic_sup, metodo_ic, gl, deff",
+   "tipo": "num",
+   "donde": "resultado",
+   "para_que": "R-ENC-01..05"
+  },
+  {
+   "campo": "estado_precision",
+   "tipo": "enum {publicable, referencial, suprimido}",
+   "donde": "resultado",
+   "para_que": "Contrato validador→LLM"
+  },
+  {
+   "campo": "periodo_agrupado",
+   "tipo": "list[int] o null",
+   "donde": "resultado",
+   "para_que": "R-ENC-10: rotular promedios multianuales"
+  },
+  {
+   "campo": "p_valor_diferencia / diferencia_significativa",
+   "tipo": "num / bool",
+   "donde": "resultado",
+   "para_que": "R-ENC-11/12"
+  },
+  {
+   "campo": "version_base",
+   "tipo": "dict {url, fecha_descarga, sha256, factor_usado, version_inei}",
+   "donde": "resultado",
+   "para_que": "R-ENC-18: reproducibilidad y recálculo tras re-ponderación"
+  },
+  {
+   "campo": "validado_contra_oficial",
+   "tipo": "bool + tabla validaciones",
+   "donde": "indicador",
+   "para_que": "R-ENC-18: prueba de humo del cálculo"
+  },
+  {
+   "campo": "valores_plausibles",
+   "tipo": "list[str] (nombres de columnas) o null",
+   "donde": "indicador",
+   "para_que": "R-ENC-15: combinar con reglas de Rubin en ENLA"
+  }
+ ],
+ "dependencias": [
+  "ámbito territorio: tabla de ubigeos históricos y jerarquía distrito→provincia→departamento usada por R-ENC-06/07",
+  "ámbito estimaciones: alternativa modelada (Mapa de Pobreza, Mapa DCI provincial) cuando R-ENC-06 sube de nivel una pregunta provincial/distrital",
+  "ámbito registros: SIEN/REUNIS rotulados como 'tamizados en EESS' (complementa R-ENC-14)",
+  "ámbito denominadores: R-ENC-17 (totales expandidos frente a proyecciones INEI/Censo 2025)",
+  "ámbito cruces: bloqueo de cruces encuesta (departamento/dominio) × registro (distrito) y de poblaciones urbanas con denominadores totales",
+  "ámbito lenguaje: rótulos 'referencial', 'sin diferencia significativa', prohibición de rankings ordinales y de inferir tendencias en el texto"
+ ],
+ "preguntas_abiertas": [
+  "Umbral de supresión por CV: ¿suprimir con CV > 30 % (propuesta) o publicar todo lo que pase CV ≤ 30 % y n ≥ 25 como referencial sin techo, como hace el INEI en sus cuadros?",
+  "Anemia: ¿se invierte en recalcular la serie ENDES desde microdatos con el criterio RM 251-2024 (hemoglobina + altitud) para tener tendencia comparable, o en el MVP se muestra solo 2024+ con el nuevo criterio y la serie anterior con el viejo, sin tendencia cruzada?",
+  "Agrupación de años: ¿máximo 3 años (propuesta) o hasta 5 para subgrupos muy pequeños (lengua originaria, departamentos amazónicos), aceptando una referencia temporal más difusa?",
+  "Nivel de significancia para afirmar cambios: p < 0,05 (propuesta) frente a la práctica INEI que marca también p < 0,10 como 'significativa'.",
+  "Rankings: ¿replicar el algoritmo de grupos del INEI para cualquier indicador o limitarse a usar los grupos oficiales cuando existan y, si no, no ordenar?",
+  "ECE por IE: confirmar con la UMC si existe un mínimo oficial de evaluados por IE; mientras tanto, ¿se acepta 10/20 como umbral del proyecto?",
+  "Año 2020: ¿se excluye por defecto de tendencias (propuesta) salvo pobreza monetaria, o se muestra en todas las series con marca?"
+ ]
+}

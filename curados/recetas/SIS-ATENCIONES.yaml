@@ -1,0 +1,42 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: SIS-ATENCIONES
+strategy: http_pattern
+publisher: SIS
+dataset_title: Datos de atenciones realizadas a los asegurados del SIS
+access_url: https://www.datosabiertos.gob.pe/group/seguro-integral-de-salud-sis
+url_patron: https://www.datosabiertos.gob.pe/sites/default/files/OPENDATA_DS_01_{anio}_{semestre}_ATENCIONES.zip
+temporal:
+  inicio: 2017
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- 'Solo prestaciones SIS (excluye EsSalud/privados); producción ≠ necesidad. El diccionario no aclara si el ubigeo
+  es INEI o RENIEC: validarlo empíricamente en la carga.'
+espera:
+  formato:
+  - csv
+  - xls
+  - pdf
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- Definir cómo se eligen los valores del patrón (ver notas).
+notas: 'ZIP anuales 2017–2020 y semestrales 2021–2025; diccionario PDF y muestra XLS. Plataforma Nacional de Datos
+  Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga en /sites/default/files/... o enlaces
+  externos; se puede listar vía /api/3/action/package_show?id=<slug> (API CKAN-compatible de DKAN; confirmar). Desde
+  este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright.'

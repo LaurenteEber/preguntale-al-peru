@@ -1,0 +1,23 @@
+# Mensajes para el usuario cuando una consulta mínima no es válida (S1-01). Sin jerga ni nombres de campos.
+# La clave es el código «x-error» del esquema (curados/motor/esquemas/consulta_minima.schema.json) o de las
+# comprobaciones de pap/motor/consulta.py. Texto fijo: lo revisa el dueño.
+version: 1.0.0
+mensajes:
+  consulta_invalida: "No entendimos la pregunta. ¿Puedes escribirla de otra forma?"
+  no_es_objeto: "No entendimos la pregunta. ¿Puedes escribirla de otra forma?"
+  campo_desconocido: "La pregunta trae datos que no sabemos usar. Prueba con una pregunta más simple: qué quieres saber, de qué problema y de qué lugar."
+  falta_intencion: "No sabemos qué quieres saber: ¿cuánto hay hoy, cómo cambió, cómo se compara con otro lugar o dónde es más alto?"
+  intencion_invalida: "No sabemos responder ese tipo de pregunta. Podemos decirte cuánto hay hoy, cómo cambió, cómo se compara con otro lugar, dónde es más alto o qué se gastó."
+  tema_o_indicador: "No sabemos de qué problema trata la pregunta. Por ahora tenemos anemia, desnutrición crónica, pobreza y gasto público en salud y nutrición infantil."
+  tema_e_indicador: "La pregunta mezcla un problema general y una cifra concreta. Elige solo uno: por ejemplo, «anemia»."
+  tema_invalido: "Todavía no tenemos datos de ese problema. Por ahora tenemos anemia, desnutrición crónica, pobreza y gasto público en salud y nutrición infantil."
+  indicador_invalido: "No tenemos esa cifra. Por ahora tenemos anemia, desnutrición crónica, pobreza y gasto público en salud y nutrición infantil."
+  falta_territorio: "Falta el lugar: ¿de qué departamento, provincia o distrito?"
+  territorio_invalido: "No entendimos el lugar. Escribe el nombre de un departamento, provincia o distrito, o «Perú» para todo el país."
+  territorio_extremo_invalido: "Para buscar dónde es más alto o más bajo, dinos si comparamos departamentos, provincias o distritos."
+  periodo_invalido: "No entendimos el año. Puedes pedir el último dato, un año (por ejemplo, 2024) o de qué año a qué año."
+  periodo_imposible: "El año de inicio es posterior al año final. Revisa de qué año a qué año quieres ver."
+  comparar_con_invalido: "No entendimos el otro lugar con el que quieres comparar. Escribe el nombre de un departamento, provincia o distrito."
+  comparar_con_sin_comparacion: "Mencionaste otro lugar, pero la pregunta no pide comparar. Si quieres comparar dos lugares, pregúntalo así: «compara A con B»."
+  pregunta_invalida: "La pregunta es demasiado larga. Prueba con una más corta."
+  idioma_invalido: "Por ahora solo respondemos en español."

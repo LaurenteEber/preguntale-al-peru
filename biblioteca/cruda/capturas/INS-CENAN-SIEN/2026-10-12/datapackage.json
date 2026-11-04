@@ -1,0 +1,65 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "ins-cenan-sien-2026-10-12",
+  "title": "Sistema de Información del Estado Nutricional de niños y gestantes",
+  "created": "2026-10-12T18:18:32-05:00",
+  "keywords": [
+    "INS-CENAN-SIEN"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "informe-gerencial-ninos-2025",
+      "title": "Sistema de Información del Estado Nutricional de niños y gestantes",
+      "original_filename": "8074913-informe-gerencial-sien-his-ninos-2025.pdf",
+      "path": "almacen/sha256/ea/74/ea743cdbc496bfcfcc5c9168915d0808f4a7f00a25b50b7e1aaf9f0c939998a8",
+      "hash": "sha256:ea743cdbc496bfcfcc5c9168915d0808f4a7f00a25b50b7e1aaf9f0c939998a8",
+      "bytes": 1686138,
+      "format": "pdf",
+      "mediatype": "application/pdf",
+      "source_id": "INS-CENAN-SIEN",
+      "publisher": "INS/CENAN",
+      "dataset_title": "Sistema de Información del Estado Nutricional de niños y gestantes",
+      "access_url": "https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional",
+      "download_url": "https://cdn.www.gob.pe/uploads/document/file/9891556/8074913-informe-gerencial-sien-his-ninos-2025.pdf",
+      "source_version": "Informe Gerencial SIEN-HIS Niños 2025",
+      "source_version_basis": "declarada",
+      "temporal": "2012–2026",
+      "data_cutoff_basis": "desconocida",
+      "issued": "2026-04-29",
+      "retrieved_at": "2026-10-12T18:18:32-05:00",
+      "method": "manual_navegador",
+      "recipe": "INS-CENAN-SIEN@7938b46-modificada",
+      "attributed_to": "Claude en Chrome (navegador de Eber)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "ODC-By-1.0",
+          "title": "ODC-BY (Open Data Commons Attribution)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "nacional (EESS MINSA/GORE)",
+        "nivel_minimo": "establecimiento"
+      },
+      "known_issues": [
+        "Solo niños que acuden a EESS del MINSA y de los gobiernos regionales: no es prevalencia poblacional como la ENDES. Rotular \"proporción de niños tamizados con anemia en establecimientos ubicados en …\". La ficha de la PNDA declara como unidad de análisis \"Niños menores de 5 años\" y como fuente \"Historias Clínicas\".",
+        "Unidad de fila (supuesto: ni el diccionario ni los Metadatos la definen; los Metadatos solo dicen «Cada base es trabajada en forma independiente»; pendiente de confirmar con el INS): un niño, con su atención más reciente del año. El dato abierto no trae DNI ni historia clínica. Evidencia 2025, con una clave aproximada (Renipress, sexo, fecha de nacimiento, PN, centro poblado) y una línea base empírica: * con fecha de atención distinta, hay 54 332 pares del mismo sexo frente a 52 544 de sexo opuesto (exceso ≈ 0,15 % de las filas: la repetición del mismo niño es marginal); * hay 1 008 filas sobrantes, duplicadas exactas en las 37 columnas; * el cuarto trimestre concentra el 35 % de las filas de 36-59 m, frente al 25 % esperado. El INS declara la regla \"la atención más reciente de cada niño\" para el SIEN-HIS de 5 a 11 años 2024. Consecuencia: Dx_anemia es el diagnóstico del último control del año.",
+        "Tres ubigeos. Diccionario oficial «2.Diccionarios HIS - 2025.xlsx» (hoja Niños0a5), contrastado con el dato: * Ubigeo_EESS: «Código UBIGEO del establecimiento de salud». Coincide con RENIPRESS. * UbigeoPN: «Código UBIGEO según procedencia del niño». Los Metadatos lo llaman «Ubicación de Procedencia». El diccionario NO dice «Padrón Nominal» ni define «procedencia» (¿residencia habitual?, ¿lugar declarado en la atención?). - Viene vacío en el 11,8 % de las filas Hb y en el 15,4 % de las de 6-35 m (nacional: 84,6 % ubicado; Loreto: 59,9 %). - En esas filas SIS y Juntos también vienen en blanco. [juicio] Sugiere que se trata de un niño sin cruce con una fuente externa (probablemente el Padrón Nominal), pero no está confirmado. - No falta al azar: esos niños tienen 20,8 frente a 29,7 meses de edad y 14,6 % frente a 12,4 % de anemia. - Se usa como \"lugar de procedencia del niño\" y no se rotula como residencia oficial. * UbigeoREN: «Código UBIGEO según código RENIPRESS». AlturaREN: «Altitud según código RENIPRESS». Metadatos: «Altitud (según el EESS Renipress)». - Confirmado: la altitud del ajuste es la del establecimiento, no la del lugar de procedencia. - En el dato hay uno por establecimiento, coincide con Ubigeo_EESS en el 99,4 % de las filas, y AlturaREN es la altitud de la capital del distrito REN (= altitud_capital en el 99,9 %), no la del establecimiento. - Discrepancia con el diccionario: en 7 301 filas (46 EESS) el REN no es el ubigeo de RENIPRESS (dim_establecimiento_salud): - 5 338 filas (26 EESS) en distritos creados después de 2017, donde REN es el distrito madre: 130112→130102, 080918→080910, 0809(13/16/17)→080907, 250306/250307→250301, 0505(12-15)→050501/050502/050509, 030612→030604…; - 1 963 filas (20 EESS) en distritos preexistentes con el REN de otro distrito. En 116 filas es de otra provincia: 160305→160113, 090117→090206. Otros casos: 200101→200115, 150140→150108, 120604→120606. [juicio] El INS usaría una tabla RENIPRESS–ubigeo–altitud con la geografía de 2017, desactualizada.",
+        "Discrepancias de formato entre el diccionario y el CSV 2025: * FechaAtencion y FechaNacimiento: el diccionario dice dd/mm/aaaa, pero el CSV trae m/d/aaaa (p. ej., 7/26/2025). * FechaHemoglobina viene como dd/mm/aaaa h:mm:ss; está vacía en 713 500 filas y difiere de FechaAtencion en 20 900. * El diccionario lista Peso y Talla en la base Hb, pero el CSV Hb no los trae. * El diccionario usa los nombres RENIPRESS y Dx_Anemia; el CSV, Renipress y Dx_anemia. * EdadMeses aparece como «meses completos», pero viene con decimales. * Ubigeo: el diccionario indica tamaño 8, pero en el CSV viene sin el cero inicial (5 o 6 dígitos). Leer por nombre exacto del CSV y parsear las fechas con formato explícito.",
+        "Ajuste por altitud: Hbc = Hemoglobina − ((0,0056384·A + 0,0000003·A²)/10) si A ≥ 500 m, con A = AlturaREN (= altitud_capital de dim_ubigeo_historico en el 99,9 %). Se reproduce en el 100 % de las filas. Dx_anemia coincide en el 100 % con los cortes OMS 2024, incluida la severidad (6-23 m: <10,5 / 9,5 / 7,0; 24-59 m: <11,0 / 10,0 / 7,0). La NTS 213-MINSA/DGIESP-2024 manda usar la altitud de la residencia habitual (últimos 4 meses; fuente secundaria); el SIEN usa la del establecimiento (confirmado por el diccionario). Ajustando con la capital del distrito de procedencia (también una aproximación), la anemia pasaría de 12,4 % a 13,2 % (cambian 18 944 diagnósticos). El diccionario confirma el umbral: Hbc es el «Valor de hemoglobina ajustado por altitud (superior a 500 m.)». 221006 trae AlturaREN = 0 (capital a 507 m): 163 filas sin ajuste.",
+        "Defecto de la fuente: el ZIP 2025 publicado en la PNDA trae 29 archivos Hb y solo 18 Pt. Faltan, de LIMA REGION en adelante: Lima Región, Loreto, Madre de Dios, Moquegua, Pasco, Piura, Puno, San Martín, Tacna, Tumbes y Ucayali. Recapturar no lo corrige: hay que consultar al INS. No usar Pt 2025 para esos departamentos.",
+        "INS/CENAN. Tabla 8.18 p. 36: anemia OMS 2024 en menores de 3 años por DIRESA/GERESA/DIRIS; metodología p. 13 (atención más reciente de cada niño)"
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

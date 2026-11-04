@@ -1,0 +1,122 @@
+# Dominios y ámbitos publicados de las encuestas → dim_dominio (R-TERRITORIO-06, R-ENC-07, R-ENC-08).
+# Versión 2 (9/10/2026, «Lima en tres ámbitos», decisiones L1–L3 y auditoría de encuestas A1, A3, A4, A5, A7, A9).
+#
+# Campos de cada regla:
+#   tipo: dominio_diseno  = la ficha técnica lo declara como dominio (nivel) de inferencia;
+#         ambito_publicado = unión de estratos completos que el INEI publica (informe técnico, Cuadro N.º 1 de la
+#                            ficha ENDES) pero que la ficha no declara como dominio → aviso ambito_no_dominio (R-ENC-08).
+#   metodo: cómo se asigna cada unidad de los microdatos al dominio:
+#         ubigeo | estrato_hv022 (ENDES 2015–2017, id_estrato = departamento × HV022) | variable_dominio (ENAHO DOMINIO)
+#         | variable_area (urbano/rural) | variable_departamento (ENDES HV024) | todos (nacional) | null (no identificable).
+#   identificable_microdatos: true si con las variables de los microdatos de ese año se asigna cada unidad.
+#   codigo_en_microdatos: variable y valor (verificado: true solo si se probó con la base).
+#   composicion: prefijos INEI como en ambitos.yaml; null = no reconstruible con ubigeo.
+#   ambito_id: ámbito de ambitos.yaml con la misma composición (da el rótulo; L3, L4).
+#   fuente: clave o lista de claves de `fuentes`.
+#   Avisos (columna dim_dominio.avisos, derivada, claves exactas de R-ENC-08.parametros.avisos y sin años en la clave:
+#   cada fila de dim_dominio ya es un año): tipo ambito_publicado → ambito_no_dominio; metodo estrato_hv022 → ambito_por_estrato.
+#   Páginas: «p. N» es la página impresa; si la del PDF difiere se escribe aparte («p. 72 (PDF 74)»).
+# Los dominios "departamentos" se expanden a los departamentos menos `excluye` (el Callao tiene su fila propia, para
+# que no haya dos dominios con la misma composición en una encuesta-año).
+fuentes:
+  ENAHO_FICHA: {titulo: "Ficha Técnica ENAHO <año>, sección Niveles de inferencia", url: "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo}-Ficha.pdf", codigos: {2015: 498, 2016: 546, 2017: 603, 2018: 634, 2019: 687, 2020: 737, 2021: 759, 2022: 784, 2023: 906, 2024: 966, 2025: 1031}, pagina: "§VII (2024, pp. 5–6) / §IX (2025, p. 10) «Niveles de inferencia», muestra integrada, anual"}
+  ENAHO_POBREZA_2019: {titulo: "INEI, Evolución de la Pobreza Monetaria 2008-2019 (Informe Técnico), cuadros 1.1-1.7", url: "https://www.inei.gob.pe/media/cifras_de_pobreza/informe_pobreza2019.pdf", pagina: "pp. 15-27"}
+  ENAHO_POBREZA_2020: {titulo: "INEI, Presentación Resultados de la Pobreza Monetaria 2020 (nota Ley 31140)", url: "https://www.inei.gob.pe/media/MenuRecursivo/boletines/presentacion-resultados-pobreza-monetaria-2020.pdf", pagina: "láminas 6-8"}
+  ENAHO_POBREZA_2015_2024_AMBITOS: {titulo: "INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico), ranking por departamentos con «Lima Metropolitana 1/», «Lima 2/» y «Prov. Const. del Callao»", url: "https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024", pagina: "Gráfico N.º 4.7, p. 72 (PDF 74); Cuadro N.º III.1 (cont., serie 2015–2024, con IC y CV), p. 220 (PDF 222); notas 1/ «Incluye los 43 distritos de la provincia de Lima» y 2/ «Incluye las Provincias: Barranca, Cajatambo, Canta, Cañete, Huaral, Huarochirí, Huaura, Oyón, Yauyos»"}
+  ENAHO_POBREZA_2016_2025_AMBITOS: {titulo: "INEI, Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico), ranking por departamentos con «Lima Metropolitana 1/», «Lima 2/» y «Prov. Const. del Callao»", url: "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025", pagina: "Gráfico N.º 4.7, p. 73; Cuadro N.º III.1 (cont., serie 2016–2025, con IC y CV), p. 232 (página impresa = PDF); notas 1/ «Incluye los 43 distritos de la provincia de Lima» y 2/ «Incluye las Provincias: Barranca, Cajatambo, Canta, Cañete, Huaral, Huarochirí, Huaura, Oyón, Yauyos»"}
+  ENAHO_POBREZA_2015_2024_D8: {titulo: "INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico), dominio «Lima Metropolitana 1/ y Prov. Const. del Callao»", url: "https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024", pagina: "Cuadro N.º 4.1, p. 68 (PDF 70)"}
+  ENAHO_POBREZA_2016_2025_D8: {titulo: "INEI, Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico), dominio «Lima Metropolitana 1/ y Prov. Const. del Callao»", url: "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025", pagina: "Gráfico N.º 4.5, p. 71; Cuadro N.º 4.1, p. 72 (2025: 27,3 %); Cuadro N.º 9.1, p. 406 (página impresa = PDF) (muestra «Lima Metropolitana 1/ y Prov. Const. del Callao»)"}
+  ENDES_FICHA: {titulo: "Ficha Técnica ENDES <año>, §3.7 «Niveles de Inferencia», dominio anual", url: "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo}-Ficha.pdf", codigos: {2015: 504, 2016: 548, 2017: 605, 2018: 638, 2019: 691, 2020: 739, 2021: 760, 2022: 786, 2023: 910, 2024: 968, 2025: 1038}, pagina: "§3.7"}
+  ENDES_CUADRO1: {titulo: "Ficha Técnica ENDES <año>, §3.6 «Distribución de la muestra», Cuadro N.º 1 (tamaño de la muestra anual de conglomerados y viviendas por ámbito —Sede, Resto urbano, Rural— según departamento), notas 1/ y 2/ y nota de Sede; no es la sección de niveles de inferencia (§3.7)", url: "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo}-Ficha.pdf", codigos: {2015: 504, 2016: 548, 2017: 605, 2018: 638, 2019: 691, 2020: 739, 2021: 760, 2022: 786, 2023: 910, 2024: 968, 2025: 1038}, pagina: "§3.6, Cuadro N.º 1"}
+reglas:
+  # ======================================================================= ENAHO
+  - {encuesta: ENAHO, anios: [2015, 2025], dominio_id: nacional, nombre_publicado: Nacional, nivel: nacional, composicion: [""], tipo: dominio_diseno, metodo: todos, identificable_microdatos: true, fuente: ENAHO_FICHA, confirmado: true}
+  - {encuesta: ENAHO, anios: [2015, 2025], dominio_id: urbano, nombre_publicado: Urbano, nivel: area, composicion: null, tipo: dominio_diseno, metodo: variable_area, identificable_microdatos: true, fuente: ENAHO_FICHA, confirmado: true, nota: "Estratos 1–5 urbano, 6–8 rural (ESTRATO)"}
+  - {encuesta: ENAHO, anios: [2015, 2025], dominio_id: rural, nombre_publicado: Rural, nivel: area, composicion: null, tipo: dominio_diseno, metodo: variable_area, identificable_microdatos: true, fuente: ENAHO_FICHA, confirmado: true}
+  - {encuesta: ENAHO, anios: [2015, 2025], dominio_id: region_natural_area, nombre_publicado: "Costa/Sierra/Selva × urbano/rural", nivel: region_natural, composicion: null, tipo: dominio_diseno, metodo: variable_dominio, identificable_microdatos: true, fuente: ENAHO_FICHA, confirmado: true, nota: "Variable DOMINIO 1–7"}
+  - encuesta: ENAHO
+    anios: [2015, 2025]
+    dominio_id: departamento
+    nombre_publicado: "Departamento (24)"
+    nivel: departamento
+    composicion: departamentos
+    excluye: ["07"]
+    tipo: dominio_diseno
+    metodo: ubigeo
+    identificable_microdatos: true
+    fuente: ENAHO_FICHA
+    confirmado: true
+    por_departamento:
+      "15": {tipo: ambito_publicado, nota: "Departamento 15 sin el Callao (Lima Metropolitana + Lima Región): la «Lima» de la ficha incluye al Callao (944 conglomerados en 2024 = 536 LM + 240 LR + 168 Callao); unión de estratos completos, con el aviso ambito_no_dominio (auditoría Lima, A7)"}
+  # Dominio 8: una sola vez (A4). El INEI lo llama «Área Metropolitana de Lima y Callao» (ficha) y «Lima Metropolitana 1/
+  # y Prov. Const. del Callao» (informe técnico); nuestro rótulo es siempre «Lima Metropolitana y Callao» (L3).
+  - encuesta: ENAHO
+    anios: [2015, 2023]
+    dominio_id: area_metropolitana_lima_callao
+    nombre_publicado: Lima Metropolitana y Callao
+    alias: [lima_metropolitana_callao, "Área Metropolitana de Lima y Callao (ficha ENAHO)", "Lima Metropolitana 1/ y Prov. Const. del Callao (informe técnico de pobreza)"]
+    ambito_id: AREA_METROPOLITANA_LIMA_CALLAO
+    nivel: provincia
+    composicion: ["1501", "0701"]
+    incluye_callao: true
+    tipo: dominio_diseno
+    metodo: variable_dominio
+    identificable_microdatos: true
+    codigo_en_microdatos: {variable: dominio, valor: 8, verificado: false}
+    fuente: [ENAHO_FICHA, ENAHO_POBREZA_2016_2025_D8]
+    confirmado: true
+    nota: "DOMINIO = 8 verificado solo en 2024–2025 (no tenemos la sumaria de otros años)"
+  - encuesta: ENAHO
+    anios: [2024, 2025]
+    dominio_id: area_metropolitana_lima_callao
+    nombre_publicado: Lima Metropolitana y Callao
+    alias: [lima_metropolitana_callao, "Área Metropolitana de Lima y Callao (ficha ENAHO)", "Lima Metropolitana 1/ y Prov. Const. del Callao (informe técnico de pobreza)"]
+    ambito_id: AREA_METROPOLITANA_LIMA_CALLAO
+    nivel: provincia
+    composicion: ["1501", "0701"]
+    incluye_callao: true
+    tipo: dominio_diseno
+    metodo: variable_dominio
+    identificable_microdatos: true
+    codigo_en_microdatos: {variable: dominio, valor: 8, verificado: true, prueba: "sumaria 2024 y 2025: DOMINIO = 8 ⇔ ubigeo 1501 o 07 (0 hogares fuera, 0 faltantes; prueba H-AAAA-04 de S4)"}
+    fuente: [ENAHO_FICHA, ENAHO_POBREZA_2015_2024_D8, ENAHO_POBREZA_2016_2025_D8]
+    confirmado: true
+  # Ámbitos publicados (L1): el ranking por departamentos del INEI separa LM (1501), «Lima 2/» (LR) y el Callao. No son
+  # dominios de la ficha; se identifican por ubigeo y son uniones de estratos completos (LM = 15-1; LR = 15-2…8; Callao = 07-1).
+  - {encuesta: ENAHO, anios: [2015, 2023], dominio_id: lima_metropolitana, nombre_publicado: "Lima Metropolitana 1/ (43 distritos de la provincia de Lima)", ambito_id: LIMA_METROPOLITANA, nivel: provincia, composicion: ["1501"], incluye_callao: false, tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: ubigeo, valor: "1501*", verificado: false}, fuente: [ENAHO_POBREZA_2015_2024_AMBITOS, ENAHO_POBREZA_2016_2025_AMBITOS], confirmado: true, nota: "Nunca DOMINIO = 8: el dominio 8 incluye al Callao (H1)"}
+  - {encuesta: ENAHO, anios: [2024, 2025], dominio_id: lima_metropolitana, nombre_publicado: "Lima Metropolitana 1/ (43 distritos, Ley 31140)", ambito_id: LIMA_METROPOLITANA, nivel: provincia, composicion: ["1501"], incluye_callao: false, tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: ubigeo, valor: "1501*", equivalente: "departamento 15 ∧ estrato 1", verificado: true}, fuente: [ENAHO_POBREZA_2015_2024_AMBITOS, ENAHO_POBREZA_2016_2025_AMBITOS], confirmado: true, nota: "Nunca DOMINIO = 8: el dominio 8 incluye al Callao (H1). Reproducido: 2024 27,58 (INEI 27,6); 2025 26,78 (INEI 26,8)"}
+  - {encuesta: ENAHO, anios: [2015, 2023], dominio_id: lima_provincias, nombre_publicado: "Lima 2/ (9 provincias)", ambito_id: LIMA_REGION, nivel: provincia, composicion: ["15", "-1501"], tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: ubigeo, valor: "15* sin 1501*", verificado: false}, fuente: [ENAHO_POBREZA_2015_2024_AMBITOS, ENAHO_POBREZA_2016_2025_AMBITOS], confirmado: true}
+  - {encuesta: ENAHO, anios: [2024, 2025], dominio_id: lima_provincias, nombre_publicado: "Lima 2/ (9 provincias)", ambito_id: LIMA_REGION, nivel: provincia, composicion: ["15", "-1501"], tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: ubigeo, valor: "15* sin 1501*", equivalente: "departamento 15 ∧ estrato 2–8", verificado: true}, fuente: [ENAHO_POBREZA_2015_2024_AMBITOS, ENAHO_POBREZA_2016_2025_AMBITOS], confirmado: true, nota: "Reproducido: 2024 21,72 (INEI 21,7); 2025 21,61 (INEI 21,6)"}
+  - {encuesta: ENAHO, anios: [2015, 2023], dominio_id: callao, nombre_publicado: Prov. Const. del Callao, ambito_id: CALLAO, nivel: provincia, composicion: ["0701"], tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: ubigeo, valor: "07*", verificado: false}, fuente: [ENAHO_POBREZA_2015_2024_AMBITOS, ENAHO_POBREZA_2016_2025_AMBITOS], confirmado: true, nota: "La ficha no lo declara dominio (va en el dominio 8); el INEI lo publica en el ranking"}
+  - {encuesta: ENAHO, anios: [2024, 2025], dominio_id: callao, nombre_publicado: Prov. Const. del Callao, ambito_id: CALLAO, nivel: provincia, composicion: ["0701"], tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: ubigeo, valor: "07*", equivalente: "departamento 07 ∧ estrato 1", verificado: true}, fuente: [ENAHO_POBREZA_2015_2024_AMBITOS, ENAHO_POBREZA_2016_2025_AMBITOS], confirmado: true, nota: "La ficha no lo declara dominio (va en el dominio 8); el INEI lo publica en el ranking. Reproducido: 2024 33,86 (INEI 33,9); 2025 32,15 (INEI 32,1)"}
+  # ======================================================================= ENDES
+  - {encuesta: ENDES, anios: [2015, 2025], dominio_id: nacional, nombre_publicado: Nacional, nivel: nacional, composicion: [""], tipo: dominio_diseno, metodo: todos, identificable_microdatos: true, fuente: ENDES_FICHA, confirmado: true}
+  - {encuesta: ENDES, anios: [2015, 2025], dominio_id: urbano, nombre_publicado: Nacional urbano, nivel: area, composicion: null, tipo: dominio_diseno, metodo: variable_area, identificable_microdatos: true, fuente: ENDES_FICHA, confirmado: true, nota: "HV025"}
+  - {encuesta: ENDES, anios: [2015, 2025], dominio_id: rural, nombre_publicado: Nacional rural, nivel: area, composicion: null, tipo: dominio_diseno, metodo: variable_area, identificable_microdatos: true, fuente: ENDES_FICHA, confirmado: true, nota: "HV025"}
+  - {encuesta: ENDES, anios: [2015, 2025], dominio_id: region_natural, nombre_publicado: "Costa/Sierra/Selva", nivel: region_natural, composicion: null, tipo: dominio_diseno, metodo: null, identificable_microdatos: false, fuente: ENDES_FICHA, confirmado: true, nota: "La asignación de región natural no está documentada; no se reconstruye con ubigeo (R-TERRITORIO-07)"}
+  - encuesta: ENDES
+    anios: [2015, 2025]
+    dominio_id: departamento
+    nombre_publicado: "Departamento (24)"
+    nivel: departamento
+    composicion: departamentos
+    excluye: ["07"]
+    tipo: dominio_diseno
+    metodo: variable_departamento
+    identificable_microdatos: true
+    fuente: ENDES_FICHA
+    confirmado: true
+  # Región natural «Lima Metropolitana» (provincia de Lima + Callao): dominio de la ficha hasta 2019.
+  - {encuesta: ENDES, anios: [2015, 2017], dominio_id: lima_metropolitana_callao, nombre_publicado: "Región natural: Lima Metropolitana (provincia de Lima + Callao)", ambito_id: AREA_METROPOLITANA_LIMA_CALLAO, nivel: provincia, composicion: ["1501", "0701"], incluye_callao: true, tipo: dominio_diseno, metodo: estrato_hv022, identificable_microdatos: true, codigo_en_microdatos: {variable: id_estrato, valor: ["15-1", "07-*"], verificado: true}, fuente: [ENDES_FICHA, ENDES_CUADRO1], confirmado: true}
+  - {encuesta: ENDES, anios: [2018, 2019], dominio_id: lima_metropolitana_callao, nombre_publicado: "Región natural: Lima Metropolitana (provincia de Lima + Callao)", ambito_id: AREA_METROPOLITANA_LIMA_CALLAO, nivel: provincia, composicion: ["1501", "0701"], incluye_callao: true, tipo: dominio_diseno, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: ubigeo, valor: ["1501*", "07*"], verificado: true}, fuente: ENDES_FICHA, confirmado: true}
+  - {encuesta: ENDES, anios: [2015, 2025], dominio_id: callao, nombre_publicado: Provincia Constitucional del Callao, ambito_id: CALLAO, nivel: provincia, composicion: ["0701"], tipo: dominio_diseno, metodo: variable_departamento, identificable_microdatos: true, codigo_en_microdatos: {variable: departamento, valor: "07", verificado: true}, fuente: ENDES_FICHA, confirmado: true, nota: "Dominio anual de la ficha (§3.7: «24 departamentos y la Provincia Constitucional del Callao»); en 2015–2017 es el estrato 07-1 completo"}
+  # LM y LR: ámbitos de asignación muestral (Cuadro N.º 1), no dominios de §3.7 (A5). 2015–2017 por estrato (L2, A3).
+  - {encuesta: ENDES, anios: [2015, 2017], dominio_id: lima_metropolitana, nombre_publicado: "Provincia de Lima 1/ (43 distritos)", ambito_id: LIMA_METROPOLITANA, nivel: provincia, composicion: ["1501"], incluye_callao: false, tipo: ambito_publicado, metodo: estrato_hv022, identificable_microdatos: true, codigo_en_microdatos: {variable: id_estrato, valor: "15-1", verificado: true, cita: "Ficha ENDES 2015/2016/2017, §3.6, Cuadro N.º 1 («Provincia de Lima 1/» 280 conglomerados, todos de Sede) y nota de Sede («capitales de departamento y la provincia de Lima»)"}, fuente: ENDES_CUADRO1, confirmado: true, nota: "Aviso de método: Lima Metropolitana identificada por el estrato de diseño (la base no trae ubigeo). Reproduce al INEI en 2017: anemia 33,34 (publicado 33,3). La ficha 2015 rotula «Lima Metropolitana»"}
+  - {encuesta: ENDES, anios: [2018, 2019], dominio_id: lima_metropolitana, nombre_publicado: "Provincia de Lima 1/ (43 distritos)", ambito_id: LIMA_METROPOLITANA, nivel: provincia, composicion: ["1501"], incluye_callao: false, tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: provincia_hogar, valor: "1501", verificado: true}, fuente: ENDES_CUADRO1, confirmado: true}
+  - {encuesta: ENDES, anios: [2020, 2025], dominio_id: lima_metropolitana, nombre_publicado: "Lima Metropolitana 1/ (43 distritos, Ley 31140)", ambito_id: LIMA_METROPOLITANA, nivel: provincia, composicion: ["1501"], incluye_callao: false, tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: provincia_hogar, valor: "1501", verificado: true}, fuente: ENDES_CUADRO1, confirmado: true, nota: "2025: Cuadro N.º 1 de la ficha 2025 («Lima Metropolitana 1/» 340/0/0) leído con WebFetch el 9/10/2026; confirmar la página con pdftotext sobre el ZIP 1038-Modulo1629 capturado"}
+  - {encuesta: ENDES, anios: [2015, 2017], dominio_id: lima_provincias, nombre_publicado: "Región Lima 2/ (9 provincias)", ambito_id: LIMA_REGION, nivel: provincia, composicion: ["15", "-1501"], tipo: ambito_publicado, metodo: estrato_hv022, identificable_microdatos: true, codigo_en_microdatos: {variable: id_estrato, valor: ["15-2", "15-3"], verificado: true, cita: "Ficha ENDES 2015/2016/2017, §3.6, Cuadro N.º 1 («Región Lima 2/» 0 de Sede, 91 Resto urbano, 26 Rural) y nota de Sede"}, fuente: ENDES_CUADRO1, confirmado: true, nota: "Aviso de método: Lima Región identificada por el estrato de diseño (la base no trae ubigeo). La ficha 2015 rotula «Lima Provincias»"}
+  - {encuesta: ENDES, anios: [2018, 2019], dominio_id: lima_provincias, nombre_publicado: "Región Lima 2/ (9 provincias)", ambito_id: LIMA_REGION, nivel: provincia, composicion: ["15", "-1501"], tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: provincia_hogar, valor: "15xx sin 1501", verificado: true}, fuente: ENDES_CUADRO1, confirmado: true}
+  - {encuesta: ENDES, anios: [2020, 2025], dominio_id: lima_provincias, nombre_publicado: "Departamento de Lima 2/ (9 provincias, Ley 31140)", ambito_id: LIMA_REGION, nivel: provincia, composicion: ["15", "-1501"], tipo: ambito_publicado, metodo: ubigeo, identificable_microdatos: true, codigo_en_microdatos: {variable: provincia_hogar, valor: "15xx sin 1501", verificado: true}, fuente: ENDES_CUADRO1, confirmado: true, nota: "En los cuadros PPR del INEI «Departamento de Lima 2/» = Lima Región, no el dpto 15 (H9). 2025: Cuadro N.º 1 de la ficha 2025 (0/91/26) leído con WebFetch el 9/10/2026"}
+# Todas las reglas llegan a 2025 con cita propia (ficha ENAHO 2025 = 1031; ficha ENDES 2025 = 1038; informe técnico
+# de pobreza 2016–2025): ya no se copian reglas sin confirmar (A9, H11).
+copiar_sin_confirmar: null

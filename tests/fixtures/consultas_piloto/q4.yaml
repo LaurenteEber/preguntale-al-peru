@@ -1,0 +1,11 @@
+# Pregunta 4 de la prueba de reglas (texto reconstruido desde su recorrido).
+id: Q4
+pregunta: ¿Cuál es el distrito más pobre del Perú? (reconstruida)
+intencion: identificar_extremo
+territorio: {nivel: distrito, id: null, nombre_pedido: distrito más pobre del Perú}
+periodo: {tipo: ultimo}
+plantilla: q4_pobreza_distrital
+cifras: []
+grupos:
+  - {tipo: mapa_grupo_robusto, grupo: 1, rol: principal}
+  - {tipo: ranking_departamental, indicador: enaho_pobreza_monetaria, anio: ultimo, prefijo: enaho, rol: contexto}

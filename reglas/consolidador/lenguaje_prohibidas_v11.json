@@ -1,0 +1,56 @@
+{
+ "descripcion": "Propuesta COM de patrones adicionales/corregidos para lenguaje.prohibidas. Se evalúan sobre texto y patrón sin tildes (modo C). Las categorías marcadas 'estructural' deben verificarse además con metadatos de marcadores (ver hallazgos COM).",
+ "prohibidas": [
+  {
+   "categoria": "causal",
+   "patron": "\\b(caus(o|a|an|aron|ado)|provoc(o|a|an|aron|ado)|origin(o|aron)|desencaden(o|a)|incidi(o|eron)|repercuti(o|eron)|permiti(o|eron) (reducir|bajar|mejorar|aumentar|disminuir)|ayud(o|aron) a (reducir|bajar|mejorar|disminuir)|se (explica|debe) (por|a)|es (consecuencia|resultado|producto) de|a raiz de|producto de|tras la implementacion)\\b"
+  },
+  {
+   "categoria": "causal",
+   "patron": "\\b(gracias|debido|por efecto|como resultado|como consecuencia) (a|al|a la|a los|a las|del|de la|de los)\\b|\\b(por eso|por ello|por lo tanto|por esta razon|por consiguiente|lo que explica|en consecuencia|asi que)\\b"
+  },
+  {
+   "categoria": "causal/evaluativa",
+   "patron": "\\b(impacto|efecto)s? (positivo|negativo|de(l)?|que tuvo)\\b|\\b(sirvi(o|eron)|funcion(o|aron)|fue (eficaz|efectiv[oa]|un exito|un fracaso)|logr(o|aron) (reducir|bajar|mejorar|disminuir)|contribuy(o|eron) a|redujo|reduce|reducira)\\b"
+  },
+  {
+   "categoria": "ranking puntual",
+   "patron": "\\b(el|la|los|las) (peor(es)?|mejor(es)?) (region|regiones|departamento|departamentos|provincia|provincias|distrito|distritos|municipalidad|municipalidades|gobierno|gobiernos|entidad|entidades|alcalde|alcaldes|gestion|gestiones|lugar|posicion|ejecutor\\w*)\\b|\\b(es|son|fue|fueron) (el|la|los|las) (peor(es)?|mejor(es)?)\\b|\\b(el|la) (region|departamento|provincia|distrito|municipalidad|gobierno regional|entidad)\\b[^.]{0,30}\\bmas (pobre|rico|alto|alta|bajo|baja|afectad[oa])\\b|\\b(es|son) (el|la|los|las) (que )?(mas|menos)\\b|\\bencabeza|\\blider(a|an)\\b|\\b(primer|ultimo|segundo|tercer) (lugar|puesto)\\b|\\branking\\b|\\btop\\b|\\bpuesto (n|\\d)|\\b(el|la) (peor|mejor) \\w+ (del|de la|de los) (peru|pais|region|departamento|provincia)\\b|\\b(el|la|los|las) que (peor|mejor)\\b|\\b(peor|mejor) (gasta|gastan|ejecuta|ejecutan|invierte|invierten)\\b"
+  },
+  {
+   "categoria": "cambio sin significancia",
+   "patron": "\\b(aument\\w*|disminu\\w*|se reduj\\w*|se reduc\\w*|se redujo|baj(ó|aron|ará|arán)|sub(ió|ieron|irá|irán|e|en)|crec(ió|ieron|e|en|erá|erán)|cay(ó|eron)|cae(n|rá|rán)?|mejor(ó|aron|ará|arán)|empeor\\w*|descend\\w*|retroced\\w*|se elev\\w*|se increment\\w*|repunt\\w*|se dispar\\w*|se desplom\\w*)\\b|\\bpas(ó|aron) de\\b[^.]{0,40}\\ba\\b|\\b(una|un|la|el) (reducción|disminución|caída|aumento|incremento|alza|subida|descenso)\\b|\\b(ha|han|había|habían) (aumentado|disminuido|bajado|subido|reducido|caído|mejorado|empeorado|crecido|descendido)\\b",
+   "normalizar": false,
+   "nota": "Se evalúa sobre el texto con tildes (bajó ≠ bajo). Respaldo del marcador {{v:id}} (COM-08)."
+  },
+  {
+   "categoria": "falsa certeza",
+   "patron": "\\b(exactamente|con (toda )?(certeza|seguridad)|esta (demostrado|comprobado)|(se )?ha (demostrado|comprobado)|sin (ninguna )?duda|definitivamente|indudablemente|obviamente|es evidente|es un hecho|la verdad es|claramente)\\b"
+  },
+  {
+   "categoria": "juicio de valor",
+   "patron": "\\b(despilfarr\\w*|derroch\\w*|malgast\\w*|desperdici\\w*|mal (uso|gasto|manejo)|negligen\\w*|fracas\\w*|culpa\\w*|responsable de|pesim\\w*|deficiente|ineficien\\w*|incapa\\w*|mala gestion|buena gestion|excelente|exitos\\w*|ejemplar|alarmante\\w*|preocupante\\w*|escandalos\\w*|vergonzos\\w*|dramatic\\w*|lamentable\\w*|irresponsab\\w*)\\b"
+  },
+  {
+   "categoria": "acusación o atribución a personas",
+   "patron": "\\b(alcalde|alcaldesa|gobernador|gobernadora|ministro|ministra|congresista|funcionario|autoridad(es)?|gestion (del|de la) (alcalde|gobernador))\\b[^.]{0,60}\\b(rob\\w*|malvers\\w*|coim\\w*|corrupt\\w*|responsable\\w*|culpa\\w*|hizo|logro|fallo|abandon\\w*|descuid\\w*)"
+  },
+  {
+   "categoria": "predicción",
+   "patron": "\\b(alcanzar|llegar|aumentar|subir|bajar|disminuir|crecer|mejorar|empeorar|reducir|caer|cambiar)(a|an)\\b|\\bhabra\\b|\\bse espera que\\b|\\bse proyecta\\b|\\bva(n)? a (subir|bajar|aumentar|disminuir|mejorar|empeorar|llegar|alcanzar|ser)\\b|\\bseguira (subiendo|bajando|aumentando|disminuyendo)\\b"
+  },
+  {
+   "categoria": "falacia ecológica",
+   "patron": "\\b(los|las) (ninos|ninas|hogares|familias|beneficiari[oa]s|usuari[oa]s|personas|afiliad[oa]s|estudiantes)\\b[^.]{0,60}\\b(tienen|son|viven|estan|presentan|logran)\\b[^.]{0,20}\\b(mas|menos|mejor|peor)\\b"
+  },
+  {
+   "categoria": "gasto mal ubicado",
+   "patron": "\\b(gast(o|aron|a)|invirti(o|eron)|ejecut(o|aron)|destin(o|aron))\\b[^.]{0,30}\\ben el distrito\\b"
+  },
+  {
+   "categoria": "ambigüedad",
+   "patron": "(?<!estadisticamente )\\bsignificativ(o|a|os|as|amente)\\b(?! estad)"
+  }
+ ],
+ "nota_estructurales": "B18, B19 y B27 (presente con dato antiguo, tamizados como prevalencia) no son detectables de forma fiable por regex: requieren verificar la oración que contiene cada marcador {{c:id}} contra sus metadatos (edad del dato, tipo_medida). La lista está ajustada a este corpus: validar con un corpus de reserva antes de adoptarla."
+}

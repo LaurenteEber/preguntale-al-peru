@@ -1,0 +1,248 @@
+# Textos de las respuestas de «no se puede» y de las aclaraciones (S1-05). Todo lo que la persona lee sale de este archivo;
+# el código solo une las piezas (pap/motor/preguntar.py). Lo lee el dueño sin leer Python.
+#
+# Reglas de redacción (contrato_respuesta.md, regla 1; R-04; R-LENGUAJE-05):
+#   - la respuesta corta dice PRIMERO lo que no se puede (empieza con «No …» o «Todavía no …») y tiene como máximo
+#     `no_se_puede.respuesta_corta_max_oraciones` oraciones (parametros_motor.yaml);
+#   - «Lo más cercano que sí tenemos» solo ofrece lo que el validador ya dejó publicar (o el territorio, el año o el nivel
+#     que existe); nunca una cifra (ni la suprimida ni otra): los números no entran sin marcador (R-LENGUAJE-03);
+#   - el motivo va en «Más contexto», sin códigos internos.
+#
+# Cada motivo:
+#   regla:    código de `motivos_codificados` de R-LENGUAJE-05 (reglas.json) que reutiliza; null = motivo que esa regla no trae
+#             (se agrega aquí; ver `agregados`)
+#   alcance:  total = no hay respuesta posible (se desvía antes de calcular o cuando ninguna cifra principal es publicable);
+#             parcial = se sigue respondiendo con lo que sí hay y se dice lo que falta (R-LENGUAJE-05, «parcial»)
+#   corta:    respuesta corta (1–2 oraciones). parcial: oración que se agrega a la respuesta corta
+#   motivo:   la explicación para «Más contexto»
+#   cercano:  «Lo más cercano que sí tenemos» según el tipo de alternativa que se encontró (clave `alternativa.tipo`)
+# Variables {así}: tema, lugar, lugar2, parte, anio_pedido, anios, anio, nivel_pedido, nivel_plural_pedido, alternativa…
+version: 1.0.0
+
+titulos:
+  lo_mas_cercano: "Lo más cercano que sí tenemos"
+  motivo: "Por qué no se puede"
+  tema_motivo: "Qué temas tenemos"
+  parte_faltante: "Lo que no pudimos mostrar"
+
+temas:                            # cómo se nombra cada tema (parametros_motor.yaml → temas.vocabulario) al hablar con la persona
+  anemia: anemia
+  desnutricion_cronica: desnutrición crónica
+  pobreza_monetaria: pobreza
+  gasto_publico: gasto público en salud y nutrición infantil
+temas_art:                        # el mismo nombre con su artículo, para «cómo ha cambiado la anemia»
+  anemia: la anemia
+  desnutricion_cronica: la desnutrición crónica
+  pobreza_monetaria: la pobreza
+  gasto_publico: el gasto público en salud y nutrición infantil
+tema_desconocido: "ese tema"      # cuando la persona pidió algo que no está en el vocabulario
+lugar_desconocido: "ese lugar"
+conjuncion: y
+
+partes:                           # «lo que se pidió», por intención: se usa en las oraciones de «no se puede»
+  nivel_actual: "cuánto hay de {tema}{en_lugar}"
+  evolucion: "cómo ha cambiado {tema_art}{en_lugar}"
+  comparacion: "la comparación de {tema} entre {lugar} y {lugar2}"
+  cruce: "las cifras de {tema}{en_lugar} juntas"
+  efecto: "si el gasto sirvió contra la anemia{en_lugar}"
+  identificar_extremo: "qué lugares tienen el valor más alto de {tema}"
+en_lugar: " en {lugar}"
+
+niveles:                          # el nivel pedido, en palabras
+  palabra: {distrito: distrito, provincia: provincia, departamento: departamento, nacional: "todo el país", defecto: "ese nivel"}
+  plural: {distrito: distritos, provincia: provincias, departamento: departamentos, nacional: "todo el país", defecto: "ese nivel"}
+territorio_alternativo:           # cómo se nombra el lugar alternativo según su nivel
+  distrito: "el distrito de {nombre}"
+  provincia: "la provincia de {nombre}"
+  departamento: "el departamento de {nombre}"
+  nacional: "todo el país"
+  defecto: "{nombre}"
+anios_lista:                      # años disponibles dichos en palabras
+  rango: "de {desde} a {hasta}"
+  lista: "de {lista}"
+  uno: "de {anio}"
+formas_de_medir:                  # S1-09 (H7): los años de cada forma de medir de un indicador, cuando el tema tiene más de una
+  endes_anemia_6_35m_oms2024: "con la forma de medir actual, {anios}"
+  endes_anemia_6_35m: "con la anterior, {anios}"
+  conjuncion: "; "
+anios_corto: {uno: "solo {anio}", dos: "{a} y {b}", rango: "de {desde} a {hasta}"}
+avisos_periodo:                   # S1-09 (A-H1, A-H2): lo que no se pudo respetar de las fechas pedidas; va primero en la respuesta corta
+  desde_no_comparable:
+    pedido: "Pediste la serie desde {desde}, pero {desde} no se compara con {hasta}: {razon}. Empezamos en {primero}."
+    inicial: "La serie empieza en {desde}, pero {desde} no se compara con {hasta}: {razon}. Empezamos en {primero}."
+  anio_final_excluido: "No podemos decir cómo cambió hasta {anio}: {razon}, y {anio} no se compara con otros años."
+  razon:                          # por el tipo del quiebre (dim_indicador.quiebres)
+    modo: "en {anio_quiebre} la encuesta se hizo en parte por teléfono por la pandemia"
+    programa: "en {anio_quiebre} cambió la forma en que se organiza el gasto"
+    criterio: "en {anio_quiebre} cambió la forma de medir"
+    defecto: "en {anio_quiebre} cambió la forma de medir o de registrar los datos"
+sin_citas: "Esta respuesta no publica cifras."
+
+motivos:
+  tema_fuera_del_piloto:
+    regla: sin_fuente_en_catalogo
+    alcance: total
+    corta: "Todavía no tenemos datos de ese tema."
+    motivo: "Por ahora solo trabajamos con {temas}. De otros temas aún no tenemos datos incorporados."
+    cercano:
+      temas: "Sí tenemos datos de {temas}. Puedes preguntar por cualquiera de ellos."
+      ninguna: "Por ahora no tenemos un tema cercano para ofrecerte."
+  anio_sin_datos:
+    regla: anio_no_disponible
+    alcance: total
+    corta: "No tenemos datos de {tema} de {anio_pedido}."
+    corta_formas: "No hay datos de {tema} de {anio_pedido} con la forma de medir actual."   # el tema tiene más de una forma de medir (formas_de_medir)
+    motivo: "Tenemos datos de {tema}: {anios}. De otros años no hay datos incorporados."
+    cercano:
+      anio: "Sí tenemos la cifra de {anio} para {lugar}. Puedes preguntar por ese año."
+      ninguna: "Por ahora no tenemos un año cercano con una cifra que se pueda mostrar."
+  nivel_no_valido:
+    regla: nivel_no_representativo
+    alcance: total
+    corta: "No podemos mostrar {parte} por {nivel_palabra_pedido}."
+    motivo: "Los datos de {tema} que usamos no permiten cifras confiables por {nivel_palabra_pedido}. Mostrarlas daría una precisión que no tienen."
+    cercano:
+      nivel: "Sí tenemos la cifra para {alternativa}. Puedes preguntar por ese lugar."
+      extremo: "Sí podemos mostrar qué lugares tienen el valor más alto de {tema}, por {nivel_palabra_alternativo}. Puedes preguntarlo así."
+      ninguna: "Por ahora no tenemos una cifra de un lugar más grande para ofrecerte."
+  nivel_sin_inferencia:
+    regla: nivel_no_representativo
+    alcance: total
+    corta: "No podemos mostrar {parte}: la fuente no alcanza para una cifra confiable por {nivel_palabra_pedido}."
+    motivo: "La fuente de {tema} no permite sacar conclusiones confiables para un lugar tan pequeño."
+    parcial: "No podemos mostrar {sujeto} en {lugar} en {anio}: la fuente no alcanza para una cifra confiable ahí."
+    cercano:
+      nivel: "Sí tenemos la cifra para {alternativa}. Puedes preguntar por ese lugar."
+      ninguna: "Por ahora no tenemos una cifra de un lugar más grande para ofrecerte."
+  precision:
+    regla: pocos_casos
+    alcance: total
+    corta: "No podemos mostrar {parte}: la cifra no es lo bastante precisa."
+    motivo: "La cifra sale de muy pocos casos o varía demasiado, y publicarla podría llevar a conclusiones equivocadas."
+    parcial: "No podemos mostrar {sujeto} en {lugar} en {anio}: la cifra no es lo bastante precisa."
+    cercano:
+      nivel: "Sí tenemos la cifra para {alternativa}, donde se reúnen más casos. Puedes preguntar por ese lugar."
+      ninguna: "Por ahora no tenemos una cifra de un lugar más grande para ofrecerte."
+  privacidad:
+    regla: null
+    alcance: total
+    corta: "No podemos mostrar {parte}: son muy pocas personas y podrían reconocerse."
+    motivo: "Para proteger la privacidad, no publicamos cifras de grupos muy pequeños, aunque tengamos el dato."
+    parcial: "No podemos mostrar {sujeto} en {lugar} en {anio}: son muy pocas personas y podrían reconocerse."
+    cercano:
+      nivel: "Sí tenemos la cifra para {alternativa}, donde el grupo es más grande. Puedes preguntar por ese lugar."
+      ninguna: "Por ahora no tenemos una cifra de un lugar más grande para ofrecerte."
+  distrito_creado_despues:
+    regla: null
+    alcance: total
+    corta: "No tenemos datos propios de {lugar}: es un distrito nuevo o cambió de límites después de los datos más recientes."
+    motivo: "Las cifras que tenemos son anteriores y se registraron con los límites de antes. No las repartimos hacia atrás ni inventamos las del distrito nuevo."
+    cercano:
+      origen: "Sí tenemos la cifra para {alternativa}, de donde se separó el distrito. Puedes preguntar por ese lugar."
+      provincia: "Sí tenemos la cifra para {alternativa}. Puedes preguntar por ese lugar."
+      origen_y_provincia: "Sí tenemos las cifras de {alternativa} y de {alternativa2}. Puedes preguntar por cualquiera de los dos."
+      ninguna: "Por ahora no tenemos una cifra de un lugar cercano para ofrecerte."
+  intencion_no_soportada:
+    regla: null
+    alcance: total
+    corta: "No podemos mostrar {parte}: todavía no lo hacemos con estos datos."
+    motivo: "Todavía no tenemos cómo responder esa pregunta con los datos de {tema} que usamos."
+    cercano:
+      lugar: "Sí podemos mostrar cuánto hay de {tema} en un lugar concreto. Puedes preguntar por un departamento, una provincia o un distrito."
+  serie_un_solo_anio:
+    regla: anio_no_disponible
+    alcance: total
+    corta: "No podemos mostrar {parte}: no tenemos dos años de datos que se puedan comparar."
+    motivo: "Los datos de {tema} que usamos para {lugar} solo permiten una cifra, sin otro año comparable. Por eso no se puede decir si subió o bajó."
+    cercano:
+      anio: "Sí tenemos la cifra de {anio} para {lugar}, la más reciente. Puedes preguntar por ella."
+      ninguna: "Por ahora no tenemos una cifra para ofrecerte."
+  mismo_lugar:                    # S1-09 (warning): comparar un lugar consigo mismo
+    regla: null
+    alcance: total
+    corta: "No podemos comparar {lugar} con {lugar}: es el mismo lugar."
+    motivo: "Una comparación necesita dos lugares distintos. Elige otro lugar para compararlo con {lugar}."
+    cercano:
+      ninguna: "Puedes preguntar cuánto hay de {tema} en {lugar}, o comparar {lugar} con otro lugar."
+  extremo_dentro_de_no_soportado:
+    regla: null
+    alcance: total
+    corta: "No podemos mostrar {parte} dentro de {dentro_de}: el orden que calculamos es solo para todo el país."
+    motivo: "Las comparaciones entre lugares que usamos se hacen con todo el país a la vez, no dentro de un solo lugar."
+    cercano:
+      pais: "Sí podemos mostrar qué lugares tienen el valor más alto de {tema} en todo el país. Puedes preguntarlo sin indicar un lugar."
+      ninguna: "Por ahora no tenemos una comparación para ofrecerte."
+  sin_registros:
+    regla: null
+    alcance: total
+    corta: "No tenemos registros de {tema} en {lugar}. Eso no quiere decir que no haya casos."
+    motivo: "La fuente no trae registros de ese lugar en {anio}. Eso no quiere decir que no haya casos: solo que no están en los datos."
+    parcial: "No tenemos registros de {sujeto} en {lugar} en {anio}."          # la aclaración «no quiere decir que no haya casos» va en la tarjeta de «Lo que no pudimos mostrar» (la capa 1 ya está en su máximo)
+    cercano:
+      nivel: "Sí tenemos la cifra para {alternativa}. Puedes preguntar por ese lugar."
+      ninguna: "Por ahora no tenemos una cifra de un lugar más grande para ofrecerte."
+  fuente_en_ingesta:
+    regla: fuente_en_ingesta
+    alcance: total
+    corta: "Todavía no incorporamos los datos que hacen falta para {parte}."
+    motivo: "La fuente aún no está incorporada. Eso no quiere decir que el dato no exista."
+    parcial: "Todavía no incorporamos los datos de {sujeto} en {lugar}."
+    cercano:
+      nivel: "Sí tenemos la cifra para {alternativa}. Puedes preguntar por ese lugar."
+      ninguna: "Por ahora no tenemos una cifra cercana para ofrecerte."
+  cifra_no_publicable:            # suprimida por una razón que no es ninguna de las anteriores
+    regla: null
+    alcance: total
+    corta: "No podemos mostrar {parte}: la cifra no cumple las condiciones para publicarse."
+    motivo: "Preferimos no mostrar una cifra antes que mostrar una que pueda llevar a conclusiones equivocadas."
+    parcial: "No podemos mostrar {sujeto} en {lugar} en {anio}: la cifra no cumple las condiciones para publicarse."
+    cercano:
+      nivel: "Sí tenemos la cifra para {alternativa}. Puedes preguntar por ese lugar."
+      ninguna: "Por ahora no tenemos una cifra cercana para ofrecerte."
+  cruce_fuera_de_lista_blanca:
+    regla: cruce_bloqueado
+    alcance: parcial
+    parcial: "No podemos decir si una cifra explica la otra: las mostramos por separado."
+    motivo: "Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo."
+  cadena_gasto_distinta:
+    regla: cruce_bloqueado
+    alcance: parcial
+    parcial: "No podemos decir si una cifra explica la otra: las mostramos por separado."
+    motivo: "El gasto disponible no es el que corresponde a esta comparación."
+
+# si una cifra suprimida trae varios motivos del validador, el que se dice (el primero de esta lista que aplique)
+prioridad_motivos: [privacidad, fuente_en_ingesta, sin_registros, nivel_sin_inferencia, precision, cifra_no_publicable]
+
+# motivos del validador (Resultado.motivo de una cifra suprimida) → motivo de «no se puede»
+motivos_validador:
+  precision: precision
+  pocos_casos: precision
+  pim_menor_minimo: precision
+  pim_no_positivo: precision
+  denominador_en_revision: precision
+  divulgacion: privacidad
+  divulgacion_nivel: privacidad
+  nivel_no_valido: nivel_sin_inferencia
+  nivel_no_representativo: nivel_sin_inferencia
+  fuera_de_cobertura: nivel_sin_inferencia
+  insumo_en_ingesta: fuente_en_ingesta
+  tabla_curada_sin_respaldo: fuente_en_ingesta
+  sin_datos: sin_registros
+  sin_fila: sin_registros
+  defecto: cifra_no_publicable
+
+ficha:                            # ficha corta de una respuesta sin cifras (ficha.generar)
+  datos: "Datos de: ninguna cifra publicada en esta respuesta"
+  territorio: "Territorio: {lugar}"
+  territorio_sin_lugar: "Territorio: sin lugar identificado"
+  no_concluir: "No permite concluir: nada sobre {tema}. No mostrar una cifra no quiere decir que el problema no exista."
+
+aclaraciones:
+  falta_tema:
+    pregunta: "¿De qué problema quieres saber?"
+  opcion_numero: "{n}) {etiqueta}"
+  sin_opciones: "Escribe el lugar de nuevo."
+
+mensajes:
+  elegir_fuera_de_rango: "La opción {n} no existe. Elige un número entre 1 y {total}."
+  elegir_sin_opciones: "No hay opciones para elegir: escribe de nuevo el lugar."

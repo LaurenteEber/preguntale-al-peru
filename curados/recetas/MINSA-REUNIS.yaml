@@ -1,0 +1,35 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINSA-REUNIS
+strategy: dashboard
+publisher: MINSA
+dataset_title: Repositorio Único Nacional de Información en Salud
+access_url: https://www.minsa.gob.pe/reunis/
+temporal:
+  inicio: 2015
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: no-declarada
+license_basis: no_declarada
+known_issues:
+- Solo establecimientos que reportan al HIS/sistemas MINSA (sub-cobertura EsSalud, FFAA, privados). Tableros cambian
+  de estructura sin aviso; sin API.
+espera:
+  formato:
+  - xlsx
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: scraping_dinamico
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+notas: 'Los menús usan parámetros ?op=&niv=&tbl= (ej. op=3&niv=6&tbl=2 = Atenciones de consulta externa; op=2&niv=9
+  = inmunizaciones). Muchos reportes son Tableau/Power BI incrustados: exportar vía ''Descargar > Datos'' o Playwright
+  interceptando llamadas; algunos ofrecen XLSX. El sitio devolvió 403 a fetch automatizado (WAF).'

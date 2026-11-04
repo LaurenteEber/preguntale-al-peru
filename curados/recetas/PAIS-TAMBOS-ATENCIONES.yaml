@@ -1,0 +1,46 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: PAIS-TAMBOS-ATENCIONES
+strategy: manual
+publisher: MIDIS
+dataset_title: Programa PAIS – Atenciones y beneficiarios en Tambos (plataformas fijas)
+access_url: https://www.datosabiertos.gob.pe/dataset/atenciones-realizadas-en-los-tambos-programa-nacional-plataformas-de-acci%C3%B3n-para-la
+temporal:
+  inicio: 2020
+  fin: 2026
+spatial:
+  ambito: nacional (rural)
+  nivel_minimo: centro_poblado
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: no-declarada
+license_basis: no_declarada
+known_issues:
+- Nivel CP asumido por la ubicación del tambo (no confirmado en columnas); atenciones ≠ personas únicas.
+manual:
+  pasos:
+  - Abrir https://www.datosabiertos.gob.pe/dataset/atenciones-realizadas-en-los-tambos-programa-nacional-plataformas-de-acci%C3%B3n-para-la
+    y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/atenciones-realizadas-en-los-tambos-programa-nacional-plataformas-de-acci%C3%B3n-para-la-4'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/PAIS-TAMBOS-ATENCIONES/
+  - 'Ejecutar: pap registrar PAIS-TAMBOS-ATENCIONES --issued <fecha>'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Serie de datasets con sufijos -1..-4 por trimestre, ''pais-atenciones-tambos-2022'', ''beneficiarios-atendidos-en-las-plataformas-fijastambos...'',
+  ''servicios-brindados-por-las-entidades...''. Plataforma Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset
+  tiene recursos con URL de descarga en /sites/default/files/... o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug>
+  (API CKAN-compatible de DKAN; confirmar). Desde este entorno el portal devolvió 403/robots en fetch: probar con
+  navegador/Playwright. Listar los datasets del publicador PNPAIS en vez de fijar un slug con sufijo numérico.'

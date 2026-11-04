@@ -1,0 +1,1167 @@
+{
+ "ambito": "territorio_denominadores",
+ "reglas": [
+  {
+   "id": "R-TERRITORIO-01",
+   "ambito": "territorio",
+   "titulo": "Tabla dim_ubigeo_historico obligatoria como única llave territorial",
+   "enunciado": "Todo dato que entre a la biblioteca debe unirse a dim_ubigeo_historico (y no a una lista de ubigeos sin fechas) usando el código y el año de referencia del dato. Una carga cuyo ubigeo no se resuelva contra una versión vigente de la tabla no puede publicarse.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "censo",
+     "estimacion_modelada",
+     "presupuestal_financiero",
+     "encuesta_muestral",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [
+     "residencia",
+     "establecimiento",
+     "ejecutora",
+     "inversion_ubicacion",
+     "ocurrencia",
+     "muestra",
+     "territorio"
+    ],
+    "fuentes": [
+     "INEI-PNDA-UBIGEOS",
+     "INEI-DIRECTORIO-MUNICIPALIDADES",
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "GITHUB-UBIGEO-PERU-AUMENTADO",
+     "INEI-CPV2017",
+     "INEI-CPV2025"
+    ]
+   },
+   "condicion": "para cada fila f de una fuente con 'ubigeo_inei' o 'ubigeo_reniec' en llaves_cruce: EXISTS dim_ubigeo_historico h WHERE h.<sistema_ubigeo> = f.ubigeo AND h.vigente_desde <= fecha_referencia(f) AND (h.vigente_hasta IS NULL OR fecha_referencia(f) <= h.vigente_hasta)",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "version_minima_tabla": "dim_ubigeo_historico v1 (base CPV2017 + creaciones hasta la fecha de carga)",
+    "distritos_esperados_vigentes_2026": 1892,
+    "distritos_tabla_INEI_2022": 1891
+   },
+   "mensaje_usuario": null,
+   "justificacion": "Los códigos UBIGEO se asignan correlativamente dentro de la provincia y no se reutilizan, pero sí cambian por anexión, cambio de capital o creación de provincias (Norma del Código UBIGEO del INEI); los distritos se crean por ley en el marco de la demarcación provincial (Ley 27795, art. 4.5). Ninguna tabla oficial publicada trae vigencia ni distrito de origen (INF-06, EMB-02), por lo que la llave debe ser fechada. Es la práctica de las oficinas que mantienen geografías con versiones (ONS: mantenimiento de geografías para el Censo 2021; IPUMS: geografía armonizada).",
+   "referencias": [
+    {
+     "titulo": "INEI – Norma del Código de Ubicación Geográfica (UBIGEO), recurso de la PNDA",
+     "url": "https://www.datosabiertos.gob.pe/sites/default/files/NORMA_DEL_CODIGO_UBIGEO.pdf"
+    },
+    {
+     "titulo": "Ley N.º 27795, Ley de Demarcación y Organización Territorial (2002)",
+     "url": "https://www.congreso.gob.pe/Docs/DGP/DIDP/files/descentralizacion/27795.pdf"
+    },
+    {
+     "titulo": "D.S. N.º 191-2020-PCM, Reglamento de la Ley 27795 (texto difundido por LP Derecho)",
+     "url": "https://lpderecho.pe/reglamento-de-la-ley-27795-ley-de-demarcacion-organizacion-territorial-decreto-supremo-191-2020-pcm"
+    },
+    {
+     "titulo": "PNDA – Ubigeos INEI (corte 2022, 1 891 distritos, ODbL)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei"
+    },
+    {
+     "titulo": "UK Statistics Authority EAP169 – Geography maintenance methodology for the 2021 Census",
+     "url": "https://uksa.statisticsauthority.gov.uk/wp-content/uploads/2022/05/EAP169-Geography-Maintenance-Methodology-and-Plans-for-the-2021-Census.pdf"
+    },
+    {
+     "titulo": "IPUMS International – Spatially harmonized second-level geography",
+     "url": "https://international.ipums.org/international/gis_harmonized_2nd.shtml"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-06",
+    "EMB-02",
+    "EXA-A-09"
+   ],
+   "ejemplo": "Un registro de SIS-AFILIADOS 2021 con ubigeo 130112 (Alto Trujillo, creado por Ley 31644 publicada el 15-12-2022) no resuelve contra la versión vigente en 2021: se marca como 'código anterior a su creación' y se envía a revisión; en 2024 resuelve normalmente.",
+   "implementacion": "Ver la clave 'especificaciones' > dim_ubigeo_historico (esquema, construcción, validación y mantenimiento). Join temporal: fecha_referencia = 30-jun del anio del dato para datos anuales; fecha exacta para eventos (nacimientos, defunciones). Resultado de la carga: pct_filas_ubigeo_resuelto y pct_numerador_ubigeo_resuelto (ponderado por el valor medido).",
+   "casos_borde": "Ubigeos '000000', '999999', vacíos o de extranjero (RENIEC) van a una categoría 'sin ubicar' que solo suma al total nacional. Ubigeos de 4 o 2 dígitos se tratan como provincia/departamento. Códigos con el cero inicial perdido (p. ej. 10101 por 010101) se reparan con zfill(6) antes de validar; se registra la reparación.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-TERRITORIO-02",
+   "ambito": "territorio",
+   "titulo": "Detección empírica del sistema de ubigeo (INEI o RENIEC) en cada carga",
+   "enunciado": "En cada carga y versión de una fuente se debe determinar por código si el ubigeo es INEI o RENIEC, midiendo la coincidencia de código Y nombre de distrito contra ambos sistemas; lo declarado en el catálogo no basta. La carga se rechaza si el sistema ganador no alcanza 99 % de coincidencia código+nombre.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados",
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": [
+     "SIS-AFILIADOS",
+     "SIS-ATENCIONES",
+     "RENIEC-POBLACION-IDENTIFICADA",
+     "MINSA-SINADEF",
+     "MINSA-CNV-NACIDOS-VIVOS",
+     "MINSA-REUNIS",
+     "MINSA-INMUNIZACIONES",
+     "INS-CENAN-SIEN",
+     "JUNTOS-HOGARES-UBIGEO",
+     "PENSION65-USUARIOS",
+     "CDC-VIGILANCIA-DATOS-ABIERTOS"
+    ]
+   },
+   "condicion": "Sea U el conjunto de pares (ubigeo, nombre_distrito_normalizado) distintos de la carga. m_inei = |{u ∈ U : u.ubigeo ∈ INEI_vigente(anio) ∧ sim(u.nombre, INEI.nombre) ≥ 0.90}| / |U|; m_reniec análogo con ubigeo_reniec. sistema = argmax(m_inei, m_reniec). Aceptar si max ≥ 0.99 y |m_inei − m_reniec| ≥ 0.20; si la fuente no trae nombre: usar prefijos de departamento (2 dígitos) y la distribución de códigos solo-INEI/solo-RENIEC (ver implementación).",
+   "accion": "revision_humana",
+   "parametros": {
+    "umbral_coincidencia_codigo_nombre": 0.99,
+    "umbral_similitud_nombre": 0.9,
+    "margen_minimo_entre_sistemas": 0.2,
+    "umbral_sin_nombre_codigos_exclusivos": 0.95
+   },
+   "mensaje_usuario": null,
+   "justificacion": "En el puente GITHUB-UBIGEO-PERU-AUMENTADO solo 111 de 1 893 distritos tienen el mismo código en INEI y RENIEC, y 997 códigos existen en ambos sistemas pero designan distritos distintos (análisis propio del archivo ubigeo_distrito.csv, 5-10-2026). Por eso un join directo con el sistema equivocado no falla: reubica en silencio (p. ej. Callao es 07 en INEI y 24 en RENIEC; Lima 15 vs 14). Los registros del SIS figuran con llaves contradictorias en el catálogo (INF-05, INT-03).",
+   "referencias": [
+    {
+     "titulo": "jmcastagnetto/ubigeo-peru-aumentado (puente INEI–RENIEC, corte 2021)",
+     "url": "https://github.com/jmcastagnetto/ubigeo-peru-aumentado"
+    },
+    {
+     "titulo": "PNDA – Ubigeos INEI (corte 2022, 1 891 distritos, ODbL)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei"
+    },
+    {
+     "titulo": "PNDA – RENIEC: Población identificada con DNI",
+     "url": "https://www.datosabiertos.gob.pe/dataset/reniec-poblaci%C3%B3n-identificada-con-dni-registro-nacional-de-identificaci%C3%B3n-y-estado-civil"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-05",
+    "INT-03",
+    "EXA-A-19"
+   ],
+   "ejemplo": "SIS-ATENCIONES declara ubigeo_inei y su ruta PNDA ubigeo_reniec. Si la carga trae '240101' con nombre 'CALLAO': en INEI 240101 es Tumbes (m_inei bajo) y en RENIEC es Callao (m_reniec alto) → sistema_ubigeo='reniec'; se convierte a INEI 070101 con el puente.",
+   "implementacion": "1) Normalizar nombres: mayúsculas, sin tildes ni signos, colapsar espacios, quitar prefijos 'DISTRITO DE'. 2) sim = 1 − Levenshtein/longitud (o Jaro-Winkler) contra el nombre vigente y sus alias (columna nombres_alternos). 3) Calcular m_inei y m_reniec. 4) Sin nombre: contar códigos que existen solo en un sistema (785 exclusivos de cada lado en el puente 2021); si ≥95 % de los códigos presentes en la carga caen en los exclusivos de un sistema y 0 % en los del otro, se acepta ese sistema; si no, revisión humana. 5) Guardar en la tabla de cargas: fuente_id, version, sistema_ubigeo, m_inei, m_reniec, n_codigos, fecha. 6) Convertir RENIEC→INEI con puente_ubigeo antes de cualquier cruce; nunca guardar ambos sistemas en la misma columna.",
+   "casos_borde": "Cargas mixtas (parte INEI, parte RENIEC, ocurre en consolidaciones de DIRESA): si ninguna supera 0,99 pero m_inei + m_reniec ≥ 0,99 con códigos disjuntos → revisión humana, no conversión automática. Cargas con menos de 50 códigos distintos (p. ej., JUNTOS en pocos distritos): exigir 100 % de coincidencia código+nombre. Nombres homónimos (hay varios 'SAN JUAN', 'SANTA ROSA'): la similitud se mide con el par provincia+distrito cuando la fuente trae provincia.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-TERRITORIO-03",
+   "ambito": "territorio",
+   "titulo": "Tabla puente INEI–RENIEC propia, versionada y validada",
+   "enunciado": "Las conversiones RENIEC→INEI deben usar una tabla puente_ubigeo propia, con vigencia, construida a partir del puente de GITHUB-UBIGEO-PERU-AUMENTADO y validada contra la lista INEI vigente y la lista de distritos de RENIEC-POBLACION-IDENTIFICADA; el archivo de GitHub no debe usarse directamente.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [
+     "territorio"
+    ],
+    "fuentes": [
+     "GITHUB-UBIGEO-PERU-AUMENTADO",
+     "PNDA-UBIGEO-EQUIVALENCIAS",
+     "RENIEC-POBLACION-IDENTIFICADA",
+     "INEI-PNDA-UBIGEOS"
+    ]
+   },
+   "condicion": "puente válido si: (a) cada ubigeo_inei vigente tiene exactamente 1 ubigeo_reniec vigente (biyección) o una excepción documentada; (b) sim(nombre_inei, nombre_reniec) ≥ 0.90 en ≥ 99,5 % de pares; (c) 0 códigos INEI no vigentes; (d) cobertura = |pares| / |distritos INEI vigentes| = 1.",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "cobertura_minima": 1.0,
+    "pares_con_nombre_coincidente": 0.995
+   },
+   "mensaje_usuario": null,
+   "justificacion": "El dataset PNDA de equivalencias no se pudo abrir y no tiene publicador confirmado (EXA-A-19); el puente de GitHub es útil pero tiene corte 2021 (EXA-A-15) y, en la revisión propia del archivo, contiene filas que no deben pasar: 'SANTA MARIA DE HUACHIPA' (150144) sin código RENIEC, que es un centro poblado de Lurigancho y no un distrito; 'SAN ANTONIO' (Moquegua) sin código INEI (Ley 31216, confirmada por el TC el 05-10-2023); y códigos antiguos 160109/160114 (Putumayo y Teniente Manuel Clavero en Maynas) duplicados con 160801/160803 de la provincia de Putumayo. No incluye Alto Trujillo (Ley 31644, 2022).",
+   "referencias": [
+    {
+     "titulo": "jmcastagnetto/ubigeo-peru-aumentado (puente INEI–RENIEC, corte 2021)",
+     "url": "https://github.com/jmcastagnetto/ubigeo-peru-aumentado"
+    },
+    {
+     "titulo": "Tribunal Constitucional, Exp. 00024-2021-AI: declara infundadas las demandas contra la Ley 31216 (distrito de San Antonio, Mariscal Nieto, Moquegua), 05-10-2023",
+     "url": "https://www.tc.gob.pe/jurisprudencia/2023/00024-2021-AI.pdf"
+    },
+    {
+     "titulo": "Ley N.º 31644, crea el distrito de Alto Trujillo (Trujillo, La Libertad), publicada el 15-12-2022",
+     "url": "https://leyes.congreso.gob.pe/Documentos/2021_2026/ADLP/Texto_Consolidado/31644-TXM.pdf"
+    },
+    {
+     "titulo": "PNDA – Ubigeos INEI (corte 2022, 1 891 distritos, ODbL)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei"
+    },
+    {
+     "titulo": "PNDA – RENIEC: Población identificada con DNI",
+     "url": "https://www.datosabiertos.gob.pe/dataset/reniec-poblaci%C3%B3n-identificada-con-dni-registro-nacional-de-identificaci%C3%B3n-y-estado-civil"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-06",
+    "EXA-A-15",
+    "EXA-A-19"
+   ],
+   "ejemplo": "Al construir v1: se descarta 150144; 160109 y 160114 se cargan con vigente_hasta = fecha de la ley de creación de la provincia de Putumayo y se redirigen a 160801/160803; San Antonio recibe el código INEI de la lista de proyecciones 2018-2026 y el RENIEC 170107; Alto Trujillo recibe 130112 (a confirmar con la lista INEI) y su código RENIEC se toma del dataset RENIEC por coincidencia de nombre dentro de la provincia 1201 RENIEC.",
+   "implementacion": "Esquema puente_ubigeo(ubigeo_inei, ubigeo_reniec, nivel, vigente_desde, vigente_hasta, metodo_emparejamiento ∈ {github_2021, nombre_exacto, nombre_difuso_revisado, manual}, sim_nombre, fuente, version). Pasos: 1) Cargar GitHub; 2) anti-join contra INEI vigente (1 892) → altas y bajas; 3) para cada distrito INEI sin par, buscar en el listado de RENIEC-POBLACION-IDENTIFICADA (último corte) por provincia+nombre; 4) revisión humana de pares con sim < 0,95; 5) pruebas: biyección, nombres, ningún código RENIEC repetido. Nivel provincia y departamento se derivan por prefijo solo después de verificar (los órdenes de provincia difieren entre sistemas).",
+   "casos_borde": "RENIEC puede tardar en asignar código a un distrito nuevo; mientras no exista, los registros RENIEC del ámbito siguen en el código madre: la conversión debe mandar ese código al 'grupo comparable' (R-TERRITORIO-05), no al distrito madre recortado. Distritos con DNI de residentes en el extranjero (códigos 9xxxxx en RENIEC) no tienen par INEI y se excluyen del total nacional residente.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-TERRITORIO-04",
+   "ambito": "territorio",
+   "titulo": "Doble geografía: vigente para cortes de un año, congelada CPV2017 para series",
+   "enunciado": "Una cifra de un solo año se publica en la geografía vigente en ese año; toda serie o comparación entre años que cruce la creación de un distrito debe expresarse en la geografía congelada 'GEO2017' (distritos del Censo 2017), reasignando cada distrito nuevo a su grupo comparable de origen.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [
+     "residencia",
+     "establecimiento",
+     "ocurrencia",
+     "inversion_ubicacion",
+     "territorio"
+    ],
+    "fuentes": []
+   },
+   "condicion": "consulta con anios = [a1..an] y nivel_territorial='distrito' AND EXISTS distrito d en el resultado con d.vigente_desde > fecha(a1) o con hijos creados entre a1 y an → geografia_base := 'GEO2017'; si n = 1 → geografia_base := 'vigente_' || a1",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "geografia_congelada": "GEO2017",
+    "fecha_corte_geo2017": "2017-10-22",
+    "geografia_futura": "GEO2025 (al publicarse las proyecciones base CPV2025)"
+   },
+   "mensaje_usuario": "Para comparar años, esta cifra suma el distrito {nombre} y los distritos que se crearon a partir de él después de 2017 ({hijos}), para que todos los años midan el mismo territorio.",
+   "justificacion": "Las encuestas usan el marco muestral, el CPV2017 su geografía de 2017 y los registros la geografía vigente (INF-06). El INEI pasó de 1 874 distritos (dic-2019) a 1 890 (2022) y 1 892 (2025); comparar un distrito madre antes y después de su partición mide territorios distintos. Las oficinas estadísticas resuelven esto con unidades estables o ajuste 'best-fit' a una geografía fija (GSS Geography Policy; IPUMS geografía armonizada). Se elige 2017 porque es la base de las proyecciones vigentes, del Mapa de Pobreza 2018 y del CPV2017 por edad.",
+   "referencias": [
+    {
+     "titulo": "Government Statistical Service (GSS) Geography Policy – best-fit (NRS Scotland)",
+     "url": "https://nrscotland.gov.uk/publications/geography-best-fit-policy"
+    },
+    {
+     "titulo": "IPUMS International – Spatially harmonized second-level geography",
+     "url": "https://international.ipums.org/international/gis_harmonized_2nd.shtml"
+    },
+    {
+     "titulo": "INEI Lib1715 – Perú: Estimaciones y proyecciones de población por departamento, provincia y distrito 2018-2020 (1 874 distritos a dic-2019)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1715/presenta.htm"
+    },
+    {
+     "titulo": "INEI Lib1860 – Población proyectada distrital 2018-2022 (Anexo 3: dispositivos legales de modificación de ámbitos)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1860/libro.pdf"
+    },
+    {
+     "titulo": "PNDA – Ubigeos INEI (corte 2022, 1 891 distritos, ODbL)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-06",
+    "EMB-02"
+   ],
+   "ejemplo": "Serie 2015–2024 de nacimientos (MINSA-CNV-NACIDOS-VIVOS) en Río Magdalena (Ayacucho, creado 2020–2021): se publica la serie del grupo comparable 'La Mar–Ayacucho original' que suma el distrito madre y sus hijos; la cifra 2024 sola de Río Magdalena sí se publica en geografía vigente.",
+   "implementacion": "Columna dim_ubigeo_historico.grupo_comparable_geo2017 (código del distrito 2017 de origen, o código sintético 'G-xxxxxx' cuando el hijo nace de varios distritos). Para series: GROUP BY grupo_comparable_geo2017 sumando numeradores y denominadores (nunca promediando tasas). Las agregaciones a provincia/departamento usan la provincia vigente del grupo; si un grupo cruza provincias (anexión), se usa la provincia de 2017 y se rotula.",
+   "casos_borde": "Hijo con varios distritos de origen (Alto Trujillo limita con Huanchaco, El Porvenir, Florencia de Mora y La Esperanza según la Ley 31644): el grupo comparable es la unión de los distritos de los que efectivamente se segregó territorio (leer la ley); si son ≥3 distritos, la serie distrital se muestra solo para el grupo y se ofrece la provincia. Creación de provincias (Putumayo): no altera GEO2017 a nivel distrital pero sí la provincia; las series provinciales usan la provincia de 2017. Encuestas (nivel_territorial_inferencia ≠ distrito) no se ven afectadas.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-TERRITORIO-05",
+   "ambito": "territorio",
+   "titulo": "Distrito partido: numerador y denominador del mismo territorio y periodo de transición",
+   "enunciado": "Para un distrito madre y sus hijos no se debe publicar tasa distrital en el año de creación ni en los 2 años siguientes; en ese periodo la cifra se publica para el grupo comparable. Fuera de ese periodo, numerador y denominador deben referirse al mismo recorte territorial (madre recortada con población de la madre recortada).",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados",
+     "presupuestal_financiero",
+     "censo"
+    ],
+    "tipo_medida": [
+     "registro_eventos",
+     "cobertura_programa",
+     "atenciones_produccion",
+     "notificacion_vigilancia",
+     "presupuesto_gasto",
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "residencia",
+     "establecimiento",
+     "ocurrencia",
+     "inversion_ubicacion"
+    ],
+    "fuentes": []
+   },
+   "condicion": "d ∈ {madre, hijos} de una creación con fecha_creacion F AND anio ∈ [year(F), year(F) + 2]  → agregar al grupo; además, para cualquier anio: si numerador(madre, anio) > 0 y numerador(hijo, anio) = 0 con poblacion(hijo, anio) ≥ 1000 → sospecha de registro aún en código madre.",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "anios_transicion": 2,
+    "poblacion_minima_hijo_para_alerta": 1000
+   },
+   "mensaje_usuario": "El distrito {hijo} se creó en {anio_creacion}. Durante los primeros años, varios registros siguieron anotando sus casos en {madre}, por eso mostramos la cifra conjunta de ambos.",
+   "justificacion": "La vigencia legal (día siguiente a la publicación de la ley) no coincide con la adopción del código en los sistemas: las municipalidades nuevas se instalan tras elecciones y los registros (SIS, HIS, CNV, MEF) actualizan sus tablas con rezago. En ese periodo la madre conserva parte del numerador del hijo mientras el denominador (proyección INEI con 1 892 distritos) ya la recorta, inflando su tasa y anulando la del hijo (INF-06). La práctica 'best-fit' de GSS/ONS evita publicar en unidades que no corresponden entre numerador y denominador.",
+   "referencias": [
+    {
+     "titulo": "Government Statistical Service (GSS) Geography Policy – best-fit (NRS Scotland)",
+     "url": "https://nrscotland.gov.uk/publications/geography-best-fit-policy"
+    },
+    {
+     "titulo": "Ley N.º 27795, Ley de Demarcación y Organización Territorial (2002)",
+     "url": "https://www.congreso.gob.pe/Docs/DGP/DIDP/files/descentralizacion/27795.pdf"
+    },
+    {
+     "titulo": "INEI – Directorio Nacional de Gobiernos Regionales, Municipalidades Provinciales, Distritales y de Centros Poblados 2025",
+     "url": "https://www.gob.pe/en/institucion/inei/informes-publicaciones/6722617-national-directory-of-regional-governments-provincial-municipalities-district-and-of-populates-centers-2025"
+    },
+    {
+     "titulo": "INEI Lib1860 – Población proyectada distrital 2018-2022 (Anexo 3: dispositivos legales de modificación de ámbitos)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1860/libro.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-06",
+    "EMB-02"
+   ],
+   "ejemplo": "Kumpirushiato, Cielo Punco, Manitea y Unión Asháninka (La Convención, Cusco) creados en 2020–2021: si en 2021 MINSA-INMUNIZACIONES aún carga vacunas en el distrito madre y la población MINSA ya separa a los hijos, la madre muestra cobertura >100 % y los hijos 0 %. Se publica la cifra del grupo hasta 2023.",
+   "implementacion": "anio_creacion = year(dim.vigente_desde) del hijo. Para anio en la ventana: reemplazar ubigeo por grupo_comparable_geo2017 en numerador y denominador. Fuera de la ventana: verificar la alerta de 'hijo vacío'; si se dispara, extender la ventana para esa fuente y registrarlo en fuente_ubigeo_transicion(fuente_id, ubigeo_hijo, primer_anio_con_datos). Denominador del hijo para años previos a su creación: solo si la fuente de población lo trae (las proyecciones 2018-2026 retroproyectan a los 1 892 distritos); nunca se divide el numerador histórico de la madre entre madre e hijo.",
+   "casos_borde": "Si la proyección del vintage usado no trae al hijo (p. ej., ediciones Lib1715 con 1 874 distritos), el denominador se toma del grupo y el resultado solo existe a nivel de grupo. Fusiones o anexiones (raras): el grupo comparable es la unión; nunca se reparte población por superficie salvo revisión humana (pesos de población por centro poblado del CPV2017).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-TERRITORIO-06",
+   "ambito": "territorio",
+   "titulo": "Dominios de encuesta: Lima Metropolitana, Lima Provincias y Callao no se derivan del prefijo de 2 dígitos",
+   "enunciado": "El cruce de una cifra de encuesta con datos administrativos debe hacerse por dominio (tabla dim_dominio por encuesta y año), nunca por los 2 primeros dígitos del ubigeo; para el departamento 15 (Lima) y 07 (Callao) es obligatorio usar el dominio declarado en la ficha técnica de cada encuesta y año.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral",
+     "estimacion_modelada"
+    ],
+    "tipo_medida": [
+     "prevalencia",
+     "estimacion_modelada"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA"
+    ]
+   },
+   "condicion": "cruce(encuesta E, anio A, territorio T) con T.departamento ∈ {'15','07'} OR nivel_territorial_inferencia='dominio' → requiere EXISTS dim_dominio(E, A, dominio) con lista explícita de ubigeos (provincias o distritos); si no existe → bloquear",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "departamentos_con_dominio_especial": [
+     "15",
+     "07"
+    ],
+    "provincia_lima_metropolitana": "1501"
+   },
+   "mensaje_usuario": "Esta encuesta divide Lima en 'Lima Metropolitana' y 'Lima Provincias' (y trata el Callao aparte o junto, según el año). La cifra corresponde a {dominio}, que incluye: {lista_provincias}.",
+   "justificacion": "El INEI publica ENAHO/ENDES con 24 departamentos + Callao + Lima Metropolitana y la Región Lima por separado, y la UMC reporta 'Lima Provincias' por DRE (INF-12). Lima Metropolitana = provincia 1501 (INEI) y, en algunas publicaciones, también Callao (07); Lima Provincias = departamento 15 sin la provincia 1501. En RENIEC Lima es 14 y Callao 24, por lo que un join por prefijo además cambia de departamento.",
+   "referencias": [
+    {
+     "titulo": "PNDA – Ubigeos INEI (corte 2022, 1 891 distritos, ODbL)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei"
+    },
+    {
+     "titulo": "jmcastagnetto/ubigeo-peru-aumentado (puente INEI–RENIEC, corte 2021)",
+     "url": "https://github.com/jmcastagnetto/ubigeo-peru-aumentado"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-12"
+   ],
+   "ejemplo": "Anemia 6–35 meses ENDES 2024 para 'Lima Metropolitana' cruzada con gasto en el PP de anemia: el gasto se suma sobre las ejecutoras con sede en provincia 1501 (y Callao si la ENDES de ese año lo incluye en el dominio), no sobre todo el departamento 15.",
+   "implementacion": "dim_dominio(encuesta_id, anio, dominio_id, dominio_nombre, nivel_definicion ∈ {departamento, provincia, distrito, area, region_natural, ciudad}, ubigeos[] (INEI, geografía vigente al marco muestral), incluye_callao bool, fuente_definicion (ficha técnica/diccionario, página)). Catálogo de dominios controlado: nacional, urbano, rural, costa, sierra, selva, departamento, lima_metropolitana, lima_provincias, callao, ciudades_principales. Join: dato_admin.ubigeo → dim_dominio.ubigeos para (E, A).",
+   "casos_borde": "Dominios por área (urbano/rural) no se pueden reconstruir con ubigeo (ver R-TERRITORIO-07). ENAPRES victimización solo urbana: el cruce con registros distritales se limita a distritos con población urbana y se rotula. Si la ficha técnica de un año no es clara sobre Callao, revisión humana antes de habilitar el cruce.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-TERRITORIO-07",
+   "ambito": "territorio",
+   "titulo": "Área urbano/rural y región natural no son atributos del distrito",
+   "enunciado": "No se debe asignar a un distrito la condición 'urbano' o 'rural' ni repartir datos administrativos distritales en urbano/rural; el área solo se publica cuando la fuente la trae por registro o por centro poblado. La región natural (costa/sierra/selva) solo se usa como dominio de encuesta o como atributo descriptivo del distrito rotulado como clasificación de referencia.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "presupuestal_financiero",
+     "indicadores_derivados",
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "INEI-CPV2017",
+     "INEI-DIRECTORIO-CCPP",
+     "MINEDU-ESCALE-PADRON"
+    ]
+   },
+   "condicion": "desagregacion solicitada ∈ {'urbano','rural'} AND 'area' ∉ columnas de la fuente AND 'codigo_centro_poblado' ∉ llaves_cruce → bloquear; cruce encuesta(dominio=urbano|rural) × registro(nivel=distrito) → bloquear",
+   "accion": "bloquear_cruce",
+   "parametros": {},
+   "mensaje_usuario": "Esta fuente no distingue zonas urbanas y rurales dentro del distrito, así que no podemos separar la cifra por área.",
+   "justificacion": "El INEI define el área en el centro poblado (urbano: centros poblados con 100 o más viviendas agrupadas o capitales de distrito), no en el distrito: casi todos los distritos tienen ambas áreas. Clasificar un distrito como 'rural' extiende a toda su población indicadores medidos solo en una parte (INF-12).",
+   "referencias": [
+    {
+     "titulo": "INEI CPV2017 – Resultados definitivos, Tomo I Tacna (Cuadro 1: distrito × área × sexo × edad simple)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1564/23TOMO_01.pdf"
+    },
+    {
+     "titulo": "PNDA – Ubigeos INEI (corte 2022, 1 891 distritos, ODbL)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-12"
+   ],
+   "ejemplo": "'¿Cuánto se gasta en zonas rurales de Cajamarca?': MEF-DA-PRESUPUESTO-EJECUCION-GASTO no trae área; se responde por distrito y se ofrece, como contexto, el % de población rural del distrito del CPV2017.",
+   "implementacion": "Atributos descriptivos opcionales en dim_ubigeo_historico: pct_poblacion_urbana_cpv2017, region_natural_ref (con fuente). Usarlos solo como contexto y nunca como filtro que reasigne cifras. Para fuentes con codigo_centro_poblado (MINEDU-ESCALE-PADRON, PAIS-TAMBOS-ATENCIONES) el área se obtiene uniendo con INEI-DIRECTORIO-CCPP (área del CP en 2017).",
+   "casos_borde": "Centros poblados nuevos o con código no presente en el directorio 2017: área 'desconocida', no se imputa. Distritos 100 % urbanos (Lima Metropolitana) pueden filtrarse como urbanos solo si pct_poblacion_urbana_cpv2017 = 100.",
+   "prioridad": "posterior"
+  },
+  {
+   "id": "R-TERRITORIO-08",
+   "ambito": "territorio",
+   "titulo": "Calidad territorial de cada carga: cobertura de ubigeo y residuo sin ubicar",
+   "enunciado": "Una carga solo se publica a nivel distrital si al menos 99 % de su numerador se ubica en un distrito vigente; si se ubica entre 95 % y 99 % se publica con advertencia y el residuo se muestra como 'sin ubicar'; por debajo de 95 % se publica solo a departamento o nacional.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "presupuestal_financiero",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "p = Σ valor(filas con ubigeo resuelto a distrito vigente) / Σ valor(todas las filas). p ≥ 0.99 → publicar; 0.95 ≤ p < 0.99 → advertir; p < 0.95 → agregar_nivel(departamento) si el departamento se resuelve en ≥ 0.99, si no nacional.",
+   "accion": "advertir",
+   "parametros": {
+    "umbral_publicar": 0.99,
+    "umbral_advertir": 0.95
+   },
+   "mensaje_usuario": "El {pct_sin_ubicar} % de los registros de esta fuente no tiene un distrito válido; esas cifras se cuentan en el total del país pero no en ningún distrito.",
+   "justificacion": "Las cifras distritales se suman a provincia y departamento; un residuo sin ubicar grande hace que el total departamental no cuadre con la suma de distritos y sesga las tasas a la baja. MINSA-SINADEF, por ejemplo, puede traer el ubigeo como texto.",
+   "referencias": [
+    {
+     "titulo": "INEI – Norma del Código de Ubicación Geográfica (UBIGEO), recurso de la PNDA",
+     "url": "https://www.datosabiertos.gob.pe/sites/default/files/NORMA_DEL_CODIGO_UBIGEO.pdf"
+    },
+    {
+     "titulo": "PNDA – Ubigeos INEI (corte 2022, 1 891 distritos, ODbL)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-05",
+    "INF-06"
+   ],
+   "ejemplo": "(Cifras ilustrativas) MINSA-SINADEF 2023 con 1,8 % de defunciones con distrito en texto no conciliable: se publica por distrito con advertencia y se muestra la fila 'sin ubicar' en la tabla departamental.",
+   "implementacion": "Se calcula tras R-TERRITORIO-02 y la conversión al sistema INEI. Guardar en la tabla de cargas: pct_numerador_ubicado (p) y pct_filas_ubicadas. Conservación: Σ distritos + sin_ubicar = total nacional publicado por la fuente (tolerancia 0,1 %).",
+   "casos_borde": "Fuentes que solo traen nombres (PRONIED-INTERVENCIONES): p se calcula tras el emparejamiento por nombre con similitud ≥ 0,90 dentro de la provincia; los empates van a revisión humana. Montos negativos (anulaciones MEF) se tratan con valor absoluto para p.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-DENOMINADORES-01",
+   "ambito": "denominadores",
+   "titulo": "Denominador oficial fijado por tipo de indicador",
+   "enunciado": "Cada indicador del catálogo debe declarar un denominador principal y sus contrastes según la matriz de esta regla; el motor no puede elegir otro en tiempo de consulta. RENIEC nunca es denominador principal.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [
+     "cobertura_programa",
+     "registro_eventos",
+     "notificacion_vigilancia",
+     "atenciones_produccion",
+     "presupuesto_gasto",
+     "stock_infraestructura",
+     "prevalencia"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+     "MINSA-POBLACION-ESTIMADA",
+     "INEI-CPV2017",
+     "INEI-CPV2025",
+     "RENIEC-POBLACION-IDENTIFICADA",
+     "MINSA-PADRON-NOMINAL"
+    ]
+   },
+   "condicion": "indicador.requiere_denominador = true AND (indicador.denominador_principal IS NULL OR indicador.denominador_principal ∉ matriz[tipo_denominador])",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "matriz": {
+     "tasa_poblacion_total (por 1 000 / 100 000 hab., gasto per cápita)": {
+      "principal": "INEI-PROYECCIONES-POBLACION-DISTRITAL (30-jun del año, mismo vintage en toda la serie)",
+      "contraste": [
+       "INEI-CPV2025 (solo año 2025, población censada)"
+      ],
+      "nivel_minimo": "distrito"
+     },
+     "cobertura_salud_por_edad (vacunas <1 y <5, CRED, tamizaje, gestantes)": {
+      "principal": "MINSA-POBLACION-ESTIMADA (corte anual cerrado)",
+      "contraste": [
+       "Padrón Nominal agregado (<6 años)",
+       "prorrateo propio INEI (R-DENOMINADORES-03)"
+      ],
+      "nivel_minimo": "distrito"
+     },
+     "cobertura_programa_por_edad_no_salud (Pensión 65 ≥65, matrícula 3-5/6-11/12-16)": {
+      "principal": "prorrateo propio INEI (R-DENOMINADORES-03)",
+      "contraste": [
+       "MINSA-POBLACION-ESTIMADA",
+       "INEI-CPV2025 grandes grupos (2025)"
+      ],
+      "nivel_minimo": "distrito (referencial)"
+     },
+     "prevalencia_encuesta (ENDES, ENAHO, ENAPRES)": {
+      "principal": "no requiere: usa factores de expansión de la encuesta",
+      "para_numero_absoluto": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD (mismo grupo de edad y año)",
+      "nivel_minimo": "nivel_territorial_inferencia"
+     },
+     "linea_base_estructural (composición por edad, % población por grupo)": {
+      "principal": "INEI-CPV2017 (hasta 2024) / INEI-CPV2025 (desde 2025)",
+      "nivel_minimo": "distrito"
+     },
+     "poblacion_con_dni / identificación": {
+      "principal": "RENIEC-POBLACION-IDENTIFICADA solo como numerador; denominador INEI",
+      "nota": "RENIEC nunca como denominador de coberturas"
+     }
+    }
+   },
+   "mensaje_usuario": "Calculado sobre la población {nombre_denominador} ({fuente_denominador}, {anio}).",
+   "justificacion": "Hay tres poblaciones distritales incompatibles (INEI total, MINSA por edad, RENIEC con DNI por domicilio declarado) más el Padrón Nominal; usar una u otra cambia coberturas en decenas de puntos en distritos chicos (INF-14, EMB-01). El MINSA calcula sus coberturas con su propia población estimada (REUNIS), así que usar otra produce cifras que no coinciden con las oficiales del sector. El INEI no proyecta edad ni sexo bajo departamento (catálogo INEI-PROYECCIONES-DEPARTAMENTAL-EDAD).",
+   "referencias": [
+    {
+     "titulo": "INEI – Colección: Estimaciones y proyecciones de población nacional, departamental, provincial y distrital",
+     "url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital"
+    },
+    {
+     "titulo": "INEI Boletín Especial N.º 25 – Proyecciones departamentales por edad simple 1995-2030",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1722/libro.pdf"
+    },
+    {
+     "titulo": "MINSA – REUNIS (Información demográfica: población estimada)",
+     "url": "https://www.minsa.gob.pe/reunis/"
+    },
+    {
+     "titulo": "PNDA – RENIEC: Población identificada con DNI",
+     "url": "https://www.datosabiertos.gob.pe/dataset/reniec-poblaci%C3%B3n-identificada-con-dni-registro-nacional-de-identificaci%C3%B3n-y-estado-civil"
+    },
+    {
+     "titulo": "INEI – Censos Nacionales 2025: Presentación de resultados (omisión censal 4,25 %)",
+     "url": "https://sistemas.inei.gob.pe/dir-segmentacion-ci/postcensal/prod/adjuntos/publicaciones/Presentacion_resultados.pdf"
+    },
+    {
+     "titulo": "INEI CPV2017 – Resultados definitivos, Tomo I Tacna (Cuadro 1: distrito × área × sexo × edad simple)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1564/23TOMO_01.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-14",
+    "EMB-01",
+    "EXA-A-07"
+   ],
+   "ejemplo": "Cobertura de vacuna pentavalente en <1 año, distrito X, 2025: numerador MINSA-INMUNIZACIONES / población <1 año MINSA-POBLACION-ESTIMADA 2025; contraste: <1 año del prorrateo INEI y del Padrón Nominal. Tasa de homicidios: numerador / proyección INEI total 2025.",
+   "implementacion": "Campos de indicador: tipo_denominador (enum de la matriz), denominador_principal (id_fuente + grupo_edad + sexo), denominadores_contraste[]. El motor resuelve el denominador por (ubigeo, anio, grupo_edad, sexo, vintage) desde una tabla fact_poblacion(fuente_id, vintage, ubigeo_inei, geografia_base, anio, edad_min, edad_max, sexo, valor, metodo ∈ {oficial, prorrateo_propio, censado}).",
+   "casos_borde": "Si el denominador principal no existe para el año (p. ej., MINSA-POBLACION-ESTIMADA no descargada), se usa el primer contraste con mensaje 'población alternativa' y la cifra pasa a referencial. Padrón Nominal solo para <6 años y solo si hay corte del mismo año; el archivo PNDA de 2017 no sirve para años posteriores.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-DENOMINADORES-02",
+   "ambito": "denominadores",
+   "titulo": "Vintage del denominador: un solo vintage por serie y numerador alineado",
+   "enunciado": "Todo denominador debe llevar su vintage (fuente, base censal, edición y fecha de corte) y una serie debe usar el mismo vintage en todos sus años; se prohíbe combinar en una misma serie o cociente poblaciones de distinta base (proyección base 2017, censo 2025 censado, MINSA de distinto corte).",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "MINSA-POBLACION-ESTIMADA",
+     "INEI-CPV2025",
+     "INEI-CPV2017",
+     "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD"
+    ]
+   },
+   "condicion": "COUNT(DISTINCT vintage_denominador) sobre los años de la serie > 1 → bloquear; para un cociente: vintage(numerador_poblacional) ≠ vintage(denominador) cuando el numerador también es población (p. ej., afiliados expandidos) → bloquear",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "formato_vintage": "<FUENTE>|base=<CPV2017|CPV2025>|ed=<AAAA-MM>|corte=<AAAA-MM-DD>",
+    "ejemplos": [
+     "INEI-PROY-DIST|base=CPV2017|ed=2025-12",
+     "MINSA-POB|base=INEI2017|corte=2026-03-31",
+     "CPV2025|censada|ed=2026-07"
+    ]
+   },
+   "mensaje_usuario": "Todos los años se calcularon con la misma estimación de población ({vintage_legible}) para que las diferencias no se deban a un cambio de fuente.",
+   "justificacion": "El INEI valida y actualiza la proyección distrital al cierre de cada año y la reemplazará con la base Censo 2025; el MINSA aplica factores de corrección durante el año, así que la misma cobertura cambia según la fecha de corte (catálogo MINSA-POBLACION-ESTIMADA). Unir la población censada 2025 (32,7 M, sin corregir omisión) con proyecciones de población total (que sí la corrigen) introduce un salto artificial de ~4–6 % (omisión 4,25 % en 2025; ≈5,9 % en 2017; EXA-A-13).",
+   "referencias": [
+    {
+     "titulo": "INEI – Colección: Estimaciones y proyecciones de población nacional, departamental, provincial y distrital",
+     "url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital"
+    },
+    {
+     "titulo": "INEI – Censos Nacionales 2025: Presentación de resultados (omisión censal 4,25 %)",
+     "url": "https://sistemas.inei.gob.pe/dir-segmentacion-ci/postcensal/prod/adjuntos/publicaciones/Presentacion_resultados.pdf"
+    },
+    {
+     "titulo": "INEI – Censos 2025: población censada por departamento, provincia y distrito",
+     "url": "https://censos2025.inei.gob.pe/resultados/poblacion-censada/indicadores"
+    },
+    {
+     "titulo": "MINSA – REUNIS (Información demográfica: población estimada)",
+     "url": "https://www.minsa.gob.pe/reunis/"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-14",
+    "EXA-A-07",
+    "EXA-A-13"
+   ],
+   "ejemplo": "Serie 2018–2025 de tasa de defunciones (MINSA-SINADEF) por distrito: denominador = edición dic-2025 de la proyección base 2017 para los 8 años; la población censada 2025 se muestra aparte como contraste del año 2025, nunca como último punto de la serie.",
+   "implementacion": "fact_poblacion.vintage obligatorio; el motor fija vintage_serie = el vintage más reciente que cubra todos los años pedidos; si ninguno los cubre, corta la serie al rango cubierto y lo informa. MINSA: usar solo cortes de año cerrado (corte fijo, p. ej. el del 31-mar del año siguiente) y archivar cada corte. Guardar vintage en cada resultado (campo resultado.vintage_denominador).",
+   "casos_borde": "Indicadores oficiales ya calculados por la fuente (coberturas publicadas en REUNIS): se publican con el denominador de la fuente y se rotulan 'calculado por MINSA con su población'; no se recalculan mezclando. Año sin edición disponible en el vintage elegido (2026 en proyección con fin 2026): permitido; 2027 sin proyección → no se extrapola.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-DENOMINADORES-03",
+   "ambito": "denominadores",
+   "titulo": "Población distrital por edad y sexo: prorrateo con ajuste a dos márgenes (estimación propia)",
+   "enunciado": "Cuando no exista población oficial por edad y sexo a nivel distrital, el denominador se estimará repartiendo el total distrital INEI con la estructura del censo y ajustándolo a los totales departamentales por edad y sexo del INEI; el resultado debe rotularse 'estimación propia' y la cifra que lo use se publica como referencial en distritos con menos de 100 personas en el grupo de edad.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [
+     "cobertura_programa",
+     "registro_eventos",
+     "atenciones_produccion"
+    ],
+    "base_geografica": [
+     "residencia",
+     "establecimiento"
+    ],
+    "fuentes": [
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+     "INEI-CPV2017",
+     "INEI-CPV2025"
+    ]
+   },
+   "condicion": "denominador.metodo = 'prorrateo_propio' → rotular; AND poblacion_grupo_edad(distrito, anio) < 100 → publicar_referencial",
+   "accion": "rotular",
+   "parametros": {
+    "poblacion_minima_grupo_para_publicar_normal": 100,
+    "tolerancia_convergencia_ipf": 0.001,
+    "max_iteraciones_ipf": 100,
+    "anios_desde_censo_alerta": 6
+   },
+   "mensaje_usuario": "La población de este grupo de edad en el distrito es una estimación propia: reparte la población total oficial del INEI según la estructura por edades del censo {anio_censo}. Puede alejarse de la real si el distrito cambió mucho desde entonces.",
+   "justificacion": "El INEI declara que a nivel provincial y distrital solo proyecta población total (catálogo INEI-PROYECCIONES-DEPARTAMENTAL-EDAD; INF-14, EMB-01), pero publica edad simple × sexo por distrito en el CPV2017 (Tomo I, Cuadro 1) y edad simple × sexo por departamento para 1995–2030 (Boletín 25). El ajuste proporcional iterativo a ambos márgenes es el método estándar para estimaciones de áreas menores cuando se conocen los totales; respeta exactamente el total distrital oficial y el total departamental por edad.",
+   "referencias": [
+    {
+     "titulo": "INEI Boletín Especial N.º 25 – Proyecciones departamentales por edad simple 1995-2030",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1722/libro.pdf"
+    },
+    {
+     "titulo": "INEI CPV2017 – Resultados definitivos, Tomo I Tacna (Cuadro 1: distrito × área × sexo × edad simple)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1564/23TOMO_01.pdf"
+    },
+    {
+     "titulo": "INEI – Colección: Estimaciones y proyecciones de población nacional, departamental, provincial y distrital",
+     "url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital"
+    },
+    {
+     "titulo": "INEI – Censos 2025: población censada por departamento, provincia y distrito",
+     "url": "https://censos2025.inei.gob.pe/resultados/poblacion-censada/indicadores"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-14",
+    "EMB-01"
+   ],
+   "ejemplo": "Población de 65+ en un distrito de Puno 2024 para Pensión 65 (PENSION65-USUARIOS): semilla = proporción 65+ por sexo del distrito en el CPV2017; se ajusta para que la suma de distritos del departamento iguale la población 65+ de Puno 2024 del Boletín 25 y la suma de grupos del distrito iguale su total INEI 2024.",
+   "implementacion": "Para cada departamento k y año t: semilla S[d,g] = censados(d, g) del CPV2017 (g = grupo edad×sexo; quinquenal, y edad simple 0–5 para primera infancia). Matriz inicial X = S. Iterar: (1) escalar filas para que Σ_g X[d,g] = P_INEI_dist[d,t]; (2) escalar columnas para que Σ_d X[d,g] = P_INEI_dep[k,g,t]; hasta max|error relativo| < 0,001. Antes de iterar, reescalar los márgenes de columna para que Σ_g P_dep = Σ_d P_dist (diferencias de redondeo del INEI). Distritos creados después de 2017: semilla = estructura del grupo comparable (R-TERRITORIO-04) o, si hay, suma de sus centros poblados del CPV2017. Al publicarse el CPV2025 por distrito con edad: semilla = CPV2025 para t ≥ 2023 y advertencia de cambio. Guardar metodo='prorrateo_propio', semilla='CPV2017', vintage de los márgenes.",
+   "casos_borde": "Celdas semilla en 0 (distrito sin censados de 0 años) quedan en 0: imputar 0,5 antes del ajuste para no bloquear la convergencia. Si t − anio_censo > 6, añadir la advertencia de desfase. Menores de 1 año: el censo subregistra niños pequeños; el ajuste al margen departamental lo corrige solo en promedio departamental, no por distrito. Distritos con fuerte migración reciente (Lima periférica, Madre de Dios) pueden tener errores > 20 %: se recomienda contrastar con la población MINSA (R-DENOMINADORES-05).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-DENOMINADORES-04",
+   "ambito": "denominadores",
+   "titulo": "Censo 2017 como línea de base, Censo 2025 para 2025 y transición de base",
+   "enunciado": "El CPV2017 debe usarse solo como línea de base y semilla de estructura; el CPV2025 (población censada) solo para cifras del año 2025 rotuladas como tales; cuando el INEI publique proyecciones con base CPV2025, todas las series deben recalcularse con el nuevo vintage en un solo cambio, archivando el anterior, sin empalmar años de distinta base.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "censo",
+     "estimacion_modelada"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [
+     "residencia",
+     "territorio"
+    ],
+    "fuentes": [
+     "INEI-CPV2017",
+     "INEI-CPV2025",
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD"
+    ]
+   },
+   "condicion": "fuente_denominador='INEI-CPV2025' AND anio ≠ 2025 → bloquear; existe vintage base=CPV2025 publicado por INEI AND serie usa base=CPV2017 → revision_humana (migrar) dentro de 30 días; |P_proy2017(d,2025) − P_cpv2025_censada(d)| / P_cpv2025_censada(d) > 0.10 → advertir en todas las tasas 2025 del distrito",
+   "accion": "advertir",
+   "parametros": {
+    "umbral_diferencia_proyeccion_vs_censo": 0.1,
+    "dias_maximos_migracion": 30,
+    "omision_censal_2025": 0.0425,
+    "omision_censal_2017": 0.059
+   },
+   "mensaje_usuario": "La población de {distrito} usada para esta tasa (proyección del INEI basada en el Censo 2017) difiere en {pct} % de la contada en el Censo 2025. Cuando el INEI publique sus nuevas proyecciones, esta cifra se recalculará.",
+   "justificacion": "Los resultados definitivos del CPV2025 (jul-2026) ya están por distrito (EXA-A-07) y las proyecciones vigentes siguen en base 2017; el INEI anunció su reemplazo (catálogo). La población censada no incluye la corrección por omisión (4,25 % en 2025, ≈5,9 % en 2017), así que no es intercambiable con la proyección de población total. Recalcular todo de una vez evita series con un quiebre artificial.",
+   "referencias": [
+    {
+     "titulo": "INEI – Censos Nacionales 2025: Presentación de resultados (omisión censal 4,25 %)",
+     "url": "https://sistemas.inei.gob.pe/dir-segmentacion-ci/postcensal/prod/adjuntos/publicaciones/Presentacion_resultados.pdf"
+    },
+    {
+     "titulo": "INEI – Censos 2025: población censada por departamento, provincia y distrito",
+     "url": "https://censos2025.inei.gob.pe/resultados/poblacion-censada/indicadores"
+    },
+    {
+     "titulo": "INEI – Colección: Estimaciones y proyecciones de población nacional, departamental, provincial y distrital",
+     "url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital"
+    },
+    {
+     "titulo": "INEI CPV2017 – Resultados definitivos, Tomo I Tacna (Cuadro 1: distrito × área × sexo × edad simple)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1564/23TOMO_01.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "EXA-A-07",
+    "EXA-A-13",
+    "INF-14"
+   ],
+   "ejemplo": "(Cifras ilustrativas) Tasa de afiliación SIS 2025 en un distrito de Lima Este: se usa la proyección 2025 base 2017 (vintage de la serie) y, si el CPV2025 muestra 18 % más población, la cifra lleva la advertencia y la ficha muestra ambas tasas.",
+   "implementacion": "Monitor de publicaciones INEI (colección 71202): al detectar una edición base CPV2025, cargar como nuevo vintage, recalcular todos los indicadores, comparar con la versión anterior (diferencias > 5 puntos o > 10 % se listan en una nota de cambios), y conmutar el vintage por defecto en una sola liberación. El vintage base 2017 queda consultable como archivado.",
+   "casos_borde": "Si el INEI publica la nueva base solo a departamento primero, se migra por nivel: departamento con base 2025 y distrito con base 2017 no pueden mezclarse en una misma respuesta (se rotula cada nivel). Distritos sin cifra del CPV2025 (no publicados o fusionados): sin advertencia, sin contraste.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-DENOMINADORES-05",
+   "ambito": "denominadores",
+   "titulo": "Sensibilidad al denominador: rango cuando las poblaciones difieren más de 10 %",
+   "enunciado": "Para cada cifra con denominador se debe calcular el indicador con los denominadores de contraste; si alguno difiere del principal en más de 10 % se muestra el rango y la cifra pasa a referencial; si difiere en más de 25 % no se publica valor puntual distrital y se ofrece la provincia.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [
+     "cobertura_programa",
+     "registro_eventos",
+     "notificacion_vigilancia",
+     "atenciones_produccion",
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "MINSA-POBLACION-ESTIMADA",
+     "INEI-CPV2025",
+     "MINSA-PADRON-NOMINAL",
+     "RENIEC-POBLACION-IDENTIFICADA"
+    ]
+   },
+   "condicion": "s = max_j |D_j − D_ppal| / D_ppal sobre contrastes j ≠ RENIEC. s ≤ 0.10 → publicar; 0.10 < s ≤ 0.25 → publicar_referencial con rango [min_j I_j, max_j I_j]; s > 0.25 → agregar_nivel(provincia) y mostrar el rango distrital solo en la ficha. RENIEC: si |D_reniec − D_ppal| / D_ppal > 0.20 → nota en la ficha, sin cambiar la acción.",
+   "accion": "publicar_referencial",
+   "parametros": {
+    "umbral_rango": 0.1,
+    "umbral_suprimir_puntual": 0.25,
+    "umbral_nota_reniec": 0.2
+   },
+   "mensaje_usuario": "Según qué población oficial se use, esta cobertura va de {min} % a {max} %. Mostramos {valor} % (población {fuente_principal}), pero el valor real podría estar en cualquier punto de ese rango.",
+   "justificacion": "INF-14 recomienda publicar la sensibilidad cuando los denominadores difieren más de 10 %; en distritos pequeños la diferencia entre población MINSA, Padrón Nominal y proyección INEI cambia coberturas en decenas de puntos. RENIEC solo se usa como contraste porque mide domicilio declarado en el DNI (sesgo a lugar de origen, fallecidos no depurados, menores sin DNI), por lo que su discrepancia no es evidencia de error del principal.",
+   "referencias": [
+    {
+     "titulo": "MINSA – REUNIS (Información demográfica: población estimada)",
+     "url": "https://www.minsa.gob.pe/reunis/"
+    },
+    {
+     "titulo": "INEI – Colección: Estimaciones y proyecciones de población nacional, departamental, provincial y distrital",
+     "url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital"
+    },
+    {
+     "titulo": "PNDA – RENIEC: Población identificada con DNI",
+     "url": "https://www.datosabiertos.gob.pe/dataset/reniec-poblaci%C3%B3n-identificada-con-dni-registro-nacional-de-identificaci%C3%B3n-y-estado-civil"
+    },
+    {
+     "titulo": "INEI – Censos 2025: población censada por departamento, provincia y distrito",
+     "url": "https://censos2025.inei.gob.pe/resultados/poblacion-censada/indicadores"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-14",
+    "EMB-01"
+   ],
+   "ejemplo": "(Cifras ilustrativas) Cobertura de CRED en <1 año en un distrito de Ucayali: con población MINSA 412 niños → 71 %; con prorrateo INEI 498 → 59 %; s = 0,21 → se publica '71 % (referencial; entre 59 % y 71 % según la población usada)'.",
+   "implementacion": "Para cada resultado: calcular D_ppal y D_j por (ubigeo, anio, grupo_edad, sexo); s y el rango de I = numerador / D. Guardar resultado.sensibilidad_denominador = s, resultado.rango_indicador = [min, max], resultado.denominadores_usados = [{fuente, vintage, valor}]. El LLM recibe el rango y el mensaje ya armados.",
+   "casos_borde": "Si solo existe el principal (sin contrastes para el grupo de edad), s = null: se publica con la etiqueta de método de R-DENOMINADORES-01 y sin rango. Denominadores con distinto vintage de base no se comparan entre sí para s si uno es población censada (se corrige primero por omisión departamental o se excluye). Coberturas >100 % se rigen por R-DENOMINADORES-06 antes que por esta regla.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-DENOMINADORES-06",
+   "ambito": "denominadores",
+   "titulo": "Coberturas imposibles y desalineación numerador-denominador por base geográfica",
+   "enunciado": "Una cobertura distrital mayor a 100 % no se publica en el distrito: se agrega a provincia (o red de salud) y se explica. Si el numerador tiene base_geografica 'establecimiento' y el denominador es población residente, la cifra distrital debe rotularse como 'atenciones en establecimientos del distrito por habitante', no como cobertura de residentes.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [
+     "cobertura_programa",
+     "atenciones_produccion"
+    ],
+    "base_geografica": [
+     "establecimiento",
+     "residencia"
+    ],
+    "fuentes": [
+     "MINSA-INMUNIZACIONES",
+     "MINSA-REUNIS",
+     "INS-CENAN-SIEN",
+     "SIS-ATENCIONES",
+     "ESSALUD-DATOS-ABIERTOS",
+     "MINEDU-SIAGIE-DATOS-ABIERTOS",
+     "PENSION65-USUARIOS",
+     "JUNTOS-HOGARES-UBIGEO"
+    ]
+   },
+   "condicion": "numerador / denominador > 1.00 a nivel distrito → agregar_nivel(provincia); repetir en provincia; si sigue > 1.00 en departamento → suprimir y revision_humana. numerador.base_geografica='establecimiento' AND denominador.base_geografica ∈ {'residencia','territorio'} → rotular",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "cobertura_maxima": 1.0,
+    "niveles_escalamiento": [
+     "distrito",
+     "provincia",
+     "departamento"
+    ]
+   },
+   "mensaje_usuario": "En {distrito} se registran más atenciones que niños que viven allí (muchas familias de distritos vecinos se atienden en sus establecimientos), así que mostramos la cifra de la provincia {provincia}.",
+   "justificacion": "Coberturas >100 % aparecen en distritos con establecimientos que atienden a no residentes o con denominador subestimado (catálogo MINSA-INMUNIZACIONES; INF-14). Publicarlas como cobertura induce a error al público no especialista; al agregar a provincia se internaliza buena parte del flujo entre distritos.",
+   "referencias": [
+    {
+     "titulo": "MINSA – REUNIS (Información demográfica: población estimada)",
+     "url": "https://www.minsa.gob.pe/reunis/"
+    },
+    {
+     "titulo": "INEI – Colección: Estimaciones y proyecciones de población nacional, departamental, provincial y distrital",
+     "url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-14"
+   ],
+   "ejemplo": "(Cifras ilustrativas) Vacunación SPR en el distrito capital de una provincia de la sierra: 134 % → se publica la cobertura provincial 88 % con la explicación; los distritos rurales vecinos muestran coberturas bajas que pueden deberse al mismo flujo y llevan la advertencia de base 'establecimiento'.",
+   "implementacion": "Aplicar después de R-DENOMINADORES-05. Para indicadores de salud, la agregación preferente es la red/microrred si existe en dim_establecimiento; si no, provincia. Registrar resultado.motivo_agregacion='cobertura_mayor_100'. Esta regla no reemplaza las reglas de base geográfica del ámbito 'cruces'; solo cubre la consecuencia sobre el denominador.",
+   "casos_borde": "Cobertura entre 95 % y 100 % en distritos con base 'establecimiento': publicar con la advertencia de base, sin agregar. Programas con focalización (JUNTOS) en los que el denominador correcto es la población elegible y no la total: no aplicar 100 % sobre la población total; requiere denominador de elegibles o se publica solo el conteo.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-DENOMINADORES-07",
+   "ambito": "denominadores",
+   "titulo": "Denominador en geografía congelada y fecha de referencia alineada",
+   "enunciado": "En series en geografía GEO2017 el denominador debe sumarse sobre el mismo grupo comparable que el numerador, y su fecha de referencia debe ser la del numerador (30 de junio para flujos anuales; la fecha de corte para stocks como afiliados o padrones).",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [
+     "cobertura_programa",
+     "registro_eventos",
+     "notificacion_vigilancia",
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "SIS-AFILIADOS",
+     "JUNTOS-HOGARES-UBIGEO",
+     "PENSION65-USUARIOS",
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "MINSA-POBLACION-ESTIMADA"
+    ]
+   },
+   "condicion": "resultado.geografia_base(numerador) ≠ resultado.geografia_base(denominador) → bloquear; |anio(fecha_ref_numerador) − anio(fecha_ref_denominador)| > 0 → bloquear (para stocks con corte en el primer trimestre se admite el denominador del año anterior y se rotula)",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "fecha_ref_flujos": "30-06",
+    "desfase_maximo_anios": 0
+   },
+   "mensaje_usuario": null,
+   "justificacion": "Las proyecciones INEI son al 30 de junio; los stocks (SIS-AFILIADOS, padrones) son a una fecha de corte. Un grupo comparable con numerador sumado y denominador de solo el distrito madre (o viceversa) reproduce el error de 'numerador nuevo, denominador viejo' descrito en INF-06.",
+   "referencias": [
+    {
+     "titulo": "INEI – Colección: Estimaciones y proyecciones de población nacional, departamental, provincial y distrital",
+     "url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital"
+    },
+    {
+     "titulo": "Government Statistical Service (GSS) Geography Policy – best-fit (NRS Scotland)",
+     "url": "https://nrscotland.gov.uk/publications/geography-best-fit-policy"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-06",
+    "INF-14"
+   ],
+   "ejemplo": "Afiliados SIS a enero 2026 en el grupo comparable de Huanta (incluye Putis): denominador = proyección 2026 de Huanta + Putis; se admite usar 2025 rotulado si 2026 no está publicado.",
+   "implementacion": "fact_poblacion se materializa también en GEO2017 (SUM por grupo_comparable_geo2017). El motor obtiene ambos lados con la misma función resolver_territorio(ubigeo, anio, geografia_base).",
+   "casos_borde": "Proyección que no trae al hijo en años previos a su creación: el grupo usa la cifra del madre original (que ya incluía ese territorio), coherente con la definición del grupo.",
+   "prioridad": "mvp"
+  }
+ ],
+ "especificaciones": {
+  "dim_ubigeo_historico": {
+   "proposito": "Dimensión territorial con vigencia (tipo SCD-2): una fila por versión de cada unidad (departamento, provincia, distrito) desde la geografía del CPV2017 hasta hoy; es la llave de todos los cruces (R-TERRITORIO-01) y la base de la geografía congelada (R-TERRITORIO-04).",
+   "columnas": [
+    {
+     "columna": "id_version",
+     "tipo": "int PK",
+     "regla": "sustituta; una por (ubigeo_inei, vigente_desde)"
+    },
+    {
+     "columna": "ubigeo_inei",
+     "tipo": "char(6)",
+     "regla": "con ceros a la izquierda; 2 dígitos dpto + 2 prov + 2 dist; para provincia 'DDPP00', departamento 'DD0000'"
+    },
+    {
+     "columna": "ubigeo_reniec",
+     "tipo": "char(6) null",
+     "regla": "desde puente_ubigeo (R-TERRITORIO-03); null mientras RENIEC no asigne"
+    },
+    {
+     "columna": "nombre",
+     "tipo": "text",
+     "regla": "nombre oficial según la norma de creación/ el INEI, con tildes"
+    },
+    {
+     "columna": "nombre_normalizado",
+     "tipo": "text",
+     "regla": "mayúsculas sin tildes ni signos (para emparejar)"
+    },
+    {
+     "columna": "nombres_alternos",
+     "tipo": "text[]",
+     "regla": "variantes vistas en fuentes (p. ej. 'UNION ASHANINKA', 'UNIÓN ASHÁNINKA')"
+    },
+    {
+     "columna": "nivel",
+     "tipo": "enum(departamento, provincia, distrito)",
+     "regla": ""
+    },
+    {
+     "columna": "ubigeo_padre",
+     "tipo": "char(6)",
+     "regla": "unidad jerárquica superior vigente en esa versión (provincia del distrito; departamento de la provincia)"
+    },
+    {
+     "columna": "vigente_desde",
+     "tipo": "date",
+     "regla": "día siguiente a la publicación de la ley en El Peruano (vigencia legal); '2017-10-22' para unidades preexistentes al CPV2017"
+    },
+    {
+     "columna": "vigente_hasta",
+     "tipo": "date null",
+     "regla": "null si vigente; para el distrito madre NO se cierra la versión por perder territorio, se abre una nueva versión con territorio_modificado=true"
+    },
+    {
+     "columna": "origen",
+     "tipo": "enum(preexistente_2017, creacion, escision, fusion, anexion, cambio_codigo, cambio_nombre, cambio_capital, cambio_provincia)",
+     "regla": "creacion = sobre territorio sin distrito (raro); escision = hijo segregado de uno o más distritos; cambio_provincia = distrito que pasa a provincia nueva (p. ej. Putumayo)"
+    },
+    {
+     "columna": "territorio_modificado",
+     "tipo": "bool",
+     "regla": "true en la versión del distrito madre posterior a una escisión"
+    },
+    {
+     "columna": "norma_legal",
+     "tipo": "text",
+     "regla": "'Ley N.º 31644'; solo leyes que crean (las leyes declarativas de interés nacional, como la Ley 31513, NO crean distritos)"
+    },
+    {
+     "columna": "fecha_publicacion_norma",
+     "tipo": "date",
+     "regla": "fecha en El Peruano"
+    },
+    {
+     "columna": "url_norma",
+     "tipo": "url",
+     "regla": "El Peruano o leyes.congreso.gob.pe"
+    },
+    {
+     "columna": "fecha_alta_inei",
+     "tipo": "date null",
+     "regla": "primera publicación INEI que trae el código (lista de ubigeos, proyecciones o Directorio)"
+    },
+    {
+     "columna": "anio_primeros_datos_registros",
+     "tipo": "int null",
+     "regla": "primer año en que los registros principales (CNV, SIS, MEF) usan el código; se llena con R-TERRITORIO-05"
+    },
+    {
+     "columna": "grupo_comparable_geo2017",
+     "tipo": "char(6)|'G-'+id",
+     "regla": "distrito 2017 del que procede o código de grupo si procede de varios"
+    },
+    {
+     "columna": "fuente",
+     "tipo": "text[]",
+     "regla": "IDs del catálogo y documentos usados (INEI-PNDA-UBIGEOS, INEI-PROYECCIONES-POBLACION-DISTRITAL, INEI-DIRECTORIO-MUNICIPALIDADES, Lib1860 Anexo 3, ley)"
+    },
+    {
+     "columna": "estado_verificacion",
+     "tipo": "enum(verificado_ley, verificado_inei, pendiente)",
+     "regla": "solo 'verificado_*' entra a producción"
+    },
+    {
+     "columna": "version_tabla",
+     "tipo": "text",
+     "regla": "semver de la tabla (v1.0 = 1 892 distritos)"
+    },
+    {
+     "columna": "region_natural_ref, pct_poblacion_urbana_cpv2017",
+     "tipo": "text, numeric",
+     "regla": "descriptivos opcionales (R-TERRITORIO-07)"
+    }
+   ],
+   "tabla_relacion": {
+    "rel_ubigeo_origen": "ubigeo_hijo, ubigeo_origen, tipo (escision|fusion|anexion|cambio_codigo), es_origen_principal bool, poblacion_cedida_cpv2017 (suma de centros poblados transferidos, si se puede reconstruir), fuente; permite hijos con varios orígenes (Alto Trujillo)."
+   },
+   "construccion": [
+    "1. Base 2017: lista de distritos del CPV2017 (REDATAM/tomos) → origen='preexistente_2017'. Comprobar que coincide con la lista de Lib1715 (1 874 distritos a dic-2019).",
+    "2. Altas 2018–2022: Anexo 3 de Lib1860 ('Dispositivos legales de modificación de ámbitos territoriales', 16 distritos creados 2020–2021) y Directorio Nacional de Municipalidades 2021 (sección 1.2, por nombre) → para cada uno, leer la ley en El Peruano: fecha de publicación, distrito(s) de origen (artículo de límites), capital.",
+    "3. Altas 2022–hoy: anti-join entre INEI-PNDA-UBIGEOS (corte 2022, 1 891) y la lista de INEI-PROYECCIONES-POBLACION-DISTRITAL (1 892) + Directorio 2025 (196 provinciales + 1 695 distritales = 1 891 municipalidades con autoridades); toda diferencia se documenta con su ley.",
+    "4. Cambios de código y de provincia: comparar la base 2017 con la lista vigente por nombre dentro de la provincia; los códigos que cambian (p. ej. 160109/160114 → 160801/160803 por la provincia de Putumayo) se cargan como cambio_codigo/cambio_provincia con vigente_hasta en el código anterior.",
+    "5. Grupos comparables: para cada hijo, grupo_comparable_geo2017 = su origen principal si tiene uno; si tiene varios, crear grupo 'G-' con la unión y asignarlo también a los orígenes.",
+    "6. Puente RENIEC: R-TERRITORIO-03.",
+    "7. Revisión humana de toda fila nueva antes de marcarla 'verificado_ley'."
+   ],
+   "validacion": [
+    "Conteo: distritos vigentes al 2026-10-05 = 1 892 (lista de proyecciones dic-2025); si la cuenta difiere, la carga de la tabla falla.",
+    "Distrito 1 892: identificar con el anti-join del paso 3. Candidatos a verificar: Alto Trujillo (130112, Ley 31644, publicada 15-12-2022; ausente en el puente 2021) y San Antonio (Mariscal Nieto, Moquegua; Ley 31216 de 2021, ratificada por el TC el 05-10-2023; ausente con código INEI en el puente 2021). Notar que el puente 2021 ya trae 16 creaciones 2020–2021 (coherente con 1 890 en Lib1860), por lo que las altas 1 891 y 1 892 son posteriores a 2021.",
+    "Unicidad: un solo registro vigente por ubigeo_inei y por ubigeo_reniec en cualquier fecha.",
+    "Jerarquía: todo ubigeo_padre existe y está vigente en el mismo intervalo; los 4 primeros dígitos del distrito = provincia padre.",
+    "Cobertura de grupos: todo distrito vigente tiene grupo_comparable_geo2017 y todo grupo contiene al menos un distrito de 2017.",
+    "Conservación de población: Σ proyección INEI (año t) de los distritos de un grupo = proyección del grupo; Σ distritos de un departamento = total departamental publicado (tolerancia 0,1 %).",
+    "Ningún código de la tabla puede ser un centro poblado (p. ej. 150144 'Santa María de Huachipa' del puente GitHub)."
+   ],
+   "mantenimiento": [
+    "Mensual: búsqueda en El Peruano de 'Ley de creación del distrito' y de leyes de demarcación y organización territorial (SDOT-PCM); cada alta se carga como 'pendiente' con fecha de vigencia legal.",
+    "Anual: al publicarse el Directorio Nacional de Municipalidades y la proyección distrital de diciembre, conciliar conteo y códigos; pasar las altas a 'verificado_inei' cuando el INEI publique el código.",
+    "En cada carga de fuente: registrar los códigos no resueltos; si aparece un código desconocido en ≥ 2 fuentes, abrir revisión (posible distrito nuevo).",
+    "Versionar la tabla (version_tabla) y guardar en cada resultado la versión usada; nunca editar una versión publicada (solo añadir filas)."
+   ]
+  },
+  "puente_ubigeo": "Ver R-TERRITORIO-03 (esquema y pasos).",
+  "dim_dominio": "Ver R-TERRITORIO-06 (esquema).",
+  "fact_poblacion": "fuente_id, vintage, metodo (oficial|prorrateo_propio|censado), geografia_base (vigente_AAAA|GEO2017), ubigeo_inei, anio, fecha_referencia, edad_min, edad_max, sexo (T|M|F), valor, semilla, iteraciones_ipf, error_max_ipf."
+ },
+ "campos_nuevos": [
+  {
+   "campo": "sistema_ubigeo",
+   "tipo": "enum(inei, reniec, mixto, nombres, ninguno)",
+   "donde": "catalogo",
+   "para_que": "Sistema de codificación verificado empíricamente por fuente y versión (R-TERRITORIO-02); reemplaza la declaración en llaves_cruce como fuente de verdad."
+  },
+  {
+   "campo": "fecha_corte_ubigeo",
+   "tipo": "str ISO o null",
+   "donde": "catalogo",
+   "para_que": "Versión de la geografía que usa la fuente (marco muestral 2017, vigente al año, etc.)."
+  },
+  {
+   "campo": "dominios_inferencia",
+   "tipo": "list[enum dominios]",
+   "donde": "catalogo",
+   "para_que": "Dominios en los que la encuesta es representativa (INF-12); clave para R-TERRITORIO-06. Puede coincidir con la propuesta del ámbito encuestas."
+  },
+  {
+   "campo": "tipo_denominador",
+   "tipo": "enum (matriz R-DENOMINADORES-01)",
+   "donde": "indicador",
+   "para_que": "Elegir el denominador principal de forma fija."
+  },
+  {
+   "campo": "denominador_principal",
+   "tipo": "obj {fuente_id, edad_min, edad_max, sexo}",
+   "donde": "indicador",
+   "para_que": "Población oficial con que se calcula el indicador."
+  },
+  {
+   "campo": "denominadores_contraste",
+   "tipo": "list[obj]",
+   "donde": "indicador",
+   "para_que": "Poblaciones alternativas para la sensibilidad (R-DENOMINADORES-05)."
+  },
+  {
+   "campo": "vintage_denominador",
+   "tipo": "str",
+   "donde": "resultado",
+   "para_que": "Trazabilidad y prohibición de mezclar bases (R-DENOMINADORES-02)."
+  },
+  {
+   "campo": "metodo_denominador",
+   "tipo": "enum(oficial, prorrateo_propio, censado)",
+   "donde": "resultado",
+   "para_que": "Rotular estimaciones propias (R-DENOMINADORES-03)."
+  },
+  {
+   "campo": "geografia_base",
+   "tipo": "str (vigente_AAAA | GEO2017)",
+   "donde": "resultado",
+   "para_que": "Saber si la cifra está en geografía vigente o congelada (R-TERRITORIO-04)."
+  },
+  {
+   "campo": "grupo_comparable",
+   "tipo": "char(6) | 'G-'+id",
+   "donde": "resultado",
+   "para_que": "Territorio efectivo cuando se agrega por partición (R-TERRITORIO-04/05)."
+  },
+  {
+   "campo": "sensibilidad_denominador",
+   "tipo": "float y rango [min,max]",
+   "donde": "resultado",
+   "para_que": "Mostrar rango cuando difieren las poblaciones (R-DENOMINADORES-05)."
+  },
+  {
+   "campo": "pct_numerador_ubicado",
+   "tipo": "float",
+   "donde": "resultado",
+   "para_que": "Calidad territorial de la carga (R-TERRITORIO-08)."
+  },
+  {
+   "campo": "version_dim_ubigeo",
+   "tipo": "str",
+   "donde": "resultado",
+   "para_que": "Reproducibilidad de la llave territorial."
+  },
+  {
+   "campo": "motivo_agregacion",
+   "tipo": "enum(transicion_particion, cobertura_mayor_100, sensibilidad_denominador, ubicacion_insuficiente, dominio)",
+   "donde": "resultado",
+   "para_que": "Explicar por qué se subió de nivel."
+  }
+ ],
+ "dependencias": [
+  "ámbito cruces: reglas de base_geografica (establecimiento vs residencia vs ejecutora) — R-DENOMINADORES-06 solo cubre el efecto sobre el denominador",
+  "ámbito registros: umbrales de números pequeños (numerador < n) y supresión; R-DENOMINADORES-03 solo fija el umbral de población del grupo (100) para rotular referencial",
+  "ámbito encuestas: nivel_territorial_inferencia y dominios_inferencia (R-TERRITORIO-06 define la tabla de mapeo; el umbral de precisión es de encuestas)",
+  "ámbito gasto: atribución territorial del gasto MEF (sede de ejecutora / CUI) usa dim_ubigeo_historico y la geografía congelada para series",
+  "ámbito lenguaje: plantillas de mensajes de rango y 'estimación propia'"
+ ],
+ "preguntas_abiertas": [
+  "¿Geografía congelada en 2017 (propuesta: compatible con proyecciones vigentes, CPV2017 y Mapa de Pobreza) o en la vigente 2026 repartiendo hacia atrás? Cuando salgan las proyecciones base CPV2025, ¿migrar la geografía congelada a GEO2025?",
+  "Umbrales de sensibilidad del denominador: 10 % (rango) y 25 % (no publicar puntual distrital). ¿Se aceptan o se prefieren 15 %/30 % para no degradar demasiadas coberturas MINSA en distritos pequeños?",
+  "Denominador de coberturas de salud: ¿adoptar la población MINSA (coincide con las cifras oficiales del sector, pero cambia según el corte y no es descargable sin navegador/transparencia) o el prorrateo propio INEI (reproducible, pero no oficial)? Afecta a la Ola 0.",
+  "¿Solicitar por transparencia al MINSA (OGTI) los cortes anuales de población estimada por distrito y edad simple, y al INEI la lista oficial con fechas de alta de ubigeos, para no depender de la construcción manual?",
+  "Distritos con varios distritos de origen (p. ej. Alto Trujillo): ¿grupo comparable por unión de orígenes (propuesto) o reparto con pesos de población por centro poblado del CPV2017 (más fino, requiere revisión humana por caso)?",
+  "Ventana de transición tras la creación de un distrito: 2 años propuestos; ¿fija para todas las fuentes o calibrada por fuente con el primer año en que el hijo tiene datos?"
+ ],
+ "notas_verificacion": [
+  "Análisis propio de GITHUB-UBIGEO-PERU-AUMENTADO/ubigeo_distrito.csv (descargado 2026-10-05): 1 893 filas; 111 códigos idénticos INEI=RENIEC; 997 códigos presentes en ambos sistemas con distinto distrito; filas anómalas 150144 (Santa María de Huachipa, centro poblado), NA INEI para San Antonio (Moquegua), códigos antiguos 160109/160114.",
+  "No se pudo descargar desde este entorno la lista INEI 2022 ni el XLSX de proyecciones 2018–2026 (proxy 403 a inei.gob.pe/gob.pe): el distrito 1 892 queda como hipótesis a confirmar con el anti-join de la especificación.",
+  "Ley 27795 no menciona al INEI; la asignación de códigos sigue la Norma del Código UBIGEO del INEI (correlativo dentro de la provincia, sin reutilización)."
+ ]
+}

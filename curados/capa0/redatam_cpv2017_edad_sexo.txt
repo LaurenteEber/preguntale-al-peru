@@ -1,0 +1,13 @@
+* Programa Redatam+SP usado en el Procesador Estadístico en línea del CPV2017 (base CPV2017DI, población censada).
+* Se ejecuta una vez por sexo (S = 1 hombre, 2 mujer) y rango de edad [A, B] para no superar el tiempo
+* máximo del servidor (~60 s). El servidor elimina las comillas, por eso se filtra con variables numéricas.
+* Rangos usados (6/10/2026): hombres 0-19, 20-29, ..., 80-89, 90-120; mujeres 0-9, 10-19, ..., 90-120.
+RUNDEF Job
+  SELECTION ALL
+  UNIVERSE Poblacio.C5P2 = S AND Poblacio.C5P41 >= A AND Poblacio.C5P41 <= B
+TABLE TABLE1
+  AS FREQUENCY
+  OF Poblacio.C5P41
+  AREABREAK Distrito
+* Cada área devuelve «AREA # <ubigeo de 6 dígitos>» y una fila por edad simple; la fila Total de cada área
+* se comprobó contra la suma de sus edades antes de guardar el CSV.

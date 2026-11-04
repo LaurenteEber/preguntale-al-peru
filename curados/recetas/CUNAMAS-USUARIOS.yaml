@@ -1,0 +1,45 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: CUNAMAS-USUARIOS
+strategy: manual
+publisher: MIDIS
+dataset_title: Cuna Más – Servicio de Acompañamiento a Familias y Servicio de Cuidado Diurno (usuarios)
+access_url: https://www.datosabiertos.gob.pe/group/ministerio-de-desarrollo-e-inclusi%C3%B3n-social-midis
+temporal:
+  inicio: 2019
+  fin: 2023
+spatial:
+  ambito: nacional (ámbito)
+  nivel_minimo: centro_poblado
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: no-declarada
+license_basis: no_declarada
+known_issues:
+- Nivel CP no confirmado; series posteriores a 2023 no confirmadas.
+manual:
+  pasos:
+  - Abrir https://www.datosabiertos.gob.pe/group/ministerio-de-desarrollo-e-inclusi%C3%B3n-social-midis y descargar
+    el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/cuna-mas-servicio-de-acompa%C3%B1amiento-familias-20233trim'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/CUNAMAS-USUARIOS/
+  - 'Ejecutar: pap registrar CUNAMAS-USUARIOS --issued <fecha>'
+espera:
+  formato:
+  - txt
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Datasets trimestrales con slug cuna-mas-servicio-de-acompañamiento-familias-<AÑO><N>trim y análogos para
+  cuidado diurno. Plataforma Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga
+  en /sites/default/files/... o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug> (API
+  CKAN-compatible de DKAN; confirmar). Desde este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright.'

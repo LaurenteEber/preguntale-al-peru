@@ -1,0 +1,24 @@
+# Plantilla comparacion (dos lugares): las dos cifras como cifras clave y la dirección solo si la prueba de diferencia lo permite
+# (R-ENC-11, S1-09 H1): p < 0,05 → dice cuál es mayor; p >= 0,05 → «sin diferencia estadísticamente clara»; una cifra suprimida o sin
+# prueba posible (un lugar contiene al otro, otra fuente) → solo las cifras, sin dirección. La prueba la calcula `Motor.prueba_cambio`.
+version: 1.1.0
+corta: "Esto es lo que dicen los datos oficiales sobre {sujeto} en {lugar} y en {lugar_b}:"
+corta_clara: "En {anio}, {sujeto} fue mayor en {lugar_mayor} que en {lugar_menor}, con una diferencia estadísticamente clara."
+corta_sin_diferencia: "En {anio}, {sujeto} en {lugar} y en {lugar_b}: sin diferencia estadísticamente clara."
+clave:
+  proporcion: "de {ciudadano} en {lugar} en {anio}."
+  defecto: "es la cifra de {ciudadano} en {lugar} en {anio}."
+clave_dos:                        # las dos cifras de la comparación en la capa 1
+  proporcion: "de {ciudadano} en {lugar} en {anio}, frente a {c_b} en {lugar_b}."
+  defecto: "es la cifra de {ciudadano} en {lugar} en {anio}; en {lugar_b}, {c_b}."
+tarjeta:
+  titulo: "{lugar}"
+  proporcion: "{c} de {ciudadano} en {lugar} en {anio} ({fuente})."
+  defecto: "En {anio}, {ciudadano} en {lugar}: {c} ({fuente})."
+  etiqueta: "Otro territorio: no se compara con la cifra clave."
+tarjeta_prueba:
+  titulo: "Cómo se comparó"
+  texto: "Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una."
+ojo: "No concluyas que un lugar tiene más que el otro solo por la diferencia entre las cifras: puede deberse al azar de la encuesta."
+ojo_clara: "No concluyas por qué es mayor en un lugar que en el otro: la diferencia no explica la causa."
+ojo_sin_diferencia: "«Sin diferencia clara» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."

@@ -1,0 +1,68 @@
+# Distritos creados después del CPV2017 (GEO2017 = 1 874 distritos).
+# codigo_inei_confirmado: false = el código no lo ha publicado el INEI (asignado provisionalmente por el dueño).
+# Fuentes: notas al pie de la proyección distrital 2018-2026 (INEI, dic-2025) y del Anexo 1 del Boletín 27,
+# verificadas contra el texto de cada ley (leyes.congreso.gob.pe / El Peruano) el 6/10/2026.
+# vigente_desde = día siguiente a la publicación en El Peruano.
+# revisado_dueno: true = revisado por Eber (6/10/2026); entonces estado_verificacion = verificado_ley.
+# origenes: ubigeo INEI de cada distrito que cede territorio; principal = el que da nombre al grupo si es único.
+- ubigeo: "090724"
+  nombre: Lambras
+  ley: 31092
+  fecha_publicacion: "2020-12-19"
+  capital: Santa María
+  url_norma: https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31092-LEY.pdf
+  origenes: [{ubigeo: "090717", nombre: Surcubamba, principal: false}, {ubigeo: "090707", nombre: Huachocolpa, principal: false}]
+  nota: La ley no permite saber qué origen es el principal; la DCM redefine límites de ambos.
+  revisado_dueno: true
+- ubigeo: "221006"
+  nombre: Santa Lucía
+  ley: 31128
+  fecha_publicacion: "2021-03-04"
+  capital: Santa Lucía
+  url_norma: https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31128-LEY.pdf
+  origenes: [{ubigeo: "221005", nombre: Uchiza, principal: true}, {ubigeo: "221001", nombre: Tocache, principal: false}]
+  nota: Principal según el INEI (en su mayor parte de Uchiza); la DCM redefine límites de Uchiza y Tocache.
+  revisado_dueno: true
+- {ubigeo: "050512", nombre: Unión Progreso, ley: 31130, fecha_publicacion: "2021-03-05", capital: San Antonio, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31130-LEY.pdf", origenes: [{ubigeo: "050502", nombre: Anco, principal: true}], revisado_dueno: true}
+- {ubigeo: "090725", nombre: Cochabamba, ley: 31132, fecha_publicacion: "2021-03-09", capital: Cochabamba Grande, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31132-LEY.pdf", origenes: [{ubigeo: "090718", nombre: Tintay Puncu, principal: true}], revisado_dueno: true}
+- {ubigeo: "250306", nombre: Huipoca, ley: 31133, fecha_publicacion: "2021-03-09", capital: Huipoca, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31133-LEY.pdf", origenes: [{ubigeo: "250301", nombre: Padre Abad, principal: true}], revisado_dueno: true}
+- {ubigeo: "050413", nombre: Putis, ley: 31134, fecha_publicacion: "2021-03-09", capital: Rodeo, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31134-LEY.pdf", origenes: [{ubigeo: "050406", nombre: Santillana, principal: true}], revisado_dueno: true}
+- {ubigeo: "050513", nombre: Río Magdalena, ley: 31135, fecha_publicacion: "2021-03-09", capital: Monterrico, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31135-LEY.pdf", origenes: [{ubigeo: "050509", nombre: Samugari, principal: true}], revisado_dueno: true}
+- {ubigeo: "050514", nombre: Ninabamba, ley: 31137, fecha_publicacion: "2021-03-16", capital: Ninabamba, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31137-LEY.pdf", origenes: [{ubigeo: "050501", nombre: San Miguel, principal: true}], revisado_dueno: true}
+- {ubigeo: "050515", nombre: Patibamba, ley: 31138, fecha_publicacion: "2021-03-16", capital: Patibamba, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31138-LEY.pdf", origenes: [{ubigeo: "050501", nombre: San Miguel, principal: true}], revisado_dueno: true}
+- {ubigeo: "250307", nombre: Boquerón, ley: 31141, fecha_publicacion: "2021-03-18", capital: Boquerón, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31141-LEY.pdf", origenes: [{ubigeo: "250301", nombre: Padre Abad, principal: true}], revisado_dueno: true}
+- {ubigeo: "080915", nombre: Kumpirushiato, ley: 31142, fecha_publicacion: "2021-03-18", capital: Kepashiato, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31142-LEY.pdf", origenes: [{ubigeo: "080902", nombre: Echarate, principal: true}], nota: "La ley escribe Echarati; el INEI, Echarate.", revisado_dueno: true}
+- {ubigeo: "080916", nombre: Cielo Punco, ley: 31162, fecha_publicacion: "2021-04-07", capital: Chirumpiari, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31162-LEY.pdf", origenes: [{ubigeo: "080907", nombre: Kimbiri, principal: true}], revisado_dueno: true}
+- {ubigeo: "080917", nombre: Manitea, ley: 31163, fecha_publicacion: "2021-04-07", capital: Tawantinsuyo, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31163-LEY.pdf", origenes: [{ubigeo: "080907", nombre: Kimbiri, principal: true}], revisado_dueno: true}
+- {ubigeo: "030612", nombre: Ahuayro, ley: 31186, fecha_publicacion: "2021-05-02", capital: Ahuayro, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31186-LEY.pdf", origenes: [{ubigeo: "030604", nombre: Huaccana, principal: true}], revisado_dueno: true}
+- {ubigeo: "080918", nombre: Unión Asháninka, ley: 31197, fecha_publicacion: "2021-05-18", capital: Mantaro, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31197-LEY.pdf", origenes: [{ubigeo: "080910", nombre: Pichari, principal: true}], revisado_dueno: true}
+- {ubigeo: "180107", nombre: San Antonio, ley: 31216, fecha_publicacion: "2021-06-15", capital: San Antonio, url_norma: "https://leyes.congreso.gob.pe/Documentos/2016_2021/ADLP/Normas_Legales/31216-LEY.pdf", origenes: [{ubigeo: "180101", nombre: Moquegua, principal: true}], nota: "Ratificada por el TC (Exp. 00024-2021-AI, 05-10-2023).", revisado_dueno: true}
+- ubigeo: "130112"
+  nombre: Alto Trujillo
+  ley: 31644
+  fecha_publicacion: "2022-12-15"
+  capital: Alto Trujillo
+  url_norma: https://leyes.congreso.gob.pe/Documentos/2021_2026/ADLP/Texto_Consolidado/31644-TXM.pdf
+  origenes:
+    - {ubigeo: "130102", nombre: El Porvenir, principal: true}
+  nota: "Creado a partir de El Porvenir; colinda con 3 distritos (decisión del dueño, 6/10/2026). El INEI escribe por error 'Ley 31664' y menciona superficie de Huanchaco (nota 19/); la proyección muestra además un traspaso de población de El Porvenir a Florencia de Mora en 2023 (ver ajustes_limites.yaml)."
+  revisado_dueno: true
+- ubigeo: "160405"
+  nombre: Santa Rosa de Loreto
+  ley: 32403
+  fecha_publicacion: "2025-07-03"
+  capital: Santa Rosa
+  url_norma: https://busquedas.elperuano.pe/dispositivo/NL/2415565-1
+  origenes: [{ubigeo: "160403", nombre: Yavarí, principal: true}]
+  nota: "El texto no dice de qué distrito se segrega; Yavarí según el INEI y por la mayoría de los límites. Limita al norte con Ramón Castilla."
+  revisado_dueno: true
+- ubigeo: "120307"
+  nombre: Sangani
+  ley: 32729
+  fecha_publicacion: "2026-07-15"
+  capital: Santa Rosa
+  url_norma: https://busquedas.elperuano.pe/dispositivo/EX/2535522-1
+  origenes: [{ubigeo: "120302", nombre: Perené, principal: true}]
+  codigo_inei_confirmado: false
+  nota: "Edición extraordinaria de El Peruano. Limita solo con Pichanaqui y Perené; se segrega de Perené. Código 120307 asignado por el dueño el 6/10/2026 (siguiente correlativo de la provincia 1203); el INEI aún no lo publica: confirmar cuando salga el Directorio o la proyección. Posterior al corte de la proyección (dic-2025): sin población propia."
+  revisado_dueno: true

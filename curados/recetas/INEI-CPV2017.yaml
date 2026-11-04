@@ -1,0 +1,46 @@
+# Receta de obtención — generada desde el catálogo y editada a mano (S2: exportación REDATAM por programa).
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-CPV2017
+strategy: manual
+method: redatam_export
+publisher: INEI
+dataset_title: 'Censos Nacionales 2017: XII de Población, VII de Vivienda y III de Comunidades Indígenas'
+access_url: https://censos2017.inei.gob.pe/redatam/
+documentation_url: https://censos2017.inei.gob.pe/pubinei/censos/Cpv2017/cpv2017_REDATAM_WEB_GUIA_DE_USO.pdf
+temporal:
+  inicio: 2017
+  fin: 2017
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  valor: Base REDATAM CPV2017DI (población censada)
+  basis: declarada
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- Omisión censal estimada omisión censal oficial ≈5,9 % (29,38 M censados frente a 31,24 M estimados); censo de
+  derecho/hecho en un día. Base de microdatos completa no se descarga libremente en formato plano (REDATAM).
+manual:
+  pasos:
+  - Abrir access_url → Redatam → Procesos estadísticos → Procesador estadístico en línea (Ejecutar programa Redatam+SP).
+  - Ejecutar el programa de curados/capa0/redatam_cpv2017_edad_sexo.txt por cada sexo (1, 2) y rango de edad (bloques de 10 años; 0-19 en un bloque para hombres), con AREABREAK Distrito.
+  - Convertir cada resultado a CSV (ubigeo,sexo,edad,casos; el bloque nacional final con ubigeo 000000) y unirlos en un solo archivo y guardar en biblioteca/cruda/bandeja/INEI-CPV2017/
+  - 'Ejecutar: pap registrar INEI-CPV2017 --edicion "Base REDATAM CPV2017DI"'
+espera:
+  formato: [csv]
+  columnas: [ubigeo, sexo, edad, casos]
+catalogo:
+  ola: 0_base
+  estrategia_descarga: scraping_dinamico
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: 'REDATAM WebServer (formularios; procesamiento por área geográfica: dpto/prov/distrito/centro poblado). Para
+  tablas masivas: automatizar POST al procesador REDATAM o usar sistema a nivel de manzana (INEI-CPV2017-MANZANA).
+  Base REDATAM también difundida vía CELADE/CEPAL. Resultados definitivos en PDF/Excel por departamento: https://censo2017.inei.gob.pe/resultados-definitivos-de-los-censos-nacionales-2017/'

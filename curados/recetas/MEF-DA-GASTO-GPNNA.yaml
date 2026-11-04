@@ -1,0 +1,41 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MEF-DA-GASTO-GPNNA
+strategy: http_pattern
+publisher: MEF
+dataset_title: Gasto en niñez y adolescencia (GPNNA)
+access_url: https://www.datosabiertos.gob.pe/dataset/gasto-en-ni%C3%B1ez-y-adolescencia-gpnna
+url_patron: https://fs.datosabiertos.mef.gob.pe/datastorefiles/GPNNA_{anio}.csv
+temporal:
+  inicio: 2023
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: otra-abierta
+  title: Otro (abierto)
+license_basis: declarada_en_pagina
+known_issues:
+- 'El ubigeo distrital es el de la SEDE DE LA UNIDAD EJECUTORA; la meta solo trae DEPARTAMENTO_META. Atribuir a
+  distrito solo el gasto de municipalidades (NIVEL_GOBIERNO=M) o inversiones ubicadas por CUI en MEF-DETALLE-INVERSIONES;
+  el gasto del Gobierno Nacional y Regional va a departamento por DEPARTAMENTO_META. Las transferencias se registran
+  de nuevo como gasto del receptor: no sumarlas. Construir el ubigeo como DEPARTAMENTO(2)+PROVINCIA(2)+DISTRITO(2)_EJECUTORA
+  y validarlo contra la tabla INEI.'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- Definir cómo se eligen los valores del patrón (ver notas).
+notas: Recursos CSV alojados en https://fs.datosabiertos.mef.gob.pe/datastorefiles/ (ver ficha). Módulo homólogo
+  en Consulta Amigable (sección 'módulos especializados').

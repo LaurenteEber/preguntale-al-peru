@@ -1,0 +1,31 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINSA-INMUNIZACIONES
+strategy: dashboard
+publisher: MINSA
+dataset_title: Coberturas de vacunación del esquema regular (REUNIS / Tablero virtual)
+access_url: https://www.minsa.gob.pe/reunis/?op=2&niv=9
+documentation_url: https://www.gob.pe/institucion/minsa/noticias/1242349-minsa-lanza-nueva-presentacion-de-tablero-virtual-del-esquema-regular-de-vacunacion
+temporal:
+  inicio: null
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: no-declarada
+license_basis: no_declarada
+known_issues:
+- Denominador (población MINSA vs Padrón Nominal) altera coberturas; coberturas >100% en distritos con migración/atención
+  extra-distrito.
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: scraping_dinamico
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+notas: Tablero (Power BI/Tableau) en REUNIS; export manual o Playwright.

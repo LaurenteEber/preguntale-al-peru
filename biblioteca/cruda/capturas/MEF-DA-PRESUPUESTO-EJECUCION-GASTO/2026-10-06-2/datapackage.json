@@ -1,0 +1,59 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "mef-da-presupuesto-ejecucion-gasto-2026-10-06-2",
+  "title": "Presupuesto y Ejecución de Gasto (datos abiertos MEF)",
+  "created": "2026-10-06T13:03:41-05:00",
+  "keywords": [
+    "MEF-DA-PRESUPUESTO-EJECUCION-GASTO"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "gasto-2024",
+      "title": "Presupuesto y Ejecución de Gasto (datos abiertos MEF)",
+      "original_filename": "2024-Gasto.csv",
+      "path": "almacen/sha256/df/9f/df9f83ae5b60a633ec0b345110e5e29a047666c06813f1fc8efee349b2daa94f",
+      "hash": "sha256:df9f83ae5b60a633ec0b345110e5e29a047666c06813f1fc8efee349b2daa94f",
+      "bytes": 10237853250,
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "source_id": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+      "publisher": "MEF",
+      "dataset_title": "Presupuesto y Ejecución de Gasto (datos abiertos MEF)",
+      "access_url": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto",
+      "download_url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/2024-Gasto.csv",
+      "source_version_basis": "ninguna",
+      "temporal": "2012–2026",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T13:03:28-05:00",
+      "method": "http_patron",
+      "recipe": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO@4e5c7e4",
+      "attributed_to": "Eber (manual, Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "otra-abierta",
+          "title": "Otro (abierto)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito"
+      },
+      "known_issues": [
+        "El ubigeo distrital es el de la SEDE DE LA UNIDAD EJECUTORA; la meta solo trae DEPARTAMENTO_META. Atribuir a distrito solo el gasto de municipalidades (NIVEL_GOBIERNO=M) o inversiones ubicadas por CUI en MEF-DETALLE-INVERSIONES; el gasto del Gobierno Nacional y Regional va a departamento por DEPARTAMENTO_META. Las transferencias se registran de nuevo como gasto del receptor: no sumarlas. Construir el ubigeo como DEPARTAMENTO(2)+PROVINCIA(2)+DISTRITO(2)_EJECUTORA y validarlo contra la tabla INEI.",
+        "Descargado por el dueño con el certificado HTTPS del MEF vencido; integridad a verificar por conciliación con la Consulta Amigable"
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

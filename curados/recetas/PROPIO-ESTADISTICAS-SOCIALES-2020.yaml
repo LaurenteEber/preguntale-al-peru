@@ -1,0 +1,42 @@
+# Receta de un archivo propio (en el catálogo desde el 8/10/2026, decisión del dueño). Escrita a mano a partir de
+# biblioteca/analisis_archivo_propio_estadisticas_sociales.md (§4).
+id: PROPIO-ESTADISTICAS-SOCIALES-2020
+strategy: owner_file
+resource_name: estadisticas-sociales-nacional-2020
+publisher: Eber
+dataset_title: Estadísticas sociales nacionales por distrito (compilación propia)
+access_url: null
+temporal: {inicio: 2017, fin: 2020}
+spatial: {ambito: PE, nivel_minimo: distrito, geografia: GEO2017 (1 874 distritos)}
+source_version: {valor: "24 de agosto de 2020", basis: declarada}   # tomado del nombre del archivo
+data_cutoff: {basis: desconocida}
+issued: "2020-08-24"
+retrieved_at: "2026-10-05"   # fecha en que se puso en la carpeta [por confirmar]
+attributed_to: Eber
+licenses: [{name: no-declarada}]
+license_basis: no_declarada
+sources:   # fuentes primarias de la hoja 1, según sus notas al pie
+  - {title: "INEI, Directorio Nacional de Municipalidades… 2020 (Lib1725)", path: "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1725/"}
+  - {title: "INEI, Estimaciones y proyecciones de población 2018-2020, Boletín 26 (Lib1715)", path: "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1715/Libro.pdf"}
+  - {title: "INEI, Sistema de Consulta de Códigos Estandarizados", path: "http://webinei.inei.gob.pe:8080/sisconcode/publico.htm"}
+  - {title: "PCM, RV N.° 005-2019-PCM/DVGT, anexo 2 (tipología de distritos)", path: "http://www.pcm.gob.pe/wp-content/uploads/2019/12/RV-N-005-2019-PCM-DVGT.pdf"}
+known_issues:
+  - Compilación propia de 2020; las fuentes primarias se declaran por columna en las notas al pie.
+  - La fila 159999 «Región Lima» es el ámbito Lima Región (9 provincias del departamento de Lima sin la provincia de Lima), no un distrito.
+  - Nombres con tildes corregidas por el autor respecto a la forma oficial del INEI.
+  - Coordenadas de la capital del distrito, no del centro del territorio.
+  - Densidad calculada con la proyección 2019; no usar.
+espera:
+  formato: [xlsx]
+  bytes: [80000000, 100000000]
+  hoja: "1. Info_General"
+  columnas: ["UBIGEO", "Capital legal", "Altitud", "Superficie", "Tipología de distrito"]
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+pendientes:
+  - Confirmar la fecha de incorporación (retrieved_at) y el origen exacto de coordenadas y altitud.
+  - "S1: extraer la hoja «1. Info_General» como recurso derivado (derived_from = huella de este Excel)."
+notas: Usar la hoja 1 como semilla de dim_ubigeo_historico (S1); las demás hojas solo como cifras de control.

@@ -1,0 +1,31 @@
+# Textos del resolver territorial (S1-02). Todo lo que la persona puede leer sale de aquí; los números y
+# comportamientos viven en parametros_motor.yaml (bloque `territorio`). Texto fijo: lo revisa el dueño.
+version: 1.0.0
+niveles:                # palabra con que se rotula cada nivel en las opciones
+  departamento: departamento
+  provincia: provincia
+  distrito: distrito
+fragmentos:             # piezas de aclaracion_opcion_formato: «{nombre} ({nivel}{, provincia de P}{, departamento de D})»
+  provincia: ", provincia de {provincia}"
+  departamento: ", departamento de {departamento}"
+  opcion: "{nombre} ({nivel}{provincia}{departamento})"
+preguntas:
+  lima_a_secas: "Hay varios lugares llamados «Lima». ¿Cuál quieres?"
+  homonimo_niveles: "Hay varios lugares llamados «{texto}». ¿Cuál quieres?"
+  homonimo_mismo_nivel: "Hay varios lugares llamados «{texto}». ¿Cuál quieres?"
+  demasiadas_opciones: "Hay {n} lugares que coinciden con «{texto}», demasiados para listarlos. Dinos de qué provincia o departamento es."
+  coincidencia_parcial: "No encontramos «{texto}» tal cual. ¿Quisiste decir alguno de estos?"
+  sugerencia: "No encontramos «{texto}». ¿Quisiste decir alguno de estos?"
+  sin_coincidencia: "No encontramos ese lugar. Revisa cómo está escrito o dinos el departamento, la provincia o el distrito."
+lima_opciones:          # T-03: rótulos de las tres opciones de «Lima» (los mismos de R-TERRITORIO-09, rotulos_lima)
+  LIMA_METROPOLITANA: "Lima Metropolitana (provincia de Lima)"
+  LIMA_REGION: "Lima Región (Lima Provincias)"
+  CALLAO: "Callao"
+alias_ambito:           # texto (sin tildes) → ámbito de dim_ambito que se resuelve directo
+  lima metropolitana: LIMA_METROPOLITANA
+  lima region: LIMA_REGION
+  lima provincias: LIMA_REGION
+  lima metropolitana y callao: AREA_METROPOLITANA_LIMA_CALLAO
+  area metropolitana de lima y callao: AREA_METROPOLITANA_LIMA_CALLAO
+alias_distrito:         # R-TERRITORIO-09 (sin_respuesta.Callao): el distrito solo si se pide así
+  callao cercado: "070101"

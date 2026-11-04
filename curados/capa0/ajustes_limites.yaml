@@ -1,0 +1,22 @@
+# Ajustes de límites entre distritos de 2017 SIN creación de distrito (no cambian códigos).
+# Decisión del dueño (6/10/2026, opción a): el origen legal no cambia (rel_ubigeo_origen), pero los distritos que
+# intercambiaron población SÍ se fusionan en el grupo comparable para series (grupo estadístico, R-TERRITORIO-04).
+# poblacion_traspasada: evidencia en la proyección distrital 2018-2026 (salto de un año del receptor).
+- ubigeos: ["130106", "130102"]
+  nombres: [Laredo, El Porvenir]
+  norma: D.S. N.º 127-2022-PCM (Reglamento de la Ley 31463, saneamiento de límites)
+  fecha: "2022-10"
+  fuente: "Nota 20/ de la proyección distrital 2018-2026 (INEI); Laredo pasa de 44 440 (2022) a 54 577 (2023)"
+  fusionar_en_grupo: true
+- ubigeos: ["040305", "040302"]
+  nombres: [Bella Unión, Acarí]
+  norma: Reasignación de centros poblados conforme a la Ley N.º 12450 (creación de Bella Unión)
+  fecha: "2024-10"
+  fuente: "Nota 21/ de la proyección distrital 2018-2026 (INEI); en la proyección el cambio aparece en 2025: Bella Unión 2 821 → 4 301, Acarí 5 548 → 4 112"
+  fusionar_en_grupo: true
+- ubigeos: ["130103", "130102"]
+  nombres: [Florencia de Mora, El Porvenir]
+  norma: Ley N.º 31644 (creación de Alto Trujillo), cláusula de prevalencia de límites
+  fecha: "2022-12"
+  fuente: "Proyección distrital 2018-2026 (INEI): Florencia de Mora pasa de 37 879 (2022) a 62 844 (2023)"
+  fusionar_en_grupo: true

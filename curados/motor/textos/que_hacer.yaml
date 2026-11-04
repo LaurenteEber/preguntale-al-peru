@@ -1,0 +1,14 @@
+# «¿Qué puedo hacer?» (decisión del dueño, 12/10/2026): solo texto fijo, corto, que resume una fuente oficial y la enlaza.
+# No sale de los datos ni lo redacta el motor. Se muestra solo si revisado_dueno es true; mientras tanto, la respuesta
+# lo marca como «pendiente de revisión».
+version: 1.0.0
+temas:
+  anemia:
+    revisado_dueno: false
+    texto: >-
+      Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la
+      hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6
+      meses.
+    fuente: Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)
+    url: https://www.gob.pe/69889-que-es-la-anemia-prevencion
+    consultado: 2026-10-12

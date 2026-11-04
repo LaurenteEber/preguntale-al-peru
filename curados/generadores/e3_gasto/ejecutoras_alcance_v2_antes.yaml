@@ -1,0 +1,4388 @@
+# Alcance de las unidades ejecutoras del Gobierno Nacional con meta en el departamento de Lima (15) — GA-01, v2.
+# GA-01 (dueño, 6/10/2026): se MARCA el alcance; la atribución (departamento_meta) no cambia.
+# Cifras de Lima (departamento, Lima Metropolitana, Lima Región): SOLO las filas de fact_gasto_territorial con
+# cuenta_en_lima = true (dpto 15, sin alcance nacional y sin referencia_nacional, incluidas las obras de esta última).
+# No basta con excluir alcance=nacional: las obras por CUI de una UE de referencia nacional tienen alcance no_aplica.
+# Línea aparte: referencia_nacional AND departamento_atribucion = '15'.
+# alcance: nacional | lima_metropolitana | lima_region | lima_callao. Las UE lima_* pasan a su ámbito
+# (A-LIMA_METROPOLITANA / A-LIMA_REGION / A-AREA_METROPOLITANA_LIMA_CALLAO). Solo se graba con departamento_meta = 15.
+#
+# v2 (pieza A de las rondas 1-2; decisiones del dueño del 7/10/2026, docs/decisiones.md):
+# Criterio único (ronda 2 §3.3): sin servicio directo → nacional; L = % de pacientes nuevos o atendidos que residen
+# en el departamento de Lima: L ≥ 60 % → Lima; L ≤ 40 % → nacional; 40-60 % → nacional solo si es rector/red nacional
+# o solo recibe referidos; sin dato → verificar_procedencia: true.
+# Campos nuevos (los lee gasto.py y los propaga a dim_unidad_ejecutora y a fact_gasto_territorial):
+#   referencia_nacional: centro nacional de referencia ubicado en Lima (INEN, INSN San Borja). Su gasto, incluidas sus
+#       obras, sale de la cifra de Lima y se muestra como línea aparte. Exige alcance: nacional.
+#   verificar_procedencia: el alcance se decidió sin dato (o con dato débil) de procedencia; pedirlo.
+#   mixta: sede nacional y servicio en Lima a la vez (22 UE); se separan por producto después del piloto; mientras
+#       tanto las cifras de Lima llevan advertencia.
+#   base_alcance: paso del criterio, L (%), métrica, fuente (URL), % de atención directa, confianza y decisión.
+#   revisado_dueno: true solo si el dueño decidió esa entrada (tabla final de la ronda 2, casos dudosos y mixtas de la
+#       ronda 1). En las mixtas la decisión es diferir su separación por producto: su alcance es provisional
+#       (base_alcance.paso = mixta), no definitivo. Las demás conservan el alcance de GA-01 con el veredicto «correcta» de la ronda 1, sin decisión
+#       individual del dueño (paso no_evaluado_criterio_unico).
+# Generado por 03_auditoria/ola0/decisiones_gasto/implementacion/pieza_a/generar_yaml.py (no editar a mano sin
+# actualizar ese script).
+- sec_ejec: '26'
+  nombre: DIRECCION DE ECONOMIA Y FINANZAS DE LA PNP
+  pliego: M. DEL INTERIOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Planilla PNP: patrullaje, investigación y eventos con meta
+    15 (6,0 mil M) incluyen la policía de Lima, inseparable de unidades nacionales. Mantener nacional; separar por producto
+    en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 17748.9
+  revisado_dueno: true
+- sec_ejec: '1082'
+  nombre: MINISTERIO DE VIVIENDA, CONSTRUCCION Y SANEAMIENTO- ADM. GENERAL
+  pliego: MINISTERIO DE VIVIENDA, CONSTRUCCION Y SANEAMIENTO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 5969.7
+  revisado_dueno: false
+- sec_ejec: '470'
+  nombre: EJERCITO PERUANO
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Ejército: ~9% atención de salud (Hospital Militar Central).
+    Mantener nacional; separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 5480.1
+  revisado_dueno: true
+- sec_ejec: '1072'
+  nombre: MINISTERIO DE TRANSPORTES Y COMUNICACIONES-ADMINISTRACION GENERAL
+  pliego: MINISTERIO DE TRANSPORTES Y COMUNICACIONES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): MTC: O&M ferroviario urbano (Lima-Callao) dentro de la UE.
+    Mantener nacional; separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 4646.0
+  revisado_dueno: true
+- sec_ejec: '117'
+  nombre: ADMINISTRACION CENTRAL - MINSA
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 4465.2
+  revisado_dueno: false
+- sec_ejec: '1345'
+  nombre: CENTRO NACIONAL DE ABASTECIMIENTOS DE RECURSOS ESTRATEGICOS DE SALUD
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 4349.5
+  revisado_dueno: false
+- sec_ejec: '185'
+  nombre: MINISTERIO DE ENERGIA Y MINAS-CENTRAL
+  pliego: M. DE ENERGIA Y MINAS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 4020.2
+  revisado_dueno: false
+- sec_ejec: '472'
+  nombre: FUERZA AEREA DEL PERU
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): FAP: ~9% atención de salud (Hospital FAP). Mantener nacional;
+    separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 3722.3
+  revisado_dueno: true
+- sec_ejec: '1438'
+  nombre: PROGRAMA NACIONAL DE BECAS Y CREDITO EDUCATIVO
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 3607.4
+  revisado_dueno: false
+- sec_ejec: '200'
+  nombre: MINISTERIO PUBLICO-GERENCIA GENERAL
+  pliego: MINISTERIO PUBLICO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Fiscalías: casos resueltos con meta 15 (1,6 mil M) = distritos
+    fiscales de Lima. Mantener nacional; separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 3052.6
+  revisado_dueno: true
+- sec_ejec: '1717'
+  nombre: AUTORIDAD DE TRANSPORTE URBANO PARA LIMA Y CALLAO - ATU
+  pliego: AUTORIDAD DE TRANSPORTE URBANO PARA LIMA Y CALLAO - ATU
+  alcance: lima_callao
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Lima y Callao: ámbito metropolitano que incluye el Callao'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 2953.3
+  revisado_dueno: false
+- sec_ejec: '477'
+  nombre: CONGRESO DE LA REPUBLICA
+  pliego: CONGRESO DE LA REPUBLICA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 2882.9
+  revisado_dueno: false
+- sec_ejec: '1091'
+  nombre: SEGURO INTEGRAL DE SALUD
+  pliego: SEGURO INTEGRAL DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): SIS: pagos a IPRESS de Lima (en parte transferencias: posible
+    doble conteo). Mantener nacional; separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 2159.9
+  revisado_dueno: true
+- sec_ejec: '56'
+  nombre: USE 01 SAN JUAN DE MIRAFLORES
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Educación: UGEL/DRE de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 2130.9
+  revisado_dueno: false
+- sec_ejec: '12'
+  nombre: GERENCIA GENERAL DEL PODER JUDICIAL
+  pliego: PODER JUDICIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1909.9
+  revisado_dueno: false
+- sec_ejec: '57'
+  nombre: USE 02 SAN MARTIN DE PORRAS
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Educación: UGEL/DRE de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1838.4
+  revisado_dueno: false
+- sec_ejec: '155'
+  nombre: MINISTERIO DE AGRICULTURA-ADMINISTRACION CENTRAL
+  pliego: M. DE DESARROLLO AGRARIO Y RIEGO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1775.2
+  revisado_dueno: false
+- sec_ejec: '59'
+  nombre: USE 04 COMAS
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Educación: UGEL/DRE de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1722.6
+  revisado_dueno: false
+- sec_ejec: '88'
+  nombre: UNIVERSIDAD NACIONAL MAYOR DE SAN MARCOS
+  pliego: U.N. MAYOR DE SAN MARCOS
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad pública con sede en Lima Metropolitana
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1716.5
+  revisado_dueno: false
+- sec_ejec: '58'
+  nombre: USE 03 CERCADO
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Educación: UGEL/DRE de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1628.7
+  revisado_dueno: false
+- sec_ejec: '60'
+  nombre: USE 05 SAN JUAN DE LURIGANCHO
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Educación: UGEL/DRE de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1572.4
+  revisado_dueno: false
+- sec_ejec: '81'
+  nombre: PROGRAMA EDUCACION BASICA PARA TODOS
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1571.6
+  revisado_dueno: false
+- sec_ejec: '61'
+  nombre: USE 06 VITARTE
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Educación: UGEL/DRE de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1540.3
+  revisado_dueno: false
+- sec_ejec: '17'
+  nombre: INSTITUTO NACIONAL PENITENCIARIO-SEDE CENTRAL- ADMINISTRACION LIMA
+  pliego: INSTITUTO NACIONAL PENITENCIARIO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1396.4
+  revisado_dueno: false
+- sec_ejec: '1685'
+  nombre: DIRECCION DE REDES INTEGRADAS DE SALUD LIMA SUR
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Salud: DIRIS de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1361.7
+  revisado_dueno: false
+- sec_ejec: '1684'
+  nombre: DIRECCION DE REDES INTEGRADAS DE SALUD LIMA NORTE
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Salud: DIRIS de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1360.8
+  revisado_dueno: false
+- sec_ejec: '1235'
+  nombre: INSTITUTO NACIONAL DE ENFERMEDADES NEOPLASICAS
+  pliego: INSTITUTO NACIONAL DE ENFERMEDADES NEOPLASICAS - INEN
+  alcance: nacional
+  referencia_nacional: true
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P2c-a): L = 48.9 % en zona gris → OPD con función rectora/red nacional en su especialidad; dato
+    de 2019 (> 5 años); ±10 pp no cambia la decisión'
+  base_alcance:
+    paso: P2c-a
+    L_pct: 48.9
+    L_metrica: pacientes nuevos, anual 2019 (Callao 5,2 %; otros 45,9 %)
+    L_fuente: https://cdn.www.gob.pe/uploads/document/file/4527806/Indicadores%20de%20Gesti%C3%B3n%20Hospitalaria%20del%20INEN%20-%20Diciembre%202019.pdf
+    pct_atencion_directa: 98.1
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 1352.9
+  revisado_dueno: true
+- sec_ejec: '1411'
+  nombre: CORTE SUPERIOR DE JUSTICIA DE LIMA
+  pliego: PODER JUDICIAL
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Justicia: Corte Superior con sede y competencia en Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1329.1
+  revisado_dueno: false
+- sec_ejec: '1456'
+  nombre: PROGRAMA NACIONAL DE ALIMENTACION ESCOLAR QALI WARMA
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Qali Warma: 910 M en alimentación escolar de IIEE de Lima
+    + 202 M ollas comunes. Mantener nacional; separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 1307.3
+  revisado_dueno: true
+- sec_ejec: '62'
+  nombre: USE 07 SAN BORJA
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Educación: UGEL/DRE de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1211.1
+  revisado_dueno: false
+- sec_ejec: '1266'
+  nombre: ORGANISMO SUPERVISOR DE LA INVERSION EN ENERGIA Y MINERIA
+  pliego: ORGANISMO SUPERVISOR DE LA INVERSION EN ENERGIA Y MINERIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1200.3
+  revisado_dueno: false
+- sec_ejec: '1683'
+  nombre: DIRECCION DE REDES INTEGRADAS DE SALUD LIMA CENTRO
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Salud: DIRIS de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1093.4
+  revisado_dueno: false
+- sec_ejec: '45'
+  nombre: M. DE RELACIONES EXTERIORES- SUBSECRETARIA DE ADMINISTRACION
+  pliego: M. DE RELACIONES EXTERIORES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1089.8
+  revisado_dueno: false
+- sec_ejec: '1423'
+  nombre: FONDO INTANGIBLE SOLIDARIO DE SALUD - FISSAL
+  pliego: SEGURO INTEGRAL DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): FISSAL: pagos por atención en Lima. Mantener nacional; separar
+    por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 1069.0
+  revisado_dueno: true
+- sec_ejec: '143'
+  nombre: HOSPITAL NACIONAL ARZOBISPO LOAYZA
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.6
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 996.2
+  revisado_dueno: true
+- sec_ejec: '1086'
+  nombre: MINISTERIO DE LA PRODUCCION
+  pliego: MINISTERIO DE LA PRODUCCION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 955.8
+  revisado_dueno: false
+- sec_ejec: '1160'
+  nombre: PROGRAMA INTEGRAL NACIONAL PARA EL BIENESTAR FAMILIAR- INABIF
+  pliego: MINISTERIO DE LA MUJER Y POBLACIONES VULNERABLES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): INABIF: centros de atención residencial en Lima. Mantener
+    nacional; separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 937.4
+  revisado_dueno: true
+- sec_ejec: '144'
+  nombre: HOSPITAL NACIONAL DOS DE MAYO
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.8
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 899.2
+  revisado_dueno: true
+- sec_ejec: '137'
+  nombre: HOSPITAL CAYETANO HEREDIA
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.1
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 887.9
+  revisado_dueno: true
+- sec_ejec: '1078'
+  nombre: MTC- PRO VIAS NACIONAL
+  pliego: MINISTERIO DE TRANSPORTES Y COMUNICACIONES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 875.2
+  revisado_dueno: false
+- sec_ejec: '15'
+  nombre: MINISTERIO DE JUSTICIA-OFICINA GENERAL DE ADMINISTRACION
+  pliego: M. DE JUSTICIA Y DERECHOS HUMANOS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Defensa pública en Lima. Mantener nacional; separar por producto
+    en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 867.1
+  revisado_dueno: true
+- sec_ejec: '126'
+  nombre: INSTITUTO NACIONAL DE SALUD DEL NIÑO
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Sin dato de procedencia (L): la regla P3b lo presumía Lima, pero el dueño decidió mantenerlo nacional con verificar_procedencia
+    hasta tener el dato'
+  base_alcance:
+    paso: decision_dueno (P3b proponía Lima)
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.3
+    confianza: baja
+    decision: 'Dueño, 7/10/2026 (ronda 2, decisión 8): se mantiene nacional hasta tener su procedencia 2023-2025 (Ley 27806)'
+  devengado_meta15_2023_2025_millones: 826.9
+  revisado_dueno: true
+- sec_ejec: '25'
+  nombre: MINISTERIO DEL INTERIOR-OFICINA GENERAL DE ADMINISTRACION
+  pliego: M. DEL INTERIOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 814.4
+  revisado_dueno: false
+- sec_ejec: '92'
+  nombre: UNIVERSIDAD NACIONAL DE INGENIERIA
+  pliego: U.N. DE INGENIERIA
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad pública con sede en Lima Metropolitana
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 810.8
+  revisado_dueno: false
+- sec_ejec: '994'
+  nombre: INSTITUTO PERUANO DEL DEPORTE - IPD
+  pliego: INSTITUTO PERUANO DEL DEPORTE
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 787.8
+  revisado_dueno: false
+- sec_ejec: '132'
+  nombre: HOSPITAL NACIONAL HIPOLITO UNANUE
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.9
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 774.9
+  revisado_dueno: true
+- sec_ejec: '1363'
+  nombre: MINISTERIO DE CULTURA - ADMINISTRACION GENERAL
+  pliego: M. DE CULTURA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 774.1
+  revisado_dueno: false
+- sec_ejec: '1299'
+  nombre: AUTORIDAD NACIONAL DE AGUA - SEDE CENTRAL
+  pliego: AUTORIDAD NACIONAL DEL AGUA - ANA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 759.9
+  revisado_dueno: false
+- sec_ejec: '1686'
+  nombre: DIRECCION DE REDES INTEGRADAS DE SALUD LIMA ESTE
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Salud: DIRIS de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 743.7
+  revisado_dueno: false
+- sec_ejec: '1512'
+  nombre: INSTITUTO NACIONAL DE SALUD DEL NIÑO - SAN BORJA
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: true
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P2b): L = 30.0 % ≤ 40 %; dato de 2017 (> 5 años); ±10 pp no cambia la decisión; universo del
+    70 % no precisado (si L real estuviera en 40–60 %, decidiría P2c-b, no verificado)'
+  base_alcance:
+    paso: P2b
+    L_pct: 30.0
+    L_metrica: '''70 % referidos de regiones'' (nota de prensa 2017; universo no precisado)'
+    L_fuente: https://andina.pe/agencia/noticia-instituto-nacional-salud-del-nino-san-borja-realizo-mas-9000-cirugias-673014.aspx
+    pct_atencion_directa: 98.8
+    confianza: baja
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 709.2
+  revisado_dueno: true
+- sec_ejec: '141'
+  nombre: HOSPITAL DE APOYO DEPARTAMENTAL MARIA AUXILIADORA
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.9
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 707.7
+  revisado_dueno: true
+- sec_ejec: '79'
+  nombre: MINISTERIO DE EDUCACION-SEDE CENTRAL
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 705.4
+  revisado_dueno: false
+- sec_ejec: '1064'
+  nombre: COMISION NAC. PARA EL DESARROLLO Y VIDA SIN DROGAS  - DEVIDA
+  pliego: COMISION NACIONAL PARA EL DESARROLLO Y VIDA SIN DROGAS - DEVIDA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 685.1
+  revisado_dueno: false
+- sec_ejec: '1311'
+  nombre: ORGANISMO DE EVALUACION Y FISCALIZACION AMBIENTAL- ADMINISTRACION - OEFA
+  pliego: ORGANISMO DE EVALUACION Y FISCALIZACION AMBIENTAL - OEFA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 662.4
+  revisado_dueno: false
+- sec_ejec: '1253'
+  nombre: M.E.-PROGRAMA NACIONAL DE INFRAESTRUCTURA  EDUCATIVA
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): PRONIED: mantenimiento de IIEE en Lima. Mantener nacional;
+    separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 653.8
+  revisado_dueno: true
+- sec_ejec: '102'
+  nombre: UNIVERSIDAD NACIONAL FEDERICO VILLARREAL
+  pliego: U.N. FEDERICO VILLARREAL
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad pública con sede en Lima Metropolitana
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 613.6
+  revisado_dueno: false
+- sec_ejec: '1067'
+  nombre: SANIDAD DE LA PNP
+  pliego: M. DEL INTERIOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Se mantiene (ronda 1, caso dudoso revisado): Sanidad PNP: atiende a policías y familiares de todo el país; 42
+    % en Lima'
+  base_alcance:
+    paso: ronda1_caso_dudoso
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: se mantiene (decisiones.md; ronda 1, casos dudosos)'
+  devengado_meta15_2023_2025_millones: 598.1
+  revisado_dueno: true
+- sec_ejec: '127'
+  nombre: INSTITUTO NACIONAL MATERNO PERINATAL
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P2a): L = 93.4 % ≥ 60 %; muestra de tesis; ROF (RM 504-2010) no verificado'
+  base_alcance:
+    paso: P2a
+    L_pct: 93.4
+    L_metrica: partos/RN en muestra de tesis (2022); 'Lima' sin precisar dpto/provincia
+    L_fuente: https://repositorio.upsjb.edu.pe/backend/api/core/bitstreams/8ee06930-c095-458e-bbe1-6cac1e0c369a/content
+    pct_atencion_directa: 99.4
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 594.2
+  revisado_dueno: true
+- sec_ejec: '33'
+  nombre: VII DIRECCION TERRITORIAL  DE POLICIA- LIMA
+  pliego: M. DEL INTERIOR
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Seguridad/penitenciario: órgano desconcentrado de Lima'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 558.4
+  revisado_dueno: false
+- sec_ejec: '1670'
+  nombre: HOSPITAL DE EMERGENCIAS VILLA EL SALVADOR
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.9
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 541.8
+  revisado_dueno: true
+- sec_ejec: '1232'
+  nombre: PROGRAMA NACIONAL CONTRA LA VIOLENCIA FAMILIAR Y SEXUAL (PNCVFS)
+  pliego: MINISTERIO DE LA MUJER Y POBLACIONES VULNERABLES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): CEM y servicios Aurora en Lima. Mantener nacional; separar
+    por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 519.7
+  revisado_dueno: true
+- sec_ejec: '1728'
+  nombre: PROYECTO ESPECIAL DE INVERSION PUBLICA ESCUELAS BICENTENARIO
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 491.9
+  revisado_dueno: false
+- sec_ejec: '1510'
+  nombre: SUPERINTENDENCIA NACIONAL DE FISCALIZACION LABORAL - SUNAFIL
+  pliego: SUPERINTENDENCIA NACIONAL DE FISCALIZACION LABORAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): SUNAFIL: intendencia Lima. Mantener nacional; separar por
+    producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 479.1
+  revisado_dueno: true
+- sec_ejec: '1520'
+  nombre: SUPERINTENDENCIA NACIONAL DE MIGRACIONES - MIGRACIONES
+  pliego: SUPERINTENDENCIA NACIONAL DE MIGRACIONES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 467.7
+  revisado_dueno: false
+- sec_ejec: '11'
+  nombre: COMISION DE PROMOCION DEL PERU PARA LA EXPORTACION Y EL TURISMO - PROMPERU
+  pliego: COMISION DE PROMOCION DEL PERU PARA LA EXPORTACION Y EL TURISMO - PROMPERU
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 452.4
+  revisado_dueno: false
+- sec_ejec: '149'
+  nombre: HOSPITAL NACIONAL DOCENTE MADRE NIÑO - SAN BARTOLOME
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.1
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 451.5
+  revisado_dueno: true
+- sec_ejec: '1070'
+  nombre: MINISTERIO DE COMERCIO EXTERIOR Y TURISMO- DIRECCION GENERAL DE ADMINISTRACION
+  pliego: MINISTERIO DE COMERCIO EXTERIOR Y TURISMO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 445.4
+  revisado_dueno: false
+- sec_ejec: '1427'
+  nombre: MIDIS- FONDO DE COOPERACION PARA EL DESARROLLO SOCIAL - FONCODES
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): FONCODES. Mantener nacional; separar por producto en fase
+    2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 431.7
+  revisado_dueno: true
+- sec_ejec: '106'
+  nombre: UNIVERSIDAD NACIONAL DE EDUCACION ENRIQUE GUZMAN Y VALLE
+  pliego: U.N. DE EDUCACION ENRIQUE GUZMAN Y VALLE
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad pública con sede en Lima Metropolitana
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 428.9
+  revisado_dueno: false
+- sec_ejec: '1700'
+  nombre: CORTE SUPERIOR DE JUSTICIA DE LIMA ESTE
+  pliego: PODER JUDICIAL
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Se mantiene (ronda 1, caso dudoso revisado): Corte de Lima Este: 8 distritos de Lima Metropolitana y Huarochirí
+    (~2 %)'
+  base_alcance:
+    paso: ronda1_caso_dudoso
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: 'Dueño, 7/10/2026: se mantiene (decisiones.md; ronda 1, casos dudosos)'
+  devengado_meta15_2023_2025_millones: 428.3
+  revisado_dueno: true
+- sec_ejec: '96'
+  nombre: UNIVERSIDAD NACIONAL AGRARIA LA MOLINA
+  pliego: U.N. AGRARIA LA MOLINA
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad pública con sede en Lima Metropolitana
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 423.3
+  revisado_dueno: false
+- sec_ejec: '145'
+  nombre: HOSPITAL DE APOYO SANTA ROSA
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.8
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 416.0
+  revisado_dueno: true
+- sec_ejec: '9'
+  nombre: INDECI - INSTITUTO NACIONAL DE DEFENSA CIVIL
+  pliego: INSTITUTO NACIONAL DE DEFENSA CIVIL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 414.6
+  revisado_dueno: false
+- sec_ejec: '151'
+  nombre: INSTITUTO NACIONAL DE SALUD
+  pliego: INSTITUTO NACIONAL DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Criterio único (P1): Atención directa < 50 % del gasto misional'
+  base_alcance:
+    paso: P1
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 0.0
+    confianza: alta
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 406.6
+  revisado_dueno: true
+- sec_ejec: '136'
+  nombre: HOSPITAL SERGIO BERNALES
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.0
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 404.1
+  revisado_dueno: true
+- sec_ejec: '154'
+  nombre: MINISTERIO DE TRABAJO-OFICINA GENERAL DE ADMINISTRACION
+  pliego: M. DE TRABAJO Y PROMOCION DEL EMPLEO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 394.0
+  revisado_dueno: false
+- sec_ejec: '1465'
+  nombre: CORTE SUPERIOR DE JUSTICIA DE LIMA NORTE
+  pliego: PODER JUDICIAL
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Se mantiene (ronda 1, caso dudoso revisado): Corte de Lima Norte: 6 distritos de Lima Metropolitana y Canta (<1
+    %)'
+  base_alcance:
+    paso: ronda1_caso_dudoso
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: 'Dueño, 7/10/2026: se mantiene (decisiones.md; ronda 1, casos dudosos)'
+  devengado_meta15_2023_2025_millones: 389.5
+  revisado_dueno: true
+- sec_ejec: '1312'
+  nombre: DIRECCION EJECUTIVA DE INVESTIGACION CRIMINAL Y APOYO A LA JUSTICIA PNP- DIREICAJ PNP
+  pliego: M. DEL INTERIOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 389.1
+  revisado_dueno: false
+- sec_ejec: '43'
+  nombre: ESCUELA NACIONAL DE FORMACIÓN PROFESIONAL POLICIAL PNP
+  pliego: M. DEL INTERIOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 387.9
+  revisado_dueno: false
+- sec_ejec: '18'
+  nombre: INPE-OFICINA REGIONAL LIMA
+  pliego: INSTITUTO NACIONAL PENITENCIARIO
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Criterio único (P3b): Penales del dpto de Lima; ideal lima_departamento'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 100.0
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 379.4
+  revisado_dueno: true
+- sec_ejec: '1087'
+  nombre: MINISTERIO DE LA MUJER Y POBLACIONES VULNERABLES- ADM. NIVEL CENTRAL
+  pliego: MINISTERIO DE LA MUJER Y POBLACIONES VULNERABLES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): MIMP: servicios en Lima. Mantener nacional; separar por producto
+    en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 378.3
+  revisado_dueno: true
+- sec_ejec: '1216'
+  nombre: HOSPITAL SAN JUAN DE LURIGANCHO
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.4
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 365.6
+  revisado_dueno: true
+- sec_ejec: '1589'
+  nombre: ORGANISMO TECNICO DE LA ADMINISTRACION DE LOS SERVICIOS DE SANEAMIENTO -OTASS
+  pliego: ORGANISMO TECNICO DE LA ADMINISTRACION DE LOS SERVICIOS DE SANEAMIENTO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 365.2
+  revisado_dueno: false
+- sec_ejec: '1268'
+  nombre: ORGANISMO SUPERVISOR DE LA INVERSION EN INFRAESTRUCTURA DE TRANSPORTE DE USO PUBLICO
+  pliego: ORGANISMO SUPERVISOR DE LA INVERSION EN INFRAESTRUCTURA DE TRANSPORTE DE USO PUBLICO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 360.9
+  revisado_dueno: false
+- sec_ejec: '1441'
+  nombre: MIDIS- PROGRAMA NACIONAL DE ASISTENCIA SOLIDARIA PENSION 65
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Pensión 65: 255 M subvenciones a adultos mayores de Lima.
+    Mantener nacional; separar por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 356.0
+  revisado_dueno: true
+- sec_ejec: '1346'
+  nombre: SUTRAN - GESTION Y ADMINISTRACION GENERAL
+  pliego: SUPERINTENDENCIA DE TRANSPORTE TERRESTRE DE PERSONAS, CARGA Y MERCANCIAS - SUTRAN
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 355.0
+  revisado_dueno: false
+- sec_ejec: '108'
+  nombre: UNIVERSIDAD NACIONAL FAUSTINO SANCHEZ CARRION
+  pliego: U.N. JOSE FAUSTINO SANCHEZ CARRION
+  alcance: lima_region
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad o servicio con sede en Lima Provincias
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 351.1
+  revisado_dueno: false
+- sec_ejec: '72'
+  nombre: DIRECCION DE EDUCACION DE LIMA
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Educación: UGEL/DRE de Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 350.7
+  revisado_dueno: false
+- sec_ejec: '1746'
+  nombre: HOSPITAL DE LIMA ESTE - VITARTE
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.3
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 344.3
+  revisado_dueno: true
+- sec_ejec: '1265'
+  nombre: ORGANISMO SUPERVISOR DE LA INVERSION PRIVADA EN TELECOMUNICACIONES
+  pliego: ORGANISMO SUPERVISOR DE LA INVERSION PRIVADA EN TELECOMUNICACIONES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 331.7
+  revisado_dueno: false
+- sec_ejec: '1250'
+  nombre: MTC- PROVIAS DESCENTRALIZADO
+  pliego: MINISTERIO DE TRANSPORTES Y COMUNICACIONES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 329.5
+  revisado_dueno: false
+- sec_ejec: '1424'
+  nombre: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL- SEDE CENTRAL- MIDIS
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 327.8
+  revisado_dueno: false
+- sec_ejec: '513'
+  nombre: INSTITUTO NACIONAL DE RADIO Y TELEVISION DEL PERU - IRTP
+  pliego: INSTITUTO NACIONAL DE RADIO Y TELEVISION DEL PERU - IRTP
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 321.4
+  revisado_dueno: false
+- sec_ejec: '146'
+  nombre: HOSPITAL DE EMERGENCIAS CASIMIRO ULLOA
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.4
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 293.3
+  revisado_dueno: true
+- sec_ejec: '1655'
+  nombre: PROGRAMA NACIONAL DE INVERSIONES EN SALUD
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 284.7
+  revisado_dueno: false
+- sec_ejec: '1476'
+  nombre: PROGRAMA NACIONAL DE DOTACION DE MATERIALES EDUCATIVOS
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 282.8
+  revisado_dueno: false
+- sec_ejec: '522'
+  nombre: HOSPITAL CARLOS LANFRANCO LA HOZ
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.4
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 280.0
+  revisado_dueno: true
+- sec_ejec: '1426'
+  nombre: MIDIS- PROGRAMA NACIONAL CUNA MAS - PNCM
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Cuna Más: servicios en Lima. Mantener nacional; separar por
+    producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 279.1
+  revisado_dueno: true
+- sec_ejec: '160'
+  nombre: INSTITUTO NACIONAL DE INNOVACION AGRARIA
+  pliego: INSTITUTO NACIONAL DE INNOVACION AGRARIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 277.7
+  revisado_dueno: false
+- sec_ejec: '1293'
+  nombre: MINISTERIO DEL AMBIENTE - ADMINISTRACION GENERAL
+  pliego: M. DEL AMBIENTE
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 277.3
+  revisado_dueno: false
+- sec_ejec: '1443'
+  nombre: PROGRAMA NACIONAL DE SANEAMIENTO RURAL
+  pliego: MINISTERIO DE VIVIENDA, CONSTRUCCION Y SANEAMIENTO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 262.4
+  revisado_dueno: false
+- sec_ejec: '1358'
+  nombre: MODERNIZACION DE LA GESTION DE LOS RECURSOS HIDRICOS
+  pliego: AUTORIDAD NACIONAL DEL AGUA - ANA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 253.6
+  revisado_dueno: false
+- sec_ejec: '197'
+  nombre: DEFENSORIA DEL PUEBLO
+  pliego: DEFENSORIA DEL PUEBLO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 251.0
+  revisado_dueno: false
+- sec_ejec: '1701'
+  nombre: CORTE SUPERIOR DE JUSTICIA DE LIMA SUR
+  pliego: PODER JUDICIAL
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Justicia: Corte Superior con sede y competencia en Lima Metropolitana'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 250.5
+  revisado_dueno: false
+- sec_ejec: '1705'
+  nombre: MINISTERIO PUBLICO - INSTITUTO DE MEDICINA LEGAL Y CIENCIAS FORENSES - IML
+  pliego: MINISTERIO PUBLICO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Medicina legal: sedes de Lima. Mantener nacional; separar
+    por producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 249.3
+  revisado_dueno: true
+- sec_ejec: '1032'
+  nombre: DIRECCION  NACIONAL DE INTELIGENCIA- DINI
+  pliego: DIRECCION NACIONAL DE INTELIGENCIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 244.1
+  revisado_dueno: false
+- sec_ejec: '1596'
+  nombre: SUNEDU - SEDE CENTRAL
+  pliego: SUPERINTENDENCIA NACIONAL DE EDUCACION SUPERIOR UNIVERSITARIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 236.3
+  revisado_dueno: false
+- sec_ejec: '123'
+  nombre: INSTITUTO NACIONAL DE CIENCIAS NEUROLOGICAS
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Sin dato de procedencia (L): la regla P3b lo presumía Lima, pero el dueño decidió mantenerlo nacional con verificar_procedencia
+    hasta tener el dato'
+  base_alcance:
+    paso: decision_dueno (P3b proponía Lima)
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.1
+    confianza: baja
+    decision: 'Dueño, 7/10/2026 (ronda 2, decisión 8): se mantiene nacional hasta tener su procedencia 2023-2025 (Ley 27806)'
+  devengado_meta15_2023_2025_millones: 233.8
+  revisado_dueno: true
+- sec_ejec: '179'
+  nombre: SERVICIO NACIONAL DE CAPACITACION PARA LA INDUSTRIA DE LA CONSTRUCCION
+  pliego: SERVICIO NACIONAL DE CAPACITACION PARA LA INDUSTRIA DE LA CONSTRUCCION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 230.8
+  revisado_dueno: false
+- sec_ejec: '1267'
+  nombre: SUPERINTENDENCIA NACIONAL DE SERVICIOS DE SANEAMIENTO
+  pliego: SUPERINTENDENCIA NACIONAL DE SERVICIOS DE SANEAMIENTO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 221.2
+  revisado_dueno: false
+- sec_ejec: '1085'
+  nombre: PROGRAMA NACIONAL DE SANEAMIENTO URBANO
+  pliego: MINISTERIO DE VIVIENDA, CONSTRUCCION Y SANEAMIENTO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 221.1
+  revisado_dueno: false
+- sec_ejec: '157'
+  nombre: SERVICIO NACIONAL DE SANIDAD AGRARIA-SENASA
+  pliego: SERVICIO NACIONAL DE SANIDAD AGRARIA - SENASA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 219.8
+  revisado_dueno: false
+- sec_ejec: '468'
+  nombre: MINISTERIO DE DEFENSA-OGA
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 219.3
+  revisado_dueno: false
+- sec_ejec: '1296'
+  nombre: PROGRAMA DE DESARROLLO PRODUCTIVO AGRARIO RURAL - AGRORURAL
+  pliego: M. DE DESARROLLO AGRARIO Y RIEGO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 217.9
+  revisado_dueno: false
+- sec_ejec: '1428'
+  nombre: MIDIS- PROGRAMA NACIONAL DE APOYO DIRECTO A LOS MAS POBRES- JUNTOS
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Juntos: hogares de Lima. Mantener nacional; separar por producto
+    en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 217.4
+  revisado_dueno: true
+- sec_ejec: '1729'
+  nombre: PROCURADURIA GENERAL DEL ESTADO
+  pliego: PROCURADURIA GENERAL DEL ESTADO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 215.8
+  revisado_dueno: false
+- sec_ejec: '1503'
+  nombre: SERVICIO NAC. FORESTAL Y DE FAUNA SILVESTRE-SERFOR - SEDE CENTRAL
+  pliego: SERVICIO NACIONAL FORESTAL Y DE FAUNA SILVESTRE - SERFOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 215.7
+  revisado_dueno: false
+- sec_ejec: '147'
+  nombre: HOSPITAL DE EMERGENCIAS PEDIATRICAS
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.2
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 213.3
+  revisado_dueno: true
+- sec_ejec: '148'
+  nombre: HOSPITAL NACIONAL VICTOR LARCO HERRERA
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 100.0
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 206.3
+  revisado_dueno: true
+- sec_ejec: '189'
+  nombre: INSTITUTO GEOLOGICO MINERO Y METALURGICO
+  pliego: INSTITUTO GEOLOGICO MINERO Y METALURGICO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 202.7
+  revisado_dueno: false
+- sec_ejec: '124'
+  nombre: INSTITUTO NACIONAL DE OFTALMOLOGIA
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Sin dato de procedencia (L): la regla P3b lo presumía Lima, pero el dueño decidió mantenerlo nacional con verificar_procedencia
+    hasta tener el dato'
+  base_alcance:
+    paso: decision_dueno (P3b proponía Lima)
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 97.6
+    confianza: baja
+    decision: 'Dueño, 7/10/2026 (ronda 2, decisión 8): se mantiene nacional hasta tener su procedencia 2023-2025 (Ley 27806)'
+  devengado_meta15_2023_2025_millones: 199.9
+  revisado_dueno: true
+- sec_ejec: '515'
+  nombre: SUPERINTENDENCIA NACIONAL DE SALUD
+  pliego: SUPERINTENDENCIA NACIONAL DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 198.2
+  revisado_dueno: false
+- sec_ejec: '474'
+  nombre: SERVICIO NACIONAL DE METEOROLOGIA E HIDROLOGIA-SENAMHI
+  pliego: SERVICIO NACIONAL DE METEOROLOGIA E HIDROLOGIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 195.1
+  revisado_dueno: false
+- sec_ejec: '469'
+  nombre: COMANDO CONJUNTO DE LAS FUERZAS ARMADAS
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 185.5
+  revisado_dueno: false
+- sec_ejec: '1442'
+  nombre: MEJORAMIENTO DE LA CALIDAD DE LA EDUCACION BASICA Y SUPERIOR
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 183.6
+  revisado_dueno: false
+- sec_ejec: '1691'
+  nombre: AGUA SEGURA PARA LIMA Y CALLAO
+  pliego: MINISTERIO DE VIVIENDA, CONSTRUCCION Y SANEAMIENTO
+  alcance: lima_callao
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Lima y Callao: ámbito metropolitano que incluye el Callao'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 179.9
+  revisado_dueno: false
+- sec_ejec: '1138'
+  nombre: HOSPITAL  JOSE AGURTO TELLO DE CHOSICA
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.0
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 178.5
+  revisado_dueno: true
+- sec_ejec: '125'
+  nombre: INSTITUTO NACIONAL DE REHABILITACION
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P2a): L = 92.0 % ≥ 60 %; dato de 2019 (> 5 años); ±10 pp no cambia la decisión'
+  base_alcance:
+    paso: P2a
+    L_pct: 92.0
+    L_metrica: personas atendidas en consulta externa, I sem 2019
+    L_fuente: https://app.inr.gob.pe:444/media/html/transparencia/Sala%20Situacional/2019/sala_I_sem_2019-3%202.pdf
+    pct_atencion_directa: 97.0
+    confianza: alta
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 177.6
+  revisado_dueno: true
+- sec_ejec: '1720'
+  nombre: PROGRAMA NACIONAL DE TELECOMUNICACIONES - PRONATEL
+  pliego: MINISTERIO DE TRANSPORTES Y COMUNICACIONES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 173.1
+  revisado_dueno: false
+- sec_ejec: '1702'
+  nombre: CORTE SUPERIOR DE JUSTICIA DE HUAURA
+  pliego: PODER JUDICIAL
+  alcance: lima_region
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Justicia: Corte Superior con competencia en Lima Provincias'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 170.0
+  revisado_dueno: false
+- sec_ejec: '133'
+  nombre: HOSPITAL HERMILIO VALDIZAN
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 98.1
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 166.4
+  revisado_dueno: true
+- sec_ejec: '121'
+  nombre: INSTITUTO NACIONAL DE SALUD MENTAL
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Sin dato de procedencia (L): la regla P3b lo presumía Lima, pero el dueño decidió mantenerlo nacional con verificar_procedencia
+    hasta tener el dato'
+  base_alcance:
+    paso: decision_dueno (P3b proponía Lima)
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 88.1
+    confianza: baja
+    decision: 'Dueño, 7/10/2026 (ronda 2, decisión 8): se mantiene nacional hasta tener su procedencia 2023-2025 (Ley 27806)'
+  devengado_meta15_2023_2025_millones: 160.3
+  revisado_dueno: true
+- sec_ejec: '1528'
+  nombre: HOSPITAL DE HUAYCAN
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.2
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 158.5
+  revisado_dueno: true
+- sec_ejec: '1280'
+  nombre: MEM - DIRECCION GENERAL DE ELECTRIFICACION RURAL
+  pliego: M. DE ENERGIA Y MINAS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 155.0
+  revisado_dueno: false
+- sec_ejec: '1309'
+  nombre: SERV.NAC.AREAS NATURALES PROTEGIDAS POR EL ESTADO - SERNANP
+  pliego: SERVICIO NACIONAL DE AREAS NATURALES PROTEGIDAS POR EL ESTADO - SERNANP
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 154.0
+  revisado_dueno: false
+- sec_ejec: '42'
+  nombre: DIRECCION DE AVIACION POLICIAL
+  pliego: M. DEL INTERIOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 151.0
+  revisado_dueno: false
+- sec_ejec: '1534'
+  nombre: ADMINISTRACION - SENACE
+  pliego: SERVICIO NACIONAL DE CERTIFICACION AMBIENTAL PARA LAS INVERSIONES SOSTENIBLES -SENACE
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 144.7
+  revisado_dueno: false
+- sec_ejec: '201'
+  nombre: TRIBUNAL CONSTITUCIONAL
+  pliego: TRIBUNAL CONSTITUCIONAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 143.4
+  revisado_dueno: false
+- sec_ejec: '1716'
+  nombre: CENTROS JUVENILES
+  pliego: M. DE JUSTICIA Y DERECHOS HUMANOS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Centros juveniles de Lima. Mantener nacional; separar por
+    producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 142.0
+  revisado_dueno: true
+- sec_ejec: '1017'
+  nombre: ORGANISMO DE FORMALIZACION DE LA PROPIEDAD INFORMAL - COFOPRI
+  pliego: ORGANISMO DE FORMALIZACION DE LA PROPIEDAD INFORMAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 141.5
+  revisado_dueno: false
+- sec_ejec: '1749'
+  nombre: PROYECTO ESPECIAL LEGADO
+  pliego: PRESIDENCIA DEL CONSEJO DE MINISTROS
+  alcance: lima_callao
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sedes de los Juegos Panamericanos 2019 en Lima y el Callao
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 140.6
+  revisado_dueno: false
+- sec_ejec: '1723'
+  nombre: MIDIS - CONTIGO
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Contigo: pensiones en Lima. Mantener nacional; separar por
+    producto en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 135.2
+  revisado_dueno: true
+- sec_ejec: '1066'
+  nombre: PROGRAMA  PARA LA GENERACION DE EMPLEO SOCIAL INCLUSIVO  TRABAJA PERU
+  pliego: M. DE TRABAJO Y PROMOCION DEL EMPLEO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: true
+  criterio: 'Ejecutora mixta (sede nacional y servicio en Lima): Empleo temporal en Lima. Mantener nacional; separar por producto
+    en fase 2'
+  base_alcance:
+    paso: mixta
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: media
+    decision: 'Dueño, 7/10/2026: mixta; se separa por producto después del piloto y las cifras de Lima llevan advertencia'
+  devengado_meta15_2023_2025_millones: 134.5
+  revisado_dueno: true
+- sec_ejec: '192'
+  nombre: FONDO NACIONAL DE DESARROLLO PESQUERO-FONDEPES
+  pliego: FONDO NACIONAL DE DESARROLLO PESQUERO - FONDEPES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 132.3
+  revisado_dueno: false
+- sec_ejec: '85'
+  nombre: BIBLIOTECA NACIONAL DEL PERU
+  pliego: BIBLIOTECA NACIONAL DEL PERU
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 124.7
+  revisado_dueno: false
+- sec_ejec: '198'
+  nombre: JUNTA NACIONAL DE JUSTICIA - DIRECCION DE ADMINISTRACION
+  pliego: JUNTA NACIONAL DE JUSTICIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 121.6
+  revisado_dueno: false
+- sec_ejec: '996'
+  nombre: INTENDENCIA NACIONAL DE BOMBEROS DEL PERÚ - INBP
+  pliego: INTENDENCIA NACIONAL DE BOMBEROS DEL PERÚ - INBP
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 119.6
+  revisado_dueno: false
+- sec_ejec: '204'
+  nombre: SUPERINTENDENCIA NACIONAL DE BIENES ESTATALES
+  pliego: SUPERINTENDENCIA NACIONAL DE BIENES ESTATALES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 119.4
+  revisado_dueno: false
+- sec_ejec: '1727'
+  nombre: MINISTERIO PUBLICO - CARPETA FISCAL ELECTRONICA
+  pliego: MINISTERIO PUBLICO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 117.7
+  revisado_dueno: false
+- sec_ejec: '1588'
+  nombre: ADMINISTRACION -SERVICIO NACIONAL DE SANIDAD PESQUERA-SANIPES
+  pliego: ORGANISMO NACIONAL DE SANIDAD PESQUERA-SANIPES
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 117.7
+  revisado_dueno: false
+- sec_ejec: '194'
+  nombre: INSTITUTO TECNOLOGICO DE LA PRODUCCION - ITP
+  pliego: INSTITUTO TECNOLOGICO DE LA PRODUCCION - ITP
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 109.2
+  revisado_dueno: false
+- sec_ejec: '1008'
+  nombre: CONSEJO NAC. PARA LA INTEGRACION DE LA PERSONA CON DISCAPACIDAD- CONADIS
+  pliego: CONSEJO NACIONAL PARA LA INTEGRACION DE LA PERSONA CON DISCAPACIDAD - CONADIS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 107.4
+  revisado_dueno: false
+- sec_ejec: '1372'
+  nombre: UNIVERSIDAD NACIONAL DE CAÑETE
+  pliego: U.N. DE CAÑETE
+  alcance: lima_region
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad o servicio con sede en Lima Provincias
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 105.2
+  revisado_dueno: false
+- sec_ejec: '1726'
+  nombre: HOSPITAL EMERGENCIA ATE VITARTE
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.9
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 97.6
+  revisado_dueno: true
+- sec_ejec: '84'
+  nombre: INSTITUTO GEOFISICO DEL PERU
+  pliego: INSTITUTO GEOFISICO DEL PERU
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 94.6
+  revisado_dueno: false
+- sec_ejec: '1203'
+  nombre: UNIVERSIDAD NACIONAL TECNOLOGICA DE LIMA SUR
+  pliego: U.N. TECNOLOGICA DE LIMA SUR
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad pública con sede en Lima Metropolitana
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 93.7
+  revisado_dueno: false
+- sec_ejec: '1732'
+  nombre: PROGRAMA MEJORAMIENTO DE LOS SERVICIOS DE JUSTICIA EN MATERIA PENAL EN EL PERU - PMSJMPP
+  pliego: M. DE JUSTICIA Y DERECHOS HUMANOS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 91.0
+  revisado_dueno: false
+- sec_ejec: '1418'
+  nombre: COLEGIO MAYOR SECUNDARIO PRESIDENTE DEL PERU
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 89.9
+  revisado_dueno: false
+- sec_ejec: '1374'
+  nombre: UNIVERSIDAD NACIONAL DE BARRANCA
+  pliego: U.N. DE BARRANCA
+  alcance: lima_region
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad o servicio con sede en Lima Provincias
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 81.4
+  revisado_dueno: false
+- sec_ejec: '1215'
+  nombre: UNIDAD DE COORDINACION DE PROYECTOS DEL PODER JUDICIAL
+  pliego: PODER JUDICIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 81.1
+  revisado_dueno: false
+- sec_ejec: '956'
+  nombre: PROGRAMA SUBSECTORIAL DE IRRIGACION - PSI
+  pliego: M. DE DESARROLLO AGRARIO Y RIEGO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 79.6
+  revisado_dueno: false
+- sec_ejec: '1674'
+  nombre: PROGRAMA NACIONAL PLATAFORMAS DE ACCION  PARA LA INCLUSION SOCIAL - PAIS
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 79.3
+  revisado_dueno: false
+- sec_ejec: '1343'
+  nombre: DIRECCION EJECUTIVA  ANTIDROGAS- DIREJANDRO PNP
+  pliego: M. DEL INTERIOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 78.3
+  revisado_dueno: false
+- sec_ejec: '1519'
+  nombre: SUPERINTENDENCIA NACIONAL DE CONTROL DE SERVICIOS DE SEGURIDAD, ARMAS, MUNICIONES Y EXPLOSIVOS DE USO CIVIL- SUCAMEC
+  pliego: SUPERINTENDENCIA NACIONAL DE CONTROL DE SERVICIOS DE SEGURIDAD, ARMAS, MUNICIONES Y EXPLOSIVOS DE USO CIVIL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 77.5
+  revisado_dueno: false
+- sec_ejec: '1706'
+  nombre: UNIVERSIDAD NACIONAL DE MÚSICA
+  pliego: U. N. DE MÚSICA
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad pública con sede en Lima Metropolitana
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 77.0
+  revisado_dueno: false
+- sec_ejec: '1122'
+  nombre: COMISION NACIONAL DE INVESTIGACION Y DESARROLLO AEROESPACIAL
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 76.0
+  revisado_dueno: false
+- sec_ejec: '1319'
+  nombre: ORGANISMO DE SUPERVISION DE LOS RECURSOS FORESTALES Y DE FAUNA SILVESTRE- OSINFOR
+  pliego: ORGANISMO DE SUPERVISION DE LOS RECURSOS FORESTALES Y DE FAUNA SILVESTRE
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 74.7
+  revisado_dueno: false
+- sec_ejec: '1669'
+  nombre: PROYECTO ESPECIAL PARA LA PREPARACION Y DESARROLLO DE LOS XVIII JUEGOS PANAMERICANOS 2019
+  pliego: MINISTERIO DE TRANSPORTES Y COMUNICACIONES
+  alcance: lima_callao
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: 'Juegos Panamericanos 2019: infraestructura en Lima y el Callao'
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 74.1
+  revisado_dueno: false
+- sec_ejec: '1409'
+  nombre: CONSERVACION DE BOSQUES
+  pliego: M. DEL AMBIENTE
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 72.0
+  revisado_dueno: false
+- sec_ejec: '1217'
+  nombre: HOSPITAL VITARTE
+  pliego: M. DE SALUD
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato de L; hospital con emergencia de demanda abierta → presunción Lima'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 99.5
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 71.4
+  revisado_dueno: true
+- sec_ejec: '1297'
+  nombre: PROGRAMA DE COMPENSACIONES PARA LA COMPETITIVIDAD
+  pliego: M. DE DESARROLLO AGRARIO Y RIEGO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 71.1
+  revisado_dueno: false
+- sec_ejec: '1631'
+  nombre: MINAGRI- GESTION DE PROYECTOS SECTORIALES
+  pliego: M. DE DESARROLLO AGRARIO Y RIEGO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 68.8
+  revisado_dueno: false
+- sec_ejec: '16'
+  nombre: OFICINA TECNICA ADMINISTRATIVA-ARCHIVO GENERAL DE LA NACION
+  pliego: ARCHIVO GENERAL DE LA NACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 68.8
+  revisado_dueno: false
+- sec_ejec: '1558'
+  nombre: OFICINA GENERAL DE INFRAESTRUCTURA (M.DEL INTERIOR)
+  pliego: M. DEL INTERIOR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 65.1
+  revisado_dueno: false
+- sec_ejec: '1276'
+  nombre: CENTRO VACACIONAL HUAMPANI
+  pliego: CENTRO VACACIONAL HUAMPANI
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Establecimiento único en Chaclacayo (Lima Metropolitana)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 63.5
+  revisado_dueno: false
+- sec_ejec: '1767'
+  nombre: IMPLEMENT. DEL MODELO DE LA INFRAESTRUC. Y FUNCIONAM. DE LA BICAMERALIDAD DEL PODER LEGISLATIVO
+  pliego: CONGRESO DE LA REPUBLICA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 60.1
+  revisado_dueno: false
+- sec_ejec: '162'
+  nombre: CENTRO DE FORMACION EN TURISMO
+  pliego: CENTRO DE FORMACION EN TURISMO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 59.0
+  revisado_dueno: false
+- sec_ejec: '188'
+  nombre: INSTITUTO PERUANO DE ENERGIA NUCLEAR
+  pliego: INSTITUTO PERUANO DE ENERGIA NUCLEAR
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 58.6
+  revisado_dueno: false
+- sec_ejec: '1734'
+  nombre: PROGRAMA DE CREACIÓN DE REDES INTEGRADAS EN SALUD
+  pliego: M. DE SALUD
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 55.7
+  revisado_dueno: false
+- sec_ejec: '1495'
+  nombre: SISTEMA NAC. DE EVALUAC., ACREDITAC. Y CERTIFICACION DE LA CALIDAD EDUCATIVA
+  pliego: SISTEMA NACIONAL DE EVALUACION, ACREDITACION Y CERTIFICACION DE LA CALIDAD EDUCATIVA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 54.8
+  revisado_dueno: false
+- sec_ejec: '1437'
+  nombre: PROGRAMA MODERNIZACION DEL SISTEMA DE ADMINISTRACION DE JUSTICIA
+  pliego: M. DE JUSTICIA Y DERECHOS HUMANOS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 49.6
+  revisado_dueno: false
+- sec_ejec: '1516'
+  nombre: FOMENTO AL CONSUMO HUMANO DIRECTO - A COMER PESCADO
+  pliego: MINISTERIO DE LA PRODUCCION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 49.5
+  revisado_dueno: false
+- sec_ejec: '1258'
+  nombre: INICTEL- UNI
+  pliego: U.N. DE INGENIERIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 49.0
+  revisado_dueno: false
+- sec_ejec: '1366'
+  nombre: ZONA ARQUEOLOGICA CARAL
+  pliego: M. DE CULTURA
+  alcance: lima_region
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Zona arqueológica de Caral (Supe, provincia de Barranca)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 48.4
+  revisado_dueno: false
+- sec_ejec: '1295'
+  nombre: FUERO MILITAR POLICIAL
+  pliego: FUERO MILITAR POLICIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 46.2
+  revisado_dueno: false
+- sec_ejec: '1410'
+  nombre: CENTRO NAC. DE ESTIMACION, PREVENCION Y REDUCCION DE RIESGOS DE DESASTRES- CENEPRED
+  pliego: CENTRO NACIONAL DE ESTIMACION, PREVENCION Y REDUCCION DEL RIESGO DE DESASTRES - CENEPRED
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 45.5
+  revisado_dueno: false
+- sec_ejec: '1257'
+  nombre: SIERRA Y SELVA EXPORTADORA
+  pliego: SIERRA Y SELVA EXPORTADORA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 43.5
+  revisado_dueno: false
+- sec_ejec: '1201'
+  nombre: MINCETUR - PLAN COPESCO NACIONAL
+  pliego: MINISTERIO DE COMERCIO EXTERIOR Y TURISMO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 40.9
+  revisado_dueno: false
+- sec_ejec: '14'
+  nombre: ACADEMIA DE LA MAGISTRATURA
+  pliego: ACADEMIA DE LA MAGISTRATURA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 40.6
+  revisado_dueno: false
+- sec_ejec: '1089'
+  nombre: AGENCIA PERUANA DE COOPERACION INTERNACIONAL - APCI
+  pliego: AGENCIA PERUANA DE COOPERACION INTERNACIONAL - APCI
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 40.5
+  revisado_dueno: false
+- sec_ejec: '1634'
+  nombre: MINAGRI - FONDO SIERRA AZUL
+  pliego: M. DE DESARROLLO AGRARIO Y RIEGO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 38.3
+  revisado_dueno: false
+- sec_ejec: '517'
+  nombre: INPE-OFICINA GENERAL DE INFRAESTRUCTURA
+  pliego: INSTITUTO NACIONAL PENITENCIARIO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 38.2
+  revisado_dueno: false
+- sec_ejec: '77'
+  nombre: INSTITUTO PEDAGOGICO NACIONAL DE MONTERRICO
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato; servicio educativo en sede única de Lima (usuarios residen en Lima mientras estudian)'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 93.6
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 35.3
+  revisado_dueno: true
+- sec_ejec: '76'
+  nombre: ESCUELA NACIONAL DE BELLAS ARTES
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato; servicio educativo en sede única de Lima (usuarios residen en Lima mientras estudian)'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 96.4
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 34.2
+  revisado_dueno: true
+- sec_ejec: '993'
+  nombre: PROGRAMA NACIONAL DE EMPLEO JUVENIL  JOVENES PRODUCTIVOS
+  pliego: M. DE TRABAJO Y PROMOCION DEL EMPLEO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 34.1
+  revisado_dueno: false
+- sec_ejec: '78'
+  nombre: ESCUELA NACIONAL SUPERIOR DE FOLKLORE  J.M.A
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato; servicio educativo en sede única de Lima (usuarios residen en Lima mientras estudian)'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 75.0
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 32.6
+  revisado_dueno: true
+- sec_ejec: '720'
+  nombre: PROGRAMA DE DESARROLLO DE SANIDAD AGROPECUARIA - PRODESA
+  pliego: SERVICIO NACIONAL DE SANIDAD AGRARIA - SENASA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 28.4
+  revisado_dueno: false
+- sec_ejec: '1745'
+  nombre: AUTORIDAD NACIONAL DE CONTROL DEL MINISTERIO PUBLICO
+  pliego: MINISTERIO PUBLICO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 25.8
+  revisado_dueno: false
+- sec_ejec: '1545'
+  nombre: AGENCIA DE COMPRAS DE LAS FUERZAS ARMADAS
+  pliego: AGENCIA DE COMPRAS DE LAS FUERZAS ARMADAS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 25.4
+  revisado_dueno: false
+- sec_ejec: '1636'
+  nombre: M.E. - ESCUELA NACIONAL SUPERIOR DE ARTE DRAMATICO  GUILLERMO UGARTE CHAMORRO
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato; servicio educativo en sede única de Lima (usuarios residen en Lima mientras estudian)'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 85.8
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 24.2
+  revisado_dueno: true
+- sec_ejec: '1769'
+  nombre: AUTORIDAD NACIONAL DE CONTROL DEL PODER JUDICIAL
+  pliego: PODER JUDICIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 21.6
+  revisado_dueno: false
+- sec_ejec: '475'
+  nombre: INSTITUTO GEOGRAFICO NACIONAL
+  pliego: INSTITUTO GEOGRAFICO NACIONAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 19.3
+  revisado_dueno: false
+- sec_ejec: '1544'
+  nombre: MC - PROYECTOS ESPECIALES
+  pliego: M. DE CULTURA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 18.0
+  revisado_dueno: false
+- sec_ejec: '1768'
+  nombre: ORGANISMO DE FOCALIZACIÓN E INFORMACIÓN SOCIAL - SEDE CENTRAL
+  pliego: ORGANISMO DE FOCALIZACIÓN E INFORMACIÓN SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 15.8
+  revisado_dueno: false
+- sec_ejec: '1635'
+  nombre: M.E. - ESCUELA NACIONAL SUPERIOR DE BALLET
+  pliego: M. DE EDUCACION
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: true
+  mixta: false
+  criterio: 'Criterio único (P3b): Sin dato; servicio educativo en sede única de Lima (usuarios residen en Lima mientras estudian)'
+  base_alcance:
+    paso: P3b
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: 94.0
+    confianza: media
+    decision: Dueño, 7/10/2026 (ronda 2 §3, decisiones 6 y 7; tabla_final_v2.csv)
+  devengado_meta15_2023_2025_millones: 14.3
+  revisado_dueno: true
+- sec_ejec: '1273'
+  nombre: SUPERINTENDENCIA NACIONAL DE ADUANAS Y DE ADMINISTRACION TRIBUTARIA
+  pliego: SUPERINTENDENCIA NACIONAL DE ADUANAS Y DE ADMINISTRACION TRIBUTARIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 13.3
+  revisado_dueno: false
+- sec_ejec: '1681'
+  nombre: PROGRAMA NACIONAL DE INNOVACION EN PESCA Y ACUICULTURA
+  pliego: MINISTERIO DE LA PRODUCCION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 11.8
+  revisado_dueno: false
+- sec_ejec: '1492'
+  nombre: GESTION INTEGRAL DE LA CALIDAD AMBIENTAL
+  pliego: M. DEL AMBIENTE
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 8.3
+  revisado_dueno: false
+- sec_ejec: '1124'
+  nombre: OFICINA PREVISIONAL DE LAS FUERZAS ARMADAS
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 8.1
+  revisado_dueno: false
+- sec_ejec: '193'
+  nombre: OFICINA DE ADMINISTRACION-IMARPE
+  pliego: INSTITUTO DEL MAR DEL PERU - IMARPE
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 7.0
+  revisado_dueno: false
+- sec_ejec: '1761'
+  nombre: CENTRO DE ALTOS ESTUDIOS NACIONALES - ESCUELA DE POSGRADO CAEN-EPG
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 6.9
+  revisado_dueno: false
+- sec_ejec: '471'
+  nombre: MARINA DE GUERRA DEL PERU
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 5.2
+  revisado_dueno: false
+- sec_ejec: '1762'
+  nombre: UNIVERSIDAD NACIONAL TECNOLOGICA DE SAN JUAN DE LURIGANCHO
+  pliego: U.N. TECNOLOGICA DE SAN JUAN DE LURIGANCHO
+  alcance: lima_metropolitana
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Universidad pública con sede en Lima Metropolitana
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 5.0
+  revisado_dueno: false
+- sec_ejec: '1750'
+  nombre: AUTORIDAD NACIONAL DE INFRAESTRUCTURA - ANIN
+  pliego: AUTORIDAD NACIONAL DE INFRAESTRUCTURA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 4.8
+  revisado_dueno: false
+- sec_ejec: '1786'
+  nombre: PROGRAMA DE ALIMENTACION ESCOLAR (PAE)
+  pliego: MINISTERIO DE DESARROLLO E INCLUSION SOCIAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 2.8
+  revisado_dueno: false
+- sec_ejec: '46'
+  nombre: MEF-ADMINISTRACION GENERAL
+  pliego: M. DE ECONOMIA Y FINANZAS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 2.0
+  revisado_dueno: false
+- sec_ejec: '3'
+  nombre: SECRETARIA GENERAL - PCM
+  pliego: PRESIDENCIA DEL CONSEJO DE MINISTROS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1.4
+  revisado_dueno: false
+- sec_ejec: '1630'
+  nombre: ADMINISTRACION - INAIGEM
+  pliego: INSTITUTO NACIONAL DE INVESTIGACION EN GLACIARES Y ECOSISTEMAS DE MONTAÑA - INAIGEM
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1.4
+  revisado_dueno: false
+- sec_ejec: '1677'
+  nombre: AUTORIDAD PARA LA RECONSTRUCCION CON CAMBIOS - RCC
+  pliego: PRESIDENCIA DEL CONSEJO DE MINISTROS
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1.3
+  revisado_dueno: false
+- sec_ejec: '1751'
+  nombre: MC - CHANKILLO, CUNA DE LA ASTRONOMIA EN CASMA Y NEPEÑA
+  pliego: M. DE CULTURA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 1.1
+  revisado_dueno: false
+- sec_ejec: '1205'
+  nombre: AUTORIDAD PORTUARIA NACIONAL
+  pliego: AUTORIDAD PORTUARIA NACIONAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.9
+  revisado_dueno: false
+- sec_ejec: '53'
+  nombre: INSTITUTO DE INVESTIGACIONES DE LA AMAZONIA PERUANA
+  pliego: INSTITUTO DE INVESTIGACIONES DE LA AMAZONIA PERUANA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.9
+  revisado_dueno: false
+- sec_ejec: '99'
+  nombre: UNIVERSIDAD NACIONAL DE PIURA
+  pliego: U.N. DE PIURA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.4
+  revisado_dueno: false
+- sec_ejec: '97'
+  nombre: UNIVERSIDAD NACIONAL DE LA AMAZONIA PERUANA
+  pliego: U.N. DE LA AMAZONIA PERUANA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.4
+  revisado_dueno: false
+- sec_ejec: '1658'
+  nombre: PROGR. PARA EL MEJORAMIENTO Y AMPLIAC. DE LOS SERV. DEL CENTRO DE EMPLEO  FORTALECE PERU
+  pliego: M. DE TRABAJO Y PROMOCION DEL EMPLEO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.2
+  revisado_dueno: false
+- sec_ejec: '1123'
+  nombre: ESCUELA NACIONAL DE MARINA MERCANTE
+  pliego: M. DE DEFENSA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.1
+  revisado_dueno: false
+- sec_ejec: '1555'
+  nombre: PROGRAMA NACIONAL DE INNOVACION AGRARIA - PNIA
+  pliego: INSTITUTO NACIONAL DE INNOVACION AGRARIA
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.1
+  revisado_dueno: false
+- sec_ejec: '1632'
+  nombre: ADMINISTRACION - INACAL
+  pliego: INSTITUTO NACIONAL DE CALIDAD (INACAL)
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.1
+  revisado_dueno: false
+- sec_ejec: '1284'
+  nombre: M.E.- APROLAB II
+  pliego: M. DE EDUCACION
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.1
+  revisado_dueno: false
+- sec_ejec: '1730'
+  nombre: CREACION Y MEJORAMIENTO DEL SERVICIO DE CATASTRO EN DISTRITOS SELECCIONADOS DE LAS PROVINCIAS DE LIMA, LAMBAYEQUE,
+    CHICLAYO Y PIURA
+  pliego: ORGANISMO DE FORMALIZACION DE LA PROPIEDAD INFORMAL
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.0
+  revisado_dueno: false
+- sec_ejec: '107'
+  nombre: UNIVERSIDAD NACIONAL DEL CALLAO
+  pliego: U.N. DEL CALLAO
+  alcance: nacional
+  referencia_nacional: false
+  verificar_procedencia: false
+  mixta: false
+  criterio: Sede central, programa u organismo de alcance nacional (meta en Lima por ser su sede)
+  base_alcance:
+    paso: no_evaluado_criterio_unico
+    L_pct: null
+    L_metrica: null
+    L_fuente: null
+    pct_atencion_directa: null
+    confianza: alta
+    decision: null
+    veredicto_ronda1: correcta (sin decisión individual del dueño)
+  devengado_meta15_2023_2025_millones: 0.0
+  revisado_dueno: false

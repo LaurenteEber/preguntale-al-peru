@@ -1,0 +1,39 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-MAPA-DCI-PROVINCIAL-2019
+strategy: http_file
+publisher: INEI
+dataset_title: Aproximación al Mapa de Desnutrición Crónica Infantil a Nivel Provincial 2019
+access_url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf
+download_url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf
+documentation_url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf
+temporal:
+  inicio: 2019
+  fin: 2019
+spatial:
+  ambito: PE
+  nivel_minimo: provincia
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: Uso libre citando la fuente
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- Estimación modelada (100 simulaciones); 148 de 196 provincias con CV < 10 %. Sin anexo distrital (INEI advierte
+  baja precisión distrital por pocos niños). No comparable con la serie departamental ENDES de forma directa.
+espera:
+  formato:
+  - pdf
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+notas: PDF estático; Anexo 1 'Porcentaje de menores de cinco años de edad con desnutrición crónica, grupo robusto
+  y ubicación de la provincia…, según departamento y provincia, 2019' con IC 95 %. Extraer con pdfplumber y asignar
+  ubigeo provincial por nombre.

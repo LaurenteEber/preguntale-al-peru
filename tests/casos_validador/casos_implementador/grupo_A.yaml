@@ -1,0 +1,926 @@
+# Casos propios del implementador A (etapas 0–3). Formato: contrato_validador.md §6.
+# Cada caso corre solo su regla. Las filas base salen del cubo real (biblioteca/indicadores/fact_indicador.parquet).
+
+# ---------------------------------------------------------------- R-MOTOR-03
+- id: A-R-MOTOR-03-a
+  regla: R-MOTOR-03
+  descripcion: "sin año pedido y la cifra es del último año cerrado (2025) → rótulo «último año completo»"
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: periodo_por_defecto}
+- id: A-R-MOTOR-03-b
+  regla: R-MOTOR-03
+  descripcion: "sin año pedido pero el motor resolvió 2024 (no es el último cerrado) → revisión"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: revision_humana, motivo: periodo_no_resuelto}
+- id: A-R-MOTOR-03-c
+  regla: R-MOTOR-03
+  descripcion: "año pedido explícito y cerrado → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal, anio_pedido: 2024}
+  espera: {dispara: false}
+- id: A-R-MOTOR-03-d
+  regla: R-MOTOR-03
+  descripcion: "borde — el año en curso (2026) pedido → dato preliminar rotulado"
+  cifra: {indicador_id: gasto_ex_pan, anio: 2026, nivel: nacional, territorio_id: PE, fecha_corte: "2026-09-30"}
+  consulta: {rol: principal, anio_pedido: 2026}
+  espera: {dispara: true, accion: rotular, motivo: anio_en_curso}
+
+# ---------------------------------------------------------------- R-DEP-01
+- id: A-R-DEP-01-a
+  regla: R-DEP-01
+  descripcion: "numerador (INEI-ENDES) sin compuerta aprobada → sin datos (insumo_en_ingesta)"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  contexto: {catalogo: {INEI-ENDES: {compuerta_ingesta: enlace_confirmado}}}
+  espera: {dispara: true, accion: suprimir, motivo: insumo_en_ingesta}
+- id: A-R-DEP-01-b
+  regla: R-DEP-01
+  descripcion: "todos los insumos aprobados y dim_dominio confirmado → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-DEP-01-c
+  regla: R-DEP-01
+  descripcion: "contraste no aprobado (MINSA-POBLACION-ESTIMADA) → nota en la ficha larga, sin suprimir"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: contraste_no_aprobado}
+- id: A-R-DEP-01-d
+  regla: R-DEP-01
+  descripcion: "tabla solo curada dim_dominio con su manifiesto con una prueba bloqueante fallida → sin datos"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal}
+  contexto: {manifiestos: {s1_territorio: {pruebas: {total: 37, fallidas: [T-01], bloqueantes_fallidas: [T-01]}}}}
+  espera: {dispara: true, accion: suprimir, motivo: tabla_curada_sin_respaldo}
+- id: A-R-DEP-01-e
+  regla: R-DEP-01
+  descripcion: "tema de gasto sin aprobación del dueño (fila de dim_tema_gasto no confirmada) → sin datos"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_aprobado: false}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: tabla_curada_sin_respaldo}
+- id: A-R-DEP-01-f
+  regla: R-DEP-01
+  descripcion: "gasto con dim_tema_gasto aprobado (cpt_grupo_expan, revisado por el dueño) → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-MOTOR-01 (regla; siguiente_paso en tmp_siguiente_paso.py)
+- id: A-R-MOTOR-01-a
+  regla: R-MOTOR-01
+  descripcion: "cifra degradada de provincia a departamento → se registra (rotular)"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra:
+    cifra_original: {nivel: provincia, territorio_id: "090100", anio: 2024}
+    motivo_nivel: [{paso: {tipo: nivel, nivel: departamento, territorio_id: "09"}, motivos: [nivel_no_representativo]}]
+  consulta: {nivel_pedido: provincia, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: degradada}
+- id: A-R-MOTOR-01-b
+  regla: R-MOTOR-01
+  descripcion: "degradación que retrocede (de departamento a provincia) → suprimir"
+  cifra:
+    indicador_id: sien_anemia_tamizados_6_35m
+    naturaleza_dato: registro_administrativo
+    nivel: provincia
+    territorio_id: "090100"
+    anio: 2025
+    cifra_original: {nivel: departamento, territorio_id: "09", anio: 2025}
+    motivo_nivel: [{paso: {tipo: nivel, nivel: provincia, territorio_id: "090100"}, motivos: [precision]}]
+  consulta: {rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: degradacion_no_monotona}
+- id: A-R-MOTOR-01-c
+  regla: R-MOTOR-01
+  descripcion: "cifra sin degradar → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-MOTOR-01-d
+  regla: R-MOTOR-01
+  descripcion: "el dominio 8 bajó a departamento → no monótona (decisión 9/10/2026) → suprimir"
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "15"}
+  cifra:
+    cifra_original: {nivel: AREA_METROPOLITANA_LIMA_CALLAO, territorio_id: AREA_METROPOLITANA_LIMA_CALLAO, anio: 2025}
+    motivo_nivel: [{paso: {tipo: nivel, nivel: departamento, territorio_id: "15"}, motivos: [precision]}]
+  consulta: {rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: degradacion_no_monotona}
+
+# ---------------------------------------------------------------- R-MOTOR-02
+- id: A-R-MOTOR-02-a
+  regla: R-MOTOR-02
+  descripcion: "indicador sin metodo_ic (obligatorio en encuestas) → suprimir por metadato_faltante"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {metodo_ic: null}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: A-R-MOTOR-02-b
+  regla: R-MOTOR-02
+  descripcion: "indicador completo → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-MOTOR-02-c
+  regla: R-MOTOR-02
+  descripcion: "un booleano en false no es nulo (subregistro_conocido = false) → no dispara"
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "010101", medida: intervalo}
+  cifra: {subregistro_conocido: false}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+- id: A-R-MOTOR-02-d
+  regla: R-MOTOR-02
+  descripcion: "encuesta sin variables_diseno.conglomerado → suprimir"
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {variables_diseno: {factor: factor07, estrato: estrato}}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+
+# ---------------------------------------------------------------- R-TERRITORIO-09
+- id: A-R-TERRITORIO-09-a
+  regla: R-TERRITORIO-09
+  descripcion: "«Huancavelica» con nivel departamento → un solo ubigeo → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal, territorio_pedido: Huancavelica}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-09-b
+  regla: R-TERRITORIO-09
+  descripcion: "«Ayaviri» sin jerarquía (Puno y Lima) → preguntar"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "210801"}
+  consulta: {nivel_pedido: establecimiento, rol: principal, territorio_pedido: Ayaviri}
+  espera: {dispara: true, accion: revision_humana, motivo: territorio_ambiguo}
+- id: A-R-TERRITORIO-09-c
+  regla: R-TERRITORIO-09
+  descripcion: "«Ayaviri, Melgar» → la jerarquía resuelve → no dispara"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "210801"}
+  consulta: {nivel_pedido: establecimiento, rol: principal, territorio_pedido: "Ayaviri, Melgar"}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-09-d
+  regla: R-TERRITORIO-09
+  descripcion: "«Lima» sola sin nivel → preguntar (L4)"
+  cifra: {anio: 2025}
+  consulta: {rol: principal, territorio_pedido: Lima}
+  espera: {dispara: true, accion: revision_humana, motivo: territorio_ambiguo}
+- id: A-R-TERRITORIO-09-e
+  regla: R-TERRITORIO-09
+  descripcion: "«Callao» → departamento 07 sin preguntar"
+  cifra: {anio: 2025}
+  consulta: {rol: principal, territorio_pedido: Callao}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-09-f
+  regla: R-TERRITORIO-09
+  descripcion: "distrito pendiente (Sangani, 120307) → R-LENGUAJE-05, sin datos"
+  cifra: {anio: 2025}
+  consulta: {rol: principal, nivel_pedido: distrito, territorio_pedido: Sangani}
+  espera: {dispara: true, accion: suprimir, motivo: sin_datos}
+- id: A-R-TERRITORIO-09-g
+  regla: R-TERRITORIO-09
+  descripcion: "pregunta sin territorio a nivel departamento → preguntar"
+  cifra: {anio: 2025, nivel: departamento}
+  consulta: {rol: principal, nivel_pedido: departamento}
+  espera: {dispara: true, accion: revision_humana, motivo: territorio_no_identificado}
+
+# ---------------------------------------------------------------- R-TERRITORIO-01
+- id: A-R-TERRITORIO-01-a
+  regla: R-TERRITORIO-01
+  descripcion: "Alto Trujillo (130112) en 2021, antes de su primer año con datos (2023) → no resuelve → suprimir"
+  cifra: {indicador_id: x, naturaleza_dato: registro_administrativo, base_geografica_usada: residencia, nivel: distrito, territorio_id: "130112", anio: 2021}
+  consulta: {rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: ubigeo_no_resuelto}
+- id: A-R-TERRITORIO-01-b
+  regla: R-TERRITORIO-01
+  descripcion: "borde — Alto Trujillo en 2023 (anio_datos_desde) → resuelve"
+  cifra: {indicador_id: x, naturaleza_dato: registro_administrativo, base_geografica_usada: residencia, nivel: distrito, territorio_id: "130112", anio: 2023}
+  consulta: {rol: principal}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-01-c
+  regla: R-TERRITORIO-01
+  descripcion: "El Porvenir 2022 (versión histórica hasta 2022) → resuelve"
+  cifra: {indicador_id: x, naturaleza_dato: registro_administrativo, base_geografica_usada: residencia, nivel: distrito, territorio_id: "130102", anio: 2022}
+  consulta: {rol: principal}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-01-d
+  regla: R-TERRITORIO-01
+  descripcion: "código 999999 (sin ubicar) a nivel distrito → suprimir"
+  cifra: {indicador_id: x, naturaleza_dato: registro_administrativo, base_geografica_usada: residencia, nivel: distrito, territorio_id: "999999", anio: 2024}
+  consulta: {rol: principal}
+  espera: {dispara: true, accion: suprimir}
+- id: A-R-TERRITORIO-01-e
+  regla: R-TERRITORIO-01
+  descripcion: "cero inicial perdido (10101 → 010101) se repara y resuelve"
+  cifra: {indicador_id: x, naturaleza_dato: registro_administrativo, base_geografica_usada: residencia, nivel: distrito, territorio_id: "10101", anio: 2020}
+  consulta: {rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-TERRITORIO-02
+- id: A-R-TERRITORIO-02-a
+  regla: R-TERRITORIO-02
+  descripcion: "SIEN sin pruebas de la carga en el contexto → revisión humana (paso 4 de la implementación)"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  contexto: {pruebas: {s3_puentes: []}}
+  espera: {dispara: true, accion: revision_humana, motivo: sistema_ubigeo_sin_verificar}
+- id: A-R-TERRITORIO-02-f
+  regla: R-TERRITORIO-02
+  descripcion: "SIEN con las pruebas de la carga (E-04 99,89 % ≥ 0,99 y E-05 ok, ctx.pruebas) → se acepta (N-6/H-11)"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-02-b
+  regla: R-TERRITORIO-02
+  descripcion: "borde — m_inei 0,99 y margen exacto 0,20 con 100 códigos → se acepta"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {m_inei: 0.99, m_reniec: 0.79, n_codigos: 100}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-02-c
+  regla: R-TERRITORIO-02
+  descripcion: "m_inei 0,989 → carga rechazada"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {m_inei: 0.989, m_reniec: 0.0, n_codigos: 100}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: carga_rechazada}
+- id: A-R-TERRITORIO-02-d
+  regla: R-TERRITORIO-02
+  descripcion: "menos de 50 códigos exige 100 % (0,99 no basta)"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {m_inei: 0.99, m_reniec: 0.0, n_codigos: 40}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: carga_rechazada}
+- id: A-R-TERRITORIO-02-e
+  regla: R-TERRITORIO-02
+  descripcion: "gasto MEF no está en la lista cerrada de fuentes → no aplica"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-TERRITORIO-08
+- id: A-R-TERRITORIO-08-a
+  regla: R-TERRITORIO-08
+  descripcion: "borde — p = 0,99 en una cifra distrital del SIEN → publicar (no dispara)"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "210801"}
+  cifra: {pct_numerador_ubicado: 0.99}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-08-b
+  regla: R-TERRITORIO-08
+  descripcion: "borde — p = 0,95 → advertir (residuo sin ubicar)"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "210801"}
+  cifra: {pct_numerador_ubicado: 0.95}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: advertir}
+- id: A-R-TERRITORIO-08-c
+  regla: R-TERRITORIO-08
+  descripcion: "p = 0,9499 → agregar a departamento"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "210801"}
+  cifra: {pct_numerador_ubicado: 0.9499}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel, motivo: nivel_no_representativo}
+- id: A-R-TERRITORIO-08-d
+  regla: R-TERRITORIO-08
+  descripcion: "cobertura de tamizaje SIEN pedida por provincia → solo departamento (excepción 7/10)"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {nivel: provincia, territorio_id: "210800", pct_numerador_ubicado: 1.0}
+  consulta: {nivel_pedido: provincia, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel}
+- id: A-R-TERRITORIO-08-e
+  regla: R-TERRITORIO-08
+  descripcion: "cobertura de tamizaje en Lima Metropolitana → publicable (L7), aunque p < 0,95"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  cifra: {pct_numerador_ubicado: 0.80}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-08-f
+  regla: R-TERRITORIO-08
+  descripcion: "anemia SIEN por distrito con p de la carga (E-05 del manifiesto) → no dispara"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "210801"}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-TERRITORIO-06
+- id: A-R-TERRITORIO-06-a
+  regla: R-TERRITORIO-06
+  descripcion: "cruce de ENDES en Lima Metropolitana 2024 con dim_dominio explícito → se cruza por dominio (rótulo)"
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2024, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal, intencion_pregunta: cruce}
+  espera: {dispara: true, accion: rotular, motivo: dominio_lima}
+- id: A-R-TERRITORIO-06-b
+  regla: R-TERRITORIO-06
+  descripcion: "cruce de ENDES en el departamento 15 sin composición explícita en dim_dominio → bloquear el cruce"
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2024, nivel: departamento, territorio: "15"}
+  consulta: {nivel_pedido: departamento, rol: principal, intencion_pregunta: cruce}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: dominio_no_definido}
+- id: A-R-TERRITORIO-06-c
+  regla: R-TERRITORIO-06
+  descripcion: "cruce de ENDES en Huancavelica (no es 15/07 ni dominio) → no dispara"
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal, intencion_pregunta: cruce}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-06-d
+  regla: R-TERRITORIO-06
+  descripcion: "Lima Metropolitana sin cruce → no dispara"
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2024, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal, intencion_pregunta: nivel_actual}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-06-e
+  regla: R-TERRITORIO-06
+  descripcion: "cruce de ENAHO en el departamento 15 (por_departamento en dim_dominio) → rótulo"
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "15"}
+  consulta: {nivel_pedido: departamento, rol: principal, intencion_pregunta: cruce}
+  espera: {dispara: true, accion: rotular}
+
+# ---------------------------------------------------------------- R-ENC-06
+- id: A-R-ENC-06-a
+  regla: R-ENC-06
+  descripcion: "ENDES pedida por provincia (Huanta) → departamento que la contiene"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "05"}
+  cifra: {nivel: provincia, territorio_id: "050400"}
+  consulta: {nivel_pedido: provincia, rol: principal, territorio_pedido: Huanta}
+  espera: {dispara: true, accion: agregar_nivel, motivo: nivel_no_representativo}
+- id: A-R-ENC-06-b
+  regla: R-ENC-06
+  descripcion: "ENDES por departamento → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-ENC-06-c
+  regla: R-ENC-06
+  descripcion: "Lima Metropolitana (ámbito de dim_dominio) → excepción L1, no se degrada"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal}
+  espera: {dispara: false}
+- id: A-R-ENC-06-d
+  regla: R-ENC-06
+  descripcion: "distrito de Lima Metropolitana (SJL) → sube al ámbito LM, no al departamento"
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "15"}
+  cifra: {nivel: distrito, territorio_id: "150132"}
+  consulta: {nivel_pedido: distrito, rol: principal, territorio_pedido: San Juan de Lurigancho}
+  espera: {dispara: true, accion: agregar_nivel}
+- id: A-R-ENC-06-e
+  regla: R-ENC-06
+  descripcion: "dominio 8 en la ENDES 2024 (no está en dim_dominio ni en sus dominios) → nacional"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: nacional, territorio: PE}
+  consulta: {nivel_pedido: AREA_METROPOLITANA_LIMA_CALLAO, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel}
+- id: A-R-ENC-06-f
+  regla: R-ENC-06
+  descripcion: "el Mapa de Pobreza (no es fuente de la lista cerrada) → no aplica"
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "010101", medida: intervalo}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-ENC-07
+- id: A-R-ENC-07-a
+  regla: R-ENC-07
+  descripcion: "ENDES Lima Región → rótulo «Lima Región (Lima Provincias)» y aviso de que no es todo el 15"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: LIMA_REGION, territorio: LIMA_REGION}
+  consulta: {nivel_pedido: LIMA_REGION, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: dominio_lima}
+- id: A-R-ENC-07-b
+  regla: R-ENC-07
+  descripcion: "ENDES Huancavelica (no es 15/07, población total) → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-ENC-07-c
+  regla: R-ENC-07
+  descripcion: "indicador solo urbano en Tumbes → rótulo «solo zonas urbanas»"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "24"}
+  cifra: {poblacion_objetivo: {area: urbano}}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: solo_urbano}
+- id: A-R-ENC-07-d
+  regla: R-ENC-07
+  descripcion: "ENAHO Callao → rótulo «Callao»"
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: CALLAO, territorio: CALLAO}
+  consulta: {nivel_pedido: CALLAO, rol: principal}
+  espera: {dispara: true, accion: rotular}
+
+# ---------------------------------------------------------------- R-REG-02
+- id: A-R-REG-02-a
+  regla: R-REG-02
+  descripcion: "anemia SIEN (tamizados en el mismo establecimiento) por distrito → rótulo «en establecimientos ubicados en»"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "210801"}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: base_establecimiento}
+- id: A-R-REG-02-b
+  regla: R-REG-02
+  descripcion: "tasa con denominador residente y base establecimiento pedida por distrito → provincia"
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "210801"}
+  cifra: {denominador_tipo_poblacion: residente}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel, motivo: base_establecimiento}
+- id: A-R-REG-02-c
+  regla: R-REG-02
+  descripcion: "cobertura SIEN (base residencia) → no dispara"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-GASTO-01
+- id: A-R-GASTO-01-a
+  regla: R-GASTO-01
+  descripcion: "gasto distrital armado con la meta departamental (no municipal ni CUI) → agregar a departamento"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "150132", medida: devengado}
+  cifra: {metodo_territorio: departamento_meta}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel}
+- id: A-R-GASTO-01-b
+  regla: R-GASTO-01
+  descripcion: "gasto distrital municipal y por CUI → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "150132", medida: devengado}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+- id: A-R-GASTO-01-c
+  regla: R-GASTO-01
+  descripcion: "fila con nivel de atribución departamento_meta pedida por provincia → departamento"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: provincia, territorio: "090100", medida: devengado}
+  cifra: {nivel_atribucion_gasto: departamento_meta}
+  consulta: {nivel_pedido: provincia, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel}
+- id: A-R-GASTO-01-d
+  regla: R-GASTO-01
+  descripcion: "borde — distrito_municipal publicado por distrito (su nivel máximo) → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "150132", medida: devengado}
+  cifra: {nivel_atribucion_gasto: distrito_municipal}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-GASTO-02
+- id: A-R-GASTO-02-a
+  regla: R-GASTO-02
+  descripcion: "cifra distrital de gasto (incluye inversiones por CUI, ubicación principal) → referencial"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "150132", medida: devengado}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: publicar_referencial, motivo: ubicacion_principal}
+- id: A-R-GASTO-02-b
+  regla: R-GASTO-02
+  descripcion: "cifra departamental → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-GASTO-02-c
+  regla: R-GASTO-02
+  descripcion: "inversión con ubicaciones en varios distritos de una provincia → no se reparte, va a la provincia"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "010103", medida: devengado}
+  cifra: {nivel_atribucion_gasto: provincia_inversion}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel}
+- id: A-R-GASTO-02-d
+  regla: R-GASTO-02
+  descripcion: "cifra distrital solo municipal (sin inversión ubicada por CUI) → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "010103", medida: devengado}
+  cifra: {incluye_inversion_cui: false}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-GASTO-03
+- id: A-R-GASTO-03-a
+  regla: R-GASTO-03
+  descripcion: "borde — pct_gasto_atribuible = 0,50 en un distrito → publicar con rótulo"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "010103", medida: devengado}
+  cifra: {pct_gasto_atribuible: 0.50}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: rotular}
+- id: A-R-GASTO-03-b
+  regla: R-GASTO-03
+  descripcion: "pct_gasto_atribuible = 0,4999 → referencial y la respuesta principal es el departamento"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "010103", medida: devengado}
+  cifra: {pct_gasto_atribuible: 0.4999}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: publicar_referencial, motivo: pct_atribuible_bajo}
+- id: A-R-GASTO-03-c
+  regla: R-GASTO-03
+  descripcion: "distrito con pct_gasto_atribuible nulo → metadato faltante"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "150132", medida: devengado}
+  cifra: {pct_gasto_atribuible: null}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: A-R-GASTO-03-d
+  regla: R-GASTO-03
+  descripcion: "Lima Metropolitana → línea aparte de referencia nacional, aviso de sede y advertencia de mixtas"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, medida: devengado}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal}
+  espera: {dispara: true, accion: advertir, motivo: sesgo_sede}
+- id: A-R-GASTO-03-e
+  regla: R-GASTO-03
+  descripcion: "Lima Región: la línea de referencia nacional va siempre"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_REGION, territorio: LIMA_REGION, medida: devengado}
+  consulta: {nivel_pedido: LIMA_REGION, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: linea_referencia_nacional}
+- id: A-R-GASTO-03-f
+  regla: R-GASTO-03
+  descripcion: "Callao → aviso de sede siempre"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: CALLAO, territorio: CALLAO, medida: devengado}
+  consulta: {nivel_pedido: CALLAO, rol: principal}
+  espera: {dispara: true, accion: advertir, motivo: sesgo_sede}
+- id: A-R-GASTO-03-g
+  regla: R-GASTO-03
+  descripcion: "Callao sin cuenta_en_ambito y pedido como comparación → no comparar"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: CALLAO, territorio: CALLAO, medida: devengado}
+  cifra: {metodo_territorio: departamento_meta}
+  consulta: {nivel_pedido: CALLAO, rol: principal, intencion_pregunta: comparacion}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: callao_sin_separar}
+- id: A-R-GASTO-03-h
+  regla: R-GASTO-03
+  descripcion: "departamento fuera de Lima y el Callao → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-TERRITORIO-04
+- id: A-R-TERRITORIO-04-a
+  regla: R-TERRITORIO-04
+  descripcion: "serie 2019–2024 de El Porvenir (Alto Trujillo se creó de él en 2023) → GEO2017 (grupo comparable)"
+  cifra: {indicador_id: x, naturaleza_dato: registro_administrativo, base_geografica_usada: residencia, nivel: distrito, territorio_id: "130102", territorio_nombre: El Porvenir, anio: 2024, serie: [{anio: 2019}, {anio: 2024}]}
+  consulta: {nivel_pedido: distrito, rol: principal, intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: agregar_nivel, motivo: geografia_geo2017, modo: grupo_comparable}
+- id: A-R-TERRITORIO-04-b
+  regla: R-TERRITORIO-04
+  descripcion: "un solo año → geografía vigente, no dispara"
+  cifra: {indicador_id: x, naturaleza_dato: registro_administrativo, base_geografica_usada: residencia, nivel: distrito, territorio_id: "130102", anio: 2024}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+- id: A-R-TERRITORIO-04-c
+  regla: R-TERRITORIO-04
+  descripcion: "serie de un distrito sin cambios (Chachapoyas) → no dispara"
+  cifra: {indicador_id: x, naturaleza_dato: registro_administrativo, base_geografica_usada: residencia, nivel: distrito, territorio_id: "010101", anio: 2024, serie: [{anio: 2019}, {anio: 2024}]}
+  consulta: {nivel_pedido: distrito, rol: principal, intencion_pregunta: evolucion}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-EST-05
+- id: A-R-EST-05-a
+  regla: R-EST-05
+  descripcion: "pobreza distrital: única fuente distrital el Mapa 2018 (8 años) → principal, referencial y rojo"
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "010101", medida: intervalo}
+  consulta: {nivel_pedido: distrito, rol: principal, intencion_pregunta: identificar_extremo}
+  espera: {dispara: true, accion: publicar_referencial, motivo: modelada_antigua}
+- id: A-R-EST-05-b
+  regla: R-EST-05
+  descripcion: "borde — dato de 2021 (edad 5, no > 5) → no dispara"
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "010101", medida: intervalo}
+  cifra: {anio: 2021}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: false}
+- id: A-R-EST-05-c
+  regla: R-EST-05
+  descripcion: "pedido por provincia → no dispara"
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "010100", medida: intervalo}
+  consulta: {nivel_pedido: provincia, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-DENOMINADORES-01
+- id: A-R-DENOMINADORES-01-a
+  regla: R-DENOMINADORES-01
+  descripcion: "cobertura SIEN por departamento con la proyección departamental (D-IND-7) → válida, rótulo de la población"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: denominador}
+- id: A-R-DENOMINADORES-01-b
+  regla: R-DENOMINADORES-01
+  descripcion: "RENIEC como denominador principal → la cifra no se publica"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {denominador_principal: "RENIEC-POBLACION-IDENTIFICADA|6-35m|T"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: denominador_no_valido}
+- id: A-R-DENOMINADORES-01-c
+  regla: R-DENOMINADORES-01
+  descripcion: "prevalencia ENDES (no requiere denominador) → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-DENOMINADORES-01-d
+  regla: R-DENOMINADORES-01
+  descripcion: "denominador principal nulo con requiere_denominador = true → no se publica"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {denominador_principal: null}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir}
+
+# ---------------------------------------------------------------- R-DENOMINADORES-02
+- id: A-R-DENOMINADORES-02-a
+  regla: R-DENOMINADORES-02
+  descripcion: "serie con dos vintages del denominador → bloquear la serie"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {serie: [{anio: 2024, vintage_denominador: "INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01"}, {anio: 2025, vintage_denominador: "CPV2025|censada|ed=2026-07"}]}
+  consulta: {nivel_pedido: departamento, rol: principal, intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: vintage_distinto}
+- id: A-R-DENOMINADORES-02-b
+  regla: R-DENOMINADORES-02
+  descripcion: "cifra de un año con vintage declarado → no dispara"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-DENOMINADORES-02-c
+  regla: R-DENOMINADORES-02
+  descripcion: "requiere denominador sin vintage → metadato faltante"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {vintage_denominador: no_aplica}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+
+# ---------------------------------------------------------------- R-DENOMINADORES-05
+- id: A-R-DENOMINADORES-05-a
+  regla: R-DENOMINADORES-05
+  descripcion: "borde — s = 0,10 → publicar (no dispara)"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {sensibilidad_denominador: 0.10}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-DENOMINADORES-05-b
+  regla: R-DENOMINADORES-05
+  descripcion: "s = 0,1001 → referencial con rango"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {sensibilidad_denominador: 0.1001, rango_indicador: [40.0, 45.0]}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: publicar_referencial, modo: rango}
+- id: A-R-DENOMINADORES-05-c
+  regla: R-DENOMINADORES-05
+  descripcion: "borde — s = 0,25 → todavía rango"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {sensibilidad_denominador: 0.25}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: publicar_referencial, modo: rango}
+- id: A-R-DENOMINADORES-05-d
+  regla: R-DENOMINADORES-05
+  descripcion: "s = 0,2501 en un distrito → provincia"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {nivel: distrito, territorio_id: "210801", sensibilidad_denominador: 0.2501}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel}
+- id: A-R-DENOMINADORES-05-e
+  regla: R-DENOMINADORES-05
+  descripcion: "Lima Metropolitana con prorrateo propio (IPF) y sin contrastes → referencial con rótulo"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal}
+  espera: {dispara: true, accion: publicar_referencial, motivo: denominador_propio}
+- id: A-R-DENOMINADORES-05-f
+  regla: R-DENOMINADORES-05
+  descripcion: "departamento con la proyección oficial y sin contrastes aprobados (s nulo) → no dispara"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-DENOMINADORES-07
+- id: A-R-DENOMINADORES-07-a
+  regla: R-DENOMINADORES-07
+  descripcion: "denominador de otro año (desfase 1 > 0) en un flujo → la cifra no se publica"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {anio_denominador: 2024}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: denominador_desalineado}
+- id: A-R-DENOMINADORES-07-b
+  regla: R-DENOMINADORES-07
+  descripcion: "numerador y denominador del mismo año y geografía → no dispara"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-DENOMINADORES-07-c
+  regla: R-DENOMINADORES-07
+  descripcion: "stock con corte en el primer trimestre y denominador del año anterior → se admite rotulado"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {anio_denominador: 2024, es_stock: true, fecha_corte: "2025-01-31"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular}
+- id: A-R-DENOMINADORES-07-d
+  regla: R-DENOMINADORES-07
+  descripcion: "geografía del numerador GEO2017 y del denominador vigente → la cifra no se publica"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {geografia_base_numerador: GEO2017}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: denominador_desalineado}
+
+# ---------------------------------------------------------------- R-GASTO-12
+- id: A-R-GASTO-12-a
+  regla: R-GASTO-12
+  descripcion: "un solo año → soles corrientes, rotulado"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: soles_corrientes}
+- id: A-R-GASTO-12-b
+  regla: R-GASTO-12
+  descripcion: "serie 2023–2025 en soles corrientes → no se compara hasta deflactar"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {serie: [{anio: 2023}, {anio: 2024}, {anio: 2025}], precios: corrientes}
+  consulta: {nivel_pedido: departamento, rol: principal, intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: serie_sin_deflactar}
+- id: A-R-GASTO-12-c
+  regla: R-GASTO-12
+  descripcion: "serie en soles constantes de 2025 → rótulo"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {serie: [{anio: 2023}, {anio: 2025}], precios: constantes, anio_base_deflactor: 2025}
+  consulta: {nivel_pedido: departamento, rol: principal, intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: rotular, motivo: soles_constantes}
+- id: A-R-GASTO-12-d
+  regla: R-GASTO-12
+  descripcion: "un ratio (avance) no se deflacta → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tipo_estimacion: razon}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+
+- id: A-R-GASTO-03-i
+  regla: R-GASTO-03
+  descripcion: "SJL 2025 con pct_gasto_atribuible del cubo v1.1.0 (0,048 < 0,50, Lima) → referencial y respuesta parcial"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "150132", medida: devengado}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: publicar_referencial, motivo: pct_atribuible_bajo}
+
+# ---------------------------------------------------------------- correcciones de la auditoría P2 (A-1 a A-9)
+- id: A-AUD-A1-a
+  regla: R-TERRITORIO-09
+  descripcion: "A-1: «Lima» sin nivel pedido aunque la fila sea Lima Metropolitana → preguntar"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {rol: principal, territorio_pedido: Lima}
+  espera: {dispara: true, accion: revision_humana, motivo: territorio_ambiguo}
+- id: A-AUD-A1-b
+  regla: R-TERRITORIO-09
+  descripcion: "A-1: «Huancavelica» sin nivel pedido (fila departamental) → departamento, provincia y distrito: preguntar"
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  consulta: {rol: principal, territorio_pedido: Huancavelica}
+  espera: {dispara: true, accion: revision_humana, motivo: territorio_ambiguo}
+- id: A-AUD-A2-a
+  regla: R-GASTO-01
+  descripcion: "A-2: fila departamental con nivel_atribucion departamento_meta pedida por distrito → agregar (nivel pedido)"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {nivel_atribucion_gasto: departamento_meta}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel, nivel_minimo: departamento}
+- id: A-AUD-A2-b
+  regla: R-GASTO-01
+  descripcion: "A-2: la misma fila pedida por departamento → no dispara"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {nivel_atribucion_gasto: departamento_meta}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-AUD-A3-a
+  regla: R-GASTO-02
+  descripcion: "A-3: multidepartamental del GN con meta en Lima → nacional_multidepartamental"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "15", medida: devengado}
+  cifra: {nivel_comun: multidepartamental, nivel_gobierno: E, departamento_meta: "15"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: agregar_nivel, nivel_minimo: nacional}
+- id: A-AUD-A3-b
+  regla: R-GASTO-02
+  descripcion: "A-3: «-MUL.DEP-» de un GORE con meta en Cusco → rótulo «proyecto multidepartamental»"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "08", medida: devengado}
+  cifra: {metodo_ubicacion_cui: multidepartamental_mef, nivel_gobierno: R, departamento_meta: "08"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: multidepartamental}
+- id: A-AUD-A3-c
+  regla: R-GASTO-02
+  descripcion: "A-3: multidepartamental de una municipalidad (nivel_gobierno M) → no aplica la (4)"
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "08", medida: devengado}
+  cifra: {nivel_comun: multidepartamental, nivel_gobierno: M, departamento_meta: "08"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-AUD-A4-a
+  regla: R-DENOMINADORES-07
+  descripcion: "A-4: fecha_ref_numerador 2025-06-30 y fecha_ref_denominador 2024-06-30 (flujo) → suprimir"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {fecha_ref_numerador: "2025-06-30", fecha_ref_denominador: "2024-06-30"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: denominador_desalineado}
+- id: A-AUD-A4-b
+  regla: R-DENOMINADORES-07
+  descripcion: "A-4: stock con fecha_ref_numerador 2026-01-31 y denominador 2025 → se admite rotulado"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {fecha_ref_numerador: "2026-01-31", fecha_ref_denominador: "2025-06-30", es_stock: true}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: denominador_anio_anterior}
+- id: A-AUD-A4-c
+  regla: R-DENOMINADORES-07
+  descripcion: "A-4: fechas de referencia del mismo año → no dispara"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {fecha_ref_numerador: "2025-12-31", fecha_ref_denominador: "2025-06-30"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-AUD-A5-a
+  regla: R-DENOMINADORES-05
+  descripcion: "A-5: RENIEC en denominadores_usados difiere 25 % (> 0,20) → nota; los contrastes no RENIEC dan s ≤ 0,10"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {denominador: 1000, numerador: 400, denominadores_usados: [{fuente: MINSA-POBLACION-ESTIMADA, vintage: x, valor: 1050}, {fuente: RENIEC-POBLACION-IDENTIFICADA, vintage: y, valor: 1250}]}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: rotular, motivo: reniec_difiere}
+- id: A-AUD-A5-b
+  regla: R-DENOMINADORES-05
+  descripcion: "A-5: borde — RENIEC difiere exactamente 0,20 → sin nota"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {denominador: 1000, numerador: 400, denominadores_usados: [{fuente: MINSA-POBLACION-ESTIMADA, vintage: x, valor: 1050}, {fuente: RENIEC-POBLACION-IDENTIFICADA, vintage: y, valor: 1200}]}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-AUD-A7-a
+  regla: R-MOTOR-01
+  descripcion: "A-7: motivo_nivel con un paso en texto → revisión humana, sin AttributeError"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {motivo_nivel: [departamento_anio]}
+  consulta: {rol: principal}
+  espera: {dispara: true, accion: revision_humana, motivo: motivo_nivel_mal_formado}
+- id: A-AUD-A7-b
+  regla: R-MOTOR-01
+  descripcion: "siguiente_paso (N-1): ENDES 2025 dpto suprimida por precisión → agrupar 2023–2025"
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  consulta: {rol: principal}
+  evaluacion: {accion_final: suprimir, resultados: [{accion: suprimir, motivo: precision}]}
+  espera: {dispara: true, paso: {tipo: agrupar, anios: [2023, 2025], paso: agrupar_3_anios}}
+- id: A-AUD-A7-c
+  regla: R-MOTOR-01
+  descripcion: "siguiente_paso (N-1): suprimida por metadato_faltante → sin paso"
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  consulta: {rol: principal}
+  evaluacion: {accion_final: suprimir, resultados: [{accion: suprimir, motivo: metadato_faltante}]}
+  espera: {dispara: false}
+- id: A-AUD-A7-d
+  regla: R-MOTOR-01
+  descripcion: "siguiente_paso (N-1): ENDES provincia con agregar_nivel(departamento) → departamento 05"
+  cifra: {indicador_id: endes_anemia_6_35m, naturaleza_dato: encuesta_muestral, nivel: provincia, territorio_id: "050400", anio: 2024, medida: proporcion}
+  consulta: {rol: principal}
+  evaluacion: {accion_final: agregar_nivel, resultados: [{accion: agregar_nivel, motivo: nivel_no_representativo, nivel_minimo: departamento}]}
+  espera: {dispara: true, paso: {tipo: nivel, nivel: departamento, territorio_id: "05"}}
+- id: A-AUD-A8-a
+  regla: R-MOTOR-03
+  descripcion: "A-8: comparación pedida (2019 frente a 2024) cuenta como periodo pedido → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {comparacion: {anio: 2019}}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-AUD-A9-a
+  regla: R-DENOMINADORES-02
+  descripcion: "A-9: una fila de la serie sin vintage → metadato faltante (no hereda el de la cifra)"
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {serie: [{anio: 2024}, {anio: 2025, vintage_denominador: "INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01"}]}
+  consulta: {nivel_pedido: departamento, rol: principal, intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: A-AUD-EST05-a
+  regla: R-EST-05
+  descripcion: "parámetro edad_maxima_anios ausente → metadato faltante (no hay valor por omisión en el código)"
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "010101", medida: intervalo}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  contexto: {reglas: {R-EST-05: {parametros: {ranking: x}}}}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+
+# ---------------------------------------------------------------- R-ENC-08 (A-6)
+- id: A-R-ENC-08-a
+  regla: R-ENC-08
+  descripcion: "ENDES 2024 Huancavelica: fila verificada (departamento) con cita → no dispara"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: A-R-ENC-08-b
+  regla: R-ENC-08
+  descripcion: "sin fila en inferencia_verificada → solo nacional"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  contexto: {inferencia: []}
+  espera: {dispara: true, accion: agregar_nivel, nivel_minimo: nacional}
+- id: A-R-ENC-08-c
+  regla: R-ENC-08
+  descripcion: "ENAHO 2025 Lima Metropolitana: ámbito publicado con su cita → aviso ambito_no_dominio"
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal}
+  espera: {dispara: true, accion: advertir, motivo: ambito_no_dominio}
+- id: A-R-ENC-08-d
+  regla: R-ENC-08
+  descripcion: "ENDES 2016 Lima Región: ámbito por estrato → ambito_no_dominio y ambito_por_estrato"
+  base: {indicador: endes_anemia_6_35m, anio: 2016, nivel: LIMA_REGION, territorio: LIMA_REGION}
+  consulta: {nivel_pedido: LIMA_REGION, rol: principal}
+  espera: {dispara: true, accion: advertir, motivo: ambito_por_estrato}
+- id: A-R-ENC-08-e
+  regla: R-ENC-08
+  descripcion: "ENDES 2020: fila con aviso entrevista_telefonica → aviso junto a la cifra"
+  base: {indicador: endes_anemia_6_35m, anio: 2020, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: advertir, motivo: entrevista_telefonica}
+- id: A-R-ENC-08-f
+  regla: R-ENC-08
+  descripcion: "ENAHO 2025 Callao con el Callao excluido y sin ámbito publicado → su dominio verificado (Lima Metropolitana y Callao)"
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: CALLAO, territorio: CALLAO}
+  consulta: {nivel_pedido: CALLAO, rol: principal}
+  contexto: {inferencia: [{fuente: INEI-ENAHO, anio: "2025", modulo: "*", inferencia_verificada: "true", nivel_maximo: departamento, excluye_departamentos: "07", aviso: "", cita_url: u, cita_documento: d, cita_ubicacion: p, ambitos_publicados: "LIMA_METROPOLITANA;LIMA_REGION", ambitos_cita_url: u, ambitos_cita_documento: d, ambitos_cita_ubicacion: p}]}
+  espera: {dispara: true, accion: agregar_nivel, nivel_minimo: AREA_METROPOLITANA_LIMA_CALLAO}
+- id: A-R-ENC-08-g
+  regla: R-ENC-08
+  descripcion: "fila sin la cita completa (falta cita_ubicacion) → no verificada: nacional"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  contexto: {inferencia: [{fuente: INEI-ENDES, anio: "2024", modulo: "*", inferencia_verificada: "true", nivel_maximo: departamento, excluye_departamentos: "", aviso: "", cita_url: u, cita_documento: d, cita_ubicacion: ""}]}
+  espera: {dispara: true, accion: agregar_nivel, nivel_minimo: nacional}
+- id: A-R-ENC-08-h
+  regla: R-ENC-08
+  descripcion: "ENAHO 2025 departamento 15 (por_departamento ámbito publicado) → verificado por la rama general con ambito_no_dominio"
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "15"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: advertir, motivo: ambito_no_dominio}
+- id: A-R-ENC-08-i
+  regla: R-ENC-08
+  descripcion: "nacional → nunca se degrada (no dispara sin aviso)"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: nacional, territorio: PE}
+  consulta: {nivel_pedido: nacional, rol: principal}
+  espera: {dispara: false}
+- id: A-R-ENC-08-j
+  regla: R-ENC-08
+  descripcion: "Lima Metropolitana ENDES 2024 sin el ámbito en ambitos_publicados → sube al departamento 15"
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {nivel_pedido: LIMA_METROPOLITANA, rol: principal}
+  contexto: {inferencia: [{fuente: INEI-ENDES, anio: "2024", modulo: "*", inferencia_verificada: "true", nivel_maximo: departamento, excluye_departamentos: "", aviso: "", cita_url: u, cita_documento: d, cita_ubicacion: p, ambitos_publicados: "LIMA_REGION", ambitos_cita_url: u, ambitos_cita_documento: d, ambitos_cita_ubicacion: p}]}
+  espera: {dispara: true, accion: agregar_nivel, nivel_minimo: departamento}

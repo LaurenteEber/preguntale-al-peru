@@ -1,0 +1,801 @@
+{
+ "descripcion": "Corpus de la ronda 4 (l_mensajes, v3, 7/10/2026). Mismo formato que corpus_auditor.json: 'debe' = pasar | bloquear | contexto; 'cat_esperada' = categorías que un corrector correcto debería detectar. Categorías nuevas: 'jerga' (la revisa el detector de mensajes, JERGA_MENSAJES) y 'precisión excesiva' (hoy solo la ven los avisos pendientes de validación). Las comparaciones sin base quedan como 'contexto': las controla el validador con una prueba de diferencia. Varias oraciones correctas copian frases estándar de la ficha, y los avisos se ajustaron con otros corpus, así que este corpus no es una reserva ciega para ellos. v3: sin las 3 oraciones idénticas ni las 5 casi idénticas a corpus anteriores (auditoría r4). Uso informativo: no entra en la puerta de consistencia.",
+ "oraciones": [
+  {
+   "id": "R4-P03",
+   "debe": "pasar",
+   "texto": "En 2025 se registraron {{c:n1}} defunciones infantiles en los sistemas del MINSA en Ucayali."
+  },
+  {
+   "id": "R4-P04",
+   "debe": "pasar",
+   "texto": "En el mismo periodo, la municipalidad devengó {{c:g1}} en el programa de desarrollo infantil temprano."
+  },
+  {
+   "id": "R4-P05",
+   "debe": "pasar",
+   "texto": "Estos datos no permiten saber si el gasto tuvo algún efecto sobre la anemia."
+  },
+  {
+   "id": "R4-P06",
+   "debe": "pasar",
+   "texto": "Con los datos públicos que usamos no se puede responder esa parte para el distrito de Ascensión."
+  },
+  {
+   "id": "R4-P07",
+   "debe": "pasar",
+   "texto": "La anemia en Puno se mantuvo sin cambio estadísticamente claro entre 2024 y 2025."
+  },
+  {
+   "id": "R4-P09",
+   "debe": "pasar",
+   "texto": "Los territorios con más pobreza tienden a tener más anemia."
+  },
+  {
+   "id": "R4-P10",
+   "debe": "pasar",
+   "texto": "No se observa una asociación clara entre el gasto por habitante y la anemia."
+  },
+  {
+   "id": "R4-P11",
+   "debe": "pasar",
+   "texto": "Se tamizaron {{c:n2}} niños en establecimientos de Huancavelica en 2025."
+  },
+  {
+   "id": "R4-P12",
+   "debe": "pasar",
+   "texto": "Esta cifra es una estimación del MEF, no un gasto registrado aparte."
+  },
+  {
+   "id": "R4-P13",
+   "debe": "pasar",
+   "texto": "El gasto se ubica donde está la oficina que paga, no donde se usa el dinero."
+  },
+  {
+   "id": "R4-P14",
+   "debe": "pasar",
+   "texto": "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta."
+  },
+  {
+   "id": "R4-P15",
+   "debe": "pasar",
+   "texto": "Las cifras son de años distintos (2018 y 2025); la comparación es aproximada."
+  },
+  {
+   "id": "R4-P16",
+   "debe": "pasar",
+   "texto": "Para que nadie pueda ser identificado, no mostramos cifras de menos de 10 personas."
+  },
+  {
+   "id": "R4-P17",
+   "debe": "pasar",
+   "texto": "En 2024 cambió la forma de medir la anemia; no comparamos 2023 con 2025 directamente."
+  },
+  {
+   "id": "R4-P18",
+   "debe": "pasar",
+   "texto": "Según la evaluación del MEF (2019), el programa tuvo resultados mixtos."
+  },
+  {
+   "id": "R4-P19",
+   "debe": "pasar",
+   "texto": "La ejecución del presupuesto municipal llegó a {{c:p1}} del presupuesto asignado."
+  },
+  {
+   "id": "R4-P20",
+   "debe": "pasar",
+   "texto": "La municipalidad gastó {{c:g2}} en obras con ubicación registrada en el distrito."
+  },
+  {
+   "id": "R4-P21",
+   "debe": "pasar",
+   "texto": "La encuesta no alcanza para dar cifras por provincia; mostramos el departamento."
+  },
+  {
+   "id": "R4-P23",
+   "debe": "pasar",
+   "texto": "El 41,5 % del gasto de este tema en Huancavelica puede ubicarse en un distrito o provincia."
+  },
+  {
+   "id": "R4-P24",
+   "debe": "pasar",
+   "texto": "Hay pocos casos en este distrito; sumamos tres años para tener una cifra más estable."
+  },
+  {
+   "id": "R4-P25",
+   "debe": "pasar",
+   "texto": "En esta escuela solo se evaluó a 4 estudiantes; mostramos el resultado de la UGEL."
+  },
+  {
+   "id": "R4-P26",
+   "debe": "pasar",
+   "texto": "Esta cifra combina datos de distinto tipo; se presentan juntos para dar contexto."
+  },
+  {
+   "id": "R4-P27",
+   "debe": "pasar",
+   "texto": "La cobertura de vacunación, según la población estimada del MINSA, fue de {{c:v1}}."
+  },
+  {
+   "id": "R4-P28",
+   "debe": "pasar",
+   "texto": "Alrededor de {{c:a2}} de los hogares de Loreto no tenía agua por red pública, según la ENAHO 2024."
+  },
+  {
+   "id": "R4-P29",
+   "debe": "pasar",
+   "texto": "La proporción de niños tamizados con anemia en establecimientos de Huancavelica fue de 17,2 % en 2025."
+  },
+  {
+   "id": "R4-P30",
+   "debe": "pasar",
+   "texto": "En paralelo, el gasto municipal en el programa se mantuvo en niveles similares."
+  },
+  {
+   "id": "R4-P31",
+   "debe": "pasar",
+   "texto": "Estos datos describen lo que registró la entidad; no permiten juzgar a sus autoridades."
+  },
+  {
+   "id": "R4-P32",
+   "debe": "pasar",
+   "texto": "La entidad informa que la obra avanzó 62 % al 15 de junio de 2026."
+  },
+  {
+   "id": "R4-P33",
+   "debe": "pasar",
+   "texto": "Según el Mapa de Pobreza 2018 del INEI, se estimaba que la pobreza del distrito estaba entre 31 % y 55 %."
+  },
+  {
+   "id": "R4-P34",
+   "debe": "pasar",
+   "texto": "No calculamos el cambio de la pobreza distrital entre 2018 y 2024: son métodos distintos."
+  },
+  {
+   "id": "R4-P35",
+   "debe": "pasar",
+   "texto": "Lima Metropolitana y el Callao se muestran juntos porque así los presenta la encuesta."
+  },
+  {
+   "id": "R4-P36",
+   "debe": "pasar",
+   "texto": "Este registro capta alrededor de 80 % de las defunciones en Loreto, según el MINSA."
+  },
+  {
+   "id": "R4-P37",
+   "debe": "pasar",
+   "texto": "La tasa de homicidios registrada en Tumbes fue de 12,4 por 100 000 habitantes en 2024."
+  },
+  {
+   "id": "R4-P38",
+   "debe": "pasar",
+   "texto": "El presupuesto asignado de la región fue de S/ 245,7 millones en 2025."
+  },
+  {
+   "id": "R4-P39",
+   "debe": "pasar",
+   "texto": "Los datos muestran cuánto se gastó y cuánta anemia hubo, no la relación entre ambos."
+  },
+  {
+   "id": "R4-P40",
+   "debe": "contexto",
+   "nota": "comparación de grupos: correcta solo si una prueba de diferencia la respalda (la controla el validador); auditoría r4, muestra de 40",
+   "texto": "Los distritos de la sierra sur tienden a tener tasas de anemia más altas que los de la costa."
+  },
+  {
+   "id": "R4-P41",
+   "debe": "pasar",
+   "texto": "No hay suficientes personas encuestadas en este grupo para dar una cifra."
+  },
+  {
+   "id": "R4-P42",
+   "debe": "pasar",
+   "texto": "Mostramos la cifra departamental; la situación en tu distrito puede ser distinta."
+  },
+  {
+   "id": "R4-P43",
+   "debe": "pasar",
+   "texto": "La cifra oficial de mortalidad infantil la estima el INEI con su encuesta de salud."
+  },
+  {
+   "id": "R4-P44",
+   "debe": "pasar",
+   "texto": "Al 31 de agosto de 2026 ya se gastó (devengado) el 81 % de lo que hoy cuesta la obra.",
+   "nota": "v3: «se pagó» → «se gastó (devengado)»"
+  },
+  {
+   "id": "R4-P45",
+   "debe": "pasar",
+   "texto": "El gasto en salud del gobierno regional se registra solo por departamento."
+  },
+  {
+   "id": "R4-P46",
+   "debe": "pasar",
+   "texto": "Alrededor de 47 % (entre 42 % y 52 %) de los hogares del departamento usa leña para cocinar."
+  },
+  {
+   "id": "R4-P47",
+   "debe": "pasar",
+   "texto": "Con los datos que tenemos no podemos decir qué municipalidad gasta mejor."
+  },
+  {
+   "id": "R4-P48",
+   "debe": "pasar",
+   "texto": "Se atendieron {{c:n4}} consultas por anemia; una persona puede tener varias atenciones."
+  },
+  {
+   "id": "R4-P49",
+   "debe": "pasar",
+   "texto": "La municipalidad registró un avance de gasto de 73 % al cierre de septiembre."
+  },
+  {
+   "id": "R4-P50",
+   "debe": "pasar",
+   "texto": "Según la ENAHO 2024, se estima que alrededor de 30 % de la población de Cajamarca era pobre."
+  },
+  {
+   "id": "R4-B01",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal",
+    "cambio sin significancia"
+   ],
+   "texto": "La anemia bajó gracias al aumento del presupuesto."
+  },
+  {
+   "id": "R4-B02",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal/evaluativa"
+   ],
+   "texto": "El programa Juntos redujo la pobreza en Apurímac."
+  },
+  {
+   "id": "R4-B03",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal",
+    "cambio sin significancia"
+   ],
+   "texto": "La caída de la anemia se debe a la suplementación con hierro."
+  },
+  {
+   "id": "R4-B04",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal",
+    "cambio sin significancia"
+   ],
+   "texto": "Como consecuencia del gasto municipal, la desnutrición disminuyó."
+  },
+  {
+   "id": "R4-B05",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal",
+    "cambio sin significancia"
+   ],
+   "texto": "El aumento de la inversión provocó una mejora en los aprendizajes."
+  },
+  {
+   "id": "R4-B06",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal"
+   ],
+   "texto": "La anemia es alta debido a la falta de inversión en agua."
+  },
+  {
+   "id": "R4-B07",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal",
+    "falacia ecológica"
+   ],
+   "texto": "Por eso los niños de Puno tienen más anemia."
+  },
+  {
+   "id": "R4-B08",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal"
+   ],
+   "texto": "El mayor gasto permitió reducir la mortalidad infantil."
+  },
+  {
+   "id": "R4-B09",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal",
+    "cambio sin significancia"
+   ],
+   "texto": "A raíz de la pandemia, la pobreza se disparó en Lima."
+  },
+  {
+   "id": "R4-B10",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal/evaluativa"
+   ],
+   "texto": "El programa tuvo un impacto positivo en la matrícula."
+  },
+  {
+   "id": "R4-B11",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal/evaluativa"
+   ],
+   "texto": "La vacunación contribuyó a bajar los casos de sarampión."
+  },
+  {
+   "id": "R4-B12",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal/evaluativa"
+   ],
+   "texto": "El nuevo hospital logró reducir la mortalidad materna.",
+   "nota": "v3: reemplaza «sirvió para atender a más gestantes» (describía un uso, no un efecto)"
+  },
+  {
+   "id": "R4-B13",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal",
+    "cambio sin significancia"
+   ],
+   "texto": "La anemia cayó porque el gobierno regional invirtió más en salud."
+  },
+  {
+   "id": "R4-B14",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal"
+   ],
+   "texto": "Las obras de saneamiento explican la menor incidencia de diarrea."
+  },
+  {
+   "id": "R4-B15",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "causal"
+   ],
+   "texto": "Desde que llegó el programa, hay menos desnutrición en la provincia."
+  },
+  {
+   "id": "R4-B16",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga",
+    "causal"
+   ],
+   "texto": "La cifra tiene un CV de 18 %, así que es referencial."
+  },
+  {
+   "id": "R4-B17",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "El IC al 95 % va de 12 % a 20 %."
+  },
+  {
+   "id": "R4-B18",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "El denominador usado es la población estimada del MINSA."
+  },
+  {
+   "id": "R4-B19",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "El ubigeo del establecimiento no coincide con el de residencia."
+  },
+  {
+   "id": "R4-B20",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "La diferencia no es estadísticamente significativa."
+  },
+  {
+   "id": "R4-B21",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "La anemia tiene un margen de error de ±3 puntos."
+  },
+  {
+   "id": "R4-B22",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "Usamos el vintage de diciembre de 2025 de la proyección."
+  },
+  {
+   "id": "R4-B23",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "Con el punto de corte de la RM 251-2024 la anemia es menor."
+  },
+  {
+   "id": "R4-B24",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "La población se ajustó por omisión censal."
+  },
+  {
+   "id": "R4-B25",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "La ENAPRES no es representativa a nivel distrital."
+  },
+  {
+   "id": "R4-B26",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "Para comparar usamos tasas ajustadas por edad."
+  },
+  {
+   "id": "R4-B27",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "Se necesitan evaluaciones de impacto para saberlo."
+  },
+  {
+   "id": "R4-B28",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "El MEF lo reparte con pesos por edad."
+  },
+  {
+   "id": "R4-B29",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "Es un registro administrativo del MINSA."
+  },
+  {
+   "id": "R4-B30",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "El devengado fue de 92 % del PIM."
+  },
+  {
+   "id": "R4-B31",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "precisión excesiva"
+   ],
+   "texto": "La anemia en Puno es de 42,3718 %."
+  },
+  {
+   "id": "R4-B32",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "falsa certeza",
+    "precisión excesiva"
+   ],
+   "texto": "Exactamente 1 234 567 niños tienen anemia en el Perú."
+  },
+  {
+   "id": "R4-B34",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "precisión excesiva"
+   ],
+   "texto": "El gasto por habitante fue de S/ 1 245,6789."
+  },
+  {
+   "id": "R4-B36",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "falsa certeza"
+   ],
+   "texto": "Sin duda, Huancavelica tiene el problema más grave."
+  },
+  {
+   "id": "R4-B37",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "falsa certeza"
+   ],
+   "texto": "Claramente el gasto no alcanzó."
+  },
+  {
+   "id": "R4-B40",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "ranking puntual"
+   ],
+   "texto": "Ayacucho está en el top 5 de departamentos con más anemia."
+  },
+  {
+   "id": "R4-B41",
+   "debe": "contexto",
+   "nota": "comparación sin base: no se controla con un patrón léxico sino con la prueba de diferencia del validador (decisión del orquestador, 7/10/2026)",
+   "texto": "Lima tiene más anemia que Arequipa."
+  },
+  {
+   "id": "R4-B42",
+   "debe": "contexto",
+   "nota": "comparación sin base: no se controla con un patrón léxico sino con la prueba de diferencia del validador (decisión del orquestador, 7/10/2026)",
+   "texto": "Cajamarca gasta el doble que La Libertad en anemia."
+  },
+  {
+   "id": "R4-B43",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "cambio sin significancia"
+   ],
+   "texto": "La anemia subió de 2024 a 2025 en Cusco."
+  },
+  {
+   "id": "R4-B44",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "cambio sin significancia"
+   ],
+   "texto": "La desnutrición crónica empeoró en Huancavelica."
+  },
+  {
+   "id": "R4-B45",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "cambio sin significancia"
+   ],
+   "texto": "Hubo una reducción de la anemia en Junín."
+  },
+  {
+   "id": "R4-B46",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "ranking puntual"
+   ],
+   "texto": "El distrito de San Marcos es el que más gasta en salud."
+  },
+  {
+   "id": "R4-B47",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "ranking puntual"
+   ],
+   "texto": "Moquegua lidera la ejecución del gasto en salud."
+  },
+  {
+   "id": "R4-B48",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "La municipalidad es una mala ejecutora."
+  },
+  {
+   "id": "R4-B49",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor",
+    "ranking puntual"
+   ],
+   "texto": "Es una de las peores ejecutoras del país."
+  },
+  {
+   "id": "R4-B50",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "El gobierno regional despilfarró el presupuesto."
+  },
+  {
+   "id": "R4-B51",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "La gestión del gobierno regional fue deficiente."
+  },
+  {
+   "id": "R4-B52",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "Una ejecución de 40 % es preocupante."
+  },
+  {
+   "id": "R4-B53",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "El distrito tiene una pésima ejecución del gasto."
+  },
+  {
+   "id": "R4-B54",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor",
+    "ranking puntual"
+   ],
+   "texto": "Es la peor municipalidad en ejecución de inversiones."
+  },
+  {
+   "id": "R4-B55",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "La DIRESA es ineficiente en el uso de recursos."
+  },
+  {
+   "id": "R4-B56",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "acusación o atribución a personas"
+   ],
+   "texto": "El alcalde abandonó las obras del distrito."
+  },
+  {
+   "id": "R4-B57",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "Es una entidad que gasta mal."
+  },
+  {
+   "id": "R4-B58",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "La región tiene baja capacidad de gasto."
+  },
+  {
+   "id": "R4-B59",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "La ejecución presupuestal del MINSA fue un fracaso."
+  },
+  {
+   "id": "R4-B60",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "juicio de valor"
+   ],
+   "texto": "La municipalidad ejecuta muy bien su presupuesto."
+  },
+  {
+   "id": "R4-B61",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "falacia ecológica"
+   ],
+   "texto": "Los niños de los distritos más pobres tienen más anemia."
+  },
+  {
+   "id": "R4-B62",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "falacia ecológica"
+   ],
+   "texto": "Las familias que reciben Juntos son más pobres."
+  },
+  {
+   "id": "R4-B63",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "predicción"
+   ],
+   "texto": "La anemia va a bajar el próximo año."
+  },
+  {
+   "id": "R4-B64",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "predicción"
+   ],
+   "texto": "Se espera que la pobreza disminuya en 2026."
+  },
+  {
+   "id": "R4-B65",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "gasto mal ubicado"
+   ],
+   "texto": "El ministerio gastó S/ 3 millones en el distrito de Ascensión."
+  },
+  {
+   "id": "R4-B66",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "gasto mal ubicado"
+   ],
+   "texto": "El gobierno regional invirtió más que la municipalidad en el distrito."
+  },
+  {
+   "id": "R4-C01",
+   "debe": "contexto",
+   "nota": "permitido para montos (sin error muestral); el regex lo bloquea por «pasó de … a»",
+   "texto": "Entre 2023 y 2025 el devengado pasó de {{c:g3}} a {{c:g4}} en soles corrientes."
+  },
+  {
+   "id": "R4-C02",
+   "debe": "contexto",
+   "nota": "texto fijo de R-ENC-11 (protegido con {{p:id}})",
+   "texto": "La cifra pasó de 20 % a 18 %, pero no se puede afirmar que haya cambiado."
+  },
+  {
+   "id": "R4-C03",
+   "debe": "contexto",
+   "nota": "permitida solo si test_cambio.significativo=true",
+   "texto": "La pobreza en Ayacucho disminuyó de forma estadísticamente clara entre 2023 y 2024."
+  },
+  {
+   "id": "R4-C04",
+   "debe": "contexto",
+   "nota": "incorrecta si la fuente es el SIEN (tamizados); correcta con la ENDES",
+   "texto": "El 17 % de los niños de Huancavelica tiene anemia."
+  },
+  {
+   "id": "R4-C05",
+   "debe": "contexto",
+   "nota": "incorrecta si el dato es de 2018 (presente con dato antiguo)",
+   "texto": "La pobreza en el distrito es de 45 %."
+  },
+  {
+   "id": "R4-C06",
+   "debe": "contexto",
+   "nota": "frase estándar «efecto»: hoy se protege con {{p:id}}; el regex la bloquearía por «funcionó»",
+   "texto": "Saber si un programa funcionó requiere una evaluación que compare con lo que habría pasado sin él."
+  },
+  {
+   "id": "R4-B67",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "Las cifras salen de registros administrativos del sector salud."
+  },
+  {
+   "id": "R4-B68",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "Con un intervalo de confianza del 95 %, la anemia estaría entre 15 % y 21 %."
+  },
+  {
+   "id": "R4-B69",
+   "debe": "bloquear",
+   "cat_esperada": [
+    "jerga"
+   ],
+   "texto": "Se contaron los diagnósticos D50 a D64 de la CIE-10 en los establecimientos."
+  }
+ ]
+}

@@ -1,0 +1,48 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+strategy: manual
+publisher: INEI
+dataset_title: 'Perú: Población total proyectada al 30 de junio de cada año, según departamento, provincia y distrito,
+  2018-2026'
+access_url: https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital
+temporal:
+  inicio: 2018
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- 'Solo población total: el INEI declara que a nivel provincial y distrital no proyecta por sexo ni edad. Base Censo
+  2017; el INEI la valida y actualiza al cierre de cada año (se usa para distribuir FONCOMUN). Deberá rebasarse
+  con el Censo 2025.'
+manual:
+  pasos:
+  - Abrir https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital
+    y descargar el archivo.
+  - 'Enlace de datos conocido: https://cdn.www.gob.pe/uploads/document/file/8261096/6894980-peru-poblacion-total-proyectada-al-30-de-junio-de-cada-ano-segun-departamento-provincia-y-distrito-2018-2026.xlsx'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/INEI-PROYECCIONES-POBLACION-DISTRITAL/
+  - 'Ejecutar: pap registrar INEI-PROYECCIONES-POBLACION-DISTRITAL --issued <fecha>'
+espera:
+  formato:
+  - xlsx
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: 'Ficha gob.pe (publicada 31-12-2025) con un adjunto XLSX de 212,6 KB ''Perú: Población Total Proyectada al
+  30 de Junio de cada año, según Departamento, Provincia y Distrito, 2018-2026''; la URL cdn del adjunto no se mostró
+  en el fetch (obtenerla desde la página con navegador). Ediciones anteriores en PDF: Lib1715 (2018-2020, 1 874
+  distritos) y Lib1860 (2018-2022, 1 890 distritos, Boletín 27).'

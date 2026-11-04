@@ -1,0 +1,42 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-DIRECTORIO-CCPP
+strategy: manual
+publisher: INEI
+dataset_title: Directorio Nacional de Centros Poblados (Censos 2017)
+access_url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1541/index.htm
+temporal:
+  inicio: 2017
+  fin: 2017
+spatial:
+  ambito: PE
+  nivel_minimo: centro_poblado
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- URL específica no confirmada; se publicó por tomos/departamentos.
+manual:
+  pasos:
+  - Abrir https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1541/index.htm y descargar
+    el archivo.
+  - 'Enlace de datos conocido: https://ide.inei.gob.pe/'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/INEI-DIRECTORIO-CCPP/
+  - 'Ejecutar: pap registrar INEI-DIRECTORIO-CCPP --issued <fecha>'
+espera:
+  formato:
+  - pdf
+  - xlsx
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false

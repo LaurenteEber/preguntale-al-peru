@@ -1,0 +1,48 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MEF-MAESTRO-EJECUTORAS-DERIVADO
+strategy: manual
+publisher: MEF
+dataset_title: Maestro de unidades ejecutoras y pliegos con ubigeo y nivel de gobierno (derivado del dataset de
+  gasto MEF)
+access_url: https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto
+documentation_url: https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv
+temporal:
+  inicio: 2012
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: Licencia de la PNDA para el dataset de origen (confirmar)
+license_basis: declarada_en_pagina
+known_issues:
+- Solo incluye ejecutoras con movimiento presupuestal en el año; nombres cambian entre años (usar SEC_EJEC como
+  llave estable); ubicación de la ejecutora ≠ lugar del gasto (usar *_META para eso).
+manual:
+  pasos:
+  - Abrir https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto y descargar el archivo.
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/MEF-MAESTRO-EJECUTORAS-DERIVADO/
+  - 'Ejecutar: pap registrar MEF-MAESTRO-EJECUTORAS-DERIVADO --issued <fecha>'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'Fuente derivada: se construye en S3 desde MEF-DA-PRESUPUESTO-EJECUCION-GASTO; no se descarga.'
+notas: 'Derivar: SELECT DISTINCT ANO_EJE, NIVEL_GOBIERNO, NIVEL_GOBIERNO_NOMBRE, SECTOR, SECTOR_NOMBRE, PLIEGO,
+  PLIEGO_NOMBRE, SEC_EJEC, EJECUTORA, EJECUTORA_NOMBRE, DEPARTAMENTO_EJECUTORA(+_NOMBRE), PROVINCIA_EJECUTORA(+_NOMBRE),
+  DISTRITO_EJECUTORA(+_NOMBRE) sobre los CSV anuales de MEF-DA-PRESUPUESTO-EJECUCION-GASTO (DuckDB). Ubigeo = DEP||PROV||DIST
+  (verificar que siga codificación INEI). Para municipalidades, el distrito de la ejecutora identifica el gobierno
+  local.'

@@ -1,0 +1,53 @@
+{
+  "nota": "Objetos del almacén guardados como <huella>.zst. La huella es la del original sin comprimir; bytes_zst y sha256_zst son los del .zst (para `pap verificar --rapido` y para revisar respaldos). Lo escribe `pap almacen comprimir` / `pap registrar`; no editar a mano.",
+  "objetos": {
+    "0fb1d61d0175c80713a6df839a57d7b150ac757b8425804589e2f6646f6a2e4a": {
+      "original_filename": "DETALLE_INVERSIONES.csv",
+      "bytes": 247121912,
+      "bytes_zst": 42615845,
+      "sha256_zst": "f41f62e39dd4c8c85af5b9a7c3330b874520851bf9a55f7fa5731c5a20d154d4",
+      "compression": "zstd",
+      "verificado": "2026-10-08T19:09:06-05:00"
+    },
+    "350a2c23b8854076578577c18dc7571f7d51f8d5b5d1de3eb06c0896ab426fd3": {
+      "original_filename": "2023-Gasto.csv",
+      "bytes": 9759864312,
+      "bytes_zst": 238418982,
+      "sha256_zst": "eb80076286692e47bdf121ba4a39f7447bc9d76c60760352069569709b3eccae",
+      "compression": "zstd",
+      "verificado": "2026-10-08T19:09:15-05:00"
+    },
+    "5aed95cb3b31916e5090d64ee6d45f8acc45041494098582411d388f464b36ef": {
+      "original_filename": "2025-Gasto-Mensual.csv",
+      "bytes": 10497728811,
+      "bytes_zst": 253902500,
+      "sha256_zst": "4d84a5017e337075ca25822462169050fdf7c42a2a37f9dc3290ddd81d5277a3",
+      "compression": "zstd",
+      "verificado": "2026-10-08T19:09:33-05:00"
+    },
+    "89040c55e9c53398465975171fb348109fd11b787d238970161a243115070823": {
+      "original_filename": "RENIPRESS_30-09-2026.csv",
+      "bytes": 19852149,
+      "bytes_zst": 2356138,
+      "sha256_zst": "0d9ca3d863c69b464914ddd1660eea2a7dace024873e4aa109c443f8b940c8b0",
+      "compression": "zstd",
+      "verificado": "2026-10-08T19:09:06-05:00"
+    },
+    "df9f83ae5b60a633ec0b345110e5e29a047666c06813f1fc8efee349b2daa94f": {
+      "original_filename": "2024-Gasto.csv",
+      "bytes": 10237853250,
+      "bytes_zst": 247826422,
+      "sha256_zst": "059f1e79d34cbf144ba95e69f58a68754c6dd616142caec06d37228590a96a76",
+      "compression": "zstd",
+      "verificado": "2026-10-08T19:09:24-05:00"
+    },
+    "f275987af1def5a9b156309559d9f490190b7d3395a3cfafd5a1a3d401de4548": {
+      "original_filename": "BD_DAbiertos_16_OPP_2026_06.01.csv",
+      "bytes": 68350255,
+      "bytes_zst": 2407190,
+      "sha256_zst": "37c8693ed250fc785ffa37cbea99fe67ba9db262a59a36ab19c1515122d9c890",
+      "compression": "zstd",
+      "verificado": "2026-10-08T19:09:06-05:00"
+    }
+  }
+}

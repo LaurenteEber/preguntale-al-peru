@@ -1,0 +1,59 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "mef-detalle-inversiones-2026-10-06",
+  "title": "Detalle de inversiones (Banco de Inversiones – SNIP/Invierte.pe)",
+  "created": "2026-10-06T12:52:26-05:00",
+  "keywords": [
+    "MEF-DETALLE-INVERSIONES"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "mef-detalle-inversiones",
+      "title": "Detalle de inversiones (Banco de Inversiones – SNIP/Invierte.pe)",
+      "original_filename": "DETALLE_INVERSIONES.csv",
+      "path": "almacen/sha256/0f/b1/0fb1d61d0175c80713a6df839a57d7b150ac757b8425804589e2f6646f6a2e4a",
+      "hash": "sha256:0fb1d61d0175c80713a6df839a57d7b150ac757b8425804589e2f6646f6a2e4a",
+      "bytes": 247121912,
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "source_id": "MEF-DETALLE-INVERSIONES",
+      "publisher": "MEF",
+      "dataset_title": "Detalle de inversiones (Banco de Inversiones – SNIP/Invierte.pe)",
+      "access_url": "https://www.datosabiertos.gob.pe/dataset/detalle-de-inversiones",
+      "download_url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/DETALLE_INVERSIONES.csv",
+      "source_version_basis": "ninguna",
+      "temporal": "2001–2026",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T12:52:26-05:00",
+      "method": "http_directo",
+      "recipe": "MEF-DETALLE-INVERSIONES@4e5c7e4",
+      "attributed_to": "Eber (manual, Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "otra-abierta",
+          "title": "Otra (abierta) según PNDA"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito"
+      },
+      "known_issues": [
+        "La localización puede ser multi-distrito (inversiones con varias ubicaciones) o solo departamental; costos actualizados vs. viables difieren; inversiones SNIP antiguas con campos incompletos.",
+        "Descargado por el dueño con el certificado HTTPS del MEF vencido; integridad a verificar por conciliación con la Consulta Amigable"
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

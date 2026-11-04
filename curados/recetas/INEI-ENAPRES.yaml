@@ -1,0 +1,49 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-ENAPRES
+strategy: http_file
+publisher: INEI
+dataset_title: Encuesta Nacional de Programas Presupuestales
+access_url: https://proyectos.inei.gob.pe/microdatos/
+download_url: https://www.inei.gob.pe/media/DATOS_ABIERTOS/ENAPRES/DATA/2023.zip
+url_patron: https://www.inei.gob.pe/media/DATOS_ABIERTOS/ENAPRES/DATA/{anio}.zip
+documentation_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/761-Ficha.pdf
+temporal:
+  inicio: 2010
+  fin: 2024
+spatial:
+  ambito: PE
+  nivel_minimo: manzana_conglomerado
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODbL-1.0
+  title: ODbL (datosabiertos.gob.pe)
+license_basis: declarada_en_pagina
+known_issues:
+- Muestra ~44 000 viviendas (2021); inferencia anual departamental; victimización solo en área urbana/ciudades.
+  2020–2021 con entrevista telefónica parcial (verificar). Módulos cambian entre años.
+espera:
+  formato:
+  - sav
+  - csv
+  - pdf
+  - zip
+  - dta
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+notas: 'Dos vías: (1) portal microdatos (código tipo de encuesta en docs = 18: .../DocumentosMetodologicos/2023-18/);
+  (2) ZIP anual completo con patrón https://www.inei.gob.pe/media/DATOS_ABIERTOS/ENAPRES/DATA/{AÑO}.zip (confirmado
+  2023) referenciado desde datosabiertos.gob.pe. Portal ASP clásico. Flujo AJAX: CambiaEnc.asp (encuesta→años) →
+  CambiaAnio.asp (año→periodos) → cambiaPeriodo.asp (periodo→tabla de módulos con links). Descarga directa predecible:
+  https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{SPSS|STATA|CSV|DBF}/{codigo_encuesta_anio}-Modulo{codigo_modulo}.zip
+  (ej. ENAHO 2024 = 966-Modulo01.zip). Ficha técnica: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo_encuesta_anio}-Ficha.pdf.
+  Documentos metodológicos: .../Descarga/DocumentosMetodologicos/{AÑO}-{codigo_tipo_encuesta}/{archivo}.pdf. Nombres
+  de encuesta con caracteres Windows-1252 deben codificarse con escape() de JS (%96), no UTF-8. Sin captcha ni registro
+  conocidos. Bash del entorno no tuvo salida a *.inei.gob.pe (proxy 403): probar desde otro entorno.'

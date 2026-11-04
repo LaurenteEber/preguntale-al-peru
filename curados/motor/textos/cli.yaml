@@ -1,0 +1,17 @@
+# Mensajes de `pap preguntar` (S1-06) en lenguaje sencillo. Los de una consulta inválida salen de errores_consulta.yaml (S1-01);
+# los de «no se puede» y las aclaraciones, de no_se_puede.yaml. Aquí solo lo que es propio de la línea de comandos.
+version: 1.0.0
+mensajes:
+  sin_consulta: "No hay nada que preguntar. Indica un archivo, una carpeta o las opciones --intencion, --tema (o --indicador) y --territorio."
+  archivos_y_opciones: "Usa archivos de consulta o las opciones directas (--intencion, --tema, --territorio…), no las dos cosas a la vez."
+  anio_y_serie: "Usa --anio para un año o --desde y --hasta para una serie, no los dos."
+  no_existe: "No encontramos «{ruta}»."
+  carpeta_vacia: "La carpeta «{ruta}» no tiene consultas (.json o .yaml)."
+  formato_no_soportado: "«{ruta}» no es una consulta: usa un archivo .json (consulta mínima) o .yaml (consulta del piloto)."
+  json_ilegible: "«{ruta}» no se puede leer como JSON: {detalle}."
+  elegir_pista: "Para responder, repite el comando con --elegir <número>."
+  elegir_pista_comparar: "Para responder, repite el comando con --elegir <número>. Si los dos lugares tienen varias opciones, escribe un número por lugar, en orden: por ejemplo --elegir 1,1."
+  elegir_de_mas_ninguna: "Esta pregunta no tiene nada por elegir: repite el comando sin --elegir."
+  elegir_de_mas_una: "Escribiste {escritos} números en --elegir, pero solo había 1 pregunta por responder. Escribe un solo número."
+  elegir_de_mas: "Escribiste {escritos} números en --elegir, pero solo había {hay} preguntas por responder. Escribe un número por cada una."
+  consulta_de: "En «{nombre}»:"

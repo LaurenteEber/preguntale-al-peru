@@ -1,0 +1,59 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "reniec-poblacion-identificada-2026-10-06",
+  "title": "Población identificada con DNI (RENIEC – Portal Estadístico)",
+  "created": "2026-10-06T09:59:08-05:00",
+  "keywords": [
+    "RENIEC-POBLACION-IDENTIFICADA"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "reniec-poblacion-identificada",
+      "title": "Población identificada con DNI (RENIEC – Portal Estadístico)",
+      "original_filename": "BD_DAbiertos_16_OPP_2026_06.01.csv",
+      "path": "almacen/sha256/f2/75/f275987af1def5a9b156309559d9f490190b7d3395a3cfafd5a1a3d401de4548",
+      "hash": "sha256:f275987af1def5a9b156309559d9f490190b7d3395a3cfafd5a1a3d401de4548",
+      "bytes": 68350255,
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "source_id": "RENIEC-POBLACION-IDENTIFICADA",
+      "publisher": "RENIEC",
+      "dataset_title": "Población identificada con DNI (RENIEC – Portal Estadístico)",
+      "access_url": "https://portales.reniec.gob.pe/web/estadistica/identificada",
+      "download_url": "https://www.datosabiertos.gob.pe/sites/default/files/BD_DAbiertos_16_OPP_2026_06.01.csv",
+      "source_version": "Reporte II Trimestre 2026",
+      "source_version_basis": "declarada",
+      "temporal": "2012–2026",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T09:59:05-05:00",
+      "method": "manual_navegador",
+      "recipe": "RENIEC-POBLACION-IDENTIFICADA@969dad8",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "ODC-By-1.0",
+          "title": "ODC-BY (PNDA)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito"
+      },
+      "known_issues": [
+        "UBIGEO RENIEC ≠ UBIGEO INEI (requiere tabla de equivalencia). Domicilio declarado en DNI suele estar desactualizado (sesgo hacia lugar de origen). Incluye fallecidos no depurados. Mide población con DNI según domicilio declarado, no población residente: subcuenta a menores sin DNI y extranjeros. Usar como contraste, no como denominador principal."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

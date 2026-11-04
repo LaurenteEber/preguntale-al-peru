@@ -1,0 +1,46 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: PRONIED-INTERVENCIONES
+strategy: manual
+publisher: Programa Nacional de Infraestructura Educativa (PRONIED) – MINEDU
+dataset_title: PRONIED – Intervenciones en infraestructura educativa y mantenimiento de locales escolares
+access_url: https://www.gob.pe/14357-acceder-a-informacion-de-las-intervenciones-para-el-mejoramiento-de-los-colegios-publicos-a-nivel-nacional
+temporal:
+  inicio: 2024
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY
+license_basis: declarada_en_pagina
+known_issues:
+- 'Datasets dispersos y de actualización irregular; cruzar con Invierte.pe por CUI para estado de ejecución. La
+  ficha solo trae región, provincia y distrito por nombre: ubicar por CUI o normalizar nombres.'
+manual:
+  pasos:
+  - Abrir https://www.gob.pe/14357-acceder-a-informacion-de-las-intervenciones-para-el-mejoramiento-de-los-colegios-publicos-a-nivel-nacional
+    y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/proyectos-que-reciben-asistencia-t%C3%A9cnica-instituciones-educativas-nivel-nacional-%E2%80%93-programa'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/PRONIED-INTERVENCIONES/
+  - 'Ejecutar: pap registrar PRONIED-INTERVENCIONES --issued <fecha>'
+espera:
+  formato:
+  - csv
+  - xlsx
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Plataforma Nacional de Datos Abiertos (datosabiertos.gob.pe, DKAN/Drupal). El endpoint CKAN /api/3/action/package_search
+  devolvió 404 en esta sesión: descargar recursos vía URL directa de cada recurso o scraping de la página del dataset.'

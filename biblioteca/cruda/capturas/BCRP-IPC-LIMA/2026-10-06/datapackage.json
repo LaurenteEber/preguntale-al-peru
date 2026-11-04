@@ -1,0 +1,61 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "bcrp-ipc-lima-2026-10-06",
+  "title": "Índice de precios al consumidor de Lima Metropolitana (índice dic. 2021 = 100), serie mensual PN38705PM",
+  "created": "2026-10-06T12:12:22-05:00",
+  "keywords": [
+    "BCRP-IPC-LIMA"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "bcrp-ipc-lima",
+      "title": "Índice de precios al consumidor de Lima Metropolitana (índice dic. 2021 = 100), serie mensual PN38705PM",
+      "original_filename": "BCRP_PN38705PM_2010-01_2026-12.json",
+      "path": "almacen/sha256/6e/ca/6eca3ec59df9b1505d50b5faf8c7e6f849a9d1e7892bc460a0390f6cca208828",
+      "hash": "sha256:6eca3ec59df9b1505d50b5faf8c7e6f849a9d1e7892bc460a0390f6cca208828",
+      "bytes": 10675,
+      "format": "json",
+      "mediatype": "application/json",
+      "source_id": "BCRP-IPC-LIMA",
+      "publisher": "BCRP",
+      "dataset_title": "Índice de precios al consumidor de Lima Metropolitana (índice dic. 2021 = 100), serie mensual PN38705PM",
+      "access_url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38705PM/html",
+      "download_url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PN38705PM/json/2010-1/2026-12/esp",
+      "source_version": "base dic. 2021 = 100",
+      "source_version_basis": "declarada",
+      "temporal": "2010–2026",
+      "data_cutoff": "2026-08-31",
+      "data_cutoff_basis": "max_fecha_en_datos",
+      "retrieved_at": "2026-10-06T12:12:22-05:00",
+      "method": "http_directo",
+      "recipe": "BCRP-IPC-LIMA@378d816",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "Uso libre citando la fuente"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública del BCRP (BCRPData); citar la fuente",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "nacional",
+        "geografia": "Lima Metropolitana (IPC de referencia nacional)"
+      },
+      "known_issues": [
+        "El último mes publicado puede revisarse; el promedio anual del año en curso usa solo los meses disponibles."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

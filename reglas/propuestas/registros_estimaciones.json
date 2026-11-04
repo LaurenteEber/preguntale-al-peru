@@ -1,0 +1,1151 @@
+{
+ "ambito": "registros_estimaciones",
+ "reglas": [
+  {
+   "id": "R-REG-01",
+   "ambito": "registros",
+   "titulo": "Rótulo obligatorio según tipo_medida; un registro nunca es prevalencia",
+   "enunciado": "Toda cifra de un registro administrativo debe mostrarse con el rótulo de su tipo_medida (quién fue contado y dónde) y no debe presentarse ni redactarse como prevalencia, incidencia poblacional o 'porcentaje de la población'.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [
+     "atenciones_produccion",
+     "cobertura_programa",
+     "notificacion_vigilancia",
+     "registro_eventos",
+     "padron_referencia"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS",
+     "MINSA-HIS",
+     "SIS-ATENCIONES",
+     "ESSALUD-DATOS-ABIERTOS",
+     "SUSALUD-DATOS-ABIERTOS",
+     "MINSA-INMUNIZACIONES",
+     "CDC-VIGILANCIA-DATOS-ABIERTOS",
+     "MINSA-SINADEF",
+     "MINSA-CNV-NACIDOS-VIVOS",
+     "SIS-AFILIADOS",
+     "JUNTOS-HOGARES-UBIGEO",
+     "PENSION65-USUARIOS",
+     "CUNAMAS-USUARIOS",
+     "PAIS-TAMBOS-ATENCIONES",
+     "MINEDU-SIAGIE-DATOS-ABIERTOS",
+     "WASIMIKUNA-IIEE",
+     "FONCODES-PROYECTOS"
+    ]
+   },
+   "condicion": "fuente.naturaleza_dato IN (registro_administrativo, indicadores_derivados) AND fuente.tipo_medida != 'prevalencia' → indicador.rotulo_medida IS NOT NULL; texto_respuesta NOT MATCH lista_prohibida(tipo_medida)",
+   "accion": "rotular",
+   "parametros": {
+    "rotulos_plantilla": {
+     "atenciones_produccion": "atenciones registradas en establecimientos {red_o_sistema} (no son personas distintas ni toda la población)",
+     "cobertura_programa": "{usuarios|afiliados|matriculados} registrados en {programa} (no equivale a toda la población que lo necesita)",
+     "notificacion_vigilancia": "casos notificados / niños evaluados en establecimientos de salud (no prevalencia en la población)",
+     "registro_eventos": "{nacimientos|defunciones} registrados en {sistema} (puede haber eventos no registrados)",
+     "padron_referencia": "registros en el padrón {nombre} (lista administrativa, no conteo de población)"
+    },
+    "ejemplos_SIEN": "proporción de niños tamizados con anemia en establecimientos MINSA",
+    "lista_prohibida": [
+     "prevalencia",
+     "incidencia",
+     "tasa de anemia del distrito",
+     "% de los niños del distrito",
+     "% de la población",
+     "tiene anemia el X % de"
+    ],
+    "excepcion_prohibicion": "registro_eventos con cobertura_registro_estimada ≥ 90 % y base residencia puede usar 'tasa' (p. ej. 'tasa de mortalidad registrada')"
+   },
+   "mensaje_usuario": "Este dato viene de un registro administrativo: cuenta a {quién} que {acudió a / fue registrado en} {sistema}. No mide a toda la población del territorio.",
+   "justificacion": "Los registros miden a quienes tuvieron contacto con el servicio (sesgo de selección): SIEN/HIS solo incluye a niños evaluados en EESS que reportan al HIS; el propio INS publica estos indicadores como vigilancia 'en establecimientos de salud'. OPS distingue indicadores de producción/cobertura de los de estado de salud poblacional.",
+   "referencias": [
+    {
+     "titulo": "INS – Indicadores Niños 2023 Final (Base de Datos HIS/MINSA) – Anemia (OMS 2024), serie de vigilancia SIEN en EESS",
+     "url": "https://www.gob.pe/institucion/ins/informes-publicaciones/5474586-indicadores-ninos-2023-final-base-de-datos-his-minsa-anemia-oms-2024"
+    },
+    {
+     "titulo": "OPS (2018) – Indicadores de salud: aspectos conceptuales y operativos",
+     "url": "https://www.paho.org/es/documentos/indicadores-salud-aspectos-conceptuales-operativos"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-07",
+    "INF-08",
+    "INF-26"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] Pregunta: '¿cuánta anemia hay en Huancavelica?'. SIEN 2024 → 'proporción de niños de 6–35 meses tamizados en establecimientos MINSA con anemia: 41 %'. Prohibido: 'el 41 % de los niños de Huancavelica tiene anemia'.",
+   "implementacion": "indicador.rotulo_medida se genera de la plantilla por tipo_medida al curar el indicador (revisión humana del texto una vez). El validador entrega el rótulo al LLM como campo obligatorio y aplica un filtro de expresiones regulares sobre la redacción final; si hay coincidencia con lista_prohibida para un indicador de registro, se rechaza y se regenera.",
+   "casos_borde": "Fuentes con tipo_medida null (CONTIGO-USUARIOS, MIDIS-SISFOH-PGH, MIDIS-INFOMIDIS): no publicar hasta asignar tipo_medida (revisión humana). SINADEF/CNV con cobertura alta: se permite 'tasa registrada', nunca sin el adjetivo 'registrada'.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-02",
+   "ambito": "registros",
+   "titulo": "Base geográfica: establecimiento ≠ residencia",
+   "enunciado": "Una tasa o proporción con denominador poblacional solo puede atribuirse a un distrito si numerador y denominador usan base_geografica = residencia; si el registro solo trae el ubigeo del establecimiento, el distrito se rotula 'en establecimientos ubicados en', y las tasas poblacionales deben agregarse a provincia o departamento.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [
+     "establecimiento",
+     "ocurrencia",
+     "residencia"
+    ],
+    "fuentes": [
+     "MINSA-CNV-NACIDOS-VIVOS",
+     "MINSA-SINADEF",
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS",
+     "MINSA-INMUNIZACIONES",
+     "SIS-ATENCIONES",
+     "ESSALUD-DATOS-ABIERTOS",
+     "MINEDU-SIAGIE-DATOS-ABIERTOS",
+     "PAIS-TAMBOS-ATENCIONES",
+     "WASIMIKUNA-IIEE"
+    ]
+   },
+   "condicion": "indicador.base_geografica_usada IN (establecimiento, ocurrencia) AND indicador.denominador_tipo = 'poblacion_territorio' AND resultado.nivel_territorial = 'distrito' → agregar_nivel(provincia); si base_geografica_usada IN (establecimiento, ocurrencia) AND denominador_tipo = 'personas_atendidas' (p. ej., tamizados) → publicar con rótulo de establecimiento",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "nivel_minimo_tasa_base_establecimiento": "provincia",
+    "prioridad_columna_ubigeo": {
+     "MINSA-CNV-NACIDOS-VIVOS": "ubigeo de residencia habitual de la madre; si falta, nivel mínimo provincia",
+     "MINSA-SINADEF": "ubigeo de residencia del fallecido (no el de ocurrencia)",
+     "CDC-VIGILANCIA-DATOS-ABIERTOS": "ubigeo de residencia/probable infección"
+    },
+    "max_pct_ubigeo_residencia_faltante": 5
+   },
+   "mensaje_usuario": "Las cifras se asignan al distrito donde está el establecimiento que atendió, no donde vive la persona. Muchas personas se atienden o dan a luz en la capital provincial, por eso mostramos el dato a nivel {provincia}.",
+   "justificacion": "La gente se atiende y da a luz fuera de su distrito: usar el ubigeo del establecimiento infla las tasas de distritos cabecera y deja en cero a los rurales. El INEI tabula nacimientos por residencia habitual de la madre; la práctica de estadísticas vitales (OPS) es asignar eventos por residencia.",
+   "referencias": [
+    {
+     "titulo": "INEI – Perú: Nacidos vivos de madres adolescentes 2019-2021 (omisión del CNV 14,4 %–18,6 %; tabulado por residencia habitual de la madre)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1864/libro.pdf"
+    },
+    {
+     "titulo": "OPS (2018) – Indicadores de salud: aspectos conceptuales y operativos",
+     "url": "https://www.paho.org/es/documentos/indicadores-salud-aspectos-conceptuales-operativos"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-07",
+    "INF-24"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] CNV 2024: nacidos vivos en establecimientos del distrito de Huancayo incluyen partos de madres de toda la provincia. 'Nacimientos de madres residentes en Huancayo' solo si existe la columna de residencia; si no, se publica a nivel provincia de Huancayo.",
+   "implementacion": "En la prueba de humo, registrar indicador.base_geografica_usada y la columna exacta de ubigeo. Si la fuente trae ambas, usar residencia. Validar: % de registros con ubigeo de residencia vacío o inválido; si > max_pct_ubigeo_residencia_faltante en un departamento, ese departamento no baja de provincia. Proporciones internas al servicio (tamizados con anemia/tamizados) se pueden publicar por distrito del establecimiento con rótulo, porque numerador y denominador comparten la base.",
+   "casos_borde": "Distrito sin establecimiento: valor 'no aplica', no cero. Distritos creados después de 2017 sin ubigeo en la fuente: dependen de la tabla de ubigeo histórico (ámbito territorio). Atención en Lima de pacientes referidos de regiones: no atribuir a Lima en tasas.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-03",
+   "ambito": "registros",
+   "titulo": "Números pequeños en tasas y proporciones de registros",
+   "enunciado": "Toda tasa o proporción de un registro debe llevar IC al 95 % (Poisson exacto para tasas, Wilson para proporciones) y cumplir umbrales mínimos de numerador y denominador; si no los cumple, se agrupan 3 años, luego se agrega a provincia, y si aún no cumple se suprime.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [
+     "registro_eventos",
+     "notificacion_vigilancia",
+     "cobertura_programa",
+     "atenciones_produccion"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MINSA-SINADEF",
+     "CDC-VIGILANCIA-DATOS-ABIERTOS",
+     "MINSA-CNV-NACIDOS-VIVOS",
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS",
+     "MINSA-INMUNIZACIONES"
+    ]
+   },
+   "condicion": "TASAS (denominador = población): numerador < 5 OR poblacion < 1000 → no publicar a ese nivel; 5 ≤ numerador < 20 → publicar_referencial ('cifra inestable') y excluir de rankings; numerador ≥ 20 AND poblacion ≥ 1000 → publicar. PROPORCIONES (denominador = personas evaluadas/objetivo): n_denominador < 30 → no publicar; 30 ≤ n < 100 OR numerador < 5 OR (n − numerador) < 5 OR (ic_sup − ic_inf) > 20 pp → publicar_referencial; resto → publicar.",
+   "accion": "agrupar_anios",
+   "parametros": {
+    "tasa_min_numerador_publicar": 5,
+    "tasa_numerador_estable": 20,
+    "tasa_min_poblacion": 1000,
+    "prop_min_denominador": 30,
+    "prop_denominador_estable": 100,
+    "prop_min_celda_extremos": 5,
+    "ancho_ic_max_pp": 20,
+    "anios_agrupados": 3,
+    "secuencia": [
+     "anio",
+     "agrupar_3_anios",
+     "provincia_anio",
+     "provincia_3_anios",
+     "departamento",
+     "suprimir"
+    ],
+    "ic_tasas": "Poisson exacto (Garwood): [χ²(0,025; 2k)/2, χ²(0,975; 2k+2)/2] / persona-tiempo",
+    "ic_proporciones": "Wilson (o Clopper-Pearson si n<30 en revisión)"
+   },
+   "mensaje_usuario": "Hay pocos casos en este territorio, así que la cifra puede variar mucho de un año a otro por azar. Por eso {sumamos 3 años | mostramos la provincia}. El rango probable es {ic_inf}–{ic_sup}.",
+   "justificacion": "Con menos de 20 eventos el error estándar relativo supera ≈22 % (criterio NCHS reproducido por el NY State DOH); las salidas recomendadas son agregar años o geografía. NCHS evalúa proporciones por denominador mínimo y ancho del IC Clopper-Pearson. Con 1–2 eventos, distritos de <1 000 habitantes encabezan cualquier ranking.",
+   "referencias": [
+    {
+     "titulo": "New York State Department of Health – Rates Based on Small Numbers (Statistics Teaching Tools): tasas con <20 eventos no confiables (RSE ≈22 %)",
+     "url": "https://www.health.ny.gov/diseases/chronic/ratesmall.htm"
+    },
+    {
+     "titulo": "NCHS – Health, United States: Statistical Reliability of Estimates (tamaño de muestra, ancho del IC, IC Clopper-Pearson)",
+     "url": "https://www.cdc.gov/nchs/hus/sources-definitions/statistical-reliability.htm"
+    },
+    {
+     "titulo": "StatsDirect – Poisson rate confidence interval (método exacto por relación Poisson–chi cuadrado)",
+     "url": "https://statsdirect.com/help/rates/poisson_rate_ci.htm"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-15"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] CDC dengue 2024, distrito de 800 habitantes con 3 casos → 375 por 100 000 crudo; numerador < 5 y población < 1 000 → se agrupan 2022–2024 (7 casos, sigue población < 1 000) → se publica la provincia: '1 240 casos notificados; 210 por 100 000 (IC 95 %: 198–222)'.",
+   "implementacion": "resultado.estado_estabilidad ∈ {estable, inestable, suprimido}; resultado.ic_metodo. Calcular IC con scipy.stats.chi2.ppf; para persona-tiempo agrupado usar suma de poblaciones anuales. Al agrupar años, el rótulo dice 'promedio anual 2022–2024'. Los umbrales se evalúan después de aplicar R-REG-02 (base geográfica).",
+   "casos_borde": "Numerador = 0: no publicar tasa 0 en distritos con población < 1 000; mostrar 'sin casos registrados' solo si la cobertura del registro es aceptable (R-REG-07). Brotes (incidencia muy alta en un año): no agrupar años si el objetivo es describir el brote; se publica el conteo con IC y advertencia. Años con quiebre (R-REG-09) no se agrupan con años del otro lado del quiebre.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-04",
+   "ambito": "registros",
+   "titulo": "Mortalidad infantil y neonatal registrada (por 1 000 nacidos vivos)",
+   "enunciado": "Las tasas de mortalidad infantil, neonatal o materna calculadas con SINADEF/CNV deben usar residencia en ambos registros, rotularse 'registrada', y solo publicarse si hay al menos 1 000 nacidos vivos y 20 defunciones en el periodo (agrupando hasta 5 años); nunca a nivel distrital anual.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo"
+    ],
+    "tipo_medida": [
+     "registro_eventos"
+    ],
+    "base_geografica": [
+     "residencia"
+    ],
+    "fuentes": [
+     "MINSA-SINADEF",
+     "MINSA-CNV-NACIDOS-VIVOS"
+    ]
+   },
+   "condicion": "indicador IN (TMI, TMN, RMM) AND (nacidos_vivos_periodo < 1000 OR defunciones_periodo < 5) → agregar_nivel; 5 ≤ defunciones_periodo < 20 → publicar_referencial; resultado.nivel_territorial = 'distrito' AND anios_agrupados = 1 → bloquear; cobertura_registro_estimada(CNV o SINADEF, departamento, anio) < 80 → publicar_referencial con advertencia de subestimación",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "min_nacidos_vivos": 1000,
+    "min_defunciones_publicar": 5,
+    "defunciones_estables": 20,
+    "max_anios_agrupados": 5,
+    "nivel_minimo_anual": "departamento",
+    "nivel_minimo_agrupado": "provincia",
+    "min_cobertura_registro_pct": 80,
+    "rmm_nivel_minimo": "departamento (5 años) por número de eventos"
+   },
+   "mensaje_usuario": "Es la mortalidad infantil REGISTRADA en los sistemas del MINSA. Como no todos los nacimientos y defunciones se registran, la cifra real puede ser mayor. La cifra oficial de mortalidad infantil del país la estima el INEI con la ENDES.",
+   "justificacion": "La tasa por 1 000 NV con pocos nacimientos es extremadamente inestable (1 defunción en 100 NV = 10 ‰). El CNV omitió 14–19 % de los nacimientos estimados en 2019–2021 (INEI) y SINADEF captaba ~49 % de las defunciones estimadas en 2018: si el subregistro de defunciones es mayor que el de nacimientos, la tasa se subestima. ONS trata las defunciones infantiles como información sensible de los padres.",
+   "referencias": [
+    {
+     "titulo": "INEI – Perú: Nacidos vivos de madres adolescentes 2019-2021 (omisión del CNV 14,4 %–18,6 %; tabulado por residencia habitual de la madre)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1864/libro.pdf"
+    },
+    {
+     "titulo": "Vargas-Herrera J et al. (2018) – Resultados preliminares del fortalecimiento del SINADEF, Rev Peru Med Exp Salud Publica 35(3):505-514",
+     "url": "https://scielosp.org/pdf/rpmesp/2018.v35n3/505-514/es"
+    },
+    {
+     "titulo": "New York State Department of Health – Rates Based on Small Numbers (Statistics Teaching Tools): tasas con <20 eventos no confiables (RSE ≈22 %)",
+     "url": "https://www.health.ny.gov/diseases/chronic/ratesmall.htm"
+    },
+    {
+     "titulo": "ONS – Policy on protecting confidentiality in tables of birth and death statistics",
+     "url": "https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/disclosurecontrol/policyonprotectingconfidentialityintablesofbirthanddeathstatistics"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-15",
+    "INF-24",
+    "INF-07"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] Provincia de Purús: ~150 NV/año → ni con 5 años (750) llega a 1 000 NV → se publica solo el departamento de Ucayali (2020–2024) con rótulo 'registrada' y, al lado, la TMI ENDES departamental como referencia oficial.",
+   "implementacion": "Numerador: SINADEF por ubigeo de residencia, edad < 1 año (o < 28 días), año de defunción. Denominador: CNV por residencia de la madre, mismo periodo. Agrupar años hasta cumplir; si a 5 años no cumple, subir de nivel. IC Poisson exacto sobre defunciones / NV × 1000. Marcar si numerador y denominador provienen de coberturas distintas.",
+   "casos_borde": "Defunciones infantiles sin CNV vinculado (partos domiciliarios) aumentan el numerador pero no el denominador: advertir. Años 2017–2019 de SINADEF (cobertura creciente) no se usan para tendencia (R-REG-09). Si cobertura_registro_estimada es null, tratar como < 80.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-05",
+   "ambito": "registros",
+   "titulo": "Sin rankings ni mapas de tasas crudas inestables",
+   "enunciado": "No debe publicarse un ranking ni un mapa coroplético de tasas o proporciones crudas por distrito si alguna unidad del ranking tiene estado_estabilidad distinto de 'estable'; en ese caso se ordena por provincia o se usan categorías (terciles) con la tasa suavizada (R-REG-06) cuando esté disponible.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados",
+     "estimacion_modelada"
+    ],
+    "tipo_medida": [
+     "registro_eventos",
+     "notificacion_vigilancia",
+     "cobertura_programa"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MINSA-SINADEF",
+     "CDC-VIGILANCIA-DATOS-ABIERTOS",
+     "INS-CENAN-SIEN",
+     "MINSA-INMUNIZACIONES"
+    ]
+   },
+   "condicion": "salida.tipo IN (ranking, mapa, top_n) AND nivel_territorial = 'distrito' AND EXISTS unidad WHERE estado_estabilidad != 'estable' → agregar_nivel(provincia) o usar tasa_suavizada si existe",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "max_pct_unidades_inestables_mapa": 0,
+    "categorias_alternativas": "terciles con IC, solo sobre tasa suavizada",
+    "top_n_requiere": "numerador ≥ 20 en cada unidad listada"
+   },
+   "mensaje_usuario": "No mostramos un 'top' de distritos porque en los distritos pequeños uno o dos casos cambian totalmente la posición. Mostramos el orden por provincias.",
+   "justificacion": "Los extremos de una distribución de tasas crudas son casi siempre los territorios con menor población (variación aleatoria); el NY State DOH advierte que con tasas inestables es 'casi imposible distinguir la fluctuación aleatoria de cambios reales'. Marshall (1991) propone el suavizado bayesiano para mapas por esta razón.",
+   "referencias": [
+    {
+     "titulo": "New York State Department of Health – Rates Based on Small Numbers (Statistics Teaching Tools): tasas con <20 eventos no confiables (RSE ≈22 %)",
+     "url": "https://www.health.ny.gov/diseases/chronic/ratesmall.htm"
+    },
+    {
+     "titulo": "Marshall RJ (1991) – Mapping disease and mortality rates using empirical Bayes estimators, JRSS Series C 40(2):283-294",
+     "url": "https://ideas.repec.org/a/bla/jorssc/v40y1991i2p283-294.html"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-15"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] '¿Qué distritos de Loreto tienen más dengue?' → ranking de las 8 provincias de Loreto con tasa e IC; los distritos solo como conteo de casos notificados, sin orden por tasa.",
+   "implementacion": "El validador recibe la lista de resultados para un ranking; si cualquier estado_estabilidad != estable, sustituye por el nivel superior o por tasa_suavizada (cuando R-REG-06 esté implementada) con rótulo 'tasa ajustada por pocos casos'.",
+   "casos_borde": "Rankings de conteos absolutos (no tasas) se permiten con rótulo 'número de casos', porque no premian a distritos pequeños. Si la pregunta pide un distrito concreto, se responde ese distrito según R-REG-03, sin compararlo con un ranking.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-06",
+   "ambito": "registros",
+   "titulo": "Suavizado bayesiano empírico para mapas distritales",
+   "enunciado": "Para mapas o comparaciones entre distritos de tasas de registros puede publicarse una tasa suavizada por bayes empírico (Marshall global o local hacia la provincia), siempre rotulada como estimación de Pregunta al Perú y junto a la cifra cruda con su IC.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [
+     "registro_eventos",
+     "notificacion_vigilancia"
+    ],
+    "base_geografica": [
+     "residencia"
+    ],
+    "fuentes": [
+     "MINSA-SINADEF",
+     "CDC-VIGILANCIA-DATOS-ABIERTOS"
+    ]
+   },
+   "condicion": "salida.tipo IN (mapa, ranking) AND nivel_territorial = 'distrito' AND base_geografica_usada = 'residencia' AND metodo_suavizado validado (revisión humana) → publicar tasa_suavizada",
+   "accion": "publicar_referencial",
+   "parametros": {
+    "metodo": "Marshall (1991) momentos: θ_i = m + C_i (r_i − m), C_i = s² / (s² + m/n_i); referencia = provincia (local) o departamento (global)",
+    "min_unidades_referencia": 5,
+    "rotulo": "tasa ajustada (estimación Pregunta al Perú)"
+   },
+   "mensaje_usuario": "En distritos con pocos habitantes, ajustamos la tasa acercándola al promedio de su provincia para evitar valores extremos por azar. Es un cálculo nuestro, no una cifra oficial.",
+   "justificacion": "Los estimadores bayesianos empíricos reducen la varianza de tasas de áreas pequeñas acercándolas a una media global o local (Marshall 1991, aplicado a mortalidad infantil); es la práctica estándar de mapeo de enfermedades.",
+   "referencias": [
+    {
+     "titulo": "Marshall RJ (1991) – Mapping disease and mortality rates using empirical Bayes estimators, JRSS Series C 40(2):283-294",
+     "url": "https://ideas.repec.org/a/bla/jorssc/v40y1991i2p283-294.html"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-15",
+    "INF-25"
+   ],
+   "ejemplo": "Mapa de tasas de TBC notificada 2022–2024 por distrito de Lima Metropolitana con suavizado local hacia la provincia.",
+   "implementacion": "Pre-cálculo en la biblioteca (no en tiempo de respuesta): resultado.tasa_suavizada, resultado.metodo_suavizado. Validar con datos simulados que la suma ponderada se conserve. No se usa para responder la cifra de un distrito aislado.",
+   "casos_borde": "Distritos sin vecinos (islas, cuando se use el método local espacial): usar referencia provincial. No suavizar coberturas de programas ni proporciones de tamizaje (sesgo de selección no se corrige con suavizado).",
+   "prioridad": "posterior"
+  },
+  {
+   "id": "R-REG-07",
+   "ambito": "registros",
+   "titulo": "Subregistro y cobertura del propio registro",
+   "enunciado": "Cada fuente de registro_eventos o notificacion_vigilancia debe tener una cobertura_registro_estimada (o la de tamizaje en SIEN) por departamento y año; si es menor a 80 % la cifra se publica como referencial con advertencia de subregistro, y si es menor a 60 % no se publican tasas, solo conteos rotulados.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo"
+    ],
+    "tipo_medida": [
+     "registro_eventos",
+     "notificacion_vigilancia"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MINSA-SINADEF",
+     "MINSA-CNV-NACIDOS-VIVOS",
+     "INS-CENAN-SIEN",
+     "CDC-VIGILANCIA-DATOS-ABIERTOS"
+    ]
+   },
+   "condicion": "cobertura_registro_estimada(fuente, departamento, anio) IS NULL → advertir; < 60 → publicar solo conteo (sin tasa); 60 ≤ x < 80 → publicar_referencial; SIEN: cobertura_tamizaje = evaluados / poblacion_objetivo; < 50 % → publicar_referencial con advertencia de selección",
+   "accion": "advertir",
+   "parametros": {
+    "umbral_referencial_pct": 80,
+    "umbral_solo_conteo_pct": 60,
+    "sien_umbral_tamizaje_pct": 50,
+    "fuente_cobertura_CNV": "omisión INEI (NV registrados / NV estimados)",
+    "fuente_cobertura_SINADEF": "defunciones registradas / defunciones estimadas INEI (proyecciones)",
+    "no_usar": "porcentajes de subregistro sin cita (p. ej. '20–30 %' del catálogo)"
+   },
+   "mensaje_usuario": "Este registro no capta todos los {nacimientos|defunciones|casos}: se estima que registró alrededor del {cobertura} % en {departamento} en {año}. La cifra real probablemente es mayor.",
+   "justificacion": "El CNV omitió entre 14 % y 19 % de los nacimientos estimados (INEI, 2019–2021); SINADEF registraba ~49 % de las defunciones estimadas a mediados de 2018 (Vargas-Herrera et al.). Un descenso o un 'cero' puede ser falta de registro. OPS pide evaluar la cobertura antes de calcular indicadores con estadísticas vitales.",
+   "referencias": [
+    {
+     "titulo": "INEI – Perú: Nacidos vivos de madres adolescentes 2019-2021 (omisión del CNV 14,4 %–18,6 %; tabulado por residencia habitual de la madre)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1864/libro.pdf"
+    },
+    {
+     "titulo": "Vargas-Herrera J et al. (2018) – Resultados preliminares del fortalecimiento del SINADEF, Rev Peru Med Exp Salud Publica 35(3):505-514",
+     "url": "https://scielosp.org/pdf/rpmesp/2018.v35n3/505-514/es"
+    },
+    {
+     "titulo": "OPS (2018) – Indicadores de salud: aspectos conceptuales y operativos",
+     "url": "https://www.paho.org/es/documentos/indicadores-salud-aspectos-conceptuales-operativos"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-24",
+    "INF-07",
+    "INF-08"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] Defunciones registradas en Loreto 2024 con cobertura estimada 70 % → 'defunciones registradas: 6 100 (referencial: el registro captó ~70 % de las defunciones esperadas)'.",
+   "implementacion": "Tabla auxiliar cobertura_registro (fuente, departamento, anio, cobertura_pct, metodo, fuente_cita) calculada: CNV/NV estimados INEI; SINADEF/defunciones esperadas (tasa bruta de mortalidad de proyecciones INEI × población). Para SIEN: evaluados HIS / población MINSA del grupo de edad (dependencia: ámbito denominadores). Valores > 100 % se registran tal cual y disparan revisión.",
+   "casos_borde": "Departamentos donde la cobertura estimada > 100 % (migración, error del denominador): tratar como 'sin evaluación' y aplicar R-REG-08. Conteos de 0 en distritos amazónicos: mostrar 'sin registros', nunca 'sin casos'.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-08",
+   "ambito": "registros",
+   "titulo": "Coberturas mayores a 100 %",
+   "enunciado": "Una cobertura de registro o de programa mayor a 100 % no debe truncarse a 100 % ni publicarse como logro: entre 100 % y 110 % se publica como referencial con explicación del denominador; por encima de 110 % se muestran numerador y denominador sin porcentaje y se agrega a provincia (o departamento si persiste).",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [
+     "cobertura_programa",
+     "atenciones_produccion",
+     "notificacion_vigilancia"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MINSA-INMUNIZACIONES",
+     "INS-CENAN-SIEN",
+     "SIS-AFILIADOS",
+     "JUNTOS-HOGARES-UBIGEO",
+     "PENSION65-USUARIOS",
+     "MINEDU-SIAGIE-DATOS-ABIERTOS"
+    ]
+   },
+   "condicion": "cobertura = numerador / denominador × 100; 100 < cobertura ≤ 110 → publicar_referencial; cobertura > 110 → suprimir el % y agregar_nivel; si en el nivel superior sigue > 110 → revision_humana del denominador",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "limite_referencial_pct": 110,
+    "truncar": false,
+    "mostrar": "numerador, denominador, fuente y año del denominador"
+   },
+   "mensaje_usuario": "El cálculo supera el 100 % porque se vacunó/atendió a más personas que las estimadas como residentes (personas de otros distritos que se atienden aquí, migración o una estimación de población desactualizada). No significa que todos estén cubiertos.",
+   "justificacion": "Coberturas > 100 % indican denominador subestimado o numerador con atenciones de no residentes (base establecimiento); el catálogo ya las reconoce en MINSA-INMUNIZACIONES y la población MINSA cambia por factores de corrección durante el año. OPS señala que la calidad del denominador condiciona la validez del indicador.",
+   "referencias": [
+    {
+     "titulo": "OPS (2018) – Indicadores de salud: aspectos conceptuales y operativos",
+     "url": "https://www.paho.org/es/documentos/indicadores-salud-aspectos-conceptuales-operativos"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-07"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] Vacuna SPR1 2025, distrito cabecera de Abancay: 1 340 vacunados / 1 050 niños estimados = 128 % → se muestra 'vacunados: 1 340; población estimada MINSA: 1 050' y la cobertura de la provincia de Abancay (94 %).",
+   "implementacion": "Comprobación en el motor antes de entregar al LLM. Registrar resultado.denominador_fuente y denominador_anio (población MINSA vs Padrón Nominal vs INEI). Si el mismo distrito tiene vecinos con coberturas < 70 %, añadir nota de posible atención extra-distrito.",
+   "casos_borde": "Programas con meta física en vez de población (Pensión 65 usuarios/meta) pueden superar 100 % legítimamente: rotular 'avance de meta', no cobertura. Denominadores de Censo 2025 vs proyección: la decisión de cuál usar es del ámbito denominadores.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-09",
+   "ambito": "registros",
+   "titulo": "Cifras preliminares, fecha de corte y retraso de digitación",
+   "enunciado": "Toda cifra de registro debe mostrar su fecha de corte; las del año en curso (y del año anterior hasta el cierre declarado por la fuente) se rotulan 'preliminar', y no deben compararse con años completos salvo por el mismo periodo acumulado.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [
+     "registro_eventos",
+     "notificacion_vigilancia",
+     "atenciones_produccion",
+     "cobertura_programa"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MINSA-SINADEF",
+     "CDC-VIGILANCIA-DATOS-ABIERTOS",
+     "MINSA-REUNIS",
+     "INS-CENAN-SIEN",
+     "MINSA-INMUNIZACIONES",
+     "MINSA-CNV-NACIDOS-VIVOS",
+     "SIS-ATENCIONES"
+    ]
+   },
+   "condicion": "resultado.anio = anio_actual OR (resultado.anio = anio_actual − 1 AND fecha_corte < fecha_cierre_fuente) → es_preliminar = true; comparacion(anio_preliminar, anio_completo) sin mismo_periodo_acumulado → bloquear; notificacion_vigilancia: semanas epidemiológicas dentro de las últimas 4 antes de fecha_corte → marcar incompletas",
+   "accion": "rotular",
+   "parametros": {
+    "semanas_incompletas_vigilancia": 4,
+    "cierre_por_defecto": "30 de junio del año siguiente si la fuente no declara cierre",
+    "mostrar": "'datos al {fecha_corte}'"
+   },
+   "mensaje_usuario": "Datos preliminares al {fecha_corte}: el registro sigue recibiendo información y la cifra puede subir. Para comparar con años anteriores usamos el mismo periodo (enero–{mes}).",
+   "justificacion": "Los registros se digitan con retraso (SINADEF y HIS son preliminares; la notificación de las últimas semanas epidemiológicas se completa después). Comparar un año parcial con uno completo fabrica descensos artificiales.",
+   "referencias": [
+    {
+     "titulo": "Vargas-Herrera J et al. (2018) – Resultados preliminares del fortalecimiento del SINADEF, Rev Peru Med Exp Salud Publica 35(3):505-514",
+     "url": "https://scielosp.org/pdf/rpmesp/2018.v35n3/505-514/es"
+    },
+    {
+     "titulo": "OPS (2018) – Indicadores de salud: aspectos conceptuales y operativos",
+     "url": "https://www.paho.org/es/documentos/indicadores-salud-aspectos-conceptuales-operativos"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-24",
+    "INF-09"
+   ],
+   "ejemplo": "Dengue 2026 a la SE 21 vs 2025 completo: bloqueado. Permitido: SE 1–21 de 2026 vs SE 1–21 de 2025, ambos con fecha de corte.",
+   "implementacion": "Guardar resultado.fecha_corte (fecha de descarga o fecha declarada en la fuente) y resultado.es_preliminar. Para series, el motor calcula acumulados al mismo mes/semana. Re-ingesta mensual reemplaza los preliminares.",
+   "casos_borde": "Fuentes sin fecha de corte declarada: usar fecha de descarga y advertir. Datasets abiertos del CDC que se actualizan de forma irregular frente a la sala situacional: preferir el más reciente y rotular la fuente exacta.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-10",
+   "ambito": "registros",
+   "titulo": "Quiebres de serie en registros (cambio de sistema o de cobertura)",
+   "enunciado": "No debe calcularse ni redactarse una tendencia, variación o promedio que cruce un año declarado en anios_con_quiebre (cambio de sistema, de fuente o expansión de cobertura); la serie se muestra cortada en dos tramos con nota.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": [
+     "MINSA-SINADEF",
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS",
+     "MINSA-CNV-NACIDOS-VIVOS",
+     "WASIMIKUNA-IIEE",
+     "MINEDU-CENSO-EDUCATIVO",
+     "MINEDU-SIAGIE-DATOS-ABIERTOS"
+    ]
+   },
+   "condicion": "serie.anio_ini < quiebre ≤ serie.anio_fin para algún quiebre en fuente.anios_con_quiebre → bloquear variación/tendencia entre tramos; agrupar_anios no puede incluir años de ambos tramos",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "quiebres_a_registrar": {
+     "MINSA-SINADEF": "2017–2019: cobertura creciente por implementación (no interpretar aumento de defunciones como aumento de mortalidad)",
+     "INS-CENAN-SIEN": "2020: la vigilancia nutricional pasa a alimentarse del HIS; 2024: criterio de anemia RM 251-2024",
+     "MINSA-REUNIS": "2024: criterio de anemia",
+     "WASIMIKUNA-IIEE": "2025: cambio institucional Qali Warma → Wasi Mikuna",
+     "MINEDU-CENSO-EDUCATIVO": "2019: matrícula desde SIAGIE"
+    }
+   },
+   "mensaje_usuario": "En {año} cambió la forma de registrar este dato ({motivo}); por eso no comparamos los años anteriores con los posteriores.",
+   "justificacion": "En SINADEF, la cobertura en línea creció de manera sostenida desde 2016–2018 (Vargas-Herrera et al.): un aumento de defunciones registradas en esos años es artefacto de cobertura. El INS dejó de alimentar el SIEN desde su propio sistema y publica desde la base HIS.",
+   "referencias": [
+    {
+     "titulo": "Vargas-Herrera J et al. (2018) – Resultados preliminares del fortalecimiento del SINADEF, Rev Peru Med Exp Salud Publica 35(3):505-514",
+     "url": "https://scielosp.org/pdf/rpmesp/2018.v35n3/505-514/es"
+    },
+    {
+     "titulo": "INS – Indicadores Niños 2023 Final (Base de Datos HIS/MINSA) – Anemia (OMS 2024), serie de vigilancia SIEN en EESS",
+     "url": "https://www.gob.pe/institucion/ins/informes-publicaciones/5474586-indicadores-ninos-2023-final-base-de-datos-his-minsa-anemia-oms-2024"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-24",
+    "INF-08",
+    "INF-09"
+   ],
+   "ejemplo": "'¿Aumentaron las muertes en Puno entre 2017 y 2023?' → se bloquea la variación 2017–2023 con SINADEF; se muestra 2020–2025 (tramo estable) con nota.",
+   "implementacion": "Pasar anios_con_quiebre a una estructura tipada: lista de {anio, motivo, tipo: sistema|cobertura|definicion} (campo nuevo quiebres_tipados). El motor parte las series y el validador rechaza cálculos que crucen.",
+   "casos_borde": "Quiebre solo en algunos departamentos (implementación escalonada): registrar quiebre por departamento si se conoce; si no, aplicar nacional. Dependencia con ámbito encuestas para quiebres ENDES/ENAHO 2020.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-11",
+   "ambito": "registros",
+   "titulo": "Anemia: criterio obligatorio y series no mezcladas",
+   "enunciado": "Todo indicador de anemia (SIEN/HIS, REUNIS, ENDES) debe llevar el atributo criterio_anemia ∈ {OMS2001_RM363-2022, OMS2024_RM251-2024}; no se unen ni comparan años con criterios distintos, y por defecto se publica el criterio vigente (RM 251-2024) indicando el criterio en el rótulo.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados",
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "notificacion_vigilancia",
+     "atenciones_produccion",
+     "prevalencia"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS",
+     "MINSA-HIS",
+     "INEI-ENDES"
+    ]
+   },
+   "condicion": "indicador.tema = 'anemia' AND criterio_anemia IS NULL → bloquear; serie con COUNT(DISTINCT criterio_anemia) > 1 → bloquear_cruce; comparacion registro vs encuesta con criterio distinto → bloquear_cruce",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "criterio_por_defecto": "OMS2024_RM251-2024",
+    "serie_larga_permitida_si": "recalculada desde microdatos (hemoglobina + altitud) con un único criterio para todos los años",
+    "corte_6_23_meses_OMS2024_g_dL": 10.5
+   },
+   "mensaje_usuario": "Desde 2024 el Perú usa un nuevo criterio para definir anemia (OMS 2024, RM 251-2024-MINSA), con otro punto de corte para bebés de 6 a 23 meses y otro ajuste por altura. Las cifras con el criterio anterior no se pueden comparar con las nuevas: el cambio de criterio por sí solo baja la cifra.",
+   "justificacion": "La OMS publicó en 2024 nuevos puntos de corte de hemoglobina y ajuste por altitud; el MINSA los adoptó con la RM 251-2024 (NTS 213). La ENDES 2024 publica la anemia con ambos criterios (RM 363-2022 y RM 251-2024) y el INS publica indicadores HIS con OMS 2001 y OMS 2024 por separado. Mezclarlos fabrica una caída artificial.",
+   "referencias": [
+    {
+     "titulo": "OMS (2024) – Guideline on haemoglobin cutoffs to define anaemia in individuals and populations",
+     "url": "https://www.who.int/publications-detail-redirect/9789240088542"
+    },
+    {
+     "titulo": "RM 251-2024/MINSA – aprueba la NTS N.° 213-MINSA/DGIESP-2024, Prevención y control de la anemia (El Peruano)",
+     "url": "https://busquedas.elperuano.pe/dispositivo/NL/2277624-1"
+    },
+    {
+     "titulo": "INEI – ENDES 2024, Cap. 9 Lactancia y nutrición (anemia con RM 363-2022 y RM 251-2024), informe departamental",
+     "url": "https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes15/pdf/Cap09.pdf"
+    },
+    {
+     "titulo": "INS – Indicadores Niños 2023 Final (Base de Datos HIS/MINSA) – Anemia (OMS 2024), serie de vigilancia SIEN en EESS",
+     "url": "https://www.gob.pe/institucion/ins/informes-publicaciones/5474586-indicadores-ninos-2023-final-base-de-datos-his-minsa-anemia-oms-2024"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-08",
+    "COB-14"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] SIEN 2023 (OMS 2001) 43 % vs SIEN 2024 (OMS 2024) 35 % → bloqueado. Permitido: INS 2023 con OMS 2024 vs 2024 con OMS 2024.",
+   "implementacion": "criterio_anemia es parte de la llave del indicador (dos indicadores distintos). Al ingerir, leer el criterio del nombre del archivo/tablero INS o de la nota metodológica; si no consta, revisión humana.",
+   "casos_borde": "Tableros REUNIS que cambiaron el criterio sin aviso a mitad de 2024: dividir el año o marcar 2024 como quiebre y no usarlo en series. Gestantes: el criterio de gestantes también cambió; aplicar igual.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-12",
+   "ambito": "registros",
+   "titulo": "Control de divulgación en registros con datos personales",
+   "enunciado": "Los conteos derivados de registros nominales (padrones de programas, CNV, SINADEF, SIS, SIAGIE) no deben publicarse en celdas de 1 a 4 personas (10 en temas sensibles), ni en tablas con más de dos desagregaciones (p. ej., edad y sexo) por debajo del distrito; a nivel de centro poblado solo se publican totales sin desagregar.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo"
+    ],
+    "tipo_medida": [
+     "cobertura_programa",
+     "registro_eventos",
+     "padron_referencia",
+     "atenciones_produccion"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "PENSION65-USUARIOS",
+     "CUNAMAS-USUARIOS",
+     "JUNTOS-HOGARES-UBIGEO",
+     "CONTIGO-USUARIOS",
+     "SIS-AFILIADOS",
+     "MINSA-CNV-NACIDOS-VIVOS",
+     "MINSA-SINADEF",
+     "MINEDU-SIAGIE-DATOS-ABIERTOS",
+     "PAIS-TAMBOS-ATENCIONES"
+    ]
+   },
+   "condicion": "1 ≤ celda < umbral_celda_min(sensibilidad_divulgacion) → suprimir y aplicar supresión complementaria; nivel_territorial = centro_poblado AND n_desagregaciones > 0 → suprimir; nivel_territorial = distrito AND n_desagregaciones > 2 → suprimir; celda = total de la fila/columna (todos los registrados comparten el atributo) en población < 1000 → suprimir",
+   "accion": "suprimir",
+   "parametros": {
+    "umbral_celda_min_normal": 5,
+    "umbral_celda_min_sensible": 10,
+    "temas_sensibles": [
+     "defunciones infantiles y fetales",
+     "madres menores de 15 años",
+     "VIH/TBC",
+     "violencia",
+     "discapacidad",
+     "causa de muerte por suicidio"
+    ],
+    "max_desagregaciones_distrito": 2,
+    "centro_poblado": "solo total, y solo si ≥ 10",
+    "presentacion_suprimida": "'menos de 5' (o 'menos de 10')",
+    "nunca_publicar": [
+     "DNI",
+     "nombres",
+     "fecha de nacimiento exacta",
+     "dirección"
+    ]
+   },
+   "mensaje_usuario": "Para proteger la identidad de las personas no mostramos cifras de menos de {umbral} personas en territorios pequeños.",
+   "justificacion": "La Ley 29733 permite el uso estadístico solo de datos anonimizados o disociados. La ONS trata conteos de 0, 1 y 2 y los eventos de mujeres muy jóvenes y defunciones infantiles como riesgo de divulgación y prefiere agregar categorías o geografía; Public Health Wales suprime conteos de 0–4 en geografías subnacionales y 0–10 en temas muy sensibles.",
+   "referencias": [
+    {
+     "titulo": "Ley N.° 29733, Ley de Protección de Datos Personales (anonimización/disociación para fines estadísticos)",
+     "url": "https://www.congreso.gob.pe/Docs/DGP/DIDP/files/ley_29733.pdf"
+    },
+    {
+     "titulo": "ONS – Policy on protecting confidentiality in tables of birth and death statistics",
+     "url": "https://www.ons.gov.uk/methodology/methodologytopicsandstatisticalconcepts/disclosurecontrol/policyonprotectingconfidentialityintablesofbirthanddeathstatistics"
+    },
+    {
+     "titulo": "Public Health Wales – Small numbers publishing guidance (supresión de conteos 0–4 en geografías subnacionales)",
+     "url": "https://phw.nhs.wales/about-us/policies-and-procedures/policies-and-procedures-documents/information-governance-information-management-and-technology-supporting-documents/small-numbers-publishing-guidance"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-26"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] Pensión 65, centro poblado de 60 habitantes: '3 usuarias mujeres de 80+ años' → suprimido; se publica 'usuarios en el distrito: 412'.",
+   "implementacion": "Campo de catálogo sensibilidad_divulgacion (normal|sensible). El motor aplica supresión primaria y complementaria (la segunda celda más pequeña de la fila/columna) para que no se recupere la suprimida por resta con el total; también verifica diferencias entre geografías superpuestas (distrito vs suma de CP).",
+   "casos_borde": "Preguntas sucesivas que permitan restar (total distrito − suma de otros CP): registrar las consultas servidas por sesión y negar la que complete la diferencia (posterior). Conteos de establecimientos o de programas (no personas) no requieren esta regla.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-EST-01",
+   "ambito": "estimaciones",
+   "titulo": "Estimaciones modeladas: año, IC y grupo robusto; sin ranking puntual",
+   "enunciado": "Toda estimación modelada (Mapa de Pobreza 2018, Mapa de DCI provincial 2019, IDH distrital, proyecciones) debe mostrarse con su año de referencia, su IC al 95 % o CV y, si existe, su grupo robusto; no debe ordenarse por el valor puntual ni presentarse una diferencia entre territorios cuyos IC se solapan, ni desagregarse por debajo de nivel_territorial_inferencia.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "estimacion_modelada"
+    ],
+    "tipo_medida": [
+     "estimacion_modelada"
+    ],
+    "base_geografica": [
+     "residencia",
+     "territorio"
+    ],
+    "fuentes": [
+     "INEI-MAPA-POBREZA",
+     "INEI-MAPA-DCI-PROVINCIAL-2019",
+     "PNUD-IDH-DISTRITAL",
+     "MIDIS-PMA-MAPA-VULNERABILIDAD",
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "MINSA-POBLACION-ESTIMADA"
+    ]
+   },
+   "condicion": "incertidumbre_publicada = false → publicar_referencial con aviso 'sin margen de error publicado'; (ic_sup − ic_inf) > 20 pp → mostrar solo el intervalo, sin punto; DCI: cv < 10 → publicar, 10 ≤ cv < 20 → publicar_referencial, cv ≥ 20 → suprimir; ranking → solo por grupo_robusto o por categorías; comparar(A,B) con IC solapados → 'no se puede afirmar que sean distintos'; nivel_solicitado más fino que nivel_territorial_inferencia → bloquear; anio_actual − anio_referencia > 3 → advertir antigüedad",
+   "accion": "publicar_referencial",
+   "parametros": {
+    "ancho_ic_max_pp": 20,
+    "dci_cv_publicar": 10,
+    "dci_cv_suprimir": 20,
+    "antiguedad_max_sin_aviso_anios": 3,
+    "aviso_fijo_pobreza_2018": "Foto de 2018, anterior a la pandemia: la pobreza subió en 2020 y en el promedio nacional aún no volvió al nivel de 2018. El nivel actual del distrito probablemente es distinto.",
+    "proyecciones": "rotular 'población estimada (proyección INEI, base Censo 2017)'; sin IC publicado"
+   },
+   "mensaje_usuario": "Es una estimación estadística del INEI para {año} (no un conteo). Lo más probable es que el valor esté entre {ic_inf} % y {ic_sup} %. {aviso_antigüedad}",
+   "justificacion": "La Comisión Consultiva de Pobreza pide evaluar diferencias con los IC y presentar grupos de distritos estadísticamente similares (grupos robustos); el INEI publicó el Mapa 2018 por grupos robustos. El Mapa de DCI 2019 considera confiables 148 de 196 provincias (CV < 10 %) y advierte que la precisión distrital es baja (21 % de distritos con menos de 100 niños menores de 5 años).",
+   "referencias": [
+    {
+     "titulo": "INEI – Declaración de la Comisión Consultiva de Pobreza sobre el Mapa de Pobreza Monetaria 2018 (usar IC y grupos robustos)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Declaracion_mapa_de_pobreza_monetaria2018.pdf"
+    },
+    {
+     "titulo": "INEI – Nota de prensa N.° 028-2020: Mapa de Pobreza Monetaria 2018 (grupos robustos)",
+     "url": "https://m.inei.gob.pe/media/MenuRecursivo/noticias/np028-2020.pdf"
+    },
+    {
+     "titulo": "INEI – Aproximación al Mapa de Desnutrición Crónica Infantil a nivel provincial 2019 (148 de 196 provincias con CV<10 %; advierte baja precisión distrital)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-02",
+    "INF-23",
+    "EMB-21",
+    "COB-04",
+    "INF-09"
+   ],
+   "ejemplo": "'¿Cuál es el distrito más pobre de Cajamarca?' → 'Según el Mapa de Pobreza 2018 del INEI, Anguía y Oxamarca están en el grupo robusto más pobre del país (no se puede afirmar cuál de los dos es más pobre). Foto de 2018, anterior a la pandemia.'",
+   "implementacion": "Ingerir del Mapa: valor, ic_inf, ic_sup, grupo_robusto. resultado.anio_referencia obligatorio en la ficha. Comparaciones: solapamiento de IC (criterio conservador). Para el Mapa DCI, CV de la tabla INEI.",
+   "casos_borde": "Distritos creados después de 2017: sin estimación (no imputar desde el distrito madre sin rótulo; dependencia con territorio). Proyecciones: no tienen IC; se aplica solo el rótulo y la regla de antigüedad cuando se rebasen con el Censo 2025 (ámbito denominadores).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-EST-02",
+   "ambito": "estimaciones",
+   "titulo": "No restar, 'actualizar' ni cruzar circularmente una estimación modelada",
+   "enunciado": "Una estimación modelada no debe restarse ni compararse como tendencia con una encuesta u otra edición de otro año, no debe 'actualizarse' aplicándole variaciones de la ENAHO/ENDES, y no debe cruzarse con las covariables de su propio modelo (p. ej., Mapa de Pobreza 2018 vs NBI o servicios del Censo 2017).",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "estimacion_modelada"
+    ],
+    "tipo_medida": [
+     "estimacion_modelada"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-MAPA-POBREZA",
+     "INEI-MAPA-DCI-PROVINCIAL-2019",
+     "PNUD-IDH-DISTRITAL",
+     "MIDIS-PMA-MAPA-VULNERABILIDAD"
+    ]
+   },
+   "condicion": "operacion IN (resta, variacion, tendencia) AND (fuente_A.naturaleza_dato = estimacion_modelada XOR fuente_B.naturaleza_dato = estimacion_modelada OR anio_A != anio_B) → bloquear_cruce; operacion = ajuste_por_variacion_encuesta → bloquear; correlacion(estimacion_modelada, variable) AND variable.fuente IN covariables_modelo → bloquear_cruce; cruce con gasto de años ≠ anio_referencia → advertir",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "covariables_conocidas": {
+     "INEI-MAPA-POBREZA": [
+      "INEI-CPV2017 (educación, vivienda, servicios, NBI)",
+      "INEI-ENAHO 2017–2018"
+     ],
+     "INEI-MAPA-DCI-PROVINCIAL-2019": [
+      "INEI-CPV2017",
+      "INEI-ENDES"
+     ]
+    },
+    "comparacion_entre_ediciones": "solo si la fuente declara comparabilidad (el INEI la declaró entre 2013 y 2018) y por IC"
+   },
+   "mensaje_usuario": "No calculamos cuánto cambió la pobreza del distrito comparando el Mapa de 2018 con la encuesta de {año}: son métodos y años distintos y el resultado sería engañoso.",
+   "justificacion": "El Mapa 2018 combina el Censo 2017 y la ENAHO 2017–2018 (modelo ELL); su diferencia con una ENAHO departamental de otro año mezcla error de modelo, error de muestreo y cambio real. Cruzarlo con variables del censo que usó como predictores produce correlaciones circulares. La Comisión Consultiva advierte que son modelos predictivos, no explicativos.",
+   "referencias": [
+    {
+     "titulo": "INEI – Declaración de la Comisión Consultiva de Pobreza sobre el Mapa de Pobreza Monetaria 2018 (usar IC y grupos robustos)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Declaracion_mapa_de_pobreza_monetaria2018.pdf"
+    },
+    {
+     "titulo": "INEI – Aproximación al Mapa de Desnutrición Crónica Infantil a nivel provincial 2019 (148 de 196 provincias con CV<10 %; advierte baja precisión distrital)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-02",
+    "INF-23",
+    "EMB-21",
+    "INF-26"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] '¿Bajó la pobreza en Ayacucho distrito X desde 2018?' → bloqueo de la resta Mapa 2018 vs ENAHO 2024; se muestran por separado: Mapa 2018 (distrito, con IC) y ENAHO 2024 (departamento, con IC), con texto que explica por qué no se restan.",
+   "implementacion": "Campo de catálogo covariables_modelo (lista de IDs de fuente). El planificador de cruces consulta este campo antes de ejecutar correlaciones o regresiones. Las comparaciones entre ediciones de un mismo mapa requieren el flag comparable_con (lista de ediciones).",
+   "casos_borde": "Coberturas de programas sociales con denominador 'pobres del Mapa 2018': permitido solo como rango heredado del IC (R-EST-04).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-EST-03",
+   "ambito": "estimaciones",
+   "titulo": "Estimaciones propias (calibración de registros con encuestas)",
+   "enunciado": "Cualquier cifra que Pregunta al Perú derive combinando un registro con una encuesta (p. ej., escalar la anemia SIEN distrital con el cociente ENDES/SIEN departamental) es una estimación modelada propia: no se publica sin modelo documentado, validación fuera de muestra y medida de incertidumbre, y siempre con el rótulo 'estimación de Pregunta al Perú, no cifra oficial'.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "estimacion_modelada"
+    ],
+    "tipo_medida": [
+     "estimacion_modelada"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INS-CENAN-SIEN",
+     "INEI-ENDES",
+     "MINSA-REUNIS"
+    ]
+   },
+   "condicion": "indicador.origen = 'propio' AND (validacion_holdout IS NULL OR incertidumbre_publicada = false) → bloquear; si validada → publicar_referencial con rótulo; requiere revision_humana de la ficha metodológica",
+   "accion": "revision_humana",
+   "parametros": {
+    "validacion_minima": "hold-out por departamento: error absoluto medio vs ENDES ≤ 5 pp en departamentos no usados para ajustar",
+    "rotulo": "estimación de Pregunta al Perú (no oficial)"
+   },
+   "mensaje_usuario": "Esta cifra es un cálculo propio de Pregunta al Perú combinando {fuentes}; no es una cifra oficial y tiene un margen de error de ±{margen} puntos.",
+   "justificacion": "Un ajuste ingenuo produce una estimación de áreas pequeñas sin validar; las estimaciones oficiales SAE del INEI (Mapas de Pobreza y DCI) documentan modelo, simulaciones e IC.",
+   "referencias": [
+    {
+     "titulo": "INEI – Aproximación al Mapa de Desnutrición Crónica Infantil a nivel provincial 2019 (148 de 196 provincias con CV<10 %; advierte baja precisión distrital)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf"
+    },
+    {
+     "titulo": "INEI – Declaración de la Comisión Consultiva de Pobreza sobre el Mapa de Pobreza Monetaria 2018 (usar IC y grupos robustos)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Declaracion_mapa_de_pobreza_monetaria2018.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-25"
+   ],
+   "ejemplo": "Anemia distrital 'calibrada' SIEN×(ENDES/SIEN) en Puno: no se publica en el MVP.",
+   "implementacion": "Campo indicador.origen ∈ {oficial, propio}. Ficha metodológica obligatoria con fórmula, datos de entrada, validación y fecha.",
+   "casos_borde": "Indicadores derivados simples (cociente de dos cifras oficiales del mismo año y territorio) no son estimación modelada propia; se rigen por R-REG-03 y el ámbito cruces.",
+   "prioridad": "posterior"
+  },
+  {
+   "id": "R-EST-04",
+   "ambito": "estimaciones",
+   "titulo": "Cobertura de programas con denominador estimado",
+   "enunciado": "La cobertura de un programa social debe declarar su denominador (fuente, año y concepto: población total, objetivo o elegible); si el denominador es una estimación modelada o de encuesta, la cobertura hereda su IC y se publica como rango, y no se publican 'filtración' o 'subcobertura' distritales sin ese rango.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo"
+    ],
+    "tipo_medida": [
+     "cobertura_programa"
+    ],
+    "base_geografica": [
+     "residencia"
+    ],
+    "fuentes": [
+     "PENSION65-USUARIOS",
+     "JUNTOS-HOGARES-UBIGEO",
+     "CUNAMAS-USUARIOS",
+     "CONTIGO-USUARIOS",
+     "SIS-AFILIADOS",
+     "MIDIS-SISFOH-PGH"
+    ]
+   },
+   "condicion": "indicador.tipo_medida = cobertura_programa AND denominador_fuente IS NULL → bloquear; denominador.naturaleza_dato IN (estimacion_modelada, encuesta_muestral) → cobertura_inf = usuarios / den_ic_sup, cobertura_sup = usuarios / den_ic_inf → publicar rango; |anio_usuarios − anio_denominador| > 2 → advertir; denominador = SISFOH → rotular 'hogares clasificados', no población objetivo",
+   "accion": "publicar_referencial",
+   "parametros": {
+    "max_desfase_anios_sin_aviso": 2,
+    "prohibido": [
+     "usuarios / población total del distrito rotulado como 'cobertura'",
+     "filtración puntual con Mapa 2018"
+    ]
+   },
+   "mensaje_usuario": "La cobertura se calcula con una población objetivo estimada ({fuente_denominador}, {año}), así que solo podemos dar un rango: entre {cob_inf} % y {cob_sup} %.",
+   "justificacion": "Usuarios ≠ población objetivo (MIDIS-INFOMIDIS); la población elegible solo existe como estimación (Mapa 2018, ENAHO) o como SISFOH con autoselección. Dividir por una estimación propaga su incertidumbre.",
+   "referencias": [
+    {
+     "titulo": "INEI – Declaración de la Comisión Consultiva de Pobreza sobre el Mapa de Pobreza Monetaria 2018 (usar IC y grupos robustos)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Declaracion_mapa_de_pobreza_monetaria2018.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-26",
+    "INF-02"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] Pensión 65 2025 en un distrito de Huancavelica: 900 usuarios / adultos de 65+ en pobreza extrema estimados 2018 (IC 700–1 100) → 'entre 82 % y más de 100 %: rango demasiado amplio para afirmar subcobertura'.",
+   "implementacion": "Ficha del indicador: denominador_fuente, denominador_anio, denominador_concepto. El motor propaga el IC del denominador (cota por intervalos). Si el rango cruza 100 %, aplicar R-REG-08.",
+   "casos_borde": "Programas con focalización geográfica (JUNTOS solo en distritos de intervención): no publicar cobertura en distritos fuera de intervención (no es 0 %, es 'no aplica').",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-REG-13",
+   "ambito": "registros",
+   "titulo": "Registro vs encuesta: cuál es la cifra principal",
+   "enunciado": "Cuando una encuesta representativa (ENDES, ENAHO) cubre el territorio y el año, su prevalencia es la cifra principal y el registro se presenta aparte como dato complementario con su propio rótulo; nunca en el mismo eje, ni restados, ni promediados. Por debajo del nivel de inferencia de la encuesta, la cifra principal es la estimación modelada oficial si existe (Mapa de DCI provincial) o, si no, el registro rotulado.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "indicadores_derivados",
+     "encuesta_muestral",
+     "estimacion_modelada"
+    ],
+    "tipo_medida": [
+     "prevalencia",
+     "notificacion_vigilancia",
+     "estimacion_modelada"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-ENDES",
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS",
+     "INEI-MAPA-DCI-PROVINCIAL-2019"
+    ]
+   },
+   "condicion": "pregunta sobre prevalencia en territorio T, año Y: si nivel(T) ≥ encuesta.nivel_territorial_inferencia AND encuesta cumple reglas del ámbito encuestas → principal = encuesta, secundario = registro (rotulado R-REG-01); si nivel(T) < nivel_inferencia → principal = estimacion_modelada oficial vigente (R-EST-01) o registro rotulado; operacion(encuesta, registro) IN (resta, cociente, promedio, mismo_grafico_mismo_eje) → bloquear_cruce; criterios de anemia distintos → R-REG-11",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "jerarquia": [
+     "encuesta representativa (departamento/nacional)",
+     "estimación modelada oficial (provincia/distrito)",
+     "registro rotulado"
+    ],
+    "presentacion_secundaria": "bloque separado 'Lo que registran los establecimientos de salud'"
+   },
+   "mensaje_usuario": "Hay dos cifras distintas porque miden cosas distintas: la ENDES (encuesta del INEI) estima la anemia en todos los niños del departamento; el registro de los establecimientos de salud cuenta solo a los niños que fueron evaluados allí. La cifra que describe a la población es la de la ENDES.",
+   "justificacion": "La ENDES es la medida poblacional oficial (inferencia departamental) y publica la anemia con ambos criterios; el SIEN/HIS es vigilancia en EESS con sesgo de selección y cobertura de tamizaje variable. El Mapa de DCI 2019 es la única cifra oficial poblacional de desnutrición crónica bajo el departamento.",
+   "referencias": [
+    {
+     "titulo": "INEI – ENDES 2024, Cap. 9 Lactancia y nutrición (anemia con RM 363-2022 y RM 251-2024), informe departamental",
+     "url": "https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes15/pdf/Cap09.pdf"
+    },
+    {
+     "titulo": "INS – Indicadores Niños 2023 Final (Base de Datos HIS/MINSA) – Anemia (OMS 2024), serie de vigilancia SIEN en EESS",
+     "url": "https://www.gob.pe/institucion/ins/informes-publicaciones/5474586-indicadores-ninos-2023-final-base-de-datos-his-minsa-anemia-oms-2024"
+    },
+    {
+     "titulo": "INEI – Aproximación al Mapa de Desnutrición Crónica Infantil a nivel provincial 2019 (148 de 196 provincias con CV<10 %; advierte baja precisión distrital)",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-08",
+    "INF-25",
+    "COB-04",
+    "INF-07"
+   ],
+   "ejemplo": "[Cifras ilustrativas, no verificadas] '¿Cuánta desnutrición crónica hay en la provincia de Huanta?' → principal: Mapa de DCI 2019 (provincia, con IC, 'foto 2019'); contexto: ENDES 2024 Ayacucho (departamento); complementario: proporción de niños evaluados en EESS de Huanta con DCI (SIEN 2025), en bloque separado.",
+   "implementacion": "El planificador asigna roles (principal/secundario) por la jerarquía; el validador impide gráficos con series de naturaleza_dato distinta en el mismo eje y bloquea operaciones aritméticas entre ellas.",
+   "casos_borde": "Si la encuesta del año no cumple reglas de precisión (CV alto) y se suprime, el registro no sube a principal como 'prevalencia': sigue rotulado como registro. Si la estimación modelada tiene > 3 años, se muestra con aviso de antigüedad y el registro reciente al lado, sin restarlos.",
+   "prioridad": "mvp"
+  }
+ ],
+ "campos_nuevos": [
+  {
+   "campo": "rotulo_medida",
+   "tipo": "str",
+   "donde": "indicador",
+   "para_que": "Rótulo ciudadano obligatorio según tipo_medida (R-REG-01)."
+  },
+  {
+   "campo": "base_geografica_usada",
+   "tipo": "enum VOCAB_BASE_GEO",
+   "donde": "indicador",
+   "para_que": "Base geográfica efectiva del indicador y columna de ubigeo usada (p. ej., residencia de la madre en CNV), puede diferir de la base de la fuente (R-REG-02)."
+  },
+  {
+   "campo": "columna_ubigeo",
+   "tipo": "str",
+   "donde": "indicador",
+   "para_que": "Nombre exacto de la columna de ubigeo usada en la fuente (trazabilidad de R-REG-02)."
+  },
+  {
+   "campo": "denominador_tipo",
+   "tipo": "enum {poblacion_territorio, personas_atendidas, nacidos_vivos, meta_fisica, poblacion_objetivo}",
+   "donde": "indicador",
+   "para_que": "Decidir si se aplica la regla de base geográfica y los umbrales de tasa o de proporción (R-REG-02/03/08)."
+  },
+  {
+   "campo": "denominador_fuente, denominador_anio, denominador_concepto",
+   "tipo": "str, int, str",
+   "donde": "indicador",
+   "para_que": "Declarar el denominador de coberturas y tasas (R-REG-08, R-EST-04)."
+  },
+  {
+   "campo": "cobertura_registro_estimada",
+   "tipo": "tabla auxiliar (fuente, departamento, anio, cobertura_pct, metodo, cita)",
+   "donde": "catalogo",
+   "para_que": "Subregistro de CNV, SINADEF y cobertura de tamizaje SIEN (R-REG-04/07)."
+  },
+  {
+   "campo": "estado_estabilidad",
+   "tipo": "enum {estable, inestable, suprimido}",
+   "donde": "resultado",
+   "para_que": "Resultado de las reglas de números pequeños; usado por rankings y mapas (R-REG-03/05)."
+  },
+  {
+   "campo": "ic_metodo",
+   "tipo": "enum {poisson_exacto, wilson, clopper_pearson, publicado_fuente}",
+   "donde": "resultado",
+   "para_que": "Trazabilidad del IC calculado."
+  },
+  {
+   "campo": "anios_agrupados",
+   "tipo": "list[int]",
+   "donde": "resultado",
+   "para_que": "Indicar el periodo agrupado ('promedio anual 2022–2024')."
+  },
+  {
+   "campo": "tasa_suavizada, metodo_suavizado",
+   "tipo": "float, str",
+   "donde": "resultado",
+   "para_que": "Suavizado bayesiano empírico para mapas (R-REG-06, posterior)."
+  },
+  {
+   "campo": "fecha_corte, es_preliminar",
+   "tipo": "str ISO, bool",
+   "donde": "resultado",
+   "para_que": "Cifras preliminares y comparaciones a igual periodo (R-REG-09)."
+  },
+  {
+   "campo": "fecha_cierre_fuente",
+   "tipo": "str (regla, p. ej. 'MM-DD del año siguiente')",
+   "donde": "catalogo",
+   "para_que": "Saber cuándo un año deja de ser preliminar (R-REG-09)."
+  },
+  {
+   "campo": "quiebres_tipados",
+   "tipo": "list[{anio:int, motivo:str, tipo: sistema|cobertura|definicion, ambito_territorial: nacional|lista_departamentos}]",
+   "donde": "catalogo",
+   "para_que": "Versión verificable por código de anios_con_quiebre (R-REG-10)."
+  },
+  {
+   "campo": "criterio_anemia",
+   "tipo": "enum {OMS2001_RM363-2022, OMS2024_RM251-2024}",
+   "donde": "indicador",
+   "para_que": "Parte de la llave de todo indicador de anemia (R-REG-11)."
+  },
+  {
+   "campo": "sensibilidad_divulgacion",
+   "tipo": "enum {normal, sensible}",
+   "donde": "catalogo",
+   "para_que": "Umbral de celda mínima 5 o 10 (R-REG-12)."
+  },
+  {
+   "campo": "incertidumbre_publicada",
+   "tipo": "bool",
+   "donde": "catalogo",
+   "para_que": "Si la estimación modelada publica IC/CV (R-EST-01)."
+  },
+  {
+   "campo": "covariables_modelo",
+   "tipo": "list[id_fuente]",
+   "donde": "catalogo",
+   "para_que": "Bloquear cruces circulares (R-EST-02)."
+  },
+  {
+   "campo": "comparable_con",
+   "tipo": "list[edicion]",
+   "donde": "catalogo",
+   "para_que": "Ediciones de una estimación modelada que la fuente declara comparables (R-EST-02)."
+  },
+  {
+   "campo": "grupo_robusto",
+   "tipo": "int o null",
+   "donde": "resultado",
+   "para_que": "Ordenar y comparar distritos del Mapa de Pobreza por grupo (R-EST-01)."
+  },
+  {
+   "campo": "anio_referencia",
+   "tipo": "int",
+   "donde": "indicador",
+   "para_que": "Año al que se refiere la cifra, mostrado siempre y usado para avisos de antigüedad (R-EST-01, INF-09)."
+  },
+  {
+   "campo": "origen",
+   "tipo": "enum {oficial, propio}",
+   "donde": "indicador",
+   "para_que": "Distinguir estimaciones propias de Pregunta al Perú (R-EST-03)."
+  }
+ ],
+ "dependencias": [
+  "ámbito denominadores: elección de población (INEI proyección vs MINSA estimada vs Censo 2025 vs Padrón Nominal) para tasas y coberturas (R-REG-03/07/08, R-EST-04)",
+  "ámbito territorio: ubigeo histórico de distritos creados después de 2017 y equivalencia RENIEC↔INEI (R-REG-02, R-EST-01)",
+  "ámbito encuestas: umbrales de CV y n para ENDES/ENAHO que deciden si la encuesta es la cifra principal (R-REG-13) y quiebres 2020 de encuestas (R-REG-10)",
+  "ámbito cruces: bloqueo de operaciones entre naturalezas de dato y años distintos (R-EST-02, R-REG-13)",
+  "ámbito lenguaje: lista de expresiones prohibidas y formato de rangos/IC para el ciudadano (R-REG-01, R-EST-01)",
+  "ámbito gasto: advertencia de periodos al cruzar Mapa 2018 con gasto 2019–2026 (R-EST-02)"
+ ],
+ "preguntas_abiertas": [
+  "Umbrales de números pequeños: ¿se adopta numerador ≥ 20 para 'estable' y 5 para publicar (más conservador, más supresión en distritos rurales) o 10/3 (más cifras distritales, más ruido)? Afecta a qué fracción de los 1 892 distritos tendrá cifras propias.",
+  "Datos con base establecimiento a nivel distrital (SIEN, REUNIS, inmunizaciones): ¿se muestran por distrito con el rótulo 'en establecimientos ubicados en' o solo desde provincia para evitar que el usuario los lea como datos de residentes?",
+  "Mapa de Pobreza 2018 para preguntas actuales: ¿se responde con él (con aviso 'foto 2018 prepandemia') o se responde solo con ENAHO departamental vigente y se deja el Mapa como contexto? Igual para el Mapa DCI 2019.",
+  "Criterio de anemia por defecto: ¿publicar solo RM 251-2024 (comparable hacia adelante, rompe serie) o recalcular series largas desde microdatos ENDES con un criterio único (costo alto, serie útil)?",
+  "¿Se construye la tabla cobertura_registro_estimada (CNV/SINADEF por departamento y año) en el MVP o se usa una advertencia genérica hasta tenerla?",
+  "¿Se permiten estimaciones propias (calibración SIEN–ENDES, suavizado bayesiano) en alguna fase, sabiendo que exigen ficha metodológica y validación?"
+ ]
+}

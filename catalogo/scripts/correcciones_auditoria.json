@@ -1,0 +1,995 @@
+[
+ {
+  "id": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+  "hallazgos": [
+   "EXA-A-01",
+   "INF-01",
+   "EXA-A-10",
+   "INT-02"
+  ],
+  "validacion": "fuente",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv",
+  "cambios": {
+   "base_geografica": "ejecutora",
+   "url_datos": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto",
+   "url_patron": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/{anio}-Gasto.csv",
+   "url_documentacion": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv",
+   "llaves_cruce": [
+    "pliego_unidad_ejecutora (sec_ejec)",
+    "clasificador_presupuestal (función/programa/genérica)",
+    "ubigeo_inei",
+    "cui_inversion"
+   ],
+   "detalle_descarga": "Archivo anual {anio}-Gasto.csv para 2012–2024; para 2025–2026 usar SOLO {anio}-Gasto-Mensual.csv (nunca sumar -Mensual y -Diario: duplica). CUI = PRODUCTO_PROYECTO cuando TIPO_ACT_PROY indica proyecto.",
+   "limitaciones": "El ubigeo distrital es el de la SEDE DE LA UNIDAD EJECUTORA; la meta solo trae DEPARTAMENTO_META. Atribuir a distrito solo el gasto de municipalidades (NIVEL_GOBIERNO=M) o inversiones ubicadas por CUI en MEF-DETALLE-INVERSIONES; el gasto del Gobierno Nacional y Regional va a departamento por DEPARTAMENTO_META. Las transferencias se registran de nuevo como gasto del receptor: no sumarlas. Construir el ubigeo como DEPARTAMENTO(2)+PROVINCIA(2)+DISTRITO(2)_EJECUTORA y validarlo contra la tabla INEI.",
+   "_append_notas": " [Auditoría C-01: no existen columnas PROVINCIA_META ni DISTRITO_META.]"
+  }
+ },
+ {
+  "id": "MEF-DA-GASTO-DEVENGADO-MENSUAL",
+  "hallazgos": [
+   "EXA-A-04",
+   "EMB-06"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gasto_Devengado_Diccionario.csv",
+  "cambios": {
+   "id_ruta_principal": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+   "base_geografica": "ejecutora",
+   "limitaciones": "Mismo dato que MEF-DA-PRESUPUESTO-EJECUCION-GASTO en formato ancho (12 columnas mensuales). El ubigeo distrital es el de la SEDE DE LA UNIDAD EJECUTORA; la meta solo trae DEPARTAMENTO_META. Atribuir a distrito solo el gasto de municipalidades (NIVEL_GOBIERNO=M) o inversiones ubicadas por CUI en MEF-DETALLE-INVERSIONES; el gasto del Gobierno Nacional y Regional va a departamento por DEPARTAMENTO_META. Las transferencias se registran de nuevo como gasto del receptor: no sumarlas. Construir el ubigeo como DEPARTAMENTO(2)+PROVINCIA(2)+DISTRITO(2)_EJECUTORA y validarlo contra la tabla INEI."
+  }
+ },
+ {
+  "id": "MEF-DA-GASTO-DEVENGADO-SECTORES",
+  "hallazgos": [
+   "EXA-A-03",
+   "EMB-06"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto-%E2%80%93-devengado-sectores",
+  "cambios": {
+   "cobertura_temporal": "2012–2023 (solo sectores 03, 05, 06, 07)",
+   "anio_inicio": 2012,
+   "anio_fin": 2023,
+   "periodicidad": "discontinuado",
+   "serie_activa": false,
+   "id_ruta_principal": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+   "base_geografica": "ejecutora"
+  }
+ },
+ {
+  "id": "MEF-DA-GASTO-PPR",
+  "hallazgos": [
+   "EXA-A-02",
+   "EMB-06"
+  ],
+  "validacion": "fuente",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/ejecuci%C3%B3n-del-gasto-presupuestal-por-resultados-ppr",
+  "cambios": {
+   "descripcion": "Ejecución de los Programas Estratégicos 2009–2011 (antecesores de los programas presupuestales). No contiene los PP actuales.",
+   "cobertura_temporal": "2009–2011",
+   "anio_inicio": 2009,
+   "anio_fin": 2011,
+   "periodicidad": "única (histórica)",
+   "serie_activa": false,
+   "url_patron": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/{anio}-Programas-Estrategicos.csv",
+   "base_geografica": "ejecutora",
+   "limitaciones": "Serie histórica cerrada. Para PP actuales filtrar PROGRAMA_PPTO en MEF-DA-PRESUPUESTO-EJECUCION-GASTO."
+  }
+ },
+ {
+  "id": "MEF-DA-GASTO-GPNNA",
+  "hallazgos": [
+   "EXA-A-12",
+   "INF-01"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/GPNNA_Diccionario.csv",
+  "cambios": {
+   "cobertura_temporal": "2023–2026",
+   "anio_inicio": 2023,
+   "anio_fin": 2026,
+   "periodicidad": "mensual",
+   "serie_activa": true,
+   "url_patron": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/GPNNA_{anio}.csv",
+   "base_geografica": "ejecutora",
+   "llaves_cruce": [
+    "pliego_unidad_ejecutora (sec_ejec)",
+    "clasificador_presupuestal (función/programa/genérica)",
+    "ubigeo_inei"
+   ],
+   "limitaciones": "El ubigeo distrital es el de la SEDE DE LA UNIDAD EJECUTORA; la meta solo trae DEPARTAMENTO_META. Atribuir a distrito solo el gasto de municipalidades (NIVEL_GOBIERNO=M) o inversiones ubicadas por CUI en MEF-DETALLE-INVERSIONES; el gasto del Gobierno Nacional y Regional va a departamento por DEPARTAMENTO_META. Las transferencias se registran de nuevo como gasto del receptor: no sumarlas. Construir el ubigeo como DEPARTAMENTO(2)+PROVINCIA(2)+DISTRITO(2)_EJECUTORA y validarlo contra la tabla INEI."
+  }
+ },
+ {
+  "id": "MEF-SEGUIMIENTO-PI",
+  "hallazgos": [
+   "EXA-A-05",
+   "EXA-A-01"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Seguimiento_PI_Diccionario.csv",
+  "cambios": {
+   "llaves_cruce": [
+    "cui_inversion",
+    "pliego_unidad_ejecutora (sec_ejec)",
+    "ubigeo_inei"
+   ],
+   "url_patron": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/{anio}-Seguimiento-PI.csv",
+   "base_geografica": "ejecutora",
+   "limitaciones": "Sin CODIGO_SNIP ni ubigeo del proyecto: el CUI viene en PRODUCTO_PROYECTO y el ubigeo es el de la ejecutora. La ubicación del proyecto se obtiene uniendo por CUI con MEF-DETALLE-INVERSIONES.UBIGEO."
+  }
+ },
+ {
+  "id": "MEF-INVERSIONES-BRECHAS",
+  "hallazgos": [
+   "EXA-A-06"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Inversiones_Brechas_Diccionario.csv",
+  "cambios": {
+   "nivel_territorial_disponible": null,
+   "llaves_cruce": [
+    "cui_inversion"
+   ],
+   "base_geografica": "inversion_ubicacion",
+   "limitaciones": "Sin ubigeo ni código de indicador: ESPACIO_GEOGRAFICO es texto y la brecha viene como texto en DES_BRECHA (requiere normalización). Ubicar por CUI en MEF-DETALLE-INVERSIONES."
+  }
+ },
+ {
+  "id": "MEF-DA-TRANSFERENCIAS",
+  "hallazgos": [
+   "EXA-A-11",
+   "INF-21"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/transferencias-de-fondos-y-asignaciones-financieras",
+  "cambios": {
+   "periodicidad": "mensual (un archivo por año)",
+   "base_geografica": "ejecutora",
+   "tipo_medida": "presupuesto_gasto",
+   "_append_limitaciones": " No sumar con el gasto del receptor (doble conteo)."
+  }
+ },
+ {
+  "id": "MEF-DETALLE-INVERSIONES",
+  "hallazgos": [
+   "EXA-A-18"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Detalle_Inversiones_Diccionario.csv",
+  "cambios": {
+   "base_geografica": "inversion_ubicacion",
+   "tipo_medida": "padron_referencia"
+  }
+ },
+ {
+  "id": "MINSA-PADRON-NOMINAL",
+  "hallazgos": [
+   "EXA-B-01"
+  ],
+  "validacion": "fuente",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/minsa-padron-nominal-ni%C3%B1os",
+  "cambios": {
+   "cobertura_temporal": "2017 (corte único preparado para un hackatón)",
+   "anio_inicio": 2017,
+   "anio_fin": 2017,
+   "periodicidad": "única",
+   "serie_activa": false,
+   "url_datos": "https://www.datosabiertos.gob.pe/sites/default/files/recursos/2017/09/BD_PADRON_HACKATON.csv",
+   "base_geografica": "residencia",
+   "tipo_medida": "padron_referencia",
+   "limitaciones": "El dataset abierto es un único archivo de 2017; la fecha \"modificado 2025\" es de migración del portal. No sirve como denominador vigente: los agregados actuales están en los tableros del Padrón Nominal/REUNIS o por transparencia."
+  }
+ },
+ {
+  "id": "MINSA-HIS",
+  "hallazgos": [
+   "EXA-B-02",
+   "EMB-07"
+  ],
+  "validacion": "fuente",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/minsa-salud-mental",
+  "cambios": {
+   "url_datos": null,
+   "estrategia_descarga": "scraping_dinamico",
+   "cobertura_temporal": null,
+   "anio_inicio": null,
+   "anio_fin": null,
+   "serie_activa": null,
+   "licencia": "no-especificada",
+   "permite_redistribucion": null,
+   "id_ruta_principal": "MINSA-REUNIS",
+   "estado_datos": "sin_descarga_publica",
+   "base_geografica": "establecimiento",
+   "tipo_medida": "atenciones_produccion",
+   "limitaciones": "No hay descarga pública del HIS. Sus agregados se consultan en REUNIS; el enlace anterior llevaba a un dataset temático de salud mental de 2017."
+  }
+ },
+ {
+  "id": "CONTIGO-USUARIOS",
+  "hallazgos": [
+   "EXA-B-04"
+  ],
+  "validacion": "fuente",
+  "evidencia": "https://www.datosabiertos.gob.pe/group/programa-nacional-de-entrega-de-la-pensi%C3%B3n-no-contributiva-personas-con-discapacidad-severa-en",
+  "cambios": {
+   "url_datos": null,
+   "formatos": [],
+   "estrategia_descarga": "solicitud_acceso_informacion",
+   "nivel_territorial_disponible": null,
+   "llaves_cruce": [],
+   "estado_datos": "sin_descarga_publica",
+   "limitaciones": "El grupo de CONTIGO en la PNDA no tiene datasets publicados (verificado el 5/10/2026)."
+  }
+ },
+ {
+  "id": "SUSALUD-RENIPRESS",
+  "hallazgos": [
+   "EXA-A-08",
+   "EMB-04",
+   "INT-13"
+  ],
+  "validacion": "fuente",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-entidades-prestadoras-de-servicios-de-salud-renipress",
+  "cambios": {
+   "url_portal": "https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-entidades-prestadoras-de-servicios-de-salud-renipress",
+   "url_datos": "https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-entidades-prestadoras-de-servicios-de-salud-renipress",
+   "url_patron": "https://www.datosabiertos.gob.pe/sites/default/files/RENIPRESS_{dd}-{mm}-{anio}.csv",
+   "periodicidad": "mensual",
+   "cobertura_temporal": "corte mensual vigente (último: 30-09-2026)",
+   "anio_fin": 2026,
+   "fecha_ultimo_dato": "2026-09-30",
+   "serie_activa": true,
+   "estado_portal": "confirmado_navegador",
+   "fecha_verificacion": "2026-10-05",
+   "base_geografica": "establecimiento",
+   "tipo_medida": "padron_referencia",
+   "licencia": "ODC-By-1.0",
+   "permite_redistribucion": true,
+   "detalle_descarga": "Un CSV por mes (RENIPRESS_DD-MM-AAAA.csv) más diccionario PDF; la fecha del nombre no es predecible: leer la lista de recursos de la ficha.",
+   "limitaciones": "Padrón de IPRESS públicas y privadas; validar la cobertura de códigos cruzando con SIS, CNV y SIEN."
+  }
+ },
+ {
+  "id": "INEI-CPV2017",
+  "hallazgos": [
+   "EXA-A-13",
+   "INF-19"
+  ],
+  "validacion": "fuente",
+  "evidencia": "Omisión = (31 237 385 − 29 381 884) / 31 237 385 = 5,9 %",
+  "cambios": {
+   "_sub_limitaciones": [
+    "[~≈]?\\s*3\\s*[–-]\\s*4\\s*%[^.;]*",
+    "omisión censal oficial ≈5,9 % (29,38 M censados frente a 31,24 M estimados)"
+   ],
+   "base_geografica": "residencia",
+   "tipo_medida": "prevalencia",
+   "serie_activa": false
+  }
+ },
+ {
+  "id": "INEI-MAPA-POBREZA",
+  "hallazgos": [
+   "EXA-A-14",
+   "INF-02"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf",
+  "cambios": {
+   "url_datos": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf",
+   "anio_fin": 2018,
+   "serie_activa": false,
+   "_append_limitaciones": " Anterior al salto de pobreza de 2020 (20,2 % → 30,1 % nacional): publicar siempre con el año 2018, intervalo de confianza y grupo robusto; no restar ni combinar con ENAHO de otros años."
+  }
+ },
+ {
+  "id": "GITHUB-UBIGEO-PERU-AUMENTADO",
+  "hallazgos": [
+   "EXA-A-15",
+   "INT-05"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://github.com/jmcastagnetto/ubigeo-peru-aumentado",
+  "cambios": {
+   "cobertura_temporal": "corte 2021",
+   "anio_inicio": 2021,
+   "anio_fin": 2021,
+   "serie_activa": false,
+   "url_datos": "https://raw.githubusercontent.com/jmcastagnetto/ubigeo-peru-aumentado/main/ubigeo_distrito.csv",
+   "licencia": "MIT",
+   "base_geografica": "territorio",
+   "tipo_medida": "padron_referencia",
+   "_append_limitaciones": " Corte 2021: no incluye distritos creados después. Usar solo como puente INEI↔RENIEC, validado contra la tabla INEI vigente."
+  }
+ },
+ {
+  "id": "PNDA-UBIGEO-EQUIVALENCIAS",
+  "hallazgos": [
+   "EXA-A-19",
+   "INF-06",
+   "INT-05"
+  ],
+  "validacion": "regla",
+  "evidencia": "Ficha redirige a login; publicador no confirmado",
+  "cambios": {
+   "notas": "Publicador y fecha de corte sin confirmar (la ficha redirige a login). Mientras no se abra, usar GITHUB-UBIGEO-PERU-AUMENTADO como puente INEI↔RENIEC y validar cada carga empíricamente (porcentaje de códigos presentes en cada sistema).",
+   "base_geografica": "territorio",
+   "tipo_medida": "padron_referencia"
+  }
+ },
+ {
+  "id": "INEI-DIRECTORIO-CCPP",
+  "hallazgos": [
+   "EXA-A-20"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://ide.inei.gob.pe/",
+  "cambios": {
+   "url_datos": "https://ide.inei.gob.pe/",
+   "base_geografica": "territorio",
+   "tipo_medida": "padron_referencia",
+   "_append_notas": " La consulta SIGE (http, ruta /test/) no es una descarga; usar la capa de centros poblados de la IDE INEI."
+  }
+ },
+ {
+  "id": "RENIEC-POBLACION-IDENTIFICADA-DNI",
+  "hallazgos": [
+   "INF-14"
+  ],
+  "validacion": "regla",
+  "evidencia": "auditoría INF-14",
+  "cambios": {
+   "base_geografica": "residencia",
+   "tipo_medida": "padron_referencia",
+   "_append_limitaciones": " Mide población con DNI según domicilio declarado, no población residente: subcuenta a menores sin DNI y extranjeros. No usar como denominador principal."
+  }
+ },
+ {
+  "id": "INEI-IDE-LIMITES",
+  "hallazgos": [
+   "A-10"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "base_geografica": "territorio",
+   "tipo_medida": "padron_referencia"
+  }
+ },
+ {
+  "id": "INEI-PNDA-UBIGEOS",
+  "hallazgos": [
+   "EXA-A-09"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei",
+  "cambios": {
+   "base_geografica": "territorio",
+   "tipo_medida": "padron_referencia",
+   "cobertura_temporal": "corte 2022 (1 891 distritos)",
+   "anio_inicio": 2022,
+   "_append_limitaciones": " Corte 2022 con 1 891 distritos; el INEI ya trabaja con 1 892 (proyecciones 2018–2026): completar con esa lista."
+  }
+ },
+ {
+  "id": "MINEDU-ESCALE-PADRON",
+  "hallazgos": [
+   "EMB-05"
+  ],
+  "validacion": "investigacion",
+  "evidencia": "https://sigmed.minedu.gob.pe/descargas/",
+  "cambios": {
+   "base_geografica": "establecimiento",
+   "tipo_medida": "padron_referencia"
+  }
+ },
+ {
+  "id": "CDC-VIGILANCIA-DATOS-ABIERTOS",
+  "hallazgos": [
+   "EXA-B-03"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/vigilancia-epidemiol%C3%B3gica-de-dengue",
+  "cambios": {
+   "periodicidad": "anual (recarga del histórico)",
+   "cobertura_temporal": "2000–2024",
+   "anio_inicio": 2000,
+   "anio_fin": 2024,
+   "llaves_cruce": [
+    "ubigeo_inei"
+   ],
+   "url_datos": "https://www.datosabiertos.gob.pe/sites/default/files/datos_abiertos_vigilancia_dengue_2000_2024.csv",
+   "base_geografica": "residencia",
+   "tipo_medida": "notificacion_vigilancia",
+   "_append_detalle_descarga": " El nombre del CSV cambia con cada recarga; leerlo de la ficha. Para datos semanales vigentes usar la sala situacional del CDC."
+  }
+ },
+ {
+  "id": "MINSA-SINADEF",
+  "hallazgos": [
+   "EXA-B-05",
+   "EXA-B-18"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/informaci%C3%B3n-de-fallecidos-del-sistema-inform%C3%A1tico-nacional-de-defunciones-sinadef-ministerio",
+  "cambios": {
+   "url_datos": "https://drive.minsa.gob.pe/s/PigmdwnCGEdyqos/download",
+   "estrategia_descarga": "descarga_directa_url",
+   "base_geografica": "residencia",
+   "tipo_medida": "registro_eventos",
+   "detalle_descarga": "GET directo al enlace compartido de Nextcloud del MINSA; el token puede rotar: volver a leerlo de la ficha PNDA en cada corrida. Diccionario: Diccionario_Datos_SINADEF.xlsx. Confirmar en la descarga si trae código de ubigeo o solo nombres (si solo nombres, normalizar nombre → ubigeo INEI)."
+  }
+ },
+ {
+  "id": "SIS-AFILIADOS",
+  "hallazgos": [
+   "EXA-B-06",
+   "INF-05",
+   "INT-03"
+  ],
+  "validacion": "fuente",
+  "evidencia": "https://www.datosabiertos.gob.pe/sites/default/files/Diccionario_Datos%20-%20DS-01%20-%20SIS%20-%20Afiliados.pdf",
+  "cambios": {
+   "cobertura_temporal": "2021-12 – 2026-08",
+   "anio_inicio": 2021,
+   "anio_fin": 2026,
+   "fecha_ultimo_dato": "2026-08",
+   "periodicidad": "mensual",
+   "serie_activa": true,
+   "nivel_territorial_disponible": "establecimiento",
+   "llaves_cruce": [
+    "ubigeo_inei",
+    "codigo_renipress_ipress",
+    "pliego_unidad_ejecutora (sec_ejec)"
+   ],
+   "url_patron": "https://www.datosabiertos.gob.pe/sites/default/files/OPENDATA_AFILIADOS_DS01_{anio}{mes}.zip",
+   "base_geografica": "residencia",
+   "tipo_medida": "cobertura_programa",
+   "_append_limitaciones": " Conteos agregados (sin DNI). Ubigeo del domicilio codificado según INEI (diccionario oficial). Ruta del ZIP por confirmar en la prueba de humo."
+  }
+ },
+ {
+  "id": "SIS-AFILIADOS-PNDA",
+  "hallazgos": [
+   "INT-03"
+  ],
+  "validacion": "fuente",
+  "evidencia": "diccionario SIS afiliados",
+  "cambios": {
+   "llaves_cruce": [
+    "ubigeo_inei",
+    "codigo_renipress_ipress"
+   ]
+  }
+ },
+ {
+  "id": "SIS-ATENCIONES",
+  "hallazgos": [
+   "EXA-B-07",
+   "INF-05"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/datos-de-atenciones-realizadas-los-asegurados-sis",
+  "cambios": {
+   "cobertura_temporal": "2017–2025 (II semestre); granularidad mensual",
+   "anio_fin": 2025,
+   "llaves_cruce": [
+    "codigo_renipress_ipress",
+    "ubigeo_inei",
+    "pliego_unidad_ejecutora (sec_ejec)"
+   ],
+   "url_patron": "https://www.datosabiertos.gob.pe/sites/default/files/OPENDATA_DS_01_{anio}_{semestre}_ATENCIONES.zip",
+   "base_geografica": "establecimiento",
+   "tipo_medida": "atenciones_produccion",
+   "_append_limitaciones": " El diccionario no aclara si el ubigeo es INEI o RENIEC: validarlo empíricamente en la carga."
+  }
+ },
+ {
+  "id": "SIS-ATENCIONES-PNDA",
+  "hallazgos": [
+   "INT-03"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "llaves_cruce": [
+    "codigo_renipress_ipress",
+    "ubigeo_inei"
+   ]
+  }
+ },
+ {
+  "id": "INEI-ENDES",
+  "hallazgos": [
+   "EXA-B-08",
+   "INF-08",
+   "INF-17",
+   "INT-06"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes15/pdf/Cap09.pdf",
+  "cambios": {
+   "cobertura_temporal": "1986–2025 (anual continua desde 2004)",
+   "anio_fin": 2025,
+   "url_datos": "https://proyectos.inei.gob.pe/microdatos/",
+   "serie_activa": true,
+   "anios_con_quiebre": "2020: entrevista telefónica parcial (antropometría y hemoglobina afectadas); 2024: anemia publicada con dos criterios (RM 363-2022 y RM 251-2024/OMS 2024 con nuevo ajuste por altitud)."
+  }
+ },
+ {
+  "id": "INEI-ENAHO",
+  "hallazgos": [
+   "INF-17"
+  ],
+  "validacion": "auditor",
+  "evidencia": "catálogo",
+  "cambios": {
+   "anios_con_quiebre": "2020: 49 % de entrevistas telefónicas (16 mar–30 sep), cuestionario reducido, tasa de respuesta 73,1 %."
+  }
+ },
+ {
+  "id": "INEI-ENAPRES",
+  "hallazgos": [
+   "INF-17"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "anios_con_quiebre": "2020–2021: entrevista telefónica parcial (por confirmar en la ficha técnica)."
+  }
+ },
+ {
+  "id": "INS-CENAN-SIEN",
+  "hallazgos": [
+   "INF-08",
+   "INF-07"
+  ],
+  "validacion": "auditor",
+  "evidencia": "RM 251-2024-MINSA",
+  "cambios": {
+   "base_geografica": "establecimiento",
+   "tipo_medida": "notificacion_vigilancia",
+   "anios_con_quiebre": "2024: cambio de punto de corte y ajuste por altitud de la anemia (RM 251-2024-MINSA / OMS 2024).",
+   "_append_limitaciones": " Mide niños tamizados en EESS: rotular \"proporción de tamizados con anemia\", no prevalencia."
+  }
+ },
+ {
+  "id": "MINSA-REUNIS",
+  "hallazgos": [
+   "EMB-07",
+   "INF-08"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "ids_fusionados": [
+    "MINSA-HIS"
+   ],
+   "base_geografica": "establecimiento",
+   "tipo_medida": "atenciones_produccion",
+   "anios_con_quiebre": "2024: criterio de anemia (RM 251-2024-MINSA).",
+   "_append_descripcion": " Alcance para la biblioteca: tableros de atenciones HIS, CRED, anemia e inmunizaciones (este último registrado aparte como MINSA-INMUNIZACIONES)."
+  }
+ },
+ {
+  "id": "ESSALUD-DATOS-ABIERTOS",
+  "hallazgos": [
+   "EXA-B-09"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/group/seguro-social-de-salud-essalud",
+  "cambios": {
+   "licencia": "PDDL-1.0",
+   "licencia_texto": "Other (Public Domain)",
+   "permite_redistribucion": true,
+   "cobertura_temporal": "2015–2022 (consulta externa)",
+   "anio_inicio": 2015,
+   "anio_fin": 2022,
+   "serie_activa": false,
+   "base_geografica": "establecimiento",
+   "tipo_medida": "atenciones_produccion"
+  }
+ },
+ {
+  "id": "SUSALUD-DATOS-ABIERTOS",
+  "hallazgos": [
+   "EXA-B-10"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/group/superintendencia-nacional-de-salud-susalud",
+  "cambios": {
+   "cobertura_temporal": "2025-09 – 2026-08 (ventana móvil; archivar cada mes para tener historia)",
+   "anio_inicio": 2025,
+   "anio_fin": 2026,
+   "serie_activa": true,
+   "base_geografica": "establecimiento",
+   "tipo_medida": "atenciones_produccion",
+   "_append_limitaciones": " Solo IPRESS privadas que facturan ≥20 UIT."
+  }
+ },
+ {
+  "id": "SUSALUD-ENSUSALUD",
+  "hallazgos": [
+   "INF-11"
+  ],
+  "validacion": "auditor",
+  "evidencia": "ficha ENSUSALUD 2016",
+  "cambios": {
+   "nivel_territorial_inferencia": "nacional",
+   "serie_activa": false
+  }
+ },
+ {
+  "id": "PRONIED-INTERVENCIONES",
+  "hallazgos": [
+   "EXA-B-11"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/",
+  "cambios": {
+   "llaves_cruce": [
+    "cui_inversion"
+   ],
+   "cobertura_temporal": "cortes 2024-09 a 2026-02",
+   "anio_inicio": 2024,
+   "anio_fin": 2026,
+   "periodicidad": "irregular (cortes)",
+   "estrategia_descarga": "descarga_directa_url",
+   "base_geografica": "inversion_ubicacion",
+   "tipo_medida": "presupuesto_gasto",
+   "_append_limitaciones": " La ficha solo trae región, provincia y distrito por nombre: ubicar por CUI o normalizar nombres."
+  }
+ },
+ {
+  "id": "PENSION65-USUARIOS",
+  "hallazgos": [
+   "EXA-B-12"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/informaci%C3%B3n-de-usuarios-del-programa-pensi%C3%B3n-65",
+  "cambios": {
+   "url_datos": "https://www.datosabiertos.gob.pe/dataset/informaci%C3%B3n-de-usuarios-del-programa-pensi%C3%B3n-65",
+   "cobertura_temporal": "2023-06 – 2025-12",
+   "anio_inicio": 2023,
+   "anio_fin": 2025,
+   "periodicidad": "bimestral",
+   "base_geografica": "residencia",
+   "tipo_medida": "cobertura_programa"
+  }
+ },
+ {
+  "id": "PAIS-TAMBOS-ATENCIONES",
+  "hallazgos": [
+   "EXA-B-13"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/",
+  "cambios": {
+   "cobertura_temporal": "~2020–2026 (trimestral; un dataset por trimestre)",
+   "anio_inicio": 2020,
+   "anio_fin": 2026,
+   "licencia": "no-especificada",
+   "permite_redistribucion": null,
+   "base_geografica": "establecimiento",
+   "tipo_medida": "cobertura_programa",
+   "_append_detalle_descarga": " Listar los datasets del publicador PNPAIS en vez de fijar un slug con sufijo numérico."
+  }
+ },
+ {
+  "id": "CUNAMAS-USUARIOS",
+  "hallazgos": [
+   "EXA-B-14"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/",
+  "cambios": {
+   "licencia": "no-especificada",
+   "permite_redistribucion": null,
+   "formatos": [
+    "TXT"
+   ],
+   "nivel_territorial_disponible": "centro_poblado",
+   "llaves_cruce": [
+    "ubigeo_inei",
+    "codigo_centro_poblado"
+   ],
+   "cobertura_temporal": "hasta 2023-III confirmado",
+   "anio_fin": 2023,
+   "base_geografica": "residencia",
+   "tipo_medida": "cobertura_programa"
+  }
+ },
+ {
+  "id": "WASIMIKUNA-IIEE",
+  "hallazgos": [
+   "EXA-B-15"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.gob.pe/wasimikuna",
+  "cambios": {
+   "base_geografica": "establecimiento",
+   "tipo_medida": "cobertura_programa",
+   "serie_activa": null,
+   "_append_notas": " Wasi Mikuna reemplazó a Qali Warma (dic-2024); el DS 006-2025-MIDIS declaró la emergencia del servicio. El enlace de datos es un listado de 2021: fijar los slugs por año tras verificarlos."
+  }
+ },
+ {
+  "id": "JUNTOS-HOGARES-UBIGEO",
+  "hallazgos": [
+   "EXA-B-19"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "base_geografica": "residencia",
+   "tipo_medida": "cobertura_programa"
+  }
+ },
+ {
+  "id": "FONCODES-PROYECTOS",
+  "hallazgos": [
+   "EXA-B-21"
+  ],
+  "validacion": "auditor",
+  "evidencia": "slug redirige a login",
+  "cambios": {
+   "url_datos": null,
+   "base_geografica": "inversion_ubicacion",
+   "tipo_medida": "cobertura_programa"
+  }
+ },
+ {
+  "id": "MINEDU-CENSO-EDUCATIVO",
+  "hallazgos": [
+   "EXA-B-16",
+   "COB-11"
+  ],
+  "validacion": "investigacion",
+  "evidencia": "https://escale.minedu.gob.pe/documents/inicio/Bases de datos/A. Censo Educativo/2025/",
+  "cambios": {
+   "url_datos": null,
+   "anio_fin": 2025,
+   "serie_activa": true,
+   "base_geografica": "establecimiento",
+   "tipo_medida": "stock_infraestructura"
+  }
+ },
+ {
+  "id": "MINSA-CNV-NACIDOS-VIVOS",
+  "hallazgos": [
+   "EXA-B-17"
+  ],
+  "validacion": "auditor",
+  "evidencia": "https://www.datosabiertos.gob.pe/",
+  "cambios": {
+   "url_datos": "https://www.datosabiertos.gob.pe/sites/default/files/CNV_MINSA_CORTE_30112025.csv",
+   "fecha_ultimo_dato": "2025-11-30",
+   "base_geografica": "establecimiento",
+   "tipo_medida": "registro_eventos",
+   "_append_detalle_descarga": " El nombre del CSV cambia con cada corte: leerlo de la ficha."
+  }
+ },
+ {
+  "id": "MINEDU-SIAGIE-DATOS-ABIERTOS",
+  "hallazgos": [
+   "A-07"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "base_geografica": "establecimiento",
+   "tipo_medida": "cobertura_programa"
+  }
+ },
+ {
+  "id": "MINEDU-UMC-ECE",
+  "hallazgos": [
+   "INF-09",
+   "INF-20"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "base_geografica": "establecimiento",
+   "tipo_medida": "prevalencia",
+   "serie_activa": false,
+   "_append_limitaciones": " Censal hasta 2019. En IE con pocos evaluados (unidocentes, multigrado), suprimir resultados con <10 estudiantes."
+  }
+ },
+ {
+  "id": "MINEDU-UMC-ENLA",
+  "hallazgos": [
+   "A-07"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "base_geografica": "muestra"
+  }
+ },
+ {
+  "id": "SUNASS-AREA-PRESTACION",
+  "hallazgos": [
+   "INT-04"
+  ],
+  "validacion": "auditor",
+  "evidencia": "misma URL que SUNASS-ADP",
+  "cambios": {
+   "id_ruta_principal": "SUNASS-ADP"
+  }
+ },
+ {
+  "id": "CEPLAN-INFO-DEPARTAMENTAL-BRECHAS",
+  "hallazgos": [
+   "INT-04"
+  ],
+  "validacion": "auditor",
+  "evidencia": "mismo url_portal",
+  "cambios": {
+   "id_ruta_principal": "CEPLAN-BRECHAS-TERRITORIALES"
+  }
+ },
+ {
+  "id": "MEF-PPR-PROGRAMAS-PRESUPUESTALES",
+  "hallazgos": [
+   "COB-10",
+   "EMB-03"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "base_geografica": "no_aplica",
+   "tipo_medida": "padron_referencia",
+   "anio_fin": 2026,
+   "_append_notas": " Incluye la estructura programada para 2027 (presupuesto aprobado, no ejecutado)."
+  }
+ },
+ {
+  "id": "MINSA-INMUNIZACIONES",
+  "hallazgos": [
+   "COB-01",
+   "EMB-07"
+  ],
+  "validacion": "regla",
+  "evidencia": "—",
+  "cambios": {
+   "base_geografica": "establecimiento",
+   "tipo_medida": "cobertura_programa",
+   "anio_fin": 2026,
+   "serie_activa": true
+  }
+ },
+ {
+  "id": "PNDA-UBIGEO-EQUIVALENCIAS",
+  "hallazgos": [
+   "INF-06",
+   "INT-05"
+  ],
+  "validacion": "fuente",
+  "evidencia": "Búsqueda \"códigos equivalentes\" en la PNDA sin resultados (5/10/2026)",
+  "cambios": {
+   "entidad": "No confirmada",
+   "id_ruta_principal": "GITHUB-UBIGEO-PERU-AUMENTADO"
+  }
+ },
+ {
+  "id": "RENIEC-POBLACION-IDENTIFICADA",
+  "hallazgos": [
+   "INF-14",
+   "EMB-14"
+  ],
+  "validacion": "fuente",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/reniec-poblaci%C3%B3n-identificada-con-dni-registro-nacional-de-identificaci%C3%B3n-y-estado-civil",
+  "cambios": {
+   "base_geografica": "residencia",
+   "tipo_medida": "padron_referencia",
+   "_append_limitaciones": " Mide población con DNI según domicilio declarado, no población residente: subcuenta a menores sin DNI y extranjeros. Usar como contraste, no como denominador principal."
+  }
+ },
+ {
+  "id": "GITHUB-UBIGEO-PERU-AUMENTADO",
+  "hallazgos": [
+   "PR-20",
+   "PR-26"
+  ],
+  "validacion": "orquestador",
+  "evidencia": "Revisión de ubigeo_distrito.csv (fase 2); Ley 31644 (El Peruano, 15-12-2022)",
+  "cambios": {
+   "_append_limitaciones": " Solo 111 códigos son idénticos en INEI y RENIEC y 997 existen en ambos sistemas pero apuntan a distritos distintos: nunca unir por código sin indicar el sistema. Filas a corregir: 150144 Huachipa (centro poblado, no distrito), San Antonio (Moquegua, Ley 31216) sin código INEI, códigos antiguos duplicados 160109/160114. Falta Alto Trujillo (Ley 31644, 2022)."
+  }
+ },
+ {
+  "id": "INEI-CPV2025",
+  "hallazgos": [
+   "PR-24"
+  ],
+  "validacion": "orquestador",
+  "evidencia": "Primeros resultados INEI 29-05-2026 (prensa); sin publicación distrital confirmada",
+  "cambios": {
+   "_append_notas": " Para denominadores: sus grandes grupos de edad (0–14, 15–59, 60+) solo sirven de contraste para totales y 60+; no para < 1 año, < 5 años ni 65+."
+  }
+ },
+ {
+  "id": "INEI-CPV2025",
+  "hallazgos": [
+   "HEC-02"
+  ],
+  "validacion": "orquestador",
+  "evidencia": "https://canaln.pe/actualidad/inei-san-juan-lurigancho-sigue-siendo-distrito-mas-poblado-peru-n493360 ; https://andina.pe/agencia/noticia-poblacion-total-del-peru-se-eleva-a-34-millones-157-mil-732-habitantes-informa-inei-1077241.aspx",
+  "cambios": {
+   "tipo_medida": "padron_referencia",
+   "limitaciones": "Publicado: 29-05-2026 primeros resultados (nacional y departamental; población total con omisión 34 157 732; censada 32 706 028; omisión 4,25 %). 10-07-2026: población censada por provincia y distrito (sexo y grandes grupos de edad 0–14/15–59/60+) en tablero en línea y PDF de presentación (con grupos quinquenales). No publicados al 05-10-2026: REDATAM, microdatos, Excel, edad simple o quinquenal por distrito, omisión subnacional, proyecciones base 2025. Cambio de modalidad (censo de derecho con tablet) frente al censo de hecho 2017.",
+   "_append_notas": " Corrección HEC-02: la nota PR-24 (\"sin resultados distritales\") era errónea; el INEI publicó la población censada distrital en julio de 2026. Para denominadores: población censada ≠ población total (falta la omisión); como contraste solo total y 60+, ajustado por omisión."
+  }
+ },
+ {
+  "id": "GITHUB-UBIGEO-PERU-AUMENTADO",
+  "hallazgos": [
+   "HEC-10"
+  ],
+  "validacion": "orquestador",
+  "evidencia": "Ley 32403 (El Peruano, 3-07-2025)",
+  "cambios": {
+   "_append_limitaciones": " Falta también Santa Rosa de Loreto (Ley 32403, 2025, segregado de Yavarí), el distrito 1 892."
+  }
+ },
+ {
+  "id": "MINEDU-UMC-ENLA",
+  "hallazgos": [
+   "HEC-06"
+  ],
+  "validacion": "orquestador",
+  "evidencia": "https://larepublica.pe/sociedad/2025/04/14/minedu-revela-que-solo-3-de-cada-10-escolares-de-cuarto-de-primaria-entiende-lo-que-lee-brecha-se-intensifica-en-regiones-amazonicas-746998",
+  "cambios": {
+   "_append_limitaciones": " ENLA 2024 de 4.º de primaria fue censal (más de 532 mil estudiantes en más de 18 mil IIEE), con resultados por región, UGEL e IE; 6.º de primaria muestral; ENLA 2022–2023 muestrales. Registrar tipo_aplicacion por año y grado."
+  }
+ },
+ {
+  "id": "MINSA-SINADEF",
+  "hallazgos": [
+   "HEC-09"
+  ],
+  "validacion": "auditor",
+  "evidencia": "An Fac Med 2022 (cobertura con certificación médica 71,6 % en 2019); Vargas-Herrera 2018",
+  "cambios": {
+   "anios_con_quiebre": "2017–2020: cobertura creciente por el certificado en línea (29 % en 2017 → 86 % en 2020); 2020–2021: exceso de mortalidad COVID-19",
+   "_append_limitaciones": " El \"~49 %\" de 2018 era la proporción de certificados en línea, no la cobertura del registro."
+  }
+ },
+ {
+  "id": "INEI-IPC",
+  "hallazgos": [
+   "R-DEP-01 (alcance del piloto, 8/10/2026)"
+  ],
+  "validacion": "regla",
+  "evidencia": "curados/insumos.lock.yaml (BCRP-IPC-LIMA)",
+  "cambios": {
+   "id_ruta_principal": "BCRP-IPC-LIMA",
+   "_append_notas": " La serie se toma de BCRP-IPC-LIMA (PN38705PM), que es la que usa dim_ipc."
+  }
+ },
+ {
+  "id": "MEF-PPR-PROGRAMAS-PRESUPUESTALES",
+  "hallazgos": [
+   "R-DEP-01 (alcance del piloto, 8/10/2026)"
+  ],
+  "validacion": "regla",
+  "evidencia": "curados/insumos.lock.yaml (sin MEF-PPR); docs/decisiones.md (8/10/2026: sale de los insumos bloqueantes)",
+  "cambios": {
+   "_append_notas": " No lo usa la capa 0: dim_tema_gasto sale de PROGRAMA_PPTO del gasto MEF más una tabla curada. Ya no es insumo bloqueante de R-DEP-01 (decisión del 8/10/2026); no descargar."
+  }
+ },
+ {
+  "id": "INEI-ENAHO",
+  "hallazgos": [
+   "R-ENC-08 (inferencia_verificada, 8/10/2026)"
+  ],
+  "validacion": "fuente",
+  "evidencia": "Fichas técnicas ENAHO 2015–2025, §VII/§IX «Niveles de inferencia» (catalogo/inferencia_verificada.csv)",
+  "cambios": {
+   "_append_limitaciones": " Según la ficha técnica (§ Niveles de inferencia), los dominios anuales son 24 departamentos (cada uno dominio de estudio) y el Área Metropolitana de Lima y Callao: el Callao no es un dominio propio. Ver catalogo/inferencia_verificada.csv."
+  }
+ }
+]

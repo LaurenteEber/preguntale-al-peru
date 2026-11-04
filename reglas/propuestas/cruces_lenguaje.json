@@ -1,0 +1,1454 @@
+{
+ "ambito": "cruces y lenguaje",
+ "reglas": [
+  {
+   "id": "R-CRUCES-01",
+   "ambito": "cruces",
+   "titulo": "Un cruce se calcula al nivel válido más grueso de sus fuentes",
+   "enunciado": "Todo cruce o comparación entre dos o más indicadores debe calcularse y mostrarse en el nivel territorial válido más grueso entre sus componentes; nunca en el más fino. Si el usuario pidió un nivel más fino, se responde al nivel común y se explica por qué.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral",
+     "estimacion_modelada",
+     "registro_administrativo",
+     "presupuestal_financiero",
+     "censo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "nivel_cruce = max_grueso(nivel_valido(c) for c in componentes); nivel_valido(c) = nivel_territorial_inferencia si naturaleza_dato in (encuesta_muestral, estimacion_modelada); si no, el nivel resultante de las reglas de registros/gasto/territorio (p. ej., gasto con base_geografica=ejecutora solo vale en distrito si NIVEL_GOBIERNO='M' o ubicado por CUI). Si nivel_pedido < nivel_cruce → accion agregar_nivel.",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "orden_niveles": "manzana_conglomerado(0) < centro_poblado(1) < distrito(2) < provincia(3) < dominio(4) < departamento(4) < nacional(6)",
+    "dominios_lima": "Lima Metropolitana (dominio) + Lima Región se fusionan en 'Lima (departamento 15)' cuando algún componente no distingue los dominios (p. ej., DEPARTAMENTO_META del MEF)"
+   },
+   "mensaje_usuario": "Mostramos esta comparación por {nivel_cruce} y no por {nivel_pedido} porque {fuente_limitante} solo es confiable hasta ese nivel.",
+   "justificacion": "Cruzar una cifra distrital con una encuesta que solo representa al departamento atribuye al distrito un valor que no le corresponde. INEI declara la ENAHO/ENDES representativas por departamento; el MEF solo ubica la meta por departamento. El nivel común más grueso es la única base en la que ambos lados son válidos (C-01, C-02).",
+   "referencias": [
+    {
+     "titulo": "INEI – Evolución de la pobreza monetaria, cap. 3: grupos de departamentos con niveles de pobreza estadísticamente semejantes",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1699/cap03.pdf"
+    },
+    {
+     "titulo": "The DHS Program – Guide to DHS Statistics (DHS-7)",
+     "url": "https://dhsprogram.com/data/Guide-to-DHS-Statistics/Purpose_of_the_Guide.htm"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-04",
+    "C-01",
+    "C-02"
+   ],
+   "ejemplo": "'¿Cuánto se gasta en anemia y cuánta anemia hay en la provincia de Azángaro?': INEI-ENDES válida a departamento; MEF-DA-PRESUPUESTO-EJECUCION-GASTO del PP/PPoR atribuible a departamento por DEPARTAMENTO_META → el cruce se muestra para el departamento de Puno, con nota. A nivel provincia solo se puede mostrar el gasto municipal de Azángaro (aparte, sin cruce).",
+   "implementacion": "Tabla NIVEL_RANK. Para cada componente el validador de su ámbito devuelve nivel_valido. nivel_cruce = argmax(NIVEL_RANK[nivel_valido]). Re-agregar cada componente a nivel_cruce con su método propio (encuestas: re-estimar con diseño; registros: sumar numeradores y denominadores; gasto: sumar devengado por DEPARTAMENTO_META). Nunca promediar valores distritales. Guardar resultado.nivel_cruce y resultado.motivo_nivel.",
+   "casos_borde": "(1) Dominio vs departamento: ENAHO separa Lima Metropolitana y Lima Región; si el otro componente no distingue, ambos pasan a Lima (15) re-estimando la encuesta para el departamento completo. (2) Callao siempre aparte. (3) Si nivel_cruce = nacional, no hay cruce territorial: solo series lado a lado. (4) Distritos creados después de 2017: usar la tabla de ubigeo histórico (ámbito territorio) antes de agregar.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-02",
+   "ambito": "cruces",
+   "titulo": "Cruces bloqueados",
+   "enunciado": "El validador debe bloquear los cruces de la lista B1–B9, aunque las fuentes compartan llaves (ubigeo, CUI, código modular). Un cruce bloqueado no se calcula ni se menciona como cifra; se explica por qué no se puede.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [
+     "ejecutora",
+     "establecimiento",
+     "muestra",
+     "meta_departamento"
+    ],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA",
+     "MEF-DA-TRANSFERENCIAS",
+     "MEF-DA-GASTO-DEVENGADO-MENSUAL",
+     "MEF-SEGUIMIENTO-PI",
+     "MEF-OXI-BASE",
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-MAPA-POBREZA",
+     "INS-CENAN-SIEN",
+     "RENIEC-POBLACION-IDENTIFICADA"
+    ]
+   },
+   "condicion": "B1: componente.base_geografica='ejecutora' AND nivel_cruce in (distrito, provincia) AND NOT (NIVEL_GOBIERNO='M' OR ubicado_por_cui) | B2: componente.naturaleza_dato='encuesta_muestral' AND NIVEL_RANK[nivel_cruce] < NIVEL_RANK[nivel_territorial_inferencia] | B3: INEI-MAPA-POBREZA combinado con INEI-ENAHO de otro año en resta, tendencia o 'actualización'; o con cualquier dato de anio >= 2020 en una asociación | B4: INS-CENAN-SIEN restado, promediado o sumado con INEI-ENDES, o usado con rótulo de prevalencia | B5: suma de MEF-DA-TRANSFERENCIAS con gasto del receptor, o de MEF-DA-GASTO-DEVENGADO-MENSUAL con MEF-DA-PRESUPUESTO-EJECUCION-GASTO, o de MEF-SEGUIMIENTO-PI/MEF-OXI-BASE con la genérica 2.6 | B6: cociente gasto / cambio de resultado ('soles por punto de anemia reducido') | B7: numerador con base_geografica='establecimiento' dividido por población residente a nivel distrito | B8: RENIEC-POBLACION-IDENTIFICADA como denominador de población residente | B9: algún componente con semaforo_cifra in ('rojo','no_publicable')",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "lista_bloqueos": [
+     "B1",
+     "B2",
+     "B3",
+     "B4",
+     "B5",
+     "B6",
+     "B7",
+     "B8",
+     "B9"
+    ],
+    "B7_nivel_minimo_permitido": "provincia (con rótulo 'atenciones por habitante, incluye a quienes vienen de otros distritos')"
+   },
+   "mensaje_usuario": "No podemos combinar estas dos cifras para {territorio}: {motivo_bloqueo_ciudadano}. Te mostramos cada una por separado{y_alternativa}.",
+   "justificacion": "Cada bloqueo corresponde a un error documentado por la auditoría: gasto del Gobierno Nacional cargado a Lima o a la capital regional (C-01), encuestas por debajo del dominio (INF-03/INF-04), Mapa de Pobreza 2018 tratado como actual (C-03), tamizados tratados como prevalencia, doble conteo de transferencias (INF-21). B6 es una afirmación de costo-efectividad que exige diseño de evaluación (Gertler et al.).",
+   "referencias": [
+    {
+     "titulo": "Gertler, Martínez, Premand, Rawlings y Vermeersch – La evaluación de impacto en la práctica, 2.ª ed. (BID / Banco Mundial)",
+     "url": "https://publications.iadb.org/es/la-evaluacion-de-impacto-en-la-practica-segunda-edicion"
+    },
+    {
+     "titulo": "Robinson, W. S. (1950). Ecological Correlations and the Behavior of Individuals. American Sociological Review 15(3)",
+     "url": "https://www.stats.uwo.ca/faculty/aim/2015/9938/articles/Robinson1950AmericanSociologicalReview.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "C-01",
+    "C-02",
+    "C-03",
+    "INF-02",
+    "INF-04",
+    "INF-21"
+   ],
+   "ejemplo": "'Gasto en salud por habitante y anemia por distrito en Cusco': el gasto de la DIRESA y de las redes (base ejecutora, nivel R) cae en el distrito sede → B1; ENDES distrital → B2. Se responde por departamento (R-CRUCES-01) y, a distrito, solo el gasto municipal en salud, sin cruce.",
+   "implementacion": "Función es_bloqueado(cruce) -> (bool, codigo, motivo). Evaluar antes de calcular. Los motivos ciudadanos se guardan en un diccionario codigo→texto (p. ej., B1: 'el gasto de los ministerios y gobiernos regionales se registra donde está la oficina que paga, no donde se gasta'). Registrar en el log el intento bloqueado (sirve para priorizar fuentes).",
+   "casos_borde": "(1) Gasto con DEPARTAMENTO_META a nivel departamento: permitido. (2) Inversiones multi-distrito por CUI: solo si la regla de gasto reparte o asigna; si no, B1. (3) SIEN junto a ENDES en la misma respuesta está permitido como cifras separadas (R-CRUCES-08); lo bloqueado es operar entre ellas. (4) B9 no impide mostrar el componente rojo como contexto aislado.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-03",
+   "ambito": "cruces",
+   "titulo": "Alineación de años entre fuentes de un cruce",
+   "enunciado": "Los componentes de un cruce deben referirse al mismo año o a años cercanos dentro de una ventana máxima según la velocidad de cambio del indicador; fuera de la ventana el cruce se bloquea. Si los años difieren, cada cifra se muestra con su año.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "dist = |anio_ref(a) - anio_ref(b)|, con anio_ref = año central si hay agrupación de años. Si ambos velocidad_cambio='rapida' (gasto, atenciones, notificación, coberturas, prevalencias anuales): dist <= 1 → publicar (dist=1 → rotular). Si alguno velocidad_cambio='lenta' (censo, stock_infraestructura, estimacion_modelada estructural): dist <= 3 → rotular. Además, si algún año de anios_choque cae en el intervalo abierto (min(anio), max(anio)] y algún componente es socioeconómico → bloquear_cruce. Si dist supera la ventana → bloquear_cruce.",
+   "accion": "rotular",
+   "parametros": {
+    "ventana_rapida_anios": 1,
+    "ventana_lenta_anios": 3,
+    "rezago_declarado_max_anios": 2,
+    "anios_choque": [
+     2020,
+     2021
+    ]
+   },
+   "mensaje_usuario": "Las cifras son de años distintos ({anio_a} y {anio_b}); la comparación es aproximada.",
+   "justificacion": "Combinar un resultado de un año con un gasto de otro año distinto mezcla situaciones diferentes; el caso extremo es el Mapa de Pobreza 2018 frente a datos posteriores al choque de 2020 (la pobreza nacional pasó de 20,2 % a 30,1 %). Los rezagos (gasto t, resultado t+1) solo se aceptan si están declarados en la lista blanca de cruces (R-CRUCES-11).",
+   "referencias": [
+    {
+     "titulo": "INEI – Evolución de la pobreza monetaria, cap. 3: grupos de departamentos con niveles de pobreza estadísticamente semejantes",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1699/cap03.pdf"
+    },
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating quality, uncertainty and change",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-02",
+    "C-03",
+    "INF-16"
+   ],
+   "ejemplo": "Gasto PP 1001 (MEF-DA-PRESUPUESTO-EJECUCION-GASTO 2025) con anemia INEI-ENDES 2025 por departamento: dist=0 → publicar. Pobreza distrital INEI-MAPA-POBREZA 2018 con gasto municipal 2025: dist=7 y cruza 2020 → bloquear. INEI-MAPA-DCI-PROVINCIAL-2019 con gasto 2022: dist=3, lenta, pero cruza 2020–2021 → bloquear.",
+   "implementacion": "Campo nuevo indicador.velocidad_cambio ('rapida'|'lenta'). anio_ref por componente desde resultado.periodo. Parámetro global anios_choque. Pseudocódigo: v = 3 if 'lenta' in velocidades else 1; if rezago_declarado: dist -= rezago; if dist > v: bloquear; elif any(a in anios_choque for a in range(min+1, max+1)) and socioeconomico: bloquear; elif dist>0: rotular.",
+   "casos_borde": "(1) Agrupación de años (pooling 2023–2025) vs año único 2024: usar año central 2024. (2) Población proyectada del mismo año siempre disponible: no cuenta para la ventana. (3) Indicadores no socioeconómicos (infraestructura escolar) no se bloquean por anios_choque. (4) El año en curso (parcial) se rotula 'avance a {mes}' y no se cruza con anuales cerrados.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-04",
+   "ambito": "cruces",
+   "titulo": "Quiebres metodológicos en comparaciones y series",
+   "enunciado": "No se debe declarar un cambio entre dos años si entre ellos hay un quiebre registrado en anios_con_quiebre del catálogo; la serie se muestra cortada en el quiebre y, si la fuente publica ambos criterios, se usa el mismo criterio en ambos años.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral",
+     "registro_administrativo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-ENDES",
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS",
+     "INEI-ENAHO",
+     "INEI-ENAPRES",
+     "MEF-PPR-PROGRAMAS-PRESUPUESTALES",
+     "MINEDU-CENSO-EDUCATIVO"
+    ]
+   },
+   "condicion": "exists q in parse(anios_con_quiebre) tal que anio_inicio_comparacion < q <= anio_fin_comparacion AND NOT misma_definicion(anio_inicio, anio_fin)",
+   "accion": "advertir",
+   "parametros": {
+    "quiebres_conocidos": {
+     "anemia (ENDES, SIEN, REUNIS)": 2024,
+     "ENAHO/ENDES modalidad telefónica": 2020,
+     "PP 0001 → PPoR 1001": 2023,
+     "matrícula Censo Educativo desde SIAGIE": 2019
+    }
+   },
+   "mensaje_usuario": "En {anio_quiebre} cambió la forma de medir {indicador} ({motivo}); por eso no comparamos {anio_a} con {anio_b} directamente.",
+   "justificacion": "Un cambio de definición (p. ej., nuevo punto de corte de anemia por altitud, OMS 2024 / RM 251-2024-MINSA) produce variaciones que no son reales. INEI publicó la anemia ENDES 2024 con dos criterios precisamente para permitir comparar con el mismo criterio.",
+   "referencias": [
+    {
+     "titulo": "INEI – ENDES 2024: Indicadores de resultados de los programas presupuestales",
+     "url": "https://proyectos.inei.gob.pe/endes/2024/ppr2/indicadores_de_resultados_de_los_programas_presupuestales_endes_2024.pdf"
+    },
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating quality, uncertainty and change",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-16",
+    "C-02"
+   ],
+   "ejemplo": "Anemia en Puno 2023 vs 2025 (INEI-ENDES): si el motor dispone del criterio anterior para 2025, compara con ese criterio; si no, la serie se corta en 2024 y no se usa 'aumentó/disminuyó'. Gasto del PP 0001 2022 vs PPoR 1001 2024: no se presenta como serie continua.",
+   "implementacion": "Campo nuevo indicador.criterio_medicion con versión por año (p. ej., 'anemia_oms2001', 'anemia_oms2024'). misma_definicion = criterio igual en ambos años. Si hay quiebre pero existe versión homologada → usarla y rotular. En gráficos de serie, cortar la línea en el año de quiebre.",
+   "casos_borde": "2020 en encuestas: no es cambio de definición sino de modalidad; se permite comparar pero el semáforo de la comparación sube a ámbar (R-CRUCES-09). Re-ponderación de factores ENAHO con el Censo 2025 (INF-18): toda la serie se recalcula con la nueva versión; no mezclar versiones.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-05",
+   "ambito": "cruces",
+   "titulo": "Unidades comparables: población objetivo, universo y base geográfica",
+   "enunciado": "Dos indicadores solo se cruzan si su población objetivo, su universo (todo el país, solo sector público, solo asegurados SIS, solo áreas de intervención) y su base geográfica son compatibles según la matriz de compatibilidad; si son distintos pero compatibles, la diferencia se rotula.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [
+     "residencia",
+     "establecimiento",
+     "ejecutora",
+     "meta_departamento",
+     "inversion_ubicacion",
+     "muestra",
+     "territorio"
+    ],
+    "fuentes": []
+   },
+   "condicion": "compat_base[base_geografica(a)][base_geografica(b)][nivel_cruce] in ('ok','rotular','bloquear') AND compat_poblacion = poblacion_objetivo(a) ⊆≈ poblacion_objetivo(b) (mismo rango de edad ±1 año de edad, mismo sexo, misma área) AND universo(a) compatible universo(b)",
+   "accion": "rotular",
+   "parametros": {
+    "compat_base_distrito": {
+     "residencia×residencia": "ok",
+     "residencia×establecimiento": "rotular (provincia o más) / bloquear (distrito)",
+     "residencia×ejecutora": "bloquear salvo NIVEL_GOBIERNO=M o CUI",
+     "residencia×meta_departamento": "ok solo a departamento",
+     "muestra×cualquiera": "según nivel_territorial_inferencia"
+    },
+    "tolerancia_edad_anios": 1
+   },
+   "mensaje_usuario": "Ojo: {indicador_a} se refiere a {poblacion_a} y {indicador_b} a {poblacion_b}; no son exactamente el mismo grupo.",
+   "justificacion": "Comparar gasto destinado a niños menores de 3 años con una población total, o atenciones registradas en el establecimiento (que atiende a vecinos de otros distritos) con residentes, produce tasas sin sentido. La base geográfica (esquema v2) existe precisamente para detectar esto (C-01).",
+   "referencias": [
+    {
+     "titulo": "UK Statistics Authority – Code of Practice for Statistics, Q3 Assured Quality",
+     "url": "https://code.statisticsauthority.gov.uk/quality/q3-assured-quality"
+    },
+    {
+     "titulo": "Robinson, W. S. (1950). Ecological Correlations and the Behavior of Individuals. American Sociological Review 15(3)",
+     "url": "https://www.stats.uwo.ca/faculty/aim/2015/9938/articles/Robinson1950AmericanSociologicalReview.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "C-01",
+    "INF-04"
+   ],
+   "ejemplo": "Gasto per cápita del PPoR 1001 (MEF-DA-PRESUPUESTO-EJECUCION-GASTO) por departamento: denominador = niños de 0–5 años (INEI-PROYECCIONES-DEPARTAMENTAL-EDAD), no población total. SIS-ATENCIONES (establecimiento) por habitante a nivel distrito → bloquear (B7); a nivel provincia → rotular.",
+   "implementacion": "Campos nuevos indicador.poblacion_objetivo {edad_min, edad_max, sexo, area} y indicador.universo (enum: total, sector_publico_minsa, asegurados_sis, asegurados_essalud, ambito_intervencion, matricula_publica, ...). Matriz compat_base en configuración. El denominador lo elige la regla de denominadores; aquí solo se verifica coherencia numerador–denominador–contraparte.",
+   "casos_borde": "(1) JUNTOS-HOGARES-UBIGEO solo cubre distritos de intervención: cualquier asociación excluye los demás distritos y lo dice. (2) Población objetivo distinta pero anidada (6–35 meses vs 0–5 años) → rotular, no bloquear. (3) ENAHO 'hogares' vs ENDES 'niños': unidades distintas → rotular.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-06",
+   "ambito": "cruces",
+   "titulo": "Asociación entre territorios: mínimo de territorios, incertidumbre y rótulo ecológico",
+   "enunciado": "Una asociación entre dos indicadores territoriales solo se muestra con al menos 10 territorios válidos, con coeficiente de Spearman y su intervalo al 95 %, y siempre con el rótulo 'asociación entre territorios, no efecto ni relación entre personas'. Con menos de 10 territorios solo se muestran los valores lado a lado.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "N = territorios con ambos valores publicables (semaforo_cifra in ('verde','ambar')) al nivel_cruce. N < 10 → solo tabla/mapa lado a lado, sin coeficiente. 10 <= N < 20 → coeficiente 'referencial' (ámbar). N >= 20 → publicar coeficiente. Si excluidos/(N+excluidos) > 0,20 → sin coeficiente y advertir sesgo de selección. Si IC95(rho) contiene 0 → texto 'no se observa una asociación clara'.",
+   "accion": "rotular",
+   "parametros": {
+    "n_min_coeficiente": 10,
+    "n_min_no_referencial": 20,
+    "max_prop_excluidos": 0.2,
+    "metodo": "Spearman",
+    "ic": "95 % por bootstrap de 2 000 réplicas (MVP: aproximación Fisher z con se=1,06/sqrt(N-3))",
+    "umbrales_fuerza": {
+     "debil": "|rho|<0,30",
+     "moderada": "0,30–0,59",
+     "fuerte": ">=0,60"
+    }
+   },
+   "mensaje_usuario": "Esto compara territorios, no personas: muestra si los lugares con más {a} tienden a tener más o menos {b}. No dice que una cosa cause la otra ni que pase lo mismo dentro de cada hogar. Con otra división territorial el resultado podría cambiar.",
+   "justificacion": "Robinson (1950) mostró que una correlación entre áreas puede diferir en magnitud y signo de la correlación individual (falacia ecológica); el MAUP implica que el resultado depende del nivel y la zonificación. Con pocas unidades el coeficiente es muy inestable. OSR/GSS piden mostrar la incertidumbre junto al hallazgo.",
+   "referencias": [
+    {
+     "titulo": "Robinson, W. S. (1950). Ecological Correlations and the Behavior of Individuals. American Sociological Review 15(3)",
+     "url": "https://www.stats.uwo.ca/faculty/aim/2015/9938/articles/Robinson1950AmericanSociologicalReview.pdf"
+    },
+    {
+     "titulo": "Modifiable areal unit problem (síntesis con referencias a Openshaw 1984, CATMOG 38)",
+     "url": "https://en.wikipedia.org/wiki/Modifiable_areal_unit_problem"
+    },
+    {
+     "titulo": "Office for Statistics Regulation (UK) – How to communicate uncertainty in statistics",
+     "url": "https://osr.statisticsauthority.gov.uk/how-to-communicate-uncertainty-in-statistics"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-04",
+    "C-02"
+   ],
+   "ejemplo": "Gasto devengado PPoR 1001 por niño (MEF, por DEPARTAMENTO_META) vs anemia 6–35 meses (INEI-ENDES) en 25 departamentos, 2025: N=25 → rho con IC. Texto: 'Los departamentos con más gasto por niño tienden a tener {más|menos} anemia (asociación {fuerza}; rango probable {ic})'. Si el IC incluye 0: 'no se observa una asociación clara'.",
+   "implementacion": "Calcular en el motor, nunca en el LLM. Spearman no ponderado (cada territorio cuenta igual; decirlo en ficha larga). No dibujar recta de regresión ni extrapolar. No combinar territorios de distinto nivel (MAUP). Guardar resultado_asociacion {N, excluidos, rho, ic_inf, ic_sup, metodo}.",
+   "casos_borde": "(1) Lima Metropolitana como valor atípico: mostrar el rho con y sin Lima si cambia de signo o de categoría de fuerza. (2) Componentes de encuesta con IC amplios: la asociación ignora el error de cada punto → ficha larga lo dice; posterior: modelo con error en variables. (3) Nunca regresiones multivariadas en MVP.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-07",
+   "ambito": "cruces",
+   "titulo": "Preguntas de efecto ('¿sirvió el gasto en X?')",
+   "enunciado": "Cuando la pregunta pide efecto, impacto o eficacia de un programa o gasto, la respuesta debe describir gasto y resultado lado a lado, decir explícitamente que esos datos no permiten saber si el gasto causó el cambio, y derivar a evaluaciones existentes; no debe afirmar ni negar el efecto.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto",
+     "cobertura_programa"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA",
+     "MEF-PPR-EVALUACIONES-INDEPENDIENTES",
+     "JUNTOS-HOGARES-UBIGEO",
+     "PENSION65-USUARIOS",
+     "CUNAMAS-USUARIOS"
+    ]
+   },
+   "condicion": "intencion_pregunta == 'efecto' (clasificador del LLM intérprete; disparadores: sirvió, funcionó, impacto, efecto, eficaz, resultado de, gracias a, valió la pena, logró, redujo + programa/gasto)",
+   "accion": "rotular",
+   "parametros": {
+    "estructura_respuesta": [
+     "1. Cuánto se gastó (gasto, años)",
+     "2. Cómo evolucionó el resultado (con prueba de cambio)",
+     "3. Por qué esto no basta para saber si el gasto funcionó (sin grupo de comparación; otros factores)",
+     "4. Evaluaciones existentes (lista curada) o 'no encontramos una evaluación publicada'",
+     "5. Qué haría falta para saberlo"
+    ],
+    "evaluaciones_fuente": "MEF-PPR-EVALUACIONES-INDEPENDIENTES + tabla curada evaluaciones_relacionadas"
+   },
+   "mensaje_usuario": "Saber si un gasto 'sirvió' requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro.",
+   "justificacion": "Atribuir un cambio a una intervención exige un contrafactual (Gertler et al.; criterio de 'impacto' del CAD-OCDE). El MEF ya realiza evaluaciones independientes (EDEP y de impacto) de programas como JUNTOS, SIS, Pensión 65 o Cuna Más, que son la fuente adecuada para esa pregunta.",
+   "referencias": [
+    {
+     "titulo": "Gertler, Martínez, Premand, Rawlings y Vermeersch – La evaluación de impacto en la práctica, 2.ª ed. (BID / Banco Mundial)",
+     "url": "https://publications.iadb.org/es/la-evaluacion-de-impacto-en-la-practica-segunda-edicion"
+    },
+    {
+     "titulo": "OECD DAC – Better Criteria for Better Evaluation: Revised evaluation criteria definitions and principles for use",
+     "url": "https://www.oecd.org/en/publications/better-criteria-for-better-evaluation_15a9c26b-en.html"
+    },
+    {
+     "titulo": "MEF – Las evaluaciones independientes para la mejora del gasto público: Evaluaciones de Diseño y Ejecución Presupuestal (EDEP)",
+     "url": "https://www.mef.gob.pe/contenidos/presu_publ/ppr/eval_indep/EDEP_evaluacion.pdf"
+    },
+    {
+     "titulo": "MEF – Directiva N.º 007-2019-EF/50.01, Directiva para las evaluaciones independientes",
+     "url": "https://mef.gob.pe/contenidos/presu_publ/ppr/Directiva_Evaluaciones_Independientes_007_2019EF5001.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-04",
+    "C-02"
+   ],
+   "ejemplo": "'¿Sirvió el gasto en anemia en Huancavelica?' → gasto PPoR 1001 2022–2025 (MEF), anemia ENDES 2022–2025 con prueba de cambio y corte 2024, texto: 'en el mismo periodo la anemia {se mantuvo sin cambio estadísticamente claro}; estos datos no permiten saber si el gasto influyó'. Enlace a las evaluaciones del MEF del programa articulado nutricional si están en la tabla curada.",
+   "implementacion": "Tabla curada (revisión humana) evaluaciones_relacionadas: {programa_o_pp, titulo, entidad, anio, tipo (EDEP|impacto|procesos), url, resumen_curado (≤60 palabras, escrito por humano)}. El LLM solo puede citar resumen_curado literal; si no existe, solo título + enlace. Sin tabla para el programa → frase fija de 'no encontramos una evaluación publicada en nuestras fuentes'.",
+   "casos_borde": "(1) La evaluación existe pero es de otro periodo o ámbito: citar con su año y ámbito. (2) Preguntas negativas ('¿se desperdició?'): misma estructura; juicios de valor prohibidos (lenguaje). (3) Pregunta mixta (cuánto + si sirvió): responder la parte descriptiva completa y aplicar esta regla a la parte causal.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-08",
+   "ambito": "cruces",
+   "titulo": "Fuentes que miden lo mismo: cuál es la principal y cómo se muestra la diferencia",
+   "enunciado": "Cuando dos o más fuentes miden el mismo concepto, se presenta como principal la de mayor rango en la jerarquía (concepto exacto > válida al nivel pedido > más reciente sin quiebre > estadística oficial INEI), y las demás como complementarias con su propio rótulo; nunca se promedian ni se eligen por conveniencia del resultado.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [
+     "prevalencia",
+     "notificacion_vigilancia",
+     "atenciones_produccion",
+     "estimacion_modelada",
+     "padron_referencia"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-ENDES",
+     "INS-CENAN-SIEN",
+     "MINSA-REUNIS",
+     "INEI-ENAHO",
+     "INEI-MAPA-POBREZA",
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "INEI-CPV2025",
+     "MINSA-POBLACION-ESTIMADA",
+     "RENIEC-POBLACION-IDENTIFICADA"
+    ]
+   },
+   "condicion": "count(fuentes con indicador.concepto_medido == concepto_pedido AND publicable al nivel_pedido o superior) >= 2 → ordenar por (rank_concepto, nivel_valido <= nivel_pedido, anio desc, sin_quiebre, es_inei); principal = primera. Si |valor_principal − valor_secundaria| > umbral_divergencia → mostrar bloque 'Por qué las cifras no coinciden'.",
+   "accion": "rotular",
+   "parametros": {
+    "umbral_divergencia_pp": 5,
+    "umbral_divergencia_poblacion_pct": 5,
+    "jerarquias": {
+     "anemia_infantil": "departamento o más: INEI-ENDES principal, INS-CENAN-SIEN complementaria ('niños tamizados en establecimientos'); provincia/distrito: solo INS-CENAN-SIEN con rótulo de tamizados + ENDES departamental como contexto",
+     "pobreza_monetaria": "departamento: INEI-ENAHO último año; distrito: INEI-MAPA-POBREZA 2018 solo como contexto (rojo), nunca restado de ENAHO",
+     "poblacion": "año 2025: INEI-CPV2025 cuando tenga el desglose requerido; otros años: proyección INEI vigente; MINSA-POBLACION-ESTIMADA solo para edades a distrito; RENIEC nunca como residentes"
+    },
+    "una_vintage_por_respuesta": true
+   },
+   "mensaje_usuario": "Hay dos cifras sobre {concepto} y no coinciden porque miden cosas distintas: {explicacion_corta}. Usamos {principal} como cifra principal porque {razon}.",
+   "justificacion": "ENDES mide prevalencia poblacional con muestra probabilística; SIEN mide a los niños que acudieron y fueron tamizados (sesgo de selección). Proyección y censo difieren por omisión censal y supuestos. Las guías de comunicación de estadística oficial piden explicar las diferencias entre fuentes en vez de ocultarlas o elegir la conveniente.",
+   "referencias": [
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating quality, uncertainty and change",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/"
+    },
+    {
+     "titulo": "UK Statistics Authority – Code of Practice for Statistics, Q3 Assured Quality",
+     "url": "https://code.statisticsauthority.gov.uk/quality/q3-assured-quality"
+    },
+    {
+     "titulo": "INEI – ENDES 2024: Indicadores de resultados de los programas presupuestales",
+     "url": "https://proyectos.inei.gob.pe/endes/2024/ppr2/indicadores_de_resultados_de_los_programas_presupuestales_endes_2024.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-02",
+    "INF-18",
+    "C-03"
+   ],
+   "ejemplo": "Anemia en Ayacucho 2025: principal INEI-ENDES ('se estima alrededor de X %, rango Y–Z'); complementaria INS-CENAN-SIEN ('de los niños tamizados en establecimientos, W % tenía anemia'); si |X−W| > 5 pp, bloque explicativo con tres razones fijas: quién está incluido, cómo se mide, criterio usado. Población distrital 2025: Censo 2025 si la regla de denominadores lo habilita; si la proyección difiere >5 %, nota.",
+   "implementacion": "Campo nuevo indicador.concepto_medido (vocabulario controlado: anemia_6_35m, dci_menor5, pobreza_monetaria, poblacion_total, ...) y indicador.rank_concepto (1 = mide el concepto exacto; 2 = aproximación). Textos explicativos por par de fuentes en tabla explicaciones_divergencia (revisión humana). Mismo criterio de medición (R-CRUCES-04) antes de comparar. Toda la respuesta usa una sola vintage de población (resultado.vintage_poblacion).",
+   "casos_borde": "(1) Fuente principal suprimida por precisión: la secundaria no pasa a ser 'la cifra del concepto'; se muestra con su rótulo y se avisa que la principal no alcanza. (2) Dos años distintos de la misma fuente: principal = el más reciente publicable; el anterior solo en serie con prueba de cambio. (3) Divergencia por cambio de criterio de anemia: se resuelve con R-CRUCES-04, no con este bloque.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-09",
+   "ambito": "cruces",
+   "titulo": "Semáforo de confianza por cifra",
+   "enunciado": "Cada cifra publicada debe llevar un semáforo (verde, ámbar, rojo) calculado por código a partir de los resultados de las reglas de los demás ámbitos, con la lógica de 'el peor criterio manda' y escalamiento por acumulación; las cifras que algún ámbito suprime o bloquea quedan 'no publicables' y no se muestran.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "puntaje_k ∈ {0 ok, 1 cautela, 2 solo_referencia, 3 bloqueo} para cada criterio k (ver parametros.criterios). nivel = max_k(puntaje_k); si count(puntaje_k == 1) >= 3 → nivel = max(nivel, 2). nivel 0 → verde; 1 → ambar; 2 → rojo; 3 → no_publicable.",
+   "accion": "rotular",
+   "parametros": {
+    "criterios": {
+     "precision": "del ámbito encuestas/registros/estimaciones: publicar=0; publicar_referencial=1 (p. ej., 15 %<CV<=30 %, n 25–49, numerador pequeño); suprimir=3",
+     "ancho_ic_modelada": "estimacion_modelada: ancho IC95 <=10 pp → 0; 10–20 pp → 1; >20 pp → 2 (solo intervalo, INF-02)",
+     "vigencia": "edad = anio_actual − anio_dato: <=2 → 0; 3–5 → 1; >5 → 2; si un año de anios_choque cae entre anio_dato y anio_actual y el indicador es socioeconómico → mínimo 1",
+     "tipo_medida_vs_concepto": "rank_concepto=1 → 0; aproximación (tamizados, atenciones, notificación, cobertura usada como necesidad) → 1",
+     "base_geografica": "residencia/muestra/territorio o gasto atribuido según reglas de gasto → 0; establecimiento a provincia o distrito → 1; no atribuible → 3",
+     "quiebre": "cifra única: 0; comparación que cruza año con modalidad distinta (2020) → 1; cruza cambio de definición sin homologar → 3 para la comparación",
+     "subregistro": "fuente con indicador.subregistro_conocido=true (p. ej., SINADEF rural, vigilancia pasiva) → 1",
+     "dato_preliminar": "resultado.preliminar=true → 1"
+    },
+    "escalamiento_acumulacion": 3,
+    "rotulos": {
+     "verde": "Confiable",
+     "ambar": "Usar con cautela",
+     "rojo": "Solo como referencia",
+     "no_publicable": "No disponible con suficiente calidad"
+    }
+   },
+   "mensaje_usuario": "{rotulo_semaforo}: {motivo_principal_ciudadano}",
+   "justificacion": "Los productores oficiales separan cifras confiables y 'referenciales' (INEI marca CV>15 %; DHS pone entre paréntesis 25–49 casos). OSR y GSS piden mensajes de calidad junto a cada dato y en lenguaje simple; la evidencia experimental (van der Bles et al.) indica que comunicar la incertidumbre no reduce de forma importante la confianza en la cifra. Un semáforo con reglas explícitas hace auditable la decisión.",
+   "referencias": [
+    {
+     "titulo": "Office for Statistics Regulation (UK) – Approaches to presenting uncertainty in the statistical system",
+     "url": "https://osr.statisticsauthority.gov.uk/publication/approaches-to-presenting-uncertainty-in-the-statistical-system/"
+    },
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating quality, uncertainty and change",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/"
+    },
+    {
+     "titulo": "van der Bles et al. (2019). Communicating uncertainty about facts, numbers and science. Royal Society Open Science",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6549952"
+    },
+    {
+     "titulo": "The DHS Program – Guide to DHS Statistics (DHS-7)",
+     "url": "https://dhsprogram.com/data/Guide-to-DHS-Statistics/Purpose_of_the_Guide.htm"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-02",
+    "INF-03",
+    "C-02",
+    "C-03"
+   ],
+   "ejemplo": "Pobreza distrital INEI-MAPA-POBREZA 2018 en 2026: vigencia 8 años → 2; además ancho IC 24 pp → 2 → rojo 'Solo como referencia'. Anemia ENDES Puno 2025 con CV 6 % → verde. Proporción de tamizados con anemia SIEN en un distrito 2025 → tipo_medida 1 + base establecimiento 1 → ámbar. Gasto municipal distrital 2025 devengado preliminar → ámbar.",
+   "implementacion": "Cada validador de ámbito devuelve {criterio, puntaje, motivo_codigo}. Función semaforo(cifra) = agregación anterior; guardar resultado.semaforo_cifra y resultado.motivos_semaforo (lista ordenada por puntaje). El motivo_principal_ciudadano es el texto del motivo de mayor puntaje (diccionario fijo).",
+   "casos_borde": "(1) Cifras de padrón (población) usadas como denominador no llevan semáforo propio; su vigencia entra en el criterio de la tasa. (2) Registros sin error muestral pero con subregistro: nunca verde si subregistro_conocido. (3) Totales nacionales de registros completos y recientes → verde aunque el distrital sea ámbar.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-10",
+   "ambito": "cruces",
+   "titulo": "Semáforo por respuesta y por cruce",
+   "enunciado": "Cada respuesta debe llevar un semáforo general igual al peor semáforo de sus cifras principales, elevado a ámbar como mínimo si la respuesta es parcial, se da a un nivel territorial distinto del pedido o incluye un coeficiente de asociación; las cifras de contexto no elevan el semáforo general por encima de ámbar.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "sem_resp = max(semaforo de cifras con es_principal=true); si respuesta_parcial OR nivel_respuesta != nivel_pedido OR incluye_coeficiente_asociacion OR (coeficiente con 10<=N<20) → sem_resp = max(sem_resp, ambar); contexto: contribuye min(semaforo_contexto, ambar). Cruce: sem_cruce = max(sem(a), sem(b), sem_asociacion) con sem_asociacion = ambar si hay coeficiente, verde si solo lado a lado.",
+   "accion": "rotular",
+   "parametros": {
+    "pisos_ambar": [
+     "respuesta_parcial",
+     "nivel_distinto_al_pedido",
+     "coeficiente_asociacion"
+    ],
+    "techo_contexto": "ambar"
+   },
+   "mensaje_usuario": "Confianza de esta respuesta: {rotulo}. {motivo_principal_respuesta}",
+   "justificacion": "El usuario no especialista lee primero un resumen; si el resumen dice 'confiable' cuando la respuesta se dio a otro nivel o solo en parte, el mensaje es engañoso. Las asociaciones entre territorios son siempre inferencia indirecta (falacia ecológica), por lo que nunca alcanzan verde.",
+   "referencias": [
+    {
+     "titulo": "Office for Statistics Regulation (UK) – How to communicate uncertainty in statistics",
+     "url": "https://osr.statisticsauthority.gov.uk/how-to-communicate-uncertainty-in-statistics"
+    },
+    {
+     "titulo": "Robinson, W. S. (1950). Ecological Correlations and the Behavior of Individuals. American Sociological Review 15(3)",
+     "url": "https://www.stats.uwo.ca/faculty/aim/2015/9938/articles/Robinson1950AmericanSociologicalReview.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-04",
+    "C-02"
+   ],
+   "ejemplo": "Pregunta distrital sobre anemia y gasto respondida a departamento con ENDES verde y gasto verde, sin coeficiente → ámbar ('respondimos por departamento'). Pregunta de pobreza distrital con Mapa 2018 como única cifra principal → rojo.",
+   "implementacion": "es_principal se fija según el mapeo pregunta→indicadores del intérprete (indicadores pedidos explícitamente). respuesta.semaforo, respuesta.motivo_principal (código). El rótulo y el motivo se insertan por plantilla, no por el LLM.",
+   "casos_borde": "(1) Respuesta sin ninguna cifra principal publicable → no hay semáforo; se aplica R-LENGUAJE-05. (2) Respuesta solo con cifras de contexto (p. ej., solo nacional por falta de datos): semáforo de la cifra y piso ámbar por nivel distinto.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-CRUCES-11",
+   "ambito": "cruces",
+   "titulo": "Lista blanca de cruces curados",
+   "enunciado": "Solo se calculan los cruces que figuran en la tabla curada cruces_permitidos (par de indicadores, nivel mínimo, ventana y rezago, población objetivo, tipo de presentación); el LLM intérprete no puede crear pares nuevos. Un cruce no listado se responde como dos cifras separadas sin relacionarlas.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "(indicador_a, indicador_b) not in cruces_permitidos → no calcular asociación ni cocientes; mostrar por separado",
+   "accion": "revision_humana",
+   "parametros": {
+    "campos_tabla": [
+     "id_cruce",
+     "indicador_a",
+     "indicador_b",
+     "nivel_minimo",
+     "ventana_anios",
+     "rezago_anios",
+     "presentacion (lado_a_lado|asociacion|cociente)",
+     "poblacion_objetivo_comun",
+     "nota_metodologica",
+     "aprobado_por",
+     "fecha_aprobacion"
+    ],
+    "max_cruces_mvp": 15
+   },
+   "mensaje_usuario": null,
+   "justificacion": "La auditoría recomienda partir de 10–15 preguntas ancla y una matriz pregunta × fuente (EMB-12). Curar los cruces convierte las reglas R-CRUCES-01 a 05 en configuración revisada por una persona, reduce el riesgo de combinaciones engañosas generadas automáticamente y documenta la justificación de cada cruce.",
+   "referencias": [
+    {
+     "titulo": "UK Statistics Authority – Code of Practice for Statistics, Q3 Assured Quality",
+     "url": "https://code.statisticsauthority.gov.uk/quality/q3-assured-quality"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "EMB-12",
+    "INF-04"
+   ],
+   "ejemplo": "Cruce 'X-01': gasto devengado PPoR 1001 por niño de 0–5 años (MEF-DA-PRESUPUESTO-EJECUCION-GASTO / INEI-PROYECCIONES-DEPARTAMENTAL-EDAD) × anemia 6–35 meses (INEI-ENDES); nivel_minimo=departamento; ventana=0; rezago=0 y 1; presentacion=asociacion.",
+   "implementacion": "Tabla versionada en el repositorio; validación automática al cargarla: cada fila debe pasar R-CRUCES-01 a 05 con sus parámetros. Las preguntas que pidan cruces no listados se registran para ampliar la tabla.",
+   "casos_borde": "Un cruce listado puede quedar inhabilitado en un año si un componente falla la compuerta de ingesta o cae en rojo (B9).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-LENGUAJE-01",
+   "ambito": "lenguaje",
+   "titulo": "Ficha de límites obligatoria y generada por plantilla",
+   "enunciado": "Toda respuesta debe publicarse con su ficha de límites (versión corta visible y versión larga desplegable) generada por plantilla a partir de los resultados del validador; el LLM no redacta la ficha ni puede omitir campos obligatorios.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "respuesta.ficha_corta y respuesta.ficha_larga no nulas AND todos los campos obligatorios de ficha_limites presentes para cada cifra principal; si no → no publicar",
+   "accion": "rotular",
+   "parametros": {
+    "ver": "clave ficha_limites",
+    "max_lineas_ficha_corta": 4
+   },
+   "mensaje_usuario": null,
+   "justificacion": "El Código de Práctica del Reino Unido (Q3) y las guías GSS piden que los mensajes de calidad vayan junto a la cifra y no en anexos; OSR recomienda decir explícitamente qué dicen y qué no dicen los datos. Generarla por plantilla evita que el LLM la suavice o la omita.",
+   "referencias": [
+    {
+     "titulo": "UK Statistics Authority – Code of Practice for Statistics, Q3 Assured Quality",
+     "url": "https://code.statisticsauthority.gov.uk/quality/q3-assured-quality"
+    },
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating quality, uncertainty and change",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/"
+    },
+    {
+     "titulo": "Office for Statistics Regulation (UK) – How to communicate uncertainty in statistics",
+     "url": "https://osr.statisticsauthority.gov.uk/how-to-communicate-uncertainty-in-statistics"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "C-02",
+    "C-03"
+   ],
+   "ejemplo": "Ver ficha_limites.ejemplo_relleno.",
+   "implementacion": "render_ficha(respuesta) con los campos del resultado: fuente, anio, nivel_respuesta, motivo_nivel, tipo_medida, precision, quiebres, semaforo, no_concluir (lista de códigos → textos fijos). Test de publicación: respuesta sin ficha válida = error bloqueante.",
+   "casos_borde": "Respuesta de rechazo o 'no hay datos': ficha mínima con motivo y fuentes consultadas.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-LENGUAJE-02",
+   "ambito": "lenguaje",
+   "titulo": "Vocabulario controlado y verificación automática del texto",
+   "enunciado": "El texto del LLM debe usar solo los verbos y fórmulas permitidas según el resultado del validador (cambio significativo o no, tipo de dato, grupo de ranking) y no debe contener expresiones de la lista prohibida; un verificador léxico revisa cada respuesta antes de publicarla.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "lint(texto) encuentra patron in lenguaje.prohibidas (regex, sin distinguir mayúsculas ni tildes) → regenerar con la lista de infracciones; tras 2 intentos fallidos → publicar respuesta por plantilla determinista. Verbos de cambio (aumentó, disminuyó, mejoró, empeoró...) solo si resultado.test_cambio.significativo == true para esa comparación; superlativos/ranking solo si resultado.grupo_ranking existe.",
+   "accion": "revision_humana",
+   "parametros": {
+    "max_regeneraciones": 2,
+    "nivel_significancia": 0.05,
+    "muestreo_revision_humana_pct": 5,
+    "ver": "clave lenguaje"
+   },
+   "mensaje_usuario": null,
+   "justificacion": "Las guías GSS recomiendan 'aumento estadísticamente significativo' o 'en general estable' según la prueba; INEI publica grupos de departamentos estadísticamente semejantes en lugar de rankings puntuales. El lenguaje causal sin diseño de evaluación es el principal riesgo del producto (INF-04).",
+   "referencias": [
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating quality, uncertainty and change",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/"
+    },
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating uncertainty and change: guidance for official statistics producers",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-uncertainty-and-change-guidance-for-official-statistics-producers"
+    },
+    {
+     "titulo": "INEI – Evolución de la pobreza monetaria, cap. 3: grupos de departamentos con niveles de pobreza estadísticamente semejantes",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1699/cap03.pdf"
+    },
+    {
+     "titulo": "Gertler, Martínez, Premand, Rawlings y Vermeersch – La evaluación de impacto en la práctica, 2.ª ed. (BID / Banco Mundial)",
+     "url": "https://publications.iadb.org/es/la-evaluacion-de-impacto-en-la-practica-segunda-edicion"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-04",
+    "INF-16",
+    "C-02"
+   ],
+   "ejemplo": "Texto propuesto: 'Gracias al aumento del gasto, la anemia bajó en Apurímac' → lint detecta 'gracias a' y 'bajó' con test_cambio.significativo=false → regenerado: 'Entre 2023 y 2025 el gasto aumentó; en el mismo periodo la anemia se mantuvo sin cambio estadísticamente claro.'",
+   "implementacion": "Lista de regex en lenguaje.prohibidas con campo 'condicion_excepcion' (p. ej., 'aumentó' permitido si test significativo; 'el mayor' permitido para montos de gasto registrados, que no tienen error muestral). Revisión humana de un 5 % de respuestas publicadas y de todas las que fueron regeneradas 2 veces.",
+   "casos_borde": "(1) Registros administrativos y gasto (sin error muestral): se permite 'aumentó' en montos y conteos, con rótulo de preliminar si aplica; prohibido 'mejoró/empeoró'. (2) Citas textuales de evaluaciones curadas pueden contener lenguaje causal: van entre comillas y atribuidas ('según la evaluación de…').",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-LENGUAJE-03",
+   "ambito": "lenguaje",
+   "titulo": "Cifras por marcador, redondeo y cita",
+   "enunciado": "El LLM no escribe números: inserta marcadores {{c:id_cifra}} que el renderizador sustituye por la cifra redondeada según la tabla de redondeo, con su rango probable cuando corresponda y la cita corta (fuente, año). Ninguna cifra puede aparecer con más decimales de los que permite su precisión.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "regex de dígitos en el texto del LLM fuera de marcadores (salvo años de 4 dígitos y números de programa presupuestal listados) → regenerar; cada marcador debe existir en resultado.cifras_permitidas",
+   "accion": "rotular",
+   "parametros": {
+    "redondeo": "ver lenguaje.redondeo",
+    "formato_numerico": "coma decimal, espacio como separador de miles, '%' precedido de espacio (estilo INEI: 20,2 %)",
+    "cita_corta": "({sigla_fuente} {anio}, {entidad})"
+   },
+   "mensaje_usuario": null,
+   "justificacion": "Refuerza la decisión de que el LLM no calcula cifras y elimina errores de transcripción. Mostrar más dígitos de los que la precisión permite comunica una exactitud falsa (Cole 2015); OSR recomienda palabras como 'alrededor de' y rangos.",
+   "referencias": [
+    {
+     "titulo": "Cole, T. J. (2015). Too many digits: the presentation of numerical data. Archives of Disease in Childhood",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4483789"
+    },
+    {
+     "titulo": "Office for Statistics Regulation (UK) – How to communicate uncertainty in statistics",
+     "url": "https://osr.statisticsauthority.gov.uk/how-to-communicate-uncertainty-in-statistics"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-03",
+    "C-02"
+   ],
+   "ejemplo": "LLM: 'En Cusco se estima que {{c:anemia_cus_2025}} de niños de 6 a 35 meses tiene anemia.' → render: 'alrededor de 47 % (rango probable: 42 % a 52 %) (ENDES 2025, INEI)' si es referencial; con 1 decimal si CV<=15 %.",
+   "implementacion": "Renderizador determinista: formatea según tipo de cifra y semáforo; añade 'alrededor de' a encuestas y estimaciones modeladas, 'aproximadamente' a proyecciones, nada a montos de gasto. Primera mención de cada fuente con cita completa; siguientes solo sigla y año.",
+   "casos_borde": "(1) Porcentajes que no suman 100 por redondeo: nota fija. (2) Diferencias se calculan con valores sin redondear en el motor. (3) Valores < 0,5 % se muestran como 'menos de 1 %'.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-LENGUAJE-04",
+   "ambito": "lenguaje",
+   "titulo": "Cifras antiguas o anteriores a un choque: año en la misma oración y tiempo pasado",
+   "enunciado": "Toda cifra con vigencia mayor a 2 años debe llevar su año en la misma oración y redactarse en pasado ('en 2018 se estimaba'), y si entre su año y el presente hay un año de choque (2020–2021) debe llevar el aviso fijo de desactualización; está prohibido 'actualizarla' con variaciones de otra fuente.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "estimacion_modelada",
+     "censo",
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "estimacion_modelada",
+     "prevalencia"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "INEI-MAPA-POBREZA",
+     "INEI-MAPA-DCI-PROVINCIAL-2019",
+     "INEI-CPV2017"
+    ]
+   },
+   "condicion": "anio_actual - anio_dato > 2 → plantilla_pasado; AND exists a in anios_choque con anio_dato < a <= anio_actual AND indicador socioeconómico → aviso_choque",
+   "accion": "advertir",
+   "parametros": {
+    "vigencia_max_presente_anios": 2,
+    "anios_choque": [
+     2020,
+     2021
+    ]
+   },
+   "mensaje_usuario": "Dato de {anio_dato}, anterior a la pandemia: la situación actual probablemente es distinta.",
+   "justificacion": "El Mapa de Pobreza 2018 es la única pobreza distrital oficial, pero es anterior al salto de 2020 (20,2 % → 30,1 %); presentarlo en presente lo convierte en una cifra actual falsa (C-03, INF-02).",
+   "referencias": [
+    {
+     "titulo": "INEI – Evolución de la pobreza monetaria, cap. 3: grupos de departamentos con niveles de pobreza estadísticamente semejantes",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1699/cap03.pdf"
+    },
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating quality, uncertainty and change",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-02",
+    "C-03"
+   ],
+   "ejemplo": "'¿Cuánta pobreza hay en el distrito de Ocobamba?' → 'En 2018, el INEI estimaba con un modelo que entre {{c:ic_inf}} y {{c:ic_sup}} de su población era pobre (grupo {{c:grupo}}). Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta. Para el departamento, la cifra más reciente es {{c:enaho_dep}} (ENAHO 2025).'",
+   "implementacion": "Plantillas de verbo por edad del dato. Si ancho IC > 20 pp (estimaciones), solo intervalo. Prohibido calcular o mencionar 'pobreza 2018 + variación departamental'.",
+   "casos_borde": "Censo 2017 usado solo como denominador o marco: no dispara el aviso. Censo 2025 en 2026: vigente.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-LENGUAJE-05",
+   "ambito": "lenguaje",
+   "titulo": "Cuando no hay datos: respuesta parcial, alternativa o rechazo",
+   "enunciado": "Si alguna parte de la pregunta no puede responderse, la respuesta debe decirlo con la fórmula estándar, indicar el motivo y ofrecer la alternativa válida más cercana; solo se rechaza la pregunta completa cuando ninguna cifra principal es publicable o cuando pide algo fuera de alcance (datos personales, predicciones, juicios sobre personas, causalidad individual).",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "para cada componente pedido: estado in ('publicable','alternativa','sin_datos'). Si todos publicables → completa. Si >=1 publicable → parcial (listar faltantes). Si 0 publicables y >=1 alternativa (nivel más grueso, años agrupados, indicador aproximado) → alternativa. Si 0 y 0 → sin_datos. intencion in ('datos_personales','prediccion','juicio_personas','causalidad_individual') → rechazo.",
+   "accion": "rotular",
+   "parametros": {
+    "motivos_codificados": [
+     "nivel_no_representativo",
+     "pocos_casos",
+     "sin_fuente_en_catalogo",
+     "anio_no_disponible",
+     "cruce_bloqueado",
+     "fuente_en_ingesta",
+     "fuera_de_alcance"
+    ],
+    "max_alternativas": 2
+   },
+   "mensaje_usuario": "Con los datos públicos que usamos no se puede responder {parte} para {territorio} porque {motivo_ciudadano}. Lo más cercano que sí podemos mostrar es: {alternativa}.",
+   "justificacion": "Decir con claridad qué no se sabe es parte de comunicar la incertidumbre (OSR). Una respuesta parcial bien rotulada es más útil que un rechazo, pero inventar o forzar cifras para llenar el hueco sería engañoso.",
+   "referencias": [
+    {
+     "titulo": "Office for Statistics Regulation (UK) – How to communicate uncertainty in statistics",
+     "url": "https://osr.statisticsauthority.gov.uk/how-to-communicate-uncertainty-in-statistics"
+    },
+    {
+     "titulo": "Office for Statistics Regulation (UK) – Approaches to presenting uncertainty in the statistical system",
+     "url": "https://osr.statisticsauthority.gov.uk/publication/approaches-to-presenting-uncertainty-in-the-statistical-system/"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-03",
+    "C-02"
+   ],
+   "ejemplo": "'¿Cuántos niños con anemia hay en el distrito de Pichari y cuánto invierte el Estado ahí?' → parcial: inversión municipal y por CUI en el distrito (MEF-DETALLE-INVERSIONES); anemia distrital ENDES no representativa → alternativa: ENDES Cusco (departamento) + SIEN distrital rotulado como tamizados.",
+   "implementacion": "Plantillas fijas por estado. El LLM solo puede elegir entre plantillas y completar con marcadores; no redacta motivos libres. Rechazo: plantilla con lista de temas disponibles.",
+   "casos_borde": "(1) Fuente en ingesta (compuerta pendiente): 'aún no está incorporada', no 'no existe'. (2) Pregunta sobre un distrito creado después de 2017 sin datos propios: indicar distrito de origen (ámbito territorio). (3) Nunca sugerir que el dato no existe en el país si existe en una fuente no ingerida.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-LENGUAJE-06",
+   "ambito": "lenguaje",
+   "titulo": "Registros administrativos y encuestas en un mismo párrafo",
+   "enunciado": "Cuando una respuesta combina encuestas, registros, gasto y estimaciones modeladas, cada cifra debe ir en su propia oración con el verbo propio de su naturaleza, su año y su fuente; está prohibido operar entre ellas en el texto o enlazarlas con conectores causales.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral",
+     "registro_administrativo",
+     "presupuestal_financiero",
+     "estimacion_modelada",
+     "censo",
+     "indicadores_derivados"
+    ],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "párrafo con cifras de >=2 naturaleza_dato distintas → (a) una cifra por oración; (b) verbo ∈ verbos_por_naturaleza[naturaleza_dato]; (c) conector entre oraciones ∈ conectores_neutrales; (d) sin aritmética entre cifras salvo indicador cruzado calculado por el motor y listado en R-CRUCES-11; (e) si años distintos, año explícito en cada oración",
+   "accion": "rotular",
+   "parametros": {
+    "verbos_por_naturaleza": {
+     "encuesta_muestral": [
+      "se estima que",
+      "alrededor de"
+     ],
+     "censo": [
+      "el censo contó",
+      "según el censo"
+     ],
+     "registro_administrativo": [
+      "se registraron",
+      "se atendieron",
+      "se tamizaron",
+      "se notificaron",
+      "figuran inscritos"
+     ],
+     "presupuestal_financiero": [
+      "se gastó (devengado)",
+      "se asignó (PIM)",
+      "se transfirió"
+     ],
+     "estimacion_modelada": [
+      "el INEI estimó con un modelo",
+      "proyecta"
+     ]
+    },
+    "conectores_neutrales": [
+     "por otro lado",
+     "en el mismo periodo",
+     "además",
+     "en paralelo",
+     "a nivel de"
+    ]
+   },
+   "mensaje_usuario": "Este párrafo combina datos de distinto tipo: {tipos}. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "justificacion": "Encuestas y registros responden a preguntas distintas (población vs personas atendidas o eventos registrados) y tienen errores distintos (muestral vs cobertura/subregistro). Mezclarlos en una misma frase u operar entre ellos induce a lecturas causales o a confundir atendidos con población.",
+   "referencias": [
+    {
+     "titulo": "Government Analysis Function (UK) – Communicating quality, uncertainty and change",
+     "url": "https://analysisfunction.civilservice.gov.uk/policy-store/communicating-quality-uncertainty-and-change/"
+    },
+    {
+     "titulo": "UK Statistics Authority – Code of Practice for Statistics, Q3 Assured Quality",
+     "url": "https://code.statisticsauthority.gov.uk/quality/q3-assured-quality"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-04",
+    "C-02"
+   ],
+   "ejemplo": "'En Loreto se estima que {{c:a}} de niños de 6 a 35 meses tenía anemia en 2025 (ENDES 2025, INEI). Por otro lado, ese año se tamizaron {{c:b}} niños en establecimientos del MINSA y {{c:c}} de ellos tenía anemia (SIEN 2025). En el mismo periodo se gastaron {{c:d}} en el programa de desarrollo infantil temprano en el departamento (MEF 2025).'",
+   "implementacion": "Plantilla de párrafo por bloques (una oración por cifra). El lint (R-LENGUAJE-02) verifica conectores causales entre oraciones con naturalezas distintas ('por eso', 'por ello', 'lo que explica', 'en consecuencia', 'gracias a').",
+   "casos_borde": "Indicadores derivados oficiales que ya combinan fuentes (p. ej., coberturas MINSA con denominador poblacional): se tratan como su naturaleza declarada en el catálogo y se rotula el denominador.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-LENGUAJE-07",
+   "ambito": "lenguaje",
+   "titulo": "Prueba de comprensión de rótulos con usuarios",
+   "enunciado": "Los rótulos del semáforo, la ficha corta y los mensajes de bloqueo deben probarse con al menos 8 usuarios no especialistas (ciudadanos, periodistas, funcionarios municipales) antes del lanzamiento público y ajustarse si menos del 75 % interpreta correctamente qué no se puede concluir.",
+   "aplica_a": {
+    "naturaleza_dato": [],
+    "tipo_medida": [],
+    "base_geografica": [],
+    "fuentes": []
+   },
+   "condicion": "prueba_usuarios.n >= 8 AND tasa_comprension(no_concluir) >= 0.75 para cada plantilla de ficha corta y mensaje de bloqueo",
+   "accion": "revision_humana",
+   "parametros": {
+    "n_minimo_usuarios": 8,
+    "umbral_comprension": 0.75,
+    "perfiles": [
+     "ciudadano",
+     "periodista",
+     "funcionario_municipal"
+    ]
+   },
+   "mensaje_usuario": null,
+   "justificacion": "OSR recomienda conocer a la audiencia y probar cómo interpreta la incertidumbre; la investigación sobre comunicación de incertidumbre muestra que el formato cambia la comprensión.",
+   "referencias": [
+    {
+     "titulo": "Office for Statistics Regulation (UK) – How to communicate uncertainty in statistics",
+     "url": "https://osr.statisticsauthority.gov.uk/how-to-communicate-uncertainty-in-statistics"
+    },
+    {
+     "titulo": "van der Bles et al. (2019). Communicating uncertainty about facts, numbers and science. Royal Society Open Science",
+     "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6549952"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "C-02"
+   ],
+   "ejemplo": "Tarea de prueba: mostrar el cruce gasto–anemia por departamento con su ficha corta y preguntar '¿el gasto redujo la anemia?'; respuesta correcta: 'no se puede saber con estos datos'.",
+   "implementacion": "Protocolo de prueba en un documento aparte; resultados versionados junto a las plantillas.",
+   "casos_borde": "Si los rótulos de color no se entienden, reemplazar por texto solo (sin color) o íconos con texto.",
+   "prioridad": "posterior"
+  }
+ ],
+ "ficha_limites": {
+  "principios": [
+   "Se genera por plantilla desde el resultado del validador; el LLM no la redacta.",
+   "Versión corta siempre visible bajo la respuesta (máx. 4 líneas); versión larga en un desplegable 'Límites de esta respuesta'.",
+   "Una ficha por respuesta, con una sección por cifra principal y una por cruce; las cifras de contexto se listan en la versión larga.",
+   "Los textos de 'qué NO se puede concluir' salen de una lista de códigos fijos, no de redacción libre."
+  ],
+  "corta": {
+   "campos": [
+    {
+     "campo": "semaforo_respuesta",
+     "texto": "Confianza: {rotulo} ({icono}) — {motivo_principal_respuesta}"
+    },
+    {
+     "campo": "fuentes_anios",
+     "texto": "Datos de: {lista 'SIGLA AÑO (entidad)' separada por ' · '}"
+    },
+    {
+     "campo": "territorio",
+     "texto": "Territorio: {nivel_respuesta} de {nombre}{si nivel_respuesta != nivel_pedido: ' (no {nivel_pedido}: ' + motivo_nivel_corto + ')'}"
+    },
+    {
+     "campo": "no_concluir_principal",
+     "texto": "No permite concluir: {texto del código no_concluir de mayor prioridad}"
+    }
+   ],
+   "ejemplo": "Confianza: Usar con cautela — respondimos por departamento, no por provincia.\nDatos de: ENDES 2025 (INEI) · Gasto MEF 2025 (devengado)\nTerritorio: departamento de Puno (la encuesta no alcanza para provincias)\nNo permite concluir: que el gasto haya causado los cambios en la anemia."
+  },
+  "larga": {
+   "secciones": [
+    {
+     "seccion": "1. De dónde vienen los datos",
+     "campos": [
+      "fuente (nombre completo, entidad, id catálogo)",
+      "año o periodo y fecha de corte/descarga",
+      "naturaleza en lenguaje ciudadano (encuesta a una muestra de hogares / registro de atenciones / gasto registrado / estimación con modelo / censo)",
+      "enlace a la fuente oficial (url_portal)"
+     ],
+     "texto_plantilla": "{nombre_fuente} ({entidad}), {periodo}. Es {naturaleza_ciudadana}. Datos descargados el {fecha_descarga}."
+    },
+    {
+     "seccion": "2. Territorio y por qué",
+     "campos": [
+      "nivel_respuesta",
+      "nivel_pedido",
+      "motivo_nivel",
+      "base_geografica en lenguaje ciudadano"
+     ],
+     "texto_plantilla": "Las cifras se presentan por {nivel_respuesta}. {motivo_nivel}. {texto_base_geografica}",
+     "textos_base_geografica": {
+      "residencia": "Las personas se cuentan donde viven.",
+      "establecimiento": "Se cuenta donde está el establecimiento que atendió, aunque la persona viva en otro distrito.",
+      "ejecutora": "El gasto se ubica donde está la oficina que paga, no donde se usa el dinero; por eso solo lo mostramos por distrito en municipalidades y obras con ubicación registrada.",
+      "meta_departamento": "El gasto se ubica en el departamento donde se usa el dinero; no se sabe en qué provincia o distrito.",
+      "inversion_ubicacion": "La obra se ubica donde se registró en el banco de inversiones.",
+      "muestra": "La encuesta entrevista a una muestra; solo es confiable para el departamento o áreas grandes.",
+      "territorio": "Cifra referida a todo el territorio."
+     }
+    },
+    {
+     "seccion": "3. Qué mide exactamente",
+     "campos": [
+      "tipo_medida en lenguaje ciudadano",
+      "poblacion_objetivo",
+      "universo",
+      "criterio_medicion (si aplica)"
+     ],
+     "texto_plantilla": "Mide {tipo_medida_ciudadana} en {poblacion_objetivo}{si universo != total: ', solo ' + universo}. {nota_criterio}",
+     "textos_tipo_medida": {
+      "prevalencia": "cuántas personas de la población tienen la condición",
+      "cobertura_programa": "cuántas personas o hogares están inscritos o reciben el programa",
+      "atenciones_produccion": "cuántas atenciones se dieron (una persona puede tener varias)",
+      "notificacion_vigilancia": "cuántos casos llegaron a ser detectados y reportados por los servicios",
+      "registro_eventos": "cuántos hechos se registraron (nacimientos, defunciones, etc.)",
+      "presupuesto_gasto": "cuánto dinero se gastó o asignó",
+      "estimacion_modelada": "un cálculo con un modelo estadístico, no un conteo directo",
+      "stock_infraestructura": "qué infraestructura existe y en qué estado",
+      "padron_referencia": "un listado de referencia"
+     }
+    },
+    {
+     "seccion": "4. Qué tan precisa es",
+     "campos": [
+      "semaforo_cifra y motivos",
+      "rango probable (IC 95 %) o n de casos o numerador",
+      "CV si es encuesta (en texto: 'margen de error relativo')"
+     ],
+     "texto_plantilla": "{rotulo}. {si encuesta: 'El valor real está probablemente entre {ic_inf} y {ic_sup}.'} {si registro: 'Basado en {numerador} casos registrados.'} {motivos_semaforo en texto}"
+    },
+    {
+     "seccion": "5. Cambios de método y comparaciones",
+     "campos": [
+      "anios_con_quiebre relevantes",
+      "resultado de la prueba de cambio",
+      "agrupación de años si hubo"
+     ],
+     "texto_plantilla": "{si quiebre: 'En {anio} cambió {motivo}: no comparamos antes y después directamente.'} {si comparación: 'Entre {a} y {b}: {cambio_significativo|sin cambio estadísticamente claro}.'} {si pooling: 'Se juntaron los años {periodo} para tener suficientes casos.'}"
+    },
+    {
+     "seccion": "6. Cruces y asociaciones",
+     "campos": [
+      "id_cruce",
+      "nivel_cruce",
+      "años de cada componente",
+      "N territorios, excluidos, rho, IC",
+      "rótulo ecológico"
+     ],
+     "texto_plantilla": "Se compararon {N} {nivel_cruce}s ({excluidos} sin datos suficientes). {texto_asociacion}. Esto compara territorios, no personas, y no muestra causas."
+    },
+    {
+     "seccion": "7. Qué NO se puede concluir",
+     "campos": [
+      "lista de códigos no_concluir aplicables (máx. 4, ordenados por prioridad)"
+     ],
+     "codigos_no_concluir": {
+      "NC-CAUSA": "Que {a} haya causado {b}: estos datos no comparan con lo que habría pasado sin el programa o gasto.",
+      "NC-INDIVIDUO": "Que lo que pasa entre territorios ocurra igual entre personas u hogares.",
+      "NC-NIVEL": "Nada sobre provincias o distritos concretos: la fuente solo es confiable para {nivel_valido}.",
+      "NC-RANKING": "Un orden exacto entre territorios: las diferencias entre muchos de ellos no son estadísticamente claras.",
+      "NC-ACTUAL": "Cuál es la situación hoy: el dato es de {anio_dato}{si choque: ', antes de la pandemia'}.",
+      "NC-TAMIZADOS": "Cuántos niños del distrito tienen anemia: solo sabemos de los que se tamizaron en establecimientos.",
+      "NC-GASTO-LUGAR": "Cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito.",
+      "NC-EFICIENCIA": "Si el gasto fue eficiente o 'cuánto costó' reducir el problema.",
+      "NC-TENDENCIA-QUIEBRE": "Si el indicador subió o bajó entre {a} y {b}: cambió la forma de medirlo.",
+      "NC-ATENCIONES-PERSONAS": "Cuántas personas distintas fueron atendidas: una persona puede tener varias atenciones."
+     },
+     "prioridad_codigos": [
+      "NC-CAUSA",
+      "NC-ACTUAL",
+      "NC-NIVEL",
+      "NC-TAMIZADOS",
+      "NC-GASTO-LUGAR",
+      "NC-TENDENCIA-QUIEBRE",
+      "NC-INDIVIDUO",
+      "NC-RANKING",
+      "NC-EFICIENCIA",
+      "NC-ATENCIONES-PERSONAS"
+     ],
+     "reglas_asignacion": {
+      "NC-CAUSA": "siempre que haya gasto o programa y un resultado en la misma respuesta",
+      "NC-INDIVIDUO": "siempre que haya asociación entre territorios",
+      "NC-NIVEL": "nivel_respuesta > nivel_pedido",
+      "NC-ACTUAL": "criterio vigencia >= 1",
+      "NC-TAMIZADOS": "fuente INS-CENAN-SIEN",
+      "NC-GASTO-LUGAR": "gasto con base ejecutora o meta_departamento",
+      "NC-RANKING": "comparación de >=3 territorios",
+      "NC-TENDENCIA-QUIEBRE": "R-CRUCES-04 activada",
+      "NC-ATENCIONES-PERSONAS": "tipo_medida=atenciones_produccion",
+      "NC-EFICIENCIA": "intencion_pregunta=efecto"
+     }
+    },
+    {
+     "seccion": "8. Reproducibilidad",
+     "campos": [
+      "versión del catálogo",
+      "versión de reglas",
+      "fecha de cálculo",
+      "ids de indicadores y cruces",
+      "enlace a la ficha del indicador"
+     ],
+     "texto_plantilla": "Cálculo del {fecha} con catálogo v{v_cat} y reglas v{v_reglas}. Indicadores: {ids}."
+    }
+   ]
+  },
+  "ejemplo_relleno": {
+   "pregunta": "¿Cuánta anemia hay en la provincia de Azángaro y cuánto se gasta en combatirla?",
+   "corta": "Confianza: Usar con cautela — respondimos por departamento, no por provincia.\nDatos de: ENDES 2025 (INEI) · SIEN 2025 (INS) · Gasto MEF 2025\nTerritorio: departamento de Puno (la encuesta no alcanza para provincias)\nNo permite concluir: que el gasto haya causado los cambios en la anemia.",
+   "larga_resumen": [
+    "1. ENDES 2025: encuesta a una muestra de hogares; SIEN 2025: registro de niños tamizados en establecimientos; MEF: gasto devengado del PPoR 1001 ubicado por DEPARTAMENTO_META.",
+    "2. Departamento: la ENDES solo es confiable por departamento; el gasto regional y nacional solo se ubica por departamento. Para Azángaro solo se muestra el SIEN provincial (tamizados) y el gasto de sus municipalidades.",
+    "3–4. Anemia en niños de 6 a 35 meses (ENDES, verde); proporción de tamizados con anemia (SIEN, ámbar).",
+    "5. Criterio de anemia OMS 2024 desde 2024: no se compara con años previos salvo con el mismo criterio.",
+    "7. No se puede concluir: NC-CAUSA, NC-NIVEL, NC-TAMIZADOS, NC-GASTO-LUGAR."
+   ]
+  }
+ },
+ "lenguaje": {
+  "permitidas": [
+   {
+    "expresion": "se estima que / alrededor de",
+    "uso": "encuestas y estimaciones modeladas"
+   },
+   {
+    "expresion": "el valor real está probablemente entre X y Y",
+    "uso": "rango probable (IC 95 %); preferir a 'margen de error'"
+   },
+   {
+    "expresion": "según {fuente} {año}",
+    "uso": "toda cifra"
+   },
+   {
+    "expresion": "aumentó / disminuyó de forma estadísticamente clara",
+    "uso": "solo con test_cambio.significativo=true (p<0,05)"
+   },
+   {
+    "expresion": "se mantuvo sin cambio estadísticamente claro / en general estable",
+    "uso": "test no significativo"
+   },
+   {
+    "expresion": "está en el grupo de departamentos con niveles más altos (o más bajos)",
+    "uso": "rankings por grupos estadísticamente semejantes (método INEI)"
+   },
+   {
+    "expresion": "los territorios con más X tienden a tener más/menos Y",
+    "uso": "asociación con IC que excluye 0"
+   },
+   {
+    "expresion": "no se observa una asociación clara",
+    "uso": "IC de rho incluye 0"
+   },
+   {
+    "expresion": "en el mismo periodo / por otro lado / en paralelo",
+    "uso": "conectar cifras de fuentes distintas"
+   },
+   {
+    "expresion": "se registraron / se atendieron / se tamizaron / se notificaron",
+    "uso": "registros administrativos"
+   },
+   {
+    "expresion": "se gastó (devengado) / se asignó (PIM) / registrado por unidades ejecutoras con sede en",
+    "uso": "gasto"
+   },
+   {
+    "expresion": "en {año} se estimaba",
+    "uso": "datos con más de 2 años"
+   },
+   {
+    "expresion": "estos datos no permiten saber si",
+    "uso": "límites causales"
+   },
+   {
+    "expresion": "con los datos públicos que usamos no se puede responder",
+    "uso": "falta de datos"
+   },
+   {
+    "expresion": "según la evaluación de {entidad} ({año})",
+    "uso": "citar evaluaciones curadas"
+   }
+  ],
+  "prohibidas": [
+   {
+    "patron": "\\b(caus[óo]|provoc[óo]|gener[óo]|origin[óo])\\b",
+    "categoria": "causal",
+    "reemplazo": "en el mismo periodo…; estos datos no permiten saber si…",
+    "excepcion": "cita literal de evaluación curada"
+   },
+   {
+    "patron": "\\bgracias a\\b|\\bdebido a\\b|\\bpor efecto de\\b|\\bcomo resultado de\\b|\\bpor eso\\b|\\blo que explica\\b|\\ben consecuencia\\b",
+    "categoria": "causal",
+    "reemplazo": "conector neutral",
+    "excepcion": "'debido a' para explicar un cambio de método o una limitación de datos"
+   },
+   {
+    "patron": "\\b(impacto|efecto) de(l)? (gasto|programa|inversi[óo]n)\\b|\\b(sirvi[óo]|funcion[óo]|fue eficaz|fue efectivo|logr[óo] reducir|contribuy[óo] a)\\b",
+    "categoria": "causal/evaluativa",
+    "reemplazo": "estructura R-CRUCES-07",
+    "excepcion": "cita literal de evaluación curada"
+   },
+   {
+    "patron": "\\bel (peor|mejor|m[áa]s pobre|m[áa]s rico)\\b|\\bencabeza\\b|\\bocupa el (primer|[úu]ltimo) lugar\\b|\\branking\\b|\\bpuesto n",
+    "categoria": "ranking puntual",
+    "reemplazo": "está en el grupo de … con niveles más altos",
+    "excepcion": "montos de gasto o conteos de registros completos (sin error muestral), sin adjetivos de juicio"
+   },
+   {
+    "patron": "\\b(aument[óo]|subi[óo]|creci[óo]|disminuy[óo]|baj[óo]|se redujo|cay[óo]|mejor[óo]|empeor[óo])\\b",
+    "categoria": "cambio sin significancia",
+    "reemplazo": "se mantuvo sin cambio estadísticamente claro",
+    "excepcion": "test_cambio.significativo=true; o montos/conteos de registros (sin 'mejoró/empeoró')"
+   },
+   {
+    "patron": "\\b(exactamente|con certeza|est[áa] demostrado|sin duda|definitivamente|la verdad es)\\b",
+    "categoria": "falsa certeza",
+    "reemplazo": "se estima que / alrededor de",
+    "excepcion": null
+   },
+   {
+    "patron": "\\b(despilfarro|derroche|corrupci[óo]n|negligencia|fracaso|culpa|mal gasto|ineficien(te|cia))\\b",
+    "categoria": "juicio de valor",
+    "reemplazo": "describir cifras sin calificar",
+    "excepcion": null
+   },
+   {
+    "patron": "\\b(ser[áa]|alcanzar[áa]|llegar[áa] a|se espera que)\\b",
+    "categoria": "predicción",
+    "reemplazo": "no se hacen proyecciones propias; citar proyección oficial con su fuente",
+    "excepcion": "proyecciones oficiales de población del INEI citadas como tales"
+   },
+   {
+    "patron": "\\blos (ni[ñn]os|hogares|beneficiarios|usuarios) (que reciben|de|del programa) .* (tienen|son) (m[áa]s|menos)\\b",
+    "categoria": "falacia ecológica",
+    "reemplazo": "los territorios con más … tienden a …",
+    "excepcion": "dato individual de encuesta desagregado por condición de programa, calculado por el motor"
+   },
+   {
+    "patron": "\\b(la )?anemia (es|era|fue) de\\b(?=.*SIEN)",
+    "categoria": "tamizados como prevalencia",
+    "reemplazo": "de los niños tamizados en establecimientos, X tenía anemia",
+    "excepcion": null
+   },
+   {
+    "patron": "\\bgast[óo] en el distrito\\b",
+    "categoria": "gasto mal ubicado",
+    "reemplazo": "gasto registrado por unidades ejecutoras con sede en … / gasto de la municipalidad de …",
+    "excepcion": "NIVEL_GOBIERNO=M o inversión ubicada por CUI"
+   },
+   {
+    "patron": "\\b(hay|tiene|es) (un|una|el|la)? ?\\d",
+    "categoria": "presente con dato antiguo",
+    "reemplazo": "en {año} se estimaba…",
+    "excepcion": "dato con edad <= 2 años"
+   },
+   {
+    "patron": "\\bsignificativ[oa]\\b(?! estad)",
+    "categoria": "ambigüedad",
+    "reemplazo": "estadísticamente claro / importante (elegir uno)",
+    "excepcion": null
+   }
+  ],
+  "redondeo": [
+   {
+    "tipo": "porcentaje de encuesta, semáforo verde",
+    "regla": "1 decimal",
+    "ejemplo": "20,2 %"
+   },
+   {
+    "tipo": "porcentaje de encuesta, ámbar/referencial",
+    "regla": "entero, con 'alrededor de' y rango",
+    "ejemplo": "alrededor de 47 % (entre 42 % y 52 %)"
+   },
+   {
+    "tipo": "estimación modelada con IC > 20 pp",
+    "regla": "solo intervalo en enteros",
+    "ejemplo": "entre 31 % y 55 %"
+   },
+   {
+    "tipo": "tasa de registros (por 1 000 o 100 000)",
+    "regla": "1 decimal; entero si numerador < 20",
+    "ejemplo": "12,4 por 1 000 nacidos vivos"
+   },
+   {
+    "tipo": "conteo de registros",
+    "regla": "exacto hasta 9 999; desde 10 000 en miles con 1 decimal",
+    "ejemplo": "1 234 / 12,3 mil"
+   },
+   {
+    "tipo": "monto de gasto",
+    "regla": ">= S/ 1 millón: millones con 1 decimal; < 1 millón: miles enteros; per cápita: soles enteros; indicar nominal o constante y año base",
+    "ejemplo": "S/ 245,7 millones (soles corrientes)"
+   },
+   {
+    "tipo": "población",
+    "regla": "miles con 1 decimal; >= 1 millón: millones con 2 decimales",
+    "ejemplo": "35,4 mil habitantes; 1,23 millones"
+   },
+   {
+    "tipo": "coeficiente de asociación",
+    "regla": "no mostrar el número en la versión corta; versión larga 2 decimales con IC",
+    "ejemplo": "rho = −0,42 (entre −0,70 y −0,04)"
+   },
+   {
+    "tipo": "valores muy pequeños",
+    "regla": "porcentaje < 0,5 → 'menos de 1 %'",
+    "ejemplo": "menos de 1 %"
+   }
+  ],
+  "citas": {
+   "corta_en_texto": "({sigla} {año}, {entidad})",
+   "primera_mencion": "nombre completo + sigla",
+   "gasto": "(MEF, Consulta amigable/datos abiertos, devengado {año}, actualizado al {fecha})",
+   "evaluacion": "según la evaluación {tipo} de {entidad} ({año})"
+  },
+  "frases_estandar": {
+   "sin_datos": "Con los datos públicos que usamos no se puede responder {parte} para {territorio} porque {motivo}.",
+   "alternativa": "Lo más cercano que sí podemos mostrar es: {alternativa}.",
+   "fuera_alcance": "Esta pregunta pide {tipo} y Pregunta al Perú solo responde con cifras públicas agregadas por territorio. Puedes preguntar sobre: {temas}.",
+   "efecto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro.",
+   "asociacion": "Esto compara territorios, no personas: no dice que una cosa cause la otra.",
+   "dato_antiguo": "Dato de {año}, anterior a la pandemia: la situación actual probablemente es distinta."
+  }
+ },
+ "campos_nuevos": [
+  {
+   "campo": "velocidad_cambio",
+   "tipo": "enum(rapida, lenta)",
+   "donde": "indicador",
+   "para_que": "ventana de alineación de años (R-CRUCES-03)"
+  },
+  {
+   "campo": "anios_choque",
+   "tipo": "list[int] (parámetro global, inicial [2020, 2021])",
+   "donde": "catalogo",
+   "para_que": "bloquear cruces y avisar desactualización a través del choque (R-CRUCES-03, R-LENGUAJE-04)"
+  },
+  {
+   "campo": "criterio_medicion",
+   "tipo": "dict{anio: str}",
+   "donde": "indicador",
+   "para_que": "detectar comparaciones a través de cambios de definición y usar el mismo criterio (R-CRUCES-04)"
+  },
+  {
+   "campo": "poblacion_objetivo",
+   "tipo": "obj{edad_min, edad_max, sexo, area}",
+   "donde": "indicador",
+   "para_que": "comparabilidad de unidades (R-CRUCES-05)"
+  },
+  {
+   "campo": "universo",
+   "tipo": "enum(total, sector_publico_minsa, asegurados_sis, asegurados_essalud, ambito_intervencion, matricula_publica, otro)",
+   "donde": "indicador",
+   "para_que": "comparabilidad y rótulo 'solo …' (R-CRUCES-05, ficha)"
+  },
+  {
+   "campo": "concepto_medido / rank_concepto",
+   "tipo": "str (vocabulario controlado) / int",
+   "donde": "indicador",
+   "para_que": "detectar fuentes que miden lo mismo y elegir la principal (R-CRUCES-08)"
+  },
+  {
+   "campo": "subregistro_conocido",
+   "tipo": "bool",
+   "donde": "indicador",
+   "para_que": "criterio del semáforo (R-CRUCES-09)"
+  },
+  {
+   "campo": "nivel_valido, motivo_nivel, nivel_cruce",
+   "tipo": "enum VOCAB_TERRITORIO / str",
+   "donde": "resultado",
+   "para_que": "nivel común más grueso y texto de la ficha (R-CRUCES-01)"
+  },
+  {
+   "campo": "semaforo_cifra, motivos_semaforo, es_principal",
+   "tipo": "enum / list[str] / bool",
+   "donde": "resultado",
+   "para_que": "semáforo por cifra y por respuesta (R-CRUCES-09/10)"
+  },
+  {
+   "campo": "test_cambio",
+   "tipo": "obj{anio_a, anio_b, diferencia, p_valor, significativo, metodo}",
+   "donde": "resultado",
+   "para_que": "habilitar verbos de cambio (R-LENGUAJE-02); lo calcula el ámbito encuestas"
+  },
+  {
+   "campo": "grupo_ranking",
+   "tipo": "int/str",
+   "donde": "resultado",
+   "para_que": "rankings por grupos estadísticamente semejantes (R-LENGUAJE-02)"
+  },
+  {
+   "campo": "resultado_asociacion",
+   "tipo": "obj{N, excluidos, rho, ic_inf, ic_sup, metodo}",
+   "donde": "resultado",
+   "para_que": "R-CRUCES-06"
+  },
+  {
+   "campo": "intencion_pregunta",
+   "tipo": "enum(descriptiva, comparacion, asociacion, efecto, prediccion, datos_personales, juicio_personas)",
+   "donde": "resultado",
+   "para_que": "R-CRUCES-07, R-LENGUAJE-05"
+  },
+  {
+   "campo": "cruces_permitidos",
+   "tipo": "tabla curada",
+   "donde": "catalogo",
+   "para_que": "lista blanca de cruces (R-CRUCES-11)"
+  },
+  {
+   "campo": "evaluaciones_relacionadas",
+   "tipo": "tabla curada {programa_o_pp, titulo, entidad, anio, tipo, url, resumen_curado}",
+   "donde": "catalogo",
+   "para_que": "derivar preguntas de efecto (R-CRUCES-07)"
+  },
+  {
+   "campo": "explicaciones_divergencia",
+   "tipo": "tabla curada {fuente_a, fuente_b, concepto, textos}",
+   "donde": "catalogo",
+   "para_que": "explicar diferencias entre fuentes (R-CRUCES-08)"
+  },
+  {
+   "campo": "vintage_poblacion",
+   "tipo": "str",
+   "donde": "resultado",
+   "para_que": "una sola versión de denominador por respuesta (R-CRUCES-08)"
+  },
+  {
+   "campo": "id_cifra / cifras_permitidas",
+   "tipo": "str / list",
+   "donde": "resultado",
+   "para_que": "marcadores que el LLM usa en vez de números (R-LENGUAJE-03)"
+  }
+ ],
+ "dependencias": [
+  "ámbito encuestas: precisión por celda (n sin ponderar, CV, IC con diseño), prueba de diferencias entre años/territorios, pooling y grupos de ranking → alimentan los criterios 'precision', test_cambio y grupo_ranking",
+  "ámbito registros: numerador mínimo, tasas pequeñas, subregistro y suavizado → criterio 'precision' y 'subregistro'",
+  "ámbito estimaciones: IC del Mapa de Pobreza y Mapa DCI, grupos robustos → criterio 'ancho_ic_modelada'",
+  "ámbito gasto: atribución territorial (NIVEL_GOBIERNO=M, CUI, DEPARTAMENTO_META), fuente canónica sin doble conteo, deflactor → nivel_valido del gasto y bloqueos B1, B5",
+  "ámbito territorio: ubigeo histórico, puente INEI↔RENIEC, dominios de Lima → R-CRUCES-01",
+  "ámbito denominadores: elección y vintage de población por edad y nivel → R-CRUCES-05, R-CRUCES-08, B7, B8"
+ ],
+ "preguntas_abiertas": [
+  "¿Se permite mostrar coeficientes de asociación en el MVP (propuesta: solo a departamento, N>=20, siempre ámbar) o solo valores lado a lado y mapas, dejando los coeficientes para una fase posterior?",
+  "Ventana de años de los cruces: ¿se aceptan 1 año (rápidos) y 3 años (lentos), y el bloqueo total del Mapa de Pobreza 2018 en cualquier cruce con datos de 2020 en adelante (queda solo como contexto rojo)?",
+  "¿Se muestran las cifras en rojo ('solo como referencia') o se suprimen directamente para el público general (propuesta: se muestran solo como contexto, nunca como cifra principal única sin aviso)?",
+  "¿Quién mantiene las tablas curadas (cruces_permitidos, evaluaciones_relacionadas, explicaciones_divergencia) y con qué frecuencia? Sin ellas las reglas R-CRUCES-07/08/11 no funcionan.",
+  "Ante fallas repetidas del verificador léxico: ¿se publica la respuesta por plantilla determinista (propuesta) o se muestra un mensaje de 'no pudimos generar la respuesta'?"
+ ]
+}

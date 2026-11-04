@@ -1,0 +1,41 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: CDC-VIGILANCIA-DATOS-ABIERTOS
+strategy: http_file
+publisher: CDC-MINSA
+dataset_title: Vigilancia epidemiológica – datasets abiertos CDC-MINSA (dengue, malaria, leishmaniosis, EDA, IRA,
+  zoonosis, Carrión)
+access_url: https://www.datosabiertos.gob.pe/users/dgeminsa
+download_url: https://www.datosabiertos.gob.pe/sites/default/files/datos_abiertos_vigilancia_dengue_2000_2024.csv
+temporal:
+  inicio: 2000
+  fin: 2024
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- 'Notificación pasiva: depende de búsqueda de atención y capacidad diagnóstica; actualización irregular del dataset
+  frente a la sala situacional.'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+notas: '11 datasets del usuario dge_minsa: vigilancia-epidemiológica-de-dengue, -de-malaria, -de-leishmaniosis,
+  -de-enfermedad-diarreica-aguda-eda, -de-infecciones-respiratorias-agudas-ira, -de-las-zoonosis, -de-enfermedad-de-carrión,
+  etc. Plataforma Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga en /sites/default/files/...
+  o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug> (API CKAN-compatible de DKAN; confirmar).
+  Desde este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright. El nombre del CSV
+  cambia con cada recarga; leerlo de la ficha. Para datos semanales vigentes usar la sala situacional del CDC.'

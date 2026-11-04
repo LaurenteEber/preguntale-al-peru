@@ -1,0 +1,50 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-MAPA-POBREZA
+strategy: manual
+publisher: INEI
+dataset_title: Mapa de Pobreza Monetaria Provincial y Distrital
+access_url: https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018
+documentation_url: https://www.inei.gob.pe/media/MenuRecursivo/boletines/mapa-de-pobreza-25022020_ponencia.pdf
+temporal:
+  inicio: 2007
+  fin: 2018
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- 'Estimación modelada (ELL) con ENAHO 2017–2018 y Censo 2017: comparar solo por intervalos/grupos robustos; IC
+  muy amplios en distritos pequeños. Última edición 2018 (no hay mapa posterior confirmado). No comparable directamente
+  entre ediciones por cambios de método/insumos. Anterior al salto de pobreza de 2020 (20,2 % → 30,1 % nacional):
+  publicar siempre con el año 2018, intervalo de confianza y grupo robusto; no restar ni combinar con ENAHO de otros
+  años.'
+manual:
+  pasos:
+  - Abrir https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018
+    y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/INEI-MAPA-POBREZA/
+  - 'Ejecutar: pap registrar INEI-MAPA-POBREZA --issued <fecha>'
+espera:
+  formato:
+  - pdf
+  - xlsx
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+notas: 'Tablas en anexos PDF (1 874 distritos con IC y grupo robusto); extracción con pdfplumber. Edición 2013:
+  https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1261/Libro.pdf. Lib1724 = desagregación
+  infradistrital 2018.'

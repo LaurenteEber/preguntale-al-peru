@@ -1,0 +1,105 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-proyecciones-distrital-2018-2022-2026-10-06",
+  "title": "Perú: Proyecciones de Población Total según Departamento, Provincia y Distrito, 2018-2022 (Boletín Especial N.º 27)",
+  "created": "2026-10-06T09:31:50-05:00",
+  "keywords": [
+    "INEI-PROYECCIONES-DISTRITAL-2018-2022"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "inei-proyecciones-distrital-2018-2022-lib1860_proyecciones_distrital_2018-2022_boletin27",
+      "title": "Perú: Proyecciones de Población Total según Departamento, Provincia y Distrito, 2018-2022 (Boletín Especial N.º 27)",
+      "original_filename": "Lib1860_Proyecciones_distrital_2018-2022_Boletin27.pdf",
+      "path": "almacen/sha256/72/1f/721f75407e9d15abe59a8f196e73dd4122b5f39433bdce82e74466cbf982820b",
+      "hash": "sha256:721f75407e9d15abe59a8f196e73dd4122b5f39433bdce82e74466cbf982820b",
+      "bytes": 1648126,
+      "format": "pdf",
+      "mediatype": "application/pdf",
+      "source_id": "INEI-PROYECCIONES-DISTRITAL-2018-2022",
+      "publisher": "INEI",
+      "dataset_title": "Perú: Proyecciones de Población Total según Departamento, Provincia y Distrito, 2018-2022 (Boletín Especial N.º 27)",
+      "access_url": "https://www.gob.pe/institucion/inei/informes-publicaciones/3464927-peru-proyecciones-de-poblacion-total-segun-departamento-provincia-y-distrito-2018-2022",
+      "source_version": "Boletín Especial N.º 27",
+      "source_version_basis": "declarada",
+      "temporal": "2018–2022",
+      "data_cutoff_basis": "desconocida",
+      "issued": "2022-04-15",
+      "retrieved_at": "2026-10-06T09:31:50-05:00",
+      "method": "manual_navegador",
+      "recipe": "INEI-PROYECCIONES-DISTRITAL-2018-2022@9f75baf",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "Uso libre citando la fuente"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito",
+        "geografia": "1 890 distritos (2022)"
+      },
+      "known_issues": [
+        "Edición reemplazada por la proyección 2018-2026 (dic-2025); se usa solo como documento de las altas 2018–2022."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    },
+    {
+      "name": "inei-proyecciones-distrital-2018-2022-3464927-anexo-1",
+      "title": "Perú: Proyecciones de Población Total según Departamento, Provincia y Distrito, 2018-2022 (Boletín Especial N.º 27)",
+      "original_filename": "3464927-anexo-1.xlsx",
+      "path": "almacen/sha256/03/21/0321fe37b6dc564a048788f8734e24ab221efebf05460d437acb0c7587963a06",
+      "hash": "sha256:0321fe37b6dc564a048788f8734e24ab221efebf05460d437acb0c7587963a06",
+      "bytes": 209157,
+      "format": "xlsx",
+      "mediatype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "source_id": "INEI-PROYECCIONES-DISTRITAL-2018-2022",
+      "publisher": "INEI",
+      "dataset_title": "Perú: Proyecciones de Población Total según Departamento, Provincia y Distrito, 2018-2022 (Boletín Especial N.º 27)",
+      "access_url": "https://www.gob.pe/institucion/inei/informes-publicaciones/3464927-peru-proyecciones-de-poblacion-total-segun-departamento-provincia-y-distrito-2018-2022",
+      "source_version": "Boletín Especial N.º 27",
+      "source_version_basis": "declarada",
+      "temporal": "2018–2022",
+      "data_cutoff_basis": "desconocida",
+      "issued": "2022-04-15",
+      "retrieved_at": "2026-10-06T09:31:50-05:00",
+      "method": "manual_navegador",
+      "recipe": "INEI-PROYECCIONES-DISTRITAL-2018-2022@9f75baf",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "Uso libre citando la fuente"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito",
+        "geografia": "1 890 distritos (2022)"
+      },
+      "known_issues": [
+        "Edición reemplazada por la proyección 2018-2026 (dic-2025); se usa solo como documento de las altas 2018–2022."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

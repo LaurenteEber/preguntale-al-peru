@@ -1,0 +1,948 @@
+# Casos del implementador B (etapa 4: encuestas, registros, estimaciones y gasto; etapa 6: R-REG-12; etapa 7: R-CRUCES-09).
+# Formato: contrato_validador.md §6. Unidades del cubo: valor, ee, cv, ic y cotas en %.
+# En R-CRUCES-09, `espera.semaforo` documenta el color esperado (lo comprueba tmp_casos_semaforo_B.py; el ejecutor no lo mira).
+
+# ---------------------------------------------------------------- R-ENC-01
+- id: B-ENC-01-a
+  regla: R-ENC-01
+  descripcion: sin estrato en variables_diseno → suprimir (y revisión humana)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {variables_diseno: {factor: peso, conglomerado: id_conglomerado}}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: B-ENC-01-b
+  regla: R-ENC-01
+  descripcion: diseño completo y salidas del diseño presentes → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {dispara: false}
+- id: B-ENC-01-c
+  regla: R-ENC-01
+  descripcion: falta el ee (salida obligatoria del diseño) → metadato_faltante
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {ee: null}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+
+# ---------------------------------------------------------------- R-ENC-02
+- id: B-ENC-02-a
+  regla: R-ENC-02
+  descripcion: n = 24 → suprimir
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {n_muestra: 24}
+  espera: {dispara: true, accion: suprimir, motivo: pocos_casos}
+- id: B-ENC-02-b
+  regla: R-ENC-02
+  descripcion: borde n = 25 → referencial
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {n_muestra: 25}
+  espera: {dispara: true, accion: publicar_referencial, motivo: pocos_casos}
+- id: B-ENC-02-c
+  regla: R-ENC-02
+  descripcion: borde n = 49 → referencial
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {n_muestra: 49}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-ENC-02-d
+  regla: R-ENC-02
+  descripcion: borde n = 50 → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {n_muestra: 50}
+  espera: {dispara: false}
+- id: B-ENC-02-e
+  regla: R-ENC-02
+  descripcion: n nulo → metadato_faltante
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {n_muestra: null, n_sin_ponderar: null}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+
+# ---------------------------------------------------------------- R-ENC-03 (p = 0,40 → cv_ref = ee/0,40)
+- id: B-ENC-03-a
+  regla: R-ENC-03
+  descripcion: borde cv_ref = 0,15 exacto → publicar (no dispara)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 6.0, gl: 40, n_muestra: 300}
+  espera: {dispara: false}
+- id: B-ENC-03-b
+  regla: R-ENC-03
+  descripcion: cv_ref = 0,16 → referencial
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 6.4, gl: 40, n_muestra: 300}
+  espera: {dispara: true, accion: publicar_referencial, motivo: precision}
+- id: B-ENC-03-c
+  regla: R-ENC-03
+  descripcion: borde cv_ref = 0,30 exacto → referencial
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 12.0, gl: 40, n_muestra: 300}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-ENC-03-d
+  regla: R-ENC-03
+  descripcion: cv_ref = 0,31 → suprimir
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 12.4, gl: 40, n_muestra: 300}
+  espera: {dispara: true, accion: suprimir, motivo: precision}
+- id: B-ENC-03-e
+  regla: R-ENC-03
+  descripcion: Modificador — publicar con gl = 7 → referencial
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 4.0, gl: 7, n_muestra: 300}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-ENC-03-f
+  regla: R-ENC-03
+  descripcion: borde gl = 8 con cv bajo → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 4.0, gl: 8, n_muestra: 300}
+  espera: {dispara: false}
+- id: B-ENC-03-g
+  regla: R-ENC-03
+  descripcion: borde p = 0,10 → la evalúa R-ENC-03 (cv_ref = 0,20 → referencial)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 10.0, ee: 2.0, gl: 40, n_muestra: 300}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-ENC-03-h
+  regla: R-ENC-03
+  descripcion: p = 0,099 → rige R-ENC-04, R-ENC-03 no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 9.9, ee: 3.0, gl: 40, n_muestra: 300}
+  espera: {dispara: false}
+- id: B-ENC-03-i
+  regla: R-ENC-03
+  descripcion: n = 49 → rige R-ENC-02, R-ENC-03 no dispara aunque el CV sea alto
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 20.0, n_muestra: 49}
+  espera: {dispara: false}
+- id: B-ENC-03-j
+  regla: R-ENC-03
+  descripcion: media con cv_ref = ee/|estimación| = 0,20 → referencial
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {tipo_estimacion: media, valor: 100.0, ee: 20.0, gl: 40, n_muestra: 300}
+  espera: {dispara: true, accion: publicar_referencial}
+
+# ---------------------------------------------------------------- R-ENC-04 (pobreza ENAHO Ica 2025: p ≈ 0,045)
+- id: B-ENC-04-a
+  regla: R-ENC-04
+  descripcion: n efectivo 29 → suprimir
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 5.0, ee: 0.5, ic_inf: 3.0, ic_sup: 6.0, n_efectivo: 29, gl: 100}
+  espera: {dispara: true, accion: suprimir, motivo: precision}
+- id: B-ENC-04-b
+  regla: R-ENC-04
+  descripcion: borde n efectivo 30 (anchos bajos) → referencial por n efectivo < 50
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 5.0, ee: 0.5, ic_inf: 3.0, ic_sup: 6.0, n_efectivo: 30, gl: 100}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-ENC-04-c
+  regla: R-ENC-04
+  descripcion: borde ancho_abs = 0,30 con p = 0,95 → suprimir
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 95.0, ee: 0.5, ic_inf: 69.5, ic_sup: 99.5, n_efectivo: 500, gl: 100}
+  espera: {dispara: true, accion: suprimir}
+- id: B-ENC-04-d
+  regla: R-ENC-04
+  descripcion: ancho_abs = 0,299 con p = 0,95 no suprime por el ancho absoluto, sí por el relativo sobre min(p, 1−p) (H-9)
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 95.0, ee: 0.5, ic_inf: 69.6, ic_sup: 99.5, n_efectivo: 500, gl: 100}
+  espera: {dispara: true, accion: suprimir, motivo: precision}
+- id: B-ENC-04-e
+  regla: R-ENC-04
+  descripcion: borde ancho_rel = 1,30 (p = 0,05, ancho 6,5 pp) → no suprime, referencial
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 5.0, ee: 0.5, ic_inf: 2.0, ic_sup: 8.5, n_efectivo: 500, gl: 100}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-ENC-04-f
+  regla: R-ENC-04
+  descripcion: ancho_rel = 1,32 y ancho_abs > 0,05 → suprimir
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 5.0, ee: 0.5, ic_inf: 2.0, ic_sup: 8.6, n_efectivo: 500, gl: 100}
+  espera: {dispara: true, accion: suprimir}
+- id: B-ENC-04-g
+  regla: R-ENC-04
+  descripcion: borde ancho_abs = 0,05 (ancho_rel 1,0) y cv_ref 0,10 → publicar (no dispara)
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 5.0, ee: 0.5, ic_inf: 3.0, ic_sup: 8.0, n_efectivo: 500, gl: 100}
+  espera: {dispara: false}
+- id: B-ENC-04-h
+  regla: R-ENC-04
+  descripcion: L9 — ancho ≤ 5 pp pero cv_ref = 0,16 → referencial
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 5.0, ee: 0.8, ic_inf: 3.0, ic_sup: 8.0, n_efectivo: 500, gl: 100}
+  espera: {dispara: true, accion: publicar_referencial, motivo: precision}
+- id: B-ENC-04-i
+  regla: R-ENC-04
+  descripcion: borde cv_ref = 0,15 exacto → publicar (no dispara)
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 5.0, ee: 0.75, ic_inf: 3.0, ic_sup: 8.0, n_efectivo: 500, gl: 100}
+  espera: {dispara: false}
+- id: B-ENC-04-j
+  regla: R-ENC-04
+  descripcion: gl = 7 → referencial
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 5.0, ee: 0.5, ic_inf: 3.0, ic_sup: 8.0, n_efectivo: 500, gl: 7}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-ENC-04-k
+  regla: R-ENC-04
+  descripcion: Además — numerador 0 (p = 0, ee = 0, n efectivo = n) → rotular «menos de {ic_sup}»
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 0.0, ee: 0.0, ic_inf: 0.0, ic_sup: 2.0, n_efectivo: null, gl: 100}
+  espera: {dispara: true, accion: rotular}
+- id: B-ENC-04-l
+  regla: R-ENC-04
+  descripcion: p = 0,30 (dentro de 10–90 %) → rige R-ENC-03, no dispara
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 30.0}
+  espera: {dispara: false}
+- id: B-ENC-04-n
+  regla: R-ENC-04
+  descripcion: H-9 — p = 0,95 con ancho 7 pp → ancho_rel = 0,07/0,05 = 1,4 > 1,3 → suprimir
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 95.0, ee: 0.5, ic_inf: 90.0, ic_sup: 97.0, n_efectivo: 500, gl: 100}
+  espera: {dispara: true, accion: suprimir}
+- id: B-ENC-04-o
+  regla: R-ENC-04
+  descripcion: H-9 borde — p = 0,95 con ancho 6,5 pp → ancho_rel = 1,30 → referencial, no suprime
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {valor: 95.0, ee: 0.5, ic_inf: 90.0, ic_sup: 96.5, n_efectivo: 500, gl: 100}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-ENC-04-m
+  regla: R-ENC-04
+  descripcion: cifra real de Ica 2025 (4,5 %, CV 19,3 %) → referencial por L9
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  espera: {dispara: true, accion: publicar_referencial}
+
+# ---------------------------------------------------------------- R-ENC-05
+- id: B-ENC-05-a
+  regla: R-ENC-05
+  descripcion: cifra publicable → rotular con IC, fuente, año, territorio y n
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: publicar}
+  espera: {dispara: true, accion: rotular}
+- id: B-ENC-05-b
+  regla: R-ENC-05
+  descripcion: cifra referencial → rotular entre paréntesis
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: publicar_referencial}
+  espera: {dispara: true, accion: rotular}
+- id: B-ENC-05-c
+  regla: R-ENC-05
+  descripcion: cifra suprimida → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: suprimir}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-ENC-10
+- id: B-ENC-10-a
+  regla: R-ENC-10
+  descripcion: anemia ENDES 2024 suprimida por CV → agrupar 2022–2024
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: suprimir, resultados_previos: [{regla: R-ENC-03, accion: suprimir, motivo: precision}]}
+  espera: {dispara: true, accion: agrupar_anios, motivo: precision}
+- id: B-ENC-10-b
+  regla: R-ENC-10
+  descripcion: anemia ENDES 2022 suprimida → la ventana cruza 2020/2021 (choque, quiebre) → no agrupa
+  base: {indicador: endes_anemia_6_35m, anio: 2022, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: suprimir, resultados_previos: [{regla: R-ENC-03, accion: suprimir, motivo: precision}]}
+  espera: {dispara: false}
+- id: B-ENC-10-c
+  regla: R-ENC-10
+  descripcion: celda publicable → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: publicar, resultados_previos: []}
+  espera: {dispara: false}
+- id: B-ENC-10-d
+  regla: R-ENC-10
+  descripcion: ya es un periodo agrupado → no vuelve a agrupar (sigue agregar_nivel)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {periodo_agrupado: [2022, 2024], accion_previa: suprimir, resultados_previos: [{regla: R-ENC-02, accion: suprimir, motivo: pocos_casos}]}
+  espera: {dispara: false}
+- id: B-ENC-10-e
+  regla: R-ENC-10
+  descripcion: ENAHO 2025 (solo 2024–2025 cargados) suprimida por n → agrupa 2 años
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "17"}
+  cifra: {accion_previa: suprimir, resultados_previos: [{regla: R-ENC-02, accion: suprimir, motivo: pocos_casos}]}
+  espera: {dispara: true, accion: agrupar_anios, motivo: pocos_casos}
+- id: B-ENC-10-g
+  regla: R-ENC-10
+  descripcion: H-17 — ENAHO 2021 suprimida; 2020 está en su comparable_con → agrupa 2019–2021
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "17"}
+  cifra: {anio: 2021, anios_disponibles: [2019, 2020, 2021], accion_previa: suprimir, resultados_previos: [{regla: R-ENC-03, accion: suprimir, motivo: precision}]}
+  espera: {dispara: true, accion: agrupar_anios}
+- id: B-ENC-10-f
+  regla: R-ENC-10
+  descripcion: suprimida por otra regla (no por n o CV) → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: suprimir, resultados_previos: [{regla: R-ENC-06, accion: suprimir, motivo: nivel_no_representativo}]}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-ENC-18
+- id: B-ENC-18-a
+  regla: R-ENC-18
+  descripcion: Huancavelica 2024 a 0,2 pp de la dorada (55,1) → revisión humana
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 55.3}
+  espera: {dispara: true, accion: revision_humana, motivo: validacion_oficial}
+- id: B-ENC-18-b
+  regla: R-ENC-18
+  descripcion: borde diferencia = 0,1 pp (tolerancia) → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 55.2}
+  espera: {dispara: false}
+- id: B-ENC-18-c
+  regla: R-ENC-18
+  descripcion: cifra real del cubo con dorada reproducida → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  espera: {dispara: false}
+- id: B-ENC-18-d
+  regla: R-ENC-18
+  descripcion: indicador no validado contra lo oficial (indicador_validado = false) → revisión humana
+  base: {indicador: endes_anemia_6_35m, anio: 2023, nivel: departamento, territorio: "05"}
+  cifra: {indicador_validado: false}
+  espera: {dispara: true, accion: revision_humana}
+- id: B-ENC-18-e
+  regla: R-ENC-18
+  descripcion: Lima Región ENDES sin dorada propia (DOR-10) → aviso en el registro
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: LIMA_REGION, territorio: LIMA_REGION}
+  espera: {dispara: true, accion: advertir}
+- id: B-ENC-18-f
+  regla: R-ENC-18
+  descripcion: V4 — CV de la ENAHO nacional 2024 a 0,6 puntos del publicado (1,9) → aviso
+  base: {indicador: enaho_pobreza_monetaria, anio: 2024, nivel: nacional, territorio: PE}
+  cifra: {cv: 2.5}
+  espera: {dispara: true, accion: advertir}
+- id: B-ENC-18-g
+  regla: R-ENC-18
+  descripcion: V4 borde — CV a 0,5 puntos del publicado → no dispara
+  base: {indicador: enaho_pobreza_monetaria, anio: 2024, nivel: nacional, territorio: PE}
+  cifra: {cv: 2.4}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-REG-01
+- id: B-REG-01-a
+  regla: R-REG-01
+  descripcion: anemia en tamizados del SIEN → rótulo de tipo_medida
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, territorio_id: "211001", valor: 40.0}
+  espera: {dispara: true, accion: rotular, motivo: tipo_medida}
+- id: B-REG-01-b
+  regla: R-REG-01
+  descripcion: SIEN con tipo_medida prevalencia → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {tipo_medida: prevalencia, anio: 2025}
+  espera: {dispara: false}
+- id: B-REG-01-c
+  regla: R-REG-01
+  descripcion: tipo_medida nulo → no publicar (suprimir) hasta asignarlo
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {tipo_medida: null, anio: 2025}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: B-REG-01-d
+  regla: R-REG-01
+  descripcion: sin rotulo_medida → metadato_faltante
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {rotulo_medida: null, anio: 2025}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+
+# ---------------------------------------------------------------- R-REG-03 (proporciones del SIEN y tasas)
+- id: B-REG-03-a
+  regla: R-REG-03
+  descripcion: n = 29 → suprimir (pocos_casos)
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 10, denominador: 29, ic_inf: 20.0, ic_sup: 50.0}
+  espera: {dispara: true, accion: suprimir, motivo: pocos_casos}
+- id: B-REG-03-b
+  regla: R-REG-03
+  descripcion: borde n = 30 → referencial
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 10, denominador: 30, ic_inf: 20.0, ic_sup: 39.0}
+  espera: {dispara: true, accion: publicar_referencial, motivo: pocos_casos}
+- id: B-REG-03-c
+  regla: R-REG-03
+  descripcion: borde n = 100, numerador 30, ancho 18 pp → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 30, denominador: 100, ic_inf: 21.0, ic_sup: 39.0}
+  espera: {dispara: false}
+- id: B-REG-03-d
+  regla: R-REG-03
+  descripcion: numerador 4 de 200 → referencial
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 4, denominador: 200, ic_inf: 0.8, ic_sup: 5.0}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-REG-03-e
+  regla: R-REG-03
+  descripcion: n − numerador = 4 → referencial
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 196, denominador: 200, ic_inf: 95.0, ic_sup: 99.2}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-REG-03-f
+  regla: R-REG-03
+  descripcion: borde ancho del IC = 20 pp → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 60, denominador: 150, ic_inf: 30.0, ic_sup: 50.0}
+  espera: {dispara: false}
+- id: B-REG-03-g
+  regla: R-REG-03
+  descripcion: ancho del IC 20,1 pp → referencial (precisión)
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 60, denominador: 150, ic_inf: 30.0, ic_sup: 50.1}
+  espera: {dispara: true, accion: publicar_referencial, motivo: precision}
+- id: B-REG-03-h
+  regla: R-REG-03
+  descripcion: cobertura SIEN sin IC (dos cotas) → Wilson sobre num/den; n grande → no dispara
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "16", medida: cobertura}
+  espera: {dispara: false}
+- id: B-REG-03-i
+  regla: R-REG-03
+  descripcion: tasa con numerador 4 → suprimir
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, tipo_estimacion: tasa, anio: 2025, numerador: 4, poblacion: 5000}
+  espera: {dispara: true, accion: suprimir, motivo: pocos_casos}
+- id: B-REG-03-j
+  regla: R-REG-03
+  descripcion: borde tasa con numerador 5 → solo IC (rango)
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, tipo_estimacion: tasa, anio: 2025, numerador: 5, poblacion: 5000}
+  espera: {dispara: true, accion: publicar_referencial, modo: rango}
+- id: B-REG-03-k
+  regla: R-REG-03
+  descripcion: borde tasa con numerador 11 → referencial
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, tipo_estimacion: tasa, anio: 2025, numerador: 11, poblacion: 5000}
+  espera: {dispara: true, accion: publicar_referencial, motivo: pocos_casos}
+- id: B-REG-03-l
+  regla: R-REG-03
+  descripcion: borde tasa con numerador 20 y población 1000 → no dispara
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, tipo_estimacion: tasa, anio: 2025, numerador: 20, poblacion: 1000}
+  espera: {dispara: false}
+- id: B-REG-03-m
+  regla: R-REG-03
+  descripcion: tasa con población 999 → suprimir y pedir agrupar 2023–2025
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, tipo_estimacion: tasa, anio: 2025, numerador: 30, poblacion: 999, anios_disponibles: [2021, 2022, 2023, 2024, 2025]}
+  espera: {dispara: true, accion: agrupar_anios}
+
+# ---------------------------------------------------------------- R-REG-07 (cobertura del SIEN y bandas de registros)
+- id: B-REG-07-a
+  regla: R-REG-07
+  descripcion: Ica 2025, cota superior 49,5 < 50 → referencial (selección)
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "11", medida: cobertura}
+  espera: {dispara: true, accion: publicar_referencial, motivo: seleccion}
+- id: B-REG-07-b
+  regla: R-REG-07
+  descripcion: Loreto 2025, el intervalo 40–67 cruza el 50 → advertir
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "16", medida: cobertura}
+  espera: {dispara: true, accion: advertir}
+- id: B-REG-07-c
+  regla: R-REG-07
+  descripcion: borde cota_sup = 50 con cota_inf 45 → cruza (advertir), no referencial
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "11", medida: cobertura}
+  cifra: {cota_inf: 45.0, cota_sup: 50.0}
+  espera: {dispara: true, accion: advertir}
+- id: B-REG-07-d
+  regla: R-REG-07
+  descripcion: L7 — Lima Región (cota_inf 50,6) → denominador propio rotulado y aviso «apenas supera»
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: LIMA_REGION, territorio: LIMA_REGION, medida: cobertura}
+  espera: {dispara: true, accion: advertir}
+- id: B-REG-07-e
+  regla: R-REG-07
+  descripcion: borde cota_inf = 50 exacto → aviso de margen (0 ≤ 0 < 1)
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "01", medida: cobertura}
+  cifra: {cota_inf: 50.0, cota_sup: 60.0}
+  espera: {dispara: true, accion: advertir}
+- id: B-REG-07-f
+  regla: R-REG-07
+  descripcion: Amazonas (65–90) → solo el rótulo de dos cotas (sin aviso ni referencial)
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "01", medida: cobertura}
+  espera: {dispara: true, accion: rotular}
+- id: B-REG-07-g
+  regla: R-REG-07
+  descripcion: anemia en tamizados del SIEN → no le aplica la marca de cobertura (no dispara)
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: departamento, territorio_id: "21"}
+  espera: {dispara: false}
+- id: B-REG-07-h
+  regla: R-REG-07
+  descripcion: CNV con cobertura nula → solo conteo (suprimir la tasa)
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, anio: 2024}
+  espera: {dispara: true, accion: suprimir}
+- id: B-REG-07-i
+  regla: R-REG-07
+  descripcion: borde cobertura 60 → referencial con subregistro
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, anio: 2024, cobertura_registro_estimada: 60}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-REG-07-j
+  regla: R-REG-07
+  descripcion: cobertura 59,9 → solo conteo
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, anio: 2024, cobertura_registro_estimada: 59.9}
+  espera: {dispara: true, accion: suprimir}
+- id: B-REG-07-k
+  regla: R-REG-07
+  descripcion: borde cobertura 90 → tasa registrada (rotular)
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, anio: 2024, cobertura_registro_estimada: 90}
+  espera: {dispara: true, accion: rotular}
+- id: B-REG-07-l
+  regla: R-REG-07
+  descripcion: borde cobertura 80 → referencial (tasa registrada)
+  cifra: {fuente_principal: MINSA-CNV-NACIDOS-VIVOS, naturaleza_dato: registro_administrativo, tipo_medida: registro_eventos, anio: 2024, cobertura_registro_estimada: 80}
+  espera: {dispara: true, accion: publicar_referencial}
+
+# ---------------------------------------------------------------- R-REG-08
+- id: B-REG-08-a
+  regla: R-REG-08
+  descripcion: cobertura 105 % → referencial
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "01", medida: cobertura}
+  cifra: {cota_sup: 105.0}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-REG-08-b
+  regla: R-REG-08
+  descripcion: borde 110 % → referencial
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "01", medida: cobertura}
+  cifra: {cota_sup: 110.0}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-REG-08-c
+  regla: R-REG-08
+  descripcion: 110,1 % → suprimir el % y agregar nivel
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "01", medida: cobertura}
+  cifra: {cota_sup: 110.1}
+  espera: {dispara: true, accion: agregar_nivel, motivo: cobertura_mayor_110}
+- id: B-REG-08-d
+  regla: R-REG-08
+  descripcion: sigue > 110 en el nivel superior → revisión humana del denominador
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "01", medida: cobertura}
+  cifra: {cota_sup: 115.0, motivo_nivel: [{paso: provincia, motivos: [cobertura_mayor_110]}]}
+  espera: {dispara: true, accion: revision_humana}
+- id: B-REG-08-e
+  regla: R-REG-08
+  descripcion: borde 100 % → no dispara
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "01", medida: cobertura}
+  cifra: {cota_sup: 100.0}
+  espera: {dispara: false}
+- id: B-REG-08-f
+  regla: R-REG-08
+  descripcion: proporción de anemia en tamizados (no es cobertura) → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, valor: 100.0, numerador: 50, denominador: 50}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-REG-09
+- id: B-REG-09-a
+  regla: R-REG-09
+  descripcion: SIEN 2025 con corte 2026-05-01 (antes del cierre por defecto 30/6/2026) → preliminar
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, fecha_corte: "2026-05-01"}
+  espera: {dispara: true, accion: rotular, motivo: dato_preliminar}
+- id: B-REG-09-b
+  regla: R-REG-09
+  descripcion: borde corte = cierre (2026-06-30) → año cerrado; solo «datos al …»
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, fecha_corte: "2026-06-30"}
+  espera: {dispara: true, accion: rotular, motivo: fecha_corte}
+- id: B-REG-09-c
+  regla: R-REG-09
+  descripcion: sin fecha de corte ni de descarga → metadato_faltante
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: B-REG-09-d
+  regla: R-REG-09
+  descripcion: sin fecha de corte → fecha de descarga y advertir
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, fecha_descarga: "2026-09-01"}
+  espera: {dispara: true, accion: advertir}
+- id: B-REG-09-e
+  regla: R-REG-09
+  descripcion: año en curso comparado con un año completo sin mismo periodo → no comparar
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2026, fecha_corte: "2026-08-31", comparacion: {anio: 2025}}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: B-REG-09-f
+  regla: R-REG-09
+  descripcion: encuesta (fuera de aplica_a) → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-EST-01 (Mapa de Pobreza 2018)
+- id: B-EST-01-a
+  regla: R-EST-01
+  descripcion: intervalo de 55 pp (> 20) → solo el intervalo (rango)
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "120205", medida: intervalo}
+  espera: {dispara: true, accion: publicar_referencial, modo: rango}
+- id: B-EST-01-b
+  regla: R-EST-01
+  descripcion: 2018 con ancho 12 pp → solo aviso de antigüedad
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "200300", medida: intervalo}
+  espera: {dispara: true, accion: advertir}
+- id: B-EST-01-c
+  regla: R-EST-01
+  descripcion: estimación de 2024 con ancho 10 pp → no dispara
+  base: {indicador: mapa_pobreza_2018}
+  cifra: {anio: 2024, anio_referencia: 2024, ic_inf: 20.0, ic_sup: 30.0, metodo_ic: publicado_inei}
+  espera: {dispara: false}
+- id: B-EST-01-d
+  regla: R-EST-01
+  descripcion: borde ancho = 20 pp y antigüedad 3 años → no dispara
+  base: {indicador: mapa_pobreza_2018}
+  cifra: {anio: 2023, anio_referencia: 2023, ic_inf: 20.0, ic_sup: 40.0, metodo_ic: publicado_inei}
+  espera: {dispara: false}
+- id: B-EST-01-e
+  regla: R-EST-01
+  descripcion: antigüedad 4 años → advertir
+  base: {indicador: mapa_pobreza_2018}
+  cifra: {anio: 2022, anio_referencia: 2022, ic_inf: 20.0, ic_sup: 30.0, metodo_ic: publicado_inei}
+  espera: {dispara: true, accion: advertir, motivo: vigencia}
+- id: B-EST-01-f
+  regla: R-EST-01
+  descripcion: sin incertidumbre publicada → referencial
+  base: {indicador: mapa_pobreza_2018}
+  cifra: {anio: 2024, anio_referencia: 2024, incertidumbre_publicada: false, ic_inf: null, ic_sup: null}
+  espera: {dispara: true, accion: publicar_referencial}
+- id: B-EST-01-g
+  regla: R-EST-01
+  descripcion: nivel pedido centro poblado (más fino que distrito) → bloquear
+  base: {indicador: mapa_pobreza_2018}
+  cifra: {anio: 2024, anio_referencia: 2024, ic_inf: 20.0, ic_sup: 30.0, metodo_ic: publicado_inei}
+  consulta: {nivel_pedido: centro_poblado}
+  espera: {dispara: true, accion: suprimir, motivo: nivel_no_representativo}
+
+# ---------------------------------------------------------------- R-GASTO-04
+- id: B-GASTO-04-a
+  regla: R-GASTO-04
+  descripcion: gasto ex-PAN 2025 nacional (fuente canónica, 2025-Gasto-Mensual.csv, G-08 ok) → no dispara
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  espera: {dispara: false}
+- id: B-GASTO-04-b
+  regla: R-GASTO-04
+  descripcion: la conciliación G-08 falló → bloquear (suprimir)
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  contexto: {manifiestos: {s3_gasto: {pruebas: {total: 49, fallidas: [G-08], bloqueantes_fallidas: [G-08]}}}}
+  espera: {dispara: true, accion: suprimir, motivo: conciliacion_gasto}
+- id: B-GASTO-04-c
+  regla: R-GASTO-04
+  descripcion: rol_gasto de ruta alterna → bloquear
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {rol_gasto: ruta_alterna}
+  espera: {dispara: true, accion: suprimir, motivo: fuente_no_canonica}
+- id: B-GASTO-04-d
+  regla: R-GASTO-04
+  descripcion: año 2022 sin archivo canónico cargado → fallo de ingesta
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {anio: 2022}
+  espera: {dispara: true, accion: revision_humana, motivo: fallo_de_ingesta}
+- id: B-GASTO-04-e
+  regla: R-GASTO-04
+  descripcion: montos de dos fuentes de gasto (insumo DEVENGADO-MENSUAL como numerador) → bloquear
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {insumos: [{id: MEF-DA-PRESUPUESTO-EJECUCION-GASTO, rol: numerador}, {id: MEF-DA-GASTO-DEVENGADO-MENSUAL, rol: numerador}]}
+  espera: {dispara: true, accion: suprimir}
+
+- id: B-GASTO-04-f
+  regla: R-GASTO-04
+  descripcion: B-2 — la consulta suma montos de la Consulta Amigable (fuentes_montos) → bloquear
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {fuentes_montos: [MEF-DA-PRESUPUESTO-EJECUCION-GASTO, MEF-CONSULTA-AMIGABLE-GASTO-MENSUAL]}
+  espera: {dispara: true, accion: suprimir, motivo: fuente_no_canonica}
+
+# ---------------------------------------------------------------- R-GASTO-05
+- id: B-GASTO-05-a
+  regla: R-GASTO-05
+  descripcion: cifra temática de gasto final → rótulo «sin transferencias»
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  espera: {dispara: true, accion: rotular, motivo: transferencias}
+- id: B-GASTO-05-b
+  regla: R-GASTO-05
+  descripcion: cifra temática con bloque «entregado fuera del presupuesto» → bloquear
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {bloque_consolidado: entregado_fuera_del_presupuesto}
+  espera: {dispara: true, accion: suprimir}
+- id: B-GASTO-05-c
+  regla: R-GASTO-05
+  descripcion: suma de MONTO_ACREDITADO con devengado → bloquear_cruce
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {medidas_sumadas: [MONTO_ACREDITADO, MONTO_DEVENGADO]}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: B-GASTO-05-g
+  regla: R-GASTO-05
+  descripcion: H-16 — cláusula (7) suma de partidas recibidas y caja acreditada → bloquear_cruce
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {medidas_sumadas: [partidas_recibidas, caja_acreditada_rd]}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: B-GASTO-05-h
+  regla: R-GASTO-05
+  descripcion: H-16 — un bloque de recursos recibidos con el devengado → bloquear_cruce
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {medidas_sumadas: [transferencias_financieras_incorporadas, devengado]}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: B-GASTO-05-d
+  regla: R-GASTO-05
+  descripcion: sin bloque_consolidado ni definición → metadato_faltante
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {bloque_consolidado: null, definicion: null}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: B-GASTO-05-e
+  regla: R-GASTO-05
+  descripcion: cifra de encuesta (fuera de aplica_a) → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  espera: {dispara: false}
+- id: B-GASTO-05-f
+  regla: R-GASTO-05
+  descripcion: consolidado sin tema, bloque de fondos por identificar → solo como nota (rotular)
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {tema_id: null, bloque_consolidado: posible_doble_conteo_fondo}
+  espera: {dispara: true, accion: rotular}
+
+# ---------------------------------------------------------------- R-GASTO-06
+- id: B-GASTO-06-a
+  regla: R-GASTO-06
+  descripcion: devengado → rótulo de fase
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  espera: {dispara: true, accion: rotular, motivo: fase_gasto}
+- id: B-GASTO-06-b
+  regla: R-GASTO-06
+  descripcion: fase certificado → no publicar en el MVP
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {fase_gasto: certificado}
+  espera: {dispara: true, accion: suprimir, motivo: fase_gasto}
+- id: B-GASTO-06-c
+  regla: R-GASTO-06
+  descripcion: devengado anual negativo → error de datos
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {valor: -100.0}
+  espera: {dispara: true, accion: revision_humana}
+- id: B-GASTO-06-d
+  regla: R-GASTO-06
+  descripcion: cifra de avance (no es una fase) → no dispara
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  cifra: {medida: avance}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-GASTO-07
+- id: B-GASTO-07-a
+  regla: R-GASTO-07
+  descripcion: cifra de una sola fase (devengado) → no dispara
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: nacional, territorio: PE, medida: devengado}
+  espera: {dispara: false}
+- id: B-GASTO-07-b
+  regla: R-GASTO-07
+  descripcion: borde PIM 49 999 < 50 000 → suprimir el avance
+  base: {indicador: gasto_ex_pan}
+  cifra: {anio: 2025, devengado: 40000, pim: 49999, anio_cerrado: true, fecha_corte: "2026-04-15"}
+  espera: {dispara: true, accion: suprimir}
+- id: B-GASTO-07-c
+  regla: R-GASTO-07
+  descripcion: borde PIM 50 000, año cerrado → rótulo con PIM final y fecha
+  base: {indicador: gasto_ex_pan}
+  cifra: {anio: 2025, devengado: 40000, pim: 50000, anio_cerrado: true, fecha_corte: "2026-04-15"}
+  espera: {dispara: true, accion: rotular, motivo: avance}
+- id: B-GASTO-07-d
+  regla: R-GASTO-07
+  descripcion: borde avance 100,5 % → no es error (rotular)
+  base: {indicador: gasto_ex_pan}
+  cifra: {anio: 2025, medida: avance, valor: 100.5, pim: 1000000, anio_cerrado: true, fecha_corte: "2026-04-15"}
+  espera: {dispara: true, accion: rotular}
+- id: B-GASTO-07-e
+  regla: R-GASTO-07
+  descripcion: avance 100,6 % → error de datos (revisión humana)
+  base: {indicador: gasto_ex_pan}
+  cifra: {anio: 2025, medida: avance, valor: 100.6, pim: 1000000, anio_cerrado: true, fecha_corte: "2026-04-15"}
+  espera: {dispara: true, accion: revision_humana}
+- id: B-GASTO-07-f
+  regla: R-GASTO-07
+  descripcion: año en curso → rotular «parcial»
+  base: {indicador: gasto_ex_pan}
+  cifra: {anio: 2026, devengado: 400000, pim: 1000000, fecha_extraccion: "2026-09-30", fecha_corte: "2026-09-30"}
+  espera: {dispara: true, accion: rotular, motivo: dato_preliminar}
+- id: B-GASTO-07-g
+  regla: R-GASTO-07
+  descripcion: «ejecución» con denominador PIA → bloquear
+  base: {indicador: gasto_ex_pan}
+  cifra: {anio: 2025, devengado: 400000, pim: 1000000, denominador_avance: pia, rotulo_cifra: "ejecución del presupuesto", anio_cerrado: true, fecha_corte: "2026-04-15"}
+  espera: {dispara: true, accion: suprimir, motivo: rotulo_prohibido}
+- id: B-GASTO-07-h
+  regla: R-GASTO-07
+  descripcion: avance sin año cerrado ni fecha de extracción → metadato_faltante
+  base: {indicador: gasto_ex_pan}
+  cifra: {anio: 2025, devengado: 400000, pim: 1000000, fecha_corte: "2026-04-15"}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+
+# ---------------------------------------------------------------- R-REG-12
+- id: B-REG-12-a
+  regla: R-REG-12
+  descripcion: numerador 4 (< 5, sensibilidad normal) → suprimir
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: departamento, numerador: 4, denominador: 200}
+  espera: {dispara: true, accion: suprimir, motivo: divulgacion}
+- id: B-REG-12-b
+  regla: R-REG-12
+  descripcion: borde numerador 5 en un departamento → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: departamento, numerador: 5, denominador: 200}
+  espera: {dispara: false}
+- id: B-REG-12-c
+  regla: R-REG-12
+  descripcion: distrito con 0 casos y población desconocida → suprimir (cláusula 4, lectura restrictiva)
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 0, denominador: 40}
+  espera: {dispara: true, accion: suprimir, motivo: divulgacion}
+- id: B-REG-12-d
+  regla: R-REG-12
+  descripcion: distrito con 0 casos y población 1000 → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 0, denominador: 40, poblacion: 1000}
+  espera: {dispara: false}
+- id: B-REG-12-e
+  regla: R-REG-12
+  descripcion: borde población 999 y celda igual al total → suprimir
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 40, denominador: 40, poblacion: 999}
+  espera: {dispara: true, accion: suprimir}
+- id: B-REG-12-f
+  regla: R-REG-12
+  descripcion: fuente sensible por tema en distrito de 10 000 hab. → nivel mínimo provincia
+  cifra: {fuente_principal: MIMP-WARMINAN-BANCO-DATOS, naturaleza_dato: registro_administrativo, tipo_medida: atenciones_produccion, anio: 2025, nivel: distrito, numerador: 30, denominador: 500, poblacion: 10000}
+  espera: {dispara: true, accion: suprimir, motivo: divulgacion_nivel}
+- id: B-REG-12-g
+  regla: R-REG-12
+  descripcion: borde sensible en distrito de 20 000 hab. con celda 10 → se publica desde el cubo protegido (rotular)
+  cifra: {fuente_principal: MIMP-WARMINAN-BANCO-DATOS, naturaleza_dato: registro_administrativo, tipo_medida: atenciones_produccion, anio: 2025, nivel: distrito, numerador: 10, denominador: 500, poblacion: 20000}
+  espera: {dispara: true, accion: rotular}
+- id: B-REG-12-h
+  regla: R-REG-12
+  descripcion: sensible con complemento 3 (denominador − numerador < 10) → suprimir
+  cifra: {fuente_principal: MIMP-WARMINAN-BANCO-DATOS, naturaleza_dato: registro_administrativo, tipo_medida: atenciones_produccion, anio: 2025, nivel: departamento, numerador: 47, denominador: 50, poblacion: 900000}
+  espera: {dispara: true, accion: suprimir, motivo: divulgacion}
+- id: B-REG-12-i
+  regla: R-REG-12
+  descripcion: sensibilidad «ninguna» (no cuenta personas) → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 2, denominador: 40, sensibilidad_divulgacion: ninguna}
+  espera: {dispara: false}
+- id: B-REG-12-j
+  regla: R-REG-12
+  descripcion: estimación modelada (fuera de aplica_a) → no dispara
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "120205", medida: intervalo}
+  espera: {dispara: false}
+- id: B-REG-12-k
+  regla: R-REG-12
+  descripcion: 1000 ≤ población < 5000 con 2 desagregaciones → suprimir
+  base: {indicador: sien_anemia_tamizados_6_35m}
+  cifra: {anio: 2025, nivel: distrito, numerador: 20, denominador: 80, poblacion: 4000, n_desagregaciones_adicionales: 2}
+  espera: {dispara: true, accion: suprimir}
+
+# ---------------------------------------------------------------- R-CRUCES-09
+- id: B-CRUCES-09-a
+  regla: R-CRUCES-09
+  descripcion: anemia ENDES Huancavelica 2025 publicable y reciente → verde
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: publicar, resultados_previos: []}
+  espera: {dispara: true, accion: rotular, motivo: semaforo, semaforo: verde}
+- id: B-CRUCES-09-b
+  regla: R-CRUCES-09
+  descripcion: pobreza ENAHO Ica 2025 referencial (L9) → ámbar
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  cifra: {accion_previa: publicar_referencial, resultados_previos: [{regla: R-ENC-04, accion: publicar_referencial, motivo: precision}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: ambar}
+- id: B-CRUCES-09-c
+  regla: R-CRUCES-09
+  descripcion: suprimida → no publicable
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {accion_previa: suprimir, resultados_previos: [{regla: R-ENC-03, accion: suprimir, motivo: precision}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: no_publicable}
+- id: B-CRUCES-09-d
+  regla: R-CRUCES-09
+  descripcion: Mapa 2018 (8 años; intervalo de 55 pp, rango) → rojo
+  base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "120205", medida: intervalo}
+  cifra: {accion_previa: publicar_referencial, resultados_previos: [{regla: R-EST-01, accion: publicar_referencial, modo: rango, motivo: precision}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: rojo}
+- id: B-CRUCES-09-e
+  regla: R-CRUCES-09
+  descripcion: cobertura SIEN de Ica (cota superior 49,5 < 50) → rojo
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: departamento, territorio: "11", medida: cobertura}
+  cifra: {accion_previa: publicar_referencial, resultados_previos: [{regla: R-REG-07, accion: publicar_referencial, motivo: seleccion}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: rojo}
+- id: B-CRUCES-09-f
+  regla: R-CRUCES-09
+  descripcion: anemia SIEN de Puno (rank_concepto 2 y base establecimiento, estructurales; cobertura 50,5 ≥ 50) → ámbar
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {accion_previa: publicar, resultados_previos: []}
+  espera: {dispara: true, motivo: semaforo, semaforo: ambar}
+- id: B-CRUCES-09-g
+  regla: R-CRUCES-09
+  descripcion: escalamiento — tres criterios no estructurales en 1 (referencial, preliminar, subregistro) → rojo
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {subregistro_conocido: true, preliminar: true, accion_previa: publicar_referencial, resultados_previos: [{regla: R-ENC-03, accion: publicar_referencial, motivo: precision}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: rojo}
+- id: B-CRUCES-09-h
+  regla: R-CRUCES-09
+  descripcion: dos criterios en 1 → ámbar (no escala)
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {preliminar: true, accion_previa: publicar_referencial, resultados_previos: [{regla: R-ENC-03, accion: publicar_referencial, motivo: precision}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: ambar}
+- id: B-CRUCES-09-i
+  regla: R-CRUCES-09
+  descripcion: borde vigencia — dato más reciente de hace 3 años → ámbar
+  base: {indicador: endes_anemia_6_35m, anio: 2023, nivel: departamento, territorio: "09"}
+  cifra: {anios_disponibles: [2021, 2022, 2023], accion_previa: publicar, resultados_previos: []}
+  espera: {dispara: true, motivo: semaforo, semaforo: ambar}
+- id: B-CRUCES-09-j
+  regla: R-CRUCES-09
+  descripcion: borde vigencia — dato más reciente de hace 2 años → verde
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {anios_disponibles: [2022, 2023, 2024], accion_previa: publicar, resultados_previos: []}
+  espera: {dispara: true, motivo: semaforo, semaforo: verde}
+- id: B-CRUCES-09-k
+  regla: R-CRUCES-09
+  descripcion: H-3 — comparación que cruza el quiebre de 2020 no sube el semáforo de la cifra (verde; la comparación va aparte)
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {comparacion: {anio: 2015}, accion_previa: publicar, resultados_previos: []}
+  espera: {dispara: true, motivo: semaforo, semaforo: verde}
+- id: B-CRUCES-09-l
+  regla: R-CRUCES-09
+  descripcion: cobertura SIEN de Lima Región (denominador propio IPF, sin contraste) → ámbar
+  base: {indicador: sien_cobertura_tamizaje_6_35m, anio: 2025, nivel: LIMA_REGION, territorio: LIMA_REGION, medida: cobertura}
+  cifra: {accion_previa: publicar, resultados_previos: []}
+  espera: {dispara: true, motivo: semaforo, semaforo: ambar}
+- id: B-CRUCES-09-n
+  regla: R-CRUCES-09
+  descripcion: H-2 — ya degradada a departamento; el agregar_nivel(departamento) de R-ENC-06 está cumplido → verde
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {accion_previa: agregar_nivel, resultados_previos: [{regla: R-ENC-06, accion: agregar_nivel, motivo: nivel_no_representativo, nivel_minimo: departamento}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: verde}
+- id: B-CRUCES-09-o
+  regla: R-CRUCES-09
+  descripcion: H-2 — cifra distrital con agregar_nivel(departamento) aún no cumplido → no publicable
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "211001"}
+  cifra: {accion_previa: agregar_nivel, resultados_previos: [{regla: R-ENC-06, accion: agregar_nivel, motivo: nivel_no_representativo, nivel_minimo: departamento}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: no_publicable}
+- id: B-CRUCES-09-p
+  regla: R-CRUCES-09
+  descripcion: H-2 — cifra que ya es un periodo agrupado con agrupar_anios previo → no cuenta 3 (verde)
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {periodo_agrupado: [2023, 2025], resultados_previos: [{regla: R-ENC-10, accion: agrupar_anios, motivo: precision}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: verde}
+- id: B-CRUCES-09-q
+  regla: R-CRUCES-09
+  descripcion: H-2 en Lima — anemia OMS 2024 de LM pedida a nivel distrito, ya degradada; R-ENC-06 pidió departamento y LM lo cumple (L1) → verde
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  cifra: {accion_previa: agregar_nivel, resultados_previos: [{regla: R-ENC-06, accion: agregar_nivel, motivo: nivel_no_representativo, nivel_minimo: departamento}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: verde}
+- id: B-CRUCES-09-r
+  regla: R-CRUCES-09
+  descripcion: H-2 en Lima — lo mismo con Lima Región → verde
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_REGION, territorio: LIMA_REGION}
+  consulta: {nivel_pedido: distrito, rol: principal}
+  cifra: {accion_previa: agregar_nivel, resultados_previos: [{regla: R-ENC-06, accion: agregar_nivel, motivo: nivel_no_representativo, nivel_minimo: departamento}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: verde}
+- id: B-CRUCES-09-s
+  regla: R-CRUCES-09
+  descripcion: H-2 — LM no cumple un mínimo «nacional» → no publicable
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  cifra: {accion_previa: agregar_nivel, resultados_previos: [{regla: R-TERRITORIO-08, accion: agregar_nivel, motivo: nivel_no_representativo, nivel_minimo: nacional}]}
+  espera: {dispara: true, motivo: semaforo, semaforo: no_publicable}
+- id: B-CRUCES-09-m
+  regla: R-CRUCES-09
+  descripcion: cifra de padrón usada como denominador → sin semáforo propio
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  consulta: {rol: denominador}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- PIPELINE (etapas 0–7 con las reglas registradas)
+- id: B-PIPE-01
+  regla: PIPELINE
+  descripcion: pobreza ENAHO Ica 2025 → referencial (L9)
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "11"}
+  consulta: {nivel_pedido: departamento, rol: principal}
+  espera: {accion_final: publicar_referencial, estado_cifra: referencial}

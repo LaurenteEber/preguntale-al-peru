@@ -1,0 +1,1693 @@
+# dim_indicador — indicadores del piloto (preguntas 1–4). Tabla curada (R-MOTOR-02, R-DEP-01; diccionario de reglas.md).
+# v1.1.0, 9/10/2026: Lima en tres ámbitos (L1, L2, L4, L5, L7, L8; P4 de 03_auditoria/lima_tres_ambitos/implementacion/).
+# v1.0.0: propuesta del analista con las correcciones del auditor (03_auditoria/piloto_tablas_curadas/). Ámbitos de Lima:
+# nivel = ambito_id con su rango de NIVEL_RANK; asignación solo con src/pap/capa0/ambitos_lima.py.
+# Se construye con `pap construir indicadores` → biblioteca/dimensiones/dim_indicador.parquet. Esta es la fuente de verdad:
+# los cambios se hacen aquí, no en el generador del analista.
+version: 1.1.0
+fecha: '2026-10-09'
+indicadores:
+- id: endes_anemia_6_35m
+  estado_propuesta: activo_piloto
+  preguntas:
+  - 1
+  nombre_ciudadano: Niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024)
+  nombre_tecnico: Prevalencia de anemia en niñas y niños de 6 a 35 meses, ENDES, criterio RM 363-2022-MINSA/OMS 2001
+  tema: anemia
+  concepto_medido: anemia_6_35m
+  rank_concepto: 1
+  criterio_medicion: RM363-2022/OMS2001
+  fuente_principal: INEI-ENDES
+  naturaleza_dato: encuesta_muestral
+  tipo_medida: prevalencia
+  base_geografica: muestra
+  base_geografica_usada: muestra
+  columna_ubigeo: 'departamento (HV024); ubigeo_hogar desde 2018; ámbito de Lima: ambitos_lima.ambito_lima_endes (ubigeo desde 2018; estrato id_estrato en 2015–2017)'
+  sistema_ubigeo: INEI
+  tipo_estimacion: proporcion
+  unidad: porcentaje (1 decimal)
+  origen_cifra: oficial
+  poblacion_objetivo:
+    descripcion: niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior
+    edad_min_meses: 6
+    edad_max_meses: 35
+    sexo: T
+    area: total
+    marcador_u: null
+  universo: total
+  unidad_observacion: persona
+  es_socioeconomico: true
+  velocidad_cambio: rapida
+  sensibilidad_divulgacion: normal
+  subregistro_conocido: false
+  insumos:
+  - id: INEI-ENDES
+    rol: numerador
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: dim_dominio
+    rol: tabla_curada
+    nota: 'dominios de Lima y Callao (R-TERRITORIO-06, R-ENC-07); sin crudo en el catálogo: pendiente D-AUD-1'
+  requiere_denominador: false
+  tipo_denominador: prevalencia_encuesta
+  denominador_principal: 'no_requiere: factores de expansión de la encuesta'
+  denominadores_contraste: []
+  denominador_tipo_poblacion: no_aplica
+  vintage_denominador: no_aplica
+  metodo_denominador: no_aplica
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: anual
+  nivel_territorial_inferencia: departamento
+  dominios_inferencia:
+    anual:
+    - nacional
+    - urbano
+    - rural
+    - departamento
+    - callao
+    ambitos_publicados:
+    - lima_metropolitana
+    - lima_provincias
+    semestral:
+    - nacional
+    - urbano
+    - rural
+    - region_natural
+  tipo_aplicacion: muestral
+  modulo_encuesta: '*'
+  niveles_validos:
+  - nivel: nacional
+    anios: 2015-2025
+  - nivel: dominio_subnacional
+    dominios:
+    - urbano
+    - rural
+    anios: 2015-2025
+    nota: 'área (columna area); NIVEL_RANK no tiene ''area'': se usa dominio_subnacional (parametros_globales.NIVEL_RANK.nota)'
+  - nivel: departamento
+    anios: 2015-2025
+    nota: 24 departamentos; el 15 entero se rotula «departamento de Lima (Lima Metropolitana + Lima Región)» y nunca va junto a LM o LR (R-ENC-12). El Callao (07) se publica con nivel CALLAO
+  - nivel: LIMA_METROPOLITANA
+    rango: 3
+    anios: 2015-2025
+    rotulo: Lima Metropolitana (provincia de Lima)
+    dominio_id: lima_metropolitana
+    tipo: ambito_publicado
+    metodo:
+      2015-2017: estrato_hv022 (id_estrato 15-1; aviso ambito_por_estrato)
+      2018-2025: ubigeo (provincia_hogar)
+    avisos:
+    - ambito_no_dominio
+    - ambito_por_estrato
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', ámbito) como indicador de dominio (z = 0 fuera; R-ENC-01)
+    anios_condicionados:
+    - anio: 2025
+      condicion: 'dim_dominio ENDES 2025: lima_metropolitana y lima_provincias con confirmado = true (dominios.yaml)'
+      estado: 'confirmado: dos lecturas WebFetch independientes del Cuadro N.º 1 de la ficha 1038 (P2 y auditoría P2–P4) y estratos de los microdatos 2025 sin mezcla de ámbitos; orquestador 9/10/2026: 2025
+        activo. Pendiente no bloqueante: pdftotext de la página en el Mac'
+      decide: 'orquestador. Para revertir: en dominios.yaml partir las reglas ENDES [2020, 2025] de LM y LR en 2020–2024 (true) y 2025 (false), quitar 2025 de este nivel (IND-13 lo exige) y acotar D-05
+        (territorio.py) y test_lima_ambitos a 2015–2024'
+    avisos_anios:
+      ambito_por_estrato: 2015-2017
+  - nivel: LIMA_REGION
+    rango: 3.5
+    anios: 2015-2025
+    rotulo: Lima Región (Lima Provincias)
+    dominio_id: lima_provincias
+    tipo: ambito_publicado
+    metodo:
+      2015-2017: estrato_hv022 (id_estrato 15-2 y 15-3; aviso ambito_por_estrato)
+      2018-2025: ubigeo (provincia_hogar)
+    avisos:
+    - ambito_no_dominio
+    - ambito_por_estrato
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', ámbito) como indicador de dominio (z = 0 fuera; R-ENC-01)
+    anios_condicionados:
+    - anio: 2025
+      condicion: 'dim_dominio ENDES 2025: lima_metropolitana y lima_provincias con confirmado = true (dominios.yaml)'
+      estado: 'confirmado: dos lecturas WebFetch independientes del Cuadro N.º 1 de la ficha 1038 (P2 y auditoría P2–P4) y estratos de los microdatos 2025 sin mezcla de ámbitos; orquestador 9/10/2026: 2025
+        activo. Pendiente no bloqueante: pdftotext de la página en el Mac'
+      decide: 'orquestador. Para revertir: en dominios.yaml partir las reglas ENDES [2020, 2025] de LM y LR en 2020–2024 (true) y 2025 (false), quitar 2025 de este nivel (IND-13 lo exige) y acotar D-05
+        (territorio.py) y test_lima_ambitos a 2015–2024'
+    avisos_anios:
+      ambito_por_estrato: 2015-2017
+  - nivel: CALLAO
+    rango: 4
+    anios: 2015-2025
+    rotulo: Callao
+    dominio_id: callao
+    tipo: dominio_diseno
+    metodo:
+      2015-2025: variable_departamento (departamento 07)
+    avisos: []
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', 'CALLAO')
+    nota: dominio anual de la ficha (§3.7); mismo rango que un departamento
+  niveles_no_validos:
+  - nivel: region_natural
+    motivo: no reconstruible con ubigeo (R-TERRITORIO-07; nota de dim_dominio)
+  - nivel: provincia/distrito
+    motivo: más fino que nivel_territorial_inferencia (R-ENC-06; bloqueo B2)
+  - nivel: departamento 15 junto con LIMA_METROPOLITANA o LIMA_REGION en la misma lista o ranking
+    motivo: se superponen (R-ENC-12.unidades_ranking_departamental.nunca)
+  anios_disponibles:
+  - 2015
+  - 2016
+  - 2017
+  - 2018
+  - 2019
+  - 2020
+  - 2021
+  - 2022
+  - 2023
+  - 2024
+  - 2025
+  quiebres:
+  - anio: 2020
+    tipo: modo
+    descripcion: Entrevista telefónica parcial; hemoglobina y antropometría con peso HV005A; biomarcadores 2020 a revisión humana (R-ENC-13.biomedicos_endes_2020)
+    comparable_con: []
+  anios_con_quiebre:
+  - 2020
+  variables_diseno:
+    factor: peso
+    divisor_factor: 1
+    estrato: id_estrato
+    conglomerado: id_conglomerado
+    estratos_un_conglomerado: adjust
+    agrupar_anios: año × estrato y año × conglomerado (R-ENC-10)
+    nota: 'factor = columna peso = HV005/1e6 (2020: HV005A/1e6, mediciones). Pesos normalizados: no estimar totales'
+  metodo_ic: korn-graubard (variante NCHS; svy ci_method='korn-graubard')
+  validado_contra_oficial: false
+  tabla_origen: biblioteca/estandarizada/encuestas/endes_nino.parquet
+  definicion:
+    ref: definiciones_endes.yaml#indicadores.anemia_6_35m
+    variable: anemia_hist
+    filtro_universo: edad_meses BETWEEN 6 AND 35 AND hb_medida AND anemia_hist IS NOT NULL AND pernocto
+    numerador: anemia_hist = true
+    estimador: proporción ponderada con diseño (Taylor, gl = conglomerados − estratos)
+  rotulo_medida: niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir anterior a 2024 (RM 363-2022-MINSA)
+  rotulos_obligatorios:
+  - 'Criterio: forma de medir anterior a 2024 (RM 363-2022-MINSA). Desde 2024 la cifra principal usa la forma vigente (RM 251-2024); esta serie va como referencia.'
+  - '2020: la medición se hizo solo en parte de la muestra (entrevista presencial); ese punto no entra a comparaciones ni tendencias, que sí se hacen a través de él (decisión del 11/10/2026, P4; 2021 comparable, H7 cerrado).'
+  - Cifras con su IC 95 % y n de niños (R-ENC-05).
+  - 'Lima: toda cifra lleva el nombre largo del ámbito (L4): «Lima Metropolitana (provincia de Lima)», «Lima Región (Lima Provincias)», «Callao» o «departamento de Lima (Lima Metropolitana + Lima Región)».
+    Si el usuario escribe solo «Lima», se pregunta cuál (R-TERRITORIO-09).'
+  - 'LM y LR: aviso ambito_no_dominio (R-ENC-08). 2015–2017: también aviso ambito_por_estrato (L2).'
+  notas:
+  - '2015: con el universo único (pernocte) la cifra nacional queda ~0,15 pp debajo de lo publicado (43,35 vs 43,5); los departamentos se reproducen mejor.'
+  - 'No se empalma con endes_anemia_6_35m_oms2024; tramo A = 2015–2025 con este criterio (PR-27, D1 del dueño: recalcular la serie con el criterio vigente después del MVP).'
+  - 'Pesos normalizados: no estimar totales (R-ENC-17 fuera del piloto).'
+  - '2015–2017 sin ubigeo: LM = estrato 15-1 y LR = estratos 15-2 y 15-3 (Ficha ENDES, §3.6, Cuadro N.º 1; L2). Reproduce al INEI en 2017: LM 33,34 (33,3) y Callao 32,39 (32,4).'
+  ambito_lima_usado:
+    LIMA_METROPOLITANA: ambitos_lima.ambito_lima_endes (columna ambito_lima de endes_nino v1.1.0; método en ambito_lima_metodo)
+    LIMA_REGION: ambitos_lima.ambito_lima_endes
+    CALLAO: ambitos_lima.ambito_lima_endes (= departamento 07)
+  ranking:
+    regla: R-ENC-12
+    unidades:
+    - '01'
+    - '02'
+    - '03'
+    - '04'
+    - '05'
+    - '06'
+    - '08'
+    - '09'
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+    - '14'
+    - '16'
+    - '17'
+    - '18'
+    - '19'
+    - '20'
+    - '21'
+    - '22'
+    - '23'
+    - '24'
+    - '25'
+    - LIMA_METROPOLITANA
+    - LIMA_REGION
+    - CALLAO
+    total: 26
+    sin_LM_o_LR: si LM o LR no tienen cifra publicable (R-ENC-08), se usa el departamento 15 entero rotulado «departamento de Lima (Lima Metropolitana + Lima Región)», con nota (25 unidades)
+    nunca: el departamento 15 junto con LM o LR; el dominio 8 (AREA_METROPOLITANA_LIMA_CALLAO)
+    decision: L8 (9/10/2026; reemplaza D-AUD-2)
+- id: endes_anemia_6_35m_oms2024
+  estado_propuesta: activo_piloto
+  preguntas:
+  - 1
+  - 2
+  - 3
+  nombre_ciudadano: Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024)
+  nombre_tecnico: Prevalencia de anemia en niñas y niños de 6 a 35 meses, ENDES, directriz OMS 2024 (RM 251-2024-MINSA)
+  tema: anemia
+  concepto_medido: anemia_6_35m
+  rank_concepto: 1
+  criterio_medicion: RM251-2024/OMS2024
+  fuente_principal: INEI-ENDES
+  naturaleza_dato: encuesta_muestral
+  tipo_medida: prevalencia
+  base_geografica: muestra
+  base_geografica_usada: muestra
+  columna_ubigeo: 'departamento (HV024); ubigeo_hogar desde 2018; ámbito de Lima: ambitos_lima.ambito_lima_endes (ubigeo desde 2018; estrato id_estrato en 2015–2017)'
+  sistema_ubigeo: INEI
+  tipo_estimacion: proporcion
+  unidad: porcentaje (1 decimal)
+  origen_cifra: oficial
+  poblacion_objetivo:
+    descripcion: niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior
+    edad_min_meses: 6
+    edad_max_meses: 35
+    sexo: T
+    area: total
+    marcador_u: null
+  universo: total
+  unidad_observacion: persona
+  es_socioeconomico: true
+  velocidad_cambio: rapida
+  sensibilidad_divulgacion: normal
+  subregistro_conocido: false
+  insumos:
+  - id: INEI-ENDES
+    rol: numerador
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: dim_dominio
+    rol: tabla_curada
+    nota: 'dominios de Lima y Callao (R-TERRITORIO-06, R-ENC-07); sin crudo en el catálogo: pendiente D-AUD-1'
+  requiere_denominador: false
+  tipo_denominador: prevalencia_encuesta
+  denominador_principal: 'no_requiere: factores de expansión de la encuesta'
+  denominadores_contraste: []
+  denominador_tipo_poblacion: no_aplica
+  vintage_denominador: no_aplica
+  metodo_denominador: no_aplica
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: anual
+  nivel_territorial_inferencia: departamento
+  dominios_inferencia:
+    anual:
+    - nacional
+    - urbano
+    - rural
+    - departamento
+    - callao
+    ambitos_publicados:
+    - lima_metropolitana
+    - lima_provincias
+    semestral:
+    - nacional
+    - urbano
+    - rural
+    - region_natural
+  tipo_aplicacion: muestral
+  modulo_encuesta: '*'
+  niveles_validos:
+  - nivel: nacional
+    anios: 2024-2025
+  - nivel: dominio_subnacional
+    dominios:
+    - urbano
+    - rural
+    anios: 2024-2025
+    nota: 'área (columna area); NIVEL_RANK no tiene ''area'': se usa dominio_subnacional (parametros_globales.NIVEL_RANK.nota)'
+  - nivel: departamento
+    anios: 2024-2025
+    nota: 24 departamentos; el 15 entero se rotula «departamento de Lima (Lima Metropolitana + Lima Región)» y nunca va junto a LM o LR (R-ENC-12). El Callao (07) se publica con nivel CALLAO
+  - nivel: LIMA_METROPOLITANA
+    rango: 3
+    anios: 2024-2025
+    rotulo: Lima Metropolitana (provincia de Lima)
+    dominio_id: lima_metropolitana
+    tipo: ambito_publicado
+    metodo:
+      2024-2025: ubigeo (provincia_hogar)
+    avisos:
+    - ambito_no_dominio
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', ámbito) como indicador de dominio (z = 0 fuera; R-ENC-01)
+    anios_condicionados:
+    - anio: 2025
+      condicion: 'dim_dominio ENDES 2025: lima_metropolitana y lima_provincias con confirmado = true (dominios.yaml)'
+      estado: 'confirmado: dos lecturas WebFetch independientes del Cuadro N.º 1 de la ficha 1038 (P2 y auditoría P2–P4) y estratos de los microdatos 2025 sin mezcla de ámbitos; orquestador 9/10/2026: 2025
+        activo. Pendiente no bloqueante: pdftotext de la página en el Mac'
+      decide: 'orquestador. Para revertir: en dominios.yaml partir las reglas ENDES [2020, 2025] de LM y LR en 2020–2024 (true) y 2025 (false), quitar 2025 de este nivel (IND-13 lo exige) y acotar D-05
+        (territorio.py) y test_lima_ambitos a 2015–2024'
+  - nivel: LIMA_REGION
+    rango: 3.5
+    anios: 2024-2025
+    rotulo: Lima Región (Lima Provincias)
+    dominio_id: lima_provincias
+    tipo: ambito_publicado
+    metodo:
+      2024-2025: ubigeo (provincia_hogar)
+    avisos:
+    - ambito_no_dominio
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', ámbito) como indicador de dominio (z = 0 fuera; R-ENC-01)
+    anios_condicionados:
+    - anio: 2025
+      condicion: 'dim_dominio ENDES 2025: lima_metropolitana y lima_provincias con confirmado = true (dominios.yaml)'
+      estado: 'confirmado: dos lecturas WebFetch independientes del Cuadro N.º 1 de la ficha 1038 (P2 y auditoría P2–P4) y estratos de los microdatos 2025 sin mezcla de ámbitos; orquestador 9/10/2026: 2025
+        activo. Pendiente no bloqueante: pdftotext de la página en el Mac'
+      decide: 'orquestador. Para revertir: en dominios.yaml partir las reglas ENDES [2020, 2025] de LM y LR en 2020–2024 (true) y 2025 (false), quitar 2025 de este nivel (IND-13 lo exige) y acotar D-05
+        (territorio.py) y test_lima_ambitos a 2015–2024'
+  - nivel: CALLAO
+    rango: 4
+    anios: 2024-2025
+    rotulo: Callao
+    dominio_id: callao
+    tipo: dominio_diseno
+    metodo:
+      2024-2025: variable_departamento (departamento 07)
+    avisos: []
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', 'CALLAO')
+    nota: dominio anual de la ficha (§3.7); mismo rango que un departamento
+  niveles_no_validos:
+  - nivel: region_natural
+    motivo: no reconstruible con ubigeo (R-TERRITORIO-07; nota de dim_dominio)
+  - nivel: provincia/distrito
+    motivo: más fino que nivel_territorial_inferencia (R-ENC-06; bloqueo B2)
+  - nivel: departamento 15 junto con LIMA_METROPOLITANA o LIMA_REGION en la misma lista o ranking
+    motivo: se superponen (R-ENC-12.unidades_ranking_departamental.nunca)
+  anios_disponibles:
+  - 2024
+  - 2025
+  quiebres: []
+  anios_con_quiebre: []
+  variables_diseno:
+    factor: peso
+    divisor_factor: 1
+    estrato: id_estrato
+    conglomerado: id_conglomerado
+    estratos_un_conglomerado: adjust
+    agrupar_anios: año × estrato y año × conglomerado (R-ENC-10)
+    nota: 'factor = columna peso = HV005/1e6 (2020: HV005A/1e6, mediciones). Pesos normalizados: no estimar totales'
+  metodo_ic: korn-graubard (variante NCHS; svy ci_method='korn-graubard')
+  validado_contra_oficial: false
+  tabla_origen: biblioteca/estandarizada/encuestas/endes_nino.parquet
+  definicion:
+    ref: definiciones_endes.yaml#indicadores.anemia_6_35m_oms2024
+    variable: anemia_oms2024
+    filtro_universo: anio >= 2024 AND edad_meses BETWEEN 6 AND 35 AND hb_medida AND anemia_oms2024 IS NOT NULL AND pernocto
+    numerador: anemia_oms2024 = true
+    estimador: proporción ponderada con diseño (Taylor)
+  rotulo_medida: niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir vigente desde 2024 (RM 251-2024-MINSA)
+  rotulos_obligatorios:
+  - Forma de medir vigente desde 2024 (RM 251-2024-MINSA, nuevo ajuste por altitud); no se compara con años anteriores a 2024.
+  - Cifras con su IC 95 % y n de niños (R-ENC-05).
+  - 'Lima: toda cifra lleva el nombre largo del ámbito (L4): «Lima Metropolitana (provincia de Lima)», «Lima Región (Lima Provincias)», «Callao» o «departamento de Lima (Lima Metropolitana + Lima Región)».
+    Si el usuario escribe solo «Lima», se pregunta cuál (R-TERRITORIO-09).'
+  - 'LM y LR: aviso ambito_no_dominio (R-ENC-08).'
+  notas:
+  - No se empalma con endes_anemia_6_35m (R-ENC-14).
+  - 'Pregunta 3: da el paso 2 de R-CRUCES-07 (cómo evolucionó) por ámbito: LM, LR o Callao, 2024 vs 2025 (R-ENC-11, mismo territorio en los dos años); 2025 de LM y LR condicionado a dim_dominio ENDES 2025
+    (ver niveles_validos.anios_condicionados). El SIEN no puede darlo (solo 2025). (C1b, L5)'
+  - 'Pesos normalizados: no estimar totales.'
+  ambito_lima_usado:
+    LIMA_METROPOLITANA: ambitos_lima.ambito_lima_endes (columna ambito_lima de endes_nino v1.1.0; método en ambito_lima_metodo)
+    LIMA_REGION: ambitos_lima.ambito_lima_endes
+    CALLAO: ambitos_lima.ambito_lima_endes (= departamento 07)
+  ranking:
+    regla: R-ENC-12
+    unidades:
+    - '01'
+    - '02'
+    - '03'
+    - '04'
+    - '05'
+    - '06'
+    - '08'
+    - '09'
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+    - '14'
+    - '16'
+    - '17'
+    - '18'
+    - '19'
+    - '20'
+    - '21'
+    - '22'
+    - '23'
+    - '24'
+    - '25'
+    - LIMA_METROPOLITANA
+    - LIMA_REGION
+    - CALLAO
+    total: 26
+    sin_LM_o_LR: si LM o LR no tienen cifra publicable (R-ENC-08), se usa el departamento 15 entero rotulado «departamento de Lima (Lima Metropolitana + Lima Región)», con nota (25 unidades)
+    nunca: el departamento 15 junto con LM o LR; el dominio 8 (AREA_METROPOLITANA_LIMA_CALLAO)
+    decision: L8 (9/10/2026; reemplaza D-AUD-2)
+- id: endes_dci_menores_5
+  estado_propuesta: piloto_ampliado
+  preguntas:
+  - 7
+  nombre_ciudadano: Niñas y niños menores de 5 años con desnutrición crónica
+  nombre_tecnico: Desnutrición crónica en menores de 5 años, patrón OMS (talla para la edad < −2 DE), ENDES
+  tema: desnutricion_cronica
+  concepto_medido: dci_menor5
+  rank_concepto: 1
+  criterio_medicion: patron_OMS2006_talla_edad_-2DE
+  fuente_principal: INEI-ENDES
+  naturaleza_dato: encuesta_muestral
+  tipo_medida: prevalencia
+  base_geografica: muestra
+  base_geografica_usada: muestra
+  columna_ubigeo: 'departamento (HV024); ubigeo_hogar desde 2018; ámbito de Lima: ambitos_lima.ambito_lima_endes (ubigeo desde 2018; estrato id_estrato en 2015–2017)'
+  sistema_ubigeo: INEI
+  tipo_estimacion: proporcion
+  unidad: porcentaje (1 decimal)
+  origen_cifra: oficial
+  poblacion_objetivo:
+    descripcion: niñas y niños de 0 a 59 meses con talla válida que durmieron en la vivienda la noche anterior
+    edad_min_meses: 0
+    edad_max_meses: 59
+    sexo: T
+    area: total
+    marcador_u: null
+  universo: total
+  unidad_observacion: persona
+  es_socioeconomico: true
+  velocidad_cambio: rapida
+  sensibilidad_divulgacion: normal
+  subregistro_conocido: false
+  insumos:
+  - id: INEI-ENDES
+    rol: numerador
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: dim_dominio
+    rol: tabla_curada
+    nota: 'dominios de Lima y Callao (R-TERRITORIO-06, R-ENC-07); sin crudo en el catálogo: pendiente D-AUD-1'
+  requiere_denominador: false
+  tipo_denominador: prevalencia_encuesta
+  denominador_principal: 'no_requiere: factores de expansión de la encuesta'
+  denominadores_contraste: []
+  denominador_tipo_poblacion: no_aplica
+  vintage_denominador: no_aplica
+  metodo_denominador: no_aplica
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: anual
+  nivel_territorial_inferencia: departamento
+  dominios_inferencia:
+    anual:
+    - nacional
+    - urbano
+    - rural
+    - departamento
+    - callao
+    ambitos_publicados:
+    - lima_metropolitana
+    - lima_provincias
+    semestral:
+    - nacional
+    - urbano
+    - rural
+    - region_natural
+  tipo_aplicacion: muestral
+  modulo_encuesta: '*'
+  niveles_validos:
+  - nivel: nacional
+    anios: 2015-2025
+  - nivel: dominio_subnacional
+    dominios:
+    - urbano
+    - rural
+    anios: 2015-2025
+    nota: 'área (columna area); NIVEL_RANK no tiene ''area'': se usa dominio_subnacional (parametros_globales.NIVEL_RANK.nota)'
+  - nivel: departamento
+    anios: 2015-2025
+    nota: 24 departamentos; el 15 entero se rotula «departamento de Lima (Lima Metropolitana + Lima Región)» y nunca va junto a LM o LR (R-ENC-12). El Callao (07) se publica con nivel CALLAO
+  - nivel: LIMA_METROPOLITANA
+    rango: 3
+    anios: 2015-2025
+    rotulo: Lima Metropolitana (provincia de Lima)
+    dominio_id: lima_metropolitana
+    tipo: ambito_publicado
+    metodo:
+      2015-2017: estrato_hv022 (id_estrato 15-1; aviso ambito_por_estrato)
+      2018-2025: ubigeo (provincia_hogar)
+    avisos:
+    - ambito_no_dominio
+    - ambito_por_estrato
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', ámbito) como indicador de dominio (z = 0 fuera; R-ENC-01)
+    anios_condicionados:
+    - anio: 2025
+      condicion: 'dim_dominio ENDES 2025: lima_metropolitana y lima_provincias con confirmado = true (dominios.yaml)'
+      estado: 'confirmado: dos lecturas WebFetch independientes del Cuadro N.º 1 de la ficha 1038 (P2 y auditoría P2–P4) y estratos de los microdatos 2025 sin mezcla de ámbitos; orquestador 9/10/2026: 2025
+        activo. Pendiente no bloqueante: pdftotext de la página en el Mac'
+      decide: 'orquestador. Para revertir: en dominios.yaml partir las reglas ENDES [2020, 2025] de LM y LR en 2020–2024 (true) y 2025 (false), quitar 2025 de este nivel (IND-13 lo exige) y acotar D-05
+        (territorio.py) y test_lima_ambitos a 2015–2024'
+    avisos_anios:
+      ambito_por_estrato: 2015-2017
+  - nivel: LIMA_REGION
+    rango: 3.5
+    anios: 2015-2025
+    rotulo: Lima Región (Lima Provincias)
+    dominio_id: lima_provincias
+    tipo: ambito_publicado
+    metodo:
+      2015-2017: estrato_hv022 (id_estrato 15-2 y 15-3; aviso ambito_por_estrato)
+      2018-2025: ubigeo (provincia_hogar)
+    avisos:
+    - ambito_no_dominio
+    - ambito_por_estrato
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', ámbito) como indicador de dominio (z = 0 fuera; R-ENC-01)
+    anios_condicionados:
+    - anio: 2025
+      condicion: 'dim_dominio ENDES 2025: lima_metropolitana y lima_provincias con confirmado = true (dominios.yaml)'
+      estado: 'confirmado: dos lecturas WebFetch independientes del Cuadro N.º 1 de la ficha 1038 (P2 y auditoría P2–P4) y estratos de los microdatos 2025 sin mezcla de ámbitos; orquestador 9/10/2026: 2025
+        activo. Pendiente no bloqueante: pdftotext de la página en el Mac'
+      decide: 'orquestador. Para revertir: en dominios.yaml partir las reglas ENDES [2020, 2025] de LM y LR en 2020–2024 (true) y 2025 (false), quitar 2025 de este nivel (IND-13 lo exige) y acotar D-05
+        (territorio.py) y test_lima_ambitos a 2015–2024'
+    avisos_anios:
+      ambito_por_estrato: 2015-2017
+  - nivel: CALLAO
+    rango: 4
+    anios: 2015-2025
+    rotulo: Callao
+    dominio_id: callao
+    tipo: dominio_diseno
+    metodo:
+      2015-2025: variable_departamento (departamento 07)
+    avisos: []
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENDES', 'CALLAO')
+    nota: dominio anual de la ficha (§3.7); mismo rango que un departamento
+  niveles_no_validos:
+  - nivel: region_natural
+    motivo: no reconstruible con ubigeo (R-TERRITORIO-07; nota de dim_dominio)
+  - nivel: provincia/distrito
+    motivo: más fino que nivel_territorial_inferencia (R-ENC-06; bloqueo B2)
+  - nivel: departamento 15 junto con LIMA_METROPOLITANA o LIMA_REGION en la misma lista o ranking
+    motivo: se superponen (R-ENC-12.unidades_ranking_departamental.nunca)
+  anios_disponibles:
+  - 2015
+  - 2016
+  - 2017
+  - 2018
+  - 2019
+  - 2020
+  - 2021
+  - 2022
+  - 2023
+  - 2024
+  - 2025
+  quiebres:
+  - anio: 2020
+    tipo: modo
+    descripcion: Entrevista telefónica parcial; antropometría con peso HV005A; revisión humana (R-ENC-13.biomedicos_endes_2020)
+    comparable_con: []
+  anios_con_quiebre:
+  - 2020
+  variables_diseno:
+    factor: peso
+    divisor_factor: 1
+    estrato: id_estrato
+    conglomerado: id_conglomerado
+    estratos_un_conglomerado: adjust
+    agrupar_anios: año × estrato y año × conglomerado (R-ENC-10)
+    nota: 'factor = columna peso = HV005/1e6 (2020: HV005A/1e6, mediciones). Pesos normalizados: no estimar totales'
+  metodo_ic: korn-graubard (variante NCHS; svy ci_method='korn-graubard')
+  validado_contra_oficial: false
+  tabla_origen: biblioteca/estandarizada/encuestas/endes_nino.parquet
+  definicion:
+    ref: definiciones_endes.yaml#indicadores.dci_menores_5
+    variable: dci
+    filtro_universo: edad_meses BETWEEN 0 AND 59 AND haz_valido AND pernocto
+    numerador: dci = true
+    estimador: proporción ponderada con diseño (Taylor)
+  rotulo_medida: niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES
+  rotulos_obligatorios:
+  - Cifras con su IC 95 % y n de niños (R-ENC-05).
+  - 'Lima: toda cifra lleva el nombre largo del ámbito (L4): «Lima Metropolitana (provincia de Lima)», «Lima Región (Lima Provincias)», «Callao» o «departamento de Lima (Lima Metropolitana + Lima Región)».
+    Si el usuario escribe solo «Lima», se pregunta cuál (R-TERRITORIO-09).'
+  - 'LM y LR: aviso ambito_no_dominio (R-ENC-08). 2015–2017: también aviso ambito_por_estrato (L2).'
+  notas:
+  - '2015: cifra nacional ~0,15 pp bajo lo publicado (14,25 vs 14,4).'
+  - DCI departamental 2024 (Cuadro 04A) pendiente como cita (preparación, «Abierto»).
+  - Si entra la pregunta 7 (asociación con gasto en agua por habitante) hacen falta R-CRUCES-06, R-GASTO-11 y R-GASTO-13 (71 reglas).
+  - '2015–2017 sin ubigeo: LM = estrato 15-1 y LR = estratos 15-2 y 15-3 (Ficha ENDES, §3.6, Cuadro N.º 1; L2). Reproduce al INEI en 2017: LM 33,34 (33,3) y Callao 32,39 (32,4).'
+  ambito_lima_usado:
+    LIMA_METROPOLITANA: ambitos_lima.ambito_lima_endes (columna ambito_lima de endes_nino v1.1.0; método en ambito_lima_metodo)
+    LIMA_REGION: ambitos_lima.ambito_lima_endes
+    CALLAO: ambitos_lima.ambito_lima_endes (= departamento 07)
+  ranking:
+    regla: R-ENC-12
+    unidades:
+    - '01'
+    - '02'
+    - '03'
+    - '04'
+    - '05'
+    - '06'
+    - '08'
+    - '09'
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+    - '14'
+    - '16'
+    - '17'
+    - '18'
+    - '19'
+    - '20'
+    - '21'
+    - '22'
+    - '23'
+    - '24'
+    - '25'
+    - LIMA_METROPOLITANA
+    - LIMA_REGION
+    - CALLAO
+    total: 26
+    sin_LM_o_LR: si LM o LR no tienen cifra publicable (R-ENC-08), se usa el departamento 15 entero rotulado «departamento de Lima (Lima Metropolitana + Lima Región)», con nota (25 unidades)
+    nunca: el departamento 15 junto con LM o LR; el dominio 8 (AREA_METROPOLITANA_LIMA_CALLAO)
+    decision: L8 (9/10/2026; reemplaza D-AUD-2)
+- id: sien_anemia_tamizados_6_35m
+  estado_propuesta: activo_piloto
+  preguntas:
+  - 2
+  - 3
+  nombre_ciudadano: Niñas y niños de 6 a 35 meses tamizados con anemia en establecimientos del MINSA y de los gobiernos regionales
+  nombre_tecnico: Proporción de niños de 6 a 35 meses con anemia entre los tamizados con diagnóstico válido, por establecimiento (SIEN-HIS, último control del año)
+  tema: anemia
+  concepto_medido: anemia_6_35m
+  rank_concepto: 2
+  criterio_medicion: RM251-2024/OMS2024
+  fuente_principal: INS-CENAN-SIEN
+  naturaleza_dato: registro_administrativo
+  tipo_medida: notificacion_vigilancia
+  base_geografica: establecimiento
+  base_geografica_usada: establecimiento
+  columna_ubigeo: ubigeo_eess
+  sistema_ubigeo: INEI
+  tipo_estimacion: proporcion
+  unidad: porcentaje (1 decimal)
+  origen_cifra: propio
+  poblacion_objetivo:
+    descripcion: niñas y niños de 6 a 35 meses tamizados (hemoglobina medida con diagnóstico válido) en establecimientos del MINSA y de los gobiernos regionales, en su último control del año
+    edad_min_meses: 6
+    edad_max_meses: 35
+    sexo: T
+    area: total
+    marcador_u: tamizados
+  universo: sector_publico_minsa
+  unidad_observacion: persona
+  es_socioeconomico: true
+  velocidad_cambio: rapida
+  sensibilidad_divulgacion: normal
+  subregistro_conocido: false
+  insumos:
+  - id: INS-CENAN-SIEN
+    rol: numerador
+  - id: SUSALUD-RENIPRESS
+    rol: tabla_curada
+    nota: ubicación del establecimiento (dim_establecimiento_salud); R-DEP-01.origen_bloqueantes pide declararlo. El vocabulario de rol no tiene 'ubicación' (H3)
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  requiere_denominador: false
+  tipo_denominador: personas_atendidas
+  denominador_principal: filas_dx_valido (niños tamizados con diagnóstico válido en el mismo establecimiento)
+  denominadores_contraste: []
+  denominador_tipo_poblacion: personas_atendidas
+  vintage_denominador: no_aplica
+  metodo_denominador: no_aplica
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: anual
+  nivel_territorial_inferencia: no_aplica
+  dominios_inferencia: []
+  modulo_encuesta: no_aplica
+  niveles_validos:
+  - nivel: establecimiento
+  - nivel: distrito
+    nota: rótulo «en establecimientos ubicados en…»
+  - nivel: provincia
+  - nivel: departamento
+    nota: el 15 entero se rotula «departamento de Lima (Lima Metropolitana + Lima Región)»
+  - nivel: LIMA_METROPOLITANA
+    rango: 3
+    rotulo: Lima Metropolitana (provincia de Lima)
+    asignacion: 'ambitos_lima.ambito_por_ubigeo(ubigeo_eess): suma de numeradores y denominadores de los establecimientos ubicados en el ámbito'
+    nota: rótulo «en establecimientos ubicados en Lima Metropolitana (provincia de Lima)» (R-REG-01)
+  - nivel: LIMA_REGION
+    rango: 3.5
+    rotulo: Lima Región (Lima Provincias)
+    asignacion: 'ambitos_lima.ambito_por_ubigeo(ubigeo_eess): suma de numeradores y denominadores de los establecimientos ubicados en el ámbito'
+    nota: rótulo «en establecimientos ubicados en Lima Región (Lima Provincias)» (R-REG-01)
+  - nivel: CALLAO
+    rango: 4
+    rotulo: Callao
+    asignacion: 'ambitos_lima.ambito_por_ubigeo(ubigeo_eess): suma de numeradores y denominadores de los establecimientos ubicados en el ámbito'
+    nota: rótulo «en establecimientos ubicados en Callao» (R-REG-01)
+  - nivel: nacional
+  niveles_no_validos:
+  - nivel: ninguno por territorio
+    motivo: la proporción es interna al servicio; no es prevalencia del territorio (R-REG-01)
+  anios_disponibles:
+  - 2025
+  quiebres:
+  - anio: 2020
+    tipo: sistema
+    descripcion: La vigilancia nutricional pasa a alimentarse del HIS
+    comparable_con: []
+  - anio: 2024
+    tipo: criterio
+    descripcion: 'Cambio a RM 251-2024/OMS 2024 a mitad de año: 2024 solo por periodos homogéneos (R-ENC-14 casos_borde, PR-27)'
+    comparable_con: []
+  anios_con_quiebre:
+  - 2020
+  - 2024
+  validado_contra_oficial: false
+  tabla_origen: biblioteca/dimensiones/fact_sien_hb_ubigeo.parquet
+  definicion:
+    filtro_universo: grupo_edad IN ('6-11m','12-23m','24-35m')
+    numerador: SUM(filas_con_anemia)
+    denominador: SUM(filas_dx_valido)
+    agregacion: GROUP BY ubigeo_eess (o cod_ipress) y niveles superiores sumando numerador y denominador
+    ic: Wilson (R-REG-03)
+  rotulo_medida: niños tamizados con anemia en establecimientos de salud del MINSA y de los gobiernos regionales (no es la prevalencia de la población)
+  rotulos_obligatorios:
+  - «De los niños de 6 a 35 meses a los que se les midió la hemoglobina en {anio} en establecimientos del MINSA y del gobierno regional ubicados en {lugar}, el {x} % tenía anemia en su último control del
+    año. Algunos viven en otros distritos. No es la anemia de todos los niños de {lugar}.»
+  - «La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño.»
+  - 'Ficha: unidad = un niño con su último control del año (confirmado: el INS usa «la atención más reciente de cada niño», Informe Gerencial SIEN-HIS Niños 2025, p. 13).'
+  notas:
+  - Lista prohibida de R-REG-01 (prevalencia, tasa de anemia del distrito…).
+  - Junto a la ENDES solo como cifras separadas (B4; R-CRUCES-08).
+- id: sien_cobertura_tamizaje_6_35m
+  estado_propuesta: activo_piloto
+  preguntas:
+  - 2
+  - 3
+  nombre_ciudadano: Niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100)
+  nombre_tecnico: Cobertura de tamizaje de hemoglobina en 6–35 meses por departamento y por LM, LR y Callao, con cota inferior (procedencia) y superior (+ sin procedencia atendidos en el territorio)
+  tema: anemia
+  concepto_medido: cobertura_tamizaje_hb_6_35m
+  rank_concepto: 1
+  criterio_medicion: RM251-2024/OMS2024
+  fuente_principal: INS-CENAN-SIEN
+  naturaleza_dato: registro_administrativo
+  tipo_medida: cobertura_programa
+  base_geografica: residencia
+  base_geografica_usada: residencia
+  columna_ubigeo: ubigeo_procedencia (cota inferior); ubigeo_eess (complemento de la cota superior)
+  sistema_ubigeo: INEI
+  tipo_estimacion: proporcion
+  unidad: de cada 100 (dos cotas, sin decimales en el texto)
+  origen_cifra: propio
+  poblacion_objetivo:
+    descripcion: niñas y niños de 6 a 35 meses residentes en el departamento o ámbito (LM, LR, Callao)
+    edad_min_meses: 6
+    edad_max_meses: 35
+    sexo: T
+    area: total
+    marcador_u: null
+  universo: total
+  unidad_observacion: persona
+  es_socioeconomico: true
+  velocidad_cambio: rapida
+  sensibilidad_divulgacion: normal
+  subregistro_conocido: false
+  insumos:
+  - id: INS-CENAN-SIEN
+    rol: numerador
+  - id: INEI-PROYECCIONES-DEPARTAMENTAL-EDAD
+    rol: denominador_principal
+  - id: MINSA-POBLACION-ESTIMADA
+    rol: contraste
+    nota: 'compuerta enlace_confirmado: se omite con nota en la ficha larga (R-DEP-01)'
+  - id: SUSALUD-RENIPRESS
+    rol: tabla_curada
+    nota: ubicación del establecimiento (cota superior)
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  requiere_denominador: true
+  tipo_denominador: cobertura_salud_por_edad
+  denominador_principal: INEI-PROYECCIONES-DEPARTAMENTAL-EDAD|6-35m|T
+  denominadores_contraste:
+  - MINSA-POBLACION-ESTIMADA|6-35m|T
+  denominador_tipo_poblacion: residente
+  vintage_denominador: INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01
+  metodo_denominador: oficial
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: anual
+  nivel_territorial_inferencia: no_aplica
+  dominios_inferencia: []
+  modulo_encuesta: no_aplica
+  niveles_validos:
+  - nivel: departamento
+    nota: dos cotas; nunca provincia ni distrito; el 15 entero se rotula «departamento de Lima (Lima Metropolitana + Lima Región)»
+  - nivel: LIMA_METROPOLITANA
+    rango: 3
+    rotulo: Lima Metropolitana (provincia de Lima)
+    denominador: propio (IPF), «población estimada (cálculo propio)»
+    nota: dos cotas; aviso si la cota inferior queda a menos de 1 punto sobre el 50 % (L7)
+  - nivel: LIMA_REGION
+    rango: 3.5
+    rotulo: Lima Región (Lima Provincias)
+    denominador: propio (IPF), «población estimada (cálculo propio)»
+    nota: dos cotas; aviso si la cota inferior queda a menos de 1 punto sobre el 50 % (L7)
+  - nivel: CALLAO
+    rango: 4
+    rotulo: Callao
+    denominador: oficial (departamento 07)
+    nota: dos cotas; aviso si la cota inferior queda a menos de 1 punto sobre el 50 % (L7)
+  niveles_no_validos:
+  - nivel: provincia/distrito
+    motivo: procedencia ubicada 84,6 % y no al azar; con ubigeo del EESS la cobertura supera 100 % en 223 distritos
+  - nivel: nacional
+    motivo: no decidido (L7 solo agrega LM, LR y Callao al «solo por departamento» del 7/10)
+  anios_disponibles:
+  - 2025
+  quiebres:
+  - anio: 2020
+    tipo: sistema
+    descripcion: La vigilancia nutricional pasa a alimentarse del HIS
+    comparable_con: []
+  - anio: 2024
+    tipo: criterio
+    descripcion: 'Cambio a RM 251-2024/OMS 2024 a mitad de año: 2024 solo por periodos homogéneos (R-ENC-14 casos_borde, PR-27)'
+    comparable_con: []
+  anios_con_quiebre:
+  - 2020
+  - 2024
+  validado_contra_oficial: false
+  tabla_origen: biblioteca/dimensiones/fact_sien_hb_ubigeo.parquet + fact_poblacion_grupo.parquet
+  definicion:
+    filtro_universo: grupo_edad IN ('6-11m','12-23m','24-35m')
+    cota_inf: SUM(filas) con LEFT(ubigeo_procedencia,2) = dpto / poblacion_6_35m(dpto, anio)
+    cota_sup: cota_inf + SUM(filas) con ubigeo_procedencia IS NULL y LEFT(ubigeo_eess,2) = dpto / poblacion_6_35m(dpto, anio)
+    denominador: fact_poblacion_grupo WHERE fuente_id='INEI-PROYECCIONES-DEPARTAMENTAL-EDAD' AND grupo_id='6-35m' AND nivel='departamento' AND sexo='T'
+    semaforo: usa cota_sup (R-REG-07, R-CRUCES-09)
+    cota_inf_ambito: SUM(filas) con ambitos_lima.ambito_por_ubigeo(ubigeo_procedencia) = ámbito / denominador_ambitos_lima
+    cota_sup_ambito: cota_inf_ambito + SUM(filas) con ubigeo_procedencia IS NULL y ambitos_lima.ambito_por_ubigeo(ubigeo_eess) = ámbito / denominador_ambitos_lima
+    aviso_margen: si 0 ≤ cota_inf − 50 < 1 → «apenas supera la mitad»; «más de la mitad» solo con cota_inf ≥ 50 (R-REG-07.sien_ambitos_lima, L7)
+  rotulo_medida: niños con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional, de cada 100 niños de 6 a 35 meses del departamento (no equivale a toda la población
+    atendida)
+  rotulos_obligatorios:
+  - «Entre {inf} y {sup} de cada 100 niños de 6 a 35 meses de {departamento} tuvieron al menos una medición de hemoglobina en {anio} en establecimientos del MINSA o del gobierno regional.»
+  - 'Si el intervalo cruza el 50 %: «Con los datos disponibles no podemos decir si la cobertura supera o no la mitad de los niños.»'
+  - 'Ficha: la cota superior no es estricta (no cuenta a niños sin procedencia del departamento atendidos en otros departamentos).'
+  - 'LM y LR: el denominador se rotula «población estimada (cálculo propio)» (L7).'
+  - 'Si 0 ≤ cota inferior − 50 < 1: «apenas supera la mitad» (2025: Lima Región, 50,6 %); «más de la mitad» solo si la cota inferior es ≥ 50 (L7).'
+  notas:
+  - 'Cobertura > 100 %: no truncar; 100–110 % referencial; > 110 % numerador y denominador (R-REG-08).'
+  - 'No es un cruce: es el control de calidad del SIEN (R-REG-07); se muestra junto a la anemia en tamizados.'
+  denominador_ambitos_lima:
+    tabla: fact_poblacion_grupo
+    propio:
+      ambitos:
+      - LIMA_METROPOLITANA
+      - LIMA_REGION
+      fuente_id: PROPIO-PRORRATEO-IPF
+      filtro:
+        grupo_id: 6-35m
+        sexo: T
+        nivel: distrito
+        geografia_base: vigente_{anio}
+      prefijos:
+        LIMA_METROPOLITANA:
+        - '1501'
+        LIMA_REGION:
+        - '15'
+        - '-1501'
+      anios: 2018-2026
+      rotulo: población estimada (cálculo propio)
+      metodo_denominador: propio
+      crudos:
+      - INEI-PROYECCIONES-POBLACION-DISTRITAL
+      - INEI-PROYECCIONES-DEPARTAMENTAL-EDAD
+      nota: 'una sola geografía por año (vigente_AAAA) y sexo T: sin el filtro la suma sale ×2 (GEO2017 + vigente)'
+    oficial:
+      ambitos:
+      - CALLAO
+      fuente_id: INEI-PROYECCIONES-DEPARTAMENTAL-EDAD
+      filtro:
+        grupo_id: 6-35m
+        sexo: T
+        nivel: departamento
+        geografia_base: vigente_{anio}
+      prefijos:
+        CALLAO:
+        - '07'
+      metodo_denominador: oficial
+      nota: 'R-REG-07.sien_ambitos_lima: Callao con la población oficial del 07 (el IPF da lo mismo)'
+    control:
+      suma:
+      - LIMA_METROPOLITANA
+      - LIMA_REGION
+      igual_a_oficial_prefijo: '15'
+      callao_propio_igual_a_oficial: true
+      tolerancia: 0.05
+      prueba: IND-14 (indicadores.py) ejecuta estos filtros con duckdb
+- id: gasto_ex_pan
+  estado_propuesta: activo_piloto
+  preguntas:
+  - 3
+  nombre_ciudadano: Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado)
+  nombre_tecnico: Devengado sin transferencias del grupo de conceptos estables grupo_expan (serie por concepto, siguiendo los servicios a cualquier programa), dim_tema_gasto v1.2
+  tema: gasto_publico
+  concepto_medido: gasto_servicios_ex_pan
+  rank_concepto: 1
+  criterio_medicion: dim_tema_gasto_v1.2|devengado|sin_transferencias
+  fuente_principal: MEF-DA-PRESUPUESTO-EJECUCION-GASTO
+  naturaleza_dato: presupuestal_financiero
+  tipo_medida: presupuesto_gasto
+  base_geografica: ejecutora
+  base_geografica_usada: ejecutora
+  columna_ubigeo: ubigeo_atribucion (fact_gasto_territorial)
+  sistema_ubigeo: INEI
+  tipo_estimacion: total
+  unidad: soles (corrientes si es un año; constantes del último año cerrado en series)
+  origen_cifra: propio
+  poblacion_objetivo:
+    descripcion: servicios para niñas y niños menores de 5 años y sus familias (CRED, vacunas, hierro y vitamina A, atención de anemia, IRA/EDA, parasitosis, consejería, comunicación, agua para consumo
+      humano)
+    edad_min_meses: 0
+    edad_max_meses: 59
+    sexo: T
+    area: total
+    marcador_u: null
+  universo: sector_publico
+  unidad_observacion: entidad
+  es_socioeconomico: true
+  velocidad_cambio: rapida
+  sensibilidad_divulgacion: ninguna
+  subregistro_conocido: false
+  insumos:
+  - id: MEF-DA-PRESUPUESTO-EJECUCION-GASTO
+    rol: numerador
+  - id: MEF-DETALLE-INVERSIONES
+    rol: tabla_curada
+    nota: ubicación por CUI vía dim_inversion_ubicacion (no es indicador)
+  - id: BCRP-IPC-LIMA
+    rol: tabla_curada
+    nota: deflactor de series (dim_ipc), R-GASTO-12
+  - id: dim_tema_gasto
+    rol: tabla_curada
+    nota: 'v1.2, revisado_por = dueño 7/10/2026; sin crudo en el catálogo: pendiente D-AUD-1'
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  requiere_denominador: false
+  tipo_denominador: no_aplica
+  denominador_principal: no_aplica
+  denominadores_contraste: []
+  denominador_tipo_poblacion: no_aplica
+  vintage_denominador: no_aplica
+  metodo_denominador: no_aplica
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: anual
+  nivel_territorial_inferencia: no_aplica
+  dominios_inferencia: []
+  modulo_encuesta: no_aplica
+  niveles_validos:
+  - nivel: nacional
+  - nivel: departamento
+    nota: DEPARTAMENTO_META + municipal + CUI; el 15 y el 07 solo con cuenta_en_ambito (un mecanismo, L6), línea aparte de referencia nacional, aviso de sesgo de sede y advertencia de ejecutoras mixtas
+      (función SALUD); el 15 entero (incluye 150000 «Lima sin separar») rotulado «departamento de Lima (Lima Metropolitana + Lima Región)»
+  - nivel: LIMA_METROPOLITANA
+    rango: 3
+    rotulo: Lima Metropolitana (provincia de Lima)
+    consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'LIMA_METROPOLITANA' GROUP BY 1
+    filtro: ambito_gasto (macro de vistas_gasto.sql) = cuenta_en_ambito + reparto por ámbito; v_gasto_por_ambito
+    linea_aparte: ambito_gasto = 'REFERENCIA_NACIONAL' (no se suma; va siempre, también si es 0)
+    avisos:
+    - sesgo_sede (R-GASTO-03.lima)
+    - ejecutoras_mixtas (función SALUD)
+  - nivel: LIMA_REGION
+    rango: 3.5
+    rotulo: Lima Región (Lima Provincias)
+    consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'LIMA_REGION' GROUP BY 1
+    filtro: ambito_gasto (macro de vistas_gasto.sql) = cuenta_en_ambito + reparto por ámbito; v_gasto_por_ambito
+    linea_aparte: ambito_gasto = 'REFERENCIA_NACIONAL' (no se suma; va siempre, también si es 0)
+    avisos:
+    - sesgo_sede (R-GASTO-03.lima)
+    - ejecutoras_mixtas (función SALUD)
+  - nivel: CALLAO
+    rango: 4
+    rotulo: Callao
+    consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'CALLAO' GROUP BY 1
+    filtro: ambito_gasto (macro de vistas_gasto.sql) = cuenta_en_ambito + reparto por ámbito; v_gasto_por_ambito
+    linea_aparte: ambito_gasto = 'REFERENCIA_NACIONAL' (no se suma; va siempre, también si es 0)
+    avisos:
+    - 'sesgo_sede (R-GASTO-03.callao: pct_sede pendiente)'
+    - sin per cápita ni ranking sin aviso (L6)
+  - nivel: provincia
+    nota: solo gasto municipal y de proyectos ubicados; referencial si pct_gasto_atribuible < 0,50
+  - nivel: distrito
+    nota: solo gasto municipal y de proyectos ubicados; inversión distrital siempre referencial (ubicación principal)
+  niveles_no_validos:
+  - nivel: distrito/provincia con gasto de ministerios o GORE
+    motivo: 'B1: base ejecutora sin municipal ni CUI'
+  - nivel: NO_ASIGNABLE_DPTO_LIMA (150000) y NO_ASIGNABLE_LIMA_CALLAO en LM, LR o Callao
+    motivo: 'no se reparten: solo en el total del departamento 15 o como línea aparte (v_gasto_por_ambito)'
+  - nivel: ranking de 26 unidades
+    motivo: 'R-GASTO-13: solo cuando la fact traiga cuenta_en_ambito en todos los años (v1.5.0 de P3 sin construir aquí)'
+  cifra_por_entidad: true
+  anios_disponibles:
+  - 2023
+  - 2024
+  - 2025
+  quiebres:
+  - anio: 2022
+    tipo: programa
+    descripcion: Productos de salud del PAN (PP 0001) pasan al PP 1001 en el año fiscal 2022; sin montos cargados (solo linaje documental, R-GASTO-09 caso 3)
+    comparable_con: []
+  - anio: 2023
+    tipo: programa
+    descripcion: L09 absorción total del tramo 2 del PP 0001 y L10 traslado a APNOP 9002; sin año anterior con montos
+    comparable_con: []
+  - anio: 2025
+    tipo: programa
+    descripcion: 'L11 división: comparable por concepto (nodos nuevos 1,4 %)'
+    comparable_con:
+    - 2023
+    - 2024
+  anios_con_quiebre: []
+  rol_gasto: canonica
+  tema_id: cpt_grupo_expan
+  cadena: concepto
+  alternativa_de: null
+  fase_gasto_defecto: DEVENGADO
+  precios: corrientes (1 año) | constantes base último año cerrado (series)
+  tabla_origen: vista v_gasto_tematico (fact_gasto_territorial, bloque_consolidado = 'gasto_final')
+  definicion:
+    consulta: gasto_tema('cpt_grupo_expan')
+    monto: MONTO_DEVENGADO
+    filtro: bloque_consolidado = 'gasto_final' (sin transferencias)
+    lima: ambito_gasto = 'LIMA_METROPOLITANA' | 'LIMA_REGION' | 'CALLAO' (cuenta_en_ambito); línea aparte ambito_gasto = 'REFERENCIA_NACIONAL'
+    control: nacional 2023–2025 = 2 179,2 / 2 429,0 / 2 455,9 millones
+  rotulo_medida: Servicios de salud y nutrición infantil que antes eran del PAN (devengado, sin transferencias)
+  rotulos_obligatorios:
+  - 'Nunca «gasto del PAN» para años posteriores a 2022: «servicios que antes eran del PAN» o el programa vigente (PP 1001).'
+  - Fase en el rótulo (devengado) y precios (corrientes o constantes de {anio_base}).
+  - 'Lima y Callao: línea aparte de centros de referencia nacional (también si es 0), aviso de sesgo de sede (Lima 38 %; Callao: aviso siempre, porcentaje pendiente) y advertencia de ejecutoras mixtas (función
+    SALUD). Callao: sin gasto por habitante ni ranking sin aviso (L6).'
+  - 'Distrito/provincia: «gasto municipal y de proyectos ubicados en el territorio» + % atribuible; inversión distrital: «ubicación principal registrada; la obra puede abarcar otros distritos».'
+  - 'Con el desglose (opción C) en la misma respuesta: «Son dos formas de ordenar el mismo gasto; no se suman.»'
+  notas:
+  - Cifra principal de los servicios ex-PAN (decisión 7/10/2026); la opción C va como desglose (gasto_ex_pan_opcion_c).
+  - 'Contexto posible (no cargado como indicador): cpt_grupo_anemia_estricta y pp_1001_dit (map_intencion_tema.contexto).'
+  - R-MOTOR-03 (último año cerrado) choca con la decisión de mostrar la serie 2023–2025 (H14).
+- id: gasto_ex_pan_opcion_c
+  estado_propuesta: activo_piloto
+  preguntas:
+  - 3
+  nombre_ciudadano: Los mismos servicios, solo dentro del programa presupuestal 1001 (devengado)
+  nombre_tecnico: Devengado sin transferencias de grupo_opcion_c (servicios ex-PAN restringidos al PP 1001), dim_tema_gasto v1.2
+  tema: gasto_publico
+  concepto_medido: gasto_servicios_ex_pan
+  rank_concepto: 1
+  criterio_medicion: dim_tema_gasto_v1.2|devengado|sin_transferencias
+  fuente_principal: MEF-DA-PRESUPUESTO-EJECUCION-GASTO
+  naturaleza_dato: presupuestal_financiero
+  tipo_medida: presupuesto_gasto
+  base_geografica: ejecutora
+  base_geografica_usada: ejecutora
+  columna_ubigeo: ubigeo_atribucion (fact_gasto_territorial)
+  sistema_ubigeo: INEI
+  tipo_estimacion: total
+  unidad: soles (corrientes si es un año; constantes del último año cerrado en series)
+  origen_cifra: propio
+  poblacion_objetivo:
+    descripcion: servicios para niñas y niños menores de 5 años y sus familias (CRED, vacunas, hierro y vitamina A, atención de anemia, IRA/EDA, parasitosis, consejería, comunicación, agua para consumo
+      humano)
+    edad_min_meses: 0
+    edad_max_meses: 59
+    sexo: T
+    area: total
+    marcador_u: null
+  universo: sector_publico
+  unidad_observacion: entidad
+  es_socioeconomico: true
+  velocidad_cambio: rapida
+  sensibilidad_divulgacion: ninguna
+  subregistro_conocido: false
+  insumos:
+  - id: MEF-DA-PRESUPUESTO-EJECUCION-GASTO
+    rol: numerador
+  - id: MEF-DETALLE-INVERSIONES
+    rol: tabla_curada
+    nota: ubicación por CUI vía dim_inversion_ubicacion (no es indicador)
+  - id: BCRP-IPC-LIMA
+    rol: tabla_curada
+    nota: deflactor de series (dim_ipc), R-GASTO-12
+  - id: dim_tema_gasto
+    rol: tabla_curada
+    nota: 'v1.2, revisado_por = dueño 7/10/2026; sin crudo en el catálogo: pendiente D-AUD-1'
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  requiere_denominador: false
+  tipo_denominador: no_aplica
+  denominador_principal: no_aplica
+  denominadores_contraste: []
+  denominador_tipo_poblacion: no_aplica
+  vintage_denominador: no_aplica
+  metodo_denominador: no_aplica
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: anual
+  nivel_territorial_inferencia: no_aplica
+  dominios_inferencia: []
+  modulo_encuesta: no_aplica
+  niveles_validos:
+  - nivel: nacional
+  - nivel: departamento
+    nota: DEPARTAMENTO_META + municipal + CUI; el 15 y el 07 solo con cuenta_en_ambito (un mecanismo, L6), línea aparte de referencia nacional, aviso de sesgo de sede y advertencia de ejecutoras mixtas
+      (función SALUD); el 15 entero (incluye 150000 «Lima sin separar») rotulado «departamento de Lima (Lima Metropolitana + Lima Región)»
+  - nivel: LIMA_METROPOLITANA
+    rango: 3
+    rotulo: Lima Metropolitana (provincia de Lima)
+    consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_opcion_c') WHERE ambito_gasto = 'LIMA_METROPOLITANA' GROUP BY 1
+    filtro: ambito_gasto (macro de vistas_gasto.sql) = cuenta_en_ambito + reparto por ámbito; v_gasto_por_ambito
+    linea_aparte: ambito_gasto = 'REFERENCIA_NACIONAL' (no se suma; va siempre, también si es 0)
+    avisos:
+    - sesgo_sede (R-GASTO-03.lima)
+    - ejecutoras_mixtas (función SALUD)
+  - nivel: LIMA_REGION
+    rango: 3.5
+    rotulo: Lima Región (Lima Provincias)
+    consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_opcion_c') WHERE ambito_gasto = 'LIMA_REGION' GROUP BY 1
+    filtro: ambito_gasto (macro de vistas_gasto.sql) = cuenta_en_ambito + reparto por ámbito; v_gasto_por_ambito
+    linea_aparte: ambito_gasto = 'REFERENCIA_NACIONAL' (no se suma; va siempre, también si es 0)
+    avisos:
+    - sesgo_sede (R-GASTO-03.lima)
+    - ejecutoras_mixtas (función SALUD)
+  - nivel: CALLAO
+    rango: 4
+    rotulo: Callao
+    consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_opcion_c') WHERE ambito_gasto = 'CALLAO' GROUP BY 1
+    filtro: ambito_gasto (macro de vistas_gasto.sql) = cuenta_en_ambito + reparto por ámbito; v_gasto_por_ambito
+    linea_aparte: ambito_gasto = 'REFERENCIA_NACIONAL' (no se suma; va siempre, también si es 0)
+    avisos:
+    - 'sesgo_sede (R-GASTO-03.callao: pct_sede pendiente)'
+    - sin per cápita ni ranking sin aviso (L6)
+  - nivel: provincia
+    nota: solo gasto municipal y de proyectos ubicados; referencial si pct_gasto_atribuible < 0,50
+  - nivel: distrito
+    nota: solo gasto municipal y de proyectos ubicados; inversión distrital siempre referencial (ubicación principal)
+  niveles_no_validos:
+  - nivel: distrito/provincia con gasto de ministerios o GORE
+    motivo: 'B1: base ejecutora sin municipal ni CUI'
+  - nivel: NO_ASIGNABLE_DPTO_LIMA (150000) y NO_ASIGNABLE_LIMA_CALLAO en LM, LR o Callao
+    motivo: 'no se reparten: solo en el total del departamento 15 o como línea aparte (v_gasto_por_ambito)'
+  - nivel: ranking de 26 unidades
+    motivo: 'R-GASTO-13: solo cuando la fact traiga cuenta_en_ambito en todos los años (v1.5.0 de P3 sin construir aquí)'
+  cifra_por_entidad: true
+  anios_disponibles:
+  - 2023
+  - 2024
+  - 2025
+  quiebres:
+  - anio: 2023
+    tipo: programa
+    descripcion: L09 absorción total del tramo 2 del PP 0001; sin año anterior con montos
+    comparable_con: []
+  - anio: 2025
+    tipo: programa
+    descripcion: 'Evento de linaje L11 (división): comparable por concepto, no por programa; no se presenta la variación 2024→2025 (R-GASTO-09)'
+    comparable_con: []
+  anios_con_quiebre:
+  - 2025
+  rol_gasto: canonica
+  tema_id: cpt_grupo_opcion_c
+  cadena: concepto
+  alternativa_de: cpt_grupo_expan
+  fase_gasto_defecto: DEVENGADO
+  precios: corrientes (1 año) | constantes base último año cerrado (series)
+  tabla_origen: vista v_gasto_tematico (fact_gasto_territorial, bloque_consolidado = 'gasto_final')
+  definicion:
+    consulta: gasto_tema('cpt_grupo_opcion_c')
+    monto: MONTO_DEVENGADO
+    filtro: bloque_consolidado = 'gasto_final'; restriccion_programa_ppto = '1001'
+    control: nacional 2023–2025 = 2 055,9 / 2 326,8 / 2 366,2 millones
+    lima: ambito_gasto = 'LIMA_METROPOLITANA' | 'LIMA_REGION' | 'CALLAO' (cuenta_en_ambito); línea aparte ambito_gasto = 'REFERENCIA_NACIONAL'
+  rotulo_medida: Los mismos servicios, solo dentro del PP 1001 (devengado, sin transferencias)
+  rotulos_obligatorios:
+  - 'Nunca «gasto del PAN» para años posteriores a 2022: «servicios que antes eran del PAN» o el programa vigente (PP 1001).'
+  - Fase en el rótulo (devengado) y precios (corrientes o constantes de {anio_base}).
+  - 'Lima y Callao: línea aparte de centros de referencia nacional (también si es 0), aviso de sesgo de sede (Lima 38 %; Callao: aviso siempre, porcentaje pendiente) y advertencia de ejecutoras mixtas (función
+    SALUD). Callao: sin gasto por habitante ni ranking sin aviso (L6).'
+  - 'Distrito/provincia: «gasto municipal y de proyectos ubicados en el territorio» + % atribuible; inversión distrital: «ubicación principal registrada; la obra puede abarcar otros distritos».'
+  - 'Con el desglose (opción C) en la misma respuesta: «Son dos formas de ordenar el mismo gasto; no se suman.»'
+  notas:
+  - Desglose «dentro del programa» de gasto_ex_pan; línea aparte, nunca sumada (R-GASTO-08b).
+  - Sin cruces en cruces_permitidos.
+  es_desglose_de: gasto_ex_pan
+- id: enaho_pobreza_monetaria
+  estado_propuesta: activo_piloto
+  preguntas:
+  - 4
+  nombre_ciudadano: Personas en situación de pobreza monetaria
+  nombre_tecnico: Incidencia de la pobreza monetaria (gasto per cápita bajo la línea de pobreza), ENAHO, personas
+  tema: pobreza_monetaria
+  concepto_medido: pobreza_monetaria
+  rank_concepto: 1
+  criterio_medicion: metodologia_INEI_pobreza_monetaria_gasto
+  fuente_principal: INEI-ENAHO
+  naturaleza_dato: encuesta_muestral
+  tipo_medida: prevalencia
+  base_geografica: muestra
+  base_geografica_usada: muestra
+  columna_ubigeo: departamento; ubigeo; ambito_lima; lima_metropolitana_dominio8
+  sistema_ubigeo: INEI
+  tipo_estimacion: proporcion
+  unidad: porcentaje de personas (1 decimal)
+  origen_cifra: oficial
+  poblacion_objetivo:
+    descripcion: personas residentes en hogares particulares (todas las edades)
+    edad_min_meses: 0
+    edad_max_meses: null
+    sexo: T
+    area: total
+    marcador_u: null
+  universo: total
+  unidad_observacion: hogar
+  es_socioeconomico: true
+  velocidad_cambio: rapida
+  sensibilidad_divulgacion: normal
+  subregistro_conocido: false
+  insumos:
+  - id: INEI-ENAHO
+    rol: numerador
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: dim_dominio
+    rol: tabla_curada
+    nota: 'dominios de Lima y Callao (R-TERRITORIO-06, R-ENC-07); sin crudo en el catálogo: pendiente D-AUD-1'
+  requiere_denominador: false
+  tipo_denominador: prevalencia_encuesta
+  denominador_principal: 'no_requiere: factores de expansión de la encuesta'
+  denominadores_contraste: []
+  denominador_tipo_poblacion: no_aplica
+  vintage_denominador: no_aplica
+  metodo_denominador: no_aplica
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: anual
+  nivel_territorial_inferencia: departamento
+  dominios_inferencia:
+    anual:
+    - nacional
+    - urbano
+    - rural
+    - departamento
+    - area_metropolitana_lima_callao
+    ambitos_publicados:
+    - lima_metropolitana
+    - lima_provincias
+    - callao
+    trimestral:
+    - nacional
+    - urbano
+    - rural
+  tipo_aplicacion: muestral
+  modulo_encuesta: '*'
+  niveles_validos:
+  - nivel: nacional
+  - nivel: dominio_subnacional
+    dominios:
+    - urbano
+    - rural
+  - nivel: AREA_METROPOLITANA_LIMA_CALLAO
+    rango: 4.5
+    rotulo: Lima Metropolitana y Callao
+    dominio_id: area_metropolitana_lima_callao
+    tipo: dominio_diseno
+    metodo: variable_dominio (DOMINIO = 8 = 1501 + 07)
+    avisos: []
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENAHO', 'AREA_METROPOLITANA_LIMA_CALLAO')
+    nota: dominio 8 de la ficha; rotulado SIEMPRE «Lima Metropolitana y Callao» (L3); solo si se pide Lima con el Callao; nunca en el ranking
+  - nivel: departamento
+    nota: 24 departamentos; el 15 entero (Lima Metropolitana + Lima Región, sin el Callao) es ámbito publicado (dim_dominio.por_departamento) con aviso ambito_no_dominio y rótulo «departamento de Lima (Lima
+      Metropolitana + Lima Región)»; nunca junto a LM o LR. El Callao (07) se publica con nivel CALLAO
+  - nivel: LIMA_METROPOLITANA
+    rango: 3
+    rotulo: Lima Metropolitana (provincia de Lima)
+    dominio_id: lima_metropolitana
+    tipo: ambito_publicado
+    metodo: ubigeo (1501*)
+    avisos:
+    - ambito_no_dominio
+    verificacion: 'inferencia_verificada.csv ENAHO 2024–2025: ambitos_publicados = LIMA_METROPOLITANA;LIMA_REGION;CALLAO, cita del informe técnico de pobreza (2015-2024 y 2016-2025, Cuadro N.º III.1)'
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENAHO', 'LIMA_METROPOLITANA')
+  - nivel: LIMA_REGION
+    rango: 3.5
+    rotulo: Lima Región (Lima Provincias)
+    dominio_id: lima_provincias
+    tipo: ambito_publicado
+    metodo: ubigeo (15* sin 1501*)
+    avisos:
+    - ambito_no_dominio
+    verificacion: 'inferencia_verificada.csv ENAHO 2024–2025: ambitos_publicados = LIMA_METROPOLITANA;LIMA_REGION;CALLAO, cita del informe técnico de pobreza (2015-2024 y 2016-2025, Cuadro N.º III.1)'
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENAHO', 'LIMA_REGION')
+  - nivel: CALLAO
+    rango: 4
+    rotulo: Callao
+    dominio_id: callao
+    tipo: ambito_publicado
+    metodo: ubigeo (07*)
+    avisos:
+    - ambito_no_dominio
+    verificacion: 'inferencia_verificada.csv ENAHO 2024–2025: ambitos_publicados = LIMA_METROPOLITANA;LIMA_REGION;CALLAO, cita del informe técnico de pobreza (2015-2024 y 2016-2025, Cuadro N.º III.1)'
+    asignacion: ambitos_lima.mascara_ambito(df, 'ENAHO', 'CALLAO')
+    nota: 'L1: ya no se excluye el 07 en 2024–2025 (excluye_departamentos vacío en inferencia_verificada)'
+  niveles_no_validos:
+  - nivel: provincia/distrito
+    motivo: B2; para distritos rige el Mapa 2018 (R-EST-05)
+  - nivel: AREA_METROPOLITANA_LIMA_CALLAO en el ranking
+    motivo: R-ENC-12.unidades_ranking_departamental.nunca
+  - nivel: departamento 15 junto con LIMA_METROPOLITANA o LIMA_REGION en la misma lista o ranking
+    motivo: se superponen (R-ENC-12)
+  ambito_lima_usado:
+    LIMA_METROPOLITANA: ambitos_lima.ambito_lima_enaho (columna ambito_lima de enaho_sumaria, por ubigeo)
+    LIMA_REGION: ambitos_lima.ambito_lima_enaho
+    CALLAO: ambitos_lima.ambito_lima_enaho
+    AREA_METROPOLITANA_LIMA_CALLAO: ambitos_lima.dominio8_enaho (columna lima_metropolitana_dominio8 = DOMINIO 8)
+  anios_disponibles:
+  - 2024
+  - 2025
+  quiebres:
+  - anio: 2020
+    tipo: modo
+    descripcion: 49 % de entrevistas telefónicas; el INEI declara comparable la pobreza monetaria
+    comparable_con:
+    - 2020
+    - 2021
+  - anio: 2021
+    tipo: modo
+    descripcion: Modo mixto (R-ENC-13.anios_modo_mixto); comparable para pobreza monetaria
+    comparable_con:
+    - 2020
+    - 2021
+  anios_con_quiebre: []
+  variables_diseno:
+    factor: peso_persona
+    divisor_factor: 1
+    estrato: id_estrato_diseno
+    conglomerado: id_conglomerado
+    estratos_un_conglomerado: adjust
+    agrupar_anios: estrato original y conglomerado estable (R-ENC-10, ENAHO)
+  metodo_ic: korn-graubard (variante NCHS; svy ci_method='korn-graubard')
+  validado_contra_oficial: false
+  tabla_origen: biblioteca/estandarizada/encuestas/enaho_sumaria.parquet
+  definicion:
+    ref: 'sin archivo de definiciones ENAHO (H: solo en preparación y especificaciones)'
+    variable: pobre (pobreza <= 2)
+    peso: peso_persona
+    estimador: proporción ponderada con diseño (Taylor)
+  rotulo_medida: personas en pobreza monetaria, según la ENAHO (encuesta a hogares)
+  rotulos_obligatorios:
+  - Rankings solo por grupos estadísticamente semejantes (R-ENC-12), nunca 'el más pobre'; 26 unidades (L8).
+  - 'Lima en la ENAHO (L1, L3): LM, LR y Callao por separado con el aviso ambito_no_dominio; el dominio 8 rotulado SIEMPRE «Lima Metropolitana y Callao» (nunca «Lima Metropolitana» sola); el 15 entero rotulado
+    «departamento de Lima (Lima Metropolitana + Lima Región)».'
+  - Cifras con su IC 95 % y n (R-ENC-05); CV > 15 % → referencial (L9, R-ENC-04).
+  notas:
+  - Nunca restar, 'actualizar' ni hacer tendencia con el Mapa 2018 (B3, R-EST-02).
+  - Solo 2024–2025 estandarizados.
+  ranking:
+    regla: R-ENC-12
+    unidades:
+    - '01'
+    - '02'
+    - '03'
+    - '04'
+    - '05'
+    - '06'
+    - '08'
+    - '09'
+    - '10'
+    - '11'
+    - '12'
+    - '13'
+    - '14'
+    - '16'
+    - '17'
+    - '18'
+    - '19'
+    - '20'
+    - '21'
+    - '22'
+    - '23'
+    - '24'
+    - '25'
+    - LIMA_METROPOLITANA
+    - LIMA_REGION
+    - CALLAO
+    total: 26
+    sin_LM_o_LR: si LM o LR no tienen cifra publicable (R-ENC-08), se usa el departamento 15 entero rotulado «departamento de Lima (Lima Metropolitana + Lima Región)», con nota (25 unidades)
+    nunca: el departamento 15 junto con LM o LR; el dominio 8 (AREA_METROPOLITANA_LIMA_CALLAO)
+    decision: L8 (9/10/2026; reemplaza D-AUD-2)
+- id: mapa_pobreza_2018
+  estado_propuesta: activo_piloto
+  preguntas:
+  - 4
+  nombre_ciudadano: Pobreza monetaria por distrito en 2018 (estimación del INEI)
+  nombre_tecnico: 'Mapa de Pobreza Monetaria Provincial y Distrital 2018 (INEI): intervalo de confianza al 95 % y grupo robusto'
+  tema: pobreza_monetaria
+  concepto_medido: pobreza_monetaria
+  rank_concepto: 1
+  criterio_medicion: mapa_pobreza_INEI_2018_areas_pequenas
+  fuente_principal: INEI-MAPA-POBREZA
+  naturaleza_dato: estimacion_modelada
+  tipo_medida: estimacion_modelada
+  base_geografica: residencia
+  base_geografica_usada: residencia
+  columna_ubigeo: ubigeo_inei (geografía vigente 2018); grupo_comparable_geo2017
+  sistema_ubigeo: INEI
+  tipo_estimacion: modelada
+  unidad: intervalo de confianza al 95 % (%), sin cifra puntual
+  origen_cifra: oficial
+  poblacion_objetivo:
+    descripcion: personas residentes (todas las edades)
+    edad_min_meses: 0
+    edad_max_meses: null
+    sexo: T
+    area: total
+    marcador_u: null
+  universo: total
+  unidad_observacion: persona
+  es_socioeconomico: true
+  velocidad_cambio: lenta
+  sensibilidad_divulgacion: ninguna
+  subregistro_conocido: false
+  insumos:
+  - id: INEI-MAPA-POBREZA
+    rol: numerador
+  - id: INEI-DIRECTORIO-MUNICIPALIDADES
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PNDA-UBIGEOS
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: GITHUB-UBIGEO-PERU-AUMENTADO
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: PROPIO-ESTADISTICAS-SOCIALES-2020
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-POBLACION-DISTRITAL
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  - id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+    rol: tabla_curada
+    nota: crudo de dim_ubigeo_historico (manifiesto_s1_territorio)
+  requiere_denominador: false
+  tipo_denominador: no_aplica
+  denominador_principal: no_aplica
+  denominadores_contraste: []
+  denominador_tipo_poblacion: no_aplica
+  vintage_denominador: no_aplica
+  metodo_denominador: no_aplica
+  requiere_estandarizacion: false
+  n_desagregaciones_adicionales: 0
+  tasa_suavizada: false
+  periodicidad_estimacion: unica
+  nivel_territorial_inferencia: distrito
+  dominios_inferencia:
+  - distrito
+  - provincia
+  modulo_encuesta: no_aplica
+  niveles_validos:
+  - nivel: distrito
+    nota: 1 874 distritos, geografía vigente 2018; 476 estimados en 197 agrupamientos
+  - nivel: provincia
+    nota: 196 provincias
+  niveles_no_validos:
+  - nivel: distritos creados después de 2018
+    motivo: sin estimación; mostrar el distrito de origen con «en 2018, este territorio formaba parte de…» (R-EST-05)
+  - nivel: departamento/nacional
+    motivo: no está en la tabla; para departamento rige la ENAHO (R-CRUCES-08)
+  anios_disponibles:
+  - 2018
+  anio_referencia: 2018
+  quiebres: []
+  anios_con_quiebre: []
+  incertidumbre_publicada: true
+  covariables_modelo:
+  - INEI-CPV2017
+  - INEI-ENAHO (2017–2018)
+  comparable_con_ediciones: []
+  validado_contra_oficial: true
+  tabla_origen: biblioteca/estandarizada/mapa_pobreza/fact_mapa_pobreza.parquet
+  definicion:
+    valor: '[pobreza_ic_inf, pobreza_ic_sup]'
+    grupo: grupo_robusto_nacional (28 grupos de distritos; 16 de provincias); grupo_robusto_regional
+    prohibido: punto medio, resta con ENAHO, 'actualización'
+    pachangara: grupo 16 inferido (grupo_nacional_inferido)
+  rotulo_medida: pobreza monetaria estimada por el INEI con un modelo para 2018 (intervalo de confianza al 95 %)
+  rotulos_obligatorios:
+  - «Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.»
+  - Siempre el año 2018 en la misma oración y en pasado (R-LENGUAJE-04).
+  - Solo intervalo y grupo robusto; sin ranking puntual (R-EST-01).
+  - 'Si es la única fuente distrital: cifra principal con semáforo rojo fijo y ENAHO departamental del último año como contexto (R-EST-05).'
+  notas:
+  - No restar ni combinar con la ENAHO de otros años (B3).
+  - Distritos creados después de 2018 no tienen dato.

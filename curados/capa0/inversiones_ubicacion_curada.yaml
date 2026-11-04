@@ -1,0 +1,18 @@
+# GA-09 (v2): ubicación curada por CUI para inversiones cuyo UBIGEO del detalle MEF es un código que se escindió.
+# 160109 «Putumayo» (Maynas) se dividió por la Ley 30186 (2014) en Putumayo 160801, Rosa Panduro 160802 y Yaguas
+# 160804 (Teniente Manuel Clavero 160803 ya existía como 160114 y pasó entero a la provincia de Putumayo).
+# Fuente de la ley: https://andina.pe/agencia/noticia-promulgan-ley-crea-provincia-putumayo-departamento-loreto-504823.aspx
+# Criterio: localidad nombrada en NOMBRE_INVERSION, ubicada con el ubigeo que RENIPRESS da al establecimiento del mismo
+# nombre (dim_establecimiento_salud) o con la sede de la UEP. Lo no curado queda en la provincia 160800.
+# Ubicar a provincia es exacto: los cuatro sucesores están en la provincia de Putumayo.
+# Ruta propuesta: curados/capa0/inversiones_ubicacion_curada.yaml (insumo CURADO, como ejecutoras_alcance.yaml)
+- {cui: "2164005", codigo_fuente: "160109", ubigeo_inei: "160801", evidencia: "El Estrecho (capital de Putumayo); UEP 301430 MD Putumayo", revisado_dueno: false}
+- {cui: "2222926", codigo_fuente: "160109", ubigeo_inei: "160801", evidencia: "San Antonio de El Estrecho", revisado_dueno: false}
+- {cui: "2248322", codigo_fuente: "160109", ubigeo_inei: "160801", evidencia: "San Antonio de El Estrecho", revisado_dueno: false}
+- {cui: "2262766", codigo_fuente: "160109", ubigeo_inei: "160801", evidencia: "PS La Florida, Flor de Agosto y San Pedro de Totoya: RENIPRESS 00000082/00000084/00000083 en 160801", revisado_dueno: false}
+- {cui: "2158355", codigo_fuente: "160109", ubigeo_inei: "160802", evidencia: "PVF PNP Santa Mercedes (capital de Rosa Panduro); RENIPRESS 00000086 PS Santa Mercedes en 160802", revisado_dueno: false}
+- {cui: "2262792", codigo_fuente: "160109", ubigeo_inei: "160802", evidencia: "PS San Francisco de Ere y Santa Mercedes: RENIPRESS 00000085/00000086 en 160802", revisado_dueno: false}
+- {cui: "2262773", codigo_fuente: "160109", ubigeo_inei: "160804", evidencia: "PS Remanso (capital de Yaguas): RENIPRESS 00000080 en 160804", revisado_dueno: false}
+- {cui: "2263611", codigo_fuente: "160109", ubigeo_inei: "160804", evidencia: "PS El Álamo, Huapapa y Betania: RENIPRESS 00000078/00000079/00000081 en 160804", revisado_dueno: false}
+- {cui: "2285726", codigo_fuente: "160109", ubigeo_inei: "160803", evidencia: "Soplín Vargas: RENIPRESS 00000088 PS Soplín Vargas en 160803; UEP 301855 MD Teniente Manuel Clavero (sede 160803)", revisado_dueno: false}
+# 2002585 (PVF PNP Corbata): localidad no ubicada; queda en la provincia 160800

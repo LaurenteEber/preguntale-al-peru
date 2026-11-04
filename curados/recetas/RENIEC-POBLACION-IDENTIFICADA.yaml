@@ -1,0 +1,46 @@
+# Receta de obtención — generada desde el catálogo y editada a mano (S1: CSV trimestral de la PNDA).
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: RENIEC-POBLACION-IDENTIFICADA
+strategy: manual
+publisher: RENIEC
+dataset_title: Población identificada con DNI (RENIEC – Portal Estadístico)
+access_url: https://portales.reniec.gob.pe/web/estadistica/identificada
+documentation_url: https://identidad.reniec.gob.pe/documents/d/guest/fichatecnica_dni_new
+temporal:
+  inicio: 2012
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (PNDA)
+license_basis: declarada_en_pagina
+known_issues:
+- 'UBIGEO RENIEC ≠ UBIGEO INEI (requiere tabla de equivalencia). Domicilio declarado en DNI suele estar desactualizado
+  (sesgo hacia lugar de origen). Incluye fallecidos no depurados. Mide población con DNI según domicilio declarado,
+  no población residente: subcuenta a menores sin DNI y extranjeros. Usar como contraste, no como denominador principal.'
+manual:
+  pasos:
+  - Abrir access_url (ficha PNDA) y descargar el último «Reporte … Trimestre» (CSV, ~70 MB), p. ej. https://www.datosabiertos.gob.pe/sites/default/files/BD_DAbiertos_16_OPP_2026_06.01.csv
+  - Guardar el archivo en biblioteca/cruda/bandeja/RENIEC-POBLACION-IDENTIFICADA/
+  - 'Ejecutar: pap registrar RENIEC-POBLACION-IDENTIFICADA --edicion "Reporte II Trimestre 2026"'
+espera:
+  formato:
+  - csv
+  - xlsx
+  columnas: [UBIGEO_RENIEC, UBIGEO_INEI, Departamento, Provincia, Distrito, Cantidad]
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: PNDA slugs 'población-identificada-con-dni-registro-nacional-de-identificación-y-estado-civil-reniec-1' y
+  '-2'. Portal estadístico es consulta dinámica (timeout desde esta red). Nuevo sitio identidad.reniec.gob.pe/estadisticas.

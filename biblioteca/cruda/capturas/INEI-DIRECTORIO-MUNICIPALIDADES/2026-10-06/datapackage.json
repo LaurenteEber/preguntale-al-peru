@@ -1,0 +1,60 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-directorio-municipalidades-2026-10-06",
+  "title": "Directorio Nacional de Gobiernos Regionales, Municipalidades Provinciales, Distritales y de Centros Poblados",
+  "created": "2026-10-06T09:31:50-05:00",
+  "keywords": [
+    "INEI-DIRECTORIO-MUNICIPALIDADES"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "inei-directorio-municipalidades",
+      "title": "Directorio Nacional de Gobiernos Regionales, Municipalidades Provinciales, Distritales y de Centros Poblados",
+      "original_filename": "6722617-directorio-nacional-de-gobiernos-regionales-municipalidades-provinciales-distritales-y-de-centros-poblados-2025-cuadros-en-excel.zip",
+      "path": "almacen/sha256/2f/a3/2fa36eda8042c24af4ca7aa0e20b6f5f6713713f7e924d329843c3cb290b1f86",
+      "hash": "sha256:2fa36eda8042c24af4ca7aa0e20b6f5f6713713f7e924d329843c3cb290b1f86",
+      "bytes": 4311464,
+      "format": "zip",
+      "mediatype": "application/zip",
+      "source_id": "INEI-DIRECTORIO-MUNICIPALIDADES",
+      "publisher": "INEI",
+      "dataset_title": "Directorio Nacional de Gobiernos Regionales, Municipalidades Provinciales, Distritales y de Centros Poblados",
+      "access_url": "https://www.gob.pe/en/institucion/inei/informes-publicaciones/6722617-national-directory-of-regional-governments-provincial-municipalities-district-and-of-populates-centers-2025",
+      "download_url": "https://cdn.www.gob.pe/uploads/document/file/7999764/6722617-directorio-nacional-de-gobiernos-regionales-municipalidades-provinciales-distritales-y-de-centros-poblados-2025-cuadros-en-excel.zip",
+      "source_version": "Directorio 2025",
+      "source_version_basis": "declarada",
+      "temporal": "2003–2025",
+      "data_cutoff_basis": "desconocida",
+      "issued": "2025-04-29",
+      "retrieved_at": "2026-10-06T09:31:49-05:00",
+      "method": "manual_navegador",
+      "recipe": "INEI-DIRECTORIO-MUNICIPALIDADES@9f75baf",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "Uso libre citando la fuente"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito"
+      },
+      "known_issues": [
+        "El cuadro de dispositivo legal (sección 1.2) no trae ubigeo en la edición 2021 (sí nombres); no consigna el distrito de origen de los distritos nuevos: hay que leerlo en la ley. Cuadros en PDF; verificar si el ZIP Excel incluye la tabla de leyes."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

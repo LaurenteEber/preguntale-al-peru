@@ -1,0 +1,59 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-mapa-pobreza-2026-10-07",
+  "title": "Mapa de Pobreza Monetaria Provincial y Distrital",
+  "created": "2026-10-07T13:09:26-05:00",
+  "keywords": [
+    "INEI-MAPA-POBREZA"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "mapa-pobreza-2018-anexo",
+      "title": "Mapa de Pobreza Monetaria Provincial y Distrital",
+      "original_filename": "Anexo Estadístico.xlsx",
+      "path": "almacen/sha256/fc/c4/fcc465d75abe7f7e20107d67fc3a947d606e2176d0c00fecb02ceafcca913f00",
+      "hash": "sha256:fcc465d75abe7f7e20107d67fc3a947d606e2176d0c00fecb02ceafcca913f00",
+      "bytes": 553923,
+      "format": "xlsx",
+      "mediatype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "source_id": "INEI-MAPA-POBREZA",
+      "publisher": "INEI",
+      "dataset_title": "Mapa de Pobreza Monetaria Provincial y Distrital",
+      "access_url": "https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018",
+      "download_url": "https://cdn.www.gob.pe/uploads/document/file/3340937/Anexo%20Estad%C3%ADstico.xlsx",
+      "source_version": "Mapa de Pobreza Provincial y Distrital 2018, Anexo Estadístico (XLSX)",
+      "source_version_basis": "declarada",
+      "temporal": "2007–2018",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-07T13:09:25-05:00",
+      "method": "manual_navegador",
+      "recipe": "INEI-MAPA-POBREZA@378d816",
+      "attributed_to": "Claude en Chrome (navegador del dueño)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "uso libre con cita"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito"
+      },
+      "known_issues": [
+        "Estimación modelada (ELL) con ENAHO 2017–2018 y Censo 2017: comparar solo por intervalos/grupos robustos; IC muy amplios en distritos pequeños. Última edición 2018 (no hay mapa posterior confirmado). No comparable directamente entre ediciones por cambios de método/insumos. Anterior al salto de pobreza de 2020 (20,2 % → 30,1 % nacional): publicar siempre con el año 2018, intervalo de confianza y grupo robusto; no restar ni combinar con ENAHO de otros años."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

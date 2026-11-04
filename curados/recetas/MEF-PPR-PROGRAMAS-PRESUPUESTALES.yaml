@@ -1,0 +1,49 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MEF-PPR-PROGRAMAS-PRESUPUESTALES
+strategy: manual
+publisher: MEF
+dataset_title: Programas Presupuestales – relación, fichas y estructura programática (PpR)
+access_url: https://www.mef.gob.pe/index.php?option=com_content&view=article&id=5337&Itemid=101530&lang=es
+url_patron: https://www.mef.gob.pe/contenidos/presu_publ/ppr/estr_program/PP_{codigo_pp}_{GNR|GL}_{anio}.PDF
+documentation_url: https://www.mef.gob.pe/es/presupuesto-por-resultados
+temporal:
+  inicio: 2012
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: nacional
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- Diseños cambian año a año; no hay API ni tabla maestra estable verificada.
+manual:
+  pasos:
+  - Abrir https://www.mef.gob.pe/index.php?option=com_content&view=article&id=5337&Itemid=101530&lang=es y descargar
+    el archivo.
+  - 'Enlace de datos conocido: https://www.mef.gob.pe/es/presupuesto-por-resultados/estructura-de-programas'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/MEF-PPR-PROGRAMAS-PRESUPUESTALES/
+  - 'Ejecutar: pap registrar MEF-PPR-PROGRAMAS-PRESUPUESTALES --issued <fecha>'
+espera:
+  formato:
+  - pdf
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+notas: 'Página ''Estructura de programas'' lista un PDF por PP × nivel (GNR = Gobierno Nacional y Regional, GL =
+  Gobiernos Locales) × año 2012–2027; extensión .PDF (2024–2026) o .pdf (2027), años 2016 y anteriores con sufijo
+  de ley (ej. PP_0001_GNR_2016_L30372.PDF). Relación histórica 2012–2016 en https://www.mef.gob.pe/es/presupuesto-publico-sp-18162/211-presupuesto-por-resultados/5346-relacion-de-programas-presupuestales.
+  Carpeta Google Drive ''Descargar programas presupuestales'': https://drive.google.com/drive/folders/1LUoYCQgS0LEk-vHVZJ57COrqltwQoYJS.
+  Versión tabular alternativa: DISTINCT (ANO_EJE, PROGRAMA_PPTO, PRODUCTO_PROYECTO, ACTIVIDAD_ACCION_OBRA) del CSV
+  de gasto.'

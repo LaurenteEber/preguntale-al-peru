@@ -1,0 +1,155 @@
+# Parámetros del motor por intenciones (slice 1). Un solo lugar para los valores por defecto: ningún número ni
+# comportamiento visible se fija en el código (agents.md §6). Cada valor dice de dónde viene:
+#   decision: <ID de docs/decisiones.md o regla de reglas/reglas.json>  → no se cambia sin decisión del dueño
+#   pendiente: <X-nn>                    → el dueño aún no decide; el valor es el que rige mientras tanto
+#   supuesto: <historia o agente>        → default de diseño, revisable; se lista en consultas_al_dueno.md
+# Precedencia (agents.md §3): las entradas decision/pendiente valen como tabla curada; las supuesto quedan por debajo
+# del backlog y del contrato de respuesta.
+# Pendientes del dueño: mientras no decida, rige el comportamiento de hoy (para que la regresión compare lo mismo);
+# la recomendación queda en «recomendacion».
+# Lo que ya vive en otra tabla NO se repite aquí: niveles válidos y años (dim_indicador.yaml), cruces
+# (cruces_permitidos.yaml), tema de gasto por intención (map_intencion_tema de R-GASTO-08b en reglas.json),
+# nombres (nombres_mostrados.yaml), año por defecto de cada fuente (Motor.anio, R-MOTOR-03).
+version: 1.1.0
+fecha: "2026-11-03"   # 1.1.0: ajustes del ensayo del implementador
+
+pendientes_dueno:
+  mostrar_conteo_sien:            # «¿cuántos?» del SIEN: dar el conteo además del porcentaje (p. ej. 52 de 547)
+    valor: false
+    recomendacion: true            # como tarjeta de la capa 2
+    donde: capa2_tarjeta
+    pendiente: X-02
+  cr01_mismo_anio:                # CR-01: además del último año, el gasto del mismo año que la anemia con la que se compara
+    valor: false
+    recomendacion: true
+    pendiente: X-03
+  intervalo_visible:              # ambos = como hoy (capa 1: el propio; cita: el del INEI si existe; ficha: los dos)
+    valor: ambos                   # uno = capa 1 y cita con el del INEI si existe, si no el propio
+    recomendacion: uno
+    permitidos: [ambos, uno]
+    pendiente: X-04
+
+respuesta:
+  capa1_palabras_objetivo: {valor: 100, decision: R-04}
+  capa1_palabras_max: {valor: 125, decision: R-04}
+  cifras_clave_capa1: {valor: 1, decision: R-04}
+  ojo_al_leer: {min: 1, max: 3, decision: R-04}
+  capa1_exceso: {valor: pasar_ojo_a_capa2, nota: "si la capa 1 pasa de capa1_palabras_max, los últimos «Ojo al leer» (sin bajar de ojo_al_leer.min) pasan a «Avisos» de la capa 2; el otro valor es «ninguno»", supuesto: S1-08}
+  confianza_niveles: {valor: {verde: alta, ambar: media, rojo: baja}, decision: R-05}
+  orden_listas_sin_orden_natural: {valor: alfabetico, decision: R-04}
+  infracciones_corrector:         # qué cuenta como «infracción» en los criterios de S1-04, S1-07 y S1-08
+    valor: [R-LENGUAJE-02, R-LENGUAJE-03, R-GASTO-15]
+    no_cuentan: "R-LENGUAJE-06 con acción «rotular» (rótulo esperado, ya presente en Q2–Q4)"
+    supuesto: ensayo-implementador
+
+territorio:
+  lima_a_secas:
+    accion: aclarar
+    opciones: [LIMA_METROPOLITANA, LIMA_REGION, CALLAO]
+    por_defecto_sin_respuesta: LIMA_METROPOLITANA
+    decision: T-03
+  homonimos: {accion: aclarar, decision: R-TERRITORIO-09}
+  aclaracion_max_opciones: {valor: 8, supuesto: S1-02}
+  aclaracion_orden: {valor: "por nivel (departamento, provincia, distrito); dentro de cada nivel, alfabético por departamento, provincia y nombre", supuesto: S1-02}
+  aclaracion_exceso: {valor: "si hay más opciones que el máximo, no se listan: se pide la provincia o el departamento", supuesto: S1-02}
+  coincidencia_parcial:
+    valor: "si no hay coincidencia exacta y todas las palabras del texto están dentro de un nombre o alterno, se ofrece como aclaración («¿Quisiste decir…?»), aunque sea una sola opción"
+    supuesto: S1-02
+  callao: {valor: "se resuelve como el ámbito CALLAO (nivel que usa el cubo), no como departamento 07", decision: T-03}
+  aclaracion_opcion_formato: {valor: "{nombre} ({nivel}{, provincia de P}{, departamento de D})", supuesto: S1-02}
+  sin_coincidencia_sugerencias_max: {valor: 3, supuesto: S1-02}
+  similitud_min_para_sugerir: {valor: 0.80, metrica: ratio de difflib sobre nombre_normalizado, uso: solo errores de tipeo, supuesto: S1-02}
+  palabras_que_fijan_nivel:       # deshacen el empate entre niveles homónimos
+    valor:
+      departamento: [departamento, region, región, dpto]
+      provincia: [provincia, prov]
+      distrito: [distrito, dist]
+    supuesto: S1-02
+  textos_nacional: {valor: ["peru", "perú", "nacional", "todo el pais", "todo el país", "el pais", "el país"], supuesto: S1-02}
+
+periodo:
+  por_defecto: {valor: ultimo, decision: R-MOTOR-03}
+  serie_desde_por_defecto: {valor: primer_anio_disponible, supuesto: S1-03}
+  por_intencion:                  # si la consulta no trae periodo
+    valor: {evolucion: serie}     # las demás intenciones usan por_defecto (último)
+    supuesto: S1-03
+
+temas:
+  vocabulario:                    # = valores de dim_indicador.tema (si se agrega un tema allí, se agrega aquí)
+    valor: [anemia, desnutricion_cronica, pobreza_monetaria, gasto_publico]
+    decision: R-02
+  alias_cli:                      # lo que puede escribirse en --tema; el LLM del slice 2 usará esta misma tabla
+    valor:
+      desnutricion: desnutricion_cronica
+      desnutrición: desnutricion_cronica
+      desnutricion cronica: desnutricion_cronica
+      desnutrición crónica: desnutricion_cronica
+      pobreza: pobreza_monetaria
+      gasto: gasto_publico
+      presupuesto: gasto_publico
+    supuesto: S1-01
+  gasto_publico_clave_map:        # clave de map_intencion_tema (R-GASTO-08b) que usa el tema gasto_publico en el piloto
+    valor: "PAN / anemia / desnutrición"   # → cpt_grupo_expan; las demás claves dan no_se_puede «tema fuera del piloto»
+    decision: G-07
+
+planificador:
+  formato_id_cifra: {valor: "{indicador}__{medida}__{nivel}__{territorio}__{anio}__{rol}", nota: "las plantillas filtran por indicador, no por prefijo del id", supuesto: S1-03}
+  anemia_dos_formas:              # E-06 (alcance decidido por el dueño el 3/11/2026)
+    valor: "solo en evolucion con la ENDES; en nivel_actual y como contexto, solo la forma vigente"
+    decision: E-06
+  extremo_dentro_de:              # identificar_extremo «dentro de» un lugar: los grupos y rankings del cubo son nacionales
+    valor: solo_nacional          # solo_nacional = «dentro de» otro lugar → no_se_puede (motivo extremo_dentro_de_no_soportado)
+    supuesto: S1-03
+  evolucion_otros_temas:          # desnutrición, pobreza, gasto, SIEN: el patrón de la serie anterior de la anemia (E-06)
+    valor: "último año contra el primer año comparable de la serie (E-07) y ese primer año como cifra de contexto"
+    supuesto: S1-03               # la lógica está en intenciones.yaml (bloques.evolucion_generica)
+  extremo_sin_fila_de_tema:       # sin fila en intenciones.yaml → no_se_puede «intencion_no_soportada» (p. ej. ranking de gasto, R-GASTO-13)
+    valor: intencion_no_soportada
+    supuesto: S1-03
+
+no_se_puede:
+  respuesta_corta_max_oraciones: {valor: 2, supuesto: S1-05}
+  ofrecer_lo_mas_cercano: {valor: true, decision: R-04}
+  anio_mas_cercano: {valor: anterior_primero, nota: "el año disponible anterior más reciente; si no hay, el último disponible (S1-09, H7)", supuesto: S1-05}
+  nivel_alternativo: {valor: superior_inmediato, nota: "distrito → provincia → departamento o ámbito de Lima → nacional, según niveles_validos", decision: R-REG-02}
+  alternativa_verificada: {valor: true, nota: "«Lo más cercano» solo ofrece un año, un nivel o un lugar cuya cifra el validador deja publicar; si ninguno, dice que no hay una alternativa. Nunca muestra una cifra", supuesto: S1-05}
+  alcance_por_motivo: {valor: "total o parcial, por motivo, en textos/no_se_puede.yaml (campo alcance)", nota: "parcial = se sigue respondiendo y se dice lo que falta (R-LENGUAJE-05); hoy solo el cruce fuera de la lista blanca y una cifra principal suprimida con otra publicable", supuesto: S1-05}
+  distrito_sin_datos_propios: {valor: "ninguna versión del distrito en dim_ubigeo_historico tiene anio_datos_desde <= el año de la cifra", nota: "ofrece su distrito de origen (principal) y su provincia, como máximo max_alternativas de R-LENGUAJE-05 (T-01, T-04)", supuesto: S1-05}
+  tema_fuera_del_piloto: {valor: "una consulta con un tema que no está en temas.vocabulario se responde «no se puede» con la lista de temas (no es un error de consulta); sin tema ni indicador se pregunta el tema (aclaración con las 4 opciones, en orden alfabético)", supuesto: S1-05}
+
+cli:
+  elegir: {valor: "--elegir N se aplica a la primera aclaración de la consulta y se ignora si no hay ninguna; N fuera de rango es un error; con dos lugares ambiguos (comparación) se pasan dos números, --elegir 1,1: uno por aclaración, en orden (S1-09, H3)", supuesto: S1-06}
+  nombre_de_archivo_de_salida: {valor: "el nombre del archivo de la consulta (q1.json → q1.json y q1.md); con opciones directas, el id del plan", supuesto: S1-06}
+  codigo_salida: {valor: {respondida: 0, no_se_puede: 0, aclaracion: 2, error: 1}, supuesto: S1-06}
+  salida_por_defecto: {valor: salidas/preguntar, nota: "fuera de git (.gitignore); 00_proyecto/piloto/p3/respuestas queda como archivo del piloto", supuesto: S1-06}
+
+matriz_cobertura:
+  semilla: {valor: 20261102, supuesto: S1-08}
+  distritos_muestra: {valor: 40, supuesto: S1-08}
+  provincias_por_departamento: {valor: 1, supuesto: S1-08}
+  homonimos: {valor: 3, supuesto: S1-08}
+  distritos_sin_sien: {valor: 3, supuesto: S1-08}
+  casos_pytest: {valor: 60, supuesto: S1-08}
+
+plantillas:
+  nombres_antiguos:               # q*.yaml (archivados en consultas/piloto/): nombre de la plantilla por pregunta → plantilla genérica de su intención (S1-04)
+    valor:                        # `plan`: lo que el plan de S1-03 trae y los q*.yaml no (la consulta lo conserva si lo trae)
+      q1_evolucion: {plantilla: evolucion, plan: {tema: anemia, bloques: [dos_formas_anemia]}}
+      q2_tamizados: {plantilla: nivel_actual, plan: {tema: anemia}}
+      q3_gasto_anemia: {plantilla: cruce_efecto, plan: {tema: gasto_publico, cruce: CR-01, respuesta_parcial: true, estructura_efecto: true}}
+      q4_pobreza_distrital: {plantilla: identificar_extremo, plan: {tema: pobreza_monetaria, grupos_estadisticos: robustos_mapa}}
+    nota: "los q*.yaml del piloto, archivados en consultas/piloto/, siguen respondiendo con estos nombres; la regresión usa consultas_minimas/"
+    supuesto: S1-04
+  nc_asignacion:                  # «No permite concluir» (ficha, sección 7): qué código lleva una respuesta; la regla es reglas_asignacion de R-LENGUAJE-01
+    valor:
+      NC-ACTUAL: {vigencia_min: 1}                    # una cifra principal con puntaje de vigencia >= 1 en el semáforo; «choque» según R-LENGUAJE-04.anios_choque
+      NC-TAMIZADOS: {fuente: [INS-CENAN-SIEN], rol: principal}
+      NC-GASTO-LUGAR: {naturaleza: [presupuestal_financiero]}
+      NC-RANKING: {intencion: [identificar_extremo], cifras_min: 3}   # comparación de >= 3 territorios
+    decision: R-LENGUAJE-01
+  nc_respaldo:                    # C-04: solo cuando ningún otro código aplica (no cambia Q1–Q4)
+    valor:
+      codigo: NC-NIVEL
+      naturaleza: [encuesta_muestral]
+      niveles: {departamento: el departamento, LIMA_METROPOLITANA: Lima Metropolitana, LIMA_REGION: Lima Región, CALLAO: el Callao, nacional: todo el país}
+    decision: "R-LENGUAJE-01 (reglas_asignacion de NC-NIVEL, dueño 3/11/2026, C-04)"

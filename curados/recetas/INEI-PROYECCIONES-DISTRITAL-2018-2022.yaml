@@ -1,0 +1,30 @@
+# Receta escrita a mano (S1). Edición anterior de la proyección distrital: Boletín Especial N.º 27 (Lib1860),
+# 1 890 distritos. Se usa por su Anexo 3 (dispositivos legales de modificación de ámbitos, 2018–2022).
+id: INEI-PROYECCIONES-DISTRITAL-2018-2022
+strategy: manual
+publisher: INEI
+dataset_title: 'Perú: Proyecciones de Población Total según Departamento, Provincia y Distrito, 2018-2022 (Boletín Especial N.º 27)'
+access_url: https://www.gob.pe/institucion/inei/informes-publicaciones/3464927-peru-proyecciones-de-poblacion-total-segun-departamento-provincia-y-distrito-2018-2022
+temporal: {inicio: 2018, fin: 2022}
+spatial: {ambito: PE, nivel_minimo: distrito, geografia: 1 890 distritos (2022)}
+source_version: {valor: Boletín Especial N.º 27, basis: declarada}
+data_cutoff: {basis: desconocida}
+issued: "2022-04-15"
+licenses: [{name: uso-libre-con-cita, title: Uso libre citando la fuente}]
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+  - Edición reemplazada por la proyección 2018-2026 (dic-2025); se usa solo como documento de las altas 2018–2022.
+manual:
+  pasos:
+    - Abrir access_url y descargar el PDF del boletín y el «Anexo 1» (XLSX).
+    - Guardar ambos en biblioteca/cruda/bandeja/INEI-PROYECCIONES-DISTRITAL-2018-2022/
+    - 'Ejecutar: pap registrar INEI-PROYECCIONES-DISTRITAL-2018-2022'
+espera:
+  formato: [pdf, xlsx]
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: Mismo documento que Lib1860 de inei.gob.pe; aquí se toma la copia de gob.pe.

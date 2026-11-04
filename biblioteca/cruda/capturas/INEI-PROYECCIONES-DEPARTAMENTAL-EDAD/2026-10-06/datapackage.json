@@ -1,0 +1,101 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-proyecciones-departamental-edad-2026-10-06",
+  "title": "Perú: Estimaciones y Proyecciones de Población Departamental 1995-2030 (Boletín Especial N.º 25, edad simple; Boletín de Análisis Demográfico N.º 39, sexo y edades quinquenales)",
+  "created": "2026-10-06T11:00:11-05:00",
+  "keywords": [
+    "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "inei-proyecciones-departamental-edad-6855196-proyecciones-departamental-edad-simple-1995-2030",
+      "title": "Perú: Estimaciones y Proyecciones de Población Departamental 1995-2030 (Boletín Especial N.º 25, edad simple; Boletín de Análisis Demográfico N.º 39, sexo y edades quinquenales)",
+      "original_filename": "6855196-proyecciones-departamental-edad-simple-1995-2030.pdf",
+      "path": "almacen/sha256/32/b4/32b4e7e81744562fc95266c0595d0ef7e25e31388e7dd906d440533d2552bb4d",
+      "hash": "sha256:32b4e7e81744562fc95266c0595d0ef7e25e31388e7dd906d440533d2552bb4d",
+      "bytes": 7941817,
+      "format": "pdf",
+      "mediatype": "application/pdf",
+      "source_id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+      "publisher": "INEI",
+      "dataset_title": "Perú: Estimaciones y Proyecciones de Población Departamental 1995-2030 (Boletín Especial N.º 25, edad simple; Boletín de Análisis Demográfico N.º 39, sexo y edades quinquenales)",
+      "access_url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital",
+      "source_version_basis": "ninguna",
+      "temporal": "1995–2030",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T11:00:11-05:00",
+      "method": "manual_navegador",
+      "recipe": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD@20c53e6",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "Uso libre citando la fuente"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "departamento"
+      },
+      "known_issues": [
+        "Solo hasta departamento: el INEI declara que a nivel provincial y distrital proyecta únicamente población total (ambos sexos) sin desagregación por edad. Base Censo 2017, desfasada frente al Censo 2025 (omisión 4,25 %).",
+        "Boletín 25 publicado el 15-01-2020; Boletín 39 publicado el 15-10-2019 (fechas de las fichas gob.pe)"
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    },
+    {
+      "name": "inei-proyecciones-departamental-edad-6855233-proyecciones-departamento-1995-2030",
+      "title": "Perú: Estimaciones y Proyecciones de Población Departamental 1995-2030 (Boletín Especial N.º 25, edad simple; Boletín de Análisis Demográfico N.º 39, sexo y edades quinquenales)",
+      "original_filename": "6855233-proyecciones-departamento-1995-2030.pdf",
+      "path": "almacen/sha256/84/eb/84ebadb3dfce916700b0fb175e7b43614b75b7d7a5bdbbef37d49b6d58be88e1",
+      "hash": "sha256:84ebadb3dfce916700b0fb175e7b43614b75b7d7a5bdbbef37d49b6d58be88e1",
+      "bytes": 2699373,
+      "format": "pdf",
+      "mediatype": "application/pdf",
+      "source_id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+      "publisher": "INEI",
+      "dataset_title": "Perú: Estimaciones y Proyecciones de Población Departamental 1995-2030 (Boletín Especial N.º 25, edad simple; Boletín de Análisis Demográfico N.º 39, sexo y edades quinquenales)",
+      "access_url": "https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital",
+      "source_version_basis": "ninguna",
+      "temporal": "1995–2030",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T11:00:11-05:00",
+      "method": "manual_navegador",
+      "recipe": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD@20c53e6",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "Uso libre citando la fuente"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "departamento"
+      },
+      "known_issues": [
+        "Solo hasta departamento: el INEI declara que a nivel provincial y distrital proyecta únicamente población total (ambos sexos) sin desagregación por edad. Base Censo 2017, desfasada frente al Censo 2025 (omisión 4,25 %).",
+        "Boletín 25 publicado el 15-01-2020; Boletín 39 publicado el 15-10-2019 (fechas de las fichas gob.pe)"
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

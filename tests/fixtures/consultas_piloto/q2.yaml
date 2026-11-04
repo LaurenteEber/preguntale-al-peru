@@ -1,0 +1,11 @@
+# Pregunta 2 de la prueba de reglas (texto reconstruido desde su recorrido).
+id: Q2
+pregunta: ¿Cuántos niños tienen anemia en Ayaviri (Melgar, Puno)? (reconstruida)
+intencion: nivel_actual
+territorio: {nivel: distrito, id: "210801", nombre_pedido: "Ayaviri, provincia de Melgar, Puno"}
+periodo: {tipo: ultimo}
+plantilla: q2_tamizados
+cifras:
+  - {id: sien_ayaviri_2025, indicador: sien_anemia_tamizados_6_35m, anio: ultimo, nivel: distrito, territorio: "210801", rol: principal}
+  - {id: endes_puno_2025, indicador: endes_anemia_6_35m_oms2024, anio: ultimo, nivel: departamento, territorio: "21", rol: contexto}
+  - {id: cobertura_puno_2025, indicador: sien_cobertura_tamizaje_6_35m, anio: ultimo, nivel: departamento, territorio: "21", rol: contexto}

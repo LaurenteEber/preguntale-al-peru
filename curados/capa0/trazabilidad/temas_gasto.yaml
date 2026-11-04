@@ -1,0 +1,22 @@
+# dim_tema_gasto v1.2 (R-GASTO-08, R-GASTO-08b). Ids y etiquetas del glosario v2 §2.5 (ronda2/w4_glosario_transferencias)
+# y de reglas/reglas.json (R-GASTO-08.parametros.temas_iniciales), aprobados por el dueño el 7/10/2026
+# (docs/decisiones.md: «dim_tema_gasto pasa a v1.2…» y «R-GASTO-08b… Se adopta el glosario v2»).
+# Los temas ps_ se generan desde programas_sociales.yaml (uno por programa social, ps_<id>); no se listan aquí.
+version: "1.2.0"
+revisado_por: "Dueño, 7/10/2026 (docs/decisiones.md, filas de dim_tema_gasto v1.2 y R-GASTO-08b; ronda2/README.md, decisiones 3, 4 y 9)"
+temas:
+  - {tema_id: fun_salud, cadena: funcion, funcion: [SALUD], etiqueta_ciudadana: "Gasto en el sector salud"}
+  - {tema_id: fun_saneamiento, cadena: funcion, funcion: [SANEAMIENTO], etiqueta_ciudadana: "Gasto en el sector saneamiento"}
+  - {tema_id: fun_proteccion_social, cadena: funcion, funcion: [PROTECCION SOCIAL], etiqueta_ciudadana: "Gasto en el sector protección social"}
+  - {tema_id: div_educacion_basica, cadena: division, funcion: [EDUCACION], division_funcional: [EDUCACION BASICA], etiqueta_ciudadana: "Gasto en educación básica (subsector)"}
+  - {tema_id: pp_0082_0083_agua_saneamiento, cadena: programa, programa_ppto: ["0082", "0083"], etiqueta_ciudadana: "Programas de agua y saneamiento urbano y rural"}
+  - {tema_id: pp_0002_materno_neonatal, cadena: programa, programa_ppto: ["0002"], etiqueta_ciudadana: "Programa Salud Materno Neonatal"}
+  - {tema_id: pp_0090_logros_aprendizaje, cadena: programa, programa_ppto: ["0090"], etiqueta_ciudadana: "Programa de logros de aprendizaje (incluye sueldos docentes)"}
+  - {tema_id: pp_0150_acceso_educacion, cadena: programa, programa_ppto: ["0150"], etiqueta_ciudadana: "Programa de acceso a la educación básica"}
+  - {tema_id: pp_1001_dit, cadena: programa, programa_ppto: ["1001"], etiqueta_ciudadana: "Programa de Desarrollo Infantil Temprano completo (incluye Cuna Más)"}
+  - {tema_id: ppxfun_1001_salud, cadena: programa_x_funcion, programa_ppto: ["1001"], funcion: [SALUD], etiqueta_ciudadana: "Parte de salud del programa DIT (incluye proyectos de hospitales)"}
+  - {tema_id: ppxfun_1001_proteccion_social, cadena: programa_x_funcion, programa_ppto: ["1001"], funcion: [PROTECCION SOCIAL], etiqueta_ciudadana: "Parte de protección social del programa DIT: Cuna Más (cuidado diurno y acompañamiento familiar)"}
+  - {tema_id: ppxfun_1001_educacion, cadena: programa_x_funcion, programa_ppto: ["1001"], funcion: [EDUCACION], etiqueta_ciudadana: "Parte de educación del programa DIT (cuidado diurno registrado en educación)"}
+  - {tema_id: cpt_grupo_expan, cadena: concepto, concepto_grupo_id: grupo_expan, etiqueta_ciudadana: "Servicios de salud y nutrición infantil que antes eran del PAN"}
+  - {tema_id: cpt_grupo_opcion_c, cadena: concepto, concepto_grupo_id: grupo_opcion_c, alternativa_de: cpt_grupo_expan, etiqueta_ciudadana: "Los mismos servicios, solo dentro del PP 1001"}
+  - {tema_id: cpt_grupo_anemia_estricta, cadena: concepto, concepto_grupo_id: grupo_anemia_estricta, alternativa_de: cpt_grupo_expan, etiqueta_ciudadana: "Hierro y atención de la anemia"}

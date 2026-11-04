@@ -1,0 +1,39 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MEF-SEGUIMIENTO-PI
+strategy: http_pattern
+publisher: MEF
+dataset_title: Seguimiento de Proyectos de Inversión (datos abiertos MEF)
+access_url: https://www.datosabiertos.gob.pe/dataset/seguimiento-de-proyectos-de-inversi%C3%B3n
+url_patron: https://fs.datosabiertos.mef.gob.pe/datastorefiles/{anio}-Seguimiento-PI.csv
+temporal:
+  inicio: 2014
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: otra-abierta
+  title: Otra (abierta) según PNDA
+license_basis: declarada_en_pagina
+known_issues:
+- 'Sin CODIGO_SNIP ni ubigeo del proyecto: el CUI viene en PRODUCTO_PROYECTO y el ubigeo es el de la ejecutora.
+  La ubicación del proyecto se obtiene uniendo por CUI con MEF-DETALLE-INVERSIONES.UBIGEO.'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- Definir cómo se eligen los valores del patrón (ver notas).
+notas: 13 CSV anuales (p.ej. recurso 2020-Seguimiento-PI.csv, id 9a66b3ce-0e39-4e32-9fb4-b6b6266ee6c4) + Seguimiento_PI_Diccionario.csv;
+  las URLs de archivo están en fs.datosabiertos.mef.gob.pe/datastorefiles/. Obtener la lista de recursos desde la
+  página del dataset (Drupal DKAN del PNDA) y bajar cada CSV.

@@ -1,0 +1,41 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-CPV2025
+strategy: dashboard
+publisher: INEI
+dataset_title: 'Censos Nacionales 2025: XIII de Población, VIII de Vivienda y IV de Comunidades Indígenas'
+access_url: https://censos2025.inei.gob.pe/
+documentation_url: https://sistemas.inei.gob.pe/dir-segmentacion-ci/postcensal/prod/adjuntos/publicaciones/Presentacion_resultados.pdf
+temporal:
+  inicio: 2025
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: no-declarada
+license_basis: no_declarada
+known_issues:
+- 'Publicado: 29-05-2026 primeros resultados (nacional y departamental; población total con omisión 34 157 732;
+  censada 32 706 028; omisión 4,25 %). 10-07-2026: población censada por provincia y distrito (sexo y grandes grupos
+  de edad 0–14/15–59/60+) en tablero en línea y PDF de presentación (con grupos quinquenales). No publicados al
+  05-10-2026: REDATAM, microdatos, Excel, edad simple o quinquenal por distrito, omisión subnacional, proyecciones
+  base 2025. Cambio de modalidad (censo de derecho con tablet) frente al censo de hecho 2017.'
+espera:
+  formato:
+  - pdf
+catalogo:
+  ola: 0_base
+  estrategia_descarga: scraping_dinamico
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+notas: Plataforma SPA censos2025.inei.gob.pe/resultados (el HTML no trae contenido; inspeccionar XHR con Playwright
+  para el endpoint JSON). La consulta /resultados/poblacion-censada/indicadores permite seleccionar departamento
+  → provincia → distritos (población censada, sexo, grandes grupos de edad). La 'Presentación de resultados' (PDF,
+  jul-2026) trae estructura por edad quinquenal y simple, omisión 4,25 % y niveles nacional/provincial/distrital.
+  No se halló aún base REDATAM ni tablas descargables por distrito×edad simple.

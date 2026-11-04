@@ -1,0 +1,25 @@
+# Receta escrita a mano (S3). Deflactor para soles constantes (R-GASTO-12).
+id: BCRP-IPC-LIMA
+strategy: http_file
+publisher: BCRP
+dataset_title: Índice de precios al consumidor de Lima Metropolitana (índice dic. 2021 = 100), serie mensual PN38705PM
+access_url: https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38705PM/html
+download_url: https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PN38705PM/json/2010-1/2026-12/esp
+documentation_url: https://estadisticas.bcrp.gob.pe/estadisticas/series/ayuda/api
+temporal: {inicio: 2010, fin: 2026}
+spatial: {ambito: PE, nivel_minimo: nacional, geografia: Lima Metropolitana (IPC de referencia nacional)}
+source_version: {valor: "base dic. 2021 = 100", basis: declarada}
+data_cutoff: {basis: max_fecha_en_datos}
+licenses: [{name: uso-libre-con-cita, title: Uso libre citando la fuente}]
+license_basis: norma_general
+terms_note: Información pública del BCRP (BCRPData); citar la fuente
+known_issues:
+  - El último mes publicado puede revisarse; el promedio anual del año en curso usa solo los meses disponibles.
+espera:
+  formato: [json]
+catalogo:
+  ola: 0_base
+  estrategia_descarga: api_rest
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: Desde la red de trabajo de Claude el dominio está bloqueado; se baja con el navegador del dueño (la API devuelve JSON).

@@ -1,0 +1,144 @@
+# Programas sociales (alcance «programa_social» de la ronda 2, W2 v2 §3; decisión del dueño del 7/10/2026).
+# Un programa social NO es un programa presupuestal: se identifica por su unidad ejecutora (nivel E) o, en los programas
+# municipales, por su actividad (nivel M). Este alcance etiqueta los mismos soles que los conceptos y los temas por función:
+# NO se suma con ellos (R-GASTO-08b). Origen: ronda2/w2_trazabilidad/ejemplo_v2/dim_programa_social_v2.csv y
+# 02_programas_sociales_v2.py. El nombre que se muestra es el nombre propio vigente en el año (regla de implementación:
+# el que estuvo vigente más días del año; si hubo cambio en el año, la etiqueta lo dice), con el del MEF entre paréntesis
+# cuando difiere (R-GASTO-08). «desde» = fecha desde la que rige el nombre (AAAA, AAAA-MM o AAAA-MM-DD; un decreto rige
+# desde el día siguiente a su publicación); null = por verificar. rotulo_fecha: mes → la etiqueta dice el mes («desde
+# agosto de 2023») y no el día (decisión del dueño del 8/10/2026 para Llamkasun).
+# linea_aparte (E3, 8/10/2026): gasto del programa que NO es gasto final (p. ej. transferencias a municipalidades) y que
+# la respuesta muestra siempre en una línea aparte, sin sumarlo (vista v_programa_social_linea_aparte).
+version: "1.1.0"
+fuente: ronda2/w2_trazabilidad (v2) y auditoría aud_trazabilidad; aprobación del dueño 7/10/2026
+# El dueño aprobó definir los programas sociales por ejecutora y actividad y la regla de nombres (7/10/2026) y, el
+# 8/10/2026, los 13 temas ps_ de la pieza C con tres condiciones (Llamkasun con su línea «transferido a
+# municipalidades», agregar Jóvenes Productivos y marcar el aumento del PCA en 2025) y el nombre de 2023.
+revisado_por: "Dueño, 8/10/2026 (decisiones.md: aprueba los 13 temas ps_ con condiciones; Jóvenes Productivos se agrega por la condición 2)"
+programas:
+  - id: juntos
+    id_w2: PS-JUNTOS
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1428"]}
+    sector_adscripcion: "MIDIS (desde Ley 29792 de 10/10/2011; antes PCM)"
+    nombre_oficial: "Programa Nacional de Apoyo Directo a los Más Pobres - JUNTOS"
+    nombres:
+      - {nombre: Juntos, desde: "2005-05-06", norma: "DS 032-2005-PCM", url: "https://cdn.www.gob.pe/uploads/document/file/743911/POI-2019-modificado-corte-al-01OCT_UE_JUNTOS-vf.pdf", confianza: alta}
+    financiamiento_w2: "PP 0049 + APNOP (subvenciones e incentivo piloto) + acciones centrales"
+  - id: pension65
+    id_w2: PS-PENSION65
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1441"]}
+    sector_adscripcion: MIDIS
+    nombre_oficial: "Programa Nacional de Asistencia Solidaria Pensión 65"
+    nombres:
+      - {nombre: "Pensión 65", desde: "2011-10", norma: "DS 081-2011-PCM (texto por_verificar)", url: "https://vlex.com.pe/vid/decreto-midis-programa-asistencia-368977362", confianza: media}
+    financiamiento_w2: "PP 0097 + APNOP (variable: 350 / ~0 / 330 millones en 2023 / 2024 / 2025)"
+  - id: cuna_mas
+    id_w2: PS-CUNAMAS
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1426"]}
+    sector_adscripcion: MIDIS
+    nombre_oficial: "Programa Nacional Cuna Más"
+    nombres:
+      - {nombre: "Cuna Más", desde: "2012-03", norma: "DS 003-2012-MIDIS", url: "https://busquedas.elperuano.pe/dispositivo/NL/2053504-1", confianza: alta}
+    financiamiento_w2: "PP 1001 (3000891 y 3000892) desde 2021; antes PP 0098"
+  - id: alimentacion_escolar
+    id_w2: "PS-QALIWARMA / PS-WASIMIKUNA (PS-ALIM-ESCOLAR-MIDIS en el financiamiento)"
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1456"]}
+    sector_adscripcion: MIDIS
+    nombre_oficial: "Programa Nacional de Alimentación Escolar Qali Warma (2012-2024) / Programa Nacional de Alimentación Escolar Comunitaria Wasi Mikuna (2024-2025)"
+    nombres:
+      - {nombre: "Qali Warma", desde: "2012-05", norma: "DS 008-2012-MIDIS", url: "https://siteal.iiep.unesco.org/sites/default/files/sit_accion_files/programa_de_alimentacion_escolar_wasi_mikuna.pdf", confianza: alta}
+      - {nombre: "Wasi Mikuna", desde: "2024-12-04", norma: "DS 010-2024-MIDIS (recreación por modificación; misma ejecutora)", url: "https://busquedas.elperuano.pe/dispositivo/NL/2350706-4", confianza: alta}
+    hasta: "2025-12-31 (cierre y transferencia al PAE; norma de extinción por_verificar)"
+    financiamiento_w2: "PP 0115 + APNOP (apoyo alimentario y ollas comunes, hasta 2024) + PP 1001 (cuidado diurno, desde 2024)"
+  - id: pae
+    id_w2: PS-PAE
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1786"]}
+    sector_adscripcion: MIDIS
+    nombre_oficial: "Programa de Alimentación Escolar"
+    nombres:
+      - {nombre: "Programa de Alimentación Escolar (PAE)", desde: "2025-08-16", norma: "DS 008-2025-MIDIS", url: "https://agraria.pe/noticias/gobierno-crea-el-programa-de-alimentacion-escolar-pae-en-ree-40432", confianza: alta, alias_mef: ["ALIMENTACION ESCOLAR"]}
+    financiamiento_w2: "PP 0115 (2,2 millones en 2025)"
+  - id: foncodes
+    id_w2: PS-FONCODES
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1427"]}
+    sector_adscripcion: "MIDIS (desde 2011-2012)"
+    nombre_oficial: "Fondo de Cooperación para el Desarrollo Social"
+    nombres:
+      - {nombre: "FONCODES", desde: "1991", norma: "creación y adscripción por_verificar", url: "", confianza: media}
+    financiamiento_w2: "PP 0118 Haku Wiñay + APNOP (137-194 millones al año)"
+  - id: contigo
+    id_w2: PS-CONTIGO
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1723"]}
+    sector_adscripcion: "MIDIS (desde DS 008-2017-MIDIS; antes MIMP)"
+    nombre_oficial: "Programa Nacional de Entrega de la Pensión No Contributiva a Personas con Discapacidad Severa en Situación de Pobreza - CONTIGO"
+    nombres:
+      - {nombre: "Contigo", desde: "2015-08-11", norma: "DS 004-2015-MIMP; DS 008-2017-MIDIS", url: "https://cdn.www.gob.pe/uploads/document/file/8105969/6795048-manual-de-operaciones-de-contigo-rm_d000138-2025.pdf", confianza: alta}
+    financiamiento_w2: "sin programa presupuestal: APNOP"
+  - id: pais
+    id_w2: PS-PAIS
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1674"]}
+    sector_adscripcion: "MIDIS (antes Vivienda)"
+    nombre_oficial: "Programa Nacional Plataformas de Acción para la Inclusión Social - PAIS"
+    nombres:
+      - {nombre: "PAIS", desde: "2017-09-07", norma: "DS 013-2017-MIDIS (antes Programa Nacional Tambos)", url: "https://faolex.fao.org/docs/pdf/per173549.pdf", confianza: alta}
+    financiamiento_w2: "sin programa presupuestal: APNOP y acciones centrales"
+  - id: empleo_temporal
+    id_w2: PS-EMPLEO-TEMPORAL
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1066"]}
+    sector_adscripcion: MTPE
+    nombre_oficial: "Programa de Empleo Temporal «Llamkasun Perú»"
+    nombres:
+      - {nombre: "Trabaja Perú", desde: "2011", norma: "DS 012-2011-TR", url: "", confianza: alta}
+      - {nombre: "Lurawi Perú", desde: "2022", norma: "DS 002-2022-TR (fecha exacta por_verificar)", url: "", confianza: media}
+      - {nombre: "Llamkasun Perú", desde: "2023-08-10", publicacion: "2023-08-09", rotulo_fecha: mes, norma: "DS 009-2023-TR (El Peruano, 9/8/2023; rige desde el día siguiente)", url: "https://busquedas.elperuano.pe/dispositivo/NL/2203873-3", confianza: alta}
+    nota: "el tema (gasto final) muestra solo el 6-8 % del programa (6,3 % en 2023, 6,0 % en 2024 y 8,4 % en 2025): el resto son transferencias a municipalidades (605,6 / 535,7 / 409,0 millones), que se muestran siempre en la línea aparte «transferido a municipalidades» y nunca se suman al gasto final"
+    linea_aparte:
+      id: transferido_a_municipalidades
+      rotulo: "Transferido a municipalidades (lo ejecutan las municipalidades; no se suma al gasto del programa)"
+      obligatoria: true
+      clasificadores: ["2.4.1.3.1.3", "2.4.2.3.1.3"]   # donaciones y transferencias corrientes y de capital «a otras unidades del gobierno local»
+    financiamiento_w2: "PP 0073 (nombre MEF «... TRABAJA PERU»)"
+  - id: warmi_nan
+    id_w2: PS-WARMINAN
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1232"]}
+    sector_adscripcion: MIMP
+    nombre_oficial: "Programa Nacional para la Prevención y Erradicación de la Violencia contra las Mujeres e Integrantes del Grupo Familiar - Warmi Ñan"
+    nombres:
+      - {nombre: "PNCVFS", desde: "2001", norma: "DS 008-2001-PROMUDEH", url: "", confianza: alta}
+      - {nombre: "AURORA", desde: null, norma: "norma de creación por_verificar; nombre en uso en 2021 (RDE N° 195-2021-MIMP-AURORA-DE) y en 2023 (RM 164-2023-MIMP)", url: "https://cdn.www.gob.pe/uploads/document/file/2029763/RDE%20N%C2%B0%20195-2021-MIMP-AURORA-DE.pdf.pdf", confianza: media}
+      - {nombre: "Warmi Ñan", desde: "2025-05-03", norma: "DS 003-2025-MIMP", url: "https://iuslatin.pe/mimp-programa-aurora-cambia-de-nombre-a-warmi-nan-decreto-supremo-n-o-003-2025-mimp/", confianza: alta}
+    financiamiento_w2: "PP 1002 + APNOP"
+  - id: inabif
+    id_w2: PS-INABIF
+    identificacion: {nivel_gobierno: E, sec_ejec: ["1160"]}
+    sector_adscripcion: MIMP
+    nombre_oficial: "Programa Integral Nacional para el Bienestar Familiar"
+    nombres:
+      - {nombre: "INABIF", desde: null, norma: "—", url: "", confianza: media}
+    financiamiento_w2: "PP 0117 y 0142 + APNOP"
+  - id: vaso_de_leche
+    id_w2: PS-VASO-DE-LECHE
+    identificacion: {nivel_gobierno: M, actividad_accion_obra: ["5001059"]}
+    sector_adscripcion: "Municipalidades (≈1 890)"
+    nombre_oficial: "Programa del Vaso de Leche"
+    nombres:
+      - {nombre: "Vaso de Leche", desde: "1985", norma: "Ley 24059 (URL por_verificar)", url: "", confianza: media}
+    financiamiento_w2: "sin programa presupuestal: APNOP, actividad 5001059"
+  - id: pca
+    id_w2: PS-PCA
+    identificacion: {nivel_gobierno: M, actividad_accion_obra: ["5001062"]}
+    sector_adscripcion: "Municipalidades provinciales (≈250), con el MIDIS como rector"
+    nombre_oficial: "Programa de Complementación Alimentaria"
+    nombres:
+      - {nombre: "Programa de Complementación Alimentaria (comedores, ollas comunes y otras modalidades)", desde: null, norma: "—", url: "https://andina.pe/Agencia/noticia-midis-las-ollas-comunes-tendran-presupuesto-permanente-y-subsidio-gas-desde-2025-1004245.aspx", confianza: alta, alias_mef: ["COMPLEMENTACION ALIMENTARIA"]}
+    nota: "2025 no es comparable con 2024 (evento L24 de rel_linaje): el PCA sube de 245,7 a 551,5 millones (+305,8) porque las ollas comunes pasan a tener presupuesto permanente en el PCA; Qali Warma pagaba 219,5 millones en 2024 a ollas comunes (actividad 5006392) y nada en 2025. Las municipalidades que lo ejecutan son casi las mismas (con devengado > 0: 250 / 243 / 244 en 2023-2025; las 238 presentes en 2024 y 2025 pasan de 245,6 a 551,1) y el aumento está en recursos ordinarios (228,6 → 534,1)"
+    financiamiento_w2: "sin programa presupuestal: APNOP, actividad 5001062"
+  - id: jovenes_productivos
+    id_w2: "PS-JOVENES-PRODUCTIVOS (agregado el 8/10/2026, condición 2 de la aprobación de los temas ps_)"
+    identificacion: {nivel_gobierno: E, sec_ejec: ["993"]}
+    sector_adscripcion: MTPE
+    nombre_oficial: "Programa Nacional de Empleo Juvenil «Jóvenes Productivos» (antes «Jóvenes a la Obra»; absorbió a «Impulsa Perú», DS 019-2020-TR)"
+    nombres:
+      - {nombre: "Jóvenes Productivos", desde: "2015-05-08", norma: "DS 004-2015-TR (El Peruano, 7/5/2015): cambia «Jóvenes a la Obra» por «Jóvenes Productivos»", url: "https://cdn.www.gob.pe/uploads/document/file/1049124/DS_003_2015_TR20200727-24078-1w0cpkj.pdf", confianza: media}
+    nota: "13,5 / 18,0 / 17,0 millones de gasto final (2023-2025), casi todo en el PP 0116; en 2025, además, 2,6 millones transferidos a otra unidad del Gobierno Nacional (fuera del gasto final)"
+    financiamiento_w2: "PP 0116 (empleabilidad) + APNOP marginal"

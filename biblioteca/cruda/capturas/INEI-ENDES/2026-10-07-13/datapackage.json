@@ -1,0 +1,58 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-endes-2026-10-07-13",
+  "title": "Encuesta Demográfica y de Salud Familiar",
+  "created": "2026-10-07T13:09:15-05:00",
+  "keywords": [
+    "INEI-ENDES"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "endes-2021-hogar",
+      "title": "Encuesta Demográfica y de Salud Familiar",
+      "original_filename": "760-Modulo1629.zip",
+      "path": "almacen/sha256/1d/d7/1dd766bf2d6dd65b8ec0f9463ea9718fa22e60cff1514488de3f448caf3a5508",
+      "hash": "sha256:1dd766bf2d6dd65b8ec0f9463ea9718fa22e60cff1514488de3f448caf3a5508",
+      "bytes": 7207357,
+      "format": "zip",
+      "mediatype": "application/zip",
+      "source_id": "INEI-ENDES",
+      "publisher": "INEI",
+      "dataset_title": "Encuesta Demográfica y de Salud Familiar",
+      "access_url": "https://proyectos.inei.gob.pe/microdatos/",
+      "download_url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/760-Modulo1629.zip",
+      "source_version": "ENDES 2021 (código 760), módulo 1629 Características del Hogar, STATA",
+      "source_version_basis": "declarada",
+      "temporal": "1986–2025",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-07T13:09:15-05:00",
+      "method": "http_patron",
+      "recipe": "INEI-ENDES@378d816-modificada",
+      "attributed_to": "Claude en Chrome (navegador del dueño)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "ODbL-1.0",
+          "title": "ODbL (en datosabiertos.gob.pe) / uso libre con cita"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "manzana_conglomerado"
+      },
+      "known_issues": [
+        "Muestra 2024: 36 760 viviendas; inferencia anual departamental (24 + Callao) y por área/región; no provincial/distrital. Algunos indicadores (anemia) con IC amplios en dptos pequeños. Cambio de umbral de anemia por altitud (OMS 2024) puede generar quiebre de serie; verificar en informe. Ubigeo y conglomerado presentes pero geo-desplazado en versiones DHS internacionales."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

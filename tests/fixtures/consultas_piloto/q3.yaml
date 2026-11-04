@@ -1,0 +1,14 @@
+# Pregunta 3 de la prueba de reglas (texto reconstruido desde su recorrido: «¿sirvió?» → intención efecto).
+# 11/10/2026: la ENDES de Lima Metropolitana se compara 2024 vs 2025 (nota de CR-01; R-CRUCES-07, paso 2).
+id: Q3
+pregunta: ¿Cuánto se gastó contra la anemia en San Juan de Lurigancho y sirvió? (reconstruida)
+intencion: efecto
+territorio: {nivel: distrito, id: "150132", nombre_pedido: San Juan de Lurigancho}
+periodo: {tipo: ultimo}
+plantilla: q3_gasto_anemia
+cifras:
+  - {id: gasto_sjl_2025, indicador: gasto_ex_pan, anio: ultimo, nivel: distrito, territorio: "150132", rol: principal}
+  - {id: gasto_lm_2025, indicador: gasto_ex_pan, anio: ultimo, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, rol: contexto}
+  - {id: sien_sjl_2025, indicador: sien_anemia_tamizados_6_35m, anio: ultimo, nivel: distrito, territorio: "150132", rol: principal}
+  - {id: anemia_lm_2025, indicador: endes_anemia_6_35m_oms2024, anio: ultimo, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, rol: contexto, comparar_con: 2024}
+  - {id: cobertura_lm_2025, indicador: sien_cobertura_tamizaje_6_35m, anio: ultimo, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, rol: contexto}

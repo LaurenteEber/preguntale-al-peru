@@ -1,0 +1,60 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-enaho-2026-10-09-2",
+  "title": "Encuesta Nacional de Hogares sobre Condiciones de Vida y Pobreza",
+  "created": "2026-10-09T16:49:03-05:00",
+  "keywords": [
+    "INEI-ENAHO"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "informe-pobreza-2016-2025",
+      "title": "Encuesta Nacional de Hogares sobre Condiciones de Vida y Pobreza",
+      "original_filename": "8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025.pdf",
+      "path": "almacen/sha256/47/5c/475cc9c6b9c3539eef644a0b19551f0974cb78430777520b0a56f2869cadfe9c",
+      "hash": "sha256:475cc9c6b9c3539eef644a0b19551f0974cb78430777520b0a56f2869cadfe9c",
+      "bytes": 7092003,
+      "format": "pdf",
+      "mediatype": "application/pdf",
+      "source_id": "INEI-ENAHO",
+      "publisher": "INEI",
+      "dataset_title": "Encuesta Nacional de Hogares sobre Condiciones de Vida y Pobreza",
+      "access_url": "https://proyectos.inei.gob.pe/microdatos/",
+      "download_url": null,
+      "source_version": "Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico)",
+      "source_version_basis": "declarada",
+      "temporal": "1997–2025",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-09T16:49:03-05:00",
+      "method": "http_directo",
+      "recipe": "INEI-ENAHO@b0d5987-modificada",
+      "attributed_to": "Eber (manual, navegador)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "uso libre con cita"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "manzana_conglomerado"
+      },
+      "known_issues": [
+        "Representativa solo a nivel departamental (24 dptos + Callao + Lima Metropolitana) y región natural/área; NO por provincia ni distrito aunque la base trae UBIGEO distrital. Estimados trimestrales solo nacional y urbano/rural. 2020: 49% entrevistas telefónicas (16 mar–30 sep) con cuestionario reducido (se mantuvieron preguntas de pobreza), tasa de respuesta 73.1%. Factores de expansión (factor07 hogar; fac500a empleo) recalibrados a proyecciones de población: usar el factor publicado para cada año/versión. Muestra 2024: 36 594 viviendas.",
+        "Informe técnico del INEI; cifras de pobreza 2025 por departamento y ámbitos de Lima, con IC y CV"
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

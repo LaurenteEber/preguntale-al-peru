@@ -1,0 +1,46 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: ESSALUD-DATOS-ABIERTOS
+strategy: manual
+publisher: EsSalud
+dataset_title: Datos abiertos EsSalud (consulta externa, emergencias, inmunizaciones, laboratorio)
+access_url: https://www.datosabiertos.gob.pe/group/seguro-social-de-salud-essalud
+temporal:
+  inicio: 2015
+  fin: 2022
+spatial:
+  ambito: nacional (red EsSalud)
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: PDDL-1.0
+  title: Other (Public Domain)
+license_basis: declarada_en_pagina
+known_issues:
+- Población asegurada (trabajo formal) concentrada en urbes; ubigeo de establecimiento, no de residencia.
+manual:
+  pasos:
+  - Abrir https://www.datosabiertos.gob.pe/group/seguro-social-de-salud-essalud y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/atenciones-en-consulta-externa-essalud'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/ESSALUD-DATOS-ABIERTOS/
+  - 'Ejecutar: pap registrar ESSALUD-DATOS-ABIERTOS --issued <fecha>'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Datasets: atenciones-en-consulta-externa-essalud, atenciones-emergencia-essalud, atenciones-de-emergencias-en-essalud,
+  inmunizacion-essalud-del-2015-al-2022, exámenes de laboratorio (diabetes/obesidad). Plataforma Nacional de Datos
+  Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga en /sites/default/files/... o enlaces
+  externos; se puede listar vía /api/3/action/package_show?id=<slug> (API CKAN-compatible de DKAN; confirmar). Desde
+  este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright.'

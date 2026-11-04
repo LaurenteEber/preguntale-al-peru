@@ -1,0 +1,40 @@
+# Receta de obtención — generada desde el catálogo y editada a mano (S3: certificado del MEF vencido).
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MEF-DETALLE-INVERSIONES
+strategy: http_file
+publisher: MEF
+dataset_title: Detalle de inversiones (Banco de Inversiones – SNIP/Invierte.pe)
+access_url: https://www.datosabiertos.gob.pe/dataset/detalle-de-inversiones
+download_url: https://fs.datosabiertos.mef.gob.pe/datastorefiles/DETALLE_INVERSIONES.csv
+documentation_url: https://fs.datosabiertos.mef.gob.pe/datastorefiles/Detalle_Inversiones_Diccionario.csv
+temporal:
+  inicio: 2001
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: otra-abierta
+  title: Otra (abierta) según PNDA
+license_basis: declarada_en_pagina
+known_issues:
+- La localización puede ser multi-distrito (inversiones con varias ubicaciones) o solo departamental; costos actualizados
+  vs. viables difieren; inversiones SNIP antiguas con campos incompletos.
+espera:
+  formato:
+  - csv
+pendientes:
+- 'Certificado HTTPS de fs.datosabiertos.mef.gob.pe vencido (6/10/2026): descargar DETALLE_INVERSIONES.csv con el navegador; ver docs/guias/descarga_mef.md'
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: 'GET directo al CSV en fs.datosabiertos.mef.gob.pe (sin auth). Diccionario y metadatos en CSV aparte (metadatos:
+  https://www.datosabiertos.gob.pe/sites/default/files/Detalle_Inversiones_Metadatos.csv). Archivo grande: descargar
+  en streaming y comparar ETag/Last-Modified para detectar actualización.'

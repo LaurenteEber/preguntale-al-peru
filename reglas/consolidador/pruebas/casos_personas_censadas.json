@@ -1,0 +1,18 @@
+{
+ "nota": "Casos de la regla estructural personas_censadas (R-LENGUAJE-02, HEC-01). Los corre consolida_reglas.py.",
+ "cifras": {
+  "p_dist": {"fuente": "INEI-CPV2025", "nivel": "distrito"},
+  "p_prov": {"fuente": "INEI-CPV2025", "nivel": "provincia"},
+  "p_dep": {"fuente": "INEI-CPV2025", "nivel": "departamento"},
+  "proy": {"fuente": "INEI-PROYECCIONES-POBLACION-DISTRITAL", "nivel": "distrito"}
+ },
+ "casos": [
+  {"texto": "En 2025 la población de Pachacámac era de {{c:p_dist}} habitantes.", "debe": "regenerar"},
+  {"texto": "El censo 2025 contó {{c:p_dist}} {{u:personas_censadas}} en Pachacámac.", "debe": "pasar"},
+  {"texto": "La provincia tiene {{c:p_prov}} habitantes. Fueron {{u:personas_censadas}}.", "debe": "regenerar"},
+  {"texto": "En la provincia se censaron {{c:p_prov}} {{u:personas_censadas}}; el resto es una estimación.", "debe": "pasar"},
+  {"texto": "El departamento tiene {{c:p_dep}} habitantes según el censo.", "debe": "pasar"},
+  {"texto": "La población estimada del distrito en 2025 es {{c:proy}}.", "debe": "pasar"},
+  {"texto": "Según la proyección son {{c:proy}} personas; el censo contó {{c:p_dist}}.", "debe": "regenerar"}
+ ]
+}

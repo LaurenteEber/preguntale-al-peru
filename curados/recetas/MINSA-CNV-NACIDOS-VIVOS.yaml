@@ -1,0 +1,39 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINSA-CNV-NACIDOS-VIVOS
+strategy: http_file
+publisher: MINSA
+dataset_title: Registros de Nacidos Vivos en el Perú (2015–2025) – Certificado de Nacido Vivo
+access_url: https://www.datosabiertos.gob.pe/dataset/registros-de-nacidos-vivos-en-el-per%C3%BA-2015%E2%80%932025
+download_url: https://www.datosabiertos.gob.pe/sites/default/files/CNV_MINSA_CORTE_30112025.csv
+temporal:
+  inicio: 2015
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Cobertura del CNV en línea incompleta en partos domiciliarios; variables normalizadas desde 2015.
+espera:
+  formato:
+  - csv
+  - pdf
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+notas: 'Incluye en el mismo dataset tablas auxiliares: códigos geográficos INEI (CSV) y lista de IPRESS (CSV). Dataset
+  en la PNDA (DKAN). Los recursos son archivos estáticos bajo https://www.datosabiertos.gob.pe/sites/default/files/<archivo>;
+  listar recursos vía /api/3/action/current_package_list_with_resources?limit=N&offset=M y filtrar por título. Usar
+  siempre host www. (el host sin www no resolvió desde el fetcher). La página HTML a veces redirige a login; la
+  API no. El nombre del CSV cambia con cada corte: leerlo de la ficha.'

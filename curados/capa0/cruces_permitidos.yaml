@@ -1,0 +1,265 @@
+# cruces_permitidos — lista blanca de cruces curados (R-CRUCES-11). Solo se calculan los de estado activo_piloto;
+# opcion_dueno = propuesto, no activo hasta el visto del dueño. Un cruce no listado se responde como dos cifras separadas.
+# v1.1.0, 9/10/2026: subdivision_lima (L5: LM, LR y Callao). v1.0.0: analista + auditor (03_auditoria/piloto_tablas_curadas/).
+version: 1.1.0
+fecha: '2026-10-09'
+max_cruces_mvp: 15
+cruces:
+- id_cruce: CR-01
+  estado_propuesta: activo_piloto
+  indicador_a: gasto_ex_pan
+  indicador_b: endes_anemia_6_35m_oms2024
+  pregunta: 3
+  nivel_minimo: departamento
+  ventana_anios: 1
+  rezago_anios: 0
+  anios_comunes:
+  - 2024
+  - 2025
+  presentacion: lado_a_lado
+  poblacion_objetivo_comun: 'Resultado: niñas y niños de 6 a 35 meses. Gasto: servicios para menores de 5 años y sus familias (anidada → rotular).'
+  nota_metodologica: 'Pregunta de efecto: estructura de 5 partes (R-CRUCES-07); paso 2 = ENDES del mismo territorio 2024 vs 2025 con prueba R-ENC-11. Plantilla de R-GASTO-15. Universo distinto (gasto público
+    vs toda la población): rotular. Se inhabilita en un año si algún componente cae en rojo (B9). Lima y Callao: subdivision_lima (L5) con el mapeo ámbito a ámbito; reemplaza D-IND-4 (Lima = 15 entero).'
+  aprobado_por: 'Eber (dueño): visto del 10/10/2026, con cargo a revisión después del piloto'
+  fecha_aprobacion: '2026-10-10'
+  subdivision_lima:
+    decision: L5 (dueño, 9/10/2026; reemplaza D-IND-4)
+    nivel_minimo_otros: 'departamento: los otros 24 departamentos sin cambio (el 15 se subdivide; el 07 es el Callao)'
+    subdivide:
+    - '15'
+    - '07'
+    ambitos:
+    - ambito_id: LIMA_METROPOLITANA
+      nivel: LIMA_METROPOLITANA
+      rango: 3
+      rotulo: Lima Metropolitana (provincia de Lima)
+      anios:
+      - 2024
+      - 2025
+      resultado:
+        campo: ambito_lima
+        valor: LIMA_METROPOLITANA
+        funcion: ambitos_lima.mascara_ambito(df, 'ENDES', 'LIMA_METROPOLITANA') (= columna ambito_lima de endes_nino v1.1.0)
+      gasto:
+        campo: ambito_gasto
+        valor: LIMA_METROPOLITANA
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'LIMA_METROPOLITANA' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    - ambito_id: LIMA_REGION
+      nivel: LIMA_REGION
+      rango: 3.5
+      rotulo: Lima Región (Lima Provincias)
+      anios:
+      - 2024
+      - 2025
+      resultado:
+        campo: ambito_lima
+        valor: LIMA_REGION
+        funcion: ambitos_lima.mascara_ambito(df, 'ENDES', 'LIMA_REGION') (= columna ambito_lima de endes_nino v1.1.0)
+      gasto:
+        campo: ambito_gasto
+        valor: LIMA_REGION
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'LIMA_REGION' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    - ambito_id: CALLAO
+      nivel: CALLAO
+      rango: 4
+      rotulo: Callao
+      anios:
+      - 2024
+      - 2025
+      resultado:
+        campo: ambito_lima
+        valor: CALLAO
+        funcion: ambitos_lima.mascara_ambito(df, 'ENDES', 'CALLAO') (= columna ambito_lima de endes_nino v1.1.0)
+      gasto:
+        campo: ambito_gasto
+        valor: CALLAO
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'CALLAO' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    anios_condicionados:
+    - anio: 2025
+      ambitos:
+      - LIMA_METROPOLITANA
+      - LIMA_REGION
+      activo: true
+      condicion: 'dim_dominio ENDES 2025: lima_metropolitana y lima_provincias con confirmado = true (dominios.yaml)'
+      estado: 'confirmado: dos lecturas WebFetch independientes del Cuadro N.º 1 de la ficha 1038 (P2 y auditoría P2–P4) y estratos de los microdatos 2025 sin mezcla de ámbitos; orquestador 9/10/2026: 2025
+        activo. Pendiente no bloqueante: pdftotext de la página en el Mac; el Callao 2025 no depende de esto (dominio de la ficha)'
+      decide: 'orquestador. Para revertir: activo = false (LM y LR quedan en 2024) y los pasos de dim_indicador (dominios.yaml, D-05)'
+    lineas_aparte: 'gasto: ambito_gasto = ''REFERENCIA_NACIONAL'' (siempre, también si es 0); NO_ASIGNABLE_DPTO_LIMA y NO_ASIGNABLE_LIMA_CALLAO no se reparten a ningún ámbito'
+    nunca: el departamento 15 entero junto con LM o LR; el dominio 8 (sin componente de gasto propio); LR × Callao (R-CRUCES-01.contencion)
+    si_falta_un_ambito: si un componente no tiene cifra publicable para LM o LR ese año, el cruce va al departamento 15 entero, rotulado «departamento de Lima (Lima Metropolitana + Lima Región)» (R-CRUCES-01.componente_solo_departamento_15)
+    avisos:
+    - 'sesgo de sede (Lima 38 %; Callao: aviso siempre, porcentaje pendiente; R-GASTO-03)'
+    - ejecutoras mixtas (función SALUD)
+    - 'Callao: sin gasto por habitante ni ranking sin aviso (L6)'
+- id_cruce: CR-02
+  estado_propuesta: opcion_dueno
+  indicador_a: gasto_ex_pan
+  indicador_b: sien_anemia_tamizados_6_35m
+  pregunta: 3
+  nivel_minimo: departamento
+  ventana_anios: 1
+  rezago_anios: 0
+  anios_comunes:
+  - 2025
+  presentacion: lado_a_lado
+  poblacion_objetivo_comun: 'Resultado: niñas y niños de 6 a 35 meses tamizados en EESS MINSA/GORE. Gasto: servicios para menores de 5 años (anidada → rotular).'
+  nota_metodologica: 'Rótulo de tamizados ({{u:tamizados}}) y de establecimiento (R-REG-01, R-REG-02). Al departamento: suma de numeradores y denominadores del SIEN por ubigeo_eess. Lima y Callao: subdivision_lima,
+    como CR-01 (L5).'
+  aprobado_por: null
+  fecha_aprobacion: null
+  subdivision_lima:
+    decision: L5 (dueño, 9/10/2026; reemplaza D-IND-4)
+    nivel_minimo_otros: 'departamento: los otros 24 departamentos sin cambio (el 15 se subdivide; el 07 es el Callao)'
+    subdivide:
+    - '15'
+    - '07'
+    ambitos:
+    - ambito_id: LIMA_METROPOLITANA
+      nivel: LIMA_METROPOLITANA
+      rango: 3
+      rotulo: Lima Metropolitana (provincia de Lima)
+      anios:
+      - 2025
+      resultado:
+        campo: ambito_por_ubigeo(ubigeo_eess)
+        valor: LIMA_METROPOLITANA
+        funcion: ambitos_lima.ambito_por_ubigeo(ubigeo_eess) == 'LIMA_METROPOLITANA' (establecimientos ubicados en el ámbito)
+      gasto:
+        campo: ambito_gasto
+        valor: LIMA_METROPOLITANA
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'LIMA_METROPOLITANA' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    - ambito_id: LIMA_REGION
+      nivel: LIMA_REGION
+      rango: 3.5
+      rotulo: Lima Región (Lima Provincias)
+      anios:
+      - 2025
+      resultado:
+        campo: ambito_por_ubigeo(ubigeo_eess)
+        valor: LIMA_REGION
+        funcion: ambitos_lima.ambito_por_ubigeo(ubigeo_eess) == 'LIMA_REGION' (establecimientos ubicados en el ámbito)
+      gasto:
+        campo: ambito_gasto
+        valor: LIMA_REGION
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'LIMA_REGION' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    - ambito_id: CALLAO
+      nivel: CALLAO
+      rango: 4
+      rotulo: Callao
+      anios:
+      - 2025
+      resultado:
+        campo: ambito_por_ubigeo(ubigeo_eess)
+        valor: CALLAO
+        funcion: ambitos_lima.ambito_por_ubigeo(ubigeo_eess) == 'CALLAO' (establecimientos ubicados en el ámbito)
+      gasto:
+        campo: ambito_gasto
+        valor: CALLAO
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'CALLAO' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    anios_condicionados: []
+    lineas_aparte: 'gasto: ambito_gasto = ''REFERENCIA_NACIONAL'' (siempre, también si es 0); NO_ASIGNABLE_DPTO_LIMA y NO_ASIGNABLE_LIMA_CALLAO no se reparten a ningún ámbito'
+    nunca: el departamento 15 entero junto con LM o LR; el dominio 8 (sin componente de gasto propio); LR × Callao (R-CRUCES-01.contencion)
+    si_falta_un_ambito: si un componente no tiene cifra publicable para LM o LR ese año, el cruce va al departamento 15 entero, rotulado «departamento de Lima (Lima Metropolitana + Lima Región)» (R-CRUCES-01.componente_solo_departamento_15)
+    avisos:
+    - 'sesgo de sede (Lima 38 %; Callao: aviso siempre, porcentaje pendiente; R-GASTO-03)'
+    - ejecutoras mixtas (función SALUD)
+    - 'Callao: sin gasto por habitante ni ranking sin aviso (L6)'
+- id_cruce: CR-03
+  estado_propuesta: opcion_dueno
+  indicador_a: gasto_ex_pan
+  indicador_b: endes_anemia_6_35m
+  pregunta: 3
+  nivel_minimo: departamento
+  ventana_anios: 1
+  rezago_anios: 0
+  anios_comunes:
+  - 2023
+  - 2024
+  - 2025
+  presentacion: lado_a_lado
+  poblacion_objetivo_comun: Igual que CR-01.
+  nota_metodologica: 'Permite alinear los tres años del gasto con la forma de medir anterior; obliga a mostrar dos criterios de anemia en la misma respuesta (R-ENC-14). Lima y Callao: subdivision_lima,
+    como CR-01 (L5).'
+  aprobado_por: null
+  fecha_aprobacion: null
+  subdivision_lima:
+    decision: L5 (dueño, 9/10/2026; reemplaza D-IND-4)
+    nivel_minimo_otros: 'departamento: los otros 24 departamentos sin cambio (el 15 se subdivide; el 07 es el Callao)'
+    subdivide:
+    - '15'
+    - '07'
+    ambitos:
+    - ambito_id: LIMA_METROPOLITANA
+      nivel: LIMA_METROPOLITANA
+      rango: 3
+      rotulo: Lima Metropolitana (provincia de Lima)
+      anios:
+      - 2023
+      - 2024
+      - 2025
+      resultado:
+        campo: ambito_lima
+        valor: LIMA_METROPOLITANA
+        funcion: ambitos_lima.mascara_ambito(df, 'ENDES', 'LIMA_METROPOLITANA') (= columna ambito_lima de endes_nino v1.1.0)
+      gasto:
+        campo: ambito_gasto
+        valor: LIMA_METROPOLITANA
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'LIMA_METROPOLITANA' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    - ambito_id: LIMA_REGION
+      nivel: LIMA_REGION
+      rango: 3.5
+      rotulo: Lima Región (Lima Provincias)
+      anios:
+      - 2023
+      - 2024
+      - 2025
+      resultado:
+        campo: ambito_lima
+        valor: LIMA_REGION
+        funcion: ambitos_lima.mascara_ambito(df, 'ENDES', 'LIMA_REGION') (= columna ambito_lima de endes_nino v1.1.0)
+      gasto:
+        campo: ambito_gasto
+        valor: LIMA_REGION
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'LIMA_REGION' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    - ambito_id: CALLAO
+      nivel: CALLAO
+      rango: 4
+      rotulo: Callao
+      anios:
+      - 2023
+      - 2024
+      - 2025
+      resultado:
+        campo: ambito_lima
+        valor: CALLAO
+        funcion: ambitos_lima.mascara_ambito(df, 'ENDES', 'CALLAO') (= columna ambito_lima de endes_nino v1.1.0)
+      gasto:
+        campo: ambito_gasto
+        valor: CALLAO
+        consulta: SELECT anio, sum(MONTO_DEVENGADO) FROM gasto_tema('cpt_grupo_expan') WHERE ambito_gasto = 'CALLAO' GROUP BY 1
+        vista_control: v_gasto_por_ambito (cifra_ambito)
+    anios_condicionados:
+    - anio: 2025
+      ambitos:
+      - LIMA_METROPOLITANA
+      - LIMA_REGION
+      activo: true
+      condicion: 'dim_dominio ENDES 2025: lima_metropolitana y lima_provincias con confirmado = true (dominios.yaml)'
+      estado: 'confirmado: dos lecturas WebFetch independientes del Cuadro N.º 1 de la ficha 1038 (P2 y auditoría P2–P4) y estratos de los microdatos 2025 sin mezcla de ámbitos; orquestador 9/10/2026: 2025
+        activo. Pendiente no bloqueante: pdftotext de la página en el Mac; el Callao 2025 no depende de esto (dominio de la ficha)'
+      decide: 'orquestador. Para revertir: activo = false (LM y LR quedan en 2024) y los pasos de dim_indicador (dominios.yaml, D-05)'
+    lineas_aparte: 'gasto: ambito_gasto = ''REFERENCIA_NACIONAL'' (siempre, también si es 0); NO_ASIGNABLE_DPTO_LIMA y NO_ASIGNABLE_LIMA_CALLAO no se reparten a ningún ámbito'
+    nunca: el departamento 15 entero junto con LM o LR; el dominio 8 (sin componente de gasto propio); LR × Callao (R-CRUCES-01.contencion)
+    si_falta_un_ambito: si un componente no tiene cifra publicable para LM o LR ese año, el cruce va al departamento 15 entero, rotulado «departamento de Lima (Lima Metropolitana + Lima Región)» (R-CRUCES-01.componente_solo_departamento_15)
+    avisos:
+    - 'sesgo de sede (Lima 38 %; Callao: aviso siempre, porcentaje pendiente; R-GASTO-03)'
+    - ejecutoras mixtas (función SALUD)
+    - 'Callao: sin gasto por habitante ni ranking sin aviso (L6)'

@@ -1,0 +1,1195 @@
+{
+ "nuevos": [
+  {
+   "id": "MINSA-POBLACION-ESTIMADA",
+   "nombre": "Población estimada MINSA por edades simples y grupos de edad (distrito / establecimiento de salud)",
+   "sigla": null,
+   "descripcion": "Población estimada que el MINSA (OGTI/OGEI) distribuye por distrito, edad simple y grupos especiales (menores de 1 año, gestantes esperadas, etc.) a partir de las proyecciones INEI; es el denominador oficial de coberturas HIS/REUNIS (vacunas, CRED, suplementación) y base para asignar población a IPRESS.",
+   "tematica_principal": "poblacion_demografia",
+   "tematicas_secundarias": [
+    "salud",
+    "nutricion_anemia"
+   ],
+   "subtemas": [
+    "población estimada",
+    "denominador de coberturas",
+    "edades simples",
+    "menores de 1 año",
+    "menores de 5 años",
+    "gestantes esperadas",
+    "población asignada a IPRESS"
+   ],
+   "entidad": "Ministerio de Salud (MINSA)",
+   "sector": "MINSA",
+   "unidad_organica": "Oficina General de Tecnologías de la Información (OGTI) – Oficina de Gestión de la Información / REUNIS; insumo INEI-DTDIS",
+   "naturaleza_dato": "estimacion_modelada",
+   "tipo_acceso": [
+    "tablero_interactivo",
+    "consulta_web"
+   ],
+   "unidad_observacion": "distrito × edad simple (y EESS en la población asignada por las DIRESA)",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "distrito",
+   "nivel_territorial_inferencia": "distrito",
+   "base_geografica": "territorio",
+   "tipo_medida": "estimacion_modelada",
+   "desagregaciones": [
+    "edad simple",
+    "grupo de edad",
+    "sexo (por confirmar)",
+    "año"
+   ],
+   "llaves_cruce": [
+    "ubigeo_inei"
+   ],
+   "periodicidad": "anual",
+   "cobertura_temporal": "anual (años recientes; series 2011–2026 replicadas por redes/DIRESA)",
+   "anio_inicio": null,
+   "anio_fin": 2026,
+   "fecha_ultimo_dato": null,
+   "es_proyeccion": true,
+   "serie_activa": true,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": "se publica al inicio del año de referencia",
+   "formatos": [
+    "HTML",
+    "XLSX (por confirmar)"
+   ],
+   "url_portal": "https://www.minsa.gob.pe/reunis/?op=1",
+   "url_datos": null,
+   "url_patron": null,
+   "url_documentacion": null,
+   "estrategia_descarga": "scraping_dinamico",
+   "detalle_descarga": "Menú 'Información Demográfica' de REUNIS (op=1). Búsquedas devuelven subpáginas https://www.minsa.gob.pe/reunis/?op=1&niv=5, ?op=1&niv=5&tbl=3 y ?op=1&niv=5&tbl=4, pero su contenido no pudo verificarse: REUNIS responde 403 / robots al fetch automatizado (WAF). Requiere Playwright o descarga manual; alternativa: solicitar el archivo anual a OGTI vía transparencia o tomarlo de DIRESA que lo republican (ej. resolución DIRESA Piura 2025).",
+   "requiere_registro": false,
+   "licencia": "no-especificada",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Es una desagregación por edad de las proyecciones INEI (que a nivel distrital solo publican total): el MINSA aplica estructuras etarias propias, y en el año se aplican factores de corrección (declaración del viceministro de Salud a El Comercio, 2025), lo que hace cambiar las coberturas según la fecha de corte. Puede diferir del Padrón Nominal (MINSA-PADRON-NOMINAL) y del Censo 2025.",
+   "prioridad_mvp": "alta",
+   "estado_portal": "confirmado_busqueda",
+   "estado_datos": "sin_probar",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Evidencia del uso: Resolución Directoral 0171-2025-GRP-DRSP-OEIS (DIRESA Piura) aprueba población asignada a IPRESS 2025 por grupos de edad citando 'MINSA OGTI – proyecciones distritales 2025', INEI y Padrón Nominal (https://cdn.www.gob.pe/uploads/document/file/7879610/6598428-resolucion-directoral-n-0171-2025-grp-drsp-oeis.pdf). La página REUNIS op=1 aparece como 'Información Demográfica' en buscadores. URL de descarga no confirmada.",
+   "vacio": "1",
+   "ola_sugerida": "0_base"
+  },
+  {
+   "id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+   "nombre": "Perú: Estimaciones y Proyecciones de Población Departamental por Años Calendario y Edad Simple 1995-2030 (Boletín Especial N.º 25)",
+   "sigla": null,
+   "descripcion": "Proyecciones oficiales de población por departamento, sexo, edad simple y grupos quinquenales para cada año 1995–2030, base Censo 2017.",
+   "tematica_principal": "poblacion_demografia",
+   "tematicas_secundarias": [],
+   "subtemas": [
+    "proyecciones de población",
+    "edad simple",
+    "grupos quinquenales",
+    "sexo",
+    "denominadores"
+   ],
+   "entidad": "Instituto Nacional de Estadística e Informática (INEI)",
+   "sector": "PCM",
+   "unidad_organica": "Dirección Técnica de Demografía e Indicadores Sociales (DTDIS)",
+   "naturaleza_dato": "estimacion_modelada",
+   "tipo_acceso": [
+    "publicacion_pdf"
+   ],
+   "unidad_observacion": "departamento × sexo × edad × año",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "departamento",
+   "nivel_territorial_inferencia": "departamento",
+   "base_geografica": "territorio",
+   "tipo_medida": "estimacion_modelada",
+   "desagregaciones": [
+    "sexo",
+    "edad simple",
+    "grupo quinquenal de edad",
+    "año calendario"
+   ],
+   "llaves_cruce": [
+    "ubigeo_inei"
+   ],
+   "periodicidad": "única (revisión tras cada censo)",
+   "cobertura_temporal": "1995–2030",
+   "anio_inicio": 1995,
+   "anio_fin": 2030,
+   "fecha_ultimo_dato": "2020-01",
+   "es_proyeccion": true,
+   "serie_activa": false,
+   "anios_con_quiebre": "Base Censo 2017; será reemplazada por la revisión post Censo 2025",
+   "rezago_publicacion": null,
+   "formatos": [
+    "PDF"
+   ],
+   "url_portal": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1722/libro.pdf",
+   "url_datos": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1722/libro.pdf",
+   "url_patron": null,
+   "url_documentacion": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1722/libro.pdf",
+   "estrategia_descarga": "descarga_directa_url",
+   "detalle_descarga": "PDF estático; extraer cuadros por departamento con pdfplumber/camelot. No se halló versión XLSX.",
+   "requiere_registro": false,
+   "licencia": "uso-libre-con-cita",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Solo hasta departamento: el INEI declara que a nivel provincial y distrital proyecta únicamente población total (ambos sexos) sin desagregación por edad. Base Censo 2017, desfasada frente al Censo 2025 (omisión 4,25 %).",
+   "prioridad_mvp": "media",
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "sin_probar",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Publicado enero 2020. Para distrito×edad combinar total distrital INEI con estructura etaria del Censo 2017 (cuadro 1 de los tomos de resultados definitivos) o usar la población estimada MINSA.",
+   "vacio": "1",
+   "ola_sugerida": "1_nucleo"
+  },
+  {
+   "id": "INEI-DIRECTORIO-MUNICIPALIDADES",
+   "nombre": "Directorio Nacional de Gobiernos Regionales, Municipalidades Provinciales, Distritales y de Centros Poblados",
+   "sigla": null,
+   "descripcion": "Directorio anual de municipalidades con autoridades, contacto, coordenadas de la capital legal y, por distrito, el dispositivo legal de creación (ley, número y fecha); incluye notas sobre distritos creados recientemente.",
+   "tematica_principal": "territorio_cartografia",
+   "tematicas_secundarias": [
+    "gobernanza_transparencia_corrupcion"
+   ],
+   "subtemas": [
+    "ley de creación",
+    "distritos nuevos",
+    "ubigeo histórico",
+    "capital legal",
+    "autoridades municipales"
+   ],
+   "entidad": "Instituto Nacional de Estadística e Informática (INEI)",
+   "sector": "PCM",
+   "unidad_organica": null,
+   "naturaleza_dato": "registro_administrativo",
+   "tipo_acceso": [
+    "publicacion_pdf",
+    "descarga_tabular"
+   ],
+   "unidad_observacion": "municipalidad / distrito",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "distrito",
+   "nivel_territorial_inferencia": null,
+   "base_geografica": "territorio",
+   "tipo_medida": "padron_referencia",
+   "desagregaciones": [
+    "departamento",
+    "provincia",
+    "distrito",
+    "centro poblado (municipalidades de CP)"
+   ],
+   "llaves_cruce": [],
+   "periodicidad": "anual",
+   "cobertura_temporal": "ediciones anuales (2003–2025 identificadas)",
+   "anio_inicio": 2003,
+   "anio_fin": 2025,
+   "fecha_ultimo_dato": "2025-02",
+   "es_proyeccion": false,
+   "serie_activa": true,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": "~3 meses",
+   "formatos": [
+    "PDF",
+    "XLSX (ZIP 'Cuadros en Excel')"
+   ],
+   "url_portal": "https://www.gob.pe/en/institucion/inei/informes-publicaciones/6722617-national-directory-of-regional-governments-provincial-municipalities-district-and-of-populates-centers-2025",
+   "url_datos": null,
+   "url_patron": null,
+   "url_documentacion": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1809/libro.pdf",
+   "estrategia_descarga": "descarga_manual",
+   "detalle_descarga": "Ficha gob.pe 2025 (publicada 29-04-2025) con PDF (13,3 MB) y 'Cuadros en Excel' (ZIP 4,3 MB); URL cdn de los adjuntos no visible en el fetch. Existe además 'Directorio Nacional de Municipalidades Provinciales y Distritales – Julio 2025' (XLSX 245 KB): https://www.gob.pe/en/institucion/inei/informes-publicaciones/3908763-directorio-nacional-de-municipalidades-provinciales-y-distritales-julio-2025. Ediciones antiguas en cdn.www.gob.pe (2019, 2020) y Lib1809 (2021).",
+   "requiere_registro": false,
+   "licencia": "uso-libre-con-cita",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "El cuadro de dispositivo legal (sección 1.2) no trae ubigeo en la edición 2021 (sí nombres); no consigna el distrito de origen de los distritos nuevos: hay que leerlo en la ley. Cuadros en PDF; verificar si el ZIP Excel incluye la tabla de leyes.",
+   "prioridad_mvp": "media",
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "sin_probar",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Edición 2025: 196 municipalidades provinciales y 1 695 distritales (autoridades al 3-02-2025). Edición 2021 indica 13 distritos creados en 2020–2021 (Ayacucho, Cusco, Huancavelica, San Martín, Ucayali). Complementos para ubigeo histórico: INEI Lib1860 (Boletín 27, proyecciones 2018-2022) Anexo 3 'Dispositivos legales de modificación de ámbitos territoriales' (16 distritos creados 2020–2021) https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1860/libro.pdf; tabla PNDA de ubigeos 2022 con 1 891 distritos; proyecciones 2018-2026 con 1 892 distritos.",
+   "vacio": "2",
+   "ola_sugerida": "1_nucleo"
+  },
+  {
+   "id": "MEF-MAESTRO-EJECUTORAS-DERIVADO",
+   "nombre": "Maestro de unidades ejecutoras y pliegos con ubigeo y nivel de gobierno (derivado del dataset de gasto MEF)",
+   "sigla": null,
+   "descripcion": "Tabla maestra construida por el proyecto a partir de las columnas de entidad del CSV de Presupuesto y Ejecución de Gasto (SEC_EJEC, EJECUTORA, PLIEGO, SECTOR, NIVEL_GOBIERNO, DEPARTAMENTO/PROVINCIA/DISTRITO_EJECUTORA), por año. El MEF no publica una relación descargable independiente.",
+   "tematica_principal": "presupuesto_finanzas_publicas",
+   "tematicas_secundarias": [
+    "territorio_cartografia"
+   ],
+   "subtemas": [
+    "unidad ejecutora",
+    "pliego",
+    "sec_ejec",
+    "nivel de gobierno",
+    "municipalidad",
+    "ubigeo de la ejecutora"
+   ],
+   "entidad": "Ministerio de Economía y Finanzas (MEF)",
+   "sector": "MEF",
+   "unidad_organica": "DGPP / SIAF-SP (origen); derivación propia",
+   "naturaleza_dato": "registro_administrativo",
+   "tipo_acceso": [
+    "descarga_tabular"
+   ],
+   "unidad_observacion": "unidad ejecutora × año",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "distrito",
+   "nivel_territorial_inferencia": null,
+   "base_geografica": "ejecutora",
+   "tipo_medida": "padron_referencia",
+   "desagregaciones": [
+    "nivel de gobierno (E/R/M)",
+    "sector",
+    "pliego",
+    "año"
+   ],
+   "llaves_cruce": [
+    "pliego_unidad_ejecutora (sec_ejec)",
+    "ubigeo_inei"
+   ],
+   "periodicidad": "anual (derivable diario)",
+   "cobertura_temporal": "2012–2026",
+   "anio_inicio": 2012,
+   "anio_fin": 2026,
+   "fecha_ultimo_dato": null,
+   "es_proyeccion": false,
+   "serie_activa": true,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": "~1 día (archivo diario)",
+   "formatos": [
+    "CSV"
+   ],
+   "url_portal": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto",
+   "url_datos": null,
+   "url_patron": null,
+   "url_documentacion": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv",
+   "estrategia_descarga": "descarga_manual",
+   "detalle_descarga": "Derivar: SELECT DISTINCT ANO_EJE, NIVEL_GOBIERNO, NIVEL_GOBIERNO_NOMBRE, SECTOR, SECTOR_NOMBRE, PLIEGO, PLIEGO_NOMBRE, SEC_EJEC, EJECUTORA, EJECUTORA_NOMBRE, DEPARTAMENTO_EJECUTORA(+_NOMBRE), PROVINCIA_EJECUTORA(+_NOMBRE), DISTRITO_EJECUTORA(+_NOMBRE) sobre los CSV anuales de MEF-DA-PRESUPUESTO-EJECUCION-GASTO (DuckDB). Ubigeo = DEP||PROV||DIST (verificar que siga codificación INEI). Para municipalidades, el distrito de la ejecutora identifica el gobierno local.",
+   "requiere_registro": false,
+   "licencia": "ODC-By-1.0",
+   "licencia_texto": "Licencia de la PNDA para el dataset de origen (confirmar)",
+   "permite_redistribucion": true,
+   "limitaciones": "Solo incluye ejecutoras con movimiento presupuestal en el año; nombres cambian entre años (usar SEC_EJEC como llave estable); ubicación de la ejecutora ≠ lugar del gasto (usar *_META para eso).",
+   "prioridad_mvp": "alta",
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "sin_probar",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Diccionario confirmado por fetch: define SEC_EJEC, EJECUTORA(_NOMBRE), PLIEGO(_NOMBRE), NIVEL_GOBIERNO(_NOMBRE) con valores E/R/M, y DEPARTAMENTO/PROVINCIA/DISTRITO_EJECUTORA(_NOMBRE) 'donde se ubica la Entidad', además de *_META. No se halló en datosabiertos.mef.gob.pe (SPA) ni en buscadores una 'relación de unidades ejecutoras' descargable.",
+   "vacio": "3",
+   "ola_sugerida": "0_base"
+  },
+  {
+   "id": "CENEPRED-SIGRID-IIEE",
+   "nombre": "Capa 'Instituciones Educativas' (Padrón MINEDU) en el ArcGIS REST de SIGRID – CENEPRED",
+   "sigla": null,
+   "descripcion": "Servicio de mapas con los puntos del Padrón de Instituciones Educativas y Programas del MINEDU (UEE, 2019) con código modular, código de local, ubigeo, matrícula por sexo y docentes; consultable en JSON/GeoJSON sin anti-bot.",
+   "tematica_principal": "educacion",
+   "tematicas_secundarias": [
+    "riesgo_desastres_clima",
+    "territorio_cartografia"
+   ],
+   "subtemas": [
+    "padrón de IIEE",
+    "locales escolares",
+    "coordenadas",
+    "código modular",
+    "elementos expuestos"
+   ],
+   "entidad": "Centro Nacional de Estimación, Prevención y Reducción del Riesgo de Desastres (CENEPRED) – datos MINEDU-UEE",
+   "sector": "PCM / MINEDU",
+   "unidad_organica": "SIGRID (CENEPRED); fuente Unidad de Estadística Educativa (MINEDU)",
+   "naturaleza_dato": "geoespacial",
+   "tipo_acceso": [
+    "geoservicio"
+   ],
+   "unidad_observacion": "servicio educativo (código modular)",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "punto_coordenadas",
+   "nivel_territorial_inferencia": null,
+   "base_geografica": "establecimiento",
+   "tipo_medida": "padron_referencia",
+   "desagregaciones": [
+    "nivel/modalidad",
+    "sexo (matrícula)"
+   ],
+   "llaves_cruce": [
+    "codigo_modular_ie",
+    "codigo_local_escolar",
+    "ubigeo_inei",
+    "coordenadas"
+   ],
+   "periodicidad": "irregular",
+   "cobertura_temporal": "corte 2019",
+   "anio_inicio": 2019,
+   "anio_fin": 2019,
+   "fecha_ultimo_dato": "2019",
+   "es_proyeccion": false,
+   "serie_activa": null,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": null,
+   "formatos": [
+    "JSON",
+    "GeoJSON"
+   ],
+   "url_portal": "https://sigrid.cenepred.gob.pe/arcgis/rest/services/Elementos_Expuestos/MapServer/2030000",
+   "url_datos": "https://sigrid.cenepred.gob.pe/arcgis/rest/services/Elementos_Expuestos/MapServer/2030000/query",
+   "url_patron": null,
+   "url_documentacion": "https://sigrid.cenepred.gob.pe/arcgis/rest/services/Elementos_Expuestos/MapServer/2030000",
+   "estrategia_descarga": "geoservicio",
+   "detalle_descarga": "ArcGIS REST MapServer capa 2030000; maxRecordCount=1000 → paginar /query?where=1=1&outFields=*&f=geojson&resultOffset=N&resultRecordCount=1000 (o por iddistrito). Campos: objectid, iddistrito (Ubigeo), cenedu, codlocal, nombdep, nombprov, nombdist, dircen, codmod, totalh, totalm, talumno, tdocente, id_nivel, fuente, url_escale.",
+   "requiere_registro": false,
+   "licencia": "no-especificada",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Corte 2019 (copyright 'MINEDU – UEE 2019'); no reemplaza el padrón vigente de ESCALE. Paginación limitada a 1000 registros; el servidor SIGRID tuvo timeouts en pruebas previas.",
+   "prioridad_mvp": "media",
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "sin_probar",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": "MINEDU-ESCALE-PADRON",
+   "notas": "Metadatos de la capa leídos por WebFetch el 5/10/2026. Útil como respaldo sin Check Point para coordenadas y llaves codmod/codlocal/ubigeo. Pertenece al servicio ya catalogado en CENEPRED-SIGRID.",
+   "vacio": "5",
+   "ola_sugerida": "referencia"
+  },
+  {
+   "id": "INEI-MAPA-DCI-PROVINCIAL-2019",
+   "nombre": "Aproximación al Mapa de Desnutrición Crónica Infantil a Nivel Provincial 2019",
+   "sigla": null,
+   "descripcion": "Estimación en áreas pequeñas (método ELL) del porcentaje de menores de 5 años con desnutrición crónica (talla/edad < -2 DE, patrón OMS 2006) para las 196 provincias, combinando Censo 2017, ENDES 2016–2019 y registros administrativos.",
+   "tematica_principal": "nutricion_anemia",
+   "tematicas_secundarias": [
+    "salud",
+    "pobreza_condiciones_vida"
+   ],
+   "subtemas": [
+    "desnutrición crónica infantil",
+    "estimación en áreas pequeñas",
+    "mapa provincial",
+    "menores de 5 años"
+   ],
+   "entidad": "Instituto Nacional de Estadística e Informática (INEI)",
+   "sector": "PCM",
+   "unidad_organica": null,
+   "naturaleza_dato": "estimacion_modelada",
+   "tipo_acceso": [
+    "publicacion_pdf"
+   ],
+   "unidad_observacion": "provincia",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "provincia",
+   "nivel_territorial_inferencia": "provincia",
+   "base_geografica": "residencia",
+   "tipo_medida": "estimacion_modelada",
+   "desagregaciones": [
+    "departamento",
+    "provincia",
+    "grupo robusto"
+   ],
+   "llaves_cruce": [],
+   "periodicidad": "única",
+   "cobertura_temporal": "2019 (ENDES 2016–2019 agrupada)",
+   "anio_inicio": 2019,
+   "anio_fin": 2019,
+   "fecha_ultimo_dato": "2021-06",
+   "es_proyeccion": false,
+   "serie_activa": false,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": "~18 meses",
+   "formatos": [
+    "PDF"
+   ],
+   "url_portal": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf",
+   "url_datos": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf",
+   "url_patron": null,
+   "url_documentacion": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf",
+   "estrategia_descarga": "descarga_directa_url",
+   "detalle_descarga": "PDF estático; Anexo 1 'Porcentaje de menores de cinco años de edad con desnutrición crónica, grupo robusto y ubicación de la provincia…, según departamento y provincia, 2019' con IC 95 %. Extraer con pdfplumber y asignar ubigeo provincial por nombre.",
+   "requiere_registro": false,
+   "licencia": "uso-libre-con-cita",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Estimación modelada (100 simulaciones); 148 de 196 provincias con CV < 10 %. Sin anexo distrital (INEI advierte baja precisión distrital por pocos niños). No comparable con la serie departamental ENDES de forma directa.",
+   "prioridad_mvp": "media",
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "sin_probar",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Publicado junio 2021. No se halló edición posterior (2022–2025) del mapa provincial/distrital de DCI. Ubigeo no viene en el anexo (nombres).",
+   "vacio": "7",
+   "ola_sugerida": "2_expansion"
+  },
+  {
+   "id": "MINEDU-EVALUACION-DIAGNOSTICA",
+   "nombre": "Evaluación Diagnóstica de Aprendizajes (Estrategia Nacional de Refuerzo Escolar)",
+   "sigla": null,
+   "descripcion": "Evaluación aplicada por los docentes al inicio del año (Comunicación y Matemática; inicial, primaria 2.º–6.º y secundaria 1.º–5.º) con kits MINEDU; resultados registrados en la plataforma SIMON y devueltos a IIEE/UGEL en tableros Power BI.",
+   "tematica_principal": "educacion",
+   "tematicas_secundarias": [],
+   "subtemas": [
+    "evaluación diagnóstica",
+    "refuerzo escolar",
+    "aprendizajes",
+    "comunicación",
+    "matemática",
+    "SIMON"
+   ],
+   "entidad": "Ministerio de Educación (MINEDU)",
+   "sector": "MINEDU",
+   "unidad_organica": "Viceministerio de Gestión Institucional / DRE-UGEL (registro); UMC (instrumentos)",
+   "naturaleza_dato": "registro_administrativo",
+   "tipo_acceso": [
+    "tablero_interactivo",
+    "solicitud_transparencia"
+   ],
+   "unidad_observacion": "estudiante / sección / IE",
+   "cobertura_geografica": "nacional (IIEE públicas)",
+   "nivel_territorial_disponible": "establecimiento",
+   "nivel_territorial_inferencia": null,
+   "base_geografica": "establecimiento",
+   "tipo_medida": "otro",
+   "desagregaciones": [
+    "grado",
+    "área curricular",
+    "nivel educativo",
+    "UGEL"
+   ],
+   "llaves_cruce": [
+    "codigo_modular_ie"
+   ],
+   "periodicidad": "anual",
+   "cobertura_temporal": "2024–2025",
+   "anio_inicio": 2024,
+   "anio_fin": 2025,
+   "fecha_ultimo_dato": "2025-06",
+   "es_proyeccion": false,
+   "serie_activa": true,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": null,
+   "formatos": [
+    "Power BI"
+   ],
+   "url_portal": null,
+   "url_datos": null,
+   "url_patron": null,
+   "url_documentacion": "https://cdn.www.gob.pe/uploads/document/file/7964847/6358579-oficio-multiple-n-00116-2025-mineduvmgi-drelm-ugel01dir-agebre-pautas-re.pdf",
+   "estrategia_descarga": "solicitud_acceso_informacion",
+   "detalle_descarga": "No hay base pública. Los resultados 2025 (inicial, primaria, secundaria) y ENLA 2024 se difundieron a directores vía enlaces Power BI (oficio UGEL 05 del 16-05-2025: https://cdn.www.gob.pe/uploads/document/file/8083908/6780419-resultados-de-evaluacion-diagnostica-2025-inicial-primaria-y-secundaria-y-enla-2024-primaria-disponibles-en-power-bi.pdf). Para el proyecto: solicitud de acceso a la información al MINEDU por IE/UGEL.",
+   "requiere_registro": true,
+   "licencia": "restringido",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Aplicada y calificada por docentes con instrumentos heterogéneos (kits MINEDU, evaluaciones regionales, portafolios): no estandarizada ni comparable entre IIEE ni con ECE/ENLA. Registro 14-04 a 30-06-2025.",
+   "prioridad_mvp": "baja",
+   "estado_portal": "confirmado_busqueda",
+   "estado_datos": "sin_descarga_publica",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Solo se confirmaron oficios de UGEL (gob.pe) que describen el flujo; no se halló página pública del MINEDU con resultados agregados. Para aprendizajes comparables usar MINEDU-UMC-ECE / MINEDU-UMC-ENLA.",
+   "vacio": "8",
+   "ola_sugerida": "referencia"
+  },
+  {
+   "id": "CDC-SALA-MORTALIDAD-FETAL-NEONATAL",
+   "nombre": "Sala situacional de mortalidad fetal y neonatal – Vigilancia epidemiológica perinatal (CDC-MINSA)",
+   "sigla": null,
+   "descripcion": "Reporte semanal de defunciones fetales y neonatales notificadas al subsistema de vigilancia perinatal-neonatal, acumuladas por GERESA/DIRESA/DIRIS, con serie 2012–año en curso.",
+   "tematica_principal": "salud",
+   "tematicas_secundarias": [
+    "nutricion_anemia"
+   ],
+   "subtemas": [
+    "mortalidad neonatal",
+    "mortalidad fetal",
+    "perinatal",
+    "vigilancia epidemiológica",
+    "sala situacional"
+   ],
+   "entidad": "Centro Nacional de Epidemiología, Prevención y Control de Enfermedades (CDC-MINSA)",
+   "sector": "MINSA",
+   "unidad_organica": "CDC – Vigilancia de mortalidad perinatal y neonatal",
+   "naturaleza_dato": "registro_administrativo",
+   "tipo_acceso": [
+    "publicacion_pdf"
+   ],
+   "unidad_observacion": "DIRESA/GERESA/DIRIS × semana epidemiológica",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "departamento",
+   "nivel_territorial_inferencia": null,
+   "base_geografica": "ocurrencia",
+   "tipo_medida": "notificacion_vigilancia",
+   "desagregaciones": [
+    "tipo de defunción (fetal/neonatal)",
+    "semana epidemiológica",
+    "DIRESA/GERESA/DIRIS",
+    "año"
+   ],
+   "llaves_cruce": [],
+   "periodicidad": "semanal",
+   "cobertura_temporal": "2012–2026 (SE en curso)",
+   "anio_inicio": 2012,
+   "anio_fin": 2026,
+   "fecha_ultimo_dato": "2026-08",
+   "es_proyeccion": false,
+   "serie_activa": true,
+   "anios_con_quiebre": "Modelo integrado con SINADEF desde 2019",
+   "rezago_publicacion": "~1–2 semanas",
+   "formatos": [
+    "PDF"
+   ],
+   "url_portal": "https://www.dge.gob.pe/portalnuevo/?p=14633",
+   "url_datos": "https://www.dge.gob.pe/portal/docs/vigilancia/sala/2026/SE20/mneonatal.pdf",
+   "url_patron": "https://www.dge.gob.pe/portal/docs/vigilancia/sala/{anio}/SE{NN}/mneonatal.pdf",
+   "url_documentacion": "https://www.diresapuno.gob.pe/wp-content/uploads/2021/05/RM279-2009_Subsistema_Vigilacia_Perinatal-Neonatal.pdf",
+   "estrategia_descarga": "descarga_directa_url",
+   "detalle_descarga": "Iterar {anio} y SE{NN} (dos dígitos: SE20, SE25, SE32, SE34 confirmados en buscador para 2026) y extraer tablas con pdfplumber; tomar la última SE del año como cierre. Proxy de WebFetch dio 504 en SE34 (intermitente).",
+   "requiere_registro": false,
+   "licencia": "uso-libre-con-cita",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Solo agregado por DIRESA (no distrito ni EESS); lugar de notificación/ocurrencia, no residencia; subnotificación variable entre regiones; cifras semanales provisionales.",
+   "prioridad_mvp": "media",
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "sin_probar",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "SE20-2026 abierto por WebFetch: defunciones fetales y neonatales acumuladas por GERESA/DIRESA/DIRIS, comparativo 2012–2026. Para distrito de residencia usar MINSA-SINADEF (defunciones <28 días) y MINSA-CNV (nacidos vivos) como denominador. Página de premio OPS (p=14633) describe el modelo de análisis.",
+   "vacio": "9",
+   "ola_sugerida": "2_expansion"
+  },
+  {
+   "id": "MIDIS-RUBPVL",
+   "nombre": "Registro Único de Beneficiarios del Programa del Vaso de Leche (RUBPVL)",
+   "sigla": "RUBPVL",
+   "descripcion": "Aplicativo del MIDIS en el que municipalidades y comités registran socios y beneficiarios del PVL (niños 0–6, 7–13, gestantes, madres lactantes, adultos mayores, TBC, discapacidad); se remite a INEI y MIDIS en enero y julio.",
+   "tematica_principal": "programas_sociales",
+   "tematicas_secundarias": [
+    "nutricion_anemia"
+   ],
+   "subtemas": [
+    "Vaso de Leche",
+    "beneficiarios",
+    "comités",
+    "padrón PVL"
+   ],
+   "entidad": "Ministerio de Desarrollo e Inclusión Social (MIDIS)",
+   "sector": "MIDIS",
+   "unidad_organica": "Viceministerio de Prestaciones Sociales",
+   "naturaleza_dato": "registro_administrativo",
+   "tipo_acceso": [
+    "solicitud_transparencia"
+   ],
+   "unidad_observacion": "beneficiario / comité / municipalidad",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "centro_poblado",
+   "nivel_territorial_inferencia": null,
+   "base_geografica": "residencia",
+   "tipo_medida": "cobertura_programa",
+   "desagregaciones": [
+    "tipo de beneficiario",
+    "sexo",
+    "edad",
+    "comité",
+    "centro poblado"
+   ],
+   "llaves_cruce": [
+    "ubigeo_inei",
+    "dni (restringido)"
+   ],
+   "periodicidad": "semestral",
+   "cobertura_temporal": "registro vigente (directiva RM 087-2023-MIDIS)",
+   "anio_inicio": null,
+   "anio_fin": null,
+   "fecha_ultimo_dato": null,
+   "es_proyeccion": false,
+   "serie_activa": true,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": null,
+   "formatos": [],
+   "url_portal": "http://www.midis.gob.pe/index.php/rubpvl-2-0/",
+   "url_datos": null,
+   "url_patron": null,
+   "url_documentacion": "https://cdn.www.gob.pe/uploads/document/file/4524304/RM_087_2023_MIDIS.pdf",
+   "estrategia_descarga": "solicitud_acceso_informacion",
+   "detalle_descarga": "Aplicativo de escritorio/local para municipalidades con credenciales; no se halló publicación abierta. Agregados por municipalidad disponibles vía RENAMU (INEI) y transferencias PVL en MEF.",
+   "requiere_registro": true,
+   "licencia": "restringido",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Datos personales (DNI); calidad dependiente de cada municipalidad; Congreso reporta distorsiones del padrón.",
+   "prioridad_mvp": "baja",
+   "estado_portal": "confirmado_busqueda",
+   "estado_datos": "sin_descarga_publica",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Campos según Anexo 02 de la RM 087-2023-MIDIS (fetch). Ruta pública útil: RENAMU (beneficiarios PVL por tipo por municipalidad) – ver corrección de INEI-RENAMU.",
+   "vacio": "10",
+   "ola_sugerida": "referencia"
+  },
+  {
+   "id": "INEI-ETI-2015",
+   "nombre": "Encuesta Nacional Especializada de Trabajo Infantil 2015",
+   "sigla": "ETI",
+   "descripcion": "Encuesta de hogares (nov–dic 2015) sobre trabajo de niñas, niños y adolescentes de 5 a 17 años: actividades económicas, trabajo peligroso, educación y características del hogar; realizada con MTPE y OIT.",
+   "tematica_principal": "empleo_ingresos",
+   "tematicas_secundarias": [
+    "educacion",
+    "pobreza_condiciones_vida"
+   ],
+   "subtemas": [
+    "trabajo infantil",
+    "adolescentes",
+    "5-17 años",
+    "trabajo peligroso"
+   ],
+   "entidad": "Instituto Nacional de Estadística e Informática (INEI)",
+   "sector": "PCM",
+   "unidad_organica": "Dirección Técnica de Demografía e Indicadores Sociales (DTDIS)",
+   "naturaleza_dato": "encuesta_muestral",
+   "tipo_acceso": [
+    "microdatos",
+    "publicacion_pdf"
+   ],
+   "unidad_observacion": "persona / hogar",
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_disponible": "departamento",
+   "nivel_territorial_inferencia": "dominio",
+   "base_geografica": "muestra",
+   "tipo_medida": "prevalencia",
+   "desagregaciones": [
+    "sexo",
+    "edad",
+    "área urbano/rural",
+    "región natural",
+    "departamento (publicación)"
+   ],
+   "llaves_cruce": [
+    "conglomerado_vivienda"
+   ],
+   "periodicidad": "única",
+   "cobertura_temporal": "2015",
+   "anio_inicio": 2015,
+   "anio_fin": 2015,
+   "fecha_ultimo_dato": "2015-12",
+   "es_proyeccion": false,
+   "serie_activa": false,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": "~16 meses (informe abril 2017)",
+   "formatos": [
+    "SAV",
+    "DBF",
+    "PDF"
+   ],
+   "url_portal": "https://proyectos.inei.gob.pe/microdatos/",
+   "url_datos": null,
+   "url_patron": null,
+   "url_documentacion": "https://www.inei.gob.pe/media/DATOS_ABIERTOS/ETI/DICCIONARIO/2015/Diccionario_Miembros_del_Hogar.pdf",
+   "estrategia_descarga": "descarga_manual",
+   "detalle_descarga": "Listada en el catálogo IHSN (PER_2015_ETI_v01_M) con acceso vía portal de microdatos INEI 'Consulta por Encuesta' (http://iinei.inei.gob.pe/microdatos/Consulta_por_Encuesta.asp, hoy proyectos.inei.gob.pe/microdatos/). Código de encuesta para el patrón /srienaho/descarga/{FORMATO}/{codigo}-Modulo{NN}.zip no confirmado. El diccionario está en la carpeta pública /media/DATOS_ABIERTOS/ETI/.",
+   "requiere_registro": false,
+   "licencia": "uso-libre-con-cita",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Corte único 2015; representativa a nivel nacional, urbano/rural y región natural (el informe trae cuadros departamentales; verificar precisión). Sin ubigeo en el diccionario de miembros del hogar (QHDEPARTAMENTO, QHCONGLOMERADO, FACTOREXP_1).",
+   "prioridad_mvp": "baja",
+   "estado_portal": "confirmado_busqueda",
+   "estado_datos": "sin_probar",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Informe: 'Perú: Características sociodemográficas de niños, niñas y adolescentes que trabajan 2015' https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1426/libro.pdf (fetch). IHSN: https://catalog.ihsn.org/catalog/7259/get-microdata. Para series recientes de trabajo infantil usar ENAHO (módulo 500, 5–17 años).",
+   "vacio": "11",
+   "ola_sugerida": "referencia"
+  },
+  {
+   "id": "MINSA-INFORHUS",
+   "nombre": "INFORHUS – Registro Nacional del Personal de la Salud",
+   "sigla": "INFORHUS",
+   "descripcion": "Aplicativo de la DIGEP-MINSA que registra a todo el personal de salud (profesión, especialidad, régimen laboral, IPRESS de destino), interoperando con RENIEC, AIRHSP y RENIPRESS; se difunde en compendios estadísticos de recursos humanos.",
+   "tematica_principal": "salud",
+   "tematicas_secundarias": [
+    "empleo_ingresos"
+   ],
+   "subtemas": [
+    "recursos humanos en salud",
+    "médicos",
+    "enfermeras",
+    "obstetras",
+    "densidad de personal",
+    "brechas de RHUS"
+   ],
+   "entidad": "Ministerio de Salud (MINSA)",
+   "sector": "MINSA",
+   "unidad_organica": "Dirección General de Personal de la Salud (DIGEP) – Observatorio de Recursos Humanos en Salud",
+   "naturaleza_dato": "registro_administrativo",
+   "tipo_acceso": [
+    "publicacion_pdf",
+    "solicitud_transparencia"
+   ],
+   "unidad_observacion": "trabajador de salud × IPRESS",
+   "cobertura_geografica": "nacional (MINSA, GORE, EsSalud, FFAA/PNP en compendios)",
+   "nivel_territorial_disponible": "departamento",
+   "nivel_territorial_inferencia": null,
+   "base_geografica": "establecimiento",
+   "tipo_medida": "stock_infraestructura",
+   "desagregaciones": [
+    "profesión/grupo ocupacional",
+    "régimen laboral",
+    "institución",
+    "departamento"
+   ],
+   "llaves_cruce": [],
+   "periodicidad": "anual (compendios); registro mensual",
+   "cobertura_temporal": "compendios 2013–2020 identificados",
+   "anio_inicio": 2013,
+   "anio_fin": 2020,
+   "fecha_ultimo_dato": null,
+   "es_proyeccion": false,
+   "serie_activa": null,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": null,
+   "formatos": [
+    "PDF"
+   ],
+   "url_portal": "https://www.gob.pe/institucion/minsa/informes-publicaciones/393874-compendio-estadistico-informacion-de-recursos-humanos-del-sector-salud-peru-2013-2018",
+   "url_datos": null,
+   "url_patron": null,
+   "url_documentacion": "https://www.mef.gob.pe/contenidos/presu_publ/migl/INFORHUS_IP_2802.pdf",
+   "estrategia_descarga": "solicitud_acceso_informacion",
+   "detalle_descarga": "No hay descarga pública por IPRESS. Compendios PDF de DIGEP (2013–2018; 'Información de RHUS en el marco de la pandemia COVID-19, Perú 2020') con tablas departamentales. Datos por establecimiento: solicitud a DIGEP/MINSA. REUNIS puede tener un tablero de RRHH (no confirmado; sitio bloquea fetch).",
+   "requiere_registro": false,
+   "licencia": "restringido",
+   "licencia_texto": null,
+   "permite_redistribucion": null,
+   "limitaciones": "Calidad del registro varía (el MEF usa 'registro INFORHUS sin inconsistencias' como meta de incentivos); los compendios no bajan a distrito/EESS.",
+   "prioridad_mvp": "media",
+   "estado_portal": "confirmado_busqueda",
+   "estado_datos": "sin_descarga_publica",
+   "fecha_verificacion": "2026-10-05",
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "notas": "Definición y alcance confirmados en documento MEF del Incentivo Presupuestario (fetch). Alternativa parcial abierta: SUSALUD-RENIPRESS (categoría de IPRESS) y MEF-AIRHSP (plazas por ejecutora).",
+   "vacio": "12",
+   "ola_sugerida": "referencia"
+  },
+  {
+   "sigla": null,
+   "subtemas": [
+    "IPC",
+    "deflactor",
+    "soles constantes"
+   ],
+   "tematicas_secundarias": [
+    "presupuesto_finanzas_publicas"
+   ],
+   "unidad_organica": null,
+   "desagregaciones": [],
+   "es_proyeccion": false,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": null,
+   "url_patron": null,
+   "requiere_registro": false,
+   "licencia_texto": null,
+   "prioridad_mvp": null,
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "descarga_ok",
+   "fecha_verificacion": null,
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "origen": null,
+   "capa": null,
+   "ola": null,
+   "puntaje_prioridad": null,
+   "motivo_ola": null,
+   "compuerta_ingesta": null,
+   "fecha_ultimo_dato": "2026-08",
+   "cobertura_geografica": "Lima Metropolitana",
+   "nivel_territorial_inferencia": null,
+   "serie_activa": true,
+   "id": "BCRP-IPC-LIMA",
+   "vacio": "R-DEP-01 / R-GASTO-12",
+   "nombre": "Índice de precios al consumidor de Lima Metropolitana (dic. 2021 = 100), serie mensual PN38705PM",
+   "descripcion": "Serie mensual del IPC de Lima Metropolitana que publica el BCRP (BCRPData) a partir del INEI. Deflactor de los montos de gasto a soles constantes (R-GASTO-12).",
+   "tematica_principal": "economia_empresas_produccion",
+   "entidad": "Banco Central de Reserva del Perú (BCRP)",
+   "sector": "BCRP (organismo constitucional autónomo)",
+   "naturaleza_dato": "indicadores_derivados",
+   "tipo_acceso": [
+    "api"
+   ],
+   "unidad_observacion": "mes",
+   "nivel_territorial_disponible": "nacional",
+   "base_geografica": "no_aplica",
+   "tipo_medida": "otro",
+   "llaves_cruce": [],
+   "periodicidad": "mensual",
+   "cobertura_temporal": "2010-01 – 2026-08 (capturado)",
+   "anio_inicio": 2010,
+   "anio_fin": 2026,
+   "formatos": [
+    "JSON"
+   ],
+   "url_portal": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38705PM/html",
+   "url_datos": "https://estadisticas.bcrp.gob.pe/estadisticas/series/api/PN38705PM/json/2010-1/2026-12/esp",
+   "url_documentacion": "https://estadisticas.bcrp.gob.pe/estadisticas/series/ayuda/api",
+   "estrategia_descarga": "api_rest",
+   "detalle_descarga": "API JSON de BCRPData; desde la red de Claude el dominio está bloqueado: se baja con el navegador del dueño.",
+   "licencia": "uso-libre-con-cita",
+   "permite_redistribucion": true,
+   "limitaciones": "El último mes puede revisarse; el promedio del año en curso es parcial (dim_ipc.anio_completo).",
+   "notas": "Agregada por decisión del dueño del 8/10/2026 (docs/decisiones.md; análisis 00_proyecto/analisis_2026-10-08/catalogo/): la capa 0 la usa (dim_ipc) y no estaba en el catálogo."
+  },
+  {
+   "sigla": null,
+   "subtemas": [],
+   "tematicas_secundarias": [
+    "territorio_cartografia"
+   ],
+   "unidad_organica": null,
+   "desagregaciones": [],
+   "es_proyeccion": true,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": null,
+   "url_patron": null,
+   "requiere_registro": false,
+   "licencia_texto": null,
+   "prioridad_mvp": null,
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "descarga_ok",
+   "fecha_verificacion": null,
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "origen": null,
+   "capa": null,
+   "ola": null,
+   "puntaje_prioridad": null,
+   "motivo_ola": null,
+   "compuerta_ingesta": null,
+   "fecha_ultimo_dato": null,
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_inferencia": null,
+   "serie_activa": false,
+   "id": "INEI-PROYECCIONES-DISTRITAL-2018-2022",
+   "vacio": "R-DEP-01 / territorio",
+   "nombre": "Perú: Proyecciones de población total según departamento, provincia y distrito, 2018-2022 (Boletín Especial N.º 27)",
+   "descripcion": "Edición anterior de la proyección distrital (Lib1860, 1 890 distritos). Se usa por su Anexo 3 (dispositivos legales de modificación de ámbitos 2018–2022) para el ubigeo histórico.",
+   "tematica_principal": "poblacion_demografia",
+   "entidad": "Instituto Nacional de Estadística e Informática (INEI)",
+   "sector": "PCM (organismo técnico especializado)",
+   "naturaleza_dato": "estimacion_modelada",
+   "tipo_acceso": [
+    "publicacion_pdf",
+    "descarga_tabular"
+   ],
+   "unidad_observacion": "distrito",
+   "nivel_territorial_disponible": "distrito",
+   "base_geografica": "residencia",
+   "tipo_medida": "estimacion_modelada",
+   "llaves_cruce": [
+    "ubigeo_inei"
+   ],
+   "periodicidad": "única",
+   "cobertura_temporal": "2018–2022",
+   "anio_inicio": 2018,
+   "anio_fin": 2022,
+   "formatos": [
+    "PDF",
+    "XLSX"
+   ],
+   "url_portal": "https://www.gob.pe/institucion/inei/informes-publicaciones/3464927-peru-proyecciones-de-poblacion-total-segun-departamento-provincia-y-distrito-2018-2022",
+   "url_datos": null,
+   "url_documentacion": null,
+   "estrategia_descarga": "descarga_manual",
+   "detalle_descarga": "PDF del boletín y «Anexo 1» (XLSX) desde la ficha de gob.pe.",
+   "licencia": "uso-libre-con-cita",
+   "permite_redistribucion": true,
+   "limitaciones": "Reemplazada por INEI-PROYECCIONES-POBLACION-DISTRITAL (2018–2026): no usar sus cifras como denominador; solo como documento de altas de distritos.",
+   "notas": "Agregada por decisión del dueño del 8/10/2026 (docs/decisiones.md; análisis 00_proyecto/analisis_2026-10-08/catalogo/): la capa 0 (dim_ubigeo_historico) la usa."
+  },
+  {
+   "sigla": null,
+   "subtemas": [],
+   "tematicas_secundarias": [],
+   "unidad_organica": null,
+   "desagregaciones": [],
+   "es_proyeccion": false,
+   "anios_con_quiebre": null,
+   "rezago_publicacion": null,
+   "url_patron": null,
+   "requiere_registro": false,
+   "licencia_texto": null,
+   "prioridad_mvp": null,
+   "estado_portal": "confirmado_navegador",
+   "estado_datos": "descarga_ok",
+   "fecha_verificacion": null,
+   "ids_fusionados": [],
+   "id_ruta_principal": null,
+   "origen": null,
+   "capa": null,
+   "ola": null,
+   "puntaje_prioridad": null,
+   "motivo_ola": null,
+   "compuerta_ingesta": null,
+   "fecha_ultimo_dato": null,
+   "cobertura_geografica": "nacional",
+   "nivel_territorial_inferencia": null,
+   "serie_activa": false,
+   "id": "PROPIO-ESTADISTICAS-SOCIALES-2020",
+   "vacio": "R-DEP-01 / territorio",
+   "nombre": "Estadísticas sociales nacionales por distrito (compilación propia, 24-08-2020)",
+   "descripcion": "Archivo propio del dueño con datos generales por distrito (capital, coordenadas, altitud, superficie, tipología PCM, frontera). Semilla GEO2017 de dim_ubigeo_historico.",
+   "tematica_principal": "territorio_cartografia",
+   "entidad": "Elaboración propia (dueño del proyecto)",
+   "sector": "Propio",
+   "naturaleza_dato": "indicadores_derivados",
+   "tipo_acceso": [
+    "archivo_propio"
+   ],
+   "unidad_observacion": "distrito",
+   "nivel_territorial_disponible": "distrito",
+   "base_geografica": "territorio",
+   "tipo_medida": "padron_referencia",
+   "llaves_cruce": [
+    "ubigeo_inei",
+    "coordenadas"
+   ],
+   "periodicidad": "única",
+   "cobertura_temporal": "2017–2020",
+   "anio_inicio": 2017,
+   "anio_fin": 2020,
+   "formatos": [
+    "XLSX"
+   ],
+   "url_portal": null,
+   "url_datos": null,
+   "url_documentacion": null,
+   "estrategia_descarga": "descarga_manual",
+   "detalle_descarga": "No se descarga: el dueño lo entregó (captura 2026-10-05).",
+   "licencia": "no-especificada",
+   "permite_redistribucion": false,
+   "limitaciones": "Compilación propia de 2020; fuentes primarias en notas al pie (Lib1725, Lib1715, PCM RV 005-2019). Coordenadas de la capital; densidad con la proyección 2019 (no usar). No redistribuir el archivo.",
+   "notas": "Agregada por decisión del dueño del 8/10/2026 (docs/decisiones.md; análisis 00_proyecto/analisis_2026-10-08/catalogo/). No es fuente pública: se cataloga solo para trazabilidad y R-DEP-01."
+  }
+ ],
+ "correcciones": [
+  {
+   "id": "INEI-CPV2025",
+   "vacio": "1",
+   "cambios": {
+    "nivel_territorial_disponible": "distrito",
+    "nivel_territorial_inferencia": null,
+    "desagregaciones": [
+     "sexo",
+     "grupos de edad (0-14, 15-59, 60+)",
+     "edad quinquenal y simple (publicación nacional/departamental)",
+     "departamento",
+     "provincia",
+     "distrito"
+    ],
+    "cobertura_temporal": "2025 (resultados publicados 29-05-2026; presentación de resultados jul-2026)",
+    "anio_inicio": 2025,
+    "anio_fin": 2025,
+    "fecha_ultimo_dato": "2026-07",
+    "url_datos": "https://censos2025.inei.gob.pe/resultados/poblacion-censada/indicadores",
+    "url_documentacion": "https://sistemas.inei.gob.pe/dir-segmentacion-ci/postcensal/prod/adjuntos/publicaciones/Presentacion_resultados.pdf",
+    "estrategia_descarga": "scraping_dinamico",
+    "estado_portal": "confirmado_navegador",
+    "estado_datos": "sin_descarga_publica",
+    "detalle_descarga": "Plataforma SPA censos2025.inei.gob.pe/resultados (el HTML no trae contenido; inspeccionar XHR con Playwright para el endpoint JSON). La consulta /resultados/poblacion-censada/indicadores permite seleccionar departamento → provincia → distritos (población censada, sexo, grandes grupos de edad). La 'Presentación de resultados' (PDF, jul-2026) trae estructura por edad quinquenal y simple, omisión 4,25 % y niveles nacional/provincial/distrital. No se halló aún base REDATAM ni tablas descargables por distrito×edad simple.",
+    "notas": "Monitorear publicación de bases/REDATAM. Población total 34 157 732 (omisión censal 4,25 %). Nota de prensa INEI 'Lima Metropolitana continúa siendo la provincia más poblada' (gob.pe 1417313) y entregas regionales (Tumbes, Cusco, Lambayeque) indican cifras distritales. URL de indicadores tomada de El Búho; presentación PDF abierta con WebFetch."
+   },
+   "evidencia": "https://sistemas.inei.gob.pe/dir-segmentacion-ci/postcensal/prod/adjuntos/publicaciones/Presentacion_resultados.pdf ; https://elbuho.pe/?p=433796 ; https://peru.unfpa.org/es/news/el-per%C3%BA-que-revelan-los-censos-2entity25-una-nueva-etapa-para-convertir-evidencia-en"
+  },
+  {
+   "id": "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+   "vacio": "1",
+   "cambios": {
+    "formatos": [
+     "XLSX"
+    ],
+    "anio_inicio": 2018,
+    "anio_fin": 2026,
+    "fecha_ultimo_dato": "2025-12-31",
+    "es_proyeccion": true,
+    "serie_activa": true,
+    "estado_portal": "confirmado_navegador",
+    "estado_datos": "sin_probar",
+    "detalle_descarga": "Ficha gob.pe (publicada 31-12-2025) con un adjunto XLSX de 212,6 KB 'Perú: Población Total Proyectada al 30 de Junio de cada año, según Departamento, Provincia y Distrito, 2018-2026'; la URL cdn del adjunto no se mostró en el fetch (obtenerla desde la página con navegador). Ediciones anteriores en PDF: Lib1715 (2018-2020, 1 874 distritos) y Lib1860 (2018-2022, 1 890 distritos, Boletín 27).",
+    "limitaciones": "Solo población total: el INEI declara que a nivel provincial y distrital no proyecta por sexo ni edad. Base Censo 2017; el INEI la valida y actualiza al cierre de cada año (se usa para distribuir FONCOMUN). Deberá rebasarse con el Censo 2025.",
+    "notas": "Cubre 1 892 distritos. Lib1860 incluye Anexo 3 'Dispositivos legales de modificación de ámbitos territoriales' (útil para ubigeo histórico; 16 distritos creados 2020–2021)."
+   },
+   "evidencia": "https://cdna.www.gob.pe/en/institucion/inei/informes-publicaciones/6894980-peru-poblacion-total-proyectada-al-30-de-junio-de-cada-ano-segun-departamento-provincia-y-distrito-2018-2026"
+  },
+  {
+   "id": "INEI-CPV2017",
+   "vacio": "1",
+   "cambios": {
+    "notas": "Base fundamental para denominadores distritales y de centro poblado hasta que se publiquen bases del Censo 2025. Tabla distrito × sexo × edad simple ya tabulada: Tomo I de los resultados definitivos por departamento, Cuadro N.º 1 'Población censada, por área urbana y rural; y sexo, según provincia, distrito y edades simples' (y Cuadro N.º 2 por grupos de edad). Ej. Tacna: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1564/23TOMO_01.pdf. Patrón: /Est/Lib{NNNN}/{cod_dep}TOMO_01.pdf con número de Lib distinto por departamento (Lib1544–Lib1619 aprox.), así que hay que mapear 25 URLs. Extraer de PDF o, preferible, regenerar con REDATAM."
+   },
+   "evidencia": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1564/23TOMO_01.pdf"
+  },
+  {
+   "id": "INEI-PNDA-UBIGEOS",
+   "vacio": "2",
+   "cambios": {
+    "url_datos": "https://www.inei.gob.pe/media/DATOS_ABIERTOS/UBIGEOS/UBIGEOS_2022_1891_distritos.zip",
+    "url_documentacion": "https://www.datosabiertos.gob.pe/sites/default/files/NORMA_DEL_CODIGO_UBIGEO.pdf",
+    "formatos": [
+     "ZIP",
+     "XLSX",
+     "CSV",
+     "PDF"
+    ],
+    "licencia": "ODbL-1.0",
+    "licencia_texto": "Open Data Commons Open Database License (ODbL)",
+    "permite_redistribucion": true,
+    "fecha_ultimo_dato": "2023-09-07",
+    "anio_fin": 2022,
+    "estado_portal": "confirmado_navegador",
+    "estado_datos": "sin_probar",
+    "detalle_descarga": "Recursos de la ficha: ZIP completo https://www.inei.gob.pe/media/DATOS_ABIERTOS/UBIGEOS/UBIGEOS_2022_1891_distritos.zip ; XLSX https://www.datosabiertos.gob.pe/sites/default/files/UBIGEO%202022_1891%20distritos.xlsx ; muestra CSV https://www.datosabiertos.gob.pe/sites/default/files/Data_Muestra_ubigeos.csv ; metadatos JSON https://www.datosabiertos.gob.pe/api/3/action/package_show?id=fd98ecaf-c53c-44ed-be1c-a37b7afc6f3e.",
+    "notas": "Versión 2022 con 1 891 distritos (las proyecciones 2018-2026 usan 1 892: falta al menos un distrito creado después). No trae fecha de creación ni distrito de origen; para eso ver INEI-DIRECTORIO-MUNICIPALIDADES y Lib1860 Anexo 3."
+   },
+   "evidencia": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei"
+  },
+  {
+   "id": "PCM-RENLIM",
+   "vacio": "2",
+   "cambios": {
+    "url_documentacion": "https://cdn.www.gob.pe/uploads/document/file/7035671/6056446-renlim-lineamientos.pdf",
+    "notas": "RENLIM (Resolución 002-2024-PCM/SDOT, 2-10-2024) registra memorias descriptivas de límites y tramos saneados/determinados/formalizados (leyes de demarcación, actas, informes dirimentes); NO es un registro de distritos creados ni de distritos de origen. Administrado por SDOT con apoyo de SSIAT; web www.sdot.pcm.gob.pe (no verificada). Según PCM ante el Congreso (5-11-2024) ~80 % de límites no están saneados y solo 2 distritos se crearon por la vía de leyes declarativas de interés nacional."
+   },
+   "evidencia": "https://www.congreso.gob.pe/Docs/comisiones2024/Descentralizacion/files/so-04-exposicion-01-pcm-05-11-2024.pptx.pdf"
+  },
+  {
+   "id": "MEF-PPR-PROGRAMAS-PRESUPUESTALES",
+   "vacio": "4",
+   "cambios": {
+    "url_datos": "https://www.mef.gob.pe/es/presupuesto-por-resultados/estructura-de-programas",
+    "url_patron": "https://www.mef.gob.pe/contenidos/presu_publ/ppr/estr_program/PP_{codigo_pp}_{GNR|GL}_{anio}.PDF",
+    "cobertura_temporal": "2012–2027 (estructura programática por año y nivel de gobierno)",
+    "anio_inicio": 2012,
+    "anio_fin": 2027,
+    "es_proyeccion": false,
+    "serie_activa": true,
+    "formatos": [
+     "PDF"
+    ],
+    "estado_portal": "confirmado_navegador",
+    "estado_datos": "sin_probar",
+    "anios_con_quiebre": "2023: productos del PP 0001 PAN migran al PPoR 1001 (DIT) y otros a APNOP; PP 0001 ya no figura en la estructura 2024–2027, PP 0002 sí sigue",
+    "detalle_descarga": "Página 'Estructura de programas' lista un PDF por PP × nivel (GNR = Gobierno Nacional y Regional, GL = Gobiernos Locales) × año 2012–2027; extensión .PDF (2024–2026) o .pdf (2027), años 2016 y anteriores con sufijo de ley (ej. PP_0001_GNR_2016_L30372.PDF). Relación histórica 2012–2016 en https://www.mef.gob.pe/es/presupuesto-publico-sp-18162/211-presupuesto-por-resultados/5346-relacion-de-programas-presupuestales. Carpeta Google Drive 'Descargar programas presupuestales': https://drive.google.com/drive/folders/1LUoYCQgS0LEk-vHVZJ57COrqltwQoYJS. Versión tabular alternativa: DISTINCT (ANO_EJE, PROGRAMA_PPTO, PRODUCTO_PROYECTO, ACTIVIDAD_ACCION_OBRA) del CSV de gasto.",
+    "notas": "Crosswalk PP 0001→PPoR 1001: solo parcial en documento MEF 'Criterios de programación PP 1001 DIT' (08-05-2023): migran 3000001, 3033251, 3033315, 3033414; 3000609 y 3000733 pasan a APNOP; productos de gestante (PP 0002) no migraron en 2023. Los códigos de producto se conservan al migrar, lo que permite un empalme por código en el CSV de gasto. PPoR DIT creado por RS 023-2019-EF (anexo https://www.mef.gob.pe/contenidos/presu_publ/anexos/anexo_RS023_2019EF.pdf)."
+   },
+   "evidencia": "https://mef.gob.pe/contenidos/presu_publ/capacita/2023/08052023_CRITERIOS_PROG_PROD_PROY_PP_1001_DESARROLLO_INFANTIL_TEMPRANO.pdf"
+  },
+  {
+   "id": "MINEDU-SIGMED-DESCARGAS",
+   "vacio": "5",
+   "cambios": {
+    "estado_portal": "confirmado_navegador",
+    "cobertura_temporal": "cortes 2017 (IIEE y locales) y 2018 (centros poblados)",
+    "anio_fin": 2017,
+    "fecha_ultimo_dato": "2017-09-27",
+    "serie_activa": false,
+    "formatos": [
+     "SHP",
+     "DBF"
+    ],
+    "notas": "Página de descargas abierta con WebFetch: Locales escolares urbanos/rurales (SHP, act. 27/09/2017, campo CODLOCAL), Padrón de IIEE (DBF, 27/09/2017, código modular enlazado por CODLOCAL), Centros poblados (SHP, 26/07/2018), cartografía base 1:100 000. URLs de los archivos no visibles en el texto. Desactualizado: no sirve como padrón vigente."
+   },
+   "evidencia": "https://sigmed.minedu.gob.pe/descargas/"
+  },
+  {
+   "id": "MINEDU-ESCALE-PADRON",
+   "vacio": "5",
+   "cambios": {
+    "notas": "Tabla maestra de IIEE. El padrón anual también se publica como 'marco censal' dentro de la carpeta del Censo Educativo (diccionarios '00_Diccionario marco censal {AÑO}.pdf' 2018–2025 indexados), mismo bloqueo Check Point. Ruta alterna sin anti-bot (corte 2019): CENEPRED-SIGRID-IIEE (ArcGIS REST con codmod, codlocal, ubigeo). SIGMED solo tiene corte 2017. No se encontró dataset del padrón en la PNDA."
+   },
+   "evidencia": "https://escale.minedu.gob.pe/documents/inicio/Bases de datos/A. Censo Educativo/2025/00_Diccionario%20marco%20censal%202025.pdf"
+  },
+  {
+   "id": "MINEDU-CENSO-EDUCATIVO",
+   "vacio": "6",
+   "cambios": {
+    "url_patron": "https://escale.minedu.gob.pe/documents/inicio/Bases%20de%20datos/A.%20Censo%20Educativo/{anio}/",
+    "detalle_descarga": "Biblioteca de documentos Liferay de ESCALE. Ruta confirmada por buscador para 2007–2025: .../documents/inicio/Bases de datos/A. Censo Educativo/{AÑO}/ con diccionarios (00_Diccionario marco censal {AÑO}.pdf, 00_Dicionario_Datos_Resultado_2025.pdf, 00 Diccionario de datos_local educativo) y subcarpeta 'Cedulas censales en PDF/'. Nombres de los ZIP de datos no confirmados. El fetch devuelve el desafío Check Point ('Este sitio está protegido'): descargar con navegador real/Playwright y codificar espacios como %20.",
+    "estado_portal": "confirmado_busqueda"
+   },
+   "evidencia": "https://escale.minedu.gob.pe/documents/inicio/Bases de datos/A. Censo Educativo/2025/00_Dicionario_Datos_Resultado_2025.pdf"
+  },
+  {
+   "id": "INEI-RENAMU",
+   "vacio": "10",
+   "cambios": {
+    "subtemas": [
+     "gestión municipal",
+     "personal municipal",
+     "servicios municipales",
+     "serenazgo",
+     "limpieza pública",
+     "Programa del Vaso de Leche",
+     "beneficiarios PVL",
+     "planificación",
+     "participación ciudadana"
+    ],
+    "notas": "Incluye el Programa del Vaso de Leche: beneficiarios por tipo (0–6, 7–13, gestantes, lactantes, adultos mayores, discapacidad, TBC) por municipalidad; INEI lo tabula en 'Perú: Estadísticas Municipales' (ej. 2015, cap. 9, datos 2014). Es la ruta pública distrital para PVL (el RUBPVL del MIDIS no se publica). Presencia en microdatos confirmada por el índice inei-microdatos; RENAMU 2025 tiene ficha en gob.pe (3364652)."
+   },
+   "evidencia": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1362/09.pdf"
+  },
+  {
+   "id": "MINSA-INMUNIZACIONES",
+   "vacio": "13",
+   "cambios": {
+    "estado_datos": "sin_descarga_publica",
+    "notas": "No se encontró dataset abierto de vacunación regular en la PNDA (solo COVID-19: MINSA-COVID-DATOS-ABIERTOS; EsSalud publica inmunizaciones propias). Fuente oficial = tablero REUNIS (menú op=2&niv=9 según búsqueda; WAF bloquea fetch). El Comercio-ECData (2025) obtuvo las coberturas por solicitud de acceso a la información; el viceministro citó REUNIS y explicó que las coberturas cambian por corte, grupo (<1 vs <5) y factores de corrección sobre proyecciones INEI. Denominador: MINSA-POBLACION-ESTIMADA o Padrón Nominal."
+   },
+   "evidencia": "https://elcomercio.pe/ecdata/vacunacion-infantil-en-peru-viceministro-explica-brechas-cifras-y-estrategias-para-revertir-la-caida-noticia"
+  }
+ ],
+ "no_encontrado": [
+  {
+   "vacio": "1",
+   "detalle": "(b) Proyecciones INEI por sexo y edad a nivel provincial o distrital: no existen. La ficha 2018-2026 dice expresamente que a nivel provincial y distrital solo se proyecta población total; por edad y sexo solo hay departamento (Boletín 25). (d) Censo 2025: no hay aún bases/REDATAM ni tabla descargable distrito×edad simple; solo plataforma web y PDF de presentación."
+  },
+  {
+   "vacio": "2",
+   "detalle": "No hay dataset oficial legible por máquina (PNDA, INEI, PCM) con distritos creados después de 2017, su ley y su distrito de origen. Se buscó en PNDA, RENLIM (solo límites), INEI ubigeos (versión 2022 sin fecha de creación). Fuentes oficiales disponibles son PDF/Excel: Directorio Nacional de Municipalidades (ley y fecha de creación por distrito) y Anexo 3 de Lib1860; el distrito de origen hay que leerlo en cada ley (El Peruano). No se identificó cuál es el distrito 1 892 (posterior a la tabla 2022 de 1 891)."
+  },
+  {
+   "vacio": "3",
+   "detalle": "El MEF no publica una relación descargable de unidades ejecutoras con ubigeo y nivel de gobierno (ni en datosabiertos.mef.gob.pe ni en Consulta Amigable como archivo). Se deriva del CSV de gasto (registro MEF-MAESTRO-EJECUTORAS-DERIVADO)."
+  },
+  {
+   "vacio": "4",
+   "detalle": "No se halló un crosswalk oficial completo y tabular PP 0001/PP 0002 → PPoR 1001 por producto y actividad. Solo hay la lista parcial del documento MEF de criterios 2023 y las estructuras programáticas anuales en PDF; el empalme debe hacerse por código de producto/actividad en el CSV de gasto."
+  },
+  {
+   "vacio": "10",
+   "detalle": "RUBPVL (MIDIS): no se publica (aplicativo con credenciales municipales; envío semestral a INEI/MIDIS). No se halló módulo público ni dataset PNDA. Ruta pública: RENAMU (INEI) por municipalidad."
+  },
+  {
+   "vacio": "12",
+   "detalle": "No hay dataset abierto de recursos humanos en salud por establecimiento (INFORHUS). Solo compendios PDF departamentales de DIGEP (2013–2020) y posible tablero REUNIS no verificado (WAF). Por IPRESS requiere solicitud de acceso a la información."
+  },
+  {
+   "vacio": "13",
+   "detalle": "No existe dataset abierto (PNDA) de vacunación del esquema regular por distrito o EESS; búsquedas en PNDA solo devuelven COVID-19. Ruta: tablero REUNIS de inmunizaciones (op=2&niv=9, bloqueado al fetch) o solicitud de acceso a la información (como hizo ECData en 2025)."
+  }
+ ]
+}

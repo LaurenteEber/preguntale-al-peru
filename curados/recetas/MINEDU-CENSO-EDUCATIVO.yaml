@@ -1,0 +1,43 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINEDU-CENSO-EDUCATIVO
+strategy: dashboard
+publisher: MINEDU
+dataset_title: Censo Educativo (ex Censo Escolar) – bases de datos por IE
+access_url: https://escale.minedu.gob.pe/
+url_patron: https://escale.minedu.gob.pe/documents/inicio/Bases%20de%20datos/A.%20Censo%20Educativo/{anio}/
+documentation_url: https://escale.minedu.gob.pe/documents/10156/9345030/PPT_Censo_Educativo_2023_final.pdf
+temporal:
+  inicio: 1998
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- Autoreporte del director; desde 2019 la matrícula proviene en gran parte de SIAGIE (cambio de fuente). Cédulas
+  y variables cambian entre años.
+espera:
+  formato:
+  - dbf
+  - xlsx
+  - sav
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: scraping_dinamico
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+notas: 'Biblioteca de documentos Liferay de ESCALE. Ruta confirmada por buscador para 2007–2025: .../documents/inicio/Bases
+  de datos/A. Censo Educativo/{AÑO}/ con diccionarios (00_Diccionario marco censal {AÑO}.pdf, 00_Dicionario_Datos_Resultado_2025.pdf,
+  00 Diccionario de datos_local educativo) y subcarpeta ''Cedulas censales en PDF/''. Nombres de los ZIP de datos
+  no confirmados. El fetch devuelve el desafío Check Point (''Este sitio está protegido''): descargar con navegador
+  real/Playwright y codificar espacios como %20.'

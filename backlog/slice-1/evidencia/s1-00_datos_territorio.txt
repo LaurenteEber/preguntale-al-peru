@@ -1,0 +1,34 @@
+# 2026-11-03 14:05 commit 82cad3a — S1-00 tarea 9: datos de territorio que suponen S1-02 y S1-08
+
+## 060506
+[('060506', 'Santa Cruz de Toled', ['SANTA CRUZ DE TOLED', 'SANTA CRUZ DE TOLEDO', 'Santa Cruz de Toledo'])]
+incluye «Santa Cruz de Toledo»: True
+
+## Distritos vigentes que comparten nombre con otro
+distritos: 255; nombres repetidos: 99
+10 más repetidos:
+  ('Santa Rosa', 10, '010610 021510 030710 050507 060812 140114 150139 210504 210808 220304')
+  ('San Antonio', 6, '030709 150513 150716 180107 210113 220912')
+  ('Pueblo Nuevo', 5, '100609 110107 110207 130403 140206')
+  ('Santa Cruz', 5, '021208 060611 061301 110404 160210')
+  ('Bellavista', 4, '060802 070102 200602 220201')
+  ('Cochabamba', 4, '020102 060407 090725 100403')
+  ('Independencia', 4, '020105 051106 110504 150112')
+  ('Miraflores', 4, '040110 100506 150122 151021')
+  ('Palca', 4, '090114 120706 210706 230107')
+  ('San Cristóbal', 4, '010516 050615 180105 220706')
+
+## Columnas de fact_sien_hb_ubigeo: ['anio', 'id_insumo', 'cod_ipress', 'ubigeo_eess', 'ubigeo_procedencia', 'ubigeo_ref_altitud', 'grupo_edad', 'filas', 'filas_con_anemia', 'filas_dx_valido', 'unidad', 'criterio_anemia', 'version_tabla']
+«SAN JUAN»: 021909 distrito, 050616 distrito, 060112 distrito, 090410 distrito
+«INDEPENDENCIA»: 020105 distrito, 051106 distrito, 110504 distrito, 150112 distrito
+«AYAVIRI»: 151004 distrito, 210801 distrito
+«HUANCAVELICA»: 090000 departamento, 090100 provincia, 090101 distrito
+
+## Distritos vigentes sin ninguna fila en fact_sien_hb_ubigeo 2025 (por ubigeo_eess, el del establecimiento)
+total: 6
+  ('050413', 'Putis', 'vigente')
+  ('080915', 'Kumpirushiato', 'vigente')
+  ('120307', 'Sangani', 'pendiente')
+  ('150121', 'Pueblo Libre', 'vigente')
+  ('151026', 'San Joaquín', 'vigente')
+  ('160405', 'Santa Rosa de Loreto', 'vigente')

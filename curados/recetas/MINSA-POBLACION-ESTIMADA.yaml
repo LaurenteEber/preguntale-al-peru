@@ -1,0 +1,38 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINSA-POBLACION-ESTIMADA
+strategy: dashboard
+publisher: MINSA
+dataset_title: Población estimada MINSA por edades simples y grupos de edad (distrito / establecimiento de salud)
+access_url: https://www.minsa.gob.pe/reunis/
+temporal:
+  inicio: null
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: no-declarada
+license_basis: no_declarada
+known_issues:
+- 'Es una desagregación por edad de las proyecciones INEI (que a nivel distrital solo publican total): el MINSA
+  aplica estructuras etarias propias, y en el año se aplican factores de corrección (declaración del viceministro
+  de Salud a El Comercio, 2025), lo que hace cambiar las coberturas según la fecha de corte. Puede diferir del Padrón
+  Nominal (MINSA-PADRON-NOMINAL) y del Censo 2025.'
+espera:
+  formato:
+  - xlsx
+catalogo:
+  ola: 0_base
+  estrategia_descarga: scraping_dinamico
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+notas: 'Menú ''Información Demográfica'' de REUNIS (op=1). Búsquedas devuelven subpáginas https://www.minsa.gob.pe/reunis/?op=1&niv=5,
+  ?op=1&niv=5&tbl=3 y ?op=1&niv=5&tbl=4, pero su contenido no pudo verificarse: REUNIS responde 403 / robots al
+  fetch automatizado (WAF). Requiere Playwright o descarga manual; alternativa: solicitar el archivo anual a OGTI
+  vía transparencia o tomarlo de DIRESA que lo republican (ej. resolución DIRESA Piura 2025).'

@@ -1,0 +1,49 @@
+# Receta de obtención — generada desde el catálogo y editada a mano (S1: enlaces reales y formato zip).
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-DIRECTORIO-MUNICIPALIDADES
+strategy: manual
+publisher: INEI
+dataset_title: Directorio Nacional de Gobiernos Regionales, Municipalidades Provinciales, Distritales y de Centros
+  Poblados
+access_url: https://www.gob.pe/en/institucion/inei/informes-publicaciones/6722617-national-directory-of-regional-governments-provincial-municipalities-district-and-of-populates-centers-2025
+documentation_url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1809/libro.pdf
+temporal:
+  inicio: 2003
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: Uso libre citando la fuente
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- 'El cuadro de dispositivo legal (sección 1.2) no trae ubigeo en la edición 2021 (sí nombres); no consigna el distrito
+  de origen de los distritos nuevos: hay que leerlo en la ley. Cuadros en PDF; verificar si el ZIP Excel incluye
+  la tabla de leyes.'
+manual:
+  pasos:
+  - Abrir la ficha gob.pe del Directorio 2025 (access_url).
+  - 'Descargar «Cuadros en Excel» (ZIP, 4,3 MB): https://cdn.www.gob.pe/uploads/document/file/7999764/6722617-directorio-nacional-de-gobiernos-regionales-municipalidades-provinciales-distritales-y-de-centros-poblados-2025-cuadros-en-excel.zip'
+  - Guardar el archivo en biblioteca/cruda/bandeja/INEI-DIRECTORIO-MUNICIPALIDADES/
+  - 'Ejecutar: pap registrar INEI-DIRECTORIO-MUNICIPALIDADES --issued 2025-04-29'
+espera:
+  formato:
+  - zip
+  - pdf
+  - xlsx
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: 'Ficha gob.pe 2025 (publicada 29-04-2025) con PDF (13,3 MB) y ''Cuadros en Excel'' (ZIP 4,3 MB); URL cdn
+  de los adjuntos no visible en el fetch. Existe además ''Directorio Nacional de Municipalidades Provinciales y
+  Distritales – Julio 2025'' (XLSX 245 KB): https://www.gob.pe/en/institucion/inei/informes-publicaciones/3908763-directorio-nacional-de-municipalidades-provinciales-y-distritales-julio-2025.
+  Ediciones antiguas en cdn.www.gob.pe (2019, 2020) y Lib1809 (2021).'

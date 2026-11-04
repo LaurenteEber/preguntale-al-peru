@@ -1,0 +1,46 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINEDU-UMC-ENLA
+strategy: manual
+publisher: MINEDU
+dataset_title: Evaluación Nacional de Logros de Aprendizaje (ENLA) / Evaluación Muestral (EM)
+access_url: http://umc.minedu.gob.pe/resultadosenla2025/
+documentation_url: http://umc.minedu.gob.pe/evaluacion-muestral-2019/
+temporal:
+  inicio: 2019
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- 'Muestral: inferencia solo nacional/departamental (y por estratos); NO usar a nivel distrito ni IE aunque la base
+  incluya código modular. Requiere pesos y medidas Rasch/valores plausibles. ENLA 2024 de 4.º de primaria fue censal
+  (más de 532 mil estudiantes en más de 18 mil IIEE), con resultados por región, UGEL e IE; 6.º de primaria muestral;
+  ENLA 2022–2023 muestrales. Registrar tipo_aplicacion por año y grado.'
+manual:
+  pasos:
+  - Abrir http://umc.minedu.gob.pe/resultadosenla2025/ y descargar el archivo.
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/MINEDU-UMC-ENLA/
+  - 'Ejecutar: pap registrar MINEDU-UMC-ENLA --issued <fecha>'
+espera:
+  formato:
+  - sav
+  - xlsx
+  - pdf
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+notas: Mismo sitio UMC (certificado autofirmado). Consulta de resultados vía SICRECE.

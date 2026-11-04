@@ -1,0 +1,278 @@
+{
+ "criterio": "captura con última verificación ok por huella; si está en insumos.lock.yaml, todas sus huellas del lock en sus capturas (decisión del dueño 8/10/2026; catalogo/scripts/ingesta_src.py)",
+ "aprobadas": [
+  {
+   "id": "BCRP-IPC-LIMA",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/BCRP-IPC-LIMA/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:6eca3ec59df9b1505d50b5faf8c7e6f849a9d1e7892bc460a0390f6cca208828"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "GITHUB-UBIGEO-PERU-AUMENTADO",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/GITHUB-UBIGEO-PERU-AUMENTADO/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:6a2cde8fb82e336285da4d684241450e8a36630e42799652c8d72b596ec252e4"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-CPV2017",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-CPV2017/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:06a0bf932f3950f79766afe6e0366f83db1e75203ecc40c547a8f46a396ef502"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-DIRECTORIO-MUNICIPALIDADES",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-DIRECTORIO-MUNICIPALIDADES/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:2fa36eda8042c24af4ca7aa0e20b6f5f6713713f7e924d329843c3cb290b1f86"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-ENAHO",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-ENAHO/2026-10-07",
+    "biblioteca/cruda/capturas/INEI-ENAHO/2026-10-07-2"
+   ],
+   "huellas": [
+    "sha256:5ee98dad87810d42d7e252401d8366feac2fbce151c7af986d9644a40952567c",
+    "sha256:d16fb8ce674485d43ca1a0cf385576f94c38431e34140a741d569dcf85ba8959"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-ENDES",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-10",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-11",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-12",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-13",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-14",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-15",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-16",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-17",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-18",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-19",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-2",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-20",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-21",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-22",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-3",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-4",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-5",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-6",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-7",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-8",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-9"
+   ],
+   "huellas": [
+    "sha256:0d022f82ea63f7dc6001de824e452850ddd9c47b6ed23ad2977383bca37c4419",
+    "sha256:0f5ead4cd363a48b72b45d78f7c7d8313e8ab2ad98ac6d3dc8f087b282e3fab5",
+    "sha256:0f93549a141fda8cc9db5935a0011fcde024a398739ed45906fec213d5ad17cf",
+    "sha256:0faf60166b7bbd3638c9b1d8443d4c014d04481fb6bed6b74558aecc8f269509",
+    "sha256:14ccd50e8b663d1e689fbb06509bc8165fc05566cbcdc8a12594a5eddf31c0de",
+    "sha256:1dd766bf2d6dd65b8ec0f9463ea9718fa22e60cff1514488de3f448caf3a5508",
+    "sha256:2c53236b8ee41db677111ff221c4691b0dab3574900987e05ca8fb15550a7702",
+    "sha256:371659e83fc4283fe591b2602a6807ff958b7303e0c7a8df99186b74fa354da1",
+    "sha256:3f3404b444895da2def53d20bfabac7afc4563b5a87a14453cf41967ef6d9afd",
+    "sha256:4555897dbdd29e86d303c828fbd57b04f611943327f2269347690ef4171dedc2",
+    "sha256:4ca224d983f708c699a177acbb6cd29dea2197bff46ae33cf140c88f0891a4cc",
+    "sha256:52e4848dc22800f767e477053d7daada3f7360f5d03d1cd022d6785319955a39",
+    "sha256:5831d3326670c6eca5c9b53a0307630c2abed756b16ad693e29b3fc53a72d3f4",
+    "sha256:5cbe2c9e249959b77b85c06aee2d37b55d8ef54b21b3128f9c3da39b81742975",
+    "sha256:6a0d3dd0aeb6a2d2c894264f1fa8f70c95e610523dd315fd149f09d2ded498e5",
+    "sha256:744d22dbd27f91fbfe5975b6791a09573298f746401a66cf8e08f67d07023e8f",
+    "sha256:8a348b2419759a86765ca7e05459a50d11c75113fe0fc31641cb70b44529ba5d",
+    "sha256:9a8877d0e9bf9cb097d3ffcbfa2574df2a9650268687c7263223f63b9d763453",
+    "sha256:bd6d3c4657712643657a66539466ca4b216664698af9e9273562a6b08274d19a",
+    "sha256:d40ca096acd91aa296742820c872350006ea55e44354cefae6f6bbd24c27838c",
+    "sha256:ee9fdc045a7670e3588074c5d7c02b5609140fd37b02d7292239f435f7096942",
+    "sha256:f989759e441d8b993e0b38e1a1c1aaf141fb3d9c70fff402e20d80e1cf23fbea"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-MAPA-POBREZA",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-MAPA-POBREZA/2026-10-07",
+    "biblioteca/cruda/capturas/INEI-MAPA-POBREZA/2026-10-09"
+   ],
+   "huellas": [
+    "sha256:02a98ba3f6ebb560c4fca985b6ee5e03bb56431abfcba7655febef7234ba3b1f",
+    "sha256:fcc465d75abe7f7e20107d67fc3a947d606e2176d0c00fecb02ceafcca913f00"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-PNDA-UBIGEOS",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-PNDA-UBIGEOS/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:d0ea9598a15c6fcb33bdeb8d81a84494403f37075a2f9f102b40868204f155c5"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-PROYECCIONES-DEPARTAMENTAL-EDAD/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:32b4e7e81744562fc95266c0595d0ef7e25e31388e7dd906d440533d2552bb4d",
+    "sha256:84ebadb3dfce916700b0fb175e7b43614b75b7d7a5bdbbef37d49b6d58be88e1"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-PROYECCIONES-DISTRITAL-2018-2022",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-PROYECCIONES-DISTRITAL-2018-2022/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:0321fe37b6dc564a048788f8734e24ab221efebf05460d437acb0c7587963a06"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INEI-PROYECCIONES-POBLACION-DISTRITAL/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:9436df29b883fd4a9db3705040a6668ff4efe7047c2643249b6b6bedd90d5c8b"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "INS-CENAN-SIEN",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/INS-CENAN-SIEN/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:b05f29b160841198785afebb9bea4b72f84fa00b0c4eebbf6b2186981868469e"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06",
+    "biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06-2",
+    "biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06-3"
+   ],
+   "huellas": [
+    "sha256:350a2c23b8854076578577c18dc7571f7d51f8d5b5d1de3eb06c0896ab426fd3",
+    "sha256:5aed95cb3b31916e5090d64ee6d45f8acc45041494098582411d388f464b36ef",
+    "sha256:df9f83ae5b60a633ec0b345110e5e29a047666c06813f1fc8efee349b2daa94f"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "MEF-DETALLE-INVERSIONES",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/MEF-DETALLE-INVERSIONES/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:0fb1d61d0175c80713a6df839a57d7b150ac757b8425804589e2f6646f6a2e4a"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "PROPIO-ESTADISTICAS-SOCIALES-2020",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/PROPIO-ESTADISTICAS-SOCIALES-2020/2026-10-05"
+   ],
+   "huellas": [
+    "sha256:3b014946628b28e0da35f67c2968568a7f13d801267633f4a410f1a1a87438c6"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "RENIEC-POBLACION-IDENTIFICADA",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/RENIEC-POBLACION-IDENTIFICADA/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:f275987af1def5a9b156309559d9f490190b7d3395a3cfafd5a1a3d401de4548"
+   ],
+   "huellas_en_lock": true
+  },
+  {
+   "id": "SUSALUD-RENIPRESS",
+   "uso": "capa0",
+   "fecha_verificacion": "2026-10-10",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/SUSALUD-RENIPRESS/2026-10-06"
+   ],
+   "huellas": [
+    "sha256:89040c55e9c53398465975171fb348109fd11b787d238970161a243115070823"
+   ],
+   "huellas_en_lock": true
+  }
+ ],
+ "rechazadas": []
+}

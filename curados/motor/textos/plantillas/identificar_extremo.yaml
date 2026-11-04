@@ -1,0 +1,24 @@
+# Plantilla identificar_extremo («¿cuál es el más alto?»): los territorios se muestran en grupos sin orden entre ellos
+# (alfabético, R-04; R-ENC-12), nunca como un ranking uno por uno.
+version: 1.1.0
+sin_ranking: "No se puede ordenar {unidades} uno por uno: las diferencias entre muchos de ellos no son estadísticamente claras."
+corta_grupo: "El grupo con {sujeto} más alta en {anio} son {n} {unidades}, sin diferencias estadísticamente claras entre ellos."
+territorio_ficha: "todos los {unidades} del país"
+tarjeta_oficial:                  # grupo publicado por el INEI (grupos_oficiales_inei.csv; R-ENC-12: prevalece sobre el propio)
+  titulo: "Con datos recientes ({anio}), solo por departamento"
+  titulo_principal: "Los {unidades} con {sujeto} más alta ({anio})"
+  texto: "En {anio}, según el INEI, {n} departamentos forman el grupo con {sujeto_grupo} más alta, sin diferencias estadísticamente claras entre ellos. En orden alfabético: {items}. Para el grupo en conjunto, el INEI estima {rango_grupo}; cada departamento puede quedar un poco por encima o por debajo de ese rango."
+tarjeta_propia:                   # sin grupos oficiales: prueba contra la cifra más alta (alfa de parametros_globales)
+  texto: "En {anio} se estima que {sujeto} era más alta, sin diferencias estadísticamente claras entre ellos, en {items} ({fuente})."
+uno:                              # el grupo de más alta tiene un solo miembro (S1-09, H2 y A-H5): se nombra y su cifra va en la capa 1
+  corta: "En {anio}, {lugar} es {nivel_el} con {sujeto} más alta, con diferencia estadísticamente clara frente a los demás."
+  nivel_el: {departamento: "el departamento", provincia: "la provincia", distrito: "el distrito", defecto: "el territorio"}
+  clave:
+    proporcion: "de {ciudadano} en {lugar} en {anio}."
+    defecto: "es la cifra de {ciudadano} en {lugar} en {anio}."
+  tarjeta:
+    titulo: "Cómo se llegó a este resultado"
+    oficial: "Según el grupo que publica el INEI para {anio}, {lugar} es el único {nivel_palabra} del grupo con {sujeto_grupo} más alta."
+    propia: "Comparamos cada {nivel_palabra} con el más alto con una prueba estadística: solo {lugar} queda en el grupo con {sujeto_grupo} más alta."
+etiqueta: "Otro año, otro territorio y otro método: no se compara con la cifra clave."
+ojo: "No los ordenes uno por uno: dentro del grupo, las diferencias pueden deberse al azar de la encuesta."

@@ -1,0 +1,48 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: JUNTOS-HOGARES-UBIGEO
+strategy: manual
+publisher: MIDIS
+dataset_title: Resumen de hogares afiliados y abonados por ubigeo – Programa JUNTOS
+access_url: https://www.datosabiertos.gob.pe/group/programa-nacional-de-apoyo-directo-los-m%C3%A1s-pobres-juntos-juntos
+documentation_url: https://www.gob.pe/9275-consultar-informacion-estadistica-del-programa-juntos
+temporal:
+  inicio: 2023
+  fin: 2025
+spatial:
+  ambito: nacional (ámbito de intervención)
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Solo distritos de intervención; años anteriores a 2023 en otros datasets/formatos.
+manual:
+  pasos:
+  - Abrir https://www.datosabiertos.gob.pe/group/programa-nacional-de-apoyo-directo-los-m%C3%A1s-pobres-juntos-juntos
+    y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/resumen-de-hogares-afiliados-y-abonados-por-ubigeo-2025-programa-juntos'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/JUNTOS-HOGARES-UBIGEO/
+  - 'Ejecutar: pap registrar JUNTOS-HOGARES-UBIGEO --issued <fecha>'
+espera:
+  formato:
+  - xlsx
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Un dataset por año: slug resumen-de-hogares-afiliados-y-abonados-por-ubigeo-<AÑO>-programa-juntos (2023,
+  2024, 2025 confirmados). Plataforma Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset tiene recursos con
+  URL de descarga en /sites/default/files/... o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug>
+  (API CKAN-compatible de DKAN; confirmar). Desde este entorno el portal devolvió 403/robots en fetch: probar con
+  navegador/Playwright.'

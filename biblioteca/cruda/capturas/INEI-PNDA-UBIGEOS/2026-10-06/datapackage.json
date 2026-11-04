@@ -1,0 +1,57 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-pnda-ubigeos-2026-10-06",
+  "title": "Ubigeos (Códigos de Ubicación Geográfica) – INEI (PNDA)",
+  "created": "2026-10-06T09:31:48-05:00",
+  "keywords": [
+    "INEI-PNDA-UBIGEOS"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "inei-pnda-ubigeos",
+      "title": "Ubigeos (Códigos de Ubicación Geográfica) – INEI (PNDA)",
+      "original_filename": "UBIGEOS_2022_1891_distritos.zip",
+      "path": "almacen/sha256/d0/ea/d0ea9598a15c6fcb33bdeb8d81a84494403f37075a2f9f102b40868204f155c5",
+      "hash": "sha256:d0ea9598a15c6fcb33bdeb8d81a84494403f37075a2f9f102b40868204f155c5",
+      "bytes": 22577,
+      "format": "zip",
+      "mediatype": "application/zip",
+      "source_id": "INEI-PNDA-UBIGEOS",
+      "publisher": "INEI",
+      "dataset_title": "Ubigeos (Códigos de Ubicación Geográfica) – INEI (PNDA)",
+      "access_url": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei",
+      "download_url": "https://www.inei.gob.pe/media/DATOS_ABIERTOS/UBIGEOS/UBIGEOS_2022_1891_distritos.zip",
+      "source_version_basis": "ninguna",
+      "temporal": "2022",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T09:31:48-05:00",
+      "method": "http_directo",
+      "recipe": "INEI-PNDA-UBIGEOS@f6f18da",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "ODbL-1.0",
+          "title": "Open Data Commons Open Database License (ODbL)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito"
+      },
+      "known_issues": [
+        "Verificar fecha de corte frente a creaciones distritales recientes. Corte 2022 con 1 891 distritos; el INEI ya trabaja con 1 892 (proyecciones 2018–2026): completar con esa lista."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

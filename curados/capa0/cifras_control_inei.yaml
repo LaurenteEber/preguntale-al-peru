@@ -1,0 +1,64 @@
+# Cifras publicadas por el INEI que la estandarización debe reproducir (control de definiciones, R-ENC-18).
+# Semilla de las «cifras doradas» del piloto. Valores en %, a 1 decimal. Citas en `fuentes` (auditoría S4, 9/10/2026:
+# 03_auditoria/s4_insumos/auditoria.md). Las claves *_informativo no bloquean.
+version: 1.1.0
+tolerancia_pp: 0.1   # sobre la estimación redondeada a 1 decimal (equivale a < 0,15 pp)
+notas:
+  - "ENDES 2015: con el universo único (filtro de pernocte) la cifra nacional queda ~0,15 pp por debajo de lo publicado (43,35 frente a 43,5; DCI 14,25 frente a 14,4); los departamentos y el área rural se reproducen mejor así (H-03). Probablemente la publicación usó otra versión de la base."
+  - "ENDES 2015–2017 no trae ubigeo: Lima solo a nivel de departamento (HV024 = 15), no «Provincia de Lima» (H-12)."
+  - "ENAHO: en el ranking departamental, Lima Metropolitana = provincia 1501 (ambito_lima); en las tablas por área o dominio = dominio 8, Lima + Callao (lima_metropolitana_dominio8) (H-05)."
+endes:
+  anemia_6_35m:
+    {2015: 43.5, 2016: 43.6, 2017: 43.6, 2018: 43.5, 2019: 40.1, 2020: 40.0, 2021: 38.8, 2022: 42.4, 2023: 43.1, 2024: 43.7, 2025: 43.4}
+  anemia_6_35m_urbana: {2015: 40.5, 2024: 40.2}
+  anemia_6_35m_rural: {2015: 51.1, 2024: 51.9}
+  anemia_6_35m_oms2024: {2024: 35.3, 2025: 34.9}
+  anemia_6_35m_oms2024_urbana: {2024: 31.2, 2025: 31.5}
+  anemia_6_35m_oms2024_rural: {2024: 44.7, 2025: 43.2}
+  dci_menores_5:
+    {2015: 14.4, 2016: 13.1, 2017: 12.9, 2018: 12.2, 2019: 12.2, 2020: 12.1, 2021: 11.5, 2022: 11.7, 2023: 11.5, 2024: 12.1, 2025: 12.1}
+  dci_menores_5_urbana: {2019: 7.6, 2020: 7.2, 2021: 6.8, 2022: 7.1, 2023: 8.1, 2024: 8.5, 2025: 7.9}
+  dci_menores_5_rural: {2015: 27.7, 2019: 24.5, 2020: 24.8, 2021: 24.4, 2022: 23.9, 2023: 20.3, 2024: 20.9, 2025: 21.7}
+  anemia_6_35m_departamento_2017: {"21": 75.9, "16": 61.5, "25": 59.1, "07": 32.4, "04": 34.2}
+  anemia_6_35m_departamento_2018: {"21": 67.7, "19": 58.7, "16": 57.4, "06": 31.9, "18": 33.9, "23": 34.9}
+  anemia_6_35m_departamento_2023: {"25": 59.4}
+  anemia_6_35m_departamento_2024: {"21": 76.0, "16": 62.0, "09": 55.1, "25": 54.6, "06": 38.4}
+  anemia_6_35m_departamento_2025: {"21": 75.4, "08": 56.6, "16": 55.6}
+  anemia_6_35m_oms2024_departamento_2024: {"21": 53.1, "16": 50.9, "25": 42.8, "06": 40.6, "09": 32.9}
+  dci_menores_5_departamento_2017: {"09": 31.2, "06": 26.6, "16": 23.8, "19": 22.8, "03": 20.9, "05": 20.0}
+  dci_menores_5_departamento_2018: {"09": 32.0, "06": 27.4, "10": 22.4, "01": 20.4, "05": 20.2, "03": 20.1, "16": 20.0}
+  dci_menores_5_departamento_2025: {"16": 20.8, "09": 20.3, "25": 18.1}
+  anemia_6_35m_departamento_2015_informativo: {"21": 76.0, "17": 58.2, "03": 56.8, "19": 56.1, "16": 55.6, "13": 34.0, "07": 34.3, "20": 35.9}
+  dci_menores_5_departamento_2015_informativo: {"09": 34.0, "10": 24.0, "25": 24.0, "06": 24.0, "23": 2.6, "18": 3.5, "15": 5.8}
+enaho:
+  pobreza_monetaria: {2024: 27.6, 2025: 25.7}
+  pobreza_extrema: {2024: 5.5, 2025: 4.7}
+  pobreza_monetaria_urbana: {2024: 24.8, 2025: 23.4}
+  pobreza_monetaria_rural: {2024: 39.3, 2025: 35.5}
+  pobreza_monetaria_departamento_2024:
+    {"06": 45.0, "16": 43.0, "21": 39.9, "19": 39.0, "10": 39.0, "07": 33.9, "09": 33.4, "05": 32.8, "20": 31.9, "13": 30.2,
+     "25": 27.1, "24": 26.9, "01": 25.7, "23": 24.0, "03": 24.0, "02": 22.8, "22": 22.0, "08": 18.5, "12": 18.5, "04": 15.8,
+     "14": 14.0, "18": 11.0, "17": 11.1, "11": 6.0}
+  pobreza_monetaria_departamento_2025:
+    {"06": 41.0, "16": 40.1, "21": 37.5, "19": 36.4, "10": 35.7, "11": 4.5, "17": 7.3, "18": 7.8}
+  pobreza_monetaria_lima_2024: {LIMA_METROPOLITANA: 27.6, LIMA_REGION: 21.7}
+  pobreza_extrema_lima_metropolitana_dominio8: {2024: 3.3, 2025: 3.6}
+  pobreza_extrema_resto_urbano: {2024: 3.0, 2025: 2.8}
+  pobreza_extrema_rural: {2024: 15.5, 2025: 11.4}
+fuentes:
+  - {cifras: "anemia 2018–2024 y DCI 2019–2024 nacional y por área; OMS 2024 en 2024", url: "https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf", verificado: true}
+  - {cifras: "anemia (ambos criterios) 2024 por departamento", url: "https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes21/pdf/Cap09.pdf", verificado: true, nota: "un PDF por departamento (Endes06, 09, 16, 21, 25), pp. 65–70"}
+  - {cifras: "anemia 2023 nacional", url: "https://www.gob.pe/en/institucion/inei/noticias/921816-el-43-1-de-la-poblacion-de-6-a-35-meses-de-edad-sufrio-de-anemia-en-el-ano-2023", verificado: true}
+  - {cifras: "2015 nacional, área y departamentos", url: "https://www.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-n094-2016-inei.pdf", verificado: true}
+  - {cifras: "anemia y DCI 2016; DCI 2015", url: "https://www.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-n043-2017-inei.pdf", verificado: true}
+  - {cifras: "2017 nacional y departamentos", url: "https://m.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-no-088-2018-inei.pdf", verificado: true}
+  - {cifras: "2018 DCI nacional y departamentos; anemia departamentos", url: "https://www.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-n017-2019-inei.pdf", verificado: true}
+  - {cifras: "ENDES 2025 anemia 43,4 (RM 363-2022) y 34,9 (OMS 2024), con área", url: "https://elbuho.pe/?p=431824", verificado: true, nota: "prensa; falta el informe técnico"}
+  - {cifras: "ENDES 2025: DCI 12,1/7,9/21,7; OMS 2024 34,9/31,5/43,2", url: "https://elcomercio.pe/peru/endes-2025-lactancia-materna-en-menores-de-seis-meses-aumento-a-711-noticia/", verificado: true, nota: "prensa; falta el informe técnico"}
+  - {cifras: "ENDES 2025 departamentos (anemia Puno, Cusco, Loreto; DCI Loreto, Huancavelica, Ucayali)", url: "https://www.infobae.com/peru/2026/05/18/desnutricion-cronica-y-anemia-infantil-en-peru-cifras-estancadas-y-avances-minimos-segun-la-endes-2025/", verificado: true, nota: "prensa"}
+  - {cifras: "pobreza 2024 nacional, extrema, urbana, rural", url: "https://canaln.pe/actualidad/pobreza-monetaria-bajo-276-2024-segun-inei-n483303", verificado: true, nota: "prensa; nota del INEI: gob.pe/institucion/inei/noticias/1164173"}
+  - {cifras: "pobreza 2024 por departamento, Lima Metropolitana, Callao, Lima Provincias", url: "https://www.bloomberglinea.com/latinoamerica/peru/los-departamentos-mas-golpeados-por-la-pobreza-monetaria-en-peru-segun-el-inei/", verificado: true, nota: "prensa; falta el informe técnico"}
+  - {cifras: "pobreza 2025 nacional, urbana, rural, extrema, 8 departamentos; extrema 2024–2025 Lima Metropolitana, resto urbano, rural", url: "https://elperuano.pe/noticia/295035-inei-pobreza-se-redujo-en-19-en-el-2025-y-afecta-al-257-de-peruanos", verificado: true, nota: "prensa; falta el informe técnico"}
+pendientes:
+  - "DCI por departamento 2024: Cuadro 04A del informe de programas presupuestales ENDES 2024 (p. 50), no extraído."
+  - "Reemplazar las notas de prensa de 2024–2025 por los informes técnicos del INEI cuando se tengan."

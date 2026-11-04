@@ -1,0 +1,241 @@
+# Casos de tubería (etapas 0–7, precedencia y nulos de R-MOTOR-02). Analista independiente de casos, 10/10/2026.
+# Cada caso compara espera.accion_final y espera.estado_cifra después de correr todas las reglas de cifra registradas.
+- id: PIPELINE-01
+  regla: PIPELINE
+  descripcion: 'Anemia ENDES OMS 2024, Puno 2025 (p 0,56, cv_ref 0,077, n 223): solo acumulables (rótulos de formato, semáforo, revisión de R-ENC-18)
+    → «por omisión una cifra se publica»'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  consulta: &id001 {anio_pedido: 2025, nivel_pedido: departamento, rol: principal, intencion_pregunta: nivel_actual}
+  espera: {accion_final: publicar, estado_cifra: publicable}
+- id: PIPELINE-02
+  regla: PIPELINE
+  descripcion: '«accion_final = max_restriccion(a_i)» con acumulables: CV alto (cv_ref 0,16 → publicar_referencial, R-ENC-03) y rótulos (R-ENC-05,
+    R-CRUCES-09) → gana la restrictiva, los rótulos se acumulan'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra: {valor: 40.0, ee: 6.4, cv: 16.0, n_muestra: 223, gl: 76}
+  consulta: *id001
+  espera: {accion_final: publicar_referencial, estado_cifra: referencial}
+- id: PIPELINE-03
+  regla: PIPELINE
+  descripcion: 'cv_ref 0,31 → suprimir (R-ENC-03) por precisión: suprimida (no sin_datos: precision no es motivo de sin datos)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra: {valor: 40.0, ee: 12.4, cv: 31.0, n_muestra: 223, gl: 76}
+  consulta: *id001
+  espera: {accion_final: suprimir, estado_cifra: suprimida}
+- id: PIPELINE-04
+  regla: PIPELINE
+  descripcion: '«campo_requerido IS NULL AND caso no definido → estado_cifra = ''suprimida'', motivo = ''metadato_faltante''»: n_sin_ponderar
+    vacío'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra: {n_muestra: null, n_sin_ponderar: null}
+  consulta: *id001
+  espera: {accion_final: suprimir, estado_cifra: suprimida}
+- id: PIPELINE-05
+  regla: PIPELINE
+  descripcion: 'R-DEP-01 «insumo no aprobado → estado_cifra = ''sin_datos''»: INEI-ENDES en enlace_confirmado'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  consulta: *id001
+  contexto:
+    catalogo:
+      INEI-ENDES: {compuerta_ingesta: enlace_confirmado}
+  espera: {accion_final: suprimir, estado_cifra: sin_datos}
+- id: PIPELINE-06
+  regla: PIPELINE
+  descripcion: 'Dos supresiones (n = 20 por R-ENC-02 e insumo en ingesta por R-DEP-01): accion_final suprimir y el estado es sin_datos porque
+    una de ellas es por falta de insumo'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra: {n_muestra: 20}
+  consulta: *id001
+  contexto:
+    catalogo:
+      INEI-ENDES: {compuerta_ingesta: enlace_confirmado}
+  espera: {accion_final: suprimir, estado_cifra: sin_datos}
+- id: PIPELINE-07
+  regla: PIPELINE
+  descripcion: 'R-DEP-01 «tabla_curada_sin_respaldo → sin_datos»: dim_tema_gasto con una prueba bloqueante fallida en su manifiesto'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: &id004
+    fuentes_montos: &id002 [MEF-DA-PRESUPUESTO-EJECUCION-GASTO]
+    archivos_cargados: &id003 [2025-Gasto-Mensual.csv]
+    rol_gasto: canonica
+    fase_gasto: devengado
+    tema_id: cpt_grupo_expan
+    cadena: concepto
+    bloque_consolidado: gasto_final
+  consulta: *id001
+  contexto:
+    manifiestos:
+      s3_gasto:
+        pruebas:
+          total: 40
+          fallidas: [G-03]
+          bloqueantes_fallidas: [G-03]
+  espera: {accion_final: suprimir, estado_cifra: sin_datos}
+- id: PIPELINE-08
+  regla: PIPELINE
+  descripcion: 'Precedencia «agregar_nivel» > «publicar_referencial»: ENDES pedida por provincia (R-ENC-06) con cv_ref 0,20 (R-ENC-03) → agregada'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra: {valor: 40.0, ee: 8.0, cv: 20.0, n_muestra: 223, gl: 76}
+  consulta: {anio_pedido: 2025, nivel_pedido: provincia, territorio_pedido: Melgar, rol: principal}
+  espera: {accion_final: agregar_nivel, estado_cifra: agregada}
+- id: PIPELINE-09
+  regla: PIPELINE
+  descripcion: 'Registro con pocos casos: anemia SIEN en Asunción (6 tamizados, 0 casos) → suprimir por R-REG-03 (n < 30)'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "010102"
+  cifra: {pct_numerador_ubicado: 0.995, poblacion: 2500, fecha_corte: '2026-07-15'}
+  consulta: {anio_pedido: 2025, nivel_pedido: distrito, rol: principal}
+  espera: {accion_final: suprimir, estado_cifra: suprimida}
+- id: PIPELINE-10
+  regla: PIPELINE
+  descripcion: Cobertura de tamizaje SIEN de Arequipa (cota superior 42,7 < 50) → publicar_referencial (R-REG-07); el contraste MINSA no aprobado
+    solo anota
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: "04"
+  cifra: {poblacion: 1500000, fecha_corte: '2026-07-15'}
+  consulta: *id001
+  espera: {accion_final: publicar_referencial, estado_cifra: referencial}
+- id: PIPELINE-11
+  regla: PIPELINE
+  descripcion: 'Mapa de Pobreza 2018 en Cospán pedido por distrito: R-EST-05 (principal en rojo, referencial) y aviso de antigüedad (acumulable)
+    → referencial'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: "060104"
+  consulta: {nivel_pedido: distrito, rol: principal, intencion_pregunta: nivel_actual}
+  espera: {accion_final: publicar_referencial, estado_cifra: referencial}
+- id: PIPELINE-12
+  regla: PIPELINE
+  descripcion: Gasto en fase girado (R-GASTO-06 «no publicar» → suprimir) aunque los demás rótulos de gasto se acumulen
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    fuentes_montos: *id002
+    archivos_cargados: *id003
+    rol_gasto: canonica
+    fase_gasto: girado
+    tema_id: cpt_grupo_expan
+    cadena: concepto
+    bloque_consolidado: gasto_final
+    medida: girado
+  consulta: *id001
+  espera: {accion_final: suprimir, estado_cifra: suprimida}
+- id: PIPELINE-13
+  regla: PIPELINE
+  descripcion: 'DCI Tacna 2025 real (p 0,020, cv 29 %, ancho 2,8 pp): R-ENC-04 con L9 → referencial'
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2025
+    nivel: departamento
+    territorio: "23"
+  consulta: *id001
+  espera: {accion_final: publicar_referencial, estado_cifra: referencial}
+- id: PIPELINE-14
+  regla: PIPELINE
+  descripcion: 'Anemia SIEN de Acoria (510 tamizados, 70 casos): solo rótulos de registro y de establecimiento → publicable'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  cifra: {pct_numerador_ubicado: 0.995, poblacion: 37000, fecha_corte: '2026-07-15'}
+  consulta: {anio_pedido: 2025, nivel_pedido: distrito, rol: principal, intencion_pregunta: nivel_actual}
+  espera: {accion_final: publicar, estado_cifra: publicable}
+- id: PIPELINE-15
+  regla: PIPELINE
+  descripcion: 'Gasto ex-PAN de Lima Metropolitana 2025: avisos de sesgo de sede, línea aparte de referencia nacional y fase son acumulables →
+    publicable'
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, medida: devengado}
+  cifra: *id004
+  consulta: {anio_pedido: 2025, nivel_pedido: LIMA_METROPOLITANA, rol: principal, intencion_pregunta: nivel_actual}
+  espera: {accion_final: publicar, estado_cifra: publicable}
+- id: PIPELINE-16
+  regla: PIPELINE
+  descripcion: 'H-1 (contrato §4: «bloquear_cruce … en una cifra, por sí solo, la deja publicable»): celda suprimida por precisión (cv_ref 0,31,
+    R-ENC-03) cuya serie mezcla criterios (R-ENC-14 → bloquear_cruce) → sigue suprimida'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    valor: 40.0
+    ee: 12.4
+    cv: 31.0
+    n_muestra: 223
+    gl: 76
+    serie:
+    - {anio: 2023, criterio: RM363-2022/OMS2001}
+    - {anio: 2024, criterio: RM251-2024/OMS2024}
+    - {anio: 2025, criterio: RM251-2024/OMS2024}
+  consulta: {anio_pedido: 2025, nivel_pedido: departamento, rol: principal, intencion_pregunta: evolucion}
+  espera: {accion_final: suprimir, estado_cifra: suprimida}
+- id: PIPELINE-17
+  regla: PIPELINE
+  descripcion: 'H-1, caso real de Q3: gasto ex-PAN de San Juan de Lurigancho (pct_gasto_atribuible < 0,50 → referencial, R-GASTO-03) en una serie
+    2023–2025 sin deflactar (R-GASTO-12 → bloquear_cruce de la serie) → sigue referencial'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: "150132"
+    medida: devengado
+  cifra:
+    fuentes_montos: *id002
+    archivos_cargados: *id003
+    rol_gasto: canonica
+    fase_gasto: devengado
+    tema_id: cpt_grupo_expan
+    cadena: concepto
+    bloque_consolidado: gasto_final
+    serie:
+    - {anio: 2023, medida: devengado}
+    - {anio: 2024, medida: devengado}
+    - {anio: 2025, medida: devengado}
+  consulta: {anio_pedido: 2025, nivel_pedido: distrito, rol: principal, intencion_pregunta: evolucion}
+  espera: {accion_final: publicar_referencial, estado_cifra: referencial}

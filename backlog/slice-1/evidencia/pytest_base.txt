@@ -1,0 +1,53 @@
+# 2026-11-03 13:27 commit e61e13b (+ cambios sin commitear del 2/11)
+........................................................................ [ 18%]
+........................................................................ [ 37%]
+........................................................................ [ 56%]
+................................F.....................F................. [ 75%]
+........................................................................ [ 93%]
+........................                                                 [100%]
+=================================== FAILURES ===================================
+_____________ test_respuesta_corta_dice_primero_lo_que_no_se_puede _____________
+
+respuestas = {'q1': {'capas': {'capa1': {'respuesta_corta': 'En Huancavelica, la anemia en niñas y niños pequeños no muestra un cam...dicador_id': 'enaho_pobreza_monetaria', 'anio': 2025, 'nivel': 'departamento', 'territorio_id': '05', ...}, ...}, ...}}
+
+    def test_respuesta_corta_dice_primero_lo_que_no_se_puede(respuestas):
+        assert respuestas["q2"]["capas"]["capa1"]["respuesta_corta"].startswith("No se puede saber cuántos niños de Ayaviri")
+        assert respuestas["q3"]["capas"]["capa1"]["respuesta_corta"].startswith("No se puede saber si el gasto")
+        assert respuestas["q4"]["capas"]["capa1"]["respuesta_corta"].startswith("No se puede nombrar un solo distrito")
+        # Q4: los distritos del grupo en orden alfabético (no insinúan un ranking)
+        t = respuestas["q4"]["capas"]["capa1"]["cifra_clave"]["texto"]
+>       assert t.index("Anguía") < t.index("Oxamarca") < t.index("Uchuraccay")
+               ^^^^^^^^^^^^^^^^^
+E       ValueError: substring not found
+
+codigo/ingesta/tests/test_respuesta_p3.py:173: ValueError
+____________________________ test_construccion_real ____________________________
+
+    def test_construccion_real():
+        rutas = Rutas(RAIZ_REAL)
+        try:
+            res = T.construir(rutas)
+        except (PapError, FileNotFoundError) as e:  # FileNotFoundError: el almacén de crudos no está en esta máquina
+            pytest.skip(f"faltan insumos registrados: {e}")
+        fallidas = [(p["id"], p["descripcion"], p["detalle"]) for p in res.pruebas if p["bloqueante"] and not p["ok"]]
+>       assert fallidas == []
+E       AssertionError: assert [('T-19', 'Or...', '050800'])] == []
+E         
+E         Left contains one more item: ('T-19', 'Ortografía del nombre mostrado: cada corrección de nombres_mostrados.yaml coincide con su fuente y se aplicó (si la fuente cambió, revisar la fila)', ['040800', '050800'])
+E         Use -v to get more diff
+
+codigo/ingesta/tests/test_territorio.py:43: AssertionError
+=============================== warnings summary ===============================
+codigo/ingesta/tests/test_s4_insumos.py::test_mapa
+  /Users/Eber/Documents/SideProjects/pregunta-al-peru/.venv/lib/python3.12/site-packages/openpyxl/reader/workbook.py:118: UserWarning: Print area cannot be set to Defined name: 'A3.23'!$A:$I.
+    warn(f"Print area cannot be set to Defined name: {defn.value}.")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+=========================== short test summary info ============================
+FAILED codigo/ingesta/tests/test_respuesta_p3.py::test_respuesta_corta_dice_primero_lo_que_no_se_puede
+FAILED codigo/ingesta/tests/test_territorio.py::test_construccion_real - Asse...
+2 failed, 382 passed, 1 warning in 321.93s (0:05:21)
+
+real	5m24.780s
+user	6m12.922s
+sys	0m34.455s

@@ -1,0 +1,24 @@
+- capa: reglas
+  antes: R-TERRITORIO-09 · revision_humana · mapa_pobreza_2018/2018/distrito/050410/intervalo/principal
+  despues: ''
+  motivo: 'El `nombre_pedido` manual de la consulta del piloto no se empareja con ningún territorio, así que R-TERRITORIO-09
+    pedía una revisión humana por un territorio «no identificado» que sí lo está. Con el resolver (S1-02) el lugar llega ya
+    resuelto y esa revisión falsa desaparece; es la corrección esperada (S1-07, tarea 4). Solo era una acción `revision_humana`:
+    no cambia cifras, semáforos, confianza ni bloqueos.'
+  aprobado_por: agente
+- capa: reglas
+  antes: R-TERRITORIO-09 · revision_humana · mapa_pobreza_2018/2018/distrito/060308/intervalo/principal
+  despues: ''
+  motivo: 'El `nombre_pedido` manual de la consulta del piloto no se empareja con ningún territorio, así que R-TERRITORIO-09
+    pedía una revisión humana por un territorio «no identificado» que sí lo está. Con el resolver (S1-02) el lugar llega ya
+    resuelto y esa revisión falsa desaparece; es la corrección esperada (S1-07, tarea 4). Solo era una acción `revision_humana`:
+    no cambia cifras, semáforos, confianza ni bloqueos.'
+  aprobado_por: agente
+- capa: reglas
+  antes: R-TERRITORIO-09 · revision_humana · mapa_pobreza_2018/2018/distrito/060402/intervalo/principal
+  despues: ''
+  motivo: 'El `nombre_pedido` manual de la consulta del piloto no se empareja con ningún territorio, así que R-TERRITORIO-09
+    pedía una revisión humana por un territorio «no identificado» que sí lo está. Con el resolver (S1-02) el lugar llega ya
+    resuelto y esa revisión falsa desaparece; es la corrección esperada (S1-07, tarea 4). Solo era una acción `revision_humana`:
+    no cambia cifras, semáforos, confianza ni bloqueos.'
+  aprobado_por: agente

@@ -1,0 +1,32 @@
+# Sistema y editores
+.DS_Store*
+.obsidian/
+.vscode/
+.idea/
+.codegraph/
+.atl/
+*.tmp
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+.venv/
+
+# Salidas locales de pap preguntar y de la matriz (cli.salida_por_defecto)
+salidas/
+
+# Biblioteca: en git solo metadatos (capturas/*/datapackage.json, verificaciones.jsonl, manifiestos, pruebas).
+# Los crudos, los Parquet y los derivados se reconstruyen con `pap construir` y `pap calcular`.
+biblioteca/cruda/almacen/
+biblioteca/cruda/bandeja/
+biblioteca/cruda/cache/
+biblioteca/cruda/*.xlsx
+biblioteca/cruda/indice.duckdb*
+biblioteca/**/*.parquet
+biblioteca/**/historial/
+biblioteca/**/.preparacion_*/
+biblioteca/_respaldo*/
+
+# Intermedio del catálogo (lo regenera catalogo/scripts/run.py)
+catalogo/scripts/catalogo_fuentes_v2.json

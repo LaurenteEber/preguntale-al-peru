@@ -1,0 +1,204 @@
+# Catálogo de intenciones (S1-03): qué cifras hacen falta para responder cada intención sobre cada tema.
+# Lo lee el planificador genérico (pap/motor/planificador.py); en Python no hay reglas de ningún tema.
+# Cada fila cita la decisión que la exige (campo `decision`, ID de docs/decisiones.md o de reglas/reglas.json).
+#
+# Lo que NO se repite aquí (se lee de su fuente):
+#   - niveles válidos/no válidos, años, quiebres, tema y cadena de gasto  → curados/capa0/dim_indicador.yaml
+#   - cruces permitidos y sus indicadores (CR-01)                         → curados/capa0/cruces_permitidos.yaml
+#   - tema de gasto de cada pregunta                                       → map_intencion_tema de R-GASTO-08b (reglas.json),
+#                                                                            clave en parametros_motor.yaml → temas.gasto_publico_clave_map
+#   - periodo por defecto, formato del id de cifra, X-03                   → parametros_motor.yaml
+#
+# Lenguaje de las filas:
+#   principal: lista ordenada de candidatos; el planificador toma el primero cuyo nivel sea válido en dim_indicador
+#              (si ninguno lo es, sube de nivel según `escalera_niveles`). Referencias: $gasto_defecto (el indicador
+#              cuyo tema_id es el defecto de map_intencion_tema), $cruce.a / $cruce.b (indicadores del cruce activo).
+#   casos:     el primero cuyo `cuando` se cumple (principal elegido; nivel del territorio planificado) decide las cifras.
+#   cifras:    {indicador | $principal | $cruce.a | $cruce.b, rol, territorio: pedido|regional|nacional (def. pedido),
+#               anio: periodo|ultimo|primero_serie|<año>|{comparado_de: <indicador>} (def. periodo),
+#               comparar_con: anterior_disponible|primero_serie, si_parametro: <ruta en parametros_motor.yaml>}
+#   «regional» = el departamento del lugar o, en Lima, su ámbito (T-03); si el cubo no lo tiene válido, la cifra se omite
+#   y queda anotada en `omitidas` del plan.
+version: 1.0.0
+fecha: "2026-11-03"
+
+escalera_niveles:                 # de lo más fino a lo más amplio; un ámbito de Lima ocupa el peldaño «departamento»
+  valor: [distrito, provincia, departamento, nacional]
+  nacional: {nivel: nacional, id: PE}
+  ambito_en: departamento         # peldaño que ocupa un ámbito de Lima (T-03)
+  id_cubo:                        # cómo se escribe el id de cada peldaño en el cubo, a partir del ubigeo (u2, u4, u6 = 2, 4 y 6 dígitos)
+    distrito: "{u6}"
+    provincia: "{u4}00"
+    departamento: "{u2}"
+  decision: "R-REG-02 / T-03"
+
+quiebres:
+  solo_el_punto: [modo]           # el cambio de modo (p. ej. ENDES 2020) excluye solo ese punto; los demás cortan la serie
+  decision: E-07
+
+referencias:                      # indicadores que no se nombran: se buscan en otra tabla
+  gasto_defecto:
+    regla: R-GASTO-08b
+    tabla: map_intencion_tema
+    clave_en: temas.gasto_publico_clave_map    # parametros_motor.yaml: la clave de la tabla para este tema
+    campo: defecto
+    indicador_con: tema_id                     # el indicador de dim_indicador cuyo tema_id es ese valor
+    decision: G-07
+
+cruces:
+  estado_activo: activo_piloto
+  indicador_a_igual_a: $gasto_defecto          # la cadena de gasto del cruce es la de map_intencion_tema
+  decision: "R-CRUCES-11 / R-GASTO-08b"
+
+motivos_no_se_puede:              # los consume S1-05; el planificador solo los registra
+  nivel_no_valido: {decision: R-REG-02, nota: "se planifica el nivel superior; nivel_pedido y nivel_planificado en el plan"}
+  anio_sin_datos: {decision: R-MOTOR-03, nota: "el año pedido no está en anios_disponibles del indicador principal"}
+  mismo_lugar: {decision: R-04, nota: "S1-09: una comparación con el mismo lugar dos veces no se responde"}
+  serie_un_solo_anio: {decision: E-06, nota: "una evolución necesita primer y último año comparables"}
+  cruce_fuera_de_lista_blanca: {decision: R-CRUCES-11, nota: "solo CR-01; lo demás son cifras separadas"}
+  cadena_gasto_distinta: {decision: R-GASTO-08b, nota: "el indicador del cruce no es el tema de gasto de map_intencion_tema"}
+  intencion_no_soportada: {decision: R-GASTO-13, nota: "sin fila para esa intención y tema (p. ej. ranking de gasto)"}
+  extremo_dentro_de_no_soportado: {decision: R-04, nota: "supuesto S1-03: el extremo solo se responde para todo el país"}
+  distrito_creado_despues: {decision: "T-01 / T-04", nota: "S1-05: ninguna versión del distrito tiene datos hasta el año de la cifra (anio_datos_desde); no se retroproyecta"}
+
+bloques:                          # fragmentos que se reutilizan (anclas YAML)
+  principal_simple: &principal_simple
+    - {indicador: $principal, rol: principal, decision: R-04}
+  s01_contexto_sien: &s01_contexto_sien      # SIEN por distrito: ENDES de su departamento (o ámbito) y cobertura de ese territorio
+    - {indicador: endes_anemia_6_35m_oms2024, rol: contexto, territorio: regional, decision: "S-01 / E-06"}
+    - {indicador: sien_cobertura_tamizaje_6_35m, rol: contexto, territorio: regional, decision: S-01}
+  evolucion_generica: &evolucion_generica    # una serie: primer y último año y la prueba de cambio, sin años intermedios
+    - {indicador: $principal, rol: principal, comparar_con: primero_serie, decision: "E-06 / E-07"}
+    - {indicador: $principal, rol: contexto, anio: primero_serie, decision: E-06}
+  anemia_nivel_actual: &anemia_nivel_actual
+    decision: "S-01 / E-06"
+    casos:
+      - cuando: {principal: [sien_anemia_tamizados_6_35m]}
+        decision: S-01
+        cifras: [*principal_simple, *s01_contexto_sien]
+      - cuando: {}
+        decision: E-06                        # en «¿cuánta hay?» y como contexto, solo la forma vigente
+        cifras: [*principal_simple]
+  cr01_casos: &cr01_casos                    # efecto y cruce con CR-01 (gasto × anemia ENDES vigente), lado a lado
+    - cuando: {nivel: [distrito, provincia]}   # el cruce va al departamento (nivel_minimo de CR-01); lo local es el SIEN
+      decision: "G-07 / R-03 / S-01"
+      cifras:
+        - {indicador: $cruce.a, rol: principal, decision: G-07}
+        - {indicador: $cruce.a, rol: contexto, territorio: regional, decision: "R-CRUCES-07 / T-03"}
+        - {indicador: sien_anemia_tamizados_6_35m, rol: principal, decision: S-01}
+        - {indicador: $cruce.b, rol: contexto, territorio: regional, comparar_con: anterior_disponible, decision: "R-CRUCES-07 / E-06"}
+        - {indicador: sien_cobertura_tamizaje_6_35m, rol: contexto, territorio: regional, decision: S-01}
+        - {indicador: $cruce.a, rol: contexto, territorio: regional, anio: {comparado_de: $cruce.b},
+           si_parametro: pendientes_dueno.cr01_mismo_anio, decision: "R-03 / X-03"}
+    - cuando: {}                               # departamento, ámbito de Lima o país: ambos lados en el mismo territorio
+      decision: "G-07 / R-03"
+      cifras:
+        - {indicador: $cruce.a, rol: principal, decision: G-07}
+        - {indicador: $cruce.b, rol: principal, comparar_con: anterior_disponible, decision: "R-CRUCES-07 / E-06"}
+        - {indicador: sien_cobertura_tamizaje_6_35m, rol: contexto, decision: S-01}
+        - {indicador: $cruce.a, rol: contexto, anio: {comparado_de: $cruce.b},
+           si_parametro: pendientes_dueno.cr01_mismo_anio, decision: "R-03 / X-03"}
+
+intenciones:
+  nivel_actual:
+    plantilla: nivel_actual
+    decision: R-04
+    casos:
+      - {cuando: {}, decision: R-04, cifras: [*principal_simple]}
+  evolucion:
+    plantilla: evolucion
+    decision: E-06
+    casos:
+      - {cuando: {}, decision: E-06, cifras: [*evolucion_generica]}
+  comparacion:
+    plantilla: comparacion
+    decision: R-04
+    casos:
+      - {cuando: {}, decision: R-04, cifras: [*principal_simple]}
+  identificar_extremo:
+    plantilla: identificar_extremo
+    decision: R-04
+    ranking: true                    # sin territorio pedido: ordena las unidades de un nivel (grupos)
+    casos: []                        # sin fila para el tema → intencion_no_soportada
+  efecto:
+    plantilla: cruce_efecto
+    decision: "R-CRUCES-07 / R-03"
+    requiere_cruce: true             # solo si cruces_permitidos tiene un cruce activo con ese tema
+    principal: [$cruce.a]
+    respuesta_parcial: true          # «¿sirvió?» solo se responde en parte (R-CRUCES-07)
+    estructura_efecto: true          # estructura de efecto en 5 partes
+    lado_a_lado: true
+    casos: *cr01_casos
+  cruce:
+    plantilla: cruce_efecto
+    decision: "R-03 / R-CRUCES-07"
+    requiere_cruce: true
+    principal: [$cruce.a]
+    respuesta_parcial: false
+    estructura_efecto: false         # un cruce es solo lado a lado, sin coeficientes (R-03)
+    lado_a_lado: true
+    casos: *cr01_casos
+
+temas:
+  anemia:
+    decision: "S-01 / E-06"
+    principal: [endes_anemia_6_35m_oms2024, sien_anemia_tamizados_6_35m]   # departamento o más: ENDES; distrito/provincia: SIEN
+    nivel_actual: *anemia_nivel_actual
+    comparacion: *anemia_nivel_actual
+    evolucion:
+      decision: "E-06 / E-07"
+      casos:
+        - cuando: {principal: [endes_anemia_6_35m_oms2024, endes_anemia_6_35m]}
+          decision: E-06                       # las dos formas de medir en paralelo, cada una con su alcance
+          bloques: [dos_formas_anemia]
+          cifras:
+            - {indicador: endes_anemia_6_35m_oms2024, rol: principal, comparar_con: anterior_disponible, decision: E-06}
+            - {indicador: endes_anemia_6_35m, rol: principal, comparar_con: primero_serie, decision: E-06}
+            - {indicador: endes_anemia_6_35m, rol: contexto, anio: primero_serie, decision: E-06}
+        - cuando: {principal: [sien_anemia_tamizados_6_35m]}
+          decision: S-01
+          cifras: [*evolucion_generica, *s01_contexto_sien]
+    identificar_extremo:
+      decision: R-ENC-12
+      casos:
+        - cuando: {nivel: [departamento]}
+          decision: R-ENC-12                   # ranking de 26 unidades (23 departamentos + 3 ámbitos de Lima)
+          grupos:
+            - {tipo: ranking_departamental, indicador: endes_anemia_6_35m_oms2024, anio: ultimo, prefijo: endes, rol: principal,
+               decision: "R-ENC-12 / E-06"}
+  desnutricion_cronica:
+    decision: E-06
+    principal: [endes_dci_menores_5]
+    identificar_extremo:
+      decision: R-ENC-12
+      casos:
+        - cuando: {nivel: [departamento]}
+          decision: R-ENC-12
+          grupos:
+            - {tipo: ranking_departamental, indicador: endes_dci_menores_5, anio: ultimo, prefijo: dci, rol: principal,
+               decision: R-ENC-12}
+  pobreza_monetaria:
+    decision: E-08
+    principal: [enaho_pobreza_monetaria, mapa_pobreza_2018]   # departamento o más: ENAHO; distrito/provincia: Mapa 2018
+    identificar_extremo:
+      decision: E-08
+      casos:
+        - cuando: {nivel: [distrito]}
+          decision: E-08                       # por distrito: grupo robusto del Mapa 2018 (sin ranking puntual) + ENAHO por departamento
+          grupos_estadisticos: robustos_mapa
+          grupos:
+            - {tipo: mapa_grupo_robusto, grupo: 1, rol: principal, decision: E-08}
+            - {tipo: ranking_departamental, indicador: enaho_pobreza_monetaria, anio: ultimo, prefijo: enaho, rol: contexto,
+               decision: E-08}
+        - cuando: {nivel: [departamento]}
+          decision: E-08                       # por departamento: grupos oficiales del INEI (grupos_oficiales_inei.csv)
+          grupos_estadisticos: oficiales_inei
+          grupos:
+            - {tipo: ranking_departamental, indicador: enaho_pobreza_monetaria, anio: ultimo, prefijo: enaho, rol: principal,
+               decision: E-08}
+  gasto_publico:
+    decision: G-07
+    principal: [$gasto_defecto]              # el tema concreto sale de map_intencion_tema (clave en parametros_motor.yaml)
+    identificar_extremo:
+      decision: R-GASTO-13                   # el ranking de gasto de 26 unidades no está construido
+      casos: []

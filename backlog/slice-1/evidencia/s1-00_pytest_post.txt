@@ -1,0 +1,9 @@
+# 2026-11-03 14:05 commit 82cad3a — tras reconstruir (S1-00 tarea 7)
+.....................................................                    [100%]
+=============================== warnings summary ===============================
+codigo/ingesta/tests/test_s4_insumos.py::test_mapa
+  /Users/Eber/Documents/SideProjects/pregunta-al-peru/.venv/lib/python3.12/site-packages/openpyxl/reader/workbook.py:118: UserWarning: Print area cannot be set to Defined name: 'A3.23'!$A:$I.
+    warn(f"Print area cannot be set to Defined name: {defn.value}.")
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+413 passed, 1 warning in 321.63s (0:05:21)

@@ -1,0 +1,97 @@
+programa_ppto,nombre_oficial,rotulo,tipo,anio_desde,anio_hasta,estado,eventos,evidencia,url,confianza,fuente_curaduria
+0001,PROGRAMA ARTICULADO NUTRICIONAL,PP 0001 Programa Articulado Nutricional (PAN),PP (programa estratégico 2008-2011),2008,2022,vaciado: tramo 1 al PP 1001 en el AF 2022; tramo 2 al PP 1001 y a la APNOP en el AF 2023,Programa estratégico 2008 (Ley 29142); PP 0001 desde 2012; recodificación interna en 2021; cede el tramo 1 al PP 1001 en el AF 2022 (evaluación anual 2021 del MINSA) y el tramo 2 en el AF 2023 y 2 a la APNOP en 2023; en 2023 solo restos de proyectos con 0 [dato],[fuente] evaluación anual 2021 del MINSA (en 2021 el 0001 aún tiene vacunas y CRED) y criterios 2023 del MEF; [dato] en 2023 solo quedan restos de proyectos con 0,https://www.minsa.gob.pe/presupuestales/doc2021/Evaluacion_anual_2021_PP.pdf,alta,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+0002,SALUD MATERNO NEONATAL,PP 0002 Salud Materno Neonatal,PP,2008,,vigente; contribuye_a PPoR DIT,"Programa estratégico 2008 (Ley 29142); rediseño 2012 con 23 productos; 19 en 2023-2025 [dato]; probable receptor del hierro para gestantes del PAN (W1, baja)",[fuente] Reporte PP 0002 2025-I,https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0002_2025_I.pdf,alta,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+0016,TBC-VIH/SIDA,,PP,2011,,,"Diseñado 2010 (Ley 29465, AF 2010), en ejecución desde 2011; 22 productos 2023-2025 sin cambios [dato]; 2 actividades nuevas y 1 baja 2023-2024",,https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0016_2025_I.pdf,alta,ronda2/w2 historia_pp_v2
+0017,ENFERMEDADES METAXENICAS Y ZOONOSIS,,PP,2011,,,"Diseñado 2010, ejecución 2011; sin cambios de diseño reportados; 7 productos [dato]",,https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0017_2025_I.pdf,alta,ronda2/w2 historia_pp_v2
+0018,ENFERMEDADES NO TRANSMISIBLES,,PP,2011,,,"Diseñado 2010, ejecución 2011; 20 productos [dato]",,https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0018_2025_I.pdf,alta,ronda2/w2 historia_pp_v2
+0024,PREVENCION Y CONTROL DEL CANCER,,PP,2011,,,"Diseñado 2010, ejecución 2011; 2025: producto VPH 3000683 (niñas) -> 3000924 (niñas y niños), Ley 32185",,https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0024_2025_I.pdf,alta,ronda2/w2 historia_pp_v2
+0030,REDUCCION DE DELITOS Y FALTAS QUE AFECTAN LA SEGURIDAD CIUDADANA,,PP,2010,,,,,,alta,ronda2/w2 historia_pp_v2
+0031,REDUCCION DEL TRAFICO ILICITO DE DROGAS,,PP,,,,,,,,ronda2/w2 historia_pp_v2
+0032,LUCHA CONTRA EL TERRORISMO,,PP,,,,,,,,ronda2/w2 historia_pp_v2
+0036,GESTION INTEGRAL DE RESIDUOS SOLIDOS,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0039,MEJORA DE LA SANIDAD ANIMAL,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0040,MEJORA Y MANTENIMIENTO DE LA SANIDAD VEGETAL,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0041,MEJORA DE LA INOCUIDAD AGROALIMENTARIA,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0042,APROVECHAMIENTO DE LOS RECURSOS HIDRICOS PARA USO AGRARIO,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0046,ACCESO Y USO DE LA ELECTRIFICACION RURAL,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0047,ACCESO Y USO ADECUADO DE LOS SERVICIOS PUBLICOS DE TELECOMUNICACIONES E INFORMACION ASOCIADOS,,PP,2011,,,,,,alta,ronda2/w2 historia_pp_v2
+0048,"PREVENCION Y ATENCION DE INCENDIOS, EMERGENCIAS MEDICAS, RESCATES Y OTROS",,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0049,PROGRAMA NACIONAL DE APOYO DIRECTO A LOS MAS POBRES,,PP,2012,,,PP desde 2012; financia a Juntos (ejecutora 1428); parte de los pagos van por APNOP [dato],,https://cdn.www.gob.pe/uploads/document/file/743911/POI-2019-modificado-corte-al-01OCT_UE_JUNTOS-vf.pdf,alta,ronda2/w2 historia_pp_v2
+0051,PREVENCION Y TRATAMIENTO DEL CONSUMO DE DROGAS,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0057,CONSERVACION DE LA DIVERSIDAD BIOLOGICA Y APROVECHAMIENTO SOSTENIBLE DE LOS RECURSOS NATURALES EN AREA NATURAL PROTEGIDA,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0058,ACCESO DE LA POBLACION A LA PROPIEDAD PREDIAL FORMALIZADA,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0062,OPTIMIZACION DE LA POLITICA DE PROTECCION Y ATENCION A LAS COMUNIDADES PERUANAS EN EL EXTERIOR,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0065,APROVECHAMIENTO DE LAS OPORTUNIDADES COMERCIALES BRINDADAS POR LOS PRINCIPALES SOCIOS COMERCIALES DEL PERU,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0066,FORMACION UNIVERSITARIA DE PREGRADO,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0067,CELERIDAD EN LOS PROCESOS JUDICIALES DE FAMILIA,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0068,REDUCCION DE VULNERABILIDAD Y ATENCION DE EMERGENCIAS POR DESASTRES,,PP,2011,,,,,,alta,ronda2/w2 historia_pp_v2
+0072,PROGRAMA DE DESARROLLO ALTERNATIVO INTEGRAL Y SOSTENIBLE - PIRDAIS,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0073,PROGRAMA PARA LA GENERACION DEL EMPLEO SOCIAL INCLUSIVO - TRABAJA PERU,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0074,GESTION INTEGRADA Y EFECTIVA DEL CONTROL DE OFERTA DE DROGAS EN EL PERU,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0079,ACCESO DE LA POBLACION A LA IDENTIDAD,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0080,LUCHA CONTRA LA VIOLENCIA FAMILIAR,,PP,2012,2020,sucesión por el PP 1002 por verificar; año final por verificar (2020-2021),2012-2020 (fin por_verificar: 2020 o 2021); en 2023 solo restos de proyectos con 0 [dato],[fuente] articulado 0080 2019; [dato] en 2023 solo 3 proyectos con devengado 0,https://www.mef.gob.pe/contenidos/presu_publ/ppr/prog_presupuestal/articulados/articulado_0080_2019.pdf,media,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+0082,PROGRAMA NACIONAL DE SANEAMIENTO URBANO,,PP,2012,,,Inicio 2012 (MEF); 2025 alta 3000858 (prestadores regulados) con 0 devengado [dato],,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5592,alta,ronda2/w2 historia_pp_v2
+0083,PROGRAMA NACIONAL DE SANEAMIENTO RURAL,,PP,2012,,,Inicio 2012 (MEF); productos 3000882/3000883 con códigos de ~2020 (rediseño por_verificar),,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5592,media,ronda2/w2 historia_pp_v2
+0086,MEJORA DE LOS SERVICIOS DEL SISTEMA DE JUSTICIA PENAL,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0087,INCREMENTO DE LA COMPETIVIDAD DEL SECTOR ARTESANIA,,PP,2013,,,,,,alta,ronda2/w2 historia_pp_v2
+0089,REDUCCION DE LA DEGRADACION DE LOS SUELOS AGRARIOS ,,PP,2013,,,,,,alta,ronda2/w2 historia_pp_v2
+0090,LOGROS DE APRENDIZAJE DE ESTUDIANTES DE LA EDUCACION BASICA REGULAR,,PP,2008,,,Programa estratégico 2008 («Logros de aprendizaje al finalizar el III ciclo» según literatura; nombre 2008 por_verificar); EBR desde 2012,,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5592,media,ronda2/w2 historia_pp_v2
+0091,INCREMENTO EN EL ACCESO DE LA POBLACION DE 3 A 16 AÑOS A LOS SERVICIOS EDUCATIVOS PUBLICOS DE LA EBR,,PP,2012,2019,recodificado como 0150 (2020),2012-2019; en 2020 aparece 0150 con el mismo nombre («...3 a 16 años... EBR») y 0091 ya no figura -> recodificación,[fuente] lista MEF 2018; POI 2020,https://dreayacucho.gob.pe/storage/portal_transparencia/2020/dgi/poi_drea_2020.pdf,media,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+0092,(PP de discapacidad en salud; nombre por verificar),,PP,2013,2014,recodificado como 0129 (2015),PP de discapacidad en salud implementado en 2013; rediseñado y recodificado como 0129 en 2015,[fuente] Reporte PP 0129 2025-I,https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0129_2025_I.pdf,media,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+0093,DESARROLLO PRODUCTIVO DE LAS EMPRESAS,,PP,2013,,,,,,alta,ronda2/w2 historia_pp_v2
+0094,ORDENAMIENTO Y DESARROLLO DE LA ACUICULTURA,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0095,FORTALECIMIENTO DE LA PESCA ARTESANAL,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0096,GESTION DE LA CALIDAD DEL AIRE,,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0097,PROGRAMA NACIONAL DE ASISTENCIA SOLIDARIA PENSION 65,,PP,2012,,,PP desde 2012; financia a Pensión 65 (1441); en 2023 y 2025 hubo ~330-350 mill. adicionales por APNOP [dato],,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5593,alta,ronda2/w2 historia_pp_v2
+0098,CUNA MAS,PP 0098 Cuna Más,PP,2013,2020,ancestro del PP 1001 (productos recodificados en 2021),"PP Cuna Más 2013-2020; sus 2 productos pasan al PP 1001 en 2021, recodificados (RA 075-2021) (3000314->3000891, 3000584->3000892)",[fuente] lista MEF 2018 (inicio en 2013); el DS 007-2020-MIDIS cita el PP 098 en 2020; la RA 075-2021 imputa el cuidado diurno al 1001 (17/3/2021),https://cdn.www.gob.pe/uploads/document/file/4324877/RESOLUCION%20ADMINISTRATIVA-000075-2021-UA.pdf.pdf,alta (inicio) / media (año final),ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+0099,CELERIDAD DE LOS PROCESOS JUDICIALES LABORALES,,PP,2013,,,,,,alta,ronda2/w2 historia_pp_v2
+0101,"INCREMENTO DE LA PRACTICA DE ACTIVIDADES FISICAS, DEPORTIVAS Y RECREATIVAS EN LA POBLACION PERUANA",,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0103,FORTALECIMIENTO DE LAS CONDICIONES LABORALES,,PP,2013,,,,,,alta,ronda2/w2 historia_pp_v2
+0104,REDUCCION DE LA MORTALIDAD POR EMERGENCIAS Y URGENCIAS MEDICAS,,PP,2013,,,Inicio 2013 (MEF) / 2014 (MINSA); 2025: baja 3000290 (urgencias en módulos) y alta 3000926 (eventos masivos) [dato],,https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0104_2025_I.pdf,media,ronda2/w2 historia_pp_v2
+0106,"INCLUSION DE NIÑOS, NIÑAS Y JOVENES CON DISCAPACIDAD EN LA EDUCACION BASICA Y TECNICO PRODUCTIVA",,PP,2012,,,Inicio 2012 (MEF); 6 productos estables 2023-2025 [dato],,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5592,alta,ronda2/w2 historia_pp_v2
+0107,MEJORA DE  LA FORMACION EN CARRERAS DOCENTES EN INSTITUTOS DE EDUCACION SUPERIOR NO UNIVERSITARIA,,PP,2012,,,Inicio 2012 (MEF); 6 productos estables 2023-2025 [dato],,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5592,alta,ronda2/w2 historia_pp_v2
+0109,NUESTRAS CIUDADES,,PP,2013,,,,,,alta,ronda2/w2 historia_pp_v2
+0110,FISCALIZACION ADUANERA,,PP,2013,,,,,,alta,ronda2/w2 historia_pp_v2
+0111,APOYO AL HABITAT RURAL,,PP,2013,,,,,,alta,ronda2/w2 historia_pp_v2
+0113,SERVICIOS REGISTRALES ACCESIBLES Y OPORTUNOS CON COBERTURA UNIVERSAL,,PP,2014,,,,,,alta,ronda2/w2 historia_pp_v2
+0114,PROTECCION AL CONSUMIDOR,,PP,2014,,,,,,alta,ronda2/w2 historia_pp_v2
+0115,PROGRAMA NACIONAL DE ALIMENTACION ESCOLAR,,PP,2013,,,Inicio 2013 (MEF); financia Qali Warma -> Wasi Mikuna (1456) y desde 2025 PAE (1786); nombre MEF genérico «Programa Nacional de Alimentación Escolar»; producto 3000884 (código de ~2020: rediseño por_verificar),,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5592,alta,ronda2/w2 historia_pp_v2
+0116,MEJORAMIENTO DE LA EMPLEABILIDAD E INSERCION LABORAL-PROEMPLEO,,PP,2014,,,,,,alta,ronda2/w2 historia_pp_v2
+0117,"ATENCION OPORTUNA DE NIÑAS, NIÑOS Y ADOLESCENTES EN PRESUNTO ESTADO DE ABANDONO",,PP,2014,,,Inicio 2014 (MEF); productos 3000887-3000890 con códigos de ~2020 (rediseño por_verificar),,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5592,media,ronda2/w2 historia_pp_v2
+0118,ACCESO DE HOGARES RURALES CON ECONOMIAS DE SUBSISTENCIA A MERCADOS LOCALES - HAKU WIÑAY,,PP,2014,,,Inicio 2014 (MEF); FONCODES (Haku Wiñay),,https://www.mef.gob.pe/es/presupuesto-por-resultados/instrumentos/programas-presupuestales?id=5593,alta,ronda2/w2 historia_pp_v2
+0119,CELERIDAD EN LOS PROCESOS JUDICIALES CIVIL-COMERCIAL,,PP,2014,,,,,,alta,ronda2/w2 historia_pp_v2
+0120,REMEDIACION DE PASIVOS AMBIENTALES MINEROS,,PP,2014,,,,,,alta,ronda2/w2 historia_pp_v2
+0121,MEJORA DE LA ARTICULACION DE PEQUEÑOS PRODUCTORES AL MERCADO,,PP,2014,,,,,,alta,ronda2/w2 historia_pp_v2
+0122,ACCESO Y PERMANENCIA DE POBLACION CON ALTO RENDIMIENTO ACADEMICO A UNA EDUCACION SUPERIOR DE CALIDAD,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0123,MEJORA DE LAS COMPETENCIAS DE LA POBLACION PENITENCIARIA PARA SU REINSERCION SOCIAL POSITIVA,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0124,MEJORA DE LA PROVISIÓN DE LOS SERVICIOS DE TELECOMUNICACIONES,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0125,MEJORA DE LA EFICIENCIA DE LOS PROCESOS ELECTORALES E INCREMENTO DE LA PARTICIPACION POLITICA DE LA CIUDADANIA,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0126,FORMALIZACION MINERA DE LA PEQUEÑA MINERIA Y MINERIA ARTESANAL,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0127,MEJORA DE LA COMPETITIVIDAD DE LOS DESTINOS TURISTICOS,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0128,REDUCCION DE LA MINERIA ILEGAL,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0129,PREVENCION Y MANEJO DE CONDICIONES SECUNDARIAS DE SALUD EN PERSONAS CON DISCAPACIDAD,,PP,2015,,vigente,Continúa al PP 092 (2013); rediseño y nuevo código en 2015 (Ley 30281),[fuente],https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0129_2025_I.pdf,alta,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+0130,COMPETITIVIDAD Y APROVECHAMIENTO SOSTENIBLE DE LOS RECURSOS FORESTALES Y DE LA FAUNA SILVESTRE,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0131,CONTROL Y PREVENCION EN SALUD MENTAL,,PP,2015,,,"Creado 2015 (Ley 30281, art. 25); de qué PP se separó: por_verificar (probable 0018)",,https://www.minsa.gob.pe/presupuestales/doc2025/reporte-seguimiento/Reporte_PP_0131_2025_I.pdf,media,ronda2/w2 historia_pp_v2
+0132,PUESTA EN VALOR Y USO SOCIAL DEL PATRIMONIO CULTURAL,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0133,FORTALECIMIENTO DE LA POLITICA EXTERIOR Y DE LA ACCION DIPLOMATICA,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0134,PROMOCION DE LA INVERSION PRIVADA,,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0135,MEJORA DE LAS CAPACIDADES MILITARES PARA LA DEFENSA Y EL DESARROLLO NACIONAL,,PP,,,,,,,,ronda2/w2 historia_pp_v2
+0137,"DESARROLLO DE LA CIENCIA, TECNOLOGIA E INNOVACION TECNOLOGICA",,PP,2015,,,,,,alta,ronda2/w2 historia_pp_v2
+0138,"REDUCCION DEL COSTO, TIEMPO E INSEGURIDAD EN EL SISTEMA DE TRANSPORTE",,PP,2012,,,,,,alta,ronda2/w2 historia_pp_v2
+0139,"DISMINUCION DE LA INCIDENCIA DE LOS CONFLICTOS, PROTESTAS Y MOVILIZACIONES SOCIALES VIOLENTAS QUE ALTERAN EL ORDEN PUBLICO",,PP,2016,,,,,,alta,ronda2/w2 historia_pp_v2
+0140,DESARROLLO Y PROMOCION DE LAS ARTES E INDUSTRIAS CULTURALES,,PP,,,,,,,,ronda2/w2 historia_pp_v2
+0141,PROTECCION DE LA PROPIEDAD INTELECTUAL,,PP,2016,,,,,,alta,ronda2/w2 historia_pp_v2
+0142,ACCESO DE PERSONAS ADULTAS MAYORES A SERVICIOS ESPECIALIZADOS,,PP,,,,,,,,ronda2/w2 historia_pp_v2
+0143,"CELERIDAD, PREDICTIBILIDAD Y ACCCESO DE LOS PROCESOS JUDICIALES TRIBUTARIOS, ADUANEROS Y DE TEMAS DE MERCADO",,PP,2016,,,,,,alta,ronda2/w2 historia_pp_v2
+0144,CONSERVACION Y USO SOSTENIBLE DE ECOSISTEMAS PARA LA PROVISION DE SERVICIOS ECOSISTEMICOS,,PP,2016,,,,,,alta,ronda2/w2 historia_pp_v2
+0145,MEJORA DE LA CALIDAD DEL SERVICIO ELECTRICO,,PP,2017,,,,,,alta,ronda2/w2 historia_pp_v2
+0146,ACCESO DE LAS FAMILIAS A VIVIENDA Y ENTORNO URBANO ADECUADO,,PP,,,,,,,,ronda2/w2 historia_pp_v2
+0147,FORTALECIMIENTO DE LA EDUCACION SUPERIOR TECNOLOGICA,,PP,2018,,,,,,alta,ronda2/w2 historia_pp_v2
+0148,"REDUCCION DEL TIEMPO, INSEGURIDAD Y COSTO AMBIENTAL EN EL TRANSPORTE URBANO",,PP,2018,,,,,,alta,ronda2/w2 historia_pp_v2
+0149,MEJORA DEL DESEMPEÑO EN LAS CONTRATACIONES PUBLICAS,,PP,,,,,,,,ronda2/w2 historia_pp_v2
+0150,INCREMENTO EN EL ACCESO DE LA POBLACION A LOS SERVICIOS EDUCATIVOS PUBLICOS DE LA EDUCACION BASICA,,PP,2020,,vigente,Desde 2020 (sucesor de 0091); nombre actual sin «3 a 16 años» (año del renombre por_verificar),[fuente] POI 2020; [dato] nombre 2023-2025,https://dreayacucho.gob.pe/storage/portal_transparencia/2020/dgi/poi_drea_2020.pdf,media,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+0151,REDUCCION DE LA CORRUPCION EN EL USO DE LOS RECURSOS PUBLICOS,,PP,,,,,,,,ronda2/w2 historia_pp_v2
+1001,PP 1001 PRODUCTOS ESPECIFICOS PARA DESARROLLO INFANTIL TEMPRANO,PP 1001 Productos Específicos para el Desarrollo Infantil Temprano,PP (categoría «productos específicos» del PPoR DIT; la política PPoR DIT es más amplia),2021,,vigente,"PP 1001 Productos Específicos para el Desarrollo Infantil Temprano: es la categoría del PPoR DIT (RS 023-2019-EF), que es la política, más amplia; opera desde 2021 (Cuna Más) y recibe salud del PAN en el AF 2022 y el AF 2023; ancestros: 0001 y 0098; alta de 3000927 (agua) en 2025",[fuente] la RS 023-2019-EF aprueba el PPoR DIT y el código 1001 opera desde el AF 2021 (solo Cuna Más en 2021),https://andina.pe/agencia/noticia-aprueban-programa-presupuestal-orientado-a-resultados-desarrollo-infantil-temprano-779968.aspx,alta,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+1002,PRODUCTOS ESPECIFICOS PARA REDUCCION DE LA VIOLENCIA CONTRA LA MUJER,,PP (categoría «productos específicos» del PPoR de Reducción de la Violencia contra la Mujer),2021,,vigente,"PP 1002, categoría del PPoR de Reducción de la Violencia contra la Mujer (RS 024-2019-EF, 30/12/2019), estructura desde AF 2021; probable sucesor de 0080 (alcance por_verificar)",[fuente] RS 024-2019-EF (30/12/2019); estructura desde el AF 2021,https://www.mef.gob.pe/es/por-instrumento/resolucion-suprema/21604-resolucion-suprema-n-024-2019-ef/file,alta,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+9001,ACCIONES CENTRALES,Acciones centrales,acciones centrales,,,vigente,,categoría presupuestal,base MEF 2023-2025 (gasto_base_*.parquet),alta,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2
+9002,ASIGNACIONES PRESUPUESTARIAS QUE NO RESULTAN EN PRODUCTOS,Asignaciones presupuestarias que no resultan en productos (APNOP),APNOP,,,"vigente; receptor de 5004428, 5004429 y 5005326 en 2023",,[fuente] criterios 2023,https://mef.gob.pe/contenidos/presu_publ/capacita/2023/08052023_CRITERIOS_PROG_PROD_PROY_PP_1001_DESARROLLO_INFANTIL_TEMPRANO.pdf,alta,ronda2/w2 dim_programa_ejemplo_v2 + historia_pp_v2

@@ -1,0 +1,35 @@
+{
+  "nota": "Casos nuevos para 04_reglas/prueba (ronda 2, W3). Cifras en millones de soles corrientes, devengado sin transferencias, fact_gasto_territorial v1.1.0, escenario S3 recomendado. {{c:...}} = cifra a calcular por el motor.",
+  "casos": [
+    {
+      "id": "G1",
+      "pregunta_usuario": "¿Cuánto gasta el Estado en salud en Lima por habitante?",
+      "reglas": ["R-GASTO-03", "R-GASTO-05", "GA-01 alcance", "propuesta: referencia_nacional"],
+      "decision": "Departamento 15, funcion SALUD, sin alcance nacional. S0 2025 = 5 858; S3 2025 = 6 635 (+13 %). INEN e INSN San Borja (referencia_nacional) se muestran como línea aparte. Población: Censo 2025.",
+      "riesgo_si_criterio_A": "Subestima Lima 26 % (S4b) si se aplica coherentemente a los 'Hospitales Nacionales'.",
+      "respuesta_borrador": "En 2025, el Estado gastó en salud en el departamento de Lima {{c:salud_lima_2025}} (unos {{c:salud_lima_pc_2025}} por habitante; MEF, devengado). No incluye EsSalud, las compras que el Ministerio de Salud hace para todo el país, ni los centros nacionales de referencia ubicados en Lima (INEN e Instituto del Niño de San Borja: {{c:refnac_lima_2025}}), que atienden a pacientes de todo el Perú."
+    },
+    {
+      "id": "G2",
+      "pregunta_usuario": "¿Cuánto se gasta en salud materna en mi región?",
+      "reglas": ["R-GASTO-08", "GA-01 alcance"],
+      "decision": "Si la región es Lima: PP 0002 dpto 15. S0 2025 = 451; S3 2025 = 520 (+15 %), por el INMP (93 % de usuarias de Lima). Para otras regiones la decisión de alcance no cambia la cifra.",
+      "observacion": "El PP 0002 solo capta 188 de los 629 millones del INMP (2023-2025); el resto está en 9002 sin producto. Revisar en dim_tema_gasto.",
+      "respuesta_borrador": "En 2025 se gastaron {{c:pp0002_dep_2025}} en salud materna y neonatal en {{departamento}} (programa presupuestal 0002, MEF). Para Lima incluye al Instituto Nacional Materno Perinatal, la principal maternidad pública de Lima; no incluye la atención de partos que el MEF registra fuera de ese programa."
+    },
+    {
+      "id": "G3",
+      "pregunta_usuario": "¿Cuánto se gasta en cáncer en el Perú?",
+      "reglas": ["R-GASTO-08"],
+      "decision": "Nacional: el alcance de ejecutoras no cambia el total. PP 0024 2023-2025 = 3 433 (INEN 759, 22 %). Quedan fuera ~667 del INEN registrados en 9001/9002.",
+      "respuesta_borrador": "Entre 2023 y 2025 el Estado gastó {{c:pp0024_pais}} en el programa de prevención y control del cáncer (MEF). El Instituto Nacional de Enfermedades Neoplásicas, que atiende a pacientes de todo el país, ejecutó {{c:pp0024_inen}} de ese monto y además {{c:inen_fuera_pp}} en atención oncológica registrada fuera del programa."
+    },
+    {
+      "id": "G4",
+      "pregunta_usuario": "¿Lima recibe más gasto que las regiones?",
+      "reglas": ["R-CRUCES-06", "GA-01 alcance", "propuesta: referencia_nacional"],
+      "decision": "Participación de Lima en el gasto en salud atribuible a departamentos 2023-2025: 24,0 % (S0), 26,4 % (S3), 28,5 % (S3 + INEN + INSN-SB), frente a ≥29,7 % de la población (Lima Metropolitana, Censo 2025). El signo no depende del INEN; la magnitud sí. Mostrar Lima con y sin centros nacionales de referencia.",
+      "respuesta_borrador": "Contando solo el gasto que se puede asignar a cada departamento, Lima recibe en salud {{c:part_lima}} del total, algo menos que su peso en la población ({{c:part_pob_lima}}). Pero muchas entidades nacionales con sede en Lima —el Ministerio de Salud, el SIS, el INEN— no se cuentan en ningún departamento; si se suman los centros nacionales de referencia ubicados en Lima, la participación sube a {{c:part_lima_con_refnac}}."
+    }
+  ]
+}

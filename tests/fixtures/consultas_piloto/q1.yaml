@@ -1,0 +1,16 @@
+# Pregunta 1 de la prueba de reglas (04_reglas/prueba/resultado_prueba.json). El texto literal no se guardó: se
+# reconstruye desde su recorrido. Consulta estructurada (sin LLM, decisión del 10/10/2026).
+# 11/10/2026 (decisión del dueño, P4): la evolución se cuenta con las dos formas de medir en paralelo, cada una con su
+# alcance y límites y contrastada con la cifra oficial de su mismo criterio. Serie anterior 2015–2025 sin el punto 2020
+# (R-ENC-13; el INEI solo marca 2020); serie vigente 2024–2025 (D1: el recálculo de años anteriores va después del MVP).
+id: Q1
+pregunta: ¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica? (reconstruida)
+intencion: evolucion
+territorio: {nivel: departamento, id: "09", nombre_pedido: Huancavelica (departamento)}
+periodo: {tipo: serie, desde: 2015, hasta: ultimo}
+plantilla: q1_evolucion
+cifras:
+  - {id: anemia_hvca_2025, indicador: endes_anemia_6_35m_oms2024, anio: ultimo, nivel: departamento, territorio: "09", rol: principal, comparar_con: 2024}
+  - {id: anemia_hvca_2025_ant, indicador: endes_anemia_6_35m, anio: ultimo, nivel: departamento, territorio: "09", rol: principal, comparar_con: 2015}
+  - {id: anemia_hvca_2015_ant, indicador: endes_anemia_6_35m, anio: 2015, nivel: departamento, territorio: "09", rol: contexto}
+  - {id: anemia_hvca_2022_ant, indicador: endes_anemia_6_35m, anio: 2022, nivel: departamento, territorio: "09", rol: contexto}

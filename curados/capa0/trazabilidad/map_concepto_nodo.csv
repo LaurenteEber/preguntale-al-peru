@@ -1,0 +1,22 @@
+regla_id,concepto_id,anio_desde,anio_hasta,programa_ppto,producto_proyecto,actividad_accion_obra,filtro_sec_ejec,filtro_funcion,excluye_transferencias,evidencia,confianza
+M01,vacunas,2023,,1001,3033254,,,,true,[dato],alta
+M02,consejeria_familias,2023,,1001,3033251,,,,true,[dato],alta
+M03,parasitosis,2023,,1001,3033414,,,,true,[dato],alta
+M04,otras_prevalentes,2023,,1001,3033315,,,,true,[dato],alta
+M05,control_calidad_alimentos,2023,,1001,3000608,,,,true,[dato],alta
+M06,ira_eda,2023,,1001,3000876,,,,true,[dato],alta
+M07,ira_eda_complicada,2023,,1001,3000877,,,,true,[dato],alta
+M08,atencion_anemia_nino,2023,,1001,3000878,,,,true,[dato],alta
+M09,cred_sin_suplemento_hierro,2023,,1001,3033255,5000018,,,true,[dato],alta
+M10,suplemento_hierro_vitA_nino,2023,,1001,3033255,5000019,,,true,[dato] actividad dentro del producto CRED,alta
+M11,suplemento_hierro_adolescente,2023,,0002,3000879,5006271,,,true,"[dato] PP 0002 (alta inferida en 2021, W1)",alta
+M12,gestion_nutricion,2023,,1001,3000001,,,SALUD,true,[dato],alta
+M13,gestion_cuidado_infantil,2023,,1001,3000001,,,,true,[dato],alta
+M14,agua_consumo_humano,2023,,9002,3999999,5004428,,,true,[dato],alta
+M15,agua_consumo_humano,2023,,9002,3999999,5004429,,,true,[dato],alta
+M16,agua_consumo_humano,2025,,1001,3000927,,,,true,[dato] alta en 2025 (actividad 5004428),alta
+M17,comunicacion_anemia,2023,,9002,3999999,5005326,,,true,[dato] APNOP; la ejecutan 26/24/23 pliegos en 2023/2024/2025,alta
+M18,cuna_mas_acompanamiento_familias,2023,,1001,3000891,,1426,,true,[dato],alta
+M19,cuna_mas_cuidado_diurno,2023,,1001,3000892,,1426,,true,[dato],alta
+M20,cuidado_diurno_otros_ejecutores,2023,,1001,3000892,,,,true,[dato],alta
+M21,cuidado_diurno_otros_ejecutores,2023,,1001,3000891,,,,true,[dato] restos municipales de menos de 1 millón,alta

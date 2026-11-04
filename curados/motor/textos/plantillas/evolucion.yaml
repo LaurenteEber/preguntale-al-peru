@@ -1,0 +1,13 @@
+# Plantilla evolucion («¿cómo ha cambiado?»): el último año contra el primer año comparable (E-06, E-07); el cambio
+# lo dice el verbo del motor (R-ENC-11), no la plantilla.
+version: 1.0.0
+corta_con_verbo: "Entre {a} y {b}, {sujeto} {verbo} en {lugar}."
+corta_sin_prueba: "Entre {a} y {b}, {sujeto} pasó de {c_ini} a {c_fin} en {lugar}."
+corta_sin_comparacion: "Esto es lo que dicen los datos oficiales sobre {sujeto} en {lugar}:"
+clave:
+  proporcion: "de {ciudadano} en {lugar} en {anio}."
+  defecto: "es la cifra de {ciudadano} en {lugar} en {anio}."
+tarjeta_inicial:
+  titulo: "El punto de partida: {a}"
+  texto: "En {a}, {sujeto} era {c_ini} en {lugar} ({fuente})."
+  etiqueta: "Otro año: no se compara con la cifra clave."

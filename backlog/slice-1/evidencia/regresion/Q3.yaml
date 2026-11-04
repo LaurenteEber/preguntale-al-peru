@@ -1,0 +1,12 @@
+- capa: capa2.mas_contexto[3].texto
+  antes: Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos
+    datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro. No encontramos una evaluación publicada
+    de estos servicios para San Juan de Lurigancho. Para saberlo haría falta comparar a niños que recibieron los servicios
+    con niños parecidos que no los recibieron.
+  despues: Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos
+    datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro. No encontramos una evaluación publicada
+    de estos servicios para San Juan de Lurigancho (Lima, Lima). Para saberlo haría falta comparar a niños que recibieron
+    los servicios con niños parecidos que no los recibieron.
+  motivo: 'Nombre largo del distrito («Lima, Lima») la primera vez que se nombra, solo en la capa 2 (T-02: provincia y departamento).
+    Misma información de lugar que antes, sin ninguna afirmación nueva; la capa 1 queda igual (Q2 está en 124 de 125 palabras).'
+  aprobado_por: agente

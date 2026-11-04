@@ -1,0 +1,85 @@
+{
+ "evaluadas": 108,
+ "aciertos_bloqueo": 100,
+ "aciertos_con_avisos": 107,
+ "falsos_positivos": [],
+ "no_detectadas": [
+  [
+   "R4-B30",
+   [
+    "jerga"
+   ]
+  ]
+ ],
+ "no_bloqueadas_pero_con_aviso": [
+  [
+   "R4-B14",
+   [
+    "causal (ampliación, ajustado)"
+   ]
+  ],
+  [
+   "R4-B15",
+   [
+    "causal (ampliación, ajustado)"
+   ]
+  ],
+  [
+   "R4-B31",
+   [
+    "precisión excesiva (ajustado)"
+   ]
+  ],
+  [
+   "R4-B34",
+   [
+    "precisión excesiva (ajustado)"
+   ]
+  ],
+  [
+   "R4-B57",
+   [
+    "juicio de valor (ampliación, ajustado)"
+   ]
+  ],
+  [
+   "R4-B58",
+   [
+    "juicio de valor (ampliación, ajustado)"
+   ]
+  ],
+  [
+   "R4-B60",
+   [
+    "juicio de valor (ampliación, ajustado)"
+   ]
+  ]
+ ],
+ "avisos_sobre_correctas": [],
+ "categoria_incompleta": [
+  [
+   "R4-B13",
+   [
+    "causal"
+   ]
+  ],
+  [
+   "R4-B32",
+   [
+    "precisión excesiva"
+   ]
+  ],
+  [
+   "R4-B49",
+   [
+    "juicio de valor"
+   ]
+  ],
+  [
+   "R4-B54",
+   [
+    "juicio de valor"
+   ]
+  ]
+ ]
+}

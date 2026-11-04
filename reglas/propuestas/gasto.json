@@ -1,0 +1,953 @@
+{
+ "ambito": "gasto",
+ "reglas": [
+  {
+   "id": "R-GASTO-01",
+   "ambito": "gasto",
+   "titulo": "Árbol de atribución territorial del gasto",
+   "enunciado": "Cada fila de gasto debe recibir un nivel_atribucion_gasto según NIVEL_GOBIERNO, tipo de entidad local y TIPO_ACT_PROY antes de agregarse a cualquier territorio; ninguna cifra territorial de gasto puede construirse con el ubigeo de la ejecutora salvo para municipalidades. Solo se publica gasto en el nivel asignado o en uno superior.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [
+     "ejecutora"
+    ],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA",
+     "MEF-DETALLE-INVERSIONES",
+     "MEF-MAESTRO-EJECUTORAS-DERIVADO"
+    ]
+   },
+   "condicion": "Para cada fila: (1) si TIPO_ACT_PROY_NOMBRE indica PROYECTO y CUI=PRODUCTO_PROYECTO existe en MEF-DETALLE-INVERSIONES.CODIGO_UNICO con un único UBIGEO válido (6 dígitos, en tabla INEI del año) -> 'distrito_inversion' (si hay varios UBIGEO ver R-GASTO-02); (2) si no, y NIVEL_GOBIERNO='M' y PLIEGO_NOMBRE empieza por 'MUNICIPALIDAD DISTRITAL' -> 'distrito_municipal' con ubigeo = DEPARTAMENTO_EJECUTORA(2)+PROVINCIA_EJECUTORA(2)+DISTRITO_EJECUTORA(2); (3) si NIVEL_GOBIERNO='M' y PLIEGO_NOMBRE empieza por 'MUNICIPALIDAD PROVINCIAL' -> 'provincia_municipal' (ubigeo provincial = 4 primeros dígitos; NUNCA al distrito cercado); (4) si NIVEL_GOBIERNO en ('E','R') o 'M' de otro tipo (mancomunidades, institutos y empresas municipales) y DEPARTAMENTO_META en 01..25 -> 'departamento_meta'; (5) si DEPARTAMENTO_META fuera de 01..25 o nulo, o FUNCION_NOMBRE en lista_no_territorializable -> 'nacional_no_territorializable'.",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "codigos_departamento_validos": "01-25",
+    "prefijo_municipal_distrital": "MUNICIPALIDAD DISTRITAL",
+    "prefijo_municipal_provincial": "MUNICIPALIDAD PROVINCIAL",
+    "lista_no_territorializable_inicial": [
+     "DEUDA PUBLICA",
+     "PREVISION SOCIAL (solo NIVEL_GOBIERNO=E)",
+     "PLANEAMIENTO, GESTION Y RESERVA DE CONTINGENCIA (solo NIVEL_GOBIERNO=E y DEPARTAMENTO_META=15)"
+    ],
+    "nivel_maximo_publicable": {
+     "distrito_inversion": "distrito",
+     "distrito_municipal": "distrito",
+     "provincia_municipal": "provincia",
+     "provincia_inversion": "provincia",
+     "departamento_meta": "departamento",
+     "departamento_inversion": "departamento",
+     "nacional_no_territorializable": "nacional"
+    }
+   },
+   "mensaje_usuario": "Según dónde se registra: {rotulo_nivel}. El MEF ubica el gasto de ministerios y gobiernos regionales solo por departamento; por eso esta cifra no se puede bajar a provincia o distrito.",
+   "justificacion": "El diccionario oficial del gasto solo trae la ubicación de la sede de la ejecutora (DEPARTAMENTO/PROVINCIA/DISTRITO_EJECUTORA) y de la meta a nivel departamento (DEPARTAMENTO_META); no hay PROVINCIA_META ni DISTRITO_META. Usar la sede asigna a Lima o a la capital regional el gasto de servicios que se prestan en otros distritos (hospitales, UGEL, JUNTOS, Wasi Mikuna). La municipalidad distrital gasta en su circunscripción y es la única entidad cuya sede coincide con su ámbito; la provincial actúa sobre toda la provincia. Las inversiones tienen localización propia en el Banco de Inversiones (UBIGEO por CUI).",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Presupuesto y Ejecución de Gasto (Gastos_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
+    },
+    {
+     "titulo": "MEF – Diccionario de datos: Detalle de inversiones (Detalle_Inversiones_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Detalle_Inversiones_Diccionario.csv"
+    },
+    {
+     "titulo": "Mesa de Concertación para la Lucha contra la Pobreza – ¿Qué es la Consulta Amigable del MEF? (definiciones de PIA, PIM, certificación, compromiso, devengado)",
+     "url": "https://www.mesadeconcertacion.org.pe/storage/documentos/2022-02-24/que-es-la-consulta-amigable-del-mef23febrero.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "EXA-A-01",
+    "EXA-A-10",
+    "INF-01",
+    "EMB-03"
+   ],
+   "ejemplo": "Devengado 2025 del PP 1001 en Huancavelica: la parte de la DIRESA y redes (NIVEL_GOBIERNO=R, actividades) va a 'departamento_meta' 09; la de la Municipalidad Distrital de Yauli va a 'distrito_municipal' 090119; un proyecto de puesto de salud con CUI ubicado en Acoria va a 'distrito_inversion' 090103. Si el usuario pide 'gasto en anemia en Acoria', solo los dos últimos tipos pueden sumarse en el distrito (ver R-GASTO-03).",
+   "implementacion": "Construir dim_unidad_ejecutora (EMB-03) por (ANO_EJE, SEC_EJEC): NIVEL_GOBIERNO, PLIEGO_NOMBRE, tipo_entidad_local ∈ {distrital, provincial, otra}, ubigeo_sede. Paso ETL: fila.nivel_atribucion_gasto = f(árbol); fila.ubigeo_atribucion = ubigeo del nivel. Agregar con GROUP BY (anio, ubigeo_atribucion, nivel_atribucion_gasto). Validar que la suma de todos los niveles = total nacional del archivo (tolerancia 0).",
+   "casos_borde": "Lima: DEPARTAMENTO_META=15 mezcla Lima Metropolitana y Lima Provincias y recibe gasto de sedes centrales; rotular 'incluye gasto de entidades nacionales con sede en Lima'. Callao=07. Municipalidades de distritos creados después de 2017 (tabla de ubigeo histórico, ámbito territorio). Centros poblados (municipalidades de CP) y mancomunidades: van a 'departamento_meta' salvo verificación manual. Proyectos sin CUI en DETALLE (SNIP antiguo) caen al paso 2–4. Si PRODUCTO_PROYECTO de un proyecto no hace match, contabilizar en indicador de calidad 'pct_proyectos_sin_ubicacion'. La lista no territorializable se cierra con revisión humana en la prueba de humo.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-02",
+   "ambito": "gasto",
+   "titulo": "Inversiones con varias ubicaciones",
+   "enunciado": "Una inversión con más de un UBIGEO en MEF-DETALLE-INVERSIONES no debe repartirse entre distritos en el MVP: se atribuye al menor nivel que contiene todas sus ubicaciones (provincia, departamento o nacional) y se rotula como multidistrital.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero",
+     "registro_administrativo"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto",
+     "padron_referencia"
+    ],
+    "base_geografica": [
+     "inversion_ubicacion"
+    ],
+    "fuentes": [
+     "MEF-DETALLE-INVERSIONES",
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-SEGUIMIENTO-PI"
+    ]
+   },
+   "condicion": "n_ubicaciones = COUNT(DISTINCT UBIGEO) por CODIGO_UNICO. Si n_ubicaciones=1 -> distrito_inversion. Si >1 y todos comparten los 4 primeros dígitos -> provincia_inversion. Si comparten los 2 primeros -> departamento_inversion. Si no -> nacional_no_territorializable (multidepartamental). Si UBIGEO nulo o solo departamento -> departamento_inversion con DEPARTAMENTO.",
+   "accion": "agregar_nivel",
+   "parametros": {
+    "prorrateo_mvp": "ninguno",
+    "prorrateo_posterior_opciones": [
+     "población INEI del año",
+     "NUM_HABITANTES_BENEF no se usa (no desagregado por ubicación)"
+    ]
+   },
+   "mensaje_usuario": "Este proyecto abarca varios distritos; su gasto se cuenta en la provincia (o departamento) y no se reparte entre ellos.",
+   "justificacion": "El Banco de Inversiones registra la localización de la inversión pero no la distribución del costo entre ubicaciones; cualquier reparto (por población o partes iguales) sería un supuesto del proyecto, no un dato oficial. Atribuir al contenedor común evita inventar cifras distritales.",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Detalle de inversiones (Detalle_Inversiones_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Detalle_Inversiones_Diccionario.csv"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "EXA-A-01",
+    "EXA-A-05",
+    "EXA-A-06"
+   ],
+   "ejemplo": "Un sistema de agua y saneamiento (PP 0083) con UBIGEO en tres distritos de la provincia de Chumbivilcas se suma en 'provincia_inversion' 0807 y aparece en la ficha distrital solo como 'proyectos multidistritales en tu provincia: S/ X'.",
+   "implementacion": "Prueba de humo: verificar si DETALLE_INVERSIONES.csv tiene una fila por (CODIGO_UNICO, UBIGEO) o una sola fila con ubicación principal; si es una sola fila, n_ubicaciones=1 siempre y se registra la limitación 'ubicación principal' en notas del catálogo. Tabla dim_inversion_ubicacion(cui, ubigeo, nivel_comun, n_ubicaciones, fecha_snapshot=ANIO_PROCESO).",
+   "casos_borde": "UBIGEO con formato RENIEC o de distritos nuevos (validar contra tabla histórica). Inversiones con ubicación en el exterior o 'multidepartamental' en texto. INVERSIONES-BRECHAS trae ESPACIO_GEOGRAFICO en texto: no usarlo para ubicar (solo vía CUI).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-03",
+   "ambito": "gasto",
+   "titulo": "Cobertura de atribución y rótulo en cifras distritales y provinciales",
+   "enunciado": "Toda cifra de gasto a distrito o provincia debe llamarse 'gasto municipal y de proyectos ubicados en el territorio' y mostrarse junto con el porcentaje del gasto del mismo tema y departamento que sí pudo ubicarse por debajo del departamento; si ese porcentaje es menor que el umbral, la cifra subdepartamental es referencial y la respuesta principal se da a nivel departamento.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [
+     "ejecutora",
+     "inversion_ubicacion"
+    ],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA"
+    ]
+   },
+   "condicion": "pct_gasto_atribuible = Σ devengado(tema, anio, dpto, nivel_atribucion_gasto ∈ {distrito_*, provincia_*}) / Σ devengado(tema, anio, dpto, todos los niveles salvo nacional_no_territorializable). Si nivel_territorial solicitado ∈ {distrito, provincia} y pct_gasto_atribuible < 0.50 -> publicar_referencial y responder con la cifra departamental; si ≥ 0.50 -> publicar con rótulo.",
+   "accion": "rotular",
+   "parametros": {
+    "umbral_pct_atribuible": 0.5,
+    "mostrar_siempre_pct": true
+   },
+   "mensaje_usuario": "Incluye solo lo que gastaron la municipalidad y los proyectos de inversión ubicados aquí. No incluye lo que gastan el ministerio o el gobierno regional en servicios del distrito (por ejemplo, el personal de salud), que el MEF no registra por distrito. En {departamento}, solo el {pct}% del gasto en este tema puede ubicarse por distrito.",
+   "justificacion": "En temas como anemia o salud materna la mayor parte del gasto corriente lo ejecutan GN y GORE (redes de salud, DIRESA), que no son ubicables por distrito; una cifra distrital sin esta advertencia haría parecer que el distrito recibe poco o nada. Mostrar la cobertura es la práctica recomendada por la auditoría (INF-01) y hace explícito el límite del dato.",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Presupuesto y Ejecución de Gasto (Gastos_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-01",
+    "EXA-A-01"
+   ],
+   "ejemplo": "Pregunta: '¿cuánto se gasta en combatir la anemia en mi distrito?'. Si en Puno el 22% del devengado del PP 1001 es municipal o de proyectos ubicados, la respuesta principal es el gasto departamental y la distrital aparece como 'gasto municipal y de proyectos (referencial)'.",
+   "implementacion": "Calcular pct_gasto_atribuible en la vista agregada por (anio, tema, departamento) y adjuntarlo al resultado como campo; el validador compara con umbral_pct_atribuible. Rótulo estándar por nivel en un diccionario rotulo_nivel: distrito_municipal='gasto de la municipalidad distrital', provincia_municipal='gasto de la municipalidad provincial (toda la provincia)', distrito_inversion='proyectos de inversión ubicados en el distrito', departamento_meta='gasto ubicado en el departamento (incluye ministerios y gobierno regional)', nacional_no_territorializable='gasto nacional no asignable a un territorio'.",
+   "casos_borde": "Temas casi 100% municipales (p. ej., residuos sólidos, PP 0036) superan el umbral fácilmente; temas sin gasto municipal (PP 0002) quedan referenciales en todos los distritos. Departamentos con poco gasto del tema (denominador < S/ 100 000): no calcular pct, mostrar solo departamento.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-04",
+   "ambito": "gasto",
+   "titulo": "Una sola fuente canónica y un solo archivo por año",
+   "enunciado": "Los montos de gasto deben salir solo de MEF-DA-PRESUPUESTO-EJECUCION-GASTO, leyendo {anio}-Gasto.csv para 2012–2024 y solo {anio}-Gasto-Mensual.csv para 2025–2026; no deben sumarse con MEF-DA-GASTO-DEVENGADO-MENSUAL, el archivo -Diario, GPNNA, Seguimiento-PI ni Consulta Amigable.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [
+     "ejecutora"
+    ],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-DEVENGADO-MENSUAL",
+     "MEF-DA-GASTO-GPNNA",
+     "MEF-SEGUIMIENTO-PI",
+     "MEF-DA-GASTO-PPR",
+     "MEF-CONSULTA-AMIGABLE-GASTO-MENSUAL",
+     "MEF-CONSULTA-AMIGABLE-GASTO-DIARIA"
+    ]
+   },
+   "condicion": "Una consulta que agregue montos de más de una fuente con rol_gasto distinto de 'canonica' -> bloquear. Por año: archivos cargados = {'{anio}-Gasto.csv'} si anio ≤ 2024; {'{anio}-Gasto-Mensual.csv'} si anio ≥ 2025; cualquier otra combinación -> fallo de ingesta.",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "anio_ultimo_archivo_anual": 2024,
+    "sufijo_anio_en_curso": "-Mensual",
+    "tolerancia_conciliacion": 0.005
+   },
+   "mensaje_usuario": null,
+   "justificacion": "El Devengado Mensual es la misma información del SIAF en formato ancho; -Mensual y -Diario cubren el mismo año; GPNNA es un subconjunto ponderado de las mismas filas; Seguimiento-PI repite el gasto de proyectos con montos acumulados. Sumar cualquier par duplica soles.",
+   "referencias": [
+    {
+     "titulo": "Plataforma Nacional de Datos Abiertos – Presupuesto y Ejecución de Gasto (recursos 2012–2024 anuales; 2025–2026 -Mensual y -Diario)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto"
+    },
+    {
+     "titulo": "MEF – Diccionario de datos: Presupuesto y Ejecución de Gasto (Gastos_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
+    },
+    {
+     "titulo": "MEF – Diccionario de datos: Seguimiento de Proyectos de Inversión (Seguimiento_PI_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Seguimiento_PI_Diccionario.csv"
+    },
+    {
+     "titulo": "MEF – Diccionario de datos: Gasto en niñez y adolescencia (GPNNA_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/GPNNA_Diccionario.csv"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "EXA-A-04",
+    "EXA-A-10",
+    "INF-21"
+   ],
+   "ejemplo": "Para 'gasto total del Gobierno Regional Ayacucho 2025' se lee solo 2025-Gasto-Mensual.csv; GPNNA_2025.csv sirve para 'gasto en niñez' (R-GASTO-10), nunca como sumando.",
+   "implementacion": "Campo de catálogo rol_gasto: canonica (PRESUPUESTO-EJECUCION-GASTO), subconjunto_ponderado (GPNNA), seguimiento_inversion (SEGUIMIENTO-PI, DETALLE), financiamiento (TRANSFERENCIAS), ruta_alterna (DEVENGADO-MENSUAL, Consulta Amigable, GASTO-PPR). Conciliación en prueba de humo: Σ MONTO_DEVENGADO por (ANO_EJE, NIVEL_GOBIERNO) vs Consulta Amigable; diferencia ≤ 0,5% o se bloquea la carga.",
+   "casos_borde": "Formato largo con MES_EJE: verificar en la prueba de humo si MONTO_PIA/MONTO_PIM se repiten por mes (en ese caso tomar el valor del último mes, no sumar) o vienen solo en un mes; devengado y girado sí se suman por mes. Si el MEF publica en 2027 un archivo anual 2025-Gasto.csv, reemplaza al -Mensual (actualizar parámetro). Revisiones del SIAF: cada recarga reemplaza el año completo, no se anexa.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-05",
+   "ambito": "gasto",
+   "titulo": "Transferencias intergubernamentales: financiamiento, no gasto",
+   "enunciado": "Los montos de MEF-DA-TRANSFERENCIAS no deben sumarse al gasto de ningún territorio; se muestran aparte como 'dinero recibido'. Al consolidar gasto de varios niveles de gobierno se deben excluir las transferencias a otras unidades del gobierno registradas como gasto del que transfiere.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [
+     "ejecutora"
+    ],
+    "fuentes": [
+     "MEF-DA-TRANSFERENCIAS",
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO"
+    ]
+   },
+   "condicion": "(a) consulta que suma MONTO_AUTORIZADO o MONTO_ACREDITADO con MONTO_DEVENGADO -> bloquear_cruce. (b) agregación de gasto con > 1 NIVEL_GOBIERNO o > 1 PLIEGO: excluir filas con GENERICA_NOMBRE='DONACIONES Y TRANSFERENCIAS' y ESPECIFICA_DET_NOMBRE o SUBGENERICA_DET_NOMBRE que contenga 'OTRAS UNIDADES DEL GOBIERNO' (lista exacta de códigos a fijar en la prueba de humo).",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "monto_transferencia_publicable": "MONTO_ACREDITADO",
+    "patron_exclusion_consolidado": "OTRAS UNIDADES DEL GOBIERNO"
+   },
+   "mensaje_usuario": "Las transferencias (canon, FONCOMUN, etc.) son dinero que la municipalidad o región recibió; lo que gastó con ese dinero ya está en su gasto. Por eso no se suman.",
+   "justificacion": "El dinero transferido vuelve a registrarse como presupuesto y devengado del receptor; además el que transfiere lo registra como gasto en la genérica de donaciones y transferencias. Sumar ambos cuenta dos veces el mismo sol. El diccionario de transferencias trae solo montos autorizados y acreditados, no ejecución, y la ubicación es la sede de la ejecutora receptora.",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Transferencias (Transferencias_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Transferencias_Diccionario.csv"
+    },
+    {
+     "titulo": "MEF – Diccionario de datos: Presupuesto y Ejecución de Gasto (Gastos_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-21",
+    "EXA-A-11"
+   ],
+   "ejemplo": "Distrito de San Marcos (Áncash): 'recibió S/ X por canon minero en 2025 (acreditado)' y aparte 'la municipalidad devengó S/ Y en total'; nunca 'S/ X + Y'.",
+   "implementacion": "Vista transferencias_recibidas(anio, mes=MES_PRC, sec_ejec, ubigeo_sede, rubro, recurso, monto_acreditado). Ubigeo de la receptora con regla R-GASTO-01 (municipalidades a distrito/provincia; GORE a departamento). En consolidados multinivel: WHERE NOT es_transferencia_intergubernamental.",
+   "casos_borde": "Transferencias a personas (subvenciones, programas como JUNTOS o Pensión 65) sí son gasto final: no excluir. MONTO_AUTORIZADO puede diferir del ACREDITADO; usar acreditado. Archivo del año en curso se actualiza mensualmente: aplicar fecha de corte (R-GASTO-07).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-06",
+   "ambito": "gasto",
+   "titulo": "Fase del gasto según la pregunta",
+   "enunciado": "'Cuánto se gastó' debe responderse con devengado; 'cuánto se asignó o se dispone' con PIM; 'presupuesto inicial' con PIA. Certificado, comprometido y girado no se publican en el MVP y nunca se suman entre fases.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA"
+    ]
+   },
+   "condicion": "resultado.fase_gasto ∈ {DEVENGADO (default), PIM, PIA}; si fase_gasto ∈ {CERTIFICADO, COMPROMETIDO, GIRADO} -> no publicar (posterior: solo año en curso y rotulado). Toda cifra lleva fase_gasto en el rótulo.",
+   "accion": "rotular",
+   "parametros": {
+    "fase_default": "DEVENGADO",
+    "fases_publicables_mvp": [
+     "PIA",
+     "PIM",
+     "DEVENGADO"
+    ],
+    "columnas": {
+     "PIA": "MONTO_PIA",
+     "PIM": "MONTO_PIM",
+     "DEVENGADO": "MONTO_DEVENGADO",
+     "GPNNA_DEVENGADO": "dev_nna"
+    }
+   },
+   "mensaje_usuario": "'Gastado' = devengado: el Estado ya recibió el bien o servicio y reconoció la obligación de pagarlo. 'Presupuesto' = PIM: lo que tiene autorizado para gastar en el año, después de modificaciones.",
+   "justificacion": "El devengado es la fase en que se registra la obligación de pago tras recibir el bien o servicio y es la medida de ejecución usada por el MEF en sus indicadores; el PIA es el presupuesto inicial aprobado por ley y el PIM el actualizado por modificaciones. Certificación y compromiso reservan crédito pero no implican gasto realizado; el girado depende de la tesorería.",
+   "referencias": [
+    {
+     "titulo": "Mesa de Concertación para la Lucha contra la Pobreza – ¿Qué es la Consulta Amigable del MEF? (definiciones de PIA, PIM, certificación, compromiso, devengado)",
+     "url": "https://www.mesadeconcertacion.org.pe/storage/documentos/2022-02-24/que-es-la-consulta-amigable-del-mef23febrero.pdf"
+    },
+    {
+     "titulo": "MEF – Anexo 08 RD 030-2019-EF/50.01: Ficha técnica de indicadores de evaluación institucional financiera (I = Devengado / PIM × 100)",
+     "url": "https://www.mef.gob.pe/contenidos/presu_publ/anexos/Anexo_08_Ficha_tecnica_indicadores_evaluacion_institucional_financiera_RD030_2019EF5001.pdf"
+    },
+    {
+     "titulo": "MEF – Diccionario de datos: Presupuesto y Ejecución de Gasto (Gastos_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-21"
+   ],
+   "ejemplo": "'¿Cuánto gastó la Municipalidad de Ate en agua y saneamiento en 2024?' -> Σ MONTO_DEVENGADO con tema=agua_saneamiento, rótulo 'devengado 2024'.",
+   "implementacion": "El intérprete de la pregunta mapea verbos ('gastó', 'invirtió', 'ejecutó') a DEVENGADO y ('presupuesto', 'asignó', 'tiene para') a PIM; si es ambiguo, mostrar ambos con avance (R-GASTO-07).",
+   "casos_borde": "PIA = 0 y PIM > 0 es normal (créditos suplementarios): no calcular 'variación PIA→PIM' en %. Devengado negativo en un mes (reversiones): permitido en el mes, el anual debe ser ≥ 0; si no, error de datos.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-07",
+   "ambito": "gasto",
+   "titulo": "Avance de ejecución y fecha de corte",
+   "enunciado": "El avance de ejecución debe calcularse como devengado acumulado / PIM vigente a la misma fecha de corte y mostrarse siempre con esa fecha; para el año en curso se rotula 'parcial' y solo se compara con otros años al mismo mes.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA",
+     "MEF-DETALLE-INVERSIONES"
+    ]
+   },
+   "condicion": "avance = Σ MONTO_DEVENGADO(MES_EJE ≤ mes_corte) / PIM(mes_corte) × 100. Suprimir avance si PIM < pim_minimo. Si avance > 100,5 -> error de datos (revision_humana). anio_cerrado = (fecha_extraccion ≥ fecha_cierre_param(anio)); si no anio_cerrado -> rotular 'parcial'. Comparación interanual del avance solo con mismo mes_corte.",
+   "accion": "advertir",
+   "parametros": {
+    "pim_minimo_soles": 50000,
+    "tolerancia_sobre_100": 0.5,
+    "fecha_cierre_param": "31 de marzo del año siguiente (provisional, a confirmar comparando descargas sucesivas)"
+   },
+   "mensaje_usuario": "Datos al {fecha_corte}. El año aún no termina y buena parte del gasto público se registra en los últimos meses, así que este avance no es el resultado final del año.",
+   "justificacion": "El MEF mide la ejecución presupuestal como Devengado/PIM×100. El PIM cambia durante el año, por lo que numerador y denominador deben tomarse al mismo corte; comparar un año en curso con uno cerrado subestima sistemáticamente la ejecución.",
+   "referencias": [
+    {
+     "titulo": "MEF – Anexo 08 RD 030-2019-EF/50.01: Ficha técnica de indicadores de evaluación institucional financiera (I = Devengado / PIM × 100)",
+     "url": "https://www.mef.gob.pe/contenidos/presu_publ/anexos/Anexo_08_Ficha_tecnica_indicadores_evaluacion_institucional_financiera_RD030_2019EF5001.pdf"
+    },
+    {
+     "titulo": "Plataforma Nacional de Datos Abiertos – Presupuesto y Ejecución de Gasto (recursos 2012–2024 anuales; 2025–2026 -Mensual y -Diario)",
+     "url": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "EXA-A-04"
+   ],
+   "ejemplo": "En octubre de 2026 (datos a agosto): 'GORE Loreto ejecutó 48% de su PIM en PP 1001 a agosto de 2026; a agosto de 2025 había ejecutado 51%'.",
+   "implementacion": "fecha_corte = max(MES_EJE con MONTO_DEVENGADO ≠ 0) del archivo + fecha de descarga; guardar ambas en resultado.fecha_corte_datos y resultado.es_anio_cerrado. Para series comparables al mes m: usar devengado acumulado a m en años previos (formato largo con MES_EJE lo permite).",
+   "casos_borde": "PIM ≤ 0 o nulo: no calcular. Ejecutoras con PIM recién incorporado en diciembre (transferencias tardías) muestran avance bajo: el mensaje de R-GASTO-15 aplica. Proyectos: el avance financiero del año (DEV_ANIO_ACTUAL/PIM_ANIO_ACTUAL) no es avance de la obra (ver R-GASTO-12).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-08",
+   "ambito": "gasto",
+   "titulo": "Etiquetado temático con tabla versionada por año",
+   "enunciado": "El gasto por tema debe asignarse solo mediante dim_tema_gasto, una tabla curada y versionada por año que mapea (ANO_EJE, PROGRAMA_PPTO, PRODUCTO_PROYECTO, ACTIVIDAD_ACCION_OBRA) a un tema, con dos alcances: 'núcleo' (programa presupuestal específico) y 'amplio' (FUNCION/DIVISION_FUNCIONAL). El LLM no puede decidir qué gasto pertenece a un tema.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-PPR-PROGRAMAS-PRESUPUESTALES"
+    ]
+   },
+   "condicion": "tema(fila) = lookup(dim_tema_gasto, anio, PROGRAMA_PPTO, PRODUCTO_PROYECTO, ACTIVIDAD_ACCION_OBRA). Si el año consultado no tiene versión de dim_tema_gasto aprobada -> bloquear la cifra temática. Toda cifra temática declara alcance ∈ {nucleo, amplio}.",
+   "accion": "rotular",
+   "parametros": {
+    "crosswalk_inicial_nucleo": {
+     "desarrollo_infantil_anemia_dci": "PP 0001 (2012–2022) + PP 1001 (desde el año en que aparece en el archivo; 6 productos migrados en 2021 y 4 en 2023); productos trasladados a APNOP en 2023 se identifican por código de producto/actividad",
+     "salud_materna_neonatal": "PP 0002 (2012–2026, sigue vigente)",
+     "educacion_basica_aprendizajes": "PP 0090",
+     "educacion_basica_acceso": "PP 0091 hasta su último año y PP 0150 desde su primer año",
+     "agua_saneamiento": "PP 0082 (urbano) y PP 0083 (rural)"
+    },
+    "crosswalk_inicial_amplio": {
+     "educacion_basica": "FUNCION_NOMBRE='EDUCACION' y DIVISION_FUNCIONAL_NOMBRE='EDUCACION BASICA'",
+     "salud": "FUNCION_NOMBRE='SALUD'",
+     "agua_saneamiento": "FUNCION_NOMBRE='SANEAMIENTO'"
+    }
+   },
+   "mensaje_usuario": "Gasto en {tema}: incluye los programas {lista_pp} ({alcance}). Otros gastos que también ayudan (por ejemplo, agua potable para la anemia) no se cuentan aquí.",
+   "justificacion": "Los programas presupuestales son la única etiqueta oficial que vincula gasto con un resultado; su estructura cambia año a año (PP 0001 → PPoR 1001 en 2021 y 2023, PP 0091 → PP 0150) y el PP 0002 no se migró. Sin una tabla versionada la serie de 'gasto en anemia' se rompe o se duplica. PPoR 1001 es más amplio que anemia (desarrollo infantil temprano), por lo que el rótulo debe decir lo que incluye.",
+   "referencias": [
+    {
+     "titulo": "MEF – Estructura de los Programas Presupuestales por año (2012–2027)",
+     "url": "https://www.mef.gob.pe/es/presupuesto-por-resultados/estructura-de-programas"
+    },
+    {
+     "titulo": "MEF (2023) – Criterios de programación de productos y proyectos del PP 1001 Desarrollo Infantil Temprano (migración de productos del PP 0001 y traslado a APNOP)",
+     "url": "https://mef.gob.pe/contenidos/presu_publ/capacita/2023/08052023_CRITERIOS_PROG_PROD_PROY_PP_1001_DESARROLLO_INFANTIL_TEMPRANO.pdf"
+    },
+    {
+     "titulo": "MINSA – Reporte de seguimiento 2023-I del PPoR 1001 (6 productos del PP 0001 migrados en 2021; 4 en 2023 y 2 a APNOP)",
+     "url": "https://www.minsa.gob.pe/presupuestales/doc2024/reporte-seguimiento/Reporte%202023-I_PPoR%201001.pdf"
+    },
+    {
+     "titulo": "MINSA – Reporte de seguimiento PP 0002 Salud Materno Neonatal 2026-I (el PP 0002 sigue vigente)",
+     "url": "https://www.minsa.gob.pe/presupuestales/doc2026/reporte-seguimiento/Reporte_PP_0002_2026_I.pdf"
+    },
+    {
+     "titulo": "MEF – Estructura programática PP 0150 Incremento en el acceso de la población a los servicios educativos públicos de la Educación Básica (2026)",
+     "url": "https://www.mef.gob.pe/contenidos/presu_publ/ppr/estr_program/PP_0150_PRODUCTO_2026.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "COB-10",
+    "EMB-03"
+   ],
+   "ejemplo": "'Gasto en anemia en Cusco 2018–2025' -> PP 0001 en 2018–2020, PP 0001 + PP 1001 en 2021–2022 y PP 1001 en 2023–2025, rótulo 'desarrollo infantil temprano (incluye anemia y desnutrición)'.",
+   "implementacion": "dim_tema_gasto(anio, programa_ppto, producto_proyecto NULLABLE, actividad NULLABLE, tema, alcance, version, fuente_mapeo, revisado_por). Poblar desde MEF-PPR-PROGRAMAS-PRESUPUESTALES (pasar a Ola 0) y desde los códigos presentes en cada {anio}-Gasto.csv. Tests: (1) cada código PROGRAMA_PPTO del año está mapeado o marcado 'sin_tema'; (2) ninguna fila recibe dos temas del mismo alcance; (3) productos migrados con el mismo código no se cuentan dos veces en años de transición.",
+   "casos_borde": "Una fila puede pertenecer a 'salud' (amplio) y 'salud materna' (núcleo) a la vez: nunca sumar alcances. Etiquetado a nivel de producto o actividad (por ejemplo, solo suplementación con hierro) es posterior y requiere revisión humana. Gasto de APNOP (9001/9002) solo entra a un tema si se mapea explícitamente por actividad.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-09",
+   "ambito": "gasto",
+   "titulo": "Advertencia de quiebre en series temáticas",
+   "enunciado": "Una serie temática que cruza un año en el que cambió el mapeo de dim_tema_gasto (aparición o desaparición de un PP, migración de productos) debe mostrar el quiebre en el gráfico y en el texto, y no debe calcular la variación interanual entre los años del quiebre como si fuera cambio real de gasto.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA"
+    ]
+   },
+   "condicion": "quiebre(tema, t) = conjunto de PROGRAMA_PPTO mapeados al tema en t ≠ conjunto en t-1, o la parte del devengado del tema en productos migrados > umbral. Si quiebre en t y la consulta pide variación t-1→t -> advertir y no presentar variación porcentual.",
+   "accion": "advertir",
+   "parametros": {
+    "umbral_productos_migrados_pct": 0.05
+   },
+   "mensaje_usuario": "En {anio} el MEF reorganizó los programas de este tema; parte del cambio que se ve ese año se debe a la nueva clasificación y no a más o menos gasto.",
+   "justificacion": "Los traslados entre PP (0001→1001 en 2021 y 2023; 0091→0150) cambian lo que se cuenta, no el gasto efectivo; el MEF documenta estos traslados en las estructuras programáticas anuales.",
+   "referencias": [
+    {
+     "titulo": "MEF (2023) – Criterios de programación de productos y proyectos del PP 1001 Desarrollo Infantil Temprano (migración de productos del PP 0001 y traslado a APNOP)",
+     "url": "https://mef.gob.pe/contenidos/presu_publ/capacita/2023/08052023_CRITERIOS_PROG_PROD_PROY_PP_1001_DESARROLLO_INFANTIL_TEMPRANO.pdf"
+    },
+    {
+     "titulo": "MINSA – Reporte de seguimiento 2023-I del PPoR 1001 (6 productos del PP 0001 migrados en 2021; 4 en 2023 y 2 a APNOP)",
+     "url": "https://www.minsa.gob.pe/presupuestales/doc2024/reporte-seguimiento/Reporte%202023-I_PPoR%201001.pdf"
+    },
+    {
+     "titulo": "MEF – Estructura de los Programas Presupuestales por año (2012–2027)",
+     "url": "https://www.mef.gob.pe/es/presupuesto-por-resultados/estructura-de-programas"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "COB-10"
+   ],
+   "ejemplo": "Serie 'gasto en anemia' en Apurímac: marca vertical en 2021 y 2023 con la nota de migración al PPoR 1001.",
+   "implementacion": "Derivar automáticamente anios_quiebre_tema de dim_tema_gasto (diff de conjuntos entre años) y guardarlo en indicador.anios_con_quiebre (campo existente). Ampliar con GPNNA: la serie de datos abiertos empieza en 2023 (no empalmar con reportes PDF anteriores).",
+   "casos_borde": "Cambios de nombre sin cambio de código no son quiebre. Si el tema usa alcance 'amplio' (función), los quiebres de PP no aplican, pero sí los cambios del clasificador funcional (revisión humana).",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-10",
+   "ambito": "gasto",
+   "titulo": "Uso del gasto en niñez y adolescencia (GPNNA)",
+   "enunciado": "Las cifras de MEF-DA-GASTO-GPNNA deben presentarse como 'estimación del MEF del gasto que beneficia a niñas, niños y adolescentes' usando las columnas ponderadas (dev_nna, dev_ciclo_0_5, dev_ciclo_6_11, dev_ciclo_12_17) y nunca sumarse ni restarse del gasto canónico.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [
+     "ejecutora"
+    ],
+    "fuentes": [
+     "MEF-DA-GASTO-GPNNA"
+    ]
+   },
+   "condicion": "fuente = MEF-DA-GASTO-GPNNA -> columnas permitidas: pia_nna, pim_nna, dev_nna, *_ciclo_*, *_meta_*, *_lin_*; prohibido usar MONTO_DEVENGADO de GPNNA como 'gasto en niñez'. Años permitidos 2023–2026. Territorio por R-GASTO-01.",
+   "accion": "rotular",
+   "parametros": {
+    "anio_inicio_serie": 2023,
+    "columna_default": "dev_nna"
+   },
+   "mensaje_usuario": "Es una estimación del MEF: incluye gastos dirigidos a niñas, niños y adolescentes y una parte proporcional de gastos que benefician a toda la población (por ejemplo, salud general), calculada con pesos por edad del Censo 2017.",
+   "justificacion": "El GPNNA aplica ponderadores (peso_edad, peso_nna, peso_meta_*) a las filas del SIAF para estimar la parte que beneficia a la niñez; MONTO_DEVENGADO es el gasto total de la fila. Los pesos se basan en el Censo 2017 según el diccionario oficial.",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Gasto en niñez y adolescencia (GPNNA_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/GPNNA_Diccionario.csv"
+    },
+    {
+     "titulo": "UNICEF Perú / MEF (2021) – Actualización de la metodología para estimar el gasto público en niñas, niños y adolescentes",
+     "url": "https://www.unicef.org/peru/informes/actualizacion-de-la-metodologia-para-estimar-el-gasto-publico-en-ninas-ninos-adolescentes"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "EXA-A-12",
+    "INF-01"
+   ],
+   "ejemplo": "'¿Cuánto gasta el Estado en primera infancia en Cajamarca?' -> Σ dev_ciclo_0_5 con atribución 'departamento_meta' 06 + municipal/proyectos, rótulo de estimación.",
+   "implementacion": "Cargar GPNNA_{anio}.csv; atribuir con el mismo árbol (tiene NIVEL_GOBIERNO, PLIEGO, *_EJECUTORA, DEPARTAMENTO_META, PRODUCTO_PROYECTO). Per cápita con población 0–17 (R-GASTO-11).",
+   "casos_borde": "Cuando el Censo 2025 reemplace los pesos, el MEF podría recalcular: tratar como quiebre (R-GASTO-09). Flags meta_pnaia_* corresponden al PNAIA; lin_pnmnna_* a la PNMNNA: no mezclar en una misma serie.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-11",
+   "ambito": "gasto",
+   "titulo": "Gasto por habitante: denominador según nivel y tema",
+   "enunciado": "El gasto per cápita debe dividir por la población del mismo territorio, año y nivel de atribución, y por la población objetivo del tema cuando exista a ese nivel; si la población objetivo no existe a ese nivel, se usa la población total y se rotula 'por habitante', nunca 'por niño' o 'por beneficiario'.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA",
+     "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+     "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+     "MINSA-POBLACION-ESTIMADA",
+     "INEI-CPV2025"
+    ]
+   },
+   "condicion": "denominador = poblacion(territorio, anio, grupo) con: departamento -> INEI-PROYECCIONES-DEPARTAMENTAL-EDAD (total o grupo objetivo: 0–5 para desarrollo infantil, 0–17 para GPNNA, 3–16 para educación básica); provincia/distrito -> INEI-PROYECCIONES-POBLACION-DISTRITAL (solo total); grupo de edad distrital -> solo si R-DEN lo habilita (MINSA o Censo 2025) y como referencial. nivel_atribucion_gasto 'nacional_no_territorializable' nunca se divide por población territorial. En distrito y provincia, el numerador es solo 'gasto municipal y de proyectos'.",
+   "accion": "rotular",
+   "parametros": {
+    "grupos_objetivo": {
+     "desarrollo_infantil_anemia_dci": "0-5",
+     "gpnna": "0-17",
+     "educacion_basica": "3-16",
+     "salud_materna_neonatal": "nacidos vivos o mujeres 15-49 (decisión abierta)"
+    },
+    "decimales_soles": 0
+   },
+   "mensaje_usuario": "S/ {valor} por habitante en {anio} (gasto {rotulo_nivel} dividido entre la población estimada por el INEI).",
+   "justificacion": "Dividir el gasto ubicado por la sede entre la población del distrito sede infla Lima y las capitales; un denominador de grupo objetivo inexistente a nivel distrital (el INEI no proyecta por edad bajo departamento) obligaría a inventarlo. El año del denominador debe ser el mismo del gasto.",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Presupuesto y Ejecución de Gasto (Gastos_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
+    },
+    {
+     "titulo": "MEF – Diccionario de datos: Gasto en niñez y adolescencia (GPNNA_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/GPNNA_Diccionario.csv"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-01",
+    "INF-21"
+   ],
+   "ejemplo": "Departamento Amazonas 2025: devengado PP 1001 (todas las fuentes de atribución del departamento) / población 0–5 años proyectada = 'S/ X por niño o niña menor de 6 años'. Distrito de Imaza: devengado municipal y de proyectos en PP 1001 / población total = 'S/ Y por habitante (solo municipalidad y proyectos)'.",
+   "implementacion": "percapita = Σ devengado(territorio, anio, tema, niveles permitidos) / poblacion(territorio, anio, grupo). Guardar en resultado: denominador_fuente, denominador_grupo, denominador_anio. Para departamento: incluir en el numerador los niveles departamento_meta + distrito_* + provincia_* + departamento_inversion de ese departamento.",
+   "casos_borde": "Lima (15): el numerador incluye sedes nacionales; rotular y excluir de rankings (R-GASTO-13). Distritos creados después de 2017: población según tabla de ubigeo histórico (ámbito denominadores). Si la proyección se rebasa con el Censo 2025, recalcular toda la serie con el mismo vintage.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-12",
+   "ambito": "gasto",
+   "titulo": "Soles constantes en series de varios años",
+   "enunciado": "Toda serie o comparación de gasto entre años distintos debe expresarse en soles constantes del último año cerrado, deflactando con el IPC; las cifras de un solo año se muestran en soles corrientes y se rotulan así.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA",
+     "MEF-SEGUIMIENTO-PI",
+     "MEF-DA-TRANSFERENCIAS",
+     "INEI-IPC"
+    ]
+   },
+   "condicion": "Si la respuesta contiene montos de > 1 año -> monto_real(t) = monto_nominal(t) × IPC_prom(anio_base) / IPC_prom(t); resultado.precios='constantes', resultado.anio_base_deflactor = último año cerrado. Año en curso: IPC_prom de los meses disponibles. Ratios (avance, participación) no se deflactan.",
+   "accion": "rotular",
+   "parametros": {
+    "serie_ipc": "BCRP PN38705PM IPC Lima Metropolitana dic.2021=100, promedio anual",
+    "anio_base": "último año cerrado"
+   },
+   "mensaje_usuario": "Montos en soles de {anio_base} (ajustados por inflación), para que se puedan comparar entre años.",
+   "justificacion": "Entre 2012 y 2026 la inflación acumulada es suficiente para que el gasto nominal crezca aunque el real no; comparar soles corrientes exagera el crecimiento. El IPC de Lima Metropolitana es la serie oficial de mayor longitud y frecuencia mensual.",
+   "referencias": [
+    {
+     "titulo": "BCRP – Serie PN38705PM: Índice de precios Lima Metropolitana (índice dic. 2021 = 100)",
+     "url": "https://estadisticas.bcrp.gob.pe/estadisticas/series/mensuales/resultados/PN38705PM/html"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-21"
+   ],
+   "ejemplo": "'¿Aumentó el gasto en agua rural en Piura desde 2015?' -> serie PP 0083 en soles de 2025.",
+   "implementacion": "Tabla dim_ipc(anio, mes, indice); ipc_prom(anio) = media de los 12 meses (o de los meses con dato). Recalcular al cerrar cada año. Guardar factor por año en el resultado para trazabilidad.",
+   "casos_borde": "Cambio de base del IPC (dic.2021=100 frente a bases anteriores): usar la serie empalmada publicada; nunca mezclar bases. Si se decide IPC nacional o deflactor del PBI (pregunta abierta), cambiar solo el parámetro.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-13",
+   "ambito": "gasto",
+   "titulo": "Comparar territorios de tamaño distinto",
+   "enunciado": "Las comparaciones o rankings de gasto entre territorios deben usar per cápita o participación, entre territorios del mismo nivel y el mismo nivel de atribución, y en distritos y provincias el gasto de capital debe promediarse en 3 años; no se comparan montos absolutos cuando la población difiere más del doble.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA",
+     "MEF-SEGUIMIENTO-PI"
+    ]
+   },
+   "condicion": "Si consulta compara territorios: (a) max(poblacion)/min(poblacion) > 2 y medida = monto absoluto -> sustituir por per cápita; (b) territorios con distinto nivel_atribucion_gasto -> bloquear; (c) nivel ∈ {distrito, provincia} y GENERICA_NOMBRE='ADQUISICION DE ACTIVOS NO FINANCIEROS' (inversión) -> agrupar_anios 3; (d) Lima (15) y Callao (07) en ranking departamental -> incluir con marca 'incluye sedes nacionales' o excluir según parámetro; (e) participación = gasto tema / gasto total del mismo territorio, año, fase y nivel de atribución.",
+   "accion": "agrupar_anios",
+   "parametros": {
+    "ratio_poblacion_max_absoluto": 2,
+    "ventana_anios_capital": 3,
+    "lima_en_ranking": "marcar"
+   },
+   "mensaje_usuario": "Para comparar lugares de distinto tamaño mostramos gasto por habitante. En los distritos, la inversión se promedia en 3 años porque un solo proyecto grande puede cambiar mucho la cifra de un año.",
+   "justificacion": "La inversión es irregular: una obra en un distrito pequeño genera picos per cápita que no reflejan una política sostenida. Los montos absolutos reflejan sobre todo tamaño poblacional. Comparar gasto municipal de un distrito con gasto departamental mezcla universos distintos.",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Presupuesto y Ejecución de Gasto (Gastos_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-01",
+    "INF-21"
+   ],
+   "ejemplo": "Ranking de gasto municipal per cápita en agua y saneamiento entre distritos de Cajamarca: promedio 2023–2025 en soles de 2025, todos 'distrito_municipal' + 'distrito_inversion'.",
+   "implementacion": "El validador revisa el conjunto de territorios del resultado; si hay heterogeneidad de nivel_atribucion_gasto, devuelve bloqueo con mensaje. promedio_3a = Σ monto_real(t-2..t)/3 por territorio.",
+   "casos_borde": "Distritos con población < 1 000: mostrar per cápita solo con promedio de 3 años también para gasto corriente. Territorios con gasto cero en el tema: mostrar 0 con nota 'sin gasto registrado', no 'no gasta'.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-14",
+   "ambito": "gasto",
+   "titulo": "Inversiones: CUI como llave, estado y avance físico vs financiero",
+   "enunciado": "Los datos de inversión deben unirse solo por CUI (CODIGO_UNICO = PRODUCTO_PROYECTO cuando la fila es proyecto); se debe mostrar por separado el avance físico declarado y el avance financiero, con su fecha, y el estado oficial (activa, cerrada, desactivada) sin reinterpretarlo.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "registro_administrativo",
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "padron_referencia",
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [
+     "inversion_ubicacion",
+     "ejecutora"
+    ],
+    "fuentes": [
+     "MEF-DETALLE-INVERSIONES",
+     "MEF-SEGUIMIENTO-PI",
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "PRONIED-INTERVENCIONES"
+    ]
+   },
+   "condicion": "Join válido si filas de gasto con TIPO_ACT_PROY_NOMBRE indica PROYECTO y PRODUCTO_PROYECTO = CODIGO_UNICO. avance_financiero = (DEVEN_ACUMUL_ANIO_ANT + DEV_ANIO_ACTUAL) / COSTO_ACTUALIZADO; avance_fisico = AVANCE_FISICO solo si TIENE_AVAN_FISICO indica sí; si ULT_FEC_DECLA_ESTIM es anterior a 180 días respecto de fecha_snapshot -> advertir. Cartera vigente = ESTADO activo; desactivadas permanentemente se excluyen de conteos; cerradas cuentan como históricas. MONTO_EJECUCION_TOTAL de Seguimiento-PI es acumulado: no sumar entre años.",
+   "accion": "advertir",
+   "parametros": {
+    "dias_max_avance_fisico": 180,
+    "costo_referencia": "COSTO_ACTUALIZADO",
+    "estados_cartera_vigente": [
+     "ACTIVO"
+    ]
+   },
+   "mensaje_usuario": "Avance de la obra (declarado por la entidad): {avance_fisico}% al {fecha}. Avance del gasto: {avance_financiero}% del costo actualizado. Uno no implica el otro: puede haberse pagado más de lo construido o al revés.",
+   "justificacion": "El Banco de Inversiones distingue estados activo/desactivado (temporal o permanente) y cerrado (con Formato 09), y registra el avance físico declarado aparte del devengado. El CUI es el identificador único de la inversión en Invierte.pe y la única llave común entre Detalle, Seguimiento-PI y el SIAF; Seguimiento-PI no trae CODIGO_SNIP ni ubigeo del proyecto.",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Detalle de inversiones (Detalle_Inversiones_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Detalle_Inversiones_Diccionario.csv"
+    },
+    {
+     "titulo": "MEF – Diccionario de datos: Seguimiento de Proyectos de Inversión (Seguimiento_PI_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Seguimiento_PI_Diccionario.csv"
+    },
+    {
+     "titulo": "MEF – Instructivo de activación y desactivación de inversiones (Banco de Inversiones)",
+     "url": "https://www.mef.gob.pe/contenidos/inv_publica/docs/Instructivo_BI/Instructivo_activacion_desactivacion.pdf"
+    },
+    {
+     "titulo": "MEF – Instructivo del Formato N.° 09 Registro de cierre de inversión",
+     "url": "https://www.mef.gob.pe/contenidos/inv_publica/docs/Instructivo_BI/Instructivo_Formato_09_Cierre.pdf"
+    },
+    {
+     "titulo": "MEF – RD N.° 001-2019-EF/63.01 que aprueba la Directiva General del Sistema Nacional de Programación Multianual y Gestión de Inversiones",
+     "url": "https://mef.gob.pe/es/normatividad-inv-publica/instrumento/resolucion-directoral/19113-resolucion-directoral-n-001-2019-ef-63-01-1/file"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "EXA-A-05",
+    "EXA-A-06",
+    "EXA-A-10",
+    "EMB-15"
+   ],
+   "ejemplo": "Colegio con CUI en Ayacucho: 'Estado: activo. Avance físico 62% (declarado el 15/06/2026). Avance financiero 81% del costo actualizado de S/ 12,4 millones. Último devengado: 2026-08'.",
+   "implementacion": "Normalizar CUI como texto de 7 dígitos en ambas fuentes. dim_inversion snapshot con ANIO_PROCESO y fecha de descarga. Ubicación según R-GASTO-02. Para PRONIED-INTERVENCIONES, ubicar solo vía CUI.",
+   "casos_borde": "Códigos de producto (3xxxxxx) y CUI comparten formato numérico de 7 dígitos: nunca unir sin filtrar TIPO_ACT_PROY. COSTO_ACTUALIZADO nulo o 0 -> no calcular avance financiero. avance_financiero > 100% se muestra tal cual con nota 'el gasto superó el costo actualizado registrado', sin calificarlo. IOARR también tienen CUI: rotular el TIPO_INVERSION. No afirmar 'obra paralizada' con estos datos; sí 'sin gasto registrado desde {ULTIMO_DEVENGADO}'.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-15",
+   "ambito": "gasto",
+   "titulo": "Lo que el gasto no permite afirmar",
+   "enunciado": "Las respuestas no deben calificar el gasto como eficiente, ineficiente, suficiente, bien o mal usado, ni atribuirle efectos sobre indicadores de resultado (anemia, aprendizaje, pobreza); solo pueden describir montos, fases, avance y su coincidencia temporal con los indicadores.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "MEF-DA-GASTO-GPNNA",
+     "MEF-SEGUIMIENTO-PI",
+     "MEF-DETALLE-INVERSIONES",
+     "MEF-DA-TRANSFERENCIAS"
+    ]
+   },
+   "condicion": "Si la respuesta incluye una cifra de gasto y el borrador contiene términos de la lista_bloqueada o un verbo causal que vincule gasto con resultado -> bloquear_cruce del enunciado y reemplazar por plantilla descriptiva. Si avance < 50% -> no usar 'mala gestión' ni 'incapacidad de gasto'.",
+   "accion": "bloquear_cruce",
+   "parametros": {
+    "lista_bloqueada": [
+     "eficiente",
+     "ineficiente",
+     "despilfarro",
+     "mal gasto",
+     "bien invertido",
+     "suficiente",
+     "insuficiente",
+     "gracias al gasto",
+     "por el gasto",
+     "redujo",
+     "logró reducir",
+     "no sirvió",
+     "incapacidad de gasto",
+     "mala gestión"
+    ],
+    "plantilla": "En {territorio} se gastaron S/ {monto} en {tema} en {anio}; en el mismo periodo {indicador} fue {valor}. Estos datos no permiten saber si el gasto causó ese resultado."
+   },
+   "mensaje_usuario": "Estos datos muestran cuánto se gastó, no si el gasto fue eficiente ni si causó los cambios en {indicador}. Para eso se necesitan evaluaciones de impacto.",
+   "justificacion": "Los indicadores de ejecución del MEF miden la proporción del presupuesto devengado, no resultados ni calidad del gasto. Un avance bajo puede deberse a créditos incorporados a fin de año o a transferencias tardías; un gasto alto junto a un indicador malo puede reflejar focalización en zonas con mayor necesidad. Sin diseño causal, la asociación no es efecto.",
+   "referencias": [
+    {
+     "titulo": "MEF – Anexo 08 RD 030-2019-EF/50.01: Ficha técnica de indicadores de evaluación institucional financiera (I = Devengado / PIM × 100)",
+     "url": "https://www.mef.gob.pe/contenidos/presu_publ/anexos/Anexo_08_Ficha_tecnica_indicadores_evaluacion_institucional_financiera_RD030_2019EF5001.pdf"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-01",
+    "INF-21"
+   ],
+   "ejemplo": "Respuesta válida: 'En Puno se devengaron S/ X en desarrollo infantil temprano en 2024; ese año la anemia en menores de 3 años fue Y% (ENDES)'. Inválida: 'el aumento del gasto redujo la anemia'.",
+   "implementacion": "Filtro léxico + verificación de plantillas en la etapa de redacción (depende del ámbito lenguaje). El validador entrega al LLM la marca 'gasto_descriptivo_solo=true'.",
+   "casos_borde": "Si el usuario pregunta explícitamente '¿el gasto funciona?', responder con la plantilla y, si existe, enlazar a evaluaciones independientes oficiales del MEF (MEF-PPR-EVALUACIONES-INDEPENDIENTES) sin resumir su conclusión como dato del sistema.",
+   "prioridad": "mvp"
+  },
+  {
+   "id": "R-GASTO-16",
+   "ambito": "gasto",
+   "titulo": "Reparto del gasto departamental y regional a distritos (modelado)",
+   "enunciado": "La estimación de gasto de GN/GORE a nivel provincial o distrital mediante prorrateo (por población objetivo, establecimientos o metas físicas) solo se publica como 'estimación del proyecto', separada del gasto observado, y tras revisión humana de la metodología.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "presupuestal_financiero"
+    ],
+    "tipo_medida": [
+     "presupuesto_gasto"
+    ],
+    "base_geografica": [
+     "meta_departamento"
+    ],
+    "fuentes": [
+     "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+     "SUSALUD-RENIPRESS",
+     "MINEDU-ESCALE-PADRON"
+    ]
+   },
+   "condicion": "nivel_atribucion_gasto='departamento_meta' y nivel solicitado ∈ {provincia, distrito} -> sin prorrateo aprobado: no publicar; con prorrateo aprobado: publicar_referencial con tipo_medida='estimacion_modelada'.",
+   "accion": "revision_humana",
+   "parametros": {
+    "metodos_candidatos": [
+     "población objetivo INEI",
+     "establecimientos RENIPRESS por red",
+     "UGEL/IIEE por ejecutora educativa"
+    ]
+   },
+   "mensaje_usuario": "Estimación propia de Pregunta al Perú: reparte el gasto regional según {criterio}. No es un dato oficial del MEF.",
+   "justificacion": "Hay demanda de cifras distritales de gasto en salud y educación, pero el SIAF no las registra; algunas ejecutoras (redes de salud, UGEL) tienen ámbito subdepartamental identificable y permitirían una aproximación provincial si se documenta.",
+   "referencias": [
+    {
+     "titulo": "MEF – Diccionario de datos: Presupuesto y Ejecución de Gasto (Gastos_Diccionario.csv)",
+     "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
+    }
+   ],
+   "hallazgos_auditoria": [
+    "INF-01",
+    "EMB-03"
+   ],
+   "ejemplo": "Unidad ejecutora 'Red de Salud Chumbivilcas' (GORE Cusco) podría asignarse a la provincia de Chumbivilcas si su ámbito está documentado.",
+   "implementacion": "Tabla ambito_ejecutora(sec_ejec, anio, ubigeos_ambito, fuente_documental) curada manualmente; solo ejecutoras con ámbito verificado.",
+   "casos_borde": "Ejecutoras cuyo ámbito cambia entre años; hospitales de referencia que atienden población de otras provincias.",
+   "prioridad": "posterior"
+  }
+ ],
+ "campos_nuevos": [
+  {
+   "campo": "nivel_atribucion_gasto",
+   "tipo": "enum{distrito_municipal, provincia_municipal, distrito_inversion, provincia_inversion, departamento_inversion, departamento_meta, nacional_no_territorializable}",
+   "donde": "resultado",
+   "para_que": "Registrar a qué nivel se puede ubicar cada sol (R-GASTO-01/02) y bloquear comparaciones entre universos distintos (R-GASTO-13)."
+  },
+  {
+   "campo": "ubigeo_atribucion",
+   "tipo": "str (2, 4 o 6 dígitos)",
+   "donde": "resultado",
+   "para_que": "Ubigeo del nivel asignado, distinto del ubigeo de la sede de la ejecutora."
+  },
+  {
+   "campo": "pct_gasto_atribuible",
+   "tipo": "float 0–1",
+   "donde": "resultado",
+   "para_que": "Proporción del gasto del tema y departamento ubicable bajo el departamento (R-GASTO-03)."
+  },
+  {
+   "campo": "fase_gasto",
+   "tipo": "enum{PIA, PIM, CERTIFICADO, COMPROMETIDO, DEVENGADO, GIRADO}",
+   "donde": "resultado",
+   "para_que": "Rótulo obligatorio de la fase (R-GASTO-06)."
+  },
+  {
+   "campo": "fecha_corte_datos / es_anio_cerrado",
+   "tipo": "str ISO / bool",
+   "donde": "resultado",
+   "para_que": "Avance parcial y comparaciones al mismo mes (R-GASTO-07)."
+  },
+  {
+   "campo": "precios / anio_base_deflactor",
+   "tipo": "enum{corrientes, constantes} / int",
+   "donde": "resultado",
+   "para_que": "Trazabilidad de la deflactación (R-GASTO-12)."
+  },
+  {
+   "campo": "rol_gasto",
+   "tipo": "enum{canonica, subconjunto_ponderado, seguimiento_inversion, financiamiento, ruta_alterna}",
+   "donde": "catalogo",
+   "para_que": "Impedir sumas entre fuentes de gasto (R-GASTO-04/05)."
+  },
+  {
+   "campo": "base_territorial_gasto",
+   "tipo": "str ('sede_ejecutora+departamento_meta')",
+   "donde": "catalogo",
+   "para_que": "Reemplaza 'distrito' en nivel_territorial_disponible de fuentes presupuestales (INF-01); nivel_territorial_inferencia queda null."
+  },
+  {
+   "campo": "dim_tema_gasto(anio, programa_ppto, producto_proyecto, actividad, tema, alcance, version, revisado_por)",
+   "tipo": "tabla de dimensión",
+   "donde": "indicador",
+   "para_que": "Crosswalk temático versionado por año (R-GASTO-08/09)."
+  },
+  {
+   "campo": "dim_unidad_ejecutora(anio, sec_ejec, nivel_gobierno, pliego, tipo_entidad_local, ubigeo_sede)",
+   "tipo": "tabla de dimensión",
+   "donde": "catalogo",
+   "para_que": "Árbol de atribución (R-GASTO-01), derivada de MEF-MAESTRO-EJECUTORAS-DERIVADO."
+  },
+  {
+   "campo": "dim_inversion(cui, ubigeo, n_ubicaciones, nivel_comun, estado, situacion, costo_actualizado, avance_fisico, fecha_avance_fisico, anio_proceso)",
+   "tipo": "tabla de dimensión (snapshot)",
+   "donde": "catalogo",
+   "para_que": "Ubicación y estado de inversiones por CUI (R-GASTO-02/14)."
+  },
+  {
+   "campo": "denominador_fuente / denominador_grupo / denominador_anio",
+   "tipo": "str / str / int",
+   "donde": "resultado",
+   "para_que": "Trazabilidad del per cápita (R-GASTO-11)."
+  },
+  {
+   "campo": "es_transferencia_intergubernamental",
+   "tipo": "bool",
+   "donde": "resultado",
+   "para_que": "Excluir transferencias entre entidades en consolidados multinivel (R-GASTO-05)."
+  }
+ ],
+ "dependencias": [
+  "ámbito territorio: tabla de ubigeo histórico y validación de ubigeo construido DEP+PROV+DIST (R-GASTO-01, R-GASTO-02)",
+  "ámbito denominadores: vintage de población y disponibilidad de grupos de edad bajo departamento (R-GASTO-11; INF-14)",
+  "ámbito cruces: reglas para cruzar gasto con indicadores de resultado de encuestas (R-GASTO-03, R-GASTO-15)",
+  "ámbito lenguaje: filtro léxico y plantillas descriptivas (R-GASTO-15)",
+  "catálogo: pasar MEF-PPR-PROGRAMAS-PRESUPUESTALES a Ola 0 y crear dim_unidad_ejecutora (EMB-03, COB-10)"
+ ],
+ "preguntas_abiertas": [
+  "Umbral de pct_gasto_atribuible (propuesto 50%) bajo el cual la cifra distrital pasa a referencial, y si se muestra el gasto distrital en temas donde casi todo lo ejecutan GN/GORE (salud materna).",
+  "Deflactor: IPC Lima Metropolitana (BCRP, dic. 2021=100), IPC nacional o deflactor implícito del PBI; y año base (propuesto: último año cerrado).",
+  "Inversiones multidistritales: mantener 'sin prorrateo' en el MVP o prorratear por población (R-GASTO-02), y si se habilita el prorrateo modelado de gasto GN/GORE (R-GASTO-16).",
+  "Alcance de los temas: quién cura y aprueba dim_tema_gasto cada año; si 'anemia' se rotula como PPoR 1001 completo (desarrollo infantil temprano) o se baja a productos específicos.",
+  "Tratamiento de Lima (DEPARTAMENTO_META=15) y del gasto de sedes nacionales en rankings departamentales (marcar o excluir).",
+  "Denominador de salud materna: nacidos vivos (CNV), gestantes estimadas o mujeres 15–49.",
+  "Fecha a partir de la cual un año se considera cerrado en los datos abiertos del MEF (propuesto provisional: 31 de marzo del año siguiente)."
+ ]
+}

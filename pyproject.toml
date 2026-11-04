@@ -1,0 +1,38 @@
+[project]
+name = "preguntale-al-peru"
+version = "0.1.0"
+description = "Pregúntale al Perú: respuestas con cifras oficiales del Perú, por territorio y con sus límites (CLI pap)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "duckdb>=1.5,<1.6",
+    "frictionless>=5.18",
+    "httpx>=0.28",
+    "jsonschema>=4.23",
+    "openpyxl>=3.1",
+    "pandas>=3.0.6",
+    "pdfplumber>=0.11.10",
+    "polars>=1.30",
+    "pyreadstat>=1.2",
+    "pyyaml>=6.0",
+    "svy==0.32.1",
+    "tzdata>=2026.5",
+    "xlrd>=2.0.2",
+    "zstandard>=0.25",
+]
+
+[project.scripts]
+pap = "pap.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8"]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/pap"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

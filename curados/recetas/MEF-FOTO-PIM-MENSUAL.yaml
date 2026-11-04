@@ -1,0 +1,77 @@
+# DESACTIVADA el 8/10/2026 por decisión del dueño (docs/decisiones.md, fila del 8/10/2026: «No habrá foto mensual
+# del PIM … La receta MEF-FOTO-PIM-MENSUAL y `pap foto-pim` se desactivan»). No se borra: el código y las pruebas siguen,
+# pero `pap registrar`, `pap descargar` y `pap foto-pim registrar|extraer` se niegan mientras exista el bloque `desactivada`.
+# Receta de obtención — escrita a mano (pieza D de las decisiones del gasto, rondas 1-2; decisión 12 del dueño, 7/10/2026).
+# Foto mensual del PIM: el MEF no publica el PIM mes a mes; cada descarga del archivo del año en curso trae el PIM
+# vigente a su fecha de corte. Esta receta guarda cada descarga mensual como captura fechada propia.
+# Por qué una receta aparte y no una variante de MEF-DA-PRESUPUESTO-EJECUCION-GASTO: (1) capa0/gasto.py toma de esa
+# receta el ÚLTIMO {anio}-Gasto-Mensual.csv para la fact (R-GASTO-04); las fotos no deben moverlo; (2) la serie de
+# fotos tiene su propio nombre de recurso (foto-pim-<año>), así `previous` encadena mes con mes; (3) el almacén es por
+# huella: si el mismo archivo se registra también en la receta principal, el CSV se guarda una sola vez.
+# Uso: `pap foto-pim registrar ARCHIVO --corte AAAA-MM-DD` (no `pap registrar` directo). Guía:
+# biblioteca/cruda/GUIA_FOTO_PIM_MENSUAL.md. Esquema: src/pap/esquemas/receta.schema.json
+id: MEF-FOTO-PIM-MENSUAL
+strategy: manual
+method: manual_navegador
+resource_name: foto-pim
+publisher: MEF
+dataset_title: Presupuesto y Ejecución de Gasto (datos abiertos MEF) — foto mensual del archivo del año en curso
+access_url: https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto
+download_url: https://fs.datosabiertos.mef.gob.pe/datastorefiles/2026-Gasto-Mensual.csv
+documentation_url: https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv
+temporal:
+  inicio: 2026
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: otra-abierta
+  title: Otro (abierto)
+license_basis: declarada_en_pagina
+known_issues:
+- 'El archivo no trae un campo de fecha de corte (Gastos_Diccionario.csv: solo ANO_EJE y MES_EJE). data_cutoff es la
+  fecha de actualización que declara la página del recurso («actualizado DD-MM-AAAA»), pasada con --corte (base
+  «declarada»); sin ella, el último mes con devengado (AAAA-MM, base «max_fecha_en_datos»). La foto se identifica por
+  (anio, mes_ref): el último mes cerrado antes de la fecha «actualizado» o, sin --corte, antes de la fecha de consulta
+  (pap/capa0/foto_pim.py).'
+- 'PIA y PIM vienen solo en MES_EJE = 0 y son los vigentes a la fecha de corte; el devengado es mensual. Un mes que no
+  se fotografió no se puede reconstruir después (el devengado sí, desde cualquier archivo posterior).'
+- 'Usar SOLO {anio}-Gasto-Mensual.csv; nunca el -Diario (R-GASTO-04). El ubigeo distrital es el de la sede de la
+  ejecutora; la meta solo trae DEPARTAMENTO_META.'
+manual:
+  pasos:
+  - 'Entre el 3.er y el 5.º día hábil del mes: abrir https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto
+    y anotar la fecha «actualizado» del recurso {anio}-Gasto-Mensual.csv; si aún es del mes anterior, reintentar otro día.'
+  - 'Descargar https://fs.datosabiertos.mef.gob.pe/datastorefiles/{anio}-Gasto-Mensual.csv con Chrome (si el
+    certificado sigue vencido: Configuración avanzada → Acceder).'
+  - 'uv run pap foto-pim registrar ~/Downloads/{anio}-Gasto-Mensual.csv --corte AAAA-MM-DD --mover'
+espera:
+  formato:
+  - csv
+  bytes: [1000, 40000000000]
+  columnas: [ANO_EJE, MES_EJE, NIVEL_GOBIERNO, PLIEGO, SEC_EJEC, PROGRAMA_PPTO, TIPO_ACT_PROY_NOMBRE,
+    PRODUCTO_PROYECTO, ACTIVIDAD_ACCION_OBRA, FUNCION_NOMBRE, DIVISION_FUNCIONAL_NOMBRE, GRUPO_FUNCIONAL_NOMBRE,
+    DEPARTAMENTO_META, FUENTE_FINANCIAMIENTO, RUBRO, CATEGORIA_GASTO, TIPO_TRANSACCION, GENERICA, SUBGENERICA,
+    SUBGENERICA_DET, ESPECIFICA, ESPECIFICA_DET, MONTO_PIA, MONTO_PIM, MONTO_DEVENGADO]
+catalogo:
+  ola: desactivada
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: desactivada
+  bloquea_mvp: false
+desactivada:
+  fecha: '2026-10-08'
+  decision: 'docs/decisiones.md, fila del 8/10/2026 (deja sin efecto la decisión 12 del 7/10/2026)'
+  motivo: 'No habrá foto mensual del PIM y no se descargarán más datos pesados; R-GASTO-07/18/19 trabajan con el PIM
+    final del año.'
+  reactivar: 'registrar una decisión nueva del dueño en docs/decisiones.md, quitar este bloque y poner
+    catalogo.ola/compuerta_ingesta según el catálogo; la guía biblioteca/cruda/GUIA_FOTO_PIM_MENSUAL.md sigue válida'
+notas: 'Tabla derivada: foto_pim v1.1 (pap/capa0/foto_pim.py), una por captura, en
+  biblioteca/estandarizada/gasto/foto_pim/. Foto: (anio, mes_ref). Línea, con los nombres de la base de gasto.py:
+  nivel_gobierno, pliego, sec_ejec, programa_ppto, tipo_act_proy, producto_proyecto, actividad_accion_obra, funcion,
+  division_funcional, grupo_funcional, departamento_meta, fuente_financiamiento, rubro, categoria_gasto, generica,
+  clasificador_transferencia. Montos: pia, pim, devengado_acum (al corte).'

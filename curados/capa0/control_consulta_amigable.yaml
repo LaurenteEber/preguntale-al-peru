@@ -1,0 +1,16 @@
+# Cifras de control de la Consulta Amigable del MEF (R-GASTO-04), en soles.
+# Fuente: captura de pantalla de la Consulta Amigable enviada por el dueño el 2026-10-06
+# (consultada ese día). Nivel: Nacional = E, Regional = R, Local = M.
+fuente: "MEF, Consulta Amigable (consulta del dueño, 2026-10-06)"
+consultado: "2026-10-06"
+tolerancia_relativa: 0.005
+cifras:
+  - {anio: 2025, nivel_gobierno: E, pim: 157330847264, devengado: 150915863340}
+  - {anio: 2025, nivel_gobierno: R, pim: 61506664023, devengado: 59525149047}
+  - {anio: 2025, nivel_gobierno: M, pim: 53613348120, devengado: 43234148485}
+  - {anio: 2024, nivel_gobierno: E, pim: 150664972454, devengado: 143041779283}
+  - {anio: 2024, nivel_gobierno: R, pim: 59589228467, devengado: 56575478530}
+  - {anio: 2024, nivel_gobierno: M, pim: 51803818284, devengado: 39275797634}
+  - {anio: 2023, nivel_gobierno: E, pim: 144961062397, devengado: 135947999082}
+  - {anio: 2023, nivel_gobierno: R, pim: 55247500047, devengado: 50925417710}
+  - {anio: 2023, nivel_gobierno: M, pim: 49738851508, devengado: 36105323252}

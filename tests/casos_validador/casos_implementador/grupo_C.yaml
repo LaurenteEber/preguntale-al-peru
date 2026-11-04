@@ -1,0 +1,1175 @@
+# Casos propios del implementador C (etapas 5, 8, 9 y 10). Formato: contrato_validador.md §6.
+# Cada caso corre solo su regla. En las reglas de respuesta la cifra puede traer `base` (fila del cubo + metadatos).
+# Las acciones esperadas son las normalizadas (regenerar → rotular; bloquear → suprimir en cifra; no_comparar → bloquear_cruce).
+
+# ----------------------------------------------------------------------------------------------------- piezas comunes
+# ============================================================================================ etapa 5 (cifra)
+# ---------------------------------------------------------------- R-ENC-13
+- id: R-ENC-13-a
+  regla: R-ENC-13
+  descripcion: serie ENDES 2015–2024 que pasa por 2020 → advertir (y 2020 biomédico a revisión humana)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2015}, {anio: 2020}, {anio: 2024}]}
+  espera: {dispara: true, accion: advertir, motivo: quiebre}
+- id: R-ENC-13-a2
+  regla: R-ENC-13
+  descripcion: el modificador biomedicos_endes_2020 sale como revision_humana cuando hay fila de 2020
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2019}, {anio: 2020}, {anio: 2024}]}
+  espera: {dispara: true, accion: revision_humana}
+- id: R-ENC-13-a3
+  regla: R-ENC-13
+  descripcion: H-20, serie 2019–2024 sin fila de 2020 → advertir, sin revisión humana (solo la fila de 2020 la pide)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2019}, {anio: 2024}]}
+  espera: {dispara: true, accion: advertir}
+- id: R-ENC-13-b
+  regla: R-ENC-13
+  descripcion: serie ENDES 2022–2024, sin años con quiebre → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2022}, {anio: 2024}]}
+  espera: {dispara: false}
+- id: R-ENC-13-borde-inicio
+  regla: R-ENC-13
+  descripcion: borde, la serie empieza justo en 2020 (abarca el año) → advertir
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2020}, {anio: 2024}]}
+  espera: {dispara: true, accion: advertir}
+- id: R-ENC-13-borde-2021-endes
+  regla: R-ENC-13
+  descripcion: borde, ENDES 2021–2024 (2021 no es modo mixto en la ENDES) → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2021}, {anio: 2024}]}
+  espera: {dispara: false}
+- id: R-ENC-13-c
+  regla: R-ENC-13
+  descripcion: pobreza ENAHO 2019–2025, 2020 y 2021 declarados comparables → entra a la serie con marca (rotular)
+  base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2019}, {anio: 2021}, {anio: 2025}]}
+  espera: {dispara: true, accion: rotular, motivo: quiebre}
+- id: R-ENC-13-d
+  regla: R-ENC-13
+  descripcion: cifra suelta de 2020 (sin serie) también lleva la marca
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {anio: 2020}
+  espera: {dispara: true, accion: advertir}
+
+# ---------------------------------------------------------------- R-ENC-14
+- id: R-ENC-14-a
+  regla: R-ENC-14
+  descripcion: anemia OMS 2024 2025 comparada con 2023 RM 363 → bloquear la comparación entre tramos
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {comparacion: {anio: 2023, criterio: "RM363-2022/OMS2001"}}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: criterio_distinto}
+- id: R-ENC-14-b
+  regla: R-ENC-14
+  descripcion: serie RM 363 2022–2024, un solo criterio → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2022, criterio: "RM363-2022/OMS2001"}, {anio: 2024}]}
+  espera: {dispara: false}
+- id: R-ENC-14-c
+  regla: R-ENC-14
+  descripcion: anemia sin criterio_medicion → suprimir (metadato_faltante)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {criterio_medicion: null, criterio: null}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: R-ENC-14-d
+  regla: R-ENC-14
+  descripcion: tema distinto de anemia (DCI) con criterios mezclados → no dispara
+  base: {indicador: endes_dci_menores_5, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {comparacion: {anio: 2015, criterio: "otro"}}
+  espera: {dispara: false}
+- id: R-ENC-14-e
+  regla: R-ENC-14
+  descripcion: SIEN (registro) también entra (absorbe R-REG-11)
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {serie: [{anio: 2023, criterio: "OMS2001/2017"}, {anio: 2025}]}
+  espera: {dispara: true, accion: bloquear_cruce}
+
+# ---------------------------------------------------------------- R-REG-10
+- id: R-REG-10-a
+  regla: R-REG-10
+  descripcion: SIEN 2023–2025 cruza el quiebre de 2024 → bloquear variación
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {serie: [{anio: 2023}, {anio: 2025}]}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: quiebre}
+- id: R-REG-10-borde
+  regla: R-REG-10
+  descripcion: borde, SIEN 2024–2025 (quiebre = anio_ini, no es anio_ini < quiebre) → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {serie: [{anio: 2024}, {anio: 2025}]}
+  espera: {dispara: false}
+- id: R-REG-10-b
+  regla: R-REG-10
+  descripcion: SIEN 2025 sola → no dispara
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  espera: {dispara: false}
+- id: R-REG-10-c
+  regla: R-REG-10
+  descripcion: años agrupados 2023–2025 a través del quiebre → la cifra agrupada se suprime
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "21"}
+  cifra: {periodo_agrupado: [2023, 2025]}
+  espera: {dispara: true, accion: suprimir, motivo: quiebre}
+- id: R-REG-10-d
+  regla: R-REG-10
+  descripcion: fuente fuera de la lista (ENDES) → no aplica
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {serie: [{anio: 2015}, {anio: 2024}]}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-GASTO-08
+- id: R-GASTO-08-a
+  regla: R-GASTO-08
+  descripcion: gasto ex-PAN 2025 → rotular con la etiqueta ciudadana del tema
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  espera: {dispara: true, accion: rotular, motivo: tema_gasto}
+- id: R-GASTO-08-b
+  regla: R-GASTO-08
+  descripcion: fila fuera de gasto_final → bloquear (suprimir)
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {bloque_consolidado: transferencias}
+  espera: {dispara: true, accion: suprimir, motivo: fuera_de_tema}
+- id: R-GASTO-08-c
+  regla: R-GASTO-08
+  descripcion: ps_empleo_temporal sin el monto «transferido a municipalidades» → no se publica
+  base: {indicador: gasto_ex_pan, anio: 2023, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: ps_empleo_temporal, cadena: programa_social}
+  espera: {dispara: true, accion: suprimir, motivo: linea_aparte_faltante}
+- id: R-GASTO-08-d
+  regla: R-GASTO-08
+  descripcion: ps_empleo_temporal 2023 con la línea aparte → rótulo con el nombre propio del año
+  base: {indicador: gasto_ex_pan, anio: 2023, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: ps_empleo_temporal, cadena: programa_social, transferido_municipalidades: 605600000, etiqueta_ciudadana: null}
+  espera: {dispara: true, accion: rotular}
+- id: R-GASTO-08-e
+  regla: R-GASTO-08
+  descripcion: cifra de encuesta → no aplica
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  espera: {dispara: false}
+- id: R-GASTO-08-f
+  regla: R-GASTO-08
+  descripcion: gasto sin tema_id → metadato faltante
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: null}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: R-GASTO-08-g
+  regla: R-GASTO-08
+  descripcion: versión de dim_tema_gasto distinta de la aprobada (1.1) → bloquear
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {version_tema: "1.1"}
+  espera: {dispara: true, accion: suprimir, motivo: tema_sin_version}
+
+# ---------------------------------------------------------------- R-GASTO-09
+- id: R-GASTO-09-a
+  regla: R-GASTO-09
+  descripcion: gasto de 2022 (sin montos) → no se publica cifra, solo linaje
+  base: {indicador: gasto_ex_pan, anio: 2023, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {anio: 2022}
+  espera: {dispara: true, accion: suprimir, motivo: fuera_de_cobertura}
+- id: R-GASTO-09-b
+  regla: R-GASTO-09
+  descripcion: opción C 2024→2025 con quiebre L11 no comparable → advertir sin variación porcentual
+  base: {indicador: gasto_ex_pan_opcion_c, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {comparacion: {anio: 2024}}
+  espera: {dispara: true, accion: advertir, motivo: quiebre}
+- id: R-GASTO-09-c
+  regla: R-GASTO-09
+  descripcion: ex-PAN 2024→2025 (L11 comparable por concepto) → no dispara
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {comparacion: {anio: 2024}}
+  espera: {dispara: false}
+- id: R-GASTO-09-borde-2023
+  regla: R-GASTO-09
+  descripcion: borde, 2023 es el primer año con montos → no dispara
+  base: {indicador: gasto_ex_pan, anio: 2023, nivel: departamento, territorio: "09", medida: devengado}
+  espera: {dispara: false}
+- id: R-GASTO-09-nodos-sobre
+  regla: R-GASTO-09
+  descripcion: nodos nuevos de 2024 pesan 6 % (> 5 %) sin evento que los declare comparables → advertir
+  base: {indicador: gasto_ex_pan, anio: 2024, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {comparacion: {anio: 2023}, peso_nodos_nuevos: 0.06}
+  espera: {dispara: true, accion: advertir}
+- id: R-GASTO-09-nodos-borde
+  regla: R-GASTO-09
+  descripcion: borde, nodos nuevos = 5 % exacto (no supera el umbral) → no dispara
+  base: {indicador: gasto_ex_pan, anio: 2024, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {comparacion: {anio: 2023}, peso_nodos_nuevos: 0.05}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-CRUCES-04
+- id: R-CRUCES-04-a
+  regla: R-CRUCES-04
+  descripcion: anemia 2023 (RM 363) vs 2025 (RM 251) cruza el quiebre de 2024 con definiciones distintas → advertir
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {comparacion: {anio: 2023, criterio: "RM363-2022/OMS2001", indicador_id: endes_anemia_6_35m}}
+  espera: {dispara: true, accion: advertir, motivo: quiebre}
+- id: R-CRUCES-04-b
+  regla: R-CRUCES-04
+  descripcion: ENDES 2019 vs 2022 (quiebre de modo 2020, misma definición) → lo trata R-ENC-13, no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2022, nivel: departamento, territorio: "09"}
+  cifra: {comparacion: {anio: 2019}}
+  espera: {dispara: false}
+- id: R-CRUCES-04-borde
+  regla: R-CRUCES-04
+  descripcion: borde, 2024 vs 2025 con el quiebre en 2024 (= anio_inicio) → no dispara
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {comparacion: {anio: 2024}}
+  espera: {dispara: false}
+- id: R-CRUCES-04-c
+  regla: R-CRUCES-04
+  descripcion: RM 363 2015 vs 2025 (quiebre 2024 del catálogo, mismo criterio publicado) → versión homologada, rotular
+  base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}
+  cifra: {comparacion: {anio: 2015}}
+  espera: {dispara: true, accion: rotular}
+
+# ---------------------------------------------------------------- R-LENGUAJE-04
+- id: R-LENGUAJE-04-a
+  regla: R-LENGUAJE-04
+  descripcion: Mapa de Pobreza 2018 → pasado y aviso de pandemia
+  cifra: {fuente_principal: INEI-MAPA-POBREZA, naturaleza_dato: estimacion_modelada, tipo_medida: estimacion_modelada, anio: 2018, es_socioeconomico: true}
+  espera: {dispara: true, accion: rotular, motivo: dato_antiguo}
+- id: R-LENGUAJE-04-a2
+  regla: R-LENGUAJE-04
+  descripcion: Mapa de Pobreza 2018 → el aviso de choque sale como advertir
+  cifra: {fuente_principal: INEI-MAPA-POBREZA, naturaleza_dato: estimacion_modelada, tipo_medida: estimacion_modelada, anio: 2018, es_socioeconomico: true}
+  espera: {dispara: true, accion: advertir}
+- id: R-LENGUAJE-04-borde
+  regla: R-LENGUAJE-04
+  descripcion: borde, dato de 2024 (edad 2 = vigencia máxima) → no dispara
+  cifra: {fuente_principal: INEI-MAPA-POBREZA, naturaleza_dato: estimacion_modelada, tipo_medida: estimacion_modelada, anio: 2024, es_socioeconomico: true}
+  espera: {dispara: false}
+- id: R-LENGUAJE-04-borde3
+  regla: R-LENGUAJE-04
+  descripcion: borde, dato de 2023 (edad 3) → pasado, sin aviso de choque
+  cifra: {fuente_principal: INEI-MAPA-POBREZA, naturaleza_dato: estimacion_modelada, tipo_medida: estimacion_modelada, anio: 2023, es_socioeconomico: true}
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-04-b
+  regla: R-LENGUAJE-04
+  descripcion: ENDES 2015 (fuera de la lista cerrada de fuentes) → no aplica
+  base: {indicador: endes_anemia_6_35m, anio: 2015, nivel: departamento, territorio: "09"}
+  espera: {dispara: false}
+- id: R-LENGUAJE-04-c
+  regla: R-LENGUAJE-04
+  descripcion: PR-05, parte de una serie cuyo último año está vigente → no dispara
+  cifra: {fuente_principal: INEI-MAPA-POBREZA, naturaleza_dato: estimacion_modelada, tipo_medida: estimacion_modelada, anio: 2018, es_socioeconomico: true,
+          serie: [{anio: 2018}, {anio: 2025}]}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-GASTO-08b (cifra, etapa 5; H-7)
+- id: R-GASTO-08b-a
+  regla: R-GASTO-08b
+  descripcion: (1) cpt_grupo_expan con cadena concepto → no dispara
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  espera: {dispara: false}
+- id: R-GASTO-08b-b
+  regla: R-GASTO-08b
+  descripcion: (1) tema fuera de la gramática → la cifra temática se suprime
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: anemia_total, cadena: concepto}
+  espera: {dispara: true, accion: suprimir, motivo: tema_fuera_de_gramatica}
+- id: R-GASTO-08b-c
+  regla: R-GASTO-08b
+  descripcion: (1) prefijo cpt_ con cadena programa → suprimir
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: cpt_grupo_expan, cadena: programa}
+  espera: {dispara: true, accion: suprimir}
+- id: R-GASTO-08b-d
+  regla: R-GASTO-08b
+  descripcion: (2) cociente pp_1001 sobre fun_salud en la comparación → bloquear_cruce
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: pp_1001_dit, cadena: programa, comparacion: {tema_id: fun_salud, cadena: funcion, operacion: cociente}}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: cadena_distinta}
+- id: R-GASTO-08b-e
+  regla: R-GASTO-08b
+  descripcion: (2) excepción, cociente ppxfun_1001_salud sobre pp_1001_dit → rotular
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: ppxfun_1001_salud, cadena: programa_x_funcion, comparacion: {tema_id: pp_1001_dit, cadena: programa, operacion: cociente}}
+  espera: {dispara: true, accion: rotular}
+- id: R-GASTO-08b-f
+  regla: R-GASTO-08b
+  descripcion: (6) suma de ex-PAN con su lectura alternativa (opción C) en la comparación → bloquear_cruce
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {comparacion: {tema_id: cpt_grupo_opcion_c, cadena: concepto, operacion: suma}}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: lecturas_alternativas}
+- id: R-GASTO-08b-g
+  regla: R-GASTO-08b
+  descripcion: (4) serie que mezcla cpt_ y pp_ → bloquear_cruce
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {serie: [{anio: 2023, tema_id: cpt_grupo_expan, cadena: concepto}, {anio: 2024, tema_id: pp_1001_dit, cadena: programa}]}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: cadena_distinta}
+- id: R-GASTO-08b-h
+  regla: R-GASTO-08b
+  descripcion: (4) versión «1.2» en una fila y «1.2.0» en otra son la misma (mayor.menor) → no dispara
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {version_tema: "1.2.0", serie: [{anio: 2024, tema_id: cpt_grupo_expan, version_tema: "1.2"}]}
+  espera: {dispara: false}
+- id: R-GASTO-08b-i
+  regla: R-GASTO-08b
+  descripcion: cifra de encuesta → no aplica
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  espera: {dispara: false}
+
+# R-GASTO-08b, cláusulas de respuesta (2)/(3)/(6): las corre R-GASTO-15 en la etapa 8 con regla = R-GASTO-08b
+- id: R-GASTO-08b-resp-a
+  regla: R-GASTO-15
+  descripcion: suma de ex-PAN y opción C declarada como cruce → bloquear el cruce (lecturas alternativas)
+  respuesta:
+    cifras: [&g09 {id_cifra: g09, rol: principal, es_principal: true, semaforo_cifra: verde, base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}}, &c09 {id_cifra: c09, rol: contexto, es_principal: false, semaforo_cifra: verde, base: {indicador: gasto_ex_pan_opcion_c, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}}]
+    cruces: [{id_cruce: S1, a: g09, b: c09, presentacion: suma}]
+    texto: "En Huancavelica se gastó (devengado) {{c:g09}}. Dentro del PP 1001 fueron {{c:c09}}. Son dos formas de ordenar el mismo gasto; no se suman."
+  espera: {dispara: true, accion: bloquear_cruce, motivo: lecturas_alternativas, objetivo: "cruce:S1"}
+- id: R-GASTO-08b-resp-b
+  regla: R-GASTO-15
+  descripcion: ex-PAN y opción C en oraciones separadas con la frase fija → no dispara
+  respuesta:
+    cifras: [*g09, *c09]
+    texto: "En Huancavelica se gastó (devengado) {{c:g09}}. Dentro del PP 1001 fueron {{c:c09}}. Son dos formas de ordenar el mismo gasto; no se suman."
+  espera: {dispara: false}
+- id: R-GASTO-08b-resp-c
+  regla: R-GASTO-15
+  descripcion: las dos lecturas en la misma oración → regenerar (rotular, modo corrector)
+  respuesta:
+    cifras: [*g09, *c09]
+    texto: "Se gastó (devengado) {{c:g09}}, de los cuales {{c:c09}} dentro del PP 1001. Son dos formas de ordenar el mismo gasto; no se suman."
+  espera: {dispara: true, accion: rotular, motivo: cadena_distinta, modo: corrector}
+- id: R-GASTO-08b-resp-d
+  regla: R-GASTO-15
+  descripcion: dos cadenas en la respuesta sin la frase fija → rotular con la frase
+  respuesta:
+    cifras: [*g09, {id_cifra: f09, base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}, tema_id: fun_salud, cadena: funcion}]
+    texto: "Se gastó (devengado) {{c:g09}} en estos servicios. En el sector salud se gastó (devengado) {{c:f09}}."
+  espera: {dispara: true, accion: rotular, motivo: cadena_distinta}
+- id: R-GASTO-08b-resp-e
+  regla: R-GASTO-15
+  descripcion: resta entre cadenas distintas declarada como cruce → bloquear el cruce
+  respuesta:
+    cifras: [*g09, {id_cifra: f09, base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}, tema_id: fun_salud, cadena: funcion}]
+    cruces: [{id_cruce: S2, a: f09, b: g09, presentacion: resta}]
+    texto: "Son dos formas de ordenar el mismo gasto; no se suman."
+  espera: {dispara: true, accion: bloquear_cruce, objetivo: "cruce:S2"}
+
+# ============================================================================================ etapa 8 (respuesta)
+# ---------------------------------------------------------------- R-CRUCES-11
+- id: R-CRUCES-11-a
+  regla: R-CRUCES-11
+  descripcion: CR-01 por departamento 2025, lado a lado → listado, no dispara
+  respuesta:
+    cifras: [*g09, &a09 {id_cifra: a09, rol: principal, es_principal: true, semaforo_cifra: verde, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: X1, a: g09, b: a09, presentacion: lado_a_lado, nivel: departamento, anios: [2025]}]
+  espera: {dispara: false}
+- id: R-CRUCES-11-b
+  regla: R-CRUCES-11
+  descripcion: gasto ex-PAN × pobreza ENAHO (no listado) → no se calcula
+  respuesta:
+    cifras: [*g09, {id_cifra: p09, base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: X2, a: g09, b: p09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: cruce_no_listado}
+- id: R-CRUCES-11-c
+  regla: R-CRUCES-11
+  descripcion: CR-02 (gasto × SIEN) sin visto del dueño (opcion_dueno) → no se calcula
+  respuesta:
+    cifras: [*g09, {id_cifra: s09, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: X3, a: g09, b: s09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: cruce_no_listado}
+- id: R-CRUCES-11-d
+  regla: R-CRUCES-11
+  descripcion: CR-01 en Lima Metropolitana 2025 (subdivision_lima, L5) → no dispara
+  respuesta:
+    cifras: [&gLM {id_cifra: gLM, rol: principal, es_principal: true, semaforo_cifra: verde, base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, medida: devengado}}, &aLM {id_cifra: aLM, rol: principal, es_principal: true, semaforo_cifra: verde, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}}]
+    cruces: [{id_cruce: X4, a: gLM, b: aLM, presentacion: lado_a_lado, nivel: LIMA_METROPOLITANA, anios: [2025]}]
+  espera: {dispara: false}
+- id: R-CRUCES-11-e
+  regla: R-CRUCES-11
+  descripcion: CR-01 en Lima Metropolitana 2023 (fuera de los años del ámbito) → bloquear
+  respuesta:
+    cifras: [*gLM, *aLM]
+    cruces: [{id_cruce: X5, a: gLM, b: aLM, presentacion: lado_a_lado, nivel: LIMA_METROPOLITANA, anios: [2023]}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: anio_fuera_de_lista}
+- id: R-CRUCES-11-e2
+  regla: R-CRUCES-11
+  descripcion: con anios_condicionados 2025 inactivo, LM 2025 sale de la lista
+  contexto:
+    cruces:
+      - id_cruce: CR-01
+        estado_propuesta: activo_piloto
+        aprobado_por: dueño
+        indicador_a: gasto_ex_pan
+        indicador_b: endes_anemia_6_35m_oms2024
+        nivel_minimo: departamento
+        anios_comunes: [2024, 2025]
+        presentacion: lado_a_lado
+        subdivision_lima:
+          subdivide: ["15", "07"]
+          ambitos: [{ambito_id: LIMA_METROPOLITANA, nivel: LIMA_METROPOLITANA, anios: [2024, 2025]}]
+          anios_condicionados: [{anio: 2025, ambitos: [LIMA_METROPOLITANA], activo: false}]
+  respuesta:
+    cifras: [*gLM, *aLM]
+    cruces: [{id_cruce: X5b, a: gLM, b: aLM, presentacion: lado_a_lado, nivel: LIMA_METROPOLITANA, anios: [2025]}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: anio_fuera_de_lista}
+- id: R-CRUCES-11-f
+  regla: R-CRUCES-11
+  descripcion: CR-01 pedido como asociación (listado lado a lado) → bloquear
+  respuesta:
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: X6, a: g09, b: a09, presentacion: asociacion, nivel: departamento, anios: [2025]}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: presentacion_no_listada}
+- id: R-CRUCES-11-g
+  regla: R-CRUCES-11
+  descripcion: CR-01 a nivel provincia (bajo nivel_minimo) → agregar_nivel
+  respuesta:
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: X7, a: g09, b: a09, presentacion: lado_a_lado, nivel: provincia, anios: [2025]}]
+  espera: {dispara: true, accion: agregar_nivel}
+- id: R-CRUCES-11-h
+  regla: R-CRUCES-11
+  descripcion: CR-01 en 2023 por departamento (fuera de anios_comunes) → bloquear
+  respuesta:
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: X8, a: g09, b: a09, presentacion: lado_a_lado, nivel: departamento, anios: [2023]}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: anio_fuera_de_lista}
+
+# ---------------------------------------------------------------- R-CRUCES-01
+- id: R-CRUCES-01-a
+  regla: R-CRUCES-01
+  descripcion: gasto × ENDES pedido por provincia → nivel del cruce departamento (agregar_nivel)
+  respuesta:
+    nivel_pedido: provincia
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: Y1, a: g09, b: a09, presentacion: lado_a_lado, nivel: provincia}]
+  espera: {dispara: true, accion: agregar_nivel, motivo: nivel_no_representativo}
+- id: R-CRUCES-01-b
+  regla: R-CRUCES-01
+  descripcion: gasto × ENDES por departamento → no dispara
+  respuesta:
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: Y2, a: g09, b: a09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: false}
+- id: R-CRUCES-01-c
+  regla: R-CRUCES-01
+  descripcion: CR-01 en Lima Metropolitana (ámbito a ámbito, L5) → no dispara
+  respuesta:
+    cifras: [*gLM, *aLM]
+    cruces: [{id_cruce: Y3, a: gLM, b: aLM, presentacion: lado_a_lado, nivel: LIMA_METROPOLITANA}]
+  espera: {dispara: false}
+- id: R-CRUCES-01-d
+  regla: R-CRUCES-01
+  descripcion: Lima Región × Callao en asociación (ningún territorio salvo el nacional los contiene) → bloquear
+  respuesta:
+    cifras: [{id_cifra: gLR, base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_REGION, territorio: LIMA_REGION, medida: devengado}},
+             {id_cifra: aCA, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: CALLAO, territorio: CALLAO}}]
+    cruces: [{id_cruce: Y4, a: gLR, b: aCA, presentacion: asociacion, nivel: LIMA_REGION}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: sin_cruce_territorial}
+
+# ---------------------------------------------------------------- R-CRUCES-02
+- id: R-CRUCES-02-a
+  regla: R-CRUCES-02
+  descripcion: B9, componente de encuesta en rojo → bloquear
+  respuesta:
+    cifras: [*g09, {id_cifra: a09r, semaforo_cifra: rojo, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: Z1, a: g09, b: a09r, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: cruce_bloqueado}
+- id: R-CRUCES-02-b
+  regla: R-CRUCES-02
+  descripcion: B4, SIEN restado de ENDES → bloquear
+  respuesta:
+    cifras: [*a09, {id_cifra: s09, semaforo_cifra: ambar, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: Z2, a: a09, b: s09, presentacion: resta, nivel: departamento}]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-02-c
+  regla: R-CRUCES-02
+  descripcion: B1, gasto regional (base ejecutora) cruzado a distrito → bloquear
+  respuesta:
+    cifras: [{id_cifra: gd, nivel_gobierno: R, semaforo_cifra: verde, base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}},
+             {id_cifra: sd, semaforo_cifra: verde, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: Z3, a: gd, b: sd, presentacion: lado_a_lado, nivel: distrito}]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-02-d
+  regla: R-CRUCES-02
+  descripcion: CR-01 por departamento, ambos verdes, lado a lado → no dispara
+  respuesta:
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: Z4, a: g09, b: a09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: false}
+- id: R-CRUCES-02-e
+  regla: R-CRUCES-02
+  descripcion: PR-05, mismo indicador en dos años con uno en rojo → B9 no aplica
+  respuesta:
+    cifras: [*a09, {id_cifra: a09b, semaforo_cifra: rojo, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2024, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: Z5, a: a09b, b: a09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: false}
+- id: R-CRUCES-02-f
+  regla: R-CRUCES-02
+  descripcion: gasto regional × ENDES por provincia → bloquear (gana B1, que va antes que B2 en lista_bloqueos)
+  respuesta:
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: Z6, a: g09, b: a09, presentacion: lado_a_lado, nivel: provincia}]
+  espera: {dispara: true, accion: bloquear_cruce}
+
+# ---------------------------------------------------------------- R-CRUCES-03
+- id: R-CRUCES-03-a
+  regla: R-CRUCES-03
+  descripcion: gasto 2025 × ENDES 2025 (dist 0, rápidas) → no dispara
+  respuesta:
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: V1, a: g09, b: a09, presentacion: lado_a_lado}]
+  espera: {dispara: false}
+- id: R-CRUCES-03-borde1
+  regla: R-CRUCES-03
+  descripcion: borde, dist = 1 con ambas rápidas → rotular
+  respuesta:
+    cifras: [*a09, {id_cifra: g24, base: {indicador: gasto_ex_pan, anio: 2024, nivel: departamento, territorio: "09", medida: devengado}}]
+    cruces: [{id_cruce: V2, a: g24, b: a09, presentacion: lado_a_lado}]
+  espera: {dispara: true, accion: rotular, motivo: anios_distintos}
+- id: R-CRUCES-03-b
+  regla: R-CRUCES-03
+  descripcion: dist = 2 con ambas rápidas → bloquear
+  respuesta:
+    cifras: [*a09, {id_cifra: g23, base: {indicador: gasto_ex_pan, anio: 2023, nivel: departamento, territorio: "09", medida: devengado}}]
+    cruces: [{id_cruce: V3, a: g23, b: a09, presentacion: lado_a_lado}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: fuera_de_ventana}
+- id: R-CRUCES-03-c
+  regla: R-CRUCES-03
+  descripcion: Mapa 2018 (lenta) × gasto 2025 → dist 7 > 3, bloquear
+  respuesta:
+    cifras: [*g09, {id_cifra: m1, base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "090100"}}]
+    cruces: [{id_cruce: V4, a: m1, b: g09, presentacion: lado_a_lado}]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-03-borde3
+  regla: R-CRUCES-03
+  descripcion: borde, lenta con dist = 3 y sin choque (no socioeconómicos) → rotular
+  respuesta:
+    cifras: [{id_cifra: l1, anio: 2015, velocidad_cambio: lenta, es_socioeconomico: false},
+             {id_cifra: l2, anio: 2018, velocidad_cambio: rapida, es_socioeconomico: false}]
+    cruces: [{id_cruce: V5, a: l1, b: l2, presentacion: lado_a_lado}]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-03-choque
+  regla: R-CRUCES-03
+  descripcion: lenta dist = 3 cruzando 2020 con componente socioeconómico → además bloquear
+  respuesta:
+    cifras: [{id_cifra: l1, anio: 2018, velocidad_cambio: lenta, es_socioeconomico: true},
+             {id_cifra: l2, anio: 2021, velocidad_cambio: rapida, es_socioeconomico: false}]
+    cruces: [{id_cruce: V6, a: l1, b: l2, presentacion: lado_a_lado}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: anio_choque}
+- id: R-CRUCES-03-d
+  regla: R-CRUCES-03
+  descripcion: velocidad_cambio nula → bloquear (metadato_faltante)
+  respuesta:
+    cifras: [{id_cifra: l1, anio: 2025, velocidad_cambio: null}, {id_cifra: l2, anio: 2025, velocidad_cambio: rapida}]
+    cruces: [{id_cruce: V7, a: l1, b: l2, presentacion: lado_a_lado}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: metadato_faltante}
+
+# ---------------------------------------------------------------- R-CRUCES-05
+- id: R-CRUCES-05-a
+  regla: R-CRUCES-05
+  descripcion: CR-01 (gasto 0–59 meses, sector público × anemia 6–35 meses, total) → poblaciones anidadas, rotular
+  respuesta:
+    cifras: [*g09, *a09]
+    cruces: [{id_cruce: W1, a: g09, b: a09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-05-b
+  regla: R-CRUCES-05
+  descripcion: SIEN (establecimiento) × Mapa (residencia) por distrito → bloquear
+  respuesta:
+    cifras: [{id_cifra: s1, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}, nivel_publicado: distrito, territorio_id: "090101"},
+             {id_cifra: m1, base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: distrito, territorio: "090101"}}]
+    cruces: [{id_cruce: W2, a: s1, b: m1, presentacion: lado_a_lado, nivel: distrito}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: compatibilidad}
+- id: R-CRUCES-05-c
+  regla: R-CRUCES-05
+  descripcion: dos cifras de anemia ENDES del mismo grupo y universo → no dispara
+  respuesta:
+    cifras: [*a09, {id_cifra: a09v, base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: W3, a: a09v, b: a09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: false}
+- id: R-CRUCES-05-borde-tol
+  regla: R-CRUCES-05
+  descripcion: borde, 6–35 vs 6–47 meses (12 meses = tolerancia de 1 año) → mismo grupo, no dispara
+  respuesta:
+    cifras: [*a09, {id_cifra: a09w, base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"},
+                    poblacion_objetivo: {edad_min_meses: 6, edad_max_meses: 47, sexo: T, area: total}}]
+    cruces: [{id_cruce: W4, a: a09w, b: a09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: false}
+- id: R-CRUCES-05-borde-tol2
+  regla: R-CRUCES-05
+  descripcion: borde, 6–35 vs 6–48 meses (13 meses) → anidadas, rotular
+  respuesta:
+    cifras: [*a09, {id_cifra: a09w, base: {indicador: endes_anemia_6_35m, anio: 2025, nivel: departamento, territorio: "09"},
+                    poblacion_objetivo: {edad_min_meses: 6, edad_max_meses: 48, sexo: T, area: total}}]
+    cruces: [{id_cruce: W5, a: a09w, b: a09, presentacion: lado_a_lado, nivel: departamento}]
+  espera: {dispara: true, accion: rotular}
+
+# ---------------------------------------------------------------- R-CRUCES-08
+- id: R-CRUCES-08-a
+  regla: R-CRUCES-08
+  descripcion: anemia en Huancavelica, ENDES principal y SIEN complementaria con 10 pp de diferencia → rotular
+  respuesta:
+    nivel_pedido: departamento
+    cifras: [*a09, {id_cifra: s09, rol: contexto, valor: 28.0, criterio_medicion: "RM251-2024/OMS2024",
+                    base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+  espera: {dispara: true, accion: rotular, motivo: divergencia_fuentes}
+- id: R-CRUCES-08-b
+  regla: R-CRUCES-08
+  descripcion: SIEN marcada como principal a nivel departamento (la ENDES manda) → advertir
+  respuesta:
+    nivel_pedido: departamento
+    cifras: [{id_cifra: a09c, rol: contexto, es_principal: false, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}},
+             {id_cifra: s09, rol: principal, es_principal: true, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+  espera: {dispara: true, accion: advertir, motivo: jerarquia_fuentes}
+- id: R-CRUCES-08-c
+  regla: R-CRUCES-08
+  descripcion: una sola fuente para el concepto → no dispara
+  respuesta:
+    cifras: [*a09]
+  espera: {dispara: false}
+- id: R-CRUCES-08-borde
+  regla: R-CRUCES-08
+  descripcion: borde, diferencia de 5 pp exactos → solo complementaria (sin bloque de divergencia)
+  respuesta:
+    nivel_pedido: departamento
+    cifras: [{id_cifra: e1, rol: principal, es_principal: true, valor: 40.0, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}},
+             {id_cifra: s1, rol: contexto, valor: 35.0, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+  espera: {dispara: true, accion: rotular, motivo: fuente_complementaria}
+
+# ---------------------------------------------------------------- R-CRUCES-07
+- id: R-CRUCES-07-a
+  regla: R-CRUCES-07
+  descripcion: intención efecto con cifra de gasto → estructura de 5 partes
+  respuesta:
+    intencion_pregunta: efecto
+    cifras: [*g09, *a09]
+  espera: {dispara: true, accion: rotular, motivo: pregunta_de_efecto}
+- id: R-CRUCES-07-b
+  regla: R-CRUCES-07
+  descripcion: «¿Sirvió el gasto…?» con intención cruce → dispara por los disparadores
+  respuesta:
+    intencion_pregunta: cruce
+    pregunta: "¿Sirvió el gasto en anemia en Huancavelica?"
+    cifras: [*g09, *a09]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-07-c
+  regla: R-CRUCES-07
+  descripcion: pregunta de efecto sin cifra de gasto → no aplica
+  respuesta:
+    intencion_pregunta: efecto
+    cifras: [*a09]
+  espera: {dispara: false}
+- id: R-CRUCES-07-d
+  regla: R-CRUCES-07
+  descripcion: pregunta descriptiva con gasto → no dispara
+  respuesta:
+    intencion_pregunta: nivel_actual
+    pregunta: "¿Cuánto se gastó en Huancavelica?"
+    cifras: [*g09]
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-ENC-11
+- id: R-ENC-11-a
+  regla: R-ENC-11
+  descripcion: prueba del motor con p = 0,01 → cambio estadísticamente claro
+  respuesta:
+    cifras: [{id_cifra: a09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"},
+              comparacion: {anio: 2024, valor: 32.9, ee: 2.5, gl: 91, prueba_cambio: {diferencia: 5.7, p_valor: 0.01, significativa: true}}}]
+  espera: {dispara: true, accion: rotular, motivo: prueba_cambio}
+- id: R-ENC-11-b
+  regla: R-ENC-11
+  descripcion: sin prueba del motor, se calcula con cov 0 (38,6 vs 32,9; ee 3,4 y 2,5)
+  respuesta:
+    cifras: [{id_cifra: a09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"},
+              comparacion: {anio: 2024, valor: 32.94, ee: 2.54, gl: 91}}]
+  espera: {dispara: true, accion: rotular, motivo: prueba_cambio}
+- id: R-ENC-11-c
+  regla: R-ENC-11
+  descripcion: la cifra de comparación está suprimida → no comparar
+  respuesta:
+    cifras: [{id_cifra: a09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"},
+              comparacion: {anio: 2024, valor: 30, ee: 9, estado_cifra: suprimida}}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: suprimida}
+- id: R-ENC-11-d
+  regla: R-ENC-11
+  descripcion: comparación entre criterios distintos (quiebre R-ENC-14) → no comparar
+  respuesta:
+    cifras: [{id_cifra: a09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"},
+              comparacion: {anio: 2023, valor: 50, ee: 3, criterio: "RM363-2022/OMS2001"}}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: quiebre}
+- id: R-ENC-11-e
+  regla: R-ENC-11
+  descripcion: cifra sin comparación → no dispara
+  respuesta:
+    cifras: [*a09]
+  espera: {dispara: false}
+- id: R-ENC-11-borde
+  regla: R-ENC-11
+  descripcion: borde, p = 0,05 exacto → sin cambio estadísticamente claro (p >= alfa)
+  respuesta:
+    cifras: [{id_cifra: a09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"},
+              comparacion: {anio: 2024, valor: 32.9, ee: 2.5, prueba_cambio: {diferencia: 5.7, p_valor: 0.05}}}]
+  espera: {dispara: true, accion: rotular}
+- id: R-ENC-11-f
+  regla: R-ENC-11
+  descripcion: departamento contra el nacional sin covarianza del motor → no comparar
+  respuesta:
+    cifras: [{id_cifra: a09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"},
+              comparacion: {anio: 2025, territorio_id: PE, valor: 30, ee: 0.8}}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: covarianza_no_estimada}
+
+# ---------------------------------------------------------------- R-ENC-12
+- id: R-ENC-12-a
+  regla: R-ENC-12
+  descripcion: tres departamentos con ENDES → grupos semejantes (rotular)
+  respuesta:
+    intencion_pregunta: identificar_extremo
+    cifras:
+      - {id_cifra: d09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}}
+      - {id_cifra: d21, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "21"}}
+      - {id_cifra: dLM, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}}
+  espera: {dispara: true, accion: rotular, motivo: ranking_por_grupos}
+- id: R-ENC-12-b
+  regla: R-ENC-12
+  descripcion: el departamento 15 entero junto con Lima Metropolitana → bloquear (L8)
+  respuesta:
+    intencion_pregunta: identificar_extremo
+    cifras:
+      - {id_cifra: d15, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "15"}}
+      - {id_cifra: dLM, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}}
+      - {id_cifra: d09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}}
+  espera: {dispara: true, accion: bloquear_cruce, motivo: unidades_ranking}
+- id: R-ENC-12-c
+  regla: R-ENC-12
+  descripcion: dos territorios, pregunta de nivel → no dispara
+  respuesta:
+    intencion_pregunta: nivel_actual
+    cifras:
+      - {id_cifra: d09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}}
+      - {id_cifra: d21, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "21"}}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-EST-02
+- id: R-EST-02-a
+  regla: R-EST-02
+  descripcion: Mapa 2018 restado de ENAHO 2025 → bloquear
+  respuesta:
+    cifras: [{id_cifra: m1, base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "090100"}},
+             {id_cifra: p09, base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: E1, a: m1, b: p09, presentacion: resta}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: modelada_vs_otra}
+- id: R-EST-02-b
+  regla: R-EST-02
+  descripcion: Mapa 2018 lado a lado con gasto 2025 → advertir (años distintos)
+  respuesta:
+    cifras: [{id_cifra: m1, base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "090100"}}, *g09]
+    cruces: [{id_cruce: E2, a: m1, b: g09, presentacion: lado_a_lado}]
+  espera: {dispara: true, accion: advertir}
+- id: R-EST-02-c
+  regla: R-EST-02
+  descripcion: Mapa 2018 en asociación con una covariable de su modelo (CPV 2017) → bloquear
+  respuesta:
+    cifras: [{id_cifra: m1, base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "090100"}},
+             {id_cifra: nbi, anio: 2017, fuente_principal: INEI-CPV2017, naturaleza_dato: censo}]
+    cruces: [{id_cruce: E3, a: m1, b: nbi, presentacion: asociacion}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: covariable_del_modelo}
+- id: R-EST-02-d
+  regla: R-EST-02
+  descripcion: Mapa 2018 solo, sin cruce ni comparación → no dispara
+  respuesta:
+    cifras: [{id_cifra: m1, base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "090100"}}]
+  espera: {dispara: false}
+- id: R-EST-02-e
+  regla: R-EST-02
+  descripcion: ajuste del Mapa con la variación de la ENAHO → bloquear
+  respuesta:
+    cifras: [{id_cifra: m1, base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "090100"}},
+             {id_cifra: p09, base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "09"}}]
+    cruces: [{id_cruce: E4, a: m1, b: p09, operacion: ajuste_por_variacion_encuesta}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: actualizacion_prohibida}
+
+# ---------------------------------------------------------------- R-GASTO-15
+- id: R-GASTO-15-a
+  regla: R-GASTO-15
+  descripcion: verbo causal gasto → resultado → bloquear el enunciado
+  respuesta:
+    cifras: [*g09, *a09]
+    texto: "Gracias al gasto de {{c:g09}}, la anemia llegó a {{c:a09}}."
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-15-b
+  regla: R-GASTO-15
+  descripcion: acusación simétrica («no supo gastar su presupuesto») → bloquear
+  respuesta:
+    cifras: [*g09]
+    texto: "La municipalidad no supo gastar su presupuesto: ejecutó {{c:g09}}."
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-15-c
+  regla: R-GASTO-15
+  descripcion: excusa simétrica («es normal que no se gaste») → bloquear
+  respuesta:
+    cifras: [*g09]
+    texto: "Se gastó (devengado) {{c:g09}}; es normal que no se gaste todo el presupuesto."
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-15-d
+  regla: R-GASTO-15
+  descripcion: plantilla descriptiva → no dispara
+  respuesta:
+    cifras: [*g09, *a09]
+    texto: "En Huancavelica se gastó (devengado) {{c:g09}} en estos servicios en 2025; en el mismo periodo se estima que alrededor de {{c:a09}} de los niños tenía anemia. {{p:R-GASTO-15.plantilla}}"
+  espera: {dispara: false}
+- id: R-GASTO-15-e
+  regla: R-GASTO-15
+  descripcion: respuesta sin cifra de gasto → no aplica
+  respuesta:
+    cifras: [*a09]
+    texto: "La encuesta es suficiente para el departamento."
+  espera: {dispara: false}
+
+# ============================================================================================ etapa 9
+# ---------------------------------------------------------------- R-CRUCES-10
+- id: R-CRUCES-10-a
+  regla: R-CRUCES-10
+  descripcion: principales verdes y respuesta parcial → ámbar (rotular con el semáforo)
+  respuesta:
+    respuesta_parcial: true
+    nivel_pedido: departamento
+    nivel_respuesta: departamento
+    cifras: [*g09, *a09]
+  espera: {dispara: true, accion: rotular, motivo: semaforo_respuesta}
+- id: R-CRUCES-10-b
+  regla: R-CRUCES-10
+  descripcion: sin cifra principal publicable → «Sin cifra disponible»
+  respuesta:
+    cifras: [{id_cifra: x, es_principal: true, estado_cifra: suprimida, semaforo_cifra: no_publicable}]
+  espera: {dispara: true, accion: rotular, motivo: sin_cifra_principal}
+- id: R-CRUCES-10-c
+  regla: R-CRUCES-10
+  descripcion: cifra principal sin semáforo → metadato faltante
+  respuesta:
+    cifras: [{id_cifra: x, es_principal: true, estado_cifra: publicable}]
+  espera: {dispara: true, accion: revision_humana, motivo: metadato_faltante, objetivo: respuesta}
+
+# ============================================================================================ etapa 10
+# ---------------------------------------------------------------- R-LENGUAJE-01
+- id: R-LENGUAJE-01-a
+  regla: R-LENGUAJE-01
+  descripcion: ficha corta (4 campos) y larga presentes → no dispara
+  respuesta:
+    cifras: [*a09]
+    ficha:
+      corta: {semaforo_respuesta: "Confianza: Dato sólido.", fuentes_anios: "Datos de: ENDES 2025 (INEI)", territorio: "Territorio: departamento de Huancavelica",
+              no_concluir_principal: [NC-ACTUAL]}
+      larga: {cifras: {a09: {"1": "…"}}}
+  espera: {dispara: false}
+- id: R-LENGUAJE-01-b
+  regla: R-LENGUAJE-01
+  descripcion: sin ficha larga → no publicar
+  respuesta:
+    cifras: [*a09]
+    ficha: {corta: "Confianza: Dato sólido.\nDatos de: ENDES 2025 (INEI)\nTerritorio: departamento de Huancavelica\nNo permite concluir: cuál es la situación hoy."}
+  espera: {dispara: true, accion: suprimir, motivo: ficha_incompleta}
+- id: R-LENGUAJE-01-c
+  regla: R-LENGUAJE-01
+  descripcion: ficha corta de 5 líneas (máximo 4) → no publicar
+  respuesta:
+    cifras: [*a09]
+    ficha: {corta: "Confianza: Dato sólido.\nDatos de: ENDES 2025 (INEI)\nTerritorio: departamento de Huancavelica\nNo permite concluir: cuál es la situación hoy.\nOtra línea.",
+            larga: "…"}
+  espera: {dispara: true, accion: suprimir}
+- id: R-LENGUAJE-01-borde
+  regla: R-LENGUAJE-01
+  descripcion: borde, ficha corta de 4 líneas exactas como texto → no dispara
+  respuesta:
+    cifras: [*a09]
+    ficha: {corta: "Confianza: Dato sólido.\nDatos de: ENDES 2025 (INEI)\nTerritorio: departamento de Huancavelica\nNo permite concluir: cuál es la situación hoy.",
+            larga: "…"}
+  espera: {dispara: false}
+- id: R-LENGUAJE-01-d
+  regla: R-LENGUAJE-01
+  descripcion: ficha mínima (sin cifra principal publicable) con semáforo y fuentes → no dispara
+  respuesta:
+    cifras: [{id_cifra: x, es_principal: true, estado_cifra: sin_datos}]
+    ficha: {corta: "Confianza: Sin cifra disponible — fuente_en_ingesta.\nDatos de: SIEN (consultada)", larga: "…"}
+  espera: {dispara: false}
+- id: R-LENGUAJE-01-e
+  regla: R-LENGUAJE-01
+  descripcion: falta la línea «No permite concluir» → no publicar
+  respuesta:
+    cifras: [*a09]
+    ficha: {corta: "Confianza: Dato sólido.\nDatos de: ENDES 2025 (INEI)\nTerritorio: departamento de Huancavelica", larga: "…"}
+  espera: {dispara: true, accion: suprimir}
+
+# ---------------------------------------------------------------- R-LENGUAJE-03
+- id: R-LENGUAJE-03-a
+  regla: R-LENGUAJE-03
+  descripcion: el texto escribe una cifra (42,3 %) → regenerar
+  respuesta:
+    cifras: [*a09]
+    cifras_permitidas: [a09]
+    texto: "En 2025 la anemia fue 42,3 % en Huancavelica."
+  espera: {dispara: true, accion: rotular, motivo: numero_fuera_de_marcador}
+- id: R-LENGUAJE-03-b
+  regla: R-LENGUAJE-03
+  descripcion: solo marcadores, años, edades, PP 1001 y Ley N.° → no dispara
+  respuesta:
+    cifras: [*a09]
+    cifras_permitidas: [a09]
+    texto: "En 2025 se estima que alrededor de {{c:a09}} de los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). El PP 1001 financia estos servicios según la Ley N.° 31254."
+  espera: {dispara: false}
+- id: R-LENGUAJE-03-c
+  regla: R-LENGUAJE-03
+  descripcion: marcador que no está en cifras_permitidas → regenerar
+  respuesta:
+    cifras: [*a09]
+    cifras_permitidas: [a09]
+    texto: "Se estima que alrededor de {{c:otra}} tenía anemia."
+  espera: {dispara: true, accion: rotular, motivo: marcador_no_permitido}
+- id: R-LENGUAJE-03-d
+  regla: R-LENGUAJE-03
+  descripcion: marcadores sin cifras_permitidas → metadato faltante
+  respuesta:
+    cifras: [*a09]
+    texto: "Se estima que alrededor de {{c:a09}} tenía anemia."
+  espera: {dispara: true, accion: revision_humana, motivo: metadato_faltante, objetivo: respuesta}
+
+# ---------------------------------------------------------------- R-LENGUAJE-06
+- id: R-LENGUAJE-06-a
+  regla: R-LENGUAJE-06
+  descripcion: encuesta y registro en la misma oración → regenerar (y rotular el párrafo)
+  respuesta:
+    cifras: [*a09, {id_cifra: s09, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+    texto: "Se estima que alrededor de {{c:a09}} tenía anemia y se tamizaron niños con {{c:s09}} de anemia en 2025."
+  espera: {dispara: true, accion: rotular, motivo: naturalezas_mezcladas}
+- id: R-LENGUAJE-06-b
+  regla: R-LENGUAJE-06
+  descripcion: un solo tipo de dato en el párrafo → no dispara
+  respuesta:
+    cifras: [*a09]
+    texto: "En 2025 se estima que alrededor de {{c:a09}} de los niños tenía anemia (ENDES 2025, INEI)."
+  espera: {dispara: false}
+- id: R-LENGUAJE-06-c
+  regla: R-LENGUAJE-06
+  descripcion: párrafo mixto bien redactado (ejemplo de la regla) → solo el rótulo del párrafo
+  respuesta:
+    cifras: [*a09, {id_cifra: s09, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}, *g09]
+    texto: "En Huancavelica se estima que {{c:a09}} de niños de 6 a 35 meses tenía anemia en 2025 (ENDES 2025, INEI). Por otro lado, ese año se tamizaron niños en establecimientos del MINSA y {{c:s09}} de ellos tenía anemia (SIEN 2025). En el mismo periodo se gastó (devengado) {{c:g09}} en el departamento (MEF 2025)."
+  espera: {dispara: true, accion: rotular}
+
+# ---------------------------------------------------------------- R-LENGUAJE-02
+- id: R-LENGUAJE-02-a
+  regla: R-LENGUAJE-02
+  descripcion: «gracias al» y «bajó» → regenerar
+  respuesta:
+    cifras: [*a09]
+    texto: "Gracias al aumento del gasto, la anemia bajó en Huancavelica en 2025 ({{c:a09}})."
+  espera: {dispara: true, accion: rotular, motivo: lenguaje_prohibido}
+- id: R-LENGUAJE-02-b
+  regla: R-LENGUAJE-02
+  descripcion: texto limpio → no dispara
+  respuesta:
+    cifras: [*a09]
+    texto: "En 2025 se estima que alrededor de {{c:a09}} de los niños de Huancavelica tenía anemia (ENDES 2025, INEI)."
+  espera: {dispara: false}
+- id: R-LENGUAJE-02-c
+  regla: R-LENGUAJE-02
+  descripcion: tras 2 regeneraciones sigue fallando → plantilla y revisión humana
+  respuesta:
+    intentos_regeneracion: 2
+    cifras: [*a09]
+    texto: "Gracias al gasto la anemia es menor ({{c:a09}})."
+  espera: {dispara: true, accion: revision_humana}
+- id: R-LENGUAJE-02-d
+  regla: R-LENGUAJE-02
+  descripcion: solo un patrón pendiente de validación → advertir, no regenerar
+  respuesta:
+    cifras: []
+    texto: "Las obras de saneamiento explican la menor incidencia de diarrea."
+  espera: {dispara: true, accion: advertir, motivo: aviso_corrector}
+- id: R-LENGUAJE-02-e
+  regla: R-LENGUAJE-02
+  descripcion: estructural, cifra de 2018 sin «en 2018» en la oración → regenerar
+  respuesta:
+    cifras: [{id_cifra: m1, base: {indicador: mapa_pobreza_2018, anio: 2018, nivel: provincia, territorio: "090100"}}]
+    texto: "La pobreza de la provincia está entre {{c:m1}} según el INEI."
+  espera: {dispara: true, accion: rotular, motivo: lenguaje_prohibido}
+- id: R-LENGUAJE-02-f
+  regla: R-LENGUAJE-02
+  descripcion: estructural, tamizados sin {{u:id}} → regenerar
+  respuesta:
+    cifras: [{id_cifra: s1, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+    texto: "En 2025, {{c:s1}} de los niños tenía anemia (SIEN 2025)."
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-02-g
+  regla: R-LENGUAJE-02
+  descripcion: estructural, tamizados con {{u:tamizados}} → no dispara
+  respuesta:
+    cifras: [{id_cifra: s1, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+    texto: "En 2025, {{c:s1}} de los niños {{u:tamizados}} tenía anemia (SIEN 2025)."
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- R-LENGUAJE-05
+- id: R-LENGUAJE-05-a
+  regla: R-LENGUAJE-05
+  descripcion: una principal publicable y otra suprimida → parcial
+  respuesta:
+    respuesta_parcial: true
+    cifras: [*a09, {id_cifra: s1, es_principal: true, estado_cifra: suprimida}]
+  espera: {dispara: true, accion: rotular, motivo: respuesta_parcial}
+- id: R-LENGUAJE-05-b
+  regla: R-LENGUAJE-05
+  descripcion: todas las principales publicables → completa, no dispara
+  respuesta:
+    cifras: [*a09, *g09]
+  espera: {dispara: false}
+- id: R-LENGUAJE-05-c
+  regla: R-LENGUAJE-05
+  descripcion: solo una cifra agregada a un nivel más grueso → alternativa
+  respuesta:
+    cifras: [{id_cifra: x, es_principal: true, estado_cifra: agregada}]
+  espera: {dispara: true, accion: rotular, motivo: alternativa}
+- id: R-LENGUAJE-05-d
+  regla: R-LENGUAJE-05
+  descripcion: pide una predicción → rechazo
+  respuesta:
+    intencion_pregunta: prediccion
+    cifras: [*a09]
+  espera: {dispara: true, accion: rotular, motivo: fuera_de_alcance}
+- id: R-LENGUAJE-05-e
+  regla: R-LENGUAJE-05
+  descripcion: nada publicable ni alternativa → sin datos
+  respuesta:
+    cifras: [{id_cifra: x, es_principal: true, estado_cifra: sin_datos}]
+  espera: {dispara: true, accion: rotular, motivo: sin_datos}
+
+# ---------------------------------------------------------------- R-LENGUAJE-08
+- id: R-LENGUAJE-08-a
+  regla: R-LENGUAJE-08
+  descripcion: intención juicio_autoridad → reformular con plantilla neutral
+  respuesta:
+    intencion_pregunta: juicio_autoridad
+    cifras: [*g09]
+  espera: {dispara: true, accion: rotular, motivo: reformular}
+- id: R-LENGUAJE-08-b
+  regla: R-LENGUAJE-08
+  descripcion: gestión del alcalde junto a una cifra → regenerar
+  respuesta:
+    cifras: [*g09]
+    texto: "Durante la gestión del alcalde se gastó (devengado) {{c:g09}}."
+  espera: {dispara: true, accion: rotular, motivo: atribucion_a_personas}
+- id: R-LENGUAJE-08-c
+  regla: R-LENGUAJE-08
+  descripcion: cifra atribuida a la entidad y al año → no dispara
+  respuesta:
+    cifras: [*g09]
+    texto: "En 2025 la Municipalidad de Huancavelica gastó (devengado) {{c:g09}}."
+  espera: {dispara: false}
+
+# ============================================================================================ correcciones de la auditoría
+# ---------------------------------------------------------------- H-4 / C-6 / C-7 (R-ENC-11)
+- id: R-ENC-11-H4-a
+  regla: R-ENC-11
+  descripcion: H-4, DCI Puno 2019 vs 2021 a través del quiebre 2020 (modo de entrevista) → sí se prueba, sin el punto 2020 (P4, decisión del 11/10/2026; antes se bloqueaba)
+  respuesta:
+    cifras: [{id_cifra: d21, base: {indicador: endes_dci_menores_5, anio: 2021, nivel: departamento, territorio: "21"},
+              comparacion: {anio: 2019, valor: 34.0, ee: 3.0, gl: 80, prueba_cambio: {p_valor: 0.3}}}]
+  espera: {dispara: true, accion: rotular, motivo: prueba_cambio}
+- id: R-ENC-11-H4-b
+  regla: R-ENC-11
+  descripcion: H-4, pobreza ENAHO 2019 vs 2021 (2020 y 2021 declarados comparables) → sí se prueba
+  respuesta:
+    cifras: [{id_cifra: p09, anio: 2021, base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: departamento, territorio: "09"},
+              comparacion: {anio: 2019, valor: 40.0, ee: 2.0, gl: 100, prueba_cambio: {p_valor: 0.2}}}]
+  espera: {dispara: true, accion: rotular, motivo: prueba_cambio}
+- id: R-ENC-11-H4-c
+  regla: R-ENC-11
+  descripcion: H-4, resultado previo de R-ENC-13 y uno de los años comparados es 2020 → no comparar (P4, 11/10/2026; a través de 2020 sí se compara)
+  respuesta:
+    cifras: [{id_cifra: a09, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"},
+              resultados: [{regla: R-ENC-13, accion: advertir, motivo: quiebre, detalle: {anios_quiebre: [2020]}}],
+              comparacion: {anio: 2020, valor: 40.0, ee: 3.0, prueba_cambio: {p_valor: 0.01}}}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: quiebre}
+- id: R-ENC-11-C7-a
+  regla: R-ENC-11
+  descripcion: C-7, comparación expresada como cruce (presentacion comparacion) con el año 2020 → no comparar el cruce (P4, 11/10/2026)
+  respuesta:
+    cifras: [{id_cifra: d19, base: {indicador: endes_dci_menores_5, anio: 2020, nivel: departamento, territorio: "21"}},
+             {id_cifra: d21, base: {indicador: endes_dci_menores_5, anio: 2021, nivel: departamento, territorio: "21"}}]
+    cruces: [{id_cruce: K1, a: d19, b: d21, presentacion: comparacion}]
+  espera: {dispara: true, accion: bloquear_cruce, motivo: quiebre, objetivo: "cruce:K1"}
+- id: R-ENC-11-C7-b
+  regla: R-ENC-11
+  descripcion: C-7, comparación como cruce 2024 vs 2025 con la prueba del motor (p = 0,01) → rotular el cruce
+  respuesta:
+    cifras: [{id_cifra: e24, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2024, nivel: departamento, territorio: "09"}}, *a09]
+    cruces: [{id_cruce: K2, a: e24, b: a09, presentacion: comparacion, prueba_cambio: {diferencia: 5.6, p_valor: 0.01}}]
+  espera: {dispara: true, accion: rotular, motivo: prueba_cambio, objetivo: "cruce:K2"}
+
+# ---------------------------------------------------------------- H-5 / C-4 (R-CRUCES-01)
+- id: R-CRUCES-01-H5-a
+  regla: R-CRUCES-01
+  descripcion: H-5, gasto de LM con anemia del departamento 15 entero, pedido por LM → el cruce va al 15 (agregar_nivel)
+  respuesta:
+    nivel_pedido: LIMA_METROPOLITANA
+    cifras: [*gLM, {id_cifra: a15, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "15"}}]
+    cruces: [{id_cruce: Y5, a: gLM, b: a15, presentacion: lado_a_lado}]
+  espera: {dispara: true, accion: agregar_nivel, objetivo: "cruce:Y5"}
+- id: R-CRUCES-01-H5-b
+  regla: R-CRUCES-01
+  descripcion: H-5, gasto de San Juan de Lurigancho con anemia de LM, pedido por distrito → el cruce va a LM
+  respuesta:
+    nivel_pedido: distrito
+    cifras: [{id_cifra: gSJL, base: {indicador: gasto_ex_pan, anio: 2025, nivel: distrito, territorio: "150132", medida: devengado}}, *aLM]
+    cruces: [{id_cruce: Y6, a: gSJL, b: aLM, presentacion: lado_a_lado, nivel: LIMA_METROPOLITANA}]
+  espera: {dispara: true, accion: agregar_nivel, objetivo: "cruce:Y6"}
+
+# ---------------------------------------------------------------- H-12 / C-8 (R-ENC-14)
+- id: R-ENC-14-H12-a
+  regla: R-ENC-14
+  descripcion: H-12, anemia RM 363 principal en 2024 y existe la RM 251 del mismo año y territorio → advertir (solo referencia)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {rol: principal, es_principal: true}
+  espera: {dispara: true, accion: advertir, motivo: criterio_anterior}
+- id: R-ENC-14-H12-b
+  regla: R-ENC-14
+  descripcion: H-12, la misma cifra como contexto (serie larga rotulada) → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  consulta: {rol: contexto, es_principal: false}
+  espera: {dispara: false}
+- id: R-ENC-14-H12-borde
+  regla: R-ENC-14
+  descripcion: H-12 borde, principal RM 363 de 2023 (no hay RM 251 de 2023) → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2023, nivel: departamento, territorio: "09"}
+  consulta: {rol: principal, es_principal: true}
+  espera: {dispara: false}
+
+# ---------------------------------------------------------------- H-10 / C-2 (R-GASTO-08)
+- id: R-GASTO-08-H10-a
+  regla: R-GASTO-08
+  descripcion: H-10, año 2022 sin fila en dim_tema_gasto → suprimir (sin versión aprobada ese año)
+  base: {indicador: gasto_ex_pan, anio: 2023, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {anio: 2022}
+  espera: {dispara: true, accion: suprimir, motivo: tema_sin_version}
+- id: R-GASTO-08-H10-b
+  regla: R-GASTO-08
+  descripcion: H-10, la fila trae «1.2.0» y el parámetro dice «1.2» → misma versión, rotular
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {version_tema: "1.2.0"}
+  espera: {dispara: true, accion: rotular, motivo: tema_gasto}
+
+# ---------------------------------------------------------------- C-3 (R-GASTO-09)
+- id: R-GASTO-09-C3
+  regla: R-GASTO-09
+  descripcion: C-3, fun_salud 2024→2025 con anios_con_quiebre [2025] (de rel_linaje) → no aplica a temas por función
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: fun_salud, cadena: funcion, anios_con_quiebre: [2025], comparacion: {anio: 2024}}
+  espera: {dispara: false}
+- id: R-GASTO-09-C3-b
+  regla: R-GASTO-09
+  descripcion: C-3, pp_1001_dit 2024→2025 con comparable_con_anio_anterior = no en dim_tema_gasto → advertir
+  base: {indicador: gasto_ex_pan, anio: 2025, nivel: departamento, territorio: "09", medida: devengado}
+  cifra: {tema_id: pp_1001_dit, cadena: programa, quiebres: [], comparacion: {anio: 2024}}
+  espera: {dispara: true, accion: advertir, motivo: quiebre}
+
+# ---------------------------------------------------------------- C-5 (R-CRUCES-08)
+- id: R-CRUCES-08-C5
+  regla: R-CRUCES-08
+  descripcion: C-5, la ENDES (principal) está suprimida y el SIEN es publicable → advertir y el SIEN queda complementario
+  respuesta:
+    nivel_pedido: departamento
+    cifras: [{id_cifra: e1, rol: principal, es_principal: true, estado_cifra: suprimida, base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: departamento, territorio: "09"}},
+             {id_cifra: s1, rol: contexto, estado_cifra: publicable, base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: departamento, territorio: "09"}}]
+  espera: {dispara: true, accion: advertir, motivo: principal_no_alcanza, objetivo: e1}

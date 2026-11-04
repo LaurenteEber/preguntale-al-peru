@@ -1,0 +1,41 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: GITHUB-UBIGEO-PERU-AUMENTADO
+strategy: http_file
+publisher: desarrollador independiente
+dataset_title: ubigeo-peru-aumentado (jmcastagnetto)
+access_url: https://github.com/jmcastagnetto/ubigeo-peru-aumentado
+download_url: https://raw.githubusercontent.com/jmcastagnetto/ubigeo-peru-aumentado/main/ubigeo_distrito.csv
+temporal:
+  inicio: 2021
+  fin: 2021
+spatial:
+  ambito: PE
+  nivel_minimo: centro_poblado
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: MIT
+  title: MIT
+license_basis: declarada_en_pagina
+known_issues:
+- 'Indicadores congelados en años específicos (2019/2020); no oficial. Corte 2021: no incluye distritos creados
+  después. Usar solo como puente INEI↔RENIEC, validado contra la tabla INEI vigente. Solo 111 códigos son idénticos
+  en INEI y RENIEC y 997 existen en ambos sistemas pero apuntan a distritos distintos: nunca unir por código sin
+  indicar el sistema. Filas a corregir: 150144 Huachipa (centro poblado, no distrito), San Antonio (Moquegua, Ley
+  31216) sin código INEI, códigos antiguos duplicados 160109/160114. Falta Alto Trujillo (Ley 31644, 2022). Falta
+  también Santa Rosa de Loreto (Ley 32403, 2025, segregado de Yavarí), el distrito 1 892.'
+espera:
+  formato:
+  - csv
+  - json
+  - rds
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: raw.githubusercontent.com/jmcastagnetto/ubigeo-peru-aumentado/<rama>/<archivo>.csv

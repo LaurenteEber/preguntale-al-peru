@@ -1,0 +1,43 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: MINEDU-ESCALE-PADRON
+strategy: http_pattern
+publisher: MINEDU
+dataset_title: Padrón de Servicios Educativos (Instituciones y Programas Educativos) – ESCALE
+access_url: https://escale.minedu.gob.pe/padron-de-iiee
+url_patron: https://escale.minedu.gob.pe/documents/inicio/Bases%20de%20datos/A.%20Censo%20Educativo/{anio}/00_Padron.zip
+documentation_url: https://escale.minedu.gob.pe/documents/10156/4028089/00+Diccionario+Padron+2017.pdf
+temporal:
+  inicio: 2004
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: punto_coordenadas
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- Coordenadas autodeclaradas/georreferenciadas con errores en zonas rurales; IIEE inactivas/cerradas permanecen
+  con estado; el ubigeo es del local, no del alumno.
+espera:
+  formato:
+  - dbf
+  - xlsx
+  - csv
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+pendientes:
+- Definir cómo se eligen los valores del patrón (ver notas).
+notas: 'escale.minedu.gob.pe devolvió en esta sesión un desafío anti-bot (Check Point CloudGuard ''Este sitio está
+  protegido''); la descarga automatizada requiere navegador headless (Playwright) o descarga manual. Alternativa:
+  capa de IIEE en SIGMED (https://sigmed.minedu.gob.pe/descargas/) y datasets del padrón en datosabiertos.gob.pe.'

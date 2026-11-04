@@ -1,0 +1,3402 @@
+# Casos de prueba del validador — grupo C (etapa 5, ámbito cifra; etapas 8–10, ámbito respuesta). Analista independiente
+# de casos, 10/10/2026. Escritos solo a partir del texto de reglas/reglas.json, sin mirar las implementaciones.
+# Formato: contrato_validador.md §6. En las reglas de respuesta el caso trae `respuesta:` (cifras con base propia, cruces,
+# texto, ficha) y `consulta:` (intencion_pregunta, nivel_pedido). R-ENC-11 trae a la vez la forma de cifra (comparacion,
+# §2e) y la de respuesta, porque el contrato la menciona en los dos ámbitos. Las claves de `espera` distintas de
+# dispara/accion/motivo/modo/objetivo (semaforo, test_cambio_significativo…) son documentales.
+- id: R-ENC-13-a
+  regla: R-ENC-13
+  descripcion: '«serie solicitada abarca anio IN anios_con_quiebre AND comparable_con NOT CONTAINS anio»: DCI de Puno 2015–2025 incluye 2020 (modo)
+    → advertir'
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    serie:
+    - {anio: 2015}
+    - {anio: 2016}
+    - {anio: 2017}
+    - {anio: 2018}
+    - {anio: 2019}
+    - {anio: 2020}
+    - {anio: 2021}
+    - {anio: 2022}
+    - {anio: 2023}
+    - {anio: 2024}
+    - {anio: 2025}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: advertir}
+- id: R-ENC-13-b
+  regla: R-ENC-13
+  descripcion: 'parametros.biomedicos_endes_2020 = revision_humana: serie de anemia (hemoglobina) ENDES 2015–2025 que incluye 2020'
+  base:
+    indicador: endes_anemia_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    serie:
+    - {anio: 2015}
+    - {anio: 2016}
+    - {anio: 2017}
+    - {anio: 2018}
+    - {anio: 2019}
+    - {anio: 2020}
+    - {anio: 2021}
+    - {anio: 2022}
+    - {anio: 2023}
+    - {anio: 2024}
+    - {anio: 2025}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: revision_humana}
+- id: R-ENC-13-c
+  regla: R-ENC-13
+  descripcion: Serie 2021–2025 sin años con quiebre → no dispara
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    serie:
+    - {anio: 2021}
+    - {anio: 2022}
+    - {anio: 2023}
+    - {anio: 2024}
+    - {anio: 2025}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: false}
+- id: R-ENC-13-d
+  regla: R-ENC-13
+  descripcion: 'enunciado «siempre llevan una marca»: la cifra suelta de 2020 también se marca (dictamen AMBIGUO, lectura restrictiva; AN-44)'
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2020
+    nivel: departamento
+    territorio: "21"
+  consulta: {intencion_pregunta: nivel_actual}
+  espera: {dispara: true, accion: advertir}
+- id: R-ENC-13-e
+  regla: R-ENC-13
+  descripcion: '[ambiguo: la condición no dispara para años declarados comparables, pero el enunciado dice que «siempre llevan una marca»] pobreza
+    ENAHO 2019–2021 (comparable_con 2020 y 2021) → entra a la serie con marca'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    anio: 2021
+    serie:
+    - {anio: 2019}
+    - {anio: 2020}
+    - {anio: 2021}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true}
+- id: R-ENC-13-f
+  regla: R-ENC-13
+  descripcion: aplica_a.fuentes no incluye el SIEN
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  cifra:
+    serie:
+    - {anio: 2019}
+    - {anio: 2020}
+    - {anio: 2021}
+  espera: {dispara: false}
+- id: R-ENC-14-a
+  regla: R-ENC-14
+  descripcion: '«COUNT(DISTINCT criterio_medicion) > 1 en la serie» es falso: anemia OMS 2024 de Puno 2024–2025 (un solo criterio)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    serie:
+    - {anio: 2024, criterio: RM251-2024/OMS2024}
+    - {anio: 2025, criterio: RM251-2024/OMS2024}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: false}
+- id: R-ENC-14-b
+  regla: R-ENC-14
+  descripcion: '«COUNT(DISTINCT criterio_medicion) > 1 en la serie → bloquear la comparación entre tramos»: 2023 con RM 363-2022 y 2024–2025 con
+    RM 251-2024'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    serie:
+    - {anio: 2023, criterio: RM363-2022/OMS2001}
+    - {anio: 2024, criterio: RM251-2024/OMS2024}
+    - {anio: 2025, criterio: RM251-2024/OMS2024}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-ENC-14-c
+  regla: R-ENC-14
+  descripcion: «tema == 'anemia' AND criterio_medicion IS NULL → suprimir»
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra: {criterio_medicion: null, criterio: null}
+  espera: {dispara: true, accion: suprimir}
+- id: R-ENC-14-d
+  regla: R-ENC-14
+  descripcion: '«tema == ''anemia''» es falso: DCI sin criterio no se juzga con esta regla'
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra: {criterio_medicion: null, criterio: null}
+  espera: {dispara: false}
+- id: R-ENC-14-e
+  regla: R-ENC-14
+  descripcion: 'ejemplo de R-ENC-11 «Anemia Lima Metropolitana 2024 RM 363 (32,9 %) vs 2024 RM 251 (24,0 %): comparación entre criterios → bloqueada
+    por R-ENC-14»'
+  base: {indicador: endes_anemia_6_35m_oms2024, anio: 2024, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+  cifra:
+    comparacion: {anio: 2024, valor: 32.9287, ee: 1.8413, criterio: RM363-2022/OMS2001, indicador_id: endes_anemia_6_35m}
+  consulta: {intencion_pregunta: comparacion}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-ENC-14-f
+  regla: R-ENC-14
+  descripcion: 'Aplica también al SIEN (absorbe R-REG-11): anemia de tamizados 2025 con su criterio → no dispara'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  espera: {dispara: false}
+- id: R-ENC-14-g
+  regla: R-ENC-14
+  descripcion: aplica_a.fuentes no incluye la ENAHO
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra: {criterio_medicion: null}
+  espera: {dispara: false}
+- id: R-REG-10-a
+  regla: R-REG-10
+  descripcion: '«serie.anio_ini < quiebre ≤ serie.anio_fin → bloquear variación/tendencia entre tramos»: SIEN 2023–2025 cruza el quiebre de criterio
+    de 2024'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  cifra:
+    serie:
+    - {anio: 2023}
+    - {anio: 2024}
+    - {anio: 2025}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-REG-10-b
+  regla: R-REG-10
+  descripcion: 'borde «anio_ini < quiebre»: serie 2024–2025 con el quiebre en 2024 = anio_ini → no cruza'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  cifra:
+    serie:
+    - {anio: 2024}
+    - {anio: 2025}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: false}
+- id: R-REG-10-c
+  regla: R-REG-10
+  descripcion: 'borde «quiebre ≤ serie.anio_fin»: serie 2019–2020 con el quiebre de sistema de 2020 = anio_fin → bloquear'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  cifra:
+    anio: 2020
+    serie:
+    - {anio: 2019}
+    - {anio: 2020}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-REG-10-d
+  regla: R-REG-10
+  descripcion: '«agrupar_anios no puede incluir años de ambos tramos»: periodo agrupado 2023–2025 del SIEN → cifra inválida: suprimir (AN-45)'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "010102"
+  cifra:
+    periodo_agrupado: [2023, 2025]
+  espera: {dispara: true, accion: suprimir}
+- id: R-REG-10-e
+  regla: R-REG-10
+  descripcion: Cifra de un solo año (SIEN 2025) → no hay serie que cortar
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  consulta: {intencion_pregunta: nivel_actual}
+  espera: {dispara: false}
+- id: R-REG-10-f
+  regla: R-REG-10
+  descripcion: aplica_a.fuentes no incluye la ENDES (sus quiebres van por R-ENC-13)
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    serie:
+    - {anio: 2018}
+    - {anio: 2019}
+    - {anio: 2020}
+    - {anio: 2021}
+    - {anio: 2022}
+  espera: {dispara: false}
+- id: R-GASTO-08-a
+  regla: R-GASTO-08
+  descripcion: '«Rótulo := etiqueta_ciudadana»: servicios que antes eran del PAN (cpt_grupo_expan) 2025 → rótulo'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {tema_id: cpt_grupo_expan, cadena: concepto}
+  espera: {dispara: true, accion: rotular}
+- id: R-GASTO-08-b
+  regla: R-GASTO-08
+  descripcion: '«Si el año no tiene versión aprobada de dim_tema_gasto … → bloquear la cifra temática» (en una cifra: suprimir): 2022 (sin montos,
+    solo linaje)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {anio: 2022, tema_id: cpt_grupo_expan, cadena: concepto}
+  espera: {dispara: true, accion: suprimir}
+- id: R-GASTO-08-c
+  regla: R-GASTO-08
+  descripcion: «si se pide un tema cpt_ y la fact no trae ACTIVIDAD_ACCION_OBRA → bloquear la cifra temática» (campo trae_actividad; AN-46)
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {tema_id: cpt_grupo_expan, cadena: concepto, trae_actividad: false}
+  espera: {dispara: true, accion: suprimir}
+- id: R-GASTO-08-d
+  regla: R-GASTO-08
+  descripcion: «Tema ps_empleo_temporal … si falta ese monto [transferido a municipalidades], la cifra del tema no se publica» (campo transferido_municipalidades)
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {tema_id: ps_empleo_temporal, cadena: programa_social, transferido_municipalidades: null}
+  espera: {dispara: true, accion: suprimir}
+- id: R-GASTO-08-e
+  regla: R-GASTO-08
+  descripcion: ps_empleo_temporal con la línea aparte «transferido a municipalidades» → se publica con rótulo
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {tema_id: ps_empleo_temporal, cadena: programa_social, transferido_municipalidades: 12500000.0}
+  espera: {dispara: true, accion: rotular}
+- id: R-GASTO-08-f
+  regla: R-GASTO-08
+  descripcion: '«Toda cifra temática declara tema_id y cadena»: cifra de gasto sin tema_id → metadato faltante'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {tema_id: null, cadena: null}
+  espera: {dispara: true, accion: suprimir, motivo: metadato_faltante}
+- id: R-GASTO-08-g
+  regla: R-GASTO-08
+  descripcion: 'aplica_a.fuentes: SIEN no es gasto'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  espera: {dispara: false}
+- id: R-GASTO-08b-a
+  regla: R-GASTO-08b
+  descripcion: '(1) «tema_id cumple la gramática y su prefijo corresponde a tema.cadena»: cpt_grupo_expan con cadena concepto → no dispara'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {tema_id: cpt_grupo_expan, cadena: concepto}
+  espera: {dispara: false}
+- id: R-GASTO-08b-b
+  regla: R-GASTO-08b
+  descripcion: '(1) «si no [cumple], … la cifra temática se bloquea»: prefijo cpt_ con cadena programa → cifra inválida: suprimir (AN-48)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {tema_id: cpt_grupo_expan, cadena: programa}
+  espera: {dispara: true, accion: suprimir}
+- id: R-GASTO-08b-c
+  regla: R-GASTO-08b
+  descripcion: '(1) gramática «^(fun|div|pp|ppxfun|cpt|ps)_[0-9a-z_]+$»: «PAN_anemia» no la cumple → suprimir (AN-49)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {tema_id: PAN_anemia, cadena: programa}
+  espera: {dispara: true, accion: suprimir}
+- id: R-GASTO-08b-d
+  regla: R-GASTO-08b
+  descripcion: '(2) «Operación entre dos cifras (… «X % de») con cadena distinta → bloquear_cruce»: ejemplo inválido «el DIT es el 32 % de su
+    gasto en salud» (pp_ sobre fun_)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2023
+    nivel: departamento
+    territorio: "09"
+    medida: devengado
+  cifra:
+    tema_id: pp_1001_dit
+    cadena: programa
+    comparacion: {tema_id: fun_salud, cadena: funcion, operacion: cociente}
+  consulta: {intencion_pregunta: comparacion}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-08b-e
+  regla: R-GASTO-08b
+  descripcion: '(2) «Única excepción al cociente: la fila ppxfun_ (calculada sobre las mismas filas que su programa), rotulada como cruce»'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2023
+    nivel: departamento
+    territorio: "09"
+    medida: devengado
+  cifra:
+    tema_id: ppxfun_1001_salud
+    cadena: programa_x_funcion
+    comparacion: {tema_id: pp_1001_dit, cadena: programa, operacion: cociente}
+  consulta: {intencion_pregunta: comparacion}
+  espera: {dispara: true, accion: rotular}
+- id: R-GASTO-08b-f
+  regla: R-GASTO-08b
+  descripcion: '(4) «Series … una sola cadena»: serie 2023–2025 con la misma cadena (concepto) → no dispara'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    tema_id: cpt_grupo_expan
+    cadena: concepto
+    serie:
+    - {anio: 2023, tema_id: cpt_grupo_expan, cadena: concepto}
+    - {anio: 2024, tema_id: cpt_grupo_expan, cadena: concepto}
+    - {anio: 2025, tema_id: cpt_grupo_expan, cadena: concepto}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: false}
+- id: R-GASTO-08b-g
+  regla: R-GASTO-08b
+  descripcion: '(4) «Series, rankings y comparaciones entre territorios → una sola cadena»: serie que mezcla cpt_ (2023–2024) y pp_ (2025) → bloquear'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    tema_id: cpt_grupo_expan
+    cadena: concepto
+    serie:
+    - {anio: 2023, tema_id: cpt_grupo_expan, cadena: concepto}
+    - {anio: 2024, tema_id: cpt_grupo_expan, cadena: concepto}
+    - {anio: 2025, tema_id: pp_1001_dit, cadena: programa}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-08b-h
+  regla: R-GASTO-08b
+  descripcion: 'aplica_a.fuentes: SIEN no es gasto'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  cifra: {tema_id: xx, cadena: programa}
+  espera: {dispara: false}
+- id: R-GASTO-09-a
+  regla: R-GASTO-09
+  descripcion: '«(1) evento de rel_linaje … ''no comparable''» y «Si no_comparable en t y se pide la variación t-1 → t → advertir»: opción C (PP
+    1001) 2025, quiebre L11 sin comparable_con, variación 2024→2025'
+  base:
+    indicador: gasto_ex_pan_opcion_c
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    comparacion: {anio: 2024, medida: devengado}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: advertir}
+- id: R-GASTO-09-b
+  regla: R-GASTO-09
+  descripcion: 'Serie por concepto (cpt_grupo_expan): el evento L11 de 2025 es comparable_con 2024 (nodos nuevos 1,4 % < 5 %) → variación 2024→2025
+    sin aviso'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    peso_nodos_nuevos: 0.014
+    comparacion: {anio: 2024, medida: devengado}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: false}
+- id: R-GASTO-09-c
+  regla: R-GASTO-09
+  descripcion: '«(3) cobertura_por_anio(t) ≠ ''con_montos'' → no se publica cifra de gasto de ese año, solo el texto de linaje»: 2022'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra: {anio: 2022}
+  consulta: {intencion_pregunta: nivel_actual}
+  espera: {dispara: true, accion: suprimir}
+- id: R-GASTO-09-d
+  regla: R-GASTO-09
+  descripcion: '«(2) los nodos nuevos del concepto en t pesan más que umbral_nodos_nuevos_pct (0,05) … sin evento que los declare comparables»:
+    6 % y variación pedida (campo peso_nodos_nuevos; AN-50)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2024
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    peso_nodos_nuevos: 0.06
+    comparacion: {anio: 2023, medida: devengado}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: true, accion: advertir}
+- id: R-GASTO-09-e
+  regla: R-GASTO-09
+  descripcion: 'borde «pesan más que 0,05»: nodos nuevos = 5 % exacto → comparable'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2024
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    peso_nodos_nuevos: 0.05
+    comparacion: {anio: 2023, medida: devengado}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: false}
+- id: R-GASTO-09-f
+  regla: R-GASTO-09
+  descripcion: '«Temas fun_ y div_: los quiebres de programas no aplican»: gasto en el sector salud 2024→2025'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    tema_id: fun_salud
+    cadena: funcion
+    anios_con_quiebre: [2025]
+    comparacion: {anio: 2024, medida: devengado}
+  consulta: {intencion_pregunta: evolucion}
+  espera: {dispara: false}
+- id: R-GASTO-09-g
+  regla: R-GASTO-09
+  descripcion: 'aplica_a.fuentes: SIEN no es gasto'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  cifra: {anio: 2022}
+  espera: {dispara: false}
+- id: R-CRUCES-04-a
+  regla: R-CRUCES-04
+  descripcion: '«exists q … anio_inicio < q <= anio_fin AND NOT misma_definicion»: anemia SIEN 2023 vs 2025 con el cambio de criterio de 2024'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: "090103"
+  cifra:
+    comparacion: {anio: 2023, criterio: OMS2001/2017, valor: 18.0}
+  consulta: {intencion_pregunta: comparacion}
+  espera: {dispara: true, accion: advertir}
+- id: R-CRUCES-04-b
+  regla: R-CRUCES-04
+  descripcion: 'casos_borde «2020 en encuestas: no es cambio de definición sino de modalidad; se permite comparar»: DCI Puno 2019 vs 2021 (mismo
+    criterio) → no dispara esta regla'
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2021
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    comparacion: {anio: 2019, criterio: patron_OMS2006_talla_edad_-2DE, valor: 12.646}
+  consulta: {intencion_pregunta: comparacion}
+  espera: {dispara: false}
+- id: R-CRUCES-04-c
+  regla: R-CRUCES-04
+  descripcion: Mismo criterio y sin quiebre entre 2024 y 2025 (anemia OMS 2024, Puno) → no dispara
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    comparacion: {anio: 2024, criterio: RM251-2024/OMS2024, valor: 53.119}
+  consulta: {intencion_pregunta: comparacion}
+  espera: {dispara: false}
+- id: R-CRUCES-04-d
+  regla: R-CRUCES-04
+  descripcion: '[ambiguo: el indicador OMS 2024 tiene anios_con_quiebre vacío; parametros.quiebres_conocidos declara el cambio de criterio de
+    la anemia] Puno 2023 (RM 363-2022) vs 2025 (RM 251-2024) → advertir'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    comparacion: {anio: 2023, criterio: RM363-2022/OMS2001, valor: 70.444}
+  consulta: {intencion_pregunta: comparacion}
+  espera: {dispara: true, accion: advertir}
+- id: R-CRUCES-04-e
+  regla: R-CRUCES-04
+  descripcion: 'aplica_a.fuentes no incluye MEF-DA-PRESUPUESTO-EJECUCION-GASTO (sí MEF-PPR-PROGRAMAS-PRESUPUESTALES): gasto ex-PAN 2023 vs 2025
+    queda fuera (ver informe)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+    medida: devengado
+  cifra:
+    comparacion: {anio: 2023, medida: devengado}
+  consulta: {intencion_pregunta: comparacion}
+  espera: {dispara: false}
+- id: R-CRUCES-04-f
+  regla: R-CRUCES-04
+  descripcion: aplica_a.fuentes no incluye el Mapa de Pobreza
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: "060104"
+  cifra:
+    comparacion: {anio: 2013}
+  espera: {dispara: false}
+- id: R-LENGUAJE-04-a
+  regla: R-LENGUAJE-04
+  descripcion: '«edad_dato > 2 → plantilla_pasado; AND anios_choque con anio_referencia < a <= anio_actual AND socioeconómico → aviso_choque (advertir)»:
+    Mapa de Pobreza 2018'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: "060104"
+  espera: {dispara: true, accion: advertir}
+- id: R-LENGUAJE-04-b
+  regla: R-LENGUAJE-04
+  descripcion: '«edad_dato > 2 → plantilla_pasado» (= rotular): mismo Mapa 2018'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: "060104"
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-04-c
+  regla: R-LENGUAJE-04
+  descripcion: 'borde «edad_dato > 2»: estimación modelada con referencia 2024 (edad 2) → no dispara'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: "060104"
+  cifra: {anio: 2024, anio_referencia: 2024}
+  espera: {dispara: false}
+- id: R-LENGUAJE-04-d
+  regla: R-LENGUAJE-04
+  descripcion: «edad_dato > 2» con referencia 2023 (edad 3) → plantilla_pasado; no hay año de choque en (2023, 2026] → solo rotular
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: "060104"
+  cifra: {anio: 2023, anio_referencia: 2023}
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-04-e
+  regla: R-LENGUAJE-04
+  descripcion: '«AND indicador socioeconómico → aviso_choque»: estimación de 2018 no socioeconómica → solo plantilla en pasado'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: "060104"
+  cifra: {es_socioeconomico: false}
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-04-f
+  regla: R-LENGUAJE-04
+  descripcion: 'aplica_a.fuentes (lista cerrada) no incluye INEI-ENDES: la anemia 2015 queda fuera (PR-05/PR-21)'
+  base:
+    indicador: endes_anemia_6_35m
+    anio: 2015
+    nivel: departamento
+    territorio: "21"
+  espera: {dispara: false}
+- id: R-CRUCES-11-a
+  regla: R-CRUCES-11
+  descripcion: '«(indicador_a, indicador_b) not in cruces_permitidos» es falso: CR-01 gasto ex-PAN × anemia ENDES OMS 2024, Puno 2025'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - &id001
+      base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      tema_id: cpt_grupo_expan
+      cadena: concepto
+    - &id002
+      base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - &id003
+      id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+  espera: {dispara: false}
+- id: R-CRUCES-11-b
+  regla: R-CRUCES-11
+  descripcion: '«not in cruces_permitidos → no calcular asociación ni cocientes; mostrar por separado»: gasto ex-PAN × pobreza ENAHO'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: p
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-99
+      a: g
+      b: p
+      presentacion: asociacion
+      nivel: departamento
+      anios: [2025]
+  espera: {dispara: true, accion: revision_humana, objetivo: 'cruce:X-99'}
+- id: R-CRUCES-11-c
+  regla: R-CRUCES-11
+  descripcion: '[ambiguo: la condición dice «not in cruces_permitidos»; la cabecera de la tabla dice que solo se calculan los activo_piloto] CR-02
+    (gasto × SIEN) está en opcion_dueno → no se calcula'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CR-02
+      a: g
+      b: s
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+  espera: {dispara: true, accion: revision_humana}
+- id: R-CRUCES-11-d
+  regla: R-CRUCES-11
+  descripcion: 'L5 «Si la fila trae subdivision_lima, sus ámbitos reemplazan a los departamentos que subdividen … y no se comparan con nivel_minimo»:
+    CR-01 en Lima Metropolitana 2025'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: LIMA_METROPOLITANA}
+  respuesta:
+    cifras:
+    - base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, medida: devengado}
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: LIMA_METROPOLITANA
+      anios: [2025]
+  espera: {dispara: false}
+- id: R-CRUCES-11-e
+  regla: R-CRUCES-11
+  descripcion: 'L5 «los años de cada ámbito son los de su lista anios»: CR-01 en Lima Región para 2023 (la lista es 2024–2025) → no se calcula
+    (bloquear_cruce; dictamen AMBIGUO, AN-51)'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: LIMA_REGION}
+  respuesta:
+    cifras:
+    - base: {indicador: gasto_ex_pan, anio: 2023, nivel: LIMA_REGION, territorio: LIMA_REGION, medida: devengado}
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base: {indicador: endes_anemia_6_35m_oms2024, anio: 2024, nivel: LIMA_REGION, territorio: LIMA_REGION}
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      anio: 2023
+    cruces:
+    - id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: LIMA_REGION
+      anios: [2023]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-11-f
+  regla: R-CRUCES-11
+  descripcion: Respuesta sin cruces (una sola cifra) → nada que verificar
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+  espera: {dispara: false}
+- id: R-CRUCES-01-a
+  regla: R-CRUCES-01
+  descripcion: '«nivel_cruce = max_grueso(nivel_publicado)» = departamento y «nivel_pedido < nivel_cruce» es falso: CR-01 en Puno pedido por departamento'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+  espera: {dispara: false}
+- id: R-CRUCES-01-b
+  regla: R-CRUCES-01
+  descripcion: 'ejemplo Azángaro: «Si nivel_pedido < nivel_cruce → agregar_nivel»: anemia (válida a departamento) y gasto por meta pedidos para
+    la provincia'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: provincia, territorio_pedido: Azángaro}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: provincia
+      anios: [2025]
+  espera: {dispara: true, accion: agregar_nivel, objetivo: 'cruce:CR-01'}
+- id: R-CRUCES-01-c
+  regla: R-CRUCES-01
+  descripcion: 'L5 «encuesta_da_LM_LR_Callao: no se fusiona»: Lima Metropolitana con Lima Metropolitana → no dispara'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: LIMA_METROPOLITANA}
+  respuesta:
+    cifras:
+    - base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, medida: devengado}
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: LIMA_METROPOLITANA
+      anios: [2025]
+  espera: {dispara: false}
+- id: R-CRUCES-01-d
+  regla: R-CRUCES-01
+  descripcion: 'L5 «encuesta_solo_dominio_8: el componente administrativo := LIMA_METROPOLITANA + CALLAO»: pobreza ENAHO dominio 8 con gasto de
+    Lima Metropolitana pedido por LM → el cruce sube al dominio 8 (rango 4,5)'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: LIMA_METROPOLITANA}
+  respuesta:
+    cifras:
+    - base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, medida: devengado}
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: AREA_METROPOLITANA_LIMA_CALLAO, territorio: AREA_METROPOLITANA_LIMA_CALLAO}
+      id_cifra: p
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-10
+      a: g
+      b: p
+      presentacion: lado_a_lado
+      nivel: LIMA_METROPOLITANA
+      anios: [2025]
+  espera: {dispara: true, accion: agregar_nivel}
+- id: R-CRUCES-01-e
+  regla: R-CRUCES-01
+  descripcion: '[ambiguo: la acción para «no hay cruce territorial» no se fija] contención: «LIMA_REGION y CALLAO no se contienen» → solo el nacional
+    contiene a ambos (caso borde 3)'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: LIMA_REGION}
+  respuesta:
+    cifras:
+    - base: {indicador: gasto_ex_pan, anio: 2025, nivel: CALLAO, territorio: CALLAO, medida: devengado}
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_REGION, territorio: LIMA_REGION}
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-11
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: LIMA_REGION
+      anios: [2025]
+  espera: {dispara: true}
+- id: R-CRUCES-01-h5
+  regla: R-CRUCES-01
+  descripcion: 'H-5: «Si nivel_pedido < nivel_cruce → agregar_nivel» con ámbitos (L5): gasto de San Juan de Lurigancho (distrito) × anemia ENDES
+    de Lima Metropolitana, pedido por distrito → el cruce sube a Lima Metropolitana'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito, territorio_pedido: San Juan de Lurigancho}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "150132"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base: {indicador: endes_anemia_6_35m_oms2024, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2025]
+  espera: {dispara: true, accion: agregar_nivel, nivel_minimo: LIMA_METROPOLITANA}
+- id: R-CRUCES-01-f
+  regla: R-CRUCES-01
+  descripcion: 'L5 «componente_solo_departamento_15: el cruce va al departamento 15»: anemia del departamento 15 entero con gasto de Lima Metropolitana
+    pedido por LM → agregar_nivel'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: LIMA_METROPOLITANA}
+  respuesta:
+    cifras:
+    - base: {indicador: gasto_ex_pan, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA, medida: devengado}
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "15"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-12
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: LIMA_METROPOLITANA
+      anios: [2025]
+  espera: {dispara: true, accion: agregar_nivel}
+- id: R-CRUCES-02-a
+  regla: R-CRUCES-02
+  descripcion: 'Ningún bloqueo B1–B9: CR-01 en Puno por departamento (casos_borde 1: gasto por meta a departamento permitido)'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+  espera: {dispara: false}
+- id: R-CRUCES-02-b
+  regla: R-CRUCES-02
+  descripcion: 'B1 «base_geografica=''ejecutora'' AND nivel_cruce in (distrito, provincia) AND NOT (NIVEL_GOBIERNO=''M'' OR ubicado_por_cui)»:
+    gasto de la DIRESA (nivel R) en el distrito'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      nivel_gobierno: R
+      ubicado_por_cui: false
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-20
+      a: g
+      b: s
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2025]
+  espera: {dispara: true, accion: bloquear_cruce, objetivo: 'cruce:X-20'}
+- id: R-CRUCES-02-c
+  regla: R-CRUCES-02
+  descripcion: 'B1 no aplica a municipalidades: gasto municipal (NIVEL_GOBIERNO = ''M'') lado a lado con el SIEN del mismo distrito → sin bloqueo'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      nivel_gobierno: M
+      ubicado_por_cui: false
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-21
+      a: g
+      b: s
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2025]
+  espera: {dispara: false}
+- id: R-CRUCES-02-d
+  regla: R-CRUCES-02
+  descripcion: 'B2 «encuesta_muestral AND NIVEL_RANK[nivel_cruce] < NIVEL_RANK[nivel_territorial_inferencia]»: ENDES en un cruce provincial'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: provincia}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: provincia
+        territorio: "090100"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      nivel_gobierno: M
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "09"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-22
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: provincia
+      anios: [2025]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-02-e
+  regla: R-CRUCES-02
+  descripcion: 'B3 «INEI-MAPA-POBREZA combinado con INEI-ENAHO de otro año en resta» [campo operacion del cruce: ver campos_nuevos]'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: mapa_pobreza_2018
+        anio: 2018
+        nivel: distrito
+        territorio: "060104"
+      id_cifra: m
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: rojo
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "06"
+      id_cifra: p
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-23
+      a: m
+      b: p
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2018, 2025]
+      operacion: resta
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-02-f
+  regla: R-CRUCES-02
+  descripcion: 'B4 «INS-CENAN-SIEN restado, promediado o sumado con INEI-ENDES»: promedio de las dos anemias de Puno'
+  consulta: {intencion_pregunta: comparacion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    cruces:
+    - id_cruce: X-24
+      a: e
+      b: s
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+      operacion: promedio
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-02-g
+  regla: R-CRUCES-02
+  descripcion: 'casos_borde (3) «SIEN junto a ENDES en la misma respuesta está permitido como cifras separadas»: lado a lado, sin operar'
+  consulta: {intencion_pregunta: comparacion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    cruces:
+    - id_cruce: X-25
+      a: e
+      b: s
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+  espera: {dispara: false}
+- id: R-CRUCES-02-h
+  regla: R-CRUCES-02
+  descripcion: 'B9 «algún componente con semaforo_cifra in (''rojo'',''no_publicable'')»: anemia ENDES en rojo cruzada con el gasto'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: rojo
+    cruces:
+    - *id003
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-02-i
+  regla: R-CRUCES-02
+  descripcion: B5 «suma de MEF-DA-GASTO-DEVENGADO-MENSUAL con MEF-DA-PRESUPUESTO-EJECUCION-GASTO» [indicador ilustrativo de la ruta alterna]
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - id_cifra: m
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      indicador_id: gasto_mensual_ilustrativo
+      fuente_principal: MEF-DA-GASTO-DEVENGADO-MENSUAL
+      naturaleza_dato: presupuestal_financiero
+      tipo_medida: presupuesto_gasto
+      base_geografica_usada: ejecutora
+      anio: 2025
+      nivel: departamento
+      territorio_id: "21"
+      valor: 10000000.0
+    cruces:
+    - id_cruce: X-26
+      a: g
+      b: m
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+      operacion: suma
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-03-a
+  regla: R-CRUCES-03
+  descripcion: 'ejemplo «Gasto 2025 con anemia ENDES 2025: dist=0 → publicar»'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - *id002
+    cruces:
+    - *id003
+  espera: {dispara: false}
+- id: R-CRUCES-03-b
+  regla: R-CRUCES-03
+  descripcion: 'borde «ambos ''rapida'': dist <= 1 → publicar (dist=1 → rotular)»: gasto 2024 con anemia 2025'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2024
+        nivel: departamento
+        territorio: "21"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - *id002
+    cruces:
+    - id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2024, 2025]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-03-c
+  regla: R-CRUCES-03
+  descripcion: '«Si dist supera la ventana → bloquear_cruce»: gasto 2023 con anemia 2025 (dist 2 > 1)'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2023
+        nivel: departamento
+        territorio: "21"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - *id002
+    cruces:
+    - id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2023, 2025]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-03-d
+  regla: R-CRUCES-03
+  descripcion: «velocidad_cambio IS NULL → bloquear_cruce (metadato_faltante)»
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      velocidad_cambio: null
+    cruces:
+    - *id003
+  espera: {dispara: true, accion: bloquear_cruce, motivo: metadato_faltante}
+- id: R-CRUCES-03-e
+  regla: R-CRUCES-03
+  descripcion: 'ejemplo «Pobreza distrital MAPA 2018 con gasto municipal 2025: dist=7 y cruza 2020 → bloquear»'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: mapa_pobreza_2018
+        anio: 2018
+        nivel: distrito
+        territorio: "090103"
+      id_cifra: m
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: rojo
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-30
+      a: m
+      b: g
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2018, 2025]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-03-f
+  regla: R-CRUCES-03
+  descripcion: 'borde «alguno ''lenta'': dist <= 3 → rotular»: dos indicadores estructurales 2022 y 2025 (dist 3, no socioeconómicos) [indicadores
+    ilustrativos]'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      indicador_id: estructural_a_ilustrativo
+      fuente_principal: MINEDU-CENSO-EDUCATIVO
+      naturaleza_dato: censo
+      tipo_medida: stock_infraestructura
+      velocidad_cambio: lenta
+      es_socioeconomico: false
+      anio: 2022
+      anio_referencia: 2022
+      nivel: distrito
+      territorio_id: "090103"
+      valor: 40.0
+    - id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      indicador_id: estructural_b_ilustrativo
+      fuente_principal: MINEDU-CENSO-EDUCATIVO
+      naturaleza_dato: censo
+      tipo_medida: stock_infraestructura
+      velocidad_cambio: lenta
+      es_socioeconomico: false
+      anio: 2025
+      anio_referencia: 2025
+      nivel: distrito
+      territorio_id: "090103"
+      valor: 40.0
+    cruces:
+    - id_cruce: X-31
+      a: a
+      b: b
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2022, 2025]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-03-g
+  regla: R-CRUCES-03
+  descripcion: '«dist supera la ventana» lenta: 2021 y 2025 (dist 4) → bloquear'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      indicador_id: estructural_a_ilustrativo
+      fuente_principal: MINEDU-CENSO-EDUCATIVO
+      naturaleza_dato: censo
+      tipo_medida: stock_infraestructura
+      velocidad_cambio: lenta
+      es_socioeconomico: false
+      anio: 2021
+      anio_referencia: 2021
+      nivel: distrito
+      territorio_id: "090103"
+      valor: 40.0
+    - id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      indicador_id: estructural_b_ilustrativo
+      fuente_principal: MINEDU-CENSO-EDUCATIVO
+      naturaleza_dato: censo
+      tipo_medida: stock_infraestructura
+      velocidad_cambio: lenta
+      es_socioeconomico: false
+      anio: 2025
+      anio_referencia: 2025
+      nivel: distrito
+      territorio_id: "090103"
+      valor: 40.0
+    cruces:
+    - id_cruce: X-32
+      a: a
+      b: b
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2021, 2025]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-03-h
+  regla: R-CRUCES-03
+  descripcion: 'casos_borde (1) «Agrupación de años (pooling 2023–2025) vs año único: usar año central 2024»: ENDES agrupada 2023–2025 con gasto
+    2025 → dist 1 → rotular'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: endes_dci_menores_5
+        anio: 2025
+        nivel: departamento
+        territorio: "17"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      periodo_agrupado: [2023, 2025]
+      anio_referencia: 2024
+    cruces:
+    - id_cruce: X-33
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2024, 2025]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-03-i
+  regla: R-CRUCES-03
+  descripcion: '[ambiguo: la excepción de la pobreza ENAHO 2020–2021 (ajuste_consolidacion) frente a un componente de gasto socioeconómico; lectura
+    restrictiva] pobreza ENAHO 2020 con gasto 2021: el choque 2021 cae en (2020, 2021] → bloquear'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2023
+        nivel: departamento
+        territorio: "21"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      anio: 2021
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: p
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      anio: 2020
+    cruces:
+    - id_cruce: X-34
+      a: g
+      b: p
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2020, 2021]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-05-a
+  regla: R-CRUCES-05
+  descripcion: 'casos_borde (2) «Población objetivo distinta pero anidada (6–35 meses vs 0–5 años) → rotular»: CR-01 gasto ex-PAN (menores de
+    5) × anemia 6–35 meses'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-05-b
+  regla: R-CRUCES-05
+  descripcion: 'compat_base_distrito «residencia×establecimiento: … bloquear (distrito)»: anemia SIEN (establecimiento) × Mapa de Pobreza (residencia)
+    por distrito'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    - base:
+        indicador: mapa_pobreza_2018
+        anio: 2018
+        nivel: distrito
+        territorio: "090103"
+      id_cifra: m
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: rojo
+    cruces:
+    - id_cruce: X-40
+      a: s
+      b: m
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2018, 2025]
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-CRUCES-05-c
+  regla: R-CRUCES-05
+  descripcion: 'compat_base_distrito «residencia×establecimiento: rotular (provincia o más)»: el mismo par por provincia'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: provincia}
+  respuesta:
+    cifras:
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: provincia
+        territorio: "090100"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    - base:
+        indicador: mapa_pobreza_2018
+        anio: 2018
+        nivel: provincia
+        territorio: "090100"
+      id_cifra: m
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: rojo
+    cruces:
+    - id_cruce: X-41
+      a: s
+      b: m
+      presentacion: lado_a_lado
+      nivel: provincia
+      anios: [2018, 2025]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-05-d
+  regla: R-CRUCES-05
+  descripcion: 'casos_borde (2) población anidada (6–35 meses frente a 0–59 meses), mismo universo y bases compatibles: anemia × DCI ENDES de
+    Puno → rotular (AN-52)'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: endes_dci_menores_5
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: d
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-42
+      a: e
+      b: d
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-05-d2
+  regla: R-CRUCES-05
+  descripcion: '«compat_poblacion = poblacion_objetivo(a) ⊆≈ poblacion_objetivo(b)» con la misma población (6–35 meses), el mismo universo (total)
+    y la misma base (muestra): anemia OMS 2024 × anemia RM 363 de Puno → ok, nada que rotular'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e363
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-45
+      a: e
+      b: e363
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+  espera: {dispara: false}
+- id: R-CRUCES-05-g
+  regla: R-CRUCES-05
+  descripcion: Sin cruces en la respuesta → la regla no evalúa compatibilidad
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+  espera: {dispara: false}
+- id: R-CRUCES-05-e
+  regla: R-CRUCES-05
+  descripcion: '«universo(a) compatible universo(b)»: SIEN (sector_publico_minsa) × ENDES (total) por departamento → rotular la diferencia'
+  consulta: {intencion_pregunta: comparacion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    cruces:
+    - id_cruce: X-43
+      a: e
+      b: s
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-05-f
+  regla: R-CRUCES-05
+  descripcion: 'compat_base_adicional «establecimiento×ejecutora_municipal: lado a lado a distrito, con rótulo, sin cociente»'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+      id_cifra: s
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      nivel_gobierno: M
+    cruces:
+    - id_cruce: X-44
+      a: s
+      b: g
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2025]
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-08-a
+  regla: R-CRUCES-08
+  descripcion: '«count(fuentes con concepto_medido == concepto_pedido …) >= 2 → ordenar»: anemia ENDES (rank 1) y SIEN (rank 2) en Puno; |56,1
+    − 20,0| > 5 pp → bloque «Por qué las cifras no coinciden»'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: s
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    cruces: []
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-08-b
+  regla: R-CRUCES-08
+  descripcion: '«count(…) >= 2» es falso: una sola fuente del concepto (anemia ENDES)'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+  espera: {dispara: false}
+- id: R-CRUCES-08-c
+  regla: R-CRUCES-08
+  descripcion: 'casos_borde (1) «Fuente principal suprimida por precisión: la secundaria no pasa a ser la cifra del concepto; se avisa»'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: suprimida
+      semaforo_cifra: no_publicable
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: s
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    cruces: []
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-08-d
+  regla: R-CRUCES-08
+  descripcion: Conceptos distintos (anemia y desnutrición crónica) → no hay dos fuentes del mismo concepto
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: endes_dci_menores_5
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: d
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+  espera: {dispara: false}
+- id: R-CRUCES-07-a
+  regla: R-CRUCES-07
+  descripcion: '«intencion_pregunta == ''efecto''» (Q3: «¿sirvió el gasto en anemia?») → estructura de 5 partes'
+  consulta: {intencion_pregunta: efecto, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+  espera: {dispara: true, accion: rotular}
+- id: R-CRUCES-07-b
+  regla: R-CRUCES-07
+  descripcion: '«intencion_pregunta == ''efecto''» es falso: pregunta descriptiva (nivel_actual)'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    cruces: []
+  espera: {dispara: false}
+- id: R-CRUCES-07-c
+  regla: R-CRUCES-07
+  descripcion: '[ambiguo: el vocabulario de intencion_pregunta del contrato (§2d) no tiene ''efecto''] intención ''cruce'' (lado a lado) no es
+    pregunta de efecto'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+  espera: {dispara: false}
+- id: R-CRUCES-07-d
+  regla: R-CRUCES-07
+  descripcion: '[ambiguo: en una regla de respuesta aplica_a se lee sobre las cifras] intención ''efecto'' sin ninguna cifra de gasto ni de cobertura
+    de programa → fuera de aplica_a'
+  consulta: {intencion_pregunta: efecto, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+  espera: {dispara: false}
+- id: R-ENC-11-a
+  regla: R-ENC-11
+  descripcion: '«p < 0.05 → declarar dirección»: anemia Puno 2024 vs 2025 con p = 0,01 → rótulo con verbo de cambio (comparación en respuesta.cifras[a].comparacion,
+    contrato §2e; AN-53…57)'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2024
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: publicable
+        prueba_cambio: &id004 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.01, significativa: true}
+      test_cambio: {p_valor: 0.01, significativo: true}
+      p_valor_diferencia: 0.01
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2024
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2024, 2025]
+      prueba_cambio: *id004
+  espera: {dispara: true, accion: rotular, test_cambio_significativo: true}
+- id: R-ENC-11-b
+  regla: R-ENC-11
+  descripcion: '«p >= 0.05 → test_cambio.significativo = false (rótulo ''sin cambio estadísticamente claro'')»: p = 0,52 (comparación en respuesta.cifras[a].comparacion,
+    contrato §2e; AN-53…57)'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2024
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: publicable
+        prueba_cambio: &id005 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.52, significativa: false}
+      test_cambio: {p_valor: 0.52, significativo: false}
+      p_valor_diferencia: 0.52
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2024
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2024, 2025]
+      prueba_cambio: *id005
+  espera: {dispara: true, accion: rotular, test_cambio_significativo: false}
+- id: R-ENC-11-c
+  regla: R-ENC-11
+  descripcion: 'borde «p < 0.05»: p = 0,05 exacto → sin cambio estadísticamente claro (comparación en respuesta.cifras[a].comparacion, contrato
+    §2e; AN-53…57)'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2024
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: publicable
+        prueba_cambio: &id006 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.05, significativa: false}
+      test_cambio: {p_valor: 0.05, significativo: false}
+      p_valor_diferencia: 0.05
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2024
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2024, 2025]
+      prueba_cambio: *id006
+  espera: {dispara: true, accion: rotular, test_cambio_significativo: false}
+- id: R-ENC-11-d
+  regla: R-ENC-11
+  descripcion: «cualquiera con estado 'suprimida' → no comparar» (= bloquear_cruce) (comparación en respuesta.cifras[a].comparacion, contrato
+    §2e; AN-53…57)
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2024
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: suprimida
+        prueba_cambio: &id007 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.01, significativa: true}
+      test_cambio: {p_valor: 0.01, significativo: true}
+      p_valor_diferencia: 0.01
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2024
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: suprimida
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2024, 2025]
+      prueba_cambio: *id007
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-ENC-11-h1
+  regla: R-ENC-11
+  descripcion: 'H-4: caso borde «Comparación a través de un quiebre (R-ENC-13/14): bloqueada» y PR-06 (prevalece R-ENC-13): anemia RM 363 de Puno
+    2019 frente a 2021 (quiebre 2020, comparable_con vacío) (comparación en respuesta.cifras[a].comparacion, contrato §2e; AN-53…57) [P4, 11/10/2026: el quiebre por modo de entrevista (2020) ya no bloquea comparar a través de él; ver R-ENC-11 casos_borde y 00_proyecto/piloto/p4/analisis_5_decisiones.md]'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2021
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2019
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: publicable
+        prueba_cambio: &id008 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.4, significativa: false}
+      test_cambio: {p_valor: 0.4, significativo: false}
+      p_valor_diferencia: 0.4
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2019
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2019, 2021]
+      prueba_cambio: *id008
+  espera: {dispara: true, accion: rotular}
+- id: R-ENC-11-h2
+  regla: R-ENC-11
+  descripcion: 'H-4: «tendencias: primer vs último año del tramo sin quiebre»: anemia RM 363 de Puno 2015 frente a 2025 cruza 2020 → bloqueada
+    (comparación en respuesta.cifras[a].comparacion, contrato §2e; AN-53…57) [P4, 11/10/2026: el quiebre por modo de entrevista (2020) ya no bloquea comparar a través de él; ver R-ENC-11 casos_borde y 00_proyecto/piloto/p4/analisis_5_decisiones.md]'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2015
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: publicable
+        prueba_cambio: &id009 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.01, significativa: true}
+      test_cambio: {p_valor: 0.01, significativo: true}
+      p_valor_diferencia: 0.01
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2015
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2015, 2025]
+      prueba_cambio: *id009
+  espera: {dispara: true, accion: rotular}
+- id: R-ENC-11-h3
+  regla: R-ENC-11
+  descripcion: 'H-4, contraparte: 2021 frente a 2025 queda dentro del tramo posterior al quiebre de 2020 → se prueba y se rotula (comparación
+    en respuesta.cifras[a].comparacion, contrato §2e; AN-53…57)'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2021
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: publicable
+        prueba_cambio: &id010 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.2, significativa: false}
+      test_cambio: {p_valor: 0.2, significativo: false}
+      p_valor_diferencia: 0.2
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2021
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2021, 2025]
+      prueba_cambio: *id010
+  espera: {dispara: true, accion: rotular}
+- id: R-ENC-11-e
+  regla: R-ENC-11
+  descripcion: 'casos_borde «Comparación a través de un quiebre (R-ENC-13/14): bloqueada»: DCI Puno 2019 vs 2021 (2020 en medio) (comparación
+    en respuesta.cifras[a].comparacion, contrato §2e; AN-53…57) [P4, 11/10/2026: el quiebre por modo de entrevista (2020) ya no bloquea comparar a través de él; ver R-ENC-11 casos_borde y 00_proyecto/piloto/p4/analisis_5_decisiones.md]'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_dci_menores_5
+        anio: 2021
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2019
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: publicable
+        prueba_cambio: &id011 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.3, significativa: false}
+      test_cambio: {p_valor: 0.3, significativo: false}
+      p_valor_diferencia: 0.3
+    - base:
+        indicador: endes_dci_menores_5
+        anio: 2019
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2019, 2021]
+      prueba_cambio: *id011
+  espera: {dispara: true, accion: rotular}
+- id: R-ENC-11-h4
+  regla: R-ENC-11
+  descripcion: 'P4 (11/10/2026): comparar CON el año del quiebre por modo de entrevista sigue bloqueado: anemia RM 363 de Puno 2024 frente a 2020'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2024
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      comparacion:
+        anio: 2020
+        valor: 53.119
+        ee: 3.18
+        estado_cifra: publicable
+        prueba_cambio: &h4id008 {diferencia: 2.95, ee_diferencia: 4.65, p_valor: 0.4, significativa: false}
+      test_cambio: {p_valor: 0.4, significativo: false}
+      p_valor_diferencia: 0.4
+    - base:
+        indicador: endes_anemia_6_35m
+        anio: 2020
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: CMP-1
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2020, 2024]
+      prueba_cambio: *h4id008
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-ENC-11-f
+  regla: R-ENC-11
+  descripcion: No hay comparación (intención nivel_actual, sin fila de comparación ni cruce) → no dispara
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+  espera: {dispara: false}
+- id: R-ENC-11-g
+  regla: R-ENC-11
+  descripcion: 'aplica_a.fuentes: comparación de dos cifras del SIEN (registro) no usa esta prueba'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: "21"
+  cifra:
+    comparacion:
+      anio: 2024
+      valor: 21.0
+      prueba_cambio: {p_valor: 0.01, significativa: true}
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: a
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: b
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      anio: 2024
+    cruces:
+    - id_cruce: CMP-2
+      a: a
+      b: b
+      presentacion: comparacion
+      nivel: departamento
+      anios: [2024, 2025]
+  espera: {dispara: false}
+- id: R-ENC-12-a
+  regla: R-ENC-12
+  descripcion: '«pregunta_tipo == ''ranking''» (intención identificar_extremo): «¿qué región tiene más pobreza?» → grupos estadísticamente semejantes,
+    no posiciones'
+  consulta: {intencion_pregunta: identificar_extremo, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: p21
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "09"
+      id_cifra: p09
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "05"
+      id_cifra: p05
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "08"
+      id_cifra: p08
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "10"
+      id_cifra: p10
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+  espera: {dispara: true, accion: rotular}
+- id: R-ENC-12-b
+  regla: R-ENC-12
+  descripcion: '«respuesta contiene orden de >= 3 territorios con cifras de encuesta»: tres departamentos ordenados en una comparación'
+  consulta: {intencion_pregunta: comparacion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: p21
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "09"
+      id_cifra: p09
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "05"
+      id_cifra: p05
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+    texto: Puno, Huancavelica y Ayacucho, en ese orden.
+  espera: {dispara: true, accion: rotular}
+- id: R-ENC-12-c
+  regla: R-ENC-12
+  descripcion: 'borde «>= 3 territorios»: comparación de solo dos departamentos → no es ranking'
+  consulta: {intencion_pregunta: comparacion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: p21
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "09"
+      id_cifra: p09
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+  espera: {dispara: false}
+- id: R-ENC-12-d
+  regla: R-ENC-12
+  descripcion: 'L8 «nunca: el departamento 15 entero junto con LM o LR (se superponen)» [ambiguo: la acción no se fija; se espera que la regla
+    intervenga]'
+  consulta: {intencion_pregunta: identificar_extremo, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: p21
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "15"
+      id_cifra: p15
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base: {indicador: enaho_pobreza_monetaria, anio: 2025, nivel: LIMA_METROPOLITANA, territorio: LIMA_METROPOLITANA}
+      id_cifra: plm
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "09"
+      id_cifra: p09
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+  espera: {dispara: true}
+- id: R-ENC-12-e
+  regla: R-ENC-12
+  descripcion: 'aplica_a.fuentes: ranking de cifras del SIEN (registro), no de encuesta → esta regla no aplica'
+  consulta: {intencion_pregunta: identificar_extremo, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: s21
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "09"
+      id_cifra: s09
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "05"
+      id_cifra: s05
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "08"
+      id_cifra: s08
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "10"
+      id_cifra: s10
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    cruces: []
+  espera: {dispara: false}
+- id: R-EST-02-a
+  regla: R-EST-02
+  descripcion: '«operacion IN (resta, variacion, tendencia) AND (fuente_A modelada XOR fuente_B modelada …) → bloquear_cruce»: Mapa 2018 menos
+    ENAHO 2025'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - &id012
+      base:
+        indicador: mapa_pobreza_2018
+        anio: 2018
+        nivel: distrito
+        territorio: "060104"
+      id_cifra: m
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: rojo
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "06"
+      id_cifra: p
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-50
+      a: m
+      b: p
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2018, 2025]
+      operacion: resta
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-EST-02-b
+  regla: R-EST-02
+  descripcion: «operacion = ajuste_por_variacion_encuesta → bloquear» («actualizar» el Mapa con la variación departamental de la ENAHO)
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - *id012
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "06"
+      id_cifra: p
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-51
+      a: m
+      b: p
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2018, 2025]
+      operacion: ajuste_por_variacion_encuesta
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-EST-02-c
+  regla: R-EST-02
+  descripcion: '«correlacion(estimacion_modelada, variable) AND variable.fuente IN covariables_modelo → bloquear_cruce»: Mapa 2018 × servicios
+    del Censo 2017 [indicador ilustrativo]'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - *id012
+    - id_cifra: c
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+      indicador_id: cpv2017_agua_red_ilustrativo
+      fuente_principal: INEI-CPV2017
+      naturaleza_dato: censo
+      tipo_medida: stock_infraestructura
+      anio: 2017
+      nivel: distrito
+      territorio_id: "060104"
+      valor: 55.0
+    cruces:
+    - id_cruce: X-52
+      a: m
+      b: c
+      presentacion: asociacion
+      nivel: distrito
+      anios: [2017, 2018]
+      operacion: correlacion
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-EST-02-d
+  regla: R-EST-02
+  descripcion: '«cruce con gasto de años ≠ anio_referencia → advertir»: Mapa 2018 lado a lado con el gasto municipal 2025'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - *id012
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-53
+      a: m
+      b: g
+      presentacion: lado_a_lado
+      nivel: distrito
+      anios: [2018, 2025]
+  espera: {dispara: true, accion: advertir}
+- id: R-EST-02-e
+  regla: R-EST-02
+  descripcion: 'Sin operación ni correlación: Mapa 2018 con la ENAHO 2025 mostrados por separado (ejemplo: «se muestran por separado») → no dispara'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - *id012
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "06"
+      id_cifra: p
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+  espera: {dispara: false}
+- id: R-EST-02-f
+  regla: R-EST-02
+  descripcion: 'aplica_a.fuentes (estimaciones modeladas): variación ENDES 2024–2025 sin componente modelado queda fuera'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2024
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e24
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces:
+    - id_cruce: X-54
+      a: e
+      b: e24
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2024, 2025]
+      operacion: variacion
+  espera: {dispara: false}
+- id: R-GASTO-15-a
+  regla: R-GASTO-15
+  descripcion: «borrador contiene términos de la lista_bloqueada» («eficiente») con cifra de gasto → bloquear el enunciado
+  consulta: {intencion_pregunta: efecto, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+    texto: 'En Puno el gasto fue eficiente: se gastaron {{c:g}} y la anemia fue {{c:e}}.'
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-15-b
+  regla: R-GASTO-15
+  descripcion: Plantilla descriptiva («Estos datos no permiten saber si el gasto causó ese resultado») → no dispara
+  consulta: {intencion_pregunta: efecto, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+    texto: En Puno se gastaron {{c:g}} en servicios que antes eran del PAN en 2025; en el mismo periodo la anemia fue {{c:e}}. {{p:efecto}}
+  espera: {dispara: false}
+- id: R-GASTO-15-c
+  regla: R-GASTO-15
+  descripcion: '«verbo causal que vincule gasto con resultado»: «el aumento del gasto redujo la anemia» (ejemplo inválido)'
+  consulta: {intencion_pregunta: efecto, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+    texto: El aumento del gasto redujo la anemia en Puno ({{c:g}}; {{c:e}}).
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-15-d
+  regla: R-GASTO-15
+  descripcion: 'Lista simétrica: acusación «mala ejecutora»'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    cruces: []
+    texto: 'El gobierno regional es una mala ejecutora: devengó {{c:g}}.'
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-15-e
+  regla: R-GASTO-15
+  descripcion: 'Lista simétrica: excusa «es normal que no se gaste»'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    cruces: []
+    texto: 'Es normal que no se gaste todo: se devengaron {{c:g}}.'
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-15-f
+  regla: R-GASTO-15
+  descripcion: Lo no ejecutado nunca como dinero que «sobró»
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    cruces: []
+    texto: Del presupuesto sobró una parte; se devengaron {{c:g}}.
+  espera: {dispara: true, accion: bloquear_cruce}
+- id: R-GASTO-15-g
+  regla: R-GASTO-15
+  descripcion: 'parametros.bloqueo_con_contexto «''redujo'' solo se bloquea si el sujeto o complemento es gasto, programa o inversión» (texto
+    vigente; la nota PR-30 del alcance no manda): «la anemia redujo su nivel» → no dispara aquí; lo cubre R-LENGUAJE-02 (AN-58)'
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+    texto: En Puno la anemia redujo su nivel; el gasto fue {{c:g}} ({{c:e}}).
+  espera: {dispara: false}
+- id: R-GASTO-15-h
+  regla: R-GASTO-15
+  descripcion: '«Si la respuesta incluye una cifra de gasto» es falso: «eficiente» en una respuesta solo con la ENDES → esta regla no aplica'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    texto: Un tamizaje eficiente detecta la anemia; en Puno fue {{c:e}}.
+  espera: {dispara: false}
+- id: R-CRUCES-10-a
+  regla: R-CRUCES-10
+  descripcion: '«sem_resp = max(semaforo de cifras con es_principal=true)»: una cifra principal verde, respuesta completa al nivel pedido → verde'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    respuesta_parcial: false
+    nivel_respuesta: departamento
+  espera: {dispara: true, accion: rotular, semaforo: verde}
+- id: R-CRUCES-10-b
+  regla: R-CRUCES-10
+  descripcion: '«si respuesta_parcial … → max(sem_resp, ambar)» (decisión 10/10: Q3 parcial con piso ámbar)'
+  consulta: {intencion_pregunta: efecto, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+    respuesta_parcial: true
+    nivel_respuesta: departamento
+  espera: {dispara: true, accion: rotular, semaforo: ambar}
+- id: R-CRUCES-10-c
+  regla: R-CRUCES-10
+  descripcion: '«nivel_respuesta != nivel_pedido → ámbar» (ejemplo: pregunta distrital respondida por departamento)'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: provincia}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    respuesta_parcial: false
+    nivel_respuesta: departamento
+  espera: {dispara: true, accion: rotular, semaforo: ambar}
+- id: R-CRUCES-10-d
+  regla: R-CRUCES-10
+  descripcion: '«contexto: contribuye min(semaforo_contexto, ambar)»: principal verde + contexto rojo → ámbar'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: mapa_pobreza_2018
+        anio: 2018
+        nivel: distrito
+        territorio: "210101"
+      id_cifra: m
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: rojo
+    cruces: []
+    respuesta_parcial: false
+    nivel_respuesta: departamento
+  espera: {dispara: true, accion: rotular, semaforo: ambar}
+- id: R-CRUCES-10-e
+  regla: R-CRUCES-10
+  descripcion: ejemplo «Pregunta de pobreza distrital con Mapa 2018 como única cifra principal → rojo»
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - *id012
+    - base:
+        indicador: enaho_pobreza_monetaria
+        anio: 2025
+        nivel: departamento
+        territorio: "06"
+      id_cifra: p
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+    respuesta_parcial: false
+    nivel_respuesta: distrito
+  espera: {dispara: true, accion: rotular, semaforo: rojo}
+- id: R-CRUCES-10-f
+  regla: R-CRUCES-10
+  descripcion: 'casos_borde (1) precisado por PR-36: respuesta sin ninguna cifra principal publicable → semáforo «Sin cifra disponible» (AN-59)'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: suprimida
+      semaforo_cifra: no_publicable
+    cruces: []
+    respuesta_parcial: false
+    nivel_respuesta: departamento
+  espera: {dispara: true, accion: rotular, semaforo: sin_cifra}
+- id: R-LENGUAJE-01-a
+  regla: R-LENGUAJE-01
+  descripcion: '[ambiguo: con la ficha válida la regla no tiene nada que imponer; formato de ficha.corta como campos de ficha_limites.corta] «ficha_corta
+    y ficha_larga no nulas AND todos los campos obligatorios presentes» → se publica'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    ficha:
+      corta: &id014 {semaforo_respuesta: 'Confianza: Dato sólido — hay suficientes datos y son de 2025.', fuentes_anios: 'Datos de: ENDES 2025
+          (INEI)', territorio: 'Territorio: departamento de Puno', no_concluir_principal: 'No permite concluir: NC-ACTUAL'}
+      larga: &id013 {1. De dónde vienen los datos: 'Encuesta Demográfica y de Salud Familiar (INEI), 2025.', 2. Territorio y por qué: Las cifras
+          se presentan por departamento.}
+  espera: {dispara: false}
+- id: R-LENGUAJE-01-b
+  regla: R-LENGUAJE-01
+  descripcion: '«si no → no publicar» (= suprimir, normalizacion_salidas.no_publicar): respuesta sin ficha'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    ficha: null
+  espera: {dispara: true, accion: suprimir, objetivo: respuesta}
+- id: R-LENGUAJE-01-c
+  regla: R-LENGUAJE-01
+  descripcion: '«todos los campos obligatorios de ficha_limites presentes» falla: la ficha corta no trae fuentes_anios'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    ficha:
+      corta: {semaforo_respuesta: 'Confianza: Dato sólido — hay suficientes datos y son de 2025.', territorio: 'Territorio: departamento de Puno',
+        no_concluir_principal: 'No permite concluir: NC-ACTUAL'}
+      larga: *id013
+  espera: {dispara: true, accion: suprimir}
+- id: R-LENGUAJE-01-d
+  regla: R-LENGUAJE-01
+  descripcion: '«ficha_larga no nula» falla: solo versión corta'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    ficha:
+      corta: *id014
+      larga: null
+  espera: {dispara: true, accion: suprimir}
+- id: R-LENGUAJE-01-e
+  regla: R-LENGUAJE-01
+  descripcion: 'parametros.max_lineas_ficha_corta = 4: ficha corta de 5 líneas → no válida'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    ficha:
+      corta: {semaforo_respuesta: 'Confianza: Dato sólido — hay suficientes datos y son de 2025.', fuentes_anios: 'Datos de: ENDES 2025 (INEI)',
+        territorio: 'Territorio: departamento de Puno', no_concluir_principal: 'No permite concluir: NC-ACTUAL', extra: 'Nota: línea adicional'}
+      larga: *id013
+  espera: {dispara: true, accion: suprimir}
+- id: R-LENGUAJE-01-f
+  regla: R-LENGUAJE-01
+  descripcion: 'casos_borde [PR-36] «Ficha mínima válida: semáforo “Sin cifra disponible”, fuentes consultadas y motivo codificado» → se publica'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras: []
+    cruces: []
+    ficha:
+      corta: {semaforo_respuesta: 'Confianza: Sin cifra disponible — nivel_no_representativo.', fuentes_anios: 'Fuentes consultadas: ENDES 2025
+          (INEI)', territorio: 'Territorio: distrito de Ayaviri', no_concluir_principal: 'No permite concluir: NC-ACTUAL'}
+      larga: *id013
+  espera: {dispara: false}
+- id: R-LENGUAJE-03-a
+  regla: R-LENGUAJE-03
+  descripcion: Solo marcadores; edades de la lista blanca («6 a 35 meses», PR-13) y año de 4 dígitos → no dispara
+  consulta: &id015 {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    texto: En Puno se estima que {{c:e}} de niñas y niños de 6 a 35 meses tenía anemia en 2025.
+    cifras_permitidas: [e]
+  espera: {dispara: false}
+- id: R-LENGUAJE-03-b
+  regla: R-LENGUAJE-03
+  descripcion: '«regex de dígitos en el texto del LLM fuera de marcadores … → regenerar» (= rotular): «56,1 %» escrito por el LLM'
+  consulta: *id015
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    texto: En Puno el 56,1 % de niñas y niños tenía anemia en 2025.
+    cifras_permitidas: [e]
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-03-c
+  regla: R-LENGUAJE-03
+  descripcion: '«cada marcador debe existir en resultado.cifras_permitidas»: {{c:x}} no permitido → regenerar'
+  consulta: *id015
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    texto: En Puno se estima que {{c:x}} de niñas y niños tenía anemia en 2025.
+    cifras_permitidas: [e]
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-03-d
+  regla: R-LENGUAJE-03
+  descripcion: '«salvo … números de programa presupuestal listados»: «programa presupuestal 1001» → no dispara'
+  consulta: *id015
+  respuesta:
+    cifras:
+    - *id001
+    cruces: []
+    texto: En 2025 se gastaron {{c:g}} en servicios del programa presupuestal 1001.
+    cifras_permitidas: [g]
+  espera: {dispara: false}
+- id: R-LENGUAJE-03-e
+  regla: R-LENGUAJE-03
+  descripcion: 'PR-13 lista blanca «“Ley N.°”»: «Ley N.° 31140» → no dispara'
+  consulta: *id015
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    texto: Lima Metropolitana es la provincia de Lima (Ley N.° 31140); allí se estima que {{c:e}} tenía anemia en 2025.
+    cifras_permitidas: [e]
+  espera: {dispara: false}
+- id: R-LENGUAJE-03-f
+  regla: R-LENGUAJE-03
+  descripcion: Número fuera de marcador escrito como entero con «por ciento» («47 por ciento») → regenerar
+  consulta: *id015
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    texto: En Puno alrededor de 47 por ciento de niños tenía anemia en 2025.
+    cifras_permitidas: [e]
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-06-a
+  regla: R-LENGUAJE-06
+  descripcion: '«párrafo con cifras de >=2 naturaleza_dato distintas»: encuesta + gasto, una por oración y con conector neutral (ejemplo) → mensaje
+    de tipos de datos'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+    texto: En Puno se estima que {{c:e}} de niñas y niños de 6 a 35 meses tenía anemia en 2025 (ENDES 2025, INEI). En el mismo periodo se gastaron
+      {{c:g}} en servicios que antes eran del PAN (MEF 2025).
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-06-b
+  regla: R-LENGUAJE-06
+  descripcion: '«>=2 naturaleza_dato distintas» es falso: dos cifras de encuesta'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: endes_dci_menores_5
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: d
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+    texto: En Puno se estima que {{c:e}} tenía anemia en 2025. Además, se estima que {{c:d}} tenía desnutrición crónica.
+  espera: {dispara: false}
+- id: R-LENGUAJE-06-c
+  regla: R-LENGUAJE-06
+  descripcion: '«(c) conector entre oraciones ∈ conectores_neutrales»: «por eso» entre encuesta y gasto → corregir'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+    texto: En 2025 se gastaron {{c:g}} en Puno. Por eso se estima que {{c:e}} tenía anemia en 2025.
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-06-d
+  regla: R-LENGUAJE-06
+  descripcion: '«(a) una cifra por oración»: registro y encuesta en la misma oración'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    - base:
+        indicador: sien_anemia_tamizados_6_35m
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: s
+      rol: contexto
+      es_principal: false
+      estado_cifra: publicable
+      semaforo_cifra: ambar
+    cruces: []
+    texto: En Puno se estima que {{c:e}} tenía anemia y se tamizaron niños con {{c:s}} de anemia en 2025.
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-02-a
+  regla: R-LENGUAJE-02
+  descripcion: ejemplo «'Gracias al aumento del gasto, la anemia bajó en Apurímac' → lint detecta 'gracias a' y 'bajó'» → regenerar (= rotular,
+    corrector)
+  consulta: {intencion_pregunta: efecto, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: departamento
+        territorio: "03"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "03"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      test_cambio: {significativo: false}
+    cruces:
+    - id_cruce: CR-01
+      a: g
+      b: e
+      presentacion: lado_a_lado
+      nivel: departamento
+      anios: [2025]
+    texto: Gracias al aumento del gasto, la anemia bajó en Apurímac.
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-02-b
+  regla: R-LENGUAJE-02
+  descripcion: Texto con fórmulas permitidas, verbos de cambio en {{v:id}} y spans protegidos → no dispara
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    texto: Entre 2024 y 2025 la anemia en Puno {{v:e}}; en 2025 se estima que fue {{c:e}}. {{p:efecto}}
+  espera: {dispara: false}
+- id: R-LENGUAJE-02-c
+  regla: R-LENGUAJE-02
+  descripcion: PR-12 «“significativo” queda prohibido para evitar dos vocabularios» (categoría ambigüedad)
+  consulta: {intencion_pregunta: evolucion, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id002
+    cruces: []
+    texto: 'En 2025 hubo un cambio significativo en la anemia de Puno: {{c:e}}.'
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-02-d
+  regla: R-LENGUAJE-02
+  descripcion: '«cada {{c:id}} con edad_dato > 2 va en una oración con ''en {anio}''»: Mapa 2018 redactado en presente sin el año → regenerar'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - *id012
+    cruces: []
+    texto: La pobreza en Cospán está entre {{c:m}}.
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-02-e
+  regla: R-LENGUAJE-02
+  descripcion: '«tras 2 intentos → plantilla determinista» y revisión humana de todas las regeneradas 2 veces [campo intentos_regeneracion: ver
+    campos_nuevos]'
+  consulta: {intencion_pregunta: efecto, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+    texto: El gasto logró reducir la anemia en Puno.
+    intentos_regeneracion: 2
+  espera: {dispara: true, accion: revision_humana}
+- id: R-LENGUAJE-02-f
+  regla: R-LENGUAJE-02
+  descripcion: «cada {{c:id}} de INEI-CPV2025 por provincia o distrito va en una oración con {{u:personas_censadas}}, si no → regenerar» [indicador
+    ilustrativo]
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - id_cifra: c
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+      indicador_id: cpv2025_poblacion_ilustrativa
+      fuente_principal: INEI-CPV2025
+      naturaleza_dato: censo
+      tipo_medida: padron_referencia
+      anio: 2025
+      nivel: distrito
+      territorio_id: "090103"
+      valor: 33000.0
+    cruces: []
+    texto: En 2025 la población de Acoria era {{c:c}}.
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-05-a
+  regla: R-LENGUAJE-05
+  descripcion: «Si todos publicables → completa» → sin fórmula de faltantes
+  consulta: {intencion_pregunta: cruce, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - *id002
+    cruces:
+    - *id003
+  espera: {dispara: false}
+- id: R-LENGUAJE-05-b
+  regla: R-LENGUAJE-05
+  descripcion: '«Si >=1 publicable → parcial (listar faltantes)»: gasto publicable y anemia sin datos (ejemplo Pichari)'
+  consulta: {intencion_pregunta: cruce, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "09"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: sin_datos
+      semaforo_cifra: no_publicable
+    cruces: []
+    respuesta_parcial: true
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-05-c
+  regla: R-LENGUAJE-05
+  descripcion: '[ambiguo: «alternativa» se lee como estado agregada/agrupada] «Si 0 publicables y >=1 alternativa (nivel más grueso…) → alternativa»'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: agregada
+      semaforo_cifra: verde
+      nivel_publicado: departamento
+    cruces: []
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-05-d
+  regla: R-LENGUAJE-05
+  descripcion: '«Si 0 y 0 → sin_datos» (fuente en ingesta: «aún no está incorporada»)'
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - base:
+        indicador: endes_anemia_6_35m_oms2024
+        anio: 2025
+        nivel: departamento
+        territorio: "21"
+      id_cifra: e
+      rol: principal
+      es_principal: true
+      estado_cifra: sin_datos
+      semaforo_cifra: no_publicable
+    cruces: []
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-05-e
+  regla: R-LENGUAJE-05
+  descripcion: '[ambiguo: ''prediccion'' no está en el vocabulario de intencion_pregunta del contrato] «intencion in (''datos_personales'',''prediccion'',…)
+    → rechazo»'
+  consulta: {intencion_pregunta: prediccion, nivel_pedido: departamento}
+  respuesta:
+    cifras: []
+    cruces: []
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-08-a
+  regla: R-LENGUAJE-08
+  descripcion: «intencion_pregunta IN ('juicio_autoridad', …) → reformular con plantilla_neutral»
+  consulta: {intencion_pregunta: juicio_autoridad, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    cruces: []
+    texto: El gobierno regional devengó {{c:g}} en 2025.
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-08-b
+  regla: R-LENGUAJE-08
+  descripcion: «comparacion_gestiones» → se comparan años, no gestiones
+  consulta: {intencion_pregunta: comparacion_gestiones, nivel_pedido: departamento}
+  respuesta:
+    cifras:
+    - *id001
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2024
+        nivel: departamento
+        territorio: "21"
+        medida: devengado
+      id_cifra: g24
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+    texto: En 2025 se devengaron {{c:g}}; en 2024, {{c:g24}}.
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-08-c
+  regla: R-LENGUAJE-08
+  descripcion: «texto menciona autoridad|partido|gestión junto a una cifra → regenerar»
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+    texto: La gestión del alcalde devengó {{c:g}} en 2025.
+  espera: {dispara: true, accion: rotular}
+- id: R-LENGUAJE-08-d
+  regla: R-LENGUAJE-08
+  descripcion: Intención neutral y cifras atribuidas a la entidad y al año → no dispara
+  consulta: {intencion_pregunta: nivel_actual, nivel_pedido: distrito}
+  respuesta:
+    cifras:
+    - base:
+        indicador: gasto_ex_pan
+        anio: 2025
+        nivel: distrito
+        territorio: "090103"
+        medida: devengado
+      id_cifra: g
+      rol: principal
+      es_principal: true
+      estado_cifra: publicable
+      semaforo_cifra: verde
+    cruces: []
+    texto: La Municipalidad Distrital de Acoria devengó {{c:g}} en 2025.
+  espera: {dispara: false}

@@ -1,0 +1,3607 @@
+- id: R-MOTOR-03-a
+  regla: R-MOTOR-03
+  descripcion: '«periodo_pedido IS NULL → anio(fuente) = max(anio con compuerta aprobada AND es_preliminar = false)»: consulta sin año sobre anemia ENDES de Puno → se rotula «último año completo disponible»'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    nivel_pedido: departamento
+    territorio_pedido: Puno
+    rol: principal
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-MOTOR-03-b
+  regla: R-MOTOR-03
+  descripcion: '«periodo_pedido IS NULL»: la consulta sí pide 2024 → la regla no interviene'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2024
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    anio_pedido: 2024
+    nivel_pedido: departamento
+    territorio_pedido: Puno
+  espera:
+    dispara: false
+- id: R-MOTOR-03-c
+  regla: R-MOTOR-03
+  descripcion: '«gasto: último año cerrado + acumulado de cartera activa»: gasto ex-PAN de Puno sin año pedido → rótulo del último año cerrado'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  consulta:
+    nivel_pedido: departamento
+    territorio_pedido: Puno
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-MOTOR-03-d
+  regla: R-MOTOR-03
+  descripcion: 'parametros.anio_en_curso «solo si la pregunta lo pide; se rotula “dato preliminar al {fecha_corte}”»: la consulta pide 2026 (año en curso, preliminar)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  cifra:
+    anio: 2026
+    es_preliminar: true
+    fecha_corte: '2026-09-30'
+    anio_cerrado: false
+  consulta:
+    anio_pedido: 2026
+    nivel_pedido: departamento
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-DEP-01-a
+  regla: R-DEP-01
+  descripcion: '«ANY(i.compuerta_ingesta != ''aprobada'' … rol IN (numerador, denominador_principal, tabla_curada))» es falso: anemia ENDES de Puno con INEI-ENDES y las tablas curadas aprobadas en el catálogo'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: false
+- id: R-DEP-01-b
+  regla: R-DEP-01
+  descripcion: '«ANY(i.compuerta_ingesta != ''aprobada'' …) → estado_cifra = ''sin_datos'', motivo = ''insumo_en_ingesta''»: el numerador INEI-ENDES no está aprobado'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  contexto:
+    catalogo:
+      INEI-ENDES:
+        compuerta_ingesta: enlace_confirmado
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: insumo_en_ingesta
+- id: R-DEP-01-c
+  regla: R-DEP-01
+  descripcion: «rol = tabla_curada» no aprobada (INEI-DIRECTORIO-MUNICIPALIDADES en pendiente_prueba, crudo de dim_ubigeo_historico) → sin_datos por insumo_en_ingesta
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  contexto:
+    catalogo:
+      INEI-DIRECTORIO-MUNICIPALIDADES:
+        compuerta_ingesta: pendiente_prueba
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: insumo_en_ingesta
+- id: R-DEP-01-d
+  regla: R-DEP-01
+  descripcion: '«rol = denominador_principal» no aprobado: la cobertura de tamizaje del SIEN con INEI-PROYECCIONES-DEPARTAMENTAL-EDAD en enlace_confirmado → sin_datos'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  contexto:
+    catalogo:
+      INEI-PROYECCIONES-DEPARTAMENTAL-EDAD:
+        compuerta_ingesta: enlace_confirmado
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: insumo_en_ingesta
+- id: R-DEP-01-e
+  regla: R-DEP-01
+  descripcion: '[ambiguo] «insumos con rol = ''contraste'' no aprobados → se omiten y se anota en la ficha larga»: la cobertura SIEN tiene MINSA-POBLACION-ESTIMADA (contraste) en enlace_confirmado en el
+    catálogo real; la cifra NO se suprime. Lectura: la anotación es una nota (normalizada a rotular)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-DEP-01-f
+  regla: R-DEP-01
+  descripcion: '«t.id IN tablas_solo_curadas AND manifiesto.bloqueantes_fallidas != [] → sin_datos, motivo = ''tabla_curada_sin_respaldo''»: dim_tema_gasto con una prueba bloqueante fallida en manifiesto_s3_gasto'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  contexto:
+    manifiestos:
+      s3_gasto:
+        pruebas:
+          total: 40
+          fallidas:
+          - G-03
+          bloqueantes_fallidas:
+          - G-03
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: tabla_curada_sin_respaldo
+- id: R-DEP-01-g
+  regla: R-DEP-01
+  descripcion: '«t NOT IN manifiesto»: dim_dominio no está registrada en manifiesto_s1_territorio y la cifra de Lima Metropolitana (ENDES) la usa → tabla_curada_sin_respaldo'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  contexto:
+    manifiestos:
+      s1_territorio:
+        tablas:
+          dim_ubigeo_historico:
+            archivo: dim_ubigeo_historico.parquet
+          dim_ambito:
+            archivo: dim_ambito.parquet
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: tabla_curada_sin_respaldo
+- id: R-DEP-01-h
+  regla: R-DEP-01
+  descripcion: '[ambiguo: el texto no dice si la fila usada se lee de dominios.yaml o de dim_dominio.parquet] «fila_usada.confirmado IS NOT TRUE»: la fila ENDES 2025 de Lima Metropolitana con confirmado
+    = false → tabla_curada_sin_respaldo'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  contexto:
+    dominios:
+    - encuesta: ENDES
+      anios:
+      - 2015
+      - 2025
+      dominio_id: nacional
+      nivel: nacional
+      composicion:
+      - ''
+      tipo: dominio_diseno
+      confirmado: true
+    - encuesta: ENDES
+      anios:
+      - 2020
+      - 2025
+      dominio_id: lima_metropolitana
+      ambito_id: LIMA_METROPOLITANA
+      nivel: provincia
+      composicion:
+      - '1501'
+      tipo: ambito_publicado
+      metodo: ubigeo
+      confirmado: false
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: tabla_curada_sin_respaldo
+- id: R-DEP-01-i
+  regla: R-DEP-01
+  descripcion: Gasto ex-PAN con todas sus fuentes aprobadas y manifiesto_s3_gasto sin bloqueantes fallidas (dim_tema_gasto v1.2 aprobada por el dueño) → no dispara
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  espera:
+    dispara: false
+- id: R-MOTOR-01-a
+  regla: R-MOTOR-01
+  descripcion: '«estado_cifra == ''suprimida'' AND motivo IN motivos_degradables»: SIEN (registro_administrativo) por distrito suprimida por pocos_casos, ya agrupada 2023–2025 → siguiente paso provincia_anio
+    (contrato: siguiente_paso; AN-1)'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: '010102'
+  cifra:
+    periodo_agrupado:
+    - 2023
+    - 2025
+    motivo_nivel:
+    - paso: &id001
+        tipo: agrupar
+        anios:
+        - 2023
+        - 2025
+        paso: agrupar_3_anios
+      motivos:
+      - pocos_casos
+  evaluacion:
+    accion_final: suprimir
+    estado_cifra: suprimida
+    resultados:
+    - regla: R-X
+      accion: suprimir
+      motivo: pocos_casos
+  espera:
+    dispara: true
+    paso:
+      tipo: nivel
+      nivel: provincia
+- id: R-MOTOR-01-b
+  regla: R-MOTOR-01
+  descripcion: 'Secuencia encuesta_muestral: ENDES departamental suprimida por precision en el paso «anio» → siguiente paso agrupar_3_anios 2023–2025 (AN-2)'
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2025
+    nivel: departamento
+    territorio: '17'
+  cifra:
+    motivo_nivel: []
+  evaluacion:
+    accion_final: suprimir
+    estado_cifra: suprimida
+    resultados:
+    - regla: R-X
+      accion: suprimir
+      motivo: precision
+  espera:
+    dispara: true
+    paso:
+      tipo: agrupar
+      anios:
+      - 2023
+      - 2025
+      paso: agrupar_3_anios
+- id: R-MOTOR-01-c
+  regla: R-MOTOR-01
+  descripcion: '«motivo IN motivos_degradables»: metadato_faltante está en no_degradables → no hay paso'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  evaluacion:
+    accion_final: suprimir
+    estado_cifra: suprimida
+    resultados:
+    - regla: R-X
+      accion: suprimir
+      motivo: metadato_faltante
+  espera:
+    dispara: false
+- id: R-MOTOR-01-d
+  regla: R-MOTOR-01
+  descripcion: 'nota_divulgacion: «''divulgacion'' (supresión primaria y complementaria de R-REG-12) no se degrada» → no hay paso'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: '010104'
+  evaluacion:
+    accion_final: suprimir
+    estado_cifra: suprimida
+    resultados:
+    - regla: R-X
+      accion: suprimir
+      motivo: divulgacion
+  espera:
+    dispara: false
+- id: R-MOTOR-01-e
+  regla: R-MOTOR-01
+  descripcion: '«estado_cifra == ''suprimida''» es falso: cifra publicable → no hay degradación'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  evaluacion:
+    accion_final: publicar
+    estado_cifra: publicable
+    resultados: []
+  espera:
+    dispara: false
+- id: R-MOTOR-01-f
+  regla: R-MOTOR-01
+  descripcion: '«R-REG-12 (etapa 6) con el motivo divulgacion_nivel … siguiente paso que cumpla el nivel_minimo» y prioridad «celda sensible → fuente_sensible»: distrito sensible con nivel_minimo provincia
+    → provincia_anio (AN-3)'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 080901
+  cifra:
+    sensibilidad_divulgacion: sensible
+  evaluacion:
+    accion_final: suprimir
+    estado_cifra: suprimida
+    resultados:
+    - regla: R-X
+      accion: suprimir
+      motivo: divulgacion_nivel
+      nivel_minimo: provincia
+  espera:
+    dispara: true
+    paso:
+      tipo: nivel
+      nivel: provincia
+      paso: provincia_anio
+- id: R-MOTOR-01-g
+  regla: R-MOTOR-01
+  descripcion: 'casos_borde [dueño 9/10/2026]: «El dominio 8 no baja a departamento, que no lo contiene: sigue con agrupar años y después nacional» → con la ventana ya hecha, sube a nacional (AN-4)'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: AREA_METROPOLITANA_LIMA_CALLAO
+    territorio: AREA_METROPOLITANA_LIMA_CALLAO
+  cifra:
+    periodo_agrupado:
+    - 2023
+    - 2025
+    motivo_nivel:
+    - paso: *id001
+      motivos:
+      - precision
+  evaluacion:
+    accion_final: suprimir
+    estado_cifra: suprimida
+    resultados:
+    - regla: R-X
+      accion: suprimir
+      motivo: precision
+  espera:
+    dispara: true
+    paso:
+      tipo: nivel
+      nivel: nacional
+- id: R-MOTOR-01-h
+  regla: R-MOTOR-01
+  descripcion: '«paso < len(secuencia)»: estimacion_modelada (secuencia [anio, suprimir]) suprimida por precision → secuencia agotada, sin paso; la cifra queda suprimida (AN-5)'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: '120205'
+  cifra:
+    motivo_nivel: []
+  evaluacion:
+    accion_final: suprimir
+    estado_cifra: suprimida
+    resultados:
+    - regla: R-X
+      accion: suprimir
+      motivo: precision
+  espera:
+    dispara: false
+    paso: null
+- id: R-MOTOR-02-a
+  regla: R-MOTOR-02
+  descripcion: '«campo_requerido IS NULL AND caso no definido → estado_cifra = ''suprimida'', motivo = ''metadato_faltante''»: anemia ENDES sin naturaleza_dato [ambiguo: la lista de obligatorios por indicador
+    no está fijada; se toma naturaleza_dato como obligatorio]'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    naturaleza_dato: null
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: metadato_faltante
+- id: R-MOTOR-02-b
+  regla: R-MOTOR-02
+  descripcion: Fila completa del cubo con todos sus metadatos → no hay metadato faltante
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: false
+- id: R-MOTOR-02-c
+  regla: R-MOTOR-02
+  descripcion: 'casos_borde «Valores vacíos o cero no son nulos: p = 0 se trata en R-ENC-04»: proporción 0 % con ee 0 no es metadato faltante'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: '010102'
+  cifra:
+    valor: 0.0
+    numerador: 0.0
+  espera:
+    dispara: false
+- id: R-TERRITORIO-09-a
+  regla: R-TERRITORIO-09
+  descripcion: '«n_coincidencias(texto…) != 1 → preguntar» y casos_borde L4: «Lima» sola → se pregunta qué Lima (motivo territorio_ambiguo de parametros.motivos)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  consulta:
+    territorio_pedido: Lima
+    nivel_pedido: null
+  espera:
+    dispara: true
+    accion: revision_humana
+    motivo: territorio_ambiguo
+- id: R-TERRITORIO-09-b
+  regla: R-TERRITORIO-09
+  descripcion: '«n_coincidencias != 1»: «Ayaviri» coincide con 210801 (Melgar, Puno) y 151004 (Yauyos, Lima) → preguntar'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    territorio_pedido: Ayaviri
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: revision_humana
+    motivo: territorio_ambiguo
+- id: R-TERRITORIO-09-c
+  regla: R-TERRITORIO-09
+  descripcion: 'sin_respuesta.Callao: «no se pregunta: departamento 07»'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: CALLAO
+    territorio: CALLAO
+  consulta:
+    territorio_pedido: Callao
+  espera:
+    dispara: false
+- id: R-TERRITORIO-09-d
+  regla: R-TERRITORIO-09
+  descripcion: '«n_coincidencias == 1»: «Acoria» es un único distrito (090103) → no se pregunta'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  consulta:
+    territorio_pedido: Acoria
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-TERRITORIO-09-e
+  regla: R-TERRITORIO-09
+  descripcion: «n_coincidencias == 0» → preguntar (territorio_no_identificado)
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    territorio_pedido: Villa Inventada del Sur
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: revision_humana
+    motivo: territorio_no_identificado
+- id: R-TERRITORIO-09-f
+  regla: R-TERRITORIO-09
+  descripcion: 'casos_borde «Preguntas sin territorio nombrado: pedir el nombre; no elegir uno» [ambiguo: el código de motivo no se fija para este caso; se usa territorio_no_identificado]'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    territorio_pedido: null
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: revision_humana
+    motivo: territorio_no_identificado
+- id: R-TERRITORIO-09-g
+  regla: R-TERRITORIO-09
+  descripcion: '«n_coincidencias != 1»: «Huancavelica» sin nivel coincide con departamento, provincia y distrito → preguntar [ambiguo: el alcance pide una regla por defecto que el texto no tiene; lectura
+    restrictiva]'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: 09
+  consulta:
+    territorio_pedido: Huancavelica
+    nivel_pedido: null
+  espera:
+    dispara: true
+    accion: revision_humana
+    motivo: territorio_ambiguo
+- id: R-TERRITORIO-09-h
+  regla: R-TERRITORIO-09
+  descripcion: 'implementacion «si el usuario da provincia o departamento, filtrar por jerarquía»: «departamento de Huancavelica» → coincidencia única'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: 09
+  consulta:
+    territorio_pedido: departamento de Huancavelica
+    nivel_pedido: departamento
+  espera:
+    dispara: false
+- id: R-TERRITORIO-09-i
+  regla: R-TERRITORIO-09
+  descripcion: '[ambiguo: la acción para el distrito nuevo no se fija] «estado_ubigeo == ''pendiente'' → responder con R-LENGUAJE-05 (distrito nuevo)»: Sangani (120307, pendiente)'
+  cifra:
+    indicador_id: gasto_ex_pan
+    anio: 2026
+    nivel: distrito
+    territorio_id: '120307'
+  consulta:
+    territorio_pedido: Sangani
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+- id: R-TERRITORIO-01-a
+  regla: R-TERRITORIO-01
+  descripcion: 'ejemplo: «ubigeo 130112 (Alto Trujillo, Ley 31644 del 15-12-2022) no resuelve contra la versión vigente en 2021» → la cifra no puede publicarse (contrato §4: suprimir; AN-6)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: '130112'
+    medida: devengado
+  cifra:
+    anio: 2021
+  espera:
+    dispara: true
+    accion: suprimir
+- id: R-TERRITORIO-01-b
+  regla: R-TERRITORIO-01
+  descripcion: '«EXISTS h … vigente_desde <= fecha_referencia»: Alto Trujillo en 2025 resuelve normalmente'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: '130112'
+    medida: devengado
+  espera:
+    dispara: false
+- id: R-TERRITORIO-01-c
+  regla: R-TERRITORIO-01
+  descripcion: 'implementacion [TE-02/SP-01] «Datos anuales: la pertenencia se decide por año con anio_datos_desde»: Alto Trujillo en 2023 (anio_datos_desde = 2023) resuelve aunque la ley sea de dic-2022'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: '130112'
+    medida: devengado
+  cifra:
+    anio: 2023
+  espera:
+    dispara: false
+- id: R-TERRITORIO-01-d
+  regla: R-TERRITORIO-01
+  descripcion: 'implementacion «Lambras 2020»: distrito con vigente_desde 2020-12-20 (después del 30-jun) pero anio_datos_desde = 2020 → resuelve para datos anuales de 2020 [ambiguo: la condición usa 30-jun;
+    la implementación, más específica, usa anio_datos_desde]'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: '130112'
+    medida: devengado
+  cifra:
+    territorio_id: 090724
+    territorio_nombre: Lambras
+    anio: 2020
+  espera:
+    dispara: false
+- id: R-TERRITORIO-01-e
+  regla: R-TERRITORIO-01
+  descripcion: '«vigente_desde <= fecha_referencia(f)»: Sangani (120307) vigente desde 2026-07-16; un dato anual de 2026 (fecha de referencia 30-jun-2026) no resuelve → suprimir (AN-7)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: '130112'
+    medida: devengado
+  cifra:
+    territorio_id: '120307'
+    territorio_nombre: Sangani
+    anio: 2026
+  espera:
+    dispara: true
+    accion: suprimir
+- id: R-TERRITORIO-01-f
+  regla: R-TERRITORIO-01
+  descripcion: casos_borde «Códigos con el cero inicial perdido (10101 por 010101) se reparan con zfill(6) antes de validar» → resuelve
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: '010101'
+  cifra:
+    territorio_id: '10101'
+  espera:
+    dispara: false
+- id: R-TERRITORIO-01-g
+  regla: R-TERRITORIO-01
+  descripcion: 'aplica_a.base_geografica no incluye meta_departamento: una cifra con base meta_departamento y ubigeo inexistente queda fuera de la regla'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  cifra:
+    base_geografica_usada: meta_departamento
+    territorio_id: '990000'
+    nivel: departamento
+  espera:
+    dispara: false
+- id: R-TERRITORIO-02-a
+  regla: R-TERRITORIO-02
+  descripcion: '«Aceptar si max ≥ 0.99 y |m_inei − m_reniec| ≥ 0.20»: carga SIEN con m_inei 0,999 y m_reniec 0,41'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    sistema_ubigeo: INEI
+    n_codigos: 1850
+    m_inei: 0.999
+    m_reniec: 0.41
+  espera:
+    dispara: false
+- id: R-TERRITORIO-02-b
+  regla: R-TERRITORIO-02
+  descripcion: 'borde «max ≥ 0.99»: m_inei exactamente 0,99 (m_reniec 0,30) → se acepta'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    sistema_ubigeo: INEI
+    n_codigos: 1850
+    m_inei: 0.99
+    m_reniec: 0.3
+  espera:
+    dispara: false
+- id: R-TERRITORIO-02-c
+  regla: R-TERRITORIO-02
+  descripcion: '«max ≥ 0.99» falla: m_inei 0,985 → revisión humana'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    sistema_ubigeo: INEI
+    n_codigos: 1850
+    m_inei: 0.985
+    m_reniec: 0.3
+  espera:
+    dispara: true
+    accion: revision_humana
+- id: R-TERRITORIO-02-d
+  regla: R-TERRITORIO-02
+  descripcion: '«|m_inei − m_reniec| ≥ 0.20» falla: m_inei 0,995 y m_reniec 0,85 (margen 0,145) → revisión humana'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    sistema_ubigeo: INEI
+    n_codigos: 1850
+    m_inei: 0.995
+    m_reniec: 0.85
+  espera:
+    dispara: true
+    accion: revision_humana
+- id: R-TERRITORIO-02-e
+  regla: R-TERRITORIO-02
+  descripcion: 'borde del margen: m_inei 0,625 y m_reniec 0,425 no llegan a 0,99 → revisión humana aunque el margen sea exactamente 0,20 (carga mixta, casos_borde: m_inei + m_reniec ≥ 0,99 → revisión humana)'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    sistema_ubigeo: INEI
+    n_codigos: 1850
+    m_inei: 0.625
+    m_reniec: 0.425
+  espera:
+    dispara: true
+    accion: revision_humana
+- id: R-TERRITORIO-02-f
+  regla: R-TERRITORIO-02
+  descripcion: 'casos_borde «Cargas con menos de 50 códigos distintos: exigir 100 % de coincidencia»: 30 códigos con m_inei 0,995 → revisión humana'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    sistema_ubigeo: INEI
+    n_codigos: 30
+    m_inei: 0.995
+    m_reniec: 0.2
+  espera:
+    dispara: true
+    accion: revision_humana
+- id: R-TERRITORIO-02-g
+  regla: R-TERRITORIO-02
+  descripcion: 'Borde de casos_borde: 49 códigos con m_inei = 1,0 (100 %) → se acepta'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    sistema_ubigeo: INEI
+    n_codigos: 49
+    m_inei: 1.0
+    m_reniec: 0.2
+  espera:
+    dispara: false
+- id: R-TERRITORIO-02-h
+  regla: R-TERRITORIO-02
+  descripcion: 'aplica_a.fuentes (lista cerrada) no incluye INEI-ENDES: aunque m_inei sea bajo, la regla no aplica'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sistema_ubigeo: INEI
+    n_codigos: 1850
+    m_inei: 0.5
+    m_reniec: 0.5
+  espera:
+    dispara: false
+- id: R-TERRITORIO-08-a
+  regla: R-TERRITORIO-08
+  descripcion: '«p ≥ 0.99 → publicar»: anemia SIEN por distrito con 99,5 % del numerador ubicado [pct_numerador_ubicado como fracción, igual que la condición]'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    pct_numerador_ubicado: 0.995
+  espera:
+    dispara: false
+- id: R-TERRITORIO-08-b
+  regla: R-TERRITORIO-08
+  descripcion: 'borde «p ≥ 0.99»: p = 0,99 exacto → publicar'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    pct_numerador_ubicado: 0.99
+  espera:
+    dispara: false
+- id: R-TERRITORIO-08-c
+  regla: R-TERRITORIO-08
+  descripcion: '«0.95 ≤ p < 0.99 → advertir»: p = 0,97'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    pct_numerador_ubicado: 0.97
+  espera:
+    dispara: true
+    accion: advertir
+- id: R-TERRITORIO-08-d
+  regla: R-TERRITORIO-08
+  descripcion: 'borde «0.95 ≤ p»: p = 0,95 exacto → advertir'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    pct_numerador_ubicado: 0.95
+  espera:
+    dispara: true
+    accion: advertir
+- id: R-TERRITORIO-08-e
+  regla: R-TERRITORIO-08
+  descripcion: '«p < 0.95 → agregar_nivel(departamento)»: p = 0,94'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    pct_numerador_ubicado: 0.94
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-TERRITORIO-08-f
+  regla: R-TERRITORIO-08
+  descripcion: 'Excepción SIEN cobertura: «no se aplica la cascada; p … solo como diagnóstico … se publica únicamente por departamento»: cobertura de Puno con procedencia ubicada al 84,6 % → no se degrada'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    pct_numerador_ubicado: 0.846
+  espera:
+    dispara: false
+- id: R-TERRITORIO-08-g
+  regla: R-TERRITORIO-08
+  descripcion: 'Excepción SIEN cobertura «nunca por provincia ni distrito … aunque p ≥ 0.95»: cobertura pedida para la provincia de Huancavelica (0901) con p = 0,977 → agregar a departamento'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: 09
+  cifra:
+    nivel: provincia
+    territorio_id: 090100
+    pct_numerador_ubicado: 0.977
+  consulta:
+    nivel_pedido: provincia
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-TERRITORIO-08-h
+  regla: R-TERRITORIO-08
+  descripcion: 'aplica_a.naturaleza_dato = registros e indicadores derivados: una encuesta (ENDES) con p bajo no entra'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    pct_numerador_ubicado: 0.5
+  espera:
+    dispara: false
+- id: R-TERRITORIO-06-a
+  regla: R-TERRITORIO-06
+  descripcion: '«T.departamento ∈ {''15'',''07''} → requiere EXISTS dim_dominio(E, A, dominio)»: ENDES 2025 Lima Metropolitana tiene su fila en dim_dominio → no bloquea'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  espera:
+    dispara: false
+- id: R-TERRITORIO-06-b
+  regla: R-TERRITORIO-06
+  descripcion: '«T.departamento ∈ {''15'',''07''}»: ENDES 2024 Callao (dominio de la ficha) → no bloquea'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2024
+    nivel: CALLAO
+    territorio: CALLAO
+  espera:
+    dispara: false
+- id: R-TERRITORIO-06-c
+  regla: R-TERRITORIO-06
+  descripcion: '«si no existe → bloquear»: ENDES 2025 Lima Metropolitana sin fila en dim_dominio'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  consulta:
+    intencion_pregunta: cruce
+  contexto:
+    dominios: &id002
+    - encuesta: ENDES
+      anios:
+      - 2015
+      - 2025
+      dominio_id: nacional
+      nivel: nacional
+      composicion:
+      - ''
+      tipo: dominio_diseno
+      confirmado: true
+    - encuesta: ENDES
+      anios:
+      - 2015
+      - 2025
+      dominio_id: callao
+      ambito_id: CALLAO
+      nivel: provincia
+      composicion:
+      - '0701'
+      tipo: dominio_diseno
+      confirmado: true
+  espera:
+    dispara: true
+    accion: bloquear_cruce
+- id: R-TERRITORIO-06-d
+  regla: R-TERRITORIO-06
+  descripcion: '«si no existe → bloquear»: la región natural «Lima Metropolitana» (1501 + 07) de la ENDES solo es dominio hasta 2019; pedida para 2020 → bloquear'
+  base:
+    indicador: endes_anemia_6_35m
+    anio: 2020
+    nivel: CALLAO
+    territorio: CALLAO
+  cifra:
+    nivel: AREA_METROPOLITANA_LIMA_CALLAO
+    territorio_id: AREA_METROPOLITANA_LIMA_CALLAO
+  consulta:
+    intencion_pregunta: cruce
+  espera:
+    dispara: true
+    accion: bloquear_cruce
+- id: R-TERRITORIO-06-e
+  regla: R-TERRITORIO-06
+  descripcion: ENAHO 2025 dominio 8 «Lima Metropolitana y Callao» existe en dim_dominio → no bloquea
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: AREA_METROPOLITANA_LIMA_CALLAO
+    territorio: AREA_METROPOLITANA_LIMA_CALLAO
+  espera:
+    dispara: false
+- id: R-TERRITORIO-06-f
+  regla: R-TERRITORIO-06
+  descripcion: '«T.departamento ∈ {''15'',''07''}» es falso: ENDES Puno → no aplica la exigencia'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: false
+- id: R-TERRITORIO-06-g
+  regla: R-TERRITORIO-06
+  descripcion: 'aplica_a.fuentes (lista cerrada ENAHO, ENDES, ENAPRES, ENLA): el SIEN en Lima Metropolitana queda fuera'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  contexto:
+    dominios: *id002
+  espera:
+    dispara: false
+- id: R-ENC-06-a
+  regla: R-ENC-06
+  descripcion: 'ejemplo y «nivel_pedido más fino que nivel_territorial_inferencia»: ENDES pedida para la provincia de Melgar (Ayaviri) → cifra de Puno (agregar_nivel)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    nivel_pedido: provincia
+    territorio_pedido: Melgar
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-ENC-06-b
+  regla: R-ENC-06
+  descripcion: 'borde: nivel_pedido = departamento = nivel_territorial_inferencia → no se degrada'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: false
+- id: R-ENC-06-c
+  regla: R-ENC-06
+  descripcion: '«nivel_pedido más fino»: ENAHO pedida para un distrito → departamento'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: departamento
+    territorio: '05'
+  consulta:
+    nivel_pedido: distrito
+    territorio_pedido: Huanta
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-ENC-06-d
+  regla: R-ENC-06
+  descripcion: 'Excepción L1/L2: «si nivel_pedido es un ámbito … LIMA_METROPOLITANA … no se degrada por rango: lo decide R-ENC-08» (rango 3 < departamento 4)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  consulta:
+    nivel_pedido: LIMA_METROPOLITANA
+  espera:
+    dispara: false
+- id: R-ENC-06-e
+  regla: R-ENC-06
+  descripcion: Excepción L1/L2 con el ámbito CALLAO
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: CALLAO
+    territorio: CALLAO
+  consulta:
+    nivel_pedido: CALLAO
+  espera:
+    dispara: false
+- id: R-ENC-06-f
+  regla: R-ENC-06
+  descripcion: 'Excepción: «Una provincia o un distrito del departamento 15 se lleva al ámbito que lo contiene (LM o LR), no al departamento»: San Juan de Lurigancho → Lima Metropolitana (sigue siendo agregar_nivel)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  consulta:
+    nivel_pedido: distrito
+    territorio_pedido: San Juan de Lurigancho
+  espera:
+    dispara: true
+    accion: agregar_nivel
+    nivel_esperado: LIMA_METROPOLITANA
+- id: R-ENC-06-g
+  regla: R-ENC-06
+  descripcion: nivel_pedido nacional (más grueso) → no se degrada
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: nacional
+    territorio: PE
+  consulta:
+    nivel_pedido: nacional
+  espera:
+    dispara: false
+- id: R-ENC-06-h
+  regla: R-ENC-06
+  descripcion: '[ambiguo: correspondencia entre nivel_pedido y los nombres de dominios_inferencia] «OR nivel_pedido NOT IN dominios_inferencia[periodicidad_estimacion]»: region_natural no está en el dominio
+    anual de la ENDES → agregar_nivel'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    nivel_pedido: region_natural
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-ENC-06-i
+  regla: R-ENC-06
+  descripcion: 'Campo requerido sin caso definido: nivel_territorial_inferencia vacío → suprimir por metadato_faltante (R-MOTOR-02)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    nivel_territorial_inferencia: null
+  consulta:
+    nivel_pedido: provincia
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: metadato_faltante
+- id: R-ENC-06-j
+  regla: R-ENC-06
+  descripcion: 'aplica_a.fuentes (lista cerrada de encuestas): el SIEN pedido por distrito no entra'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-ENC-07-a
+  regla: R-ENC-07
+  descripcion: '«ubigeo_departamento IN (''15'',''07'')»: ENDES 2025 Lima Metropolitana → rótulo «no a todo el departamento de Lima»'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-ENC-07-b
+  regla: R-ENC-07
+  descripcion: '«ubigeo_departamento IN (''15'',''07'')»: ENDES 2025 Callao'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: CALLAO
+    territorio: CALLAO
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-ENC-07-c
+  regla: R-ENC-07
+  descripcion: '«ubigeo_departamento IN (''15'',''07'')»: ENAHO dominio 8 → rótulo «Lima Metropolitana y Callao»'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: AREA_METROPOLITANA_LIMA_CALLAO
+    territorio: AREA_METROPOLITANA_LIMA_CALLAO
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-ENC-07-d
+  regla: R-ENC-07
+  descripcion: '«ubigeo_departamento IN (''15'',''07'')»: departamento 15 entero → rótulo «departamento de Lima (Lima Metropolitana + Lima Región)»'
+  base:
+    indicador: endes_dci_menores_5
+    anio: 2025
+    nivel: departamento
+    territorio: '15'
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-ENC-07-e
+  regla: R-ENC-07
+  descripcion: 'Ninguna cláusula: ENDES Puno con población objetivo de área total → no rota'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: false
+- id: R-ENC-07-f
+  regla: R-ENC-07
+  descripcion: '[ambiguo: poblacion_objetivo es un objeto; se lee su área] «poblacion_objetivo IN (''urbano'',''ciudades'')»: indicador medido solo en zona urbana de Tumbes'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '24'
+  cifra:
+    poblacion_objetivo:
+      descripcion: población urbana de 15 años o más
+      edad_min_meses: 180
+      edad_max_meses: null
+      sexo: T
+      area: urbano
+      marcador_u: null
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-ENC-07-g
+  regla: R-ENC-07
+  descripcion: 'aplica_a.fuentes: el SIEN de Lima Metropolitana no entra (lista cerrada de encuestas)'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  espera:
+    dispara: false
+- id: R-ENC-08-a
+  regla: R-ENC-08
+  descripcion: '«verificado(n)»: ENDES 2025, departamento de Puno; fila (INEI-ENDES, 2025, *) verificada, cita completa, nivel_maximo departamento → no dispara'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: false
+- id: R-ENC-08-b
+  regla: R-ENC-08
+  descripcion: 'parametros.sin_registro «false: la cifra se publica solo a nivel nacional»: sin fila (INEI-ENDES, 2025) → agregar_nivel a nacional'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  contexto:
+    inferencia:
+    - &id003
+      fuente: INEI-ENDES
+      anio: '2015'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Lima Metropolitana, Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/SPSS/504-Modulo64.zip
+      cita_documento: Ficha técnica ENDES 2015 (504-Modulo64/FICHA TECNICA 2015.pdf, dentro del ZIP; idéntica en 504-Modulo74.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 5 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 504-Modulo64.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: estrato_hv022
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/504-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2015
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana» 280/0/0 y «Lima Provincias» 0/91/26; nota «Conglomerados de Sede,
+        comprende a aquellos seleccionados en las capitales de departamento y la provincia de Lima» → LM = estrato 15-1, LR = 15-2 y 15-3 (aviso de método: identificado por el estrato de diseño). Leído
+        con WebFetch el 9/10/2026; reproduce al INEI 2017 (LM 33,3; Callao 32,4)'
+    - &id004
+      fuente: INEI-ENDES
+      anio: '2016'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Lima Metropolitana, Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/SPSS/548-Modulo64.zip
+      cita_documento: Ficha técnica ENDES 2016 (548-Modulo64/FICHA TECNICA 2016.pdf, dentro del ZIP; idéntica en 548-Modulo74.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 5 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 548-Modulo64.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: estrato_hv022
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/548-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2016
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Provincia de Lima 1/» 280/0/0 y «Región Lima 2/» 0/91/26; nota «Conglomerados de
+        Sede, comprende a aquellos seleccionados en las capitales de departamento y la provincia de Lima» → LM = estrato 15-1, LR = 15-2 y 15-3 (aviso de método: identificado por el estrato de diseño).
+        Leído con WebFetch el 9/10/2026; reproduce al INEI 2017 (LM 33,3; Callao 32,4)'
+    - &id005
+      fuente: INEI-ENDES
+      anio: '2017'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Lima Metropolitana, Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/SPSS/605-Modulo64.zip
+      cita_documento: Ficha técnica ENDES 2017 (605-Modulo64/FichaTecnica.pdf, dentro del ZIP; idéntica en 605-Modulo74.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 5 del PDF: «Cada uno de las 24 regiones del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 605-Modulo64.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: estrato_hv022
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/605-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2017
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Provincia de Lima 1/» 280/0/0 y «Región Lima 2/» 0/91/26; nota «Conglomerados de
+        Sede, comprende a aquellos seleccionados en las capitales de departamento y la provincia de Lima» → LM = estrato 15-1, LR = 15-2 y 15-3 (aviso de método: identificado por el estrato de diseño).
+        Leído con WebFetch el 9/10/2026; reproduce al INEI 2017 (LM 33,3; Callao 32,4)'
+    - &id006
+      fuente: INEI-ENDES
+      anio: '2018'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Lima Metropolitana, Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/SPSS/638-Modulo64.zip
+      cita_documento: Ficha técnica ENDES 2018 (Modulo64/FichaTecnica.pdf, dentro del ZIP; idéntica en 638-Modulo74.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 6 del PDF: «Cada uno de las 24 regiones del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 638-Modulo64.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/638-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2018
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Provincia de Lima 1/» 340/0/0 y «Región Lima 2/» 0/91/26; asignación por ubigeo (provincia_hogar).
+        Leído con WebFetch el 9/10/2026'
+    - &id007
+      fuente: INEI-ENDES
+      anio: '2019'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: 24 departamentos, Provincia Constitucional del Callao y región natural
+      excepciones: mensual/semestral como en los otros años (ficha del ZIP §3.7)
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Endes2019/pdf/ApendiceA.pdf
+      cita_documento: ENDES 2019, Apéndice A «Diseño y cobertura de la muestra»
+      cita_ubicacion: '§A.1 «Introducción», p. 325: «La muestra total permite sólidas estimaciones de indicadores para los hogares y para las mujeres entre 12-49 años en cada uno de los 24 departamentos,
+        la Provincia Constitucional del Callao y región natural del país»'
+      evidencia_local: 'biblioteca/cruda/capturas/INEI-ENDES (691-Modulo64.zip, 691-Modulo74.zip): su FichaTecnica.pdf §3.7 (p. 6) solo lista los dominios mensual y semestral; §3.4 (p. 2): muestra «independiente,
+        a nivel departamental»'
+      metodo_lectura: WebFetch del PDF del INEI (cita textual devuelta por la herramienta) + pdftotext sobre la ficha del ZIP
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: 'La ficha técnica del ZIP (extracto del informe de Programas Presupuestales 2019) omite el dominio anual; la representatividad departamental se cita del Apéndice A del informe ENDES 2019. Revisión
+        sugerida al dueño: confirmar la página en el PDF.'
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/691-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2019
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Provincia de Lima 2/» 340/0/0 y «Región Lima 3/» 0/91/26 (muestra semestral); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026'
+    - &id008
+      fuente: INEI-ENDES
+      anio: '2020'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: entrevista_telefonica
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/SPSS/739-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2020 (739-Modulo1629/Modulo1629/FichaTecnica.pdf, dentro del ZIP; idéntica en 739-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 6 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 739-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: 'Pandemia: desde fines de marzo de 2020 la encuesta se aplicó por teléfono con cuestionario reducido y las mediciones biomédicas (talla, peso, hemoglobina) se hicieron después de manera presencial
+        (ficha 2020: p. 2 §III, p. 8 §5.2 cuadro 2 y nota 1/, p. 10 §5.5); la rotación de la muestra solo se hizo hasta abril (p. 6 §IV). §3.7 mantiene los dominios departamentales: publicar con aviso de
+        cambio de modo de entrevista y comparabilidad limitada.'
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/739-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2020
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026'
+    - &id009
+      fuente: INEI-ENDES
+      anio: '2021'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: entrevista_telefonica
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/760-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2021 (760-Modulo1629/FICHA TECNICA ENDES 2021.pdf, dentro del ZIP; idéntica en 760-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 6 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 760-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: 'Ficha 2021, p. 9 §5.4: «ENTREVISTA DIRECTA (presencial) y ENTREVISTA TELEFÓNICA» (operativo mixto). Publicar con aviso de modo de entrevista.'
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/760-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2021
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026'
+    - &id010
+      fuente: INEI-ENDES
+      anio: '2022'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/786-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2022 (786-Modulo1629/FICHA TECNICA-ENDES 2022.pdf, dentro del ZIP; idéntica en 786-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 6 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 786-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/786-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2022
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026'
+    - &id011
+      fuente: INEI-ENDES
+      anio: '2023'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/910-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2023 (910-Modulo1629/FICHA TECNICA-ENDES 2023.pdf, dentro del ZIP; idéntica en 910-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 7 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 910-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/910-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2023
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026'
+    - &id012
+      fuente: INEI-ENDES
+      anio: '2024'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2024 (968-Modulo1629/FICHA TECNICA-ENDES 2024.pdf, dentro del ZIP; idéntica en 968-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 7 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 968-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/968-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2024
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026'
+    - &id013
+      fuente: INEI-ENAHO
+      anio: '2015'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/498-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2015 (encuesta 498)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 5–6: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id014
+      fuente: INEI-ENAHO
+      anio: '2016'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/546-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2016 (encuesta 546)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 5–7: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id015
+      fuente: INEI-ENAHO
+      anio: '2017'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/603-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2017 (encuesta 603)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 5–6: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id016
+      fuente: INEI-ENAHO
+      anio: '2018'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/634-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2018 (encuesta 634)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 5–6: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id017
+      fuente: INEI-ENAHO
+      anio: '2019'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/687-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2019 (encuesta 687)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 5–6: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id018
+      fuente: INEI-ENAHO
+      anio: '2020'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: entrevista_telefonica
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/737-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2020 (encuesta 737)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 7: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: '2020: del 16/03 al 30/09 entrevistas telefónicas con cuestionario reducido (la misma ficha); §VII no cambia los dominios, pero la precisión departamental es menor: advertir en la ficha larga.'
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id019
+      fuente: INEI-ENAHO
+      anio: '2021'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/759-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2021 (encuesta 759)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 5–6: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id020
+      fuente: INEI-ENAHO
+      anio: '2022'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/784-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2022 (encuesta 784)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 5–6: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id021
+      fuente: INEI-ENAHO
+      anio: '2023'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/906-Ficha.pdf
+      cita_documento: Ficha técnica ENAHO 2023 (encuesta 906)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, pp. aprox. 5–6: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: ''
+      metodo_lectura: WebFetch del PDF del INEI (cita textual y página devueltas por la herramienta; página aproximada)
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Cuadro N.º III.1 (cont.), p. 220 (PDF 222): serie 2015–2023 de «Lima Metropolitana 1/», «Prov. Const. del Callao» y «Lima 2/»; notas 1/ «Incluye los 43 distritos de la provincia
+        de Lima» y 2/ «Incluye las Provincias: Barranca, …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026. Sin sumaria de este año en la biblioteca: habilitado para cuando se ingiera'
+    - &id022
+      fuente: INEI-ENAHO
+      anio: '2024'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/966-Modulo34.zip
+      cita_documento: Ficha técnica ENAHO 2024 (966-Modulo34/FichaTecnica.pdf, dentro del ZIP; también https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/966-Ficha.pdf)
+      cita_ubicacion: '§VII «Niveles de inferencia», a. Muestra integrada, Anual, p. 5–6 del PDF: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENAHO (recurso 966-Modulo34.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)'
+      ambitos_cita_ubicacion: 'Gráfico N.º 4.7, p. 72 (PDF 74) (ranking: Prov. Callao 33,9; Lima Metropolitana 1/; Lima 2/ 21,7) y Cuadro N.º III.1 (cont.), p. 220 (PDF 222) (LM 27,6, IC 25,0–30,1, CV 4,7;
+        Callao 33,9, IC 29,1–38,6, CV 7,1; Lima 2/ 21,7, IC 18,3–25,1, CV 8,0); notas 1/ «Incluye los 43 distritos de la provincia de Lima» y 2/ «Incluye las Provincias: Barranca, Cajatambo, Canta, Cañete,
+        Huaral, Huarochirí, Huaura, Oyón, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026'
+    - &id023
+      fuente: INEI-ENAHO
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/1031-Modulo34.zip
+      cita_documento: Ficha técnica ENAHO 2025 (1031-Modulo34/FichaTecnica.pdf, dentro del ZIP; también https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1031-Ficha.pdf)
+      cita_ubicacion: '§IX «Niveles de inferencia», a. Muestra integrada, Anual, p. 10 del PDF: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENAHO (recurso 1031-Modulo34.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico)'
+      ambitos_cita_ubicacion: 'Gráfico N.º 4.7, p. 73 (ranking 2025: Prov. Const. del Callao 32,1; Lima Metropolitana 1/ 26,8; Lima 2/ 21,6) y Cuadro N.º III.1 (cont.), p. 232 (página impresa = PDF) (LM
+        26,8, IC 24,2–29,4, CV 4,9; Callao 32,1, IC 27,8–36,5, CV 6,9; Lima 2/ 21,6, IC 18,0–25,2, CV 8,5); notas 1/ «Incluye los 43 distritos de la provincia de Lima» y 2/ «Incluye las Provincias: Barranca,
+        …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026'
+    - &id024
+      fuente: MINEDU-UMC-ENLA
+      anio: '2019'
+      modulo: '*'
+      inferencia_verificada: ''
+      nivel_maximo: ''
+      dominios_anuales: ''
+      excepciones: ''
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: ''
+      cita_documento: ''
+      cita_ubicacion: ''
+      evidencia_local: ''
+      metodo_lectura: ''
+      verificado_el: ''
+      verificado_por: ''
+      nota: 'pendiente: verificar ficha técnica 2019. Por grado (modulo = grado) y tipo de aplicación. Pista: Evaluación Muestral 2019 (2.º y 4.º de primaria, 2.º de secundaria). La página http://umc.minedu.gob.pe/evaluacion-muestral-2019/
+        dice que se diseñó para «reportar resultados a nivel nacional, regional y de estratos» y, en las bases de 2.º y 4.º de primaria, «por DRE»; no es la ficha técnica.'
+      ambitos_publicados: ''
+      ambitos_metodo: ''
+      ambitos_cita_url: ''
+      ambitos_cita_documento: ''
+      ambitos_cita_ubicacion: ''
+    - &id025
+      fuente: MINEDU-UMC-ENLA
+      anio: '2022'
+      modulo: '*'
+      inferencia_verificada: ''
+      nivel_maximo: ''
+      dominios_anuales: ''
+      excepciones: ''
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: ''
+      cita_documento: ''
+      cita_ubicacion: ''
+      evidencia_local: ''
+      metodo_lectura: ''
+      verificado_el: ''
+      verificado_por: ''
+      nota: 'pendiente: verificar ficha técnica 2022. Por grado (modulo = grado) y tipo de aplicación. Pista: ENLA 2022 muestral.'
+      ambitos_publicados: ''
+      ambitos_metodo: ''
+      ambitos_cita_url: ''
+      ambitos_cita_documento: ''
+      ambitos_cita_ubicacion: ''
+    - &id026
+      fuente: MINEDU-UMC-ENLA
+      anio: '2023'
+      modulo: '*'
+      inferencia_verificada: ''
+      nivel_maximo: ''
+      dominios_anuales: ''
+      excepciones: ''
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: ''
+      cita_documento: ''
+      cita_ubicacion: ''
+      evidencia_local: ''
+      metodo_lectura: ''
+      verificado_el: ''
+      verificado_por: ''
+      nota: 'pendiente: verificar ficha técnica 2023. Por grado (modulo = grado) y tipo de aplicación. Pista: ENLA 2023 muestral; reporte técnico en https://repositorio.minedu.gob.pe/handle/20.500.12799/10650
+        (el repositorio bloquea la lectura automática).'
+      ambitos_publicados: ''
+      ambitos_metodo: ''
+      ambitos_cita_url: ''
+      ambitos_cita_documento: ''
+      ambitos_cita_ubicacion: ''
+    - &id027
+      fuente: MINEDU-UMC-ENLA
+      anio: '2024'
+      modulo: '*'
+      inferencia_verificada: ''
+      nivel_maximo: ''
+      dominios_anuales: ''
+      excepciones: ''
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: ''
+      cita_documento: ''
+      cita_ubicacion: ''
+      evidencia_local: ''
+      metodo_lectura: ''
+      verificado_el: ''
+      verificado_por: ''
+      nota: 'pendiente: verificar ficha técnica 2024. Por grado (modulo = grado) y tipo de aplicación. Pista: ENLA 2024: 4.º de primaria censal, 6.º de primaria muestral (http://umc.minedu.gob.pe/resultadosenla2024/);
+        reporte técnico http://umc.minedu.gob.pe/wp-content/uploads/2026/05/RT_ENLA2024.pdf (robots.txt impide leerlo por WebFetch).'
+      ambitos_publicados: ''
+      ambitos_metodo: ''
+      ambitos_cita_url: ''
+      ambitos_cita_documento: ''
+      ambitos_cita_ubicacion: ''
+    - &id028
+      fuente: MINEDU-UMC-ENLA
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: ''
+      nivel_maximo: ''
+      dominios_anuales: ''
+      excepciones: ''
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: ''
+      cita_documento: ''
+      cita_ubicacion: ''
+      evidencia_local: ''
+      metodo_lectura: ''
+      verificado_el: ''
+      verificado_por: ''
+      nota: 'pendiente: verificar ficha técnica 2025. Por grado (modulo = grado) y tipo de aplicación. Pista: ENLA 2025 (http://umc.minedu.gob.pe/resultadosenla2025/).'
+      ambitos_publicados: ''
+      ambitos_metodo: ''
+      ambitos_cita_url: ''
+      ambitos_cita_documento: ''
+      ambitos_cita_ubicacion: ''
+  espera:
+    dispara: true
+    accion: agregar_nivel
+    nivel_minimo: nacional
+- id: R-ENC-08-c
+  regla: R-ENC-08
+  descripcion: '«fila con inferencia_verificada = true»: la fila existe pero inferencia_verificada = false → nacional'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  contexto:
+    inferencia:
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id023
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+    - fuente: INEI-ENDES
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: 'false'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/1038-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2025 (1038-Modulo1629/FICHA_TECNICA_ENDES 2025.pdf, dentro del ZIP; idéntica en 1038-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 8 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 1038-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1038-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2025
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026; habilitado solo con dim_dominio ENDES 2025 confirmado (lo está desde dominios.yaml v2, 9/10/2026)'
+  espera:
+    dispara: true
+    accion: agregar_nivel
+    nivel_minimo: nacional
+- id: R-ENC-08-d
+  regla: R-ENC-08
+  descripcion: '«la cita completa (cita_url, cita_documento y cita_ubicacion)»: falta cita_ubicacion → no verificado → nacional'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  contexto:
+    inferencia:
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id023
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+    - fuente: INEI-ENDES
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/1038-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2025 (1038-Modulo1629/FICHA_TECNICA_ENDES 2025.pdf, dentro del ZIP; idéntica en 1038-Modulo1638.zip)
+      cita_ubicacion: ''
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 1038-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1038-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2025
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026; habilitado solo con dim_dominio ENDES 2025 confirmado (lo está desde dominios.yaml v2, 9/10/2026)'
+  espera:
+    dispara: true
+    accion: agregar_nivel
+    nivel_minimo: nacional
+- id: R-ENC-08-e
+  regla: R-ENC-08
+  descripcion: '«n no más fino que nivel_maximo»: si la ficha solo verifica el nivel nacional, la cifra departamental sube a nacional'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  contexto:
+    inferencia:
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id023
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+    - fuente: INEI-ENDES
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: nacional
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/1038-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2025 (1038-Modulo1629/FICHA_TECNICA_ENDES 2025.pdf, dentro del ZIP; idéntica en 1038-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 8 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 1038-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1038-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2025
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026; habilitado solo con dim_dominio ENDES 2025 confirmado (lo está desde dominios.yaml v2, 9/10/2026)'
+  espera:
+    dispara: true
+    accion: agregar_nivel
+    nivel_minimo: nacional
+- id: R-ENC-08-f
+  regla: R-ENC-08
+  descripcion: 'borde «nivel != ''nacional''»: la cifra nacional se publica aunque no haya fila'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: nacional
+    territorio: PE
+  contexto:
+    inferencia:
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id023
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+  espera:
+    dispara: false
+- id: R-ENC-08-g
+  regla: R-ENC-08
+  descripcion: '«si n es un dominio, el dominio en dim_dominio»: área rural ENDES 2025 (dominio de la ficha, rango 5 ≥ departamento) → verificado'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: dominio_subnacional
+    territorio: rural
+  espera:
+    dispara: false
+- id: R-ENC-08-h
+  regla: R-ENC-08
+  descripcion: 'L1 «Ámbito publicado … publicar con el aviso ambito_no_dominio»: ENDES 2025, Lima Metropolitana (LIMA_METROPOLITANA en ambitos_publicados, con su cita)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  espera:
+    dispara: true
+    accion: advertir
+- id: R-ENC-08-i
+  regla: R-ENC-08
+  descripcion: 'L2 «en la ENDES 2015–2017 también ambito_por_estrato»: Lima Región 2015 (ámbito asignado por estrato) → avisos'
+  base:
+    indicador: endes_anemia_6_35m
+    anio: 2015
+    nivel: LIMA_REGION
+    territorio: LIMA_REGION
+  espera:
+    dispara: true
+    accion: advertir
+- id: R-ENC-08-j
+  regla: R-ENC-08
+  descripcion: 'L1: ENAHO 2025, Callao (CALLAO en ambitos_publicados) → publicar con aviso ambito_no_dominio'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: CALLAO
+    territorio: CALLAO
+  espera:
+    dispara: true
+    accion: advertir
+- id: R-ENC-08-k
+  regla: R-ENC-08
+  descripcion: 'ENDES 2025, Callao: en la ENDES el Callao es dominio de la ficha (tipo dominio_diseno), no ámbito publicado → rama general, verificado y sin aviso'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: CALLAO
+    territorio: CALLAO
+  espera:
+    dispara: false
+- id: R-ENC-08-l
+  regla: R-ENC-08
+  descripcion: '«sin_columna_o_sin_fila: false: el ámbito no se publica y la cifra sube al menor nivel verificado que lo contiene»: ENAHO 2025 sin LIMA_METROPOLITANA en ambitos_publicados'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  contexto:
+    inferencia:
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - &id029
+      fuente: INEI-ENDES
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/1038-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2025 (1038-Modulo1629/FICHA_TECNICA_ENDES 2025.pdf, dentro del ZIP; idéntica en 1038-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 8 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 1038-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1038-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2025
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026; habilitado solo con dim_dominio ENDES 2025 confirmado (lo está desde dominios.yaml v2, 9/10/2026)'
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+    - fuente: INEI-ENAHO
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/1031-Modulo34.zip
+      cita_documento: Ficha técnica ENAHO 2025 (1031-Modulo34/FichaTecnica.pdf, dentro del ZIP; también https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1031-Ficha.pdf)
+      cita_ubicacion: '§IX «Niveles de inferencia», a. Muestra integrada, Anual, p. 10 del PDF: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENAHO (recurso 1031-Modulo34.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico)'
+      ambitos_cita_ubicacion: 'Gráfico N.º 4.7, p. 73 (ranking 2025: Prov. Const. del Callao 32,1; Lima Metropolitana 1/ 26,8; Lima 2/ 21,6) y Cuadro N.º III.1 (cont.), p. 232 (página impresa = PDF) (LM
+        26,8, IC 24,2–29,4, CV 4,9; Callao 32,1, IC 27,8–36,5, CV 6,9; Lima 2/ 21,6, IC 18,0–25,2, CV 8,5); notas 1/ «Incluye los 43 distritos de la provincia de Lima» y 2/ «Incluye las Provincias: Barranca,
+        …, Yauyos». pdftotext sobre el PDF capturado el 9/10/2026'
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-ENC-08-m
+  regla: R-ENC-08
+  descripcion: '«ámbito … y la cita del ámbito completa»: falta ambitos_cita_ubicacion → el ámbito no se publica (sube de nivel)'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  contexto:
+    inferencia:
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id029
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+    - fuente: INEI-ENAHO
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; urbano y rural nacional; 24 departamentos (cada uno dominio de estudio); Costa, Sierra y Selva urbana y rural; Área Metropolitana de Lima y Callao
+      excepciones: 'el Callao no es dominio de la ficha (va en «Área Metropolitana de Lima y Callao», dominio 8): se publica como ámbito CALLAO con el aviso ambito_no_dominio (ambitos_publicados); la «Lima»
+        de la ficha incluye al Callao, así que el dpto 15 sin el Callao también lleva ese aviso; trimestral: solo nacional y área; muestra panel: solo nacional, área y región natural'
+      excluye_departamentos: ''
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/1031-Modulo34.zip
+      cita_documento: Ficha técnica ENAHO 2025 (1031-Modulo34/FichaTecnica.pdf, dentro del ZIP; también https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1031-Ficha.pdf)
+      cita_ubicacion: '§IX «Niveles de inferencia», a. Muestra integrada, Anual, p. 10 del PDF: «24 departamentos, cada uno como dominio de estudio»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENAHO (recurso 1031-Modulo34.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION;CALLAO
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+      ambitos_cita_documento: 'INEI, Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico)'
+      ambitos_cita_ubicacion: ''
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-ENC-08-n
+  regla: R-ENC-08
+  descripcion: '«fila.aviso no vacío → se agrega el texto de parametros.avisos[aviso]»: ENDES 2020 (entrevista_telefonica), Puno'
+  base:
+    indicador: endes_anemia_6_35m
+    anio: 2020
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: true
+    accion: advertir
+- id: R-ENC-08-o
+  regla: R-ENC-08
+  descripcion: '«Un departamento con dim_dominio.por_departamento[d].tipo = ''ambito_publicado'' (ENAHO: 15, sin el Callao) … lleva el aviso ambito_no_dominio»: pobreza ENAHO 2025 del departamento 15'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: departamento
+    territorio: '15'
+  espera:
+    dispara: true
+    accion: advertir
+- id: R-ENC-08-p
+  regla: R-ENC-08
+  descripcion: '«excluye_departamentos … y no publicado como ámbito → su dominio de R-ENC-07 si está verificado; si no, nacional»: Puno excluido en la fila ENDES 2025 → nacional'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  contexto:
+    inferencia:
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id023
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+    - fuente: INEI-ENDES
+      anio: '2025'
+      modulo: '*'
+      inferencia_verificada: 'true'
+      nivel_maximo: departamento
+      dominios_anuales: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+      excepciones: 'mensual: solo nacional para algunos indicadores; semestral: nacional, área y región natural (sin departamentos)'
+      excluye_departamentos: '21'
+      aviso: ''
+      cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/1038-Modulo1629.zip
+      cita_documento: Ficha técnica ENDES 2025 (1038-Modulo1629/FICHA_TECNICA_ENDES 2025.pdf, dentro del ZIP; idéntica en 1038-Modulo1638.zip)
+      cita_ubicacion: '§3.7 «Niveles de Inferencia», dominio Anual, p. 8 del PDF: «Cada uno de los 24 departamentos del país y la Provincia Constitucional del Callao»'
+      evidencia_local: biblioteca/cruda/capturas/INEI-ENDES (recurso 1038-Modulo1629.zip, captura verificada 7/10/2026)
+      metodo_lectura: pdftotext sobre el PDF del ZIP capturado
+      verificado_el: '2026-10-08'
+      verificado_por: Claude (implementador E2 – catálogo)
+      nota: ''
+      ambitos_publicados: LIMA_METROPOLITANA;LIMA_REGION
+      ambitos_metodo: ubigeo
+      ambitos_cita_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1038-Ficha.pdf
+      ambitos_cita_documento: Ficha técnica ENDES 2025
+      ambitos_cita_ubicacion: '§3.6 «Distribución de la muestra», Cuadro N.º 1 (conglomerados Sede/Resto urbano/Rural): «Lima Metropolitana 1/» 340/0/0 y «Departamento de Lima 2/» 0/91/26 (Ley 31140); asignación
+        por ubigeo (provincia_hogar). Leído con WebFetch el 9/10/2026; habilitado solo con dim_dominio ENDES 2025 confirmado (lo está desde dominios.yaml v2, 9/10/2026)'
+  espera:
+    dispara: true
+    accion: agregar_nivel
+    nivel_minimo: nacional
+- id: R-ENC-08-q
+  regla: R-ENC-08
+  descripcion: '[adjudicado por el orquestador, 10/10/2026] R-ENC-08 evalúa «nivel := nivel al que se publicaría la cifra después de R-ENC-06 y R-ENC-07»: la cifra provincial ya la sube R-ENC-06 al departamento
+    (nivel_territorial_inferencia), así que R-ENC-08 no dispara; la subida se prueba en R-ENC-06 y en la tubería'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    nivel: provincia
+    territorio_id: '210800'
+  espera:
+    dispara: false
+- id: R-ENC-08-r
+  regla: R-ENC-08
+  descripcion: '«tipo_aplicacion != ''censal''»: una aplicación censal (R-ENC-16) no entra, aunque no haya fila'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    tipo_aplicacion: censal
+  contexto:
+    inferencia:
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id013
+    - *id014
+    - *id015
+    - *id016
+    - *id017
+    - *id018
+    - *id019
+    - *id020
+    - *id021
+    - *id022
+    - *id023
+    - *id024
+    - *id025
+    - *id026
+    - *id027
+    - *id028
+  espera:
+    dispara: false
+- id: R-ENC-08-s
+  regla: R-ENC-08
+  descripcion: 'aplica_a.naturaleza_dato = encuesta_muestral: el SIEN (registro) por distrito no entra'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  espera:
+    dispara: false
+- id: R-REG-02-a
+  regla: R-REG-02
+  descripcion: '«denominador = personas atendidas en el mismo establecimiento (tamizados) → publicar con rótulo de establecimiento»: anemia SIEN en el distrito de Acoria'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-REG-02-b
+  regla: R-REG-02
+  descripcion: «base establecimiento AND tipo_estimacion IN (tasa, proporcion) AND denominador.tipo_poblacion = 'residente' AND nivel_pedido = 'distrito' → agregar_nivel('provincia')»
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    denominador_tipo_poblacion: residente
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-REG-02-c
+  regla: R-REG-02
+  descripcion: '«AND nivel_pedido = ''distrito''» es falso: la misma tasa con denominador residente pedida por provincia → no se degrada'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: provincia
+    territorio: 090100
+  cifra:
+    denominador_tipo_poblacion: residente
+  consulta:
+    nivel_pedido: provincia
+  espera:
+    dispara: false
+- id: R-REG-02-d
+  regla: R-REG-02
+  descripcion: «conteos → publicar por distrito con rótulo 'en establecimientos ubicados en'» (D4)
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    tipo_estimacion: total
+    valor: 70.0
+    denominador_tipo_poblacion: no_aplica
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-REG-02-e
+  regla: R-REG-02
+  descripcion: '«indicador.base_geografica_usada IN (''establecimiento'',''ocurrencia'')» es falso: la cobertura SIEN usa base residencia → ninguna cláusula'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: false
+- id: R-REG-02-f
+  regla: R-REG-02
+  descripcion: 'aplica_a.fuentes: la ENDES (encuesta) no está en la lista cerrada'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-GASTO-01-a
+  regla: R-GASTO-01
+  descripcion: '«Solo se publica gasto en el nivel asignado o en uno superior»: gasto de la DIRESA (departamento_meta) pedido para el distrito de Acoria → agregar_nivel'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: 09
+    medida: devengado
+  cifra:
+    nivel_atribucion_gasto: departamento_meta
+    nivel_gobierno: R
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-GASTO-01-b
+  regla: R-GASTO-01
+  descripcion: (2) «NIVEL_GOBIERNO='M' y municipalidad distrital → 'distrito_municipal'» pedido por distrito → nivel_maximo_publicable distrito
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    nivel_atribucion_gasto: distrito_municipal
+    nivel_gobierno: M
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-GASTO-01-c
+  regla: R-GASTO-01
+  descripcion: '(3) «municipalidad provincial → ''provincia_municipal'' (NUNCA al distrito cercado)»: pedido por distrito → agregar_nivel a provincia'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    nivel_atribucion_gasto: provincia_municipal
+    nivel_gobierno: M
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-GASTO-01-d
+  regla: R-GASTO-01
+  descripcion: (1) «proyecto con CUI y un único UBIGEO válido → 'distrito_inversion'» pedido por distrito → se publica
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    nivel_atribucion_gasto: distrito_inversion
+    nivel_gobierno: R
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-GASTO-01-e
+  regla: R-GASTO-01
+  descripcion: 'borde: departamento_meta pedido por departamento (nivel asignado = nivel pedido) → se publica'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: 09
+    medida: devengado
+  cifra:
+    nivel_atribucion_gasto: departamento_meta
+    nivel_gobierno: R
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: false
+- id: R-GASTO-01-f
+  regla: R-GASTO-01
+  descripcion: (5) «FUNCION_NOMBRE en lista_no_territorializable → 'nacional_no_territorializable'» pedido por departamento → agregar_nivel (nacional)
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '15'
+    medida: devengado
+  cifra:
+    nivel_atribucion_gasto: nacional_no_territorializable
+    nivel_gobierno: E
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-GASTO-01-g
+  regla: R-GASTO-01
+  descripcion: (b) GA-02 «nacional_multidepartamental (obra que cruza departamentos; no se carga a un distrito ni vuelve a la meta)» pedido por departamento → agregar_nivel
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: 08
+    medida: devengado
+  cifra:
+    nivel_atribucion_gasto: nacional_multidepartamental
+    nivel_gobierno: E
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-GASTO-01-h
+  regla: R-GASTO-01
+  descripcion: 'aplica_a.fuentes: el SIEN no es gasto'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    nivel_atribucion_gasto: departamento_meta
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-GASTO-02-a
+  regla: R-GASTO-02
+  descripcion: '(2) «varios [distritos] con los mismos 4 primeros dígitos → provincia» y (4) «provincia → provincia_inversion»: pedido por distrito → agregar_nivel'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    nivel_comun: provincia
+    metodo_ubicacion_cui: ubigeo
+    motivo_sin_ubicacion: null
+    nivel_atribucion_gasto: provincia_inversion
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-GASTO-02-b
+  regla: R-GASTO-02
+  descripcion: (5) «toda cifra distrital de inversión es publicar_referencial con el rótulo “ubicación principal registrada”»
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    nivel_comun: distrito
+    metodo_ubicacion_cui: ubigeo
+    nivel_atribucion_gasto: distrito_inversion
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: publicar_referencial
+- id: R-GASTO-02-c
+  regla: R-GASTO-02
+  descripcion: '(4) «departamento → departamento_inversion (agregar_nivel; nunca se reparte)»: pedido por distrito'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    nivel_comun: departamento
+    metodo_ubicacion_cui: ubigeo
+    nivel_atribucion_gasto: departamento_inversion
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-GASTO-02-d
+  regla: R-GASTO-02
+  descripcion: '(4) «multidepartamental del GN o de un GORE → nacional_multidepartamental si la meta está en Lima» (ejemplo: GN con «-MUL.DEP-» y meta en Lima)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '15'
+    medida: devengado
+  cifra:
+    nivel_comun: multidepartamental
+    metodo_ubicacion_cui: multidepartamental_mef
+    nivel_gobierno: E
+    departamento_meta: '15'
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-GASTO-02-e
+  regla: R-GASTO-02
+  descripcion: '(4) «si la meta está en otro departamento, se queda en esa meta (departamento_meta) con el rótulo “proyecto multidepartamental…”» (ejemplo: GORE Cusco)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: 08
+    medida: devengado
+  cifra:
+    nivel_comun: multidepartamental
+    metodo_ubicacion_cui: multidepartamental_mef
+    nivel_gobierno: R
+    departamento_meta: 08
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-GASTO-02-f
+  regla: R-GASTO-02
+  descripcion: 'G-10 («nivel_comun NULL ⇔ motivo») es prueba de construcción, no de la cifra: una cifra distrital agregada sin esos campos sigue la cláusula (5) «toda cifra distrital de inversión es publicar_referencial»
+    (AN-10)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    nivel_comun: null
+    motivo_sin_ubicacion: null
+    metodo_ubicacion_cui: ubigeo
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: publicar_referencial
+- id: R-GASTO-02-g
+  regla: R-GASTO-02
+  descripcion: '[ambiguo: aplica_a.fuentes incluye MEF-DA-PRESUPUESTO-EJECUCION-GASTO, así que entra toda cifra de gasto] cifra departamental de gasto sin componente de inversión por CUI (metodo_territorio
+    departamento_meta) → no hay ubicación de CUI que resolver'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: false
+- id: R-GASTO-02-h
+  regla: R-GASTO-02
+  descripcion: 'aplica_a.fuentes: la ENDES no es gasto'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    nivel_comun: provincia
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-GASTO-03-a
+  regla: R-GASTO-03
+  descripcion: «nivel solicitado ∈ {distrito, provincia} y pct_gasto_atribuible < 0.50 → publicar_referencial» (ejemplo Puno 22 %) [pct como fracción, igual que la condición]
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    pct_gasto_atribuible: 0.22
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: publicar_referencial
+- id: R-GASTO-03-b
+  regla: R-GASTO-03
+  descripcion: 'borde «≥ 0.50 → publicar con rótulo»: pct = 0,50 exacto'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+    medida: devengado
+  cifra:
+    pct_gasto_atribuible: 0.5
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-GASTO-03-c
+  regla: R-GASTO-03
+  descripcion: '«≥ 0.50 → publicar con rótulo»: provincia con pct 0,75'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: provincia
+    territorio: 090100
+    medida: devengado
+  cifra:
+    pct_gasto_atribuible: 0.75
+  consulta:
+    nivel_pedido: provincia
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-GASTO-03-d
+  regla: R-GASTO-03
+  descripcion: 'Lima: «Toda cifra de Lima → aviso de sesgo de sede» y línea aparte de referencia nacional (también si es 0): Lima Metropolitana 2025'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+    medida: devengado
+  consulta:
+    nivel_pedido: LIMA_METROPOLITANA
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-GASTO-03-e
+  regla: R-GASTO-03
+  descripcion: 'L6: «Toda cifra del Callao lleva el aviso de sede (parametros.callao)» (aviso → advertir; dictamen AMBIGUO, AN-11)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: CALLAO
+    territorio: CALLAO
+    medida: devengado
+  consulta:
+    nivel_pedido: CALLAO
+  espera:
+    dispara: true
+    accion: advertir
+- id: R-GASTO-03-f
+  regla: R-GASTO-03
+  descripcion: 'Ninguna cláusula: gasto departamental de Puno (ni subdepartamental ni de Lima o Callao)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  consulta:
+    nivel_pedido: departamento
+  espera:
+    dispara: false
+- id: R-GASTO-03-g
+  regla: R-GASTO-03
+  descripcion: 'PR-15: distrito del departamento 15 (San Juan de Lurigancho) con pct 0,30 → referencial; el respaldo es respuesta parcial con NC-GASTO-LUGAR, no la cifra departamental'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: '150132'
+    medida: devengado
+  cifra:
+    pct_gasto_atribuible: 0.3
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: publicar_referencial
+- id: R-GASTO-03-h
+  regla: R-GASTO-03
+  descripcion: 'aplica_a.fuentes: SIEN no es gasto'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    pct_gasto_atribuible: 0.1
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-TERRITORIO-04-a
+  regla: R-TERRITORIO-04
+  descripcion: '«si n = 1 → geografia_base := ''vigente_'' || a1»: anemia SIEN 2025 de un solo año en Alto Trujillo'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: '130112'
+  espera:
+    dispara: false
+- id: R-TERRITORIO-04-b
+  regla: R-TERRITORIO-04
+  descripcion: 'TE-04 «También pasa a GEO2017 si … grupo_comparable_geo2017 <> ubigeo_inei»: serie 2023–2025 de El Porvenir (grupo G-130102) → agregar_nivel al grupo comparable'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: '130102'
+  cifra:
+    serie:
+    - anio: 2023
+      territorio_id: '130102'
+    - anio: 2024
+      territorio_id: '130102'
+    - anio: 2025
+      territorio_id: '130102'
+  consulta:
+    anio_pedido: null
+    intencion_pregunta: evolucion
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-TERRITORIO-04-c
+  regla: R-TERRITORIO-04
+  descripcion: '«EXISTS distrito d con d.vigente_desde > fecha(a1)»: serie 2018–2025 de Río Magdalena (creado en 2021) → GEO2017'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: '050513'
+  cifra:
+    territorio_id: '050513'
+    serie:
+    - anio: 2018
+      territorio_id: '050513'
+    - anio: 2019
+      territorio_id: '050513'
+    - anio: 2020
+      territorio_id: '050513'
+    - anio: 2021
+      territorio_id: '050513'
+    - anio: 2022
+      territorio_id: '050513'
+    - anio: 2023
+      territorio_id: '050513'
+    - anio: 2024
+      territorio_id: '050513'
+    - anio: 2025
+      territorio_id: '050513'
+  consulta:
+    intencion_pregunta: evolucion
+  espera:
+    dispara: true
+    accion: agregar_nivel
+- id: R-TERRITORIO-04-d
+  regla: R-TERRITORIO-04
+  descripcion: Serie 2023–2025 de Acoria (sin creaciones ni grupo distinto) → geografía vigente, sin cambio
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    serie:
+    - anio: 2023
+      territorio_id: 090103
+    - anio: 2024
+      territorio_id: 090103
+    - anio: 2025
+      territorio_id: 090103
+  consulta:
+    intencion_pregunta: evolucion
+  espera:
+    dispara: false
+- id: R-TERRITORIO-04-e
+  regla: R-TERRITORIO-04
+  descripcion: '[ambiguo: TE-04 dice «aunque el distrito tenga una sola versión», pero la condición fija «si n = 1 → vigente»] Laredo (grupo G-130102) con un solo año → geografía vigente'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: '130106'
+  espera:
+    dispara: false
+- id: R-TERRITORIO-04-f
+  regla: R-TERRITORIO-04
+  descripcion: 'aplica_a.base_geografica no incluye ''ejecutora'': serie de gasto 2023–2025 de Alto Trujillo queda fuera de la regla (ver informe: posible vacío)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: distrito
+    territorio: '130112'
+    medida: devengado
+  cifra:
+    serie:
+    - anio: 2023
+      territorio_id: '130112'
+    - anio: 2024
+      territorio_id: '130112'
+    - anio: 2025
+      territorio_id: '130112'
+  consulta:
+    intencion_pregunta: evolucion
+  espera:
+    dispara: false
+- id: R-TERRITORIO-04-g
+  regla: R-TERRITORIO-04
+  descripcion: 'casos_borde «Encuestas (nivel_territorial_inferencia ≠ distrito) no se ven afectadas»: base muestra fuera de aplica_a'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    serie:
+    - anio: 2024
+    - anio: 2025
+  espera:
+    dispara: false
+- id: R-EST-05-a
+  regla: R-EST-05
+  descripcion: '«nivel_pedido == ''distrito'' AND fuentes_disponibles(distrito) == [estimacion_modelada] AND edad_dato > 5»: Mapa de Pobreza 2018 en Cospán, consultado en 2026 (edad 8) → principal en rojo
+    fijo'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: '060104'
+  consulta:
+    nivel_pedido: distrito
+    rol: principal
+  espera:
+    dispara: true
+    accion: publicar_referencial
+    semaforo: rojo
+- id: R-EST-05-b
+  regla: R-EST-05
+  descripcion: '«nivel_pedido == ''distrito''» es falso: Mapa 2018 pedido por provincia'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: provincia
+    territorio: '060100'
+  consulta:
+    nivel_pedido: provincia
+  espera:
+    dispara: false
+- id: R-EST-05-c
+  regla: R-EST-05
+  descripcion: 'borde «edad_dato > 5»: estimación modelada con anio_referencia 2021 → edad 5 → no dispara'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: '060104'
+  cifra:
+    anio: 2021
+    anio_referencia: 2021
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-EST-05-d
+  regla: R-EST-05
+  descripcion: '«edad_dato > 5»: anio_referencia 2020 → edad 6 → dispara'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: '060104'
+  cifra:
+    anio: 2020
+    anio_referencia: 2020
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: publicar_referencial
+- id: R-EST-05-e
+  regla: R-EST-05
+  descripcion: 'aplica_a.fuentes: la ENAHO departamental no es estimación modelada'
+  base:
+    indicador: enaho_pobreza_monetaria
+    anio: 2025
+    nivel: departamento
+    territorio: '06'
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-01-a
+  regla: R-DENOMINADORES-01
+  descripcion: 'matriz cobertura_salud_por_edad.principal_por_departamento = INEI-PROYECCIONES-DEPARTAMENTAL-EDAD (D-IND-7): la cobertura SIEN de Puno lo declara → se publica con el rótulo «Calculado sobre
+    la población…» (AN-12)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-DENOMINADORES-01-b
+  regla: R-DENOMINADORES-01
+  descripcion: «requiere_denominador = true AND denominador_principal IS NULL» → la cifra no puede publicarse (suprimir; AN-13)
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    denominador_principal: null
+  espera:
+    dispara: true
+    accion: suprimir
+- id: R-DENOMINADORES-01-c
+  regla: R-DENOMINADORES-01
+  descripcion: «denominador_principal ∉ matriz[tipo_denominador]» y «RENIEC nunca es denominador principal» → suprimir (AN-14)
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    denominador_principal: RENIEC-POBLACION-IDENTIFICADA|6-35m|T
+  espera:
+    dispara: true
+    accion: suprimir
+- id: R-DENOMINADORES-01-d
+  regla: R-DENOMINADORES-01
+  descripcion: 'matriz D-IND-7: «En los ámbitos de Lima (LM, LR) el denominador es el prorrateo propio (IPF) rotulado como tal» → rótulo «población estimada (cálculo propio)» (AN-15)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+  cifra:
+    denominador_principal: PROPIO-PRORRATEO-IPF|6-35m|T
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-DENOMINADORES-01-e
+  regla: R-DENOMINADORES-01
+  descripcion: '«indicador.requiere_denominador = true» es falso: prevalencia ENDES (usa factores de expansión)'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-01-f
+  regla: R-DENOMINADORES-01
+  descripcion: '«denominador_principal ∉ matriz[tipo_denominador]»: tipo_denominador vacío → metadato faltante (AN-16)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    tipo_denominador: null
+  espera:
+    dispara: true
+    accion: suprimir
+    motivo: metadato_faltante
+- id: R-DENOMINADORES-01-g
+  regla: R-DENOMINADORES-01
+  descripcion: 'aplica_a.tipo_medida no incluye estimacion_modelada: Mapa de Pobreza'
+  base:
+    indicador: mapa_pobreza_2018
+    anio: 2018
+    nivel: distrito
+    territorio: '060104'
+  cifra:
+    requiere_denominador: true
+    denominador_principal: null
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-02-a
+  regla: R-DENOMINADORES-02
+  descripcion: '«COUNT(DISTINCT vintage_denominador) sobre los años de la serie > 1» es falso: cifra de un solo año'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-02-b
+  regla: R-DENOMINADORES-02
+  descripcion: Serie 2023–2025 con el mismo vintage en todos los años → rótulo «Para todos los años usamos la misma estimación…» (AN-17)
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    serie:
+    - anio: 2023
+      vintage_denominador: INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01
+    - anio: 2024
+      vintage_denominador: INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01
+    - anio: 2025
+      vintage_denominador: INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-DENOMINADORES-02-c
+  regla: R-DENOMINADORES-02
+  descripcion: '«COUNT(DISTINCT vintage_denominador) > 1 → bloquear»: el último año usa el CPV2025 censado'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    serie:
+    - anio: 2023
+      vintage_denominador: INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01
+    - anio: 2024
+      vintage_denominador: INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01
+    - anio: 2025
+      vintage_denominador: CPV2025|censada|ed=2026-07
+  espera:
+    dispara: true
+    accion: bloquear_cruce
+- id: R-DENOMINADORES-02-d
+  regla: R-DENOMINADORES-02
+  descripcion: '«para un cociente: vintage(numerador_poblacional) ≠ vintage(denominador) cuando el numerador también es población → bloquear» (cifra inválida → suprimir; AN-18) [campos vintage_numerador
+    y numerador_es_poblacion: ver campos_nuevos]'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    numerador_es_poblacion: true
+    vintage_numerador: MINSA-POB|base=INEI2017|corte=2026-03-31
+  espera:
+    dispara: true
+    accion: suprimir
+- id: R-DENOMINADORES-02-e
+  regla: R-DENOMINADORES-02
+  descripcion: Serie ENDES 2024–2025 sin denominador (vintage no_aplica en todos los años) → un solo valor
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    serie:
+    - anio: 2024
+      vintage_denominador: no_aplica
+    - anio: 2025
+      vintage_denominador: no_aplica
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-05-a
+  regla: R-DENOMINADORES-05
+  descripcion: '«s ≤ 0.10 → publicar»: s = 0,05'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sensibilidad_denominador: 0.05
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-05-b
+  regla: R-DENOMINADORES-05
+  descripcion: 'borde «s ≤ 0.10 → publicar»: s = 0,10 exacto'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sensibilidad_denominador: 0.1
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-05-c
+  regla: R-DENOMINADORES-05
+  descripcion: '«0.10 < s ≤ 0.25 → publicar_referencial con rango» (ejemplo: s = 0,21)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sensibilidad_denominador: 0.21
+  espera:
+    dispara: true
+    accion: publicar_referencial
+- id: R-DENOMINADORES-05-d
+  regla: R-DENOMINADORES-05
+  descripcion: 'borde «s ≤ 0.25»: s = 0,25 exacto → publicar_referencial'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sensibilidad_denominador: 0.25
+  espera:
+    dispara: true
+    accion: publicar_referencial
+- id: R-DENOMINADORES-05-e
+  regla: R-DENOMINADORES-05
+  descripcion: 'enunciado «si difiere en más de 25 % no se publica valor puntual distrital»: en una cifra departamental con s = 0,30 no hay provincia que ofrecer → solo el rango (AN-19)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sensibilidad_denominador: 0.3
+  espera:
+    dispara: true
+    accion: publicar_referencial
+    modo: rango
+- id: R-DENOMINADORES-05-e2
+  regla: R-DENOMINADORES-05
+  descripcion: '«s > 0.25 → agregar_nivel(provincia) y mostrar el rango distrital solo en la ficha»: cifra distrital con s = 0,30 (AN-19)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: 09
+  cifra:
+    nivel: distrito
+    territorio_id: 090103
+    sensibilidad_denominador: 0.3
+  consulta:
+    nivel_pedido: distrito
+  espera:
+    dispara: true
+    accion: agregar_nivel
+    nivel_minimo: provincia
+- id: R-DENOMINADORES-05-f
+  regla: R-DENOMINADORES-05
+  descripcion: '«s IS NULL AND metodo = prorrateo_propio → publicar_referencial con rótulo de estimación propia»: Lima Región (IPF)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: LIMA_REGION
+    territorio: LIMA_REGION
+  cifra:
+    sensibilidad_denominador: null
+    metodo_denominador: prorrateo_propio
+  espera:
+    dispara: true
+    accion: publicar_referencial
+- id: R-DENOMINADORES-05-g
+  regla: R-DENOMINADORES-05
+  descripcion: '[ambiguo: la condición no define s IS NULL con método oficial] casos_borde «Si solo existe el principal, s = null: se publica con la etiqueta de método de R-DENOMINADORES-01 y sin rango»:
+    cobertura SIEN de Puno con denominador oficial → no se degrada ni se suprime'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sensibilidad_denominador: null
+    metodo_denominador: oficial
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-05-h
+  regla: R-DENOMINADORES-05
+  descripcion: '«RENIEC: si |D_reniec − D_ppal| / D_ppal > 0.20 → nota en la ficha, sin cambiar la acción»: D_reniec = 1,24·D_ppal en denominadores_usados (AN-20)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sensibilidad_denominador: 0.05
+    denominador: 49988.0
+    denominadores_usados:
+    - fuente: RENIEC-POBLACION-IDENTIFICADA
+      vintage: RENIEC|corte=2025-06-30
+      valor: 61985.12
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-DENOMINADORES-05-i
+  regla: R-DENOMINADORES-05
+  descripcion: 'aplica_a.tipo_medida no incluye prevalencia: ENDES'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    sensibilidad_denominador: 0.4
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-07-a
+  regla: R-DENOMINADORES-07
+  descripcion: Numerador y denominador en la misma geografía y el mismo año (30-jun) → no bloquea
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    geografia_base_numerador: vigente_2025
+    geografia_base_denominador: vigente_2025
+    fecha_ref_numerador: '2025-06-30'
+    fecha_ref_denominador: '2025-06-30'
+  espera:
+    dispara: false
+- id: R-DENOMINADORES-07-b
+  regla: R-DENOMINADORES-07
+  descripcion: «geografia_base(numerador) ≠ geografia_base(denominador) → bloquear» (cifra inválida → suprimir; AN-21)
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    geografia_base_numerador: GEO2017
+    geografia_base_denominador: vigente_2025
+    fecha_ref_numerador: '2025-06-30'
+    fecha_ref_denominador: '2025-06-30'
+  espera:
+    dispara: true
+    accion: suprimir
+- id: R-DENOMINADORES-07-c
+  regla: R-DENOMINADORES-07
+  descripcion: '«|anio(fecha_ref_numerador) − anio(fecha_ref_denominador)| > 0 → bloquear»: SIEN 2025 con población 2024 (cifra inválida → suprimir; AN-22)'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    geografia_base_numerador: vigente_2025
+    geografia_base_denominador: vigente_2025
+    fecha_ref_numerador: '2025-06-30'
+    fecha_ref_denominador: '2024-06-30'
+  espera:
+    dispara: true
+    accion: suprimir
+- id: R-DENOMINADORES-07-d
+  regla: R-DENOMINADORES-07
+  descripcion: '«(para stocks con corte en el primer trimestre se admite el denominador del año anterior y se rotula)» [campo es_stock: ver campos_nuevos]'
+  base:
+    indicador: sien_cobertura_tamizaje_6_35m
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    es_stock: true
+    geografia_base_numerador: vigente_2026
+    geografia_base_denominador: vigente_2026
+    fecha_ref_numerador: '2026-01-31'
+    fecha_ref_denominador: '2025-06-30'
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-DENOMINADORES-07-e
+  regla: R-DENOMINADORES-07
+  descripcion: 'aplica_a.tipo_medida no incluye prevalencia: ENDES con fechas desalineadas no entra'
+  base:
+    indicador: endes_anemia_6_35m_oms2024
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+  cifra:
+    fecha_ref_numerador: '2025-06-30'
+    fecha_ref_denominador: '2023-06-30'
+  espera:
+    dispara: false
+- id: R-GASTO-12-a
+  regla: R-GASTO-12
+  descripcion: '«Si la respuesta contiene montos de > 1 año → … precios=''constantes''» y rótulo «Montos en soles de {anio_base}»: serie 2023–2025 de Puno deflactada (AN-23)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  cifra:
+    precios: constantes
+    anio_base_deflactor: 2025
+    serie:
+    - anio: 2023
+      medida: devengado
+    - anio: 2024
+      medida: devengado
+    - anio: 2025
+      medida: devengado
+  consulta:
+    intencion_pregunta: evolucion
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-GASTO-12-e
+  regla: R-GASTO-12
+  descripcion: '«Toda serie … debe expresarse en soles constantes»: la misma serie sin precios constantes → se bloquea la serie (dictamen AMBIGUO, lectura restrictiva; AN-23)'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  cifra:
+    serie:
+    - anio: 2023
+      medida: devengado
+    - anio: 2024
+      medida: devengado
+    - anio: 2025
+      medida: devengado
+  consulta:
+    intencion_pregunta: evolucion
+  espera:
+    dispara: true
+    accion: bloquear_cruce
+- id: R-GASTO-12-b
+  regla: R-GASTO-12
+  descripcion: «las cifras de un solo año se muestran en soles corrientes y se rotulan así»
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  consulta:
+    intencion_pregunta: nivel_actual
+  espera:
+    dispara: true
+    accion: rotular
+- id: R-GASTO-12-c
+  regla: R-GASTO-12
+  descripcion: '«Ratios (avance, participación) no se deflactan» [ambiguo: se lee que no hay rótulo de precios]: avance devengado/PIM de un año'
+  base:
+    indicador: gasto_ex_pan
+    anio: 2025
+    nivel: departamento
+    territorio: '21'
+    medida: devengado
+  cifra:
+    tipo_estimacion: razon
+    valor: 92.4
+    devengado: 132056300.0
+    pim: 142918000.0
+  consulta:
+    intencion_pregunta: nivel_actual
+  espera:
+    dispara: false
+- id: R-GASTO-12-d
+  regla: R-GASTO-12
+  descripcion: 'aplica_a.fuentes: SIEN no es gasto'
+  base:
+    indicador: sien_anemia_tamizados_6_35m
+    anio: 2025
+    nivel: distrito
+    territorio: 090103
+  cifra:
+    serie:
+    - anio: 2024
+    - anio: 2025
+  espera:
+    dispara: false

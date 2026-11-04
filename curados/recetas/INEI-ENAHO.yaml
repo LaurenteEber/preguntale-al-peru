@@ -1,0 +1,55 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-ENAHO
+strategy: http_file
+publisher: INEI
+dataset_title: Encuesta Nacional de Hogares sobre Condiciones de Vida y Pobreza
+access_url: https://proyectos.inei.gob.pe/microdatos/
+download_url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/966-Modulo01.zip
+documentation_url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/842-Ficha.pdf
+temporal:
+  inicio: 1997
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: manzana_conglomerado
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- 'Representativa solo a nivel departamental (24 dptos + Callao + Lima Metropolitana) y región natural/área; NO
+  por provincia ni distrito aunque la base trae UBIGEO distrital. Estimados trimestrales solo nacional y urbano/rural.
+  2020: 49% entrevistas telefónicas (16 mar–30 sep) con cuestionario reducido (se mantuvieron preguntas de pobreza),
+  tasa de respuesta 73.1%. Factores de expansión (factor07 hogar; fac500a empleo) recalibrados a proyecciones de
+  población: usar el factor publicado para cada año/versión. Muestra 2024: 36 594 viviendas.'
+espera:
+  formato:
+  - zip
+  - dta
+  - sav
+  - csv
+  - dbf
+  - pdf
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+notas: 'Códigos de encuesta-año confirmados: 2019=687 (ficha técnica 687), 2023=906, 2024=966 (resto: obtener de
+  cambiaPeriodo.asp o tablas de enahodata/PeruData); 1997–2003 en DBF. Módulos corte transversal: 01 vivienda/hogar,
+  02 miembros, 03 educación, 04 salud, 05 empleo e ingresos, 34 sumarias (pobreza), 85 gobernabilidad, 37 programas
+  sociales, etc. URL: .../descarga/{STATA|SPSS|CSV}/{cod}-Modulo{NN}.zip. Docs: .../DocumentosMetodologicos/{AÑO}-55/
+  (p.ej. 6_Calidad-ENAHO.pdf, 20_Diccionario_2024.pdf). Portal ASP clásico. Flujo AJAX: CambiaEnc.asp (encuesta→años)
+  → CambiaAnio.asp (año→periodos) → cambiaPeriodo.asp (periodo→tabla de módulos con links). Descarga directa predecible:
+  https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{SPSS|STATA|CSV|DBF}/{codigo_encuesta_anio}-Modulo{codigo_modulo}.zip
+  (ej. ENAHO 2024 = 966-Modulo01.zip). Ficha técnica: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo_encuesta_anio}-Ficha.pdf.
+  Documentos metodológicos: .../Descarga/DocumentosMetodologicos/{AÑO}-{codigo_tipo_encuesta}/{archivo}.pdf. Nombres
+  de encuesta con caracteres Windows-1252 deben codificarse con escape() de JS (%96), no UTF-8. Sin captcha ni registro
+  conocidos. Bash del entorno no tuvo salida a *.inei.gob.pe (proxy 403): probar desde otro entorno.'

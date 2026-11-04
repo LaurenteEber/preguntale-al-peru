@@ -1,0 +1,111 @@
+# Correcciones ortográficas del nombre que se muestra (nombre_mostrado de dim_ubigeo_historico).
+# Decisión del dueño (T-02, 2/11/2026): la interfaz muestra los nombres con tildes y ñ en todo el proyecto.
+# La base es el Directorio Nacional de Municipalidades 2025 del INEI (o la ley de creación, o el archivo propio para
+# provincias y departamentos). Aquí solo se corrige la ORTOGRAFÍA (tilde, ñ, mayúscula de «del», signo mal escrito,
+# abreviatura) y solo con evidencia en un documento oficial. No se cambia ningún nombre legal.
+#
+# nombre_fuente: lo que trae hoy la fuente base. Si la fuente cambia, la construcción falla (T-19) para revisar la fila.
+# El emparejamiento entre fuentes no cambia: usa nombre_normalizado (sin tildes ni signos).
+#
+# Validado y SIN corrección (nombres iguales o distintos que no son error):
+#   060506 «Santa Cruz de Toled»: es el nombre legal (Ley 15416, 29/01/1965, «Creando el distrito de Santa Cruz de
+#     Toled»); la municipalidad usa «Toledo», que queda como nombre alterno para la búsqueda.
+#   250201 Raimondi, 050707 San Francisco de Rivacayco, 010517 San Francisco del Yeso, 150712 San Pedro de Laraos,
+#     100106 Quisqui: se mantiene la grafía del Directorio 2025 (la más reciente del INEI); las anteriores quedan como
+#     nombres alternos.
+#   «de La Capilla», «de Los Molinos», «de Los Olleros», «de La Legua», «Villa El Salvador»…: todas las fuentes coinciden
+#     y el artículo es parte del topónimo.
+version: 1.0.0
+fecha: "2026-11-03"   # 3/11: 040800 y 050800 con el nombre que trae el Directorio 2025 (C-03)
+correcciones:
+- ubigeo: "060402"
+  nombre_fuente: Anguia
+  nombre_mostrado: Anguía
+  motivo: tilde
+  evidencia: "Ley 7856 (16/10/1933): «Créase en la provincia de Chota… el distrito de Anguía» (Biblioteca del Congreso, demarcación territorial de Chota). El INEI escribe «Anguía» en el Mapa de Pobreza 2018 (Libro Lib1718)"
+  url: https://www3.congreso.gob.pe/biblioteca/demarcacion1904-cajamarca-chota
+- ubigeo: "040302"
+  nombre_fuente: Acari
+  nombre_mostrado: Acarí
+  motivo: tilde
+  evidencia: "Ley 32653 (El Peruano, 14/06/2026), que cita la carta nacional del IGN «Acarí», hoja 1940 (31-n)"
+  url: https://busquedas.elperuano.pe/dispositivo/NL/2525555-3
+- ubigeo: "100602"
+  nombre_fuente: Daniel Alomia Robles
+  nombre_mostrado: Daniel Alomía Robles
+  motivo: tilde
+  evidencia: "Decreto supremo de la PCM que declara el estado de emergencia en «el distrito de Daniel Alomía Robles» (repositorio de normas legales de la SBN, n.º 2693). La Ley 11843 (1952) lo escribió «Daniel Alomías Robles»"
+  url: https://sbn.gob.pe/Repositorio/Normas_Legales/NORMA_LEGAL_2693_8822.pdf
+- ubigeo: "101006"
+  nombre_fuente: San Francisco de Asis
+  nombre_mostrado: San Francisco de Asís
+  motivo: tilde
+  evidencia: "Ley 13418 (20/04/1960): «Distrito de San Francisco de Asís» (Biblioteca del Congreso, demarcación territorial de Lauricocha)"
+  url: https://www3.congreso.gob.pe/biblioteca/demarcacion1904-huanuco-lauricocha
+- ubigeo: "150135"
+  nombre_fuente: San Martin de Porres
+  nombre_mostrado: San Martín de Porres
+  motivo: tilde
+  evidencia: "INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro Lib1718), anexo: «SAN MARTÍN DE PORRES»"
+  url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf
+- ubigeo: "150516"
+  nombre_fuente: Zuñiga
+  nombre_mostrado: Zúñiga
+  motivo: tilde
+  evidencia: "Resolución N.º 0289-2018-JNE (Jurado Nacional de Elecciones): «ZÚÑIGA - CAÑETE - LIMA»; el INEI escribe «Zúñiga» en el Libro Lib1718"
+  url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf
+- ubigeo: "220803"
+  nombre_fuente: Elias Soplín Vargas
+  nombre_mostrado: Elías Soplín Vargas
+  motivo: tilde
+  evidencia: "Resolución N.º 0229-2017-JNE: «Concejo Distrital de Elías Soplín Vargas, provincia de Rioja»; la municipalidad firma «Elías Soplín Vargas» en sus documentos oficiales (SINIA, MINAM)"
+  url: https://sinia.minam.gob.pe/metadatos/321160
+- ubigeo: "230110"
+  nombre_fuente: Coronel Gregorio Albarracin Lanchipa
+  nombre_mostrado: Coronel Gregorio Albarracín Lanchipa
+  motivo: tilde
+  evidencia: "INEI, Libro Lib1718: «ALBARRACÍN»; Ordenanza Municipal 012-2017 de la municipalidad (gob.pe)"
+  url: https://cdn.www.gob.pe/uploads/document/file/6539122/5698761-2276-2017_ordenanza_municipal_n_012_2017_35ca20541074b1df-pdf.pdf
+- ubigeo: "230111"
+  nombre_fuente: La Yarada los Palos
+  nombre_mostrado: La Yarada Los Palos
+  motivo: mayuscula_toponimo
+  evidencia: "Ley 30358 (El Peruano, 08/11/2015): «Créase el distrito de La Yarada Los Palos, con su capital Los Palos»"
+  url: https://busquedas.elperuano.pe/dispositivo/NL/1309533-1
+- ubigeo: "110114"
+  nombre_fuente: Yauca Del Rosario
+  nombre_mostrado: Yauca del Rosario
+  motivo: minuscula_preposicion
+  evidencia: "Ortografía de la RAE (preposición y artículo en minúscula dentro del topónimo); el archivo propio corregido por el dueño escribe «Yauca del Rosario»"
+  url: null
+- ubigeo: "150120"
+  nombre_fuente: Magdalena Del Mar
+  nombre_mostrado: Magdalena del Mar
+  motivo: minuscula_preposicion
+  evidencia: "INEI, Libro Lib1718: «Magdalena del Mar»; ortografía de la RAE"
+  url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf
+- ubigeo: "150143"
+  nombre_fuente: Villa María Del Triunfo
+  nombre_mostrado: Villa María del Triunfo
+  motivo: minuscula_preposicion
+  evidencia: "Ortografía de la RAE; el archivo propio corregido por el dueño escribe «Villa María del Triunfo»"
+  url: null
+- ubigeo: "040800"
+  nombre_fuente: La Unión
+  nombre_mostrado: La Unión
+  motivo: signo_mal_escrito
+  evidencia: "Nombre confirmado por el dueño (3/11/2026, C-03 del slice 1). El Directorio 2025 ya lo trae con tilde aguda; el archivo propio usa tilde grave («ò»), que no existe en español y queda como nombre alterno; PNDA del INEI: «LA UNION»"
+  url: null
+- ubigeo: "050800"
+  nombre_fuente: Paucar del Sara Sara
+  nombre_mostrado: Páucar del Sara Sara
+  motivo: tilde
+  evidencia: "Nombre confirmado por el dueño (3/11/2026, C-03 del slice 1). El Directorio 2025 lo trae sin tilde; el archivo propio usa tilde grave («à»), que marca la sílaba tónica; PNDA del INEI: «PAUCAR DEL SARA SARA»"
+  url: null
+- ubigeo: "070100"
+  nombre_fuente: Prov. Const. del Callao
+  nombre_mostrado: Callao
+  motivo: abreviatura
+  evidencia: "PNDA del INEI: «CALLAO». El nombre largo «Provincia Constitucional del Callao» queda como nombre alterno"
+  url: null
+  alterno: Provincia Constitucional del Callao

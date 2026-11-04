@@ -1,0 +1,252 @@
+# Lista curada de la genérica 2.4 «Donaciones y transferencias» (GA-05, R-GASTO-05 v4) — v2 tras la auditoría aud_ga05;
+# 2.1.0: EX-01 (centros poblados) y EX-02 (IVP, probable) aplicadas por decisión del dueño (7/10/2026), con alarma G-18b.
+# Reemplaza la marca por patrón (GENERICA = '4' AND SUBGENERICA_DET = '3') de gasto.py.
+# Llave: código completo del clasificador = TIPO_TRANSACCION.GENERICA.SUBGENERICA.SUBGENERICA_DET.ESPECIFICA.ESPECIFICA_DET
+# (columna `clasificador_transferencia` de gasto_base_*). Toda específica 2.4 que aparezca en la base DEBE estar aquí:
+# si no, la prueba G-15 falla y la construcción se detiene.
+version: 2.1.0
+fecha: '2026-10-07'
+revisado_dueno: false
+fuentes:
+  clasificador_2023: https://www.mef.gob.pe/contenidos/presu_publ/anexos/2023/Anexo_2_Clasificador_Economico_Gastos_2023.pdf
+  clasificador_2024: https://cdn.www.gob.pe/uploads/document/file/5627853/4986320-anexo-ii-clasificador-economico-de-gastos-para-el-ano-fiscal-2024.pdf
+  clasificador_2025: https://cdn.www.gob.pe/uploads/document/file/7405290/6312586-anexo_2_rd0039_2024ef5001.PDF (Anexo 2 de la RD 0039-2024-EF/50.01,
+    https://www.mef.gob.pe/en/por-instrumento/resolucion-directoral/33947-resolucion-directoral-n-0039-2024-ef-50-01/file)
+  indice_mef: https://www.mef.gob.pe/es/clasificadores-presupuestarios
+  transferencias_financieras_siaf: https://www.mef.gob.pe/contenidos/ogie/capacitacion/esquema_transferencia_financiera_19072017.pdf
+  compras_ops_minsa: 'https://busquedas.elperuano.pe/dispositivo/NL/2316660-1/ (RM 555-2024/MINSA: CENARES transfiere a la OPS/OMS para comprar
+    vacunas; DU 007-2019, art. 7)'
+  nota_verificacion: Nombres tomados de ESPECIFICA_DET_NOMBRE del CSV del MEF (idénticos 2023–2025). La presentación DGCP 2014 corrobora 2.4.1.3.1.1
+    a .4. El texto del Anexo 2 2023–2025 NO se pudo leer (cdn.www.gob.pe 403; el PDF del MEF se corta en la 2.3), ni por el analista ni por el
+    auditor. revisado_dueno queda en false hasta que el dueño coteje el Anexo 2 de cada año desde otra red.
+  presentacion_mef_2014: 'https://www.mef.gob.pe/contenidos/conta_publ/capacitaciones/seminario_dic2014/exposiciones/TRANSFERENCIAS_FINANCIERAS_CANORIO.pdf
+    (DGCP, ejercicio 2014: lista 2.4.1.3.1.1–.4 con estos nombres y, como tipos de receptor, institutos viales provinciales, centros poblados,
+    beneficencias, OPD municipales y empresas del Estado; no asigna receptor a código; no muestra .5)'
+categorias:
+  intergubernamental:
+    letra: a
+    descripcion: El receptor es un pliego o ejecutora que está en la base y vuelve a registrar el gasto (fuente 4, Donaciones y transferencias).
+    consolidado_multinivel: excluir
+    cifra_tematica: excluir
+    cifra_de_un_solo_pliego: incluir_rotulado
+  publico_fuera_de_base:
+    letra: b
+    descripcion: El receptor es una entidad pública que no está en la base (fondos con uso final conocido como el FEPC, empresas públicas, EPS,
+      AGROBANCO, beneficencias; y, por decisión del dueño del 7/10/2026, centros poblados e IVP —este último rotulado «probable IVP»—). Nadie vuelve a registrar el gasto.
+    consolidado_multinivel: bloque_rotulado
+    cifra_tematica: excluir_y_mostrar_aparte
+    cifra_de_un_solo_pliego: incluir_rotulado
+  fondo_por_identificar:
+    letra: b*
+    descripcion: 'Transferencia a un fondo público cuyo uso final no se conoce y que podría financiar después a pliegos de la base (transferencia
+      de partidas): posible doble conteo.'
+    consolidado_multinivel: fuera_de_las_sumas_con_nota
+    cifra_tematica: excluir
+    cifra_de_un_solo_pliego: incluir_rotulado
+  gasto_final_externo:
+    letra: c
+    descripcion: Pago a gobiernos extranjeros, organismos internacionales o fondos binacionales (cuotas, compras a través de la OPS/UNICEF/UNOPS).
+      Es gasto final; nadie en la base lo vuelve a registrar.
+    consolidado_multinivel: incluir
+    cifra_tematica: incluir
+    cifra_de_un_solo_pliego: incluir
+  por_revisar:
+    letra: d
+    descripcion: Específica nueva o sin clasificar. La prueba G-15 falla si su devengado es mayor que cero.
+    consolidado_multinivel: bloquear
+    cifra_tematica: bloquear
+    cifra_de_un_solo_pliego: bloquear
+clasificadores:
+- codigo: 2.4.1.1.2.1
+  nombre: AGENCIAS GUBERNAMENTALES DE COOPERACION INTERNACIONAL
+  categoria: gasto_final_externo
+  receptor: agencias de cooperación de gobiernos extranjeros
+  motivo: Receptor extranjero; no está en la base.
+  evidencia: '2025: 0,5 M (RREE).'
+- codigo: 2.4.1.1.2.2
+  nombre: FONDOS CONTRAVALOR O DE DESARROLLO BINACIONAL
+  categoria: gasto_final_externo
+  receptor: fondos binacionales (p. ej. Plan Binacional Perú-Ecuador) [juicio, por el nombre]
+  motivo: Receptor binacional/extranjero; no está en la base.
+  evidencia: '2023–2025: 26,1 / 18,8 / 18,5 M, todo RREE.'
+- codigo: 2.4.2.1.2.2
+  nombre: FONDOS CONTRAVALOR O DE DESARROLLO BINACIONAL
+  categoria: gasto_final_externo
+  receptor: fondos binacionales
+  motivo: Ídem, de capital.
+  evidencia: '2023–2025: 3,0 / 7,9 / 7,0 M.'
+- codigo: 2.4.1.2.1.1
+  nombre: A INSTITUCIONES FINANCIERAS INTERNACIONALES
+  categoria: gasto_final_externo
+  receptor: BID, Banco Mundial, CAF y similares
+  motivo: Receptor internacional.
+  evidencia: ≈ 0 en 2023–2025.
+- codigo: 2.4.1.2.1.98
+  nombre: A OTROS ORGANISMOS INTERNACIONALES DE LA SALUD - SUMINISTROS MÉDICOS
+  categoria: gasto_final_externo
+  receptor: OPS/OMS (Fondo Rotatorio y Fondo Estratégico), UNICEF, UNFPA (DU 007-2019, art. 7)
+  motivo: 'Compra de vacunas, anticonceptivos y medicamentos a través de organismos internacionales. Los bienes llegan al Perú y nadie en la base
+    vuelve a registrar el gasto: es gasto final en salud. Debe contar en salud y en el PP 1001.'
+  evidencia: '2023–2025: 491,1 / 608,7 / 568,0 M; 100 % MINSA, ejecutora CENARES; 2025: PP 1001 238,1 (vacunas completas), PP 0024 99,1 (VPH),
+    APNOP 98,7, PP 0002 93,3. La auditoría sumó «MINSA 568 + CENARES 238», pero CENARES es la ejecutora del MINSA: los 238 son parte de los 568.'
+- codigo: 2.4.1.2.1.99
+  nombre: A OTROS ORGANISMOS INTERNACIONALES
+  categoria: gasto_final_externo
+  receptor: organismos internacionales (cuotas de RREE, UNODC para DEVIDA, Panam Sports/ODEPA, UNOPS) [juicio, por la actividad]
+  motivo: Cuotas y convenios con organismos internacionales; receptor fuera de la base.
+  evidencia: '2023–2025: 280,2 / 436,7 / 439,1 M; 2025: DEVIDA 121,1, RREE 87,2, IPD 104,4 (Juegos Panamericanos 2027 y Bolivarianos 2025; pliego
+    IPD 2025 en DyT no marcadas 104,5), MTC 32,3.'
+- codigo: 2.4.2.2.1.1
+  nombre: A INSTITUCIONES FINANCIERAS INTERNACIONALES
+  categoria: gasto_final_externo
+  receptor: instituciones financieras internacionales
+  motivo: Receptor internacional.
+  evidencia: ≈ 0.
+- codigo: 2.4.2.2.1.99
+  nombre: A OTROS ORGANISMOS INTERNACIONALES
+  categoria: gasto_final_externo
+  receptor: organismos internacionales que compran o ejecutan por encargo (UNOPS, OPS…) [juicio]
+  motivo: 'Compras o ejecución de inversiones encargadas a organismos internacionales: ambulancias del MINSA, equipos del INEI, vías de la Municipalidad
+    de Lima. Es gasto final (capital).'
+  evidencia: '2023–2025: 84,3 / 746,3 / 0,0 M; 2024: MML 478,3 (mejoramiento de vía local), MINSA 112,8 (ambulancias), INEI 82,1 (equipos).'
+- codigo: 2.4.1.3.1.1
+  nombre: A OTRAS UNIDADES DEL GOBIERNO NACIONAL
+  categoria: intergubernamental
+  receptor: pliegos del Gobierno Nacional (hospitales e institutos del MINSA vía el SIS, MINEDU, universidades…)
+  motivo: El receptor está en la base y registra el gasto en la fuente 4.
+  evidencia: '2023–2025: 1 016,3 / 1 393,2 / 1 288,2 M; 2025: SIS 308,6 en APNOP. Receptor del ANA (146,8, «gestión administrativa») a verificar.'
+- codigo: 2.4.1.3.1.2
+  nombre: A OTRAS UNIDADES DEL GOBIERNO REGIONAL
+  categoria: intergubernamental
+  receptor: GORE y sus ejecutoras (sobre todo unidades de salud vía el SIS)
+  motivo: El receptor está en la base.
+  evidencia: '2023–2025: 1 095,9 / 1 238,9 / 1 097,1 M; 2025: SIS ≈ 650 M a ejecutoras de salud de los GORE.'
+- codigo: 2.4.1.3.1.3
+  nombre: A OTRAS UNIDADES DEL GOBIERNO LOCAL
+  categoria: intergubernamental
+  receptor: municipalidades y mancomunidades municipales (MTPE, Lurawi Perú, PP 0073…)
+  motivo: El receptor está en la base, salvo las excepciones por actividad (centros poblados, IVP).
+  evidencia: '2023–2025: 812,0 / 652,2 / 625,1 M; 2025: MTPE 252,7; municipalidades 323,7 y GORE 21,5; de eso, 240,8 a centros poblados (232,9
+    municipal y 7,9 de GORE) y 78,9 a caminos vecinales (EX-01 y EX-02, aplicadas por decisión del dueño del 7/10/2026: pasan a (b)).'
+- codigo: 2.4.1.3.1.4
+  nombre: A OTRAS ENTIDADES PUBLICAS
+  categoria: publico_fuera_de_base
+  receptor: AGROBANCO y fondos agrarios, EPS de agua, beneficencias, IVP, organismos y empresas municipales [juicio, por la actividad]
+  motivo: Ninguna de esas entidades es ejecutora de la base (verificado por nombre en 2025).
+  evidencia: '2023–2025: 987,8 / 681,8 / 683,9 M; 2025: MIDAGRI 276 (gestión agropecuaria y fondo de garantía), MVCS 130,4 (agua urbana), MML
+    78,2.'
+- codigo: 2.4.1.3.1.5
+  nombre: A FONDOS PUBLICOS
+  categoria: publico_fuera_de_base
+  receptor: fondos administrados por el Tesoro o creados por ley (Fondo de Estabilización de Precios de los Combustibles)
+  motivo: Receptor fuera de la base (destino «MEF-Tesoro Público» con fondo autorizado por la DGTP).
+  evidencia: '2023: 2 292,0 M (MINEM: FEPC 2 111,9 → (b); promoción de hidrocarburos 180,1 → EX-03, fondo por identificar); 2024–2025: 0.'
+- codigo: 2.4.2.3.1.1
+  nombre: A OTRAS UNIDADES DEL GOBIERNO NACIONAL
+  categoria: intergubernamental
+  receptor: pliegos del GN que ejecutan proyectos (los GORE de Áncash, La Libertad y Piura transfieren para proyectos)
+  motivo: El receptor está en la base.
+  evidencia: '2023–2025: 844,9 / 320,3 / 641,8 M.'
+- codigo: 2.4.2.3.1.2
+  nombre: A OTRAS UNIDADES DEL GOBIERNO REGIONAL
+  categoria: intergubernamental
+  receptor: GORE
+  motivo: El receptor está en la base.
+  evidencia: '2023–2025: 30,4 / 85,7 / 73,9 M.'
+- codigo: 2.4.2.3.1.3
+  nombre: A OTRAS UNIDADES DEL GOBIERNO LOCAL
+  categoria: intergubernamental
+  receptor: municipalidades (proyectos de inversión cofinanciados por GORE y GN)
+  motivo: El receptor está en la base.
+  evidencia: '2023–2025: 1 350,7 / 1 076,4 / 774,3 M.'
+- codigo: 2.4.2.3.1.4
+  nombre: A OTRAS ENTIDADES PUBLICAS
+  categoria: publico_fuera_de_base
+  receptor: Fondo MIVIVIENDA (bonos de vivienda), EPS y OTASS, Activos Mineros, empresas eléctricas [juicio, por la actividad]
+  motivo: Receptor fuera de la base.
+  evidencia: '2023–2025: 1 861,1 / 1 653,8 / 1 816,4 M; 2025: Bono Familiar Habitacional 1 438,3, MINEM 149,6, Bono del Buen Pagador 75,0.'
+- codigo: 2.4.2.3.1.5
+  nombre: A FONDOS PUBLICOS
+  categoria: publico_fuera_de_base
+  receptor: fondos del Tesoro (MEF, «transferencia para proyectos de inversión»; MINEM, hidrocarburos)
+  motivo: Receptor fuera de la base. Las filas actuales son todas de EX-03 (fondo por identificar).
+  evidencia: '2023–2025: 1 172,1 / 47,5 / 195,0 M; todo pasa a EX-03 (MEF 391,1 / 47,5 / 95,0; MINEM hidrocarburos 781,0 / 0 / 100,0).'
+excepciones:
+- id: EX-01
+  estado: aplicada
+  decision: 'Dueño, 7/10/2026 (pendientes menores, ronda 3, decisión 10): al bloque (b), con la alarma G-18b.'
+  categoria: publico_fuera_de_base
+  receptor: municipalidades de centro poblado
+  confianza: alta
+  motivo: No son ejecutoras del SIAF ni de la base (0 ejecutoras de centro poblado en 2023–2025); la presentación DGCP 2014 las lista como tipo
+    de receptor propio.
+  evidencia: '2023–2025: 144,8 / 192,3 / 240,8 M (2025: 977 municipalidades 232,9; 3 GORE —La Libertad, Puno, San Martín— 7,9).'
+  combinaciones:
+  - clasificador: 2.4.1.3.1.2
+    nivel_gobierno: M
+    actividad_accion_obra: '5001267'
+  - clasificador: 2.4.1.3.1.3
+    nivel_gobierno: M
+    actividad_accion_obra: '5001267'
+  - clasificador: 2.4.1.3.1.3
+    nivel_gobierno: R
+    actividad_accion_obra: '5001267'
+  - clasificador: 2.4.2.3.1.3
+    nivel_gobierno: M
+    actividad_accion_obra: '5001267'
+- id: EX-02
+  estado: aplicada
+  decision: 'Dueño, 7/10/2026 (pendientes menores, ronda 3, decisión 10): al bloque (b), con la alarma G-18b. Receptor rotulado
+    «probable IVP» hasta cotejar con el registro de IVP de Provías Descentralizado.'
+  rotulo: probable IVP
+  categoria: publico_fuera_de_base
+  receptor: institutos viales provinciales (IVP) [juicio]
+  confianza: media
+  motivo: 'Las mismas municipalidades provinciales registran estas actividades en .3 y en .4 (2025: 24 de 43 que usan .3); los distritos de esas
+    provincias solo tienen 12,0 de PIM fuente 4 en caminos vecinales frente a 78,9 transferidos en .3. Pendiente: cotejar con el registro de IVP
+    de Provías Descentralizado (no se encontró en línea).'
+  evidencia: '2023–2025: 38,3 / 52,0 / 78,9 M; ev_ivp_por_provincia.csv.'
+  combinaciones:
+  - clasificador: 2.4.1.3.1.3
+    nivel_gobierno: M
+    actividad_accion_obra: '5001452'
+  - clasificador: 2.4.1.3.1.3
+    nivel_gobierno: M
+    actividad_accion_obra: '5001453'
+  - clasificador: 2.4.1.3.1.3
+    nivel_gobierno: M
+    actividad_accion_obra: '5001454'
+  - clasificador: 2.4.1.3.1.3
+    nivel_gobierno: M
+    actividad_accion_obra: '5001275'
+- id: EX-03
+  estado: aplicada
+  categoria: fondo_por_identificar
+  receptor: 'fondos del Tesoro o sectoriales sin identificar (MEF: «transferencia de recursos para la ejecución de proyectos de inversión»; MINEM:
+    «promoción y normatividad de hidrocarburos»)'
+  confianza: media
+  motivo: Si el fondo financia después a pliegos de la base por transferencia de partidas, el receptor registra el gasto como propio y el bloque
+    (b) lo contaría dos veces. Fuera del bloque (b) hasta documentar el fondo de destino (DS o resolución de cada transferencia).
+  evidencia: '2023–2025: 1 352,2 / 47,5 / 195,0 M.'
+  combinaciones:
+  - clasificador: 2.4.2.3.1.5
+    nivel_gobierno: E
+    actividad_accion_obra: '5001253'
+    pliego: 009
+  - clasificador: 2.4.1.3.1.5
+    nivel_gobierno: E
+    actividad_accion_obra: '5001106'
+    pliego: '016'
+  - clasificador: 2.4.2.3.1.5
+    nivel_gobierno: E
+    actividad_accion_obra: '5001106'
+    pliego: '016'
+alarmas_revision:
+  descripcion: Filas intergubernamentales sin excepción aplicada cuyo NOMBRE de actividad sugiere un receptor fuera de la base. Solo avisan (G-18b);
+    nunca clasifican. Con EX-01 y EX-02 aplicadas, la alarma lista lo que esas excepciones no cubren (otros códigos de actividad, otros niveles).
+  patrones_nombre:
+  - CENTRO POBLADO
+  - CENTROS POBLADOS
+  - CAMINOS VECINALES
+  - INSTITUTO VIAL
+  - BENEFICENCIA

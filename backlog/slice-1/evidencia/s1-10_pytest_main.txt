@@ -1,0 +1,4 @@
+# 2026-11-03 18:44 main b427dae — tras fusionar slice-1
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+748 passed, 1 warning in 364.39s (0:06:04)

@@ -1,0 +1,45 @@
+# 2026-11-03 14:04 commit 82cad3a — S1-00, comparación antes (respaldo) / después (reconstrucción)
+
+## fact_indicador (cubo)
+filas antes 39539, después 39539; solo antes 0; solo después 0; columnas distintas en el esquema: []
+diferencias en columnas que no son nombre: 0
+nombres de territorio cambiados en el cubo: 14
+  040302: Acari → Acarí
+  050800: Paucar del Sara Sara → Páucar del Sara Sara
+  060402: Anguia → Anguía
+  070100: Prov. Const. del Callao → Callao
+  100602: Daniel Alomia Robles → Daniel Alomía Robles
+  101006: San Francisco de Asis → San Francisco de Asís
+  110114: Yauca Del Rosario → Yauca del Rosario
+  150120: Magdalena Del Mar → Magdalena del Mar
+  150135: San Martin de Porres → San Martín de Porres
+  150143: Villa María Del Triunfo → Villa María del Triunfo
+  150516: Zuñiga → Zúñiga
+  220803: Elias Soplín Vargas → Elías Soplín Vargas
+  230110: Coronel Gregorio Albarracin Lanchipa → Coronel Gregorio Albarracín Lanchipa
+  230111: La Yarada los Palos → La Yarada Los Palos
+
+## fact_gasto_territorial: totales por año, nivel, departamento y método de ubicación
+grupos comparados: 628; grupos con diferencias: 0
+
+## dim_ubigeo_historico
+filas antes 2134, después 2134; solo antes 0; solo después 0; columnas distintas en el esquema: []
+filas distintas por columna: {'nombre': 14, 'nombre_normalizado': 1, 'nombres_alternos': 14, 'nombre_mostrado': 14, 'fuente_nombre_mostrado': 15, 'version_tabla': 2134}
+columnas que no debían cambiar y cambiaron: ninguna
+ubigeos con nombre cambiado: 15; en nombres_mostrados.yaml: 15
+cambiados fuera del YAML: ninguno
+del YAML sin cambio (ya estaban bien escritos en la fuente): ninguno
+  040302: Acari → Acarí
+  050800: Paucar del Sara Sara → Páucar del Sara Sara
+  060402: Anguia → Anguía
+  070100: Prov. Const. del Callao → Callao
+  100602: Daniel Alomia Robles → Daniel Alomía Robles
+  101006: San Francisco de Asis → San Francisco de Asís
+  110114: Yauca Del Rosario → Yauca del Rosario
+  150120: Magdalena Del Mar → Magdalena del Mar
+  150135: San Martin de Porres → San Martín de Porres
+  150143: Villa María Del Triunfo → Villa María del Triunfo
+  150516: Zuñiga → Zúñiga
+  220803: Elias Soplín Vargas → Elías Soplín Vargas
+  230110: Coronel Gregorio Albarracin Lanchipa → Coronel Gregorio Albarracín Lanchipa
+  230111: La Yarada los Palos → La Yarada Los Palos

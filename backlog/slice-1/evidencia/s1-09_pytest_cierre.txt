@@ -1,0 +1,4 @@
+# 2026-11-03 18:28 commit 5b51c3b — cierre de S1-09 y S1-07 (mismo código que 1603698, que solo agrega manifiestos)
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+748 passed, 1 warning in 363.64s (0:06:03)

@@ -1,0 +1,85 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pregunta-al-peru/esquemas/receta.schema.json",
+  "title": "Receta de obtención de una fuente (pap)",
+  "description": "Una receta por fuente del catálogo. Dice de dónde y cómo se obtiene el archivo y qué metadatos fijos lleva. Ver docs/especificaciones/datos_crudos.md.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "strategy", "publisher", "dataset_title", "access_url", "temporal", "spatial", "licenses", "license_basis"],
+  "properties": {
+    "id": {"type": "string", "pattern": "^[A-Z0-9][A-Z0-9-]*[A-Z0-9]$"},
+    "strategy": {"enum": ["http_file", "http_pattern", "http_archive", "geoservice", "manual", "dashboard", "owner_file"]},
+    "method": {"enum": ["http_directo", "http_patron", "manual_navegador", "scraping_navegador", "solicitud_acceso", "microdatos_encuesta", "redatam_export", "archivo_propio", "geoservicio"]},
+    "resource_name": {"type": "string", "pattern": "^[a-z0-9][-a-z0-9._]*$"},
+    "publisher": {"type": "string", "minLength": 1},
+    "dataset_title": {"type": "string", "minLength": 1},
+    "access_url": {"type": ["string", "null"]},
+    "download_url": {"type": ["string", "null"]},
+    "url_patron": {"type": ["string", "null"]},
+    "documentation_url": {"type": ["string", "null"]},
+    "temporal": {
+      "type": "object", "additionalProperties": false, "required": ["inicio", "fin"],
+      "properties": {"inicio": {"type": ["integer", "null"]}, "fin": {"type": ["integer", "null"]}}
+    },
+    "spatial": {
+      "type": "object", "additionalProperties": false, "required": ["ambito", "nivel_minimo"],
+      "properties": {"ambito": {"type": "string"}, "nivel_minimo": {"type": "string"}, "geografia": {"type": "string"}}
+    },
+    "source_version": {
+      "type": "object", "additionalProperties": false, "required": ["basis"],
+      "properties": {"valor": {"type": ["string", "null"]}, "basis": {"enum": ["declarada", "inferida", "ninguna"]}}
+    },
+    "data_cutoff": {
+      "type": "object", "additionalProperties": false, "required": ["basis"],
+      "properties": {"valor": {"type": ["string", "null"]}, "basis": {"enum": ["declarada", "max_fecha_en_datos", "desconocida"]}}
+    },
+    "issued": {"type": ["string", "null"]},
+    "retrieved_at": {"type": "string", "description": "Solo para archivos propios: cuándo se incorporó el archivo."},
+    "licenses": {
+      "type": "array", "minItems": 1,
+      "items": {"type": "object", "required": ["name"], "properties": {"name": {"type": "string"}, "path": {"type": "string"}, "title": {"type": "string"}}}
+    },
+    "license_basis": {"enum": ["declarada_en_pagina", "norma_general", "no_declarada"]},
+    "terms_note": {"type": "string"},
+    "sources": {
+      "type": "array",
+      "items": {"type": "object", "required": ["title"], "properties": {"title": {"type": "string"}, "path": {"type": "string"}}}
+    },
+    "known_issues": {"type": "array", "items": {"type": "string"}},
+    "attributed_to": {"type": "string"},
+    "manual": {
+      "type": "object", "additionalProperties": false, "required": ["pasos"],
+      "properties": {"pasos": {"type": "array", "minItems": 1, "items": {"type": "string"}}}
+    },
+    "espera": {
+      "type": "object", "additionalProperties": false,
+      "properties": {
+        "formato": {"type": "array", "minItems": 1, "items": {"type": "string", "pattern": "^[a-z0-9]+$"}},
+        "bytes": {"type": "array", "minItems": 2, "maxItems": 2, "items": {"type": "integer", "minimum": 0}},
+        "hoja": {"type": "string"},
+        "columnas": {"type": "array", "items": {"type": "string"}}
+      }
+    },
+    "catalogo": {
+      "type": "object",
+      "properties": {"ola": {"type": "string"}, "estrategia_descarga": {"type": "string"}, "compuerta_ingesta": {"type": "string"}, "bloquea_mvp": {"type": "boolean"}}
+    },
+    "desactivada": {
+      "type": "object",
+      "description": "Receta desactivada por decisión del dueño: pap registrar, pap descargar y pap foto-pim registrar|extraer se niegan a usarla. No se borra (reversible).",
+      "required": ["fecha", "decision", "motivo"],
+      "additionalProperties": false,
+      "properties": {"fecha": {"type": "string"}, "decision": {"type": "string"}, "motivo": {"type": "string"}, "reactivar": {"type": "string"}}
+    },
+    "pendientes": {"type": "array", "items": {"type": "string"}},
+    "notas": {"type": "string"}
+  },
+  "allOf": [
+    {"if": {"properties": {"strategy": {"const": "http_file"}}},
+     "then": {"required": ["download_url"], "properties": {"download_url": {"type": "string", "pattern": "^https?://"}}}},
+    {"if": {"properties": {"strategy": {"const": "http_pattern"}}},
+     "then": {"required": ["url_patron"], "properties": {"url_patron": {"type": "string", "pattern": "^https?://"}}}},
+    {"if": {"properties": {"strategy": {"const": "manual"}}}, "then": {"required": ["manual"]}},
+    {"if": {"properties": {"strategy": {"const": "owner_file"}}}, "then": {"required": ["attributed_to", "retrieved_at"]}}
+  ]
+}

@@ -1,0 +1,41 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-PNDA-UBIGEOS
+strategy: http_file
+publisher: INEI
+dataset_title: Ubigeos (Códigos de Ubicación Geográfica) – INEI (PNDA)
+access_url: https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei
+download_url: https://www.inei.gob.pe/media/DATOS_ABIERTOS/UBIGEOS/UBIGEOS_2022_1891_distritos.zip
+documentation_url: https://www.datosabiertos.gob.pe/sites/default/files/NORMA_DEL_CODIGO_UBIGEO.pdf
+temporal:
+  inicio: 2022
+  fin: 2022
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODbL-1.0
+  title: Open Data Commons Open Database License (ODbL)
+license_basis: declarada_en_pagina
+known_issues:
+- 'Verificar fecha de corte frente a creaciones distritales recientes. Corte 2022 con 1 891 distritos; el INEI ya
+  trabaja con 1 892 (proyecciones 2018–2026): completar con esa lista.'
+espera:
+  formato:
+  - zip
+  - xlsx
+  - csv
+  - pdf
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: 'Recursos de la ficha: ZIP completo https://www.inei.gob.pe/media/DATOS_ABIERTOS/UBIGEOS/UBIGEOS_2022_1891_distritos.zip
+  ; XLSX https://www.datosabiertos.gob.pe/sites/default/files/UBIGEO%202022_1891%20distritos.xlsx ; muestra CSV
+  https://www.datosabiertos.gob.pe/sites/default/files/Data_Muestra_ubigeos.csv ; metadatos JSON https://www.datosabiertos.gob.pe/api/3/action/package_show?id=fd98ecaf-c53c-44ed-be1c-a37b7afc6f3e.'

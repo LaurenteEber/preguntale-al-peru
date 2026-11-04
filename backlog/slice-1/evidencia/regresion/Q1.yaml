@@ -1,0 +1,34 @@
+- capa: capa2.mas_contexto[0].texto
+  antes: 'Con la forma de medir anterior, que permite comparar desde 2015 con la misma regla, la anemia fue 53,5 % en 2015
+    y 54,5 % en 2025: entre 2015 y 2025 se mantuvo sin cambio estadísticamente claro. En 2022 llegó a 65,0 %, un pico que
+    luego no se mantuvo.'
+  despues: 'Con la forma de medir anterior, que permite comparar desde 2015 con la misma regla, la anemia fue 53,5 % en 2015
+    y 54,5 % en 2025: entre 2015 y 2025 se mantuvo sin cambio estadísticamente claro.'
+  motivo: 'C-01 (dueño, 3/11/2026, fila E-06 de decisiones.md): Q1 ya no muestra el pico de 2022; la serie se cuenta con su
+    primer y último año. Se quita la oración «En 2022 llegó a 65,0 %, un pico que luego no se mantuvo.»; el resto de la tarjeta
+    no cambia.'
+  aprobado_por: dueño
+- capa: capa3.para_citar[3]
+  antes: '65,0 % (intervalo: 59,1 % a 70,6 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024),
+    Huancavelica, 2022. Fuente: INEI, ENDES 2022 Departamento de Huancavelica, cap. 9 Nutrición, p. 66 (texto: «la anemia
+    en el año 2022, afectó a 65,0% de niñas y niños de 6 a 35 meses»; 2021: 57,4%).'
+  despues: ''
+  motivo: 'C-01 (dueño, 3/11/2026, fila E-06 de decisiones.md): Q1 ya no muestra el pico de 2022; la serie se cuenta con su
+    primer y último año. Se quita la cita de la cifra de 2022, que ya no se usa.'
+  aprobado_por: dueño
+- capa: reglas
+  antes: R-TERRITORIO-09 · revision_humana · endes_anemia_6_35m/2025/departamento/09/proporcion/principal
+  despues: ''
+  motivo: 'El `nombre_pedido` manual de la consulta del piloto no se empareja con ningún territorio, así que R-TERRITORIO-09
+    pedía una revisión humana por un territorio «no identificado» que sí lo está. Con el resolver (S1-02) el lugar llega ya
+    resuelto y esa revisión falsa desaparece; es la corrección esperada (S1-07, tarea 4). Solo era una acción `revision_humana`:
+    no cambia cifras, semáforos, confianza ni bloqueos.'
+  aprobado_por: agente
+- capa: reglas
+  antes: R-TERRITORIO-09 · revision_humana · endes_anemia_6_35m_oms2024/2025/departamento/09/proporcion/principal
+  despues: ''
+  motivo: 'El `nombre_pedido` manual de la consulta del piloto no se empareja con ningún territorio, así que R-TERRITORIO-09
+    pedía una revisión humana por un territorio «no identificado» que sí lo está. Con el resolver (S1-02) el lugar llega ya
+    resuelto y esa revisión falsa desaparece; es la corrección esperada (S1-07, tarea 4). Solo era una acción `revision_humana`:
+    no cambia cifras, semáforos, confianza ni bloqueos.'
+  aprobado_por: agente

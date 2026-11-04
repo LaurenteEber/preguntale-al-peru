@@ -1,0 +1,9 @@
+origen,destino,relacion,anios,nota,url,confianza
+0001,PP 1001,ancestro_de,2022-2023,sus productos de salud pasan al PP 1001 (AF 2022 y AF 2023),https://www.minsa.gob.pe/presupuestales/doc2021/Evaluacion_anual_2021_PP.pdf ; https://mef.gob.pe/contenidos/presu_publ/capacita/2023/08052023_CRITERIOS_PROG_PROD_PROY_PP_1001_DESARROLLO_INFANTIL_TEMPRANO.pdf,alta
+0098,PP 1001,ancestro_de,2021,sus 2 productos se recodifican dentro del PP 1001,https://cdn.www.gob.pe/uploads/document/file/4324877/RESOLUCION%20ADMINISTRATIVA-000075-2021-UA.pdf.pdf,alta
+1001,PPoR DIT,categoria_de,2021-,el PP 1001 es la categoría «productos específicos» de la política,https://andina.pe/agencia/noticia-aprueban-programa-presupuestal-orientado-a-resultados-desarrollo-infantil-temprano-779968.aspx,alta
+0002,PPoR DIT,contribuye_a,2021-,"conserva su código; el MEF lo cuenta en la política, pero no le cedió productos",https://mef.gob.pe/contenidos/presu_publ/capacita/2022/34_DISPOSICIONES_PRESUPUESTAL_ORIENTADO_RESULTADOS.pdf,media
+0082,PPoR DIT,contribuye_a,2021-,ídem,https://mef.gob.pe/contenidos/presu_publ/capacita/2022/34_DISPOSICIONES_PRESUPUESTAL_ORIENTADO_RESULTADOS.pdf,media
+0083,PPoR DIT,contribuye_a,2021-,ídem,https://mef.gob.pe/contenidos/presu_publ/capacita/2022/34_DISPOSICIONES_PRESUPUESTAL_ORIENTADO_RESULTADOS.pdf,media
+0049,PPoR DIT,contribuye_a,2021-,ídem (Juntos),https://mef.gob.pe/contenidos/presu_publ/capacita/2022/34_DISPOSICIONES_PRESUPUESTAL_ORIENTADO_RESULTADOS.pdf,media
+1002,PPoR Reducción de la Violencia contra la Mujer,categoria_de,2021-,,https://www.mef.gob.pe/es/por-instrumento/resolucion-suprema/21604-resolucion-suprema-n-024-2019-ef/file,alta

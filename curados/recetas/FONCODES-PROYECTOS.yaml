@@ -1,0 +1,45 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: FONCODES-PROYECTOS
+strategy: manual
+publisher: Fondo de Cooperación para el Desarrollo Social (FONCODES) – MIDIS
+dataset_title: FONCODES – Proyectos productivos (Haku Wiñay / Noa Jayatai)
+access_url: http://www.foncodes.gob.pe/portal/index.php/proyectos/haku-winay-noa-jayatai
+temporal:
+  inicio: 2018
+  fin: 2024
+spatial:
+  ambito: nacional (rural)
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Publicación discontinua; no confirmado si incluye código de centro poblado.
+manual:
+  pasos:
+  - Abrir http://www.foncodes.gob.pe/portal/index.php/proyectos/haku-winay-noa-jayatai y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/proyectos-productivos-fondo-de-cooperaci%C3%B3n-para-el-desarrollo-social-foncodes'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/FONCODES-PROYECTOS/
+  - 'Ejecutar: pap registrar FONCODES-PROYECTOS --issued <fecha>'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Datasets: foncodes-proyectos-productivos-2022, foncodes-proyectos-productivos-agosto-2018, proyectos-productivos-fondo-de-cooperación-para-el-desarrollo-social-foncodes.
+  Plataforma Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga en /sites/default/files/...
+  o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug> (API CKAN-compatible de DKAN; confirmar).
+  Desde este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright.'

@@ -1,0 +1,73 @@
+indicador_id,anio,nivel,territorio,rotulo_inei,estimacion,ic_inf,ic_sup,cv,serie_anio_anterior,cuadro_pagina,pdf_pagina
+enaho_pobreza_monetaria,2024,nacional,PE,Nacional,27.6,26.6,28.6,1.9,29.0,"Cuadro N.º III.1, p. 219 (PDF 221)",221
+enaho_pobreza_monetaria,2024,dominio_subnacional,urbano,Urbana,24.8,23.6,26.0,2.5,26.4,"Cuadro N.º III.1, p. 219 (PDF 221)",221
+enaho_pobreza_monetaria,2024,dominio_subnacional,rural,Rural,39.3,37.6,41.0,2.1,39.8,"Cuadro N.º III.1, p. 219 (PDF 221)",221
+enaho_pobreza_monetaria,2024,AREA_METROPOLITANA_LIMA_CALLAO,AREA_METROPOLITANA_LIMA_CALLAO,Lima Metropolitana 1/ y,28.2,25.9,30.6,4.2,28.7,"Cuadro N.º III.1, p. 219 (PDF 221)",221
+enaho_pobreza_monetaria,2024,dominio_subnacional,resto_urbano,Resto urbano,22.4,21.3,23.6,2.7,24.8,"Cuadro N.º III.1, p. 219 (PDF 221)",221
+enaho_pobreza_monetaria,2024,departamento,01,Amazonas,25.7,20.9,30.6,9.6,25.8,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,02,Áncash,22.8,19.1,26.4,8.2,25.0,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,03,Apurímac,24.0,19.3,28.6,9.8,25.8,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,04,Arequipa,15.8,12.6,19.0,10.3,13.9,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,05,Ayacucho,32.8,28.3,37.3,7.0,39.4,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,06,Cajamarca,45.0,40.7,49.3,4.8,44.5,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,08,Cusco,18.5,14.7,22.4,10.5,21.7,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,09,Huancavelica,33.4,29.1,37.7,6.6,39.5,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,10,Huánuco,39.0,33.9,44.0,6.5,39.2,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,11,Ica,6.0,4.2,7.9,15.6,6.9,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,12,Junín,18.5,14.9,22.1,9.9,24.3,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,13,La Libertad,30.2,26.6,33.8,6.1,31.6,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,14,Lambayeque,14.0,10.3,17.8,13.7,17.9,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,LIMA_METROPOLITANA,LIMA_METROPOLITANA,Lima Metropolitana 1/,27.6,25.0,30.1,4.7,28.1,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,CALLAO,CALLAO,Prov. Const. del Callao,33.9,29.1,38.6,7.1,34.2,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,LIMA_REGION,LIMA_REGION,Lima 2/,21.7,18.3,25.1,8.0,26.1,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,16,Loreto,43.0,38.8,47.2,5.0,43.5,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,17,Madre de Dios,11.1,6.8,15.5,19.5,16.6,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,18,Moquegua,11.0,7.5,14.5,16.3,13.1,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,19,Pasco,39.0,34.0,44.0,6.5,41.7,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,20,Piura,31.9,28.6,35.1,5.2,33.1,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,21,Puno,39.9,35.4,44.5,5.8,41.6,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,22,San Martín,22.0,18.1,25.9,9.0,22.6,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,23,Tacna,24.0,18.3,29.6,11.9,26.7,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,24,Tumbes,26.9,22.1,31.7,9.1,29.0,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_monetaria,2024,departamento,25,Ucayali,27.1,22.7,31.4,8.1,26.9,"Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",222
+enaho_pobreza_extrema,2024,nacional,PE,Nacional,5.5,5.0,6.0,4.5,5.7,"Cuadro N.º III.4, p. 223 (PDF 225)",225
+enaho_pobreza_extrema,2024,dominio_subnacional,urbano,Urbana,3.1,2.6,3.6,8.0,3.2,"Cuadro N.º III.4, p. 223 (PDF 225)",225
+enaho_pobreza_extrema,2024,dominio_subnacional,rural,Rural,15.5,14.2,16.8,4.2,16.2,"Cuadro N.º III.4, p. 223 (PDF 225)",225
+enaho_pobreza_extrema,2024,AREA_METROPOLITANA_LIMA_CALLAO,AREA_METROPOLITANA_LIMA_CALLAO,Lima Metropolitana 1/ y,3.3,2.3,4.3,15.0,3.2,"Cuadro N.º III.4, p. 223 (PDF 225)",225
+enaho_pobreza_extrema,2024,dominio_subnacional,resto_urbano,Resto urbano,3.0,2.5,3.5,8.4,3.2,"Cuadro N.º III.4, p. 223 (PDF 225)",225
+enaho_pobreza_monetaria,2025,nacional,PE,Nacional,25.7,24.6,26.7,2.0,27.6,"Cuadro N.º III.1, p. 231",231
+enaho_pobreza_monetaria,2025,dominio_subnacional,urbano,Urbana,23.4,22.2,24.6,2.6,24.8,"Cuadro N.º III.1, p. 231",231
+enaho_pobreza_monetaria,2025,dominio_subnacional,rural,Rural,35.5,33.8,37.1,2.3,39.3,"Cuadro N.º III.1, p. 231",231
+enaho_pobreza_monetaria,2025,AREA_METROPOLITANA_LIMA_CALLAO,AREA_METROPOLITANA_LIMA_CALLAO,Lima Metropolitana 1/ y,27.3,24.9,29.7,4.4,28.2,"Cuadro N.º III.1, p. 231",231
+enaho_pobreza_monetaria,2025,dominio_subnacional,resto_urbano,Resto urbano,20.7,19.5,21.9,2.9,22.4,"Cuadro N.º III.1, p. 231",231
+enaho_pobreza_monetaria,2025,departamento,01,Amazonas,20.4,16.5,24.2,9.6,25.7,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,02,Áncash,22.9,19.6,26.3,7.4,22.8,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,03,Apurímac,20.9,16.9,24.9,9.6,24.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,04,Arequipa,12.8,9.9,15.7,11.5,15.8,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,05,Ayacucho,33.7,29.2,38.2,6.8,32.8,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,06,Cajamarca,41.0,36.5,45.6,5.6,45.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,08,Cusco,18.8,15.2,22.3,9.7,18.5,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,09,Huancavelica,34.3,29.2,39.4,7.5,33.4,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,10,Huánuco,35.7,30.3,41.1,7.7,39.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,11,Ica,4.5,2.8,6.2,19.3,6.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,12,Junín,13.5,10.6,16.3,10.8,18.5,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,13,La Libertad,25.5,22.2,28.9,6.7,30.2,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,14,Lambayeque,14.5,11.5,17.5,10.4,14.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,LIMA_METROPOLITANA,LIMA_METROPOLITANA,Lima Metropolitana 1/,26.8,24.2,29.4,4.9,27.6,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,CALLAO,CALLAO,Prov. Const. del Callao,32.1,27.8,36.5,6.9,33.9,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,LIMA_REGION,LIMA_REGION,Lima 2/,21.6,18.0,25.2,8.5,21.7,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,16,Loreto,40.1,35.7,44.5,5.6,43.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,17,Madre de Dios,7.3,3.1,11.5,28.9,11.1,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,18,Moquegua,7.8,5.3,10.4,16.5,11.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,19,Pasco,36.4,31.9,40.9,6.3,39.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,20,Piura,28.1,24.9,31.2,5.7,31.9,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,21,Puno,37.5,32.1,42.8,7.3,39.9,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,22,San Martín,21.3,17.0,25.7,10.4,22.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,23,Tacna,17.4,12.9,22.0,13.4,24.0,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,24,Tumbes,28.3,23.4,33.1,8.7,26.9,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_monetaria,2025,departamento,25,Ucayali,21.8,18.2,25.4,8.4,27.1,"Cuadro N.º III.1 (cont.), p. 232",232
+enaho_pobreza_extrema,2025,nacional,PE,Nacional,4.7,4.2,5.1,5.2,5.5,"Cuadro N.º III.4, p. 235",235
+enaho_pobreza_extrema,2025,dominio_subnacional,urbano,Urbana,3.1,2.6,3.6,8.4,3.1,"Cuadro N.º III.4, p. 235",235
+enaho_pobreza_extrema,2025,dominio_subnacional,rural,Rural,11.4,10.2,12.6,5.3,15.5,"Cuadro N.º III.4, p. 235",235
+enaho_pobreza_extrema,2025,AREA_METROPOLITANA_LIMA_CALLAO,AREA_METROPOLITANA_LIMA_CALLAO,Lima Metropolitana 1/ y,3.6,2.6,4.6,14.0,3.3,"Cuadro N.º III.4, p. 235",235
+enaho_pobreza_extrema,2025,dominio_subnacional,resto_urbano,Resto urbano,2.8,2.2,3.3,9.9,3.0,"Cuadro N.º III.4, p. 235",235

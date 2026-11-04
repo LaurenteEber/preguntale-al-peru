@@ -1,0 +1,67 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-cpv2017-2026-10-06",
+  "title": "Censos Nacionales 2017: XII de Población, VII de Vivienda y III de Comunidades Indígenas",
+  "created": "2026-10-06T11:30:59-05:00",
+  "keywords": [
+    "INEI-CPV2017"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "inei-cpv2017",
+      "title": "Censos Nacionales 2017: XII de Población, VII de Vivienda y III de Comunidades Indígenas",
+      "original_filename": "cpv2017_edad_simple_sexo_distrito.csv",
+      "path": "almacen/sha256/06/a0/06a0bf932f3950f79766afe6e0366f83db1e75203ecc40c547a8f46a396ef502",
+      "hash": "sha256:06a0bf932f3950f79766afe6e0366f83db1e75203ecc40c547a8f46a396ef502",
+      "bytes": 5088743,
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "source_id": "INEI-CPV2017",
+      "publisher": "INEI",
+      "dataset_title": "Censos Nacionales 2017: XII de Población, VII de Vivienda y III de Comunidades Indígenas",
+      "access_url": "https://censos2017.inei.gob.pe/redatam/",
+      "source_version": "Base REDATAM CPV2017DI (población censada)",
+      "source_version_basis": "declarada",
+      "temporal": "2017",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-10-06T11:30:59-05:00",
+      "method": "redatam_export",
+      "recipe": "INEI-CPV2017@0b909c8",
+      "attributed_to": "Claude en Chrome de Eber (programa Redatam+SP, 18 consultas)",
+      "tool": "pap 0.1.0",
+      "manual_evidence": [
+        {
+          "original_filename": "redatam_cpv2017_edad_sexo.txt",
+          "hash": "sha256:b83f2bc5e9a3c79a6a24647cb0d2f24725fd10c7291bc7bc8f2bcc3ee38872a0",
+          "path": "almacen/sha256/b8/3f/b83f2bc5e9a3c79a6a24647cb0d2f24725fd10c7291bc7bc8f2bcc3ee38872a0"
+        }
+      ],
+      "licenses": [
+        {
+          "name": "uso-libre-con-cita",
+          "title": "uso libre con cita"
+        }
+      ],
+      "license_basis": "norma_general",
+      "terms_note": "Información pública (TUO Ley 27806); citar a la entidad",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito"
+      },
+      "known_issues": [
+        "Omisión censal estimada omisión censal oficial ≈5,9 % (29,38 M censados frente a 31,24 M estimados); censo de derecho/hecho en un día. Base de microdatos completa no se descarga libremente en formato plano (REDATAM).",
+        "Población censada (sin omisión). Incluye un bloque nacional con ubigeo 000000 como control."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

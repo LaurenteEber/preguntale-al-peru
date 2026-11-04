@@ -1,0 +1,46 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: PENSION65-USUARIOS
+strategy: manual
+publisher: MIDIS
+dataset_title: Pensión 65 – Información de usuarios
+access_url: https://www.datosabiertos.gob.pe/dataset/informaci%C3%B3n-de-usuarios-del-programa-pensi%C3%B3n-65
+temporal:
+  inicio: 2023
+  fin: 2025
+spatial:
+  ambito: PE
+  nivel_minimo: distrito
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Publicación discontinua; nombres de dataset inconsistentes.
+manual:
+  pasos:
+  - Abrir https://www.datosabiertos.gob.pe/dataset/informaci%C3%B3n-de-usuarios-del-programa-pensi%C3%B3n-65 y descargar
+    el archivo.
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/PENSION65-USUARIOS/
+  - 'Ejecutar: pap registrar PENSION65-USUARIOS --issued <fecha>'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Varios datasets: ''información-de-usuarios-del-programa-pensión-65'', ''pensión-65-información-de-usuarios-<periodo>'',
+  ''información-de-ex-usuarios-del-programa-pensión-65'', ''pensión-65-saberes-productivos-2017''. Plataforma Nacional
+  de Datos Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga en /sites/default/files/... o
+  enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug> (API CKAN-compatible de DKAN; confirmar).
+  Desde este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright.'

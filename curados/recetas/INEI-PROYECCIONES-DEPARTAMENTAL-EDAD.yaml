@@ -1,0 +1,42 @@
+# Receta de obtención — generada desde el catálogo y editada a mano (S2: dos boletines en gob.pe).
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-PROYECCIONES-DEPARTAMENTAL-EDAD
+strategy: manual
+publisher: INEI
+dataset_title: 'Perú: Estimaciones y Proyecciones de Población Departamental 1995-2030 (Boletín Especial N.º 25, edad
+  simple; Boletín de Análisis Demográfico N.º 39, sexo y edades quinquenales)'
+access_url: https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital
+documentation_url: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1722/libro.pdf
+temporal:
+  inicio: 1995
+  fin: 2030
+spatial:
+  ambito: PE
+  nivel_minimo: departamento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: Uso libre citando la fuente
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- 'Solo hasta departamento: el INEI declara que a nivel provincial y distrital proyecta únicamente población total
+  (ambos sexos) sin desagregación por edad. Base Censo 2017, desfasada frente al Censo 2025 (omisión 4,25 %).'
+manual:
+  pasos:
+  - 'Boletín 25 (edad simple, 7,9 MB): https://cdn.www.gob.pe/uploads/document/file/8199582/6855196-peru-estimaciones-y-proyecciones-de-poblacion-departamental-por-anos-calendario-y-edad-simple-1995-2030.pdf'
+  - 'Boletín 39 (sexo y edades quinquenales, 2,7 MB): https://cdn.www.gob.pe/uploads/document/file/8199636/6855233-peru-estimaciones-y-proyecciones-de-la-poblacion-por-departamento-1995-2030.pdf'
+  - Guardar ambos en biblioteca/cruda/bandeja/INEI-PROYECCIONES-DEPARTAMENTAL-EDAD/
+  - 'Ejecutar: pap registrar INEI-PROYECCIONES-DEPARTAMENTAL-EDAD'
+espera:
+  formato: [pdf]
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: true
+notas: PDF estático; extraer cuadros por departamento con pdfplumber/camelot. No se halló versión XLSX.

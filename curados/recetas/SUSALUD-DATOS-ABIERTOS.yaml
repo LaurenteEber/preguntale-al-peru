@@ -1,0 +1,47 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: SUSALUD-DATOS-ABIERTOS
+strategy: manual
+publisher: SUSALUD
+dataset_title: Datos abiertos SUSALUD (producción asistencial, recursos, camas, atenciones del sector privado)
+access_url: https://www.datosabiertos.gob.pe/group/superintendencia-nacional-de-salud-susalud
+temporal:
+  inicio: 2025
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Calidad depende del reporte de IPRESS (TEDEF/ consolidados); vacíos de reporte. Solo IPRESS privadas que facturan
+  ≥20 UIT.
+manual:
+  pasos:
+  - Abrir https://www.datosabiertos.gob.pe/group/superintendencia-nacional-de-salud-susalud y descargar el archivo.
+  - 'Enlace de datos conocido: https://www.datosabiertos.gob.pe/dataset/registro-de-datos-de-atenciones-de-la-cobertura-prestacional-de-salud-del-sector-privado'
+  - Anotar la fecha de publicación que muestra la página.
+  - Guardar el archivo en biblioteca/cruda/bandeja/SUSALUD-DATOS-ABIERTOS/
+  - 'Ejecutar: pap registrar SUSALUD-DATOS-ABIERTOS --issued <fecha>'
+espera:
+  formato:
+  - csv
+catalogo:
+  ola: 1_nucleo
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- 'La URL de datos del catálogo es una página, no un archivo: confirmar la URL directa.'
+notas: 'Grupo SUSALUD en PNDA (usuario 73994012_susalud). Antiguo portal datos.susalud.gob.pe (CKAN) mencionado
+  en fichas; disponibilidad actual no confirmada. Plataforma Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset
+  tiene recursos con URL de descarga en /sites/default/files/... o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug>
+  (API CKAN-compatible de DKAN; confirmar). Desde este entorno el portal devolvió 403/robots en fetch: probar con
+  navegador/Playwright.'

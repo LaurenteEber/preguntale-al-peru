@@ -1,0 +1,39 @@
+# Receta de obtención — generada desde catalogo/catalogo_fuentes.json con `pap recetas generar`.
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: INEI-IDE-LIMITES
+strategy: geoservice
+publisher: INEI
+dataset_title: IDE INEI – Límites censales, centros poblados y manzanas (descargas y WMS/WFS)
+access_url: https://ide.inei.gob.pe/
+documentation_url: https://metadatogis.inei.gob.pe/geonetwork/
+temporal:
+  inicio: 2017
+  fin: 2023
+spatial:
+  ambito: PE
+  nivel_minimo: manzana_conglomerado
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: uso-libre-con-cita
+  title: uso libre con cita
+license_basis: norma_general
+terms_note: Información pública (TUO Ley 27806); citar a la entidad
+known_issues:
+- 'Límites censales INEI ≠ límites oficiales saneados (RENLIM/PCM): muchos distritos sin límite legal; cambios de
+  ubigeo por creación de distritos.'
+espera:
+  formato:
+  - gpkg
+  - rar
+  - shp
+catalogo:
+  ola: 0_base
+  estrategia_descarga: geoservicio
+  compuerta_ingesta: enlace_confirmado
+  bloquea_mvp: false
+notas: Usar WFS GetFeature (outputFormat=application/json) para límites distritales; descargas GPKG/RAR enlazadas
+  desde la página principal. Obtener GetCapabilities para nombres de capa.

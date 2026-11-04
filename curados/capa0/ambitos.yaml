@@ -1,0 +1,39 @@
+# Ámbitos territoriales que no son un ubigeo único (reglas/especificaciones_capa0.md, dim_ambito).
+# composicion: prefijos de ubigeo INEI (2 = departamento, 4 = provincia, 6 = distrito); "-" excluye.
+# nombre_mostrado: rótulo corto que se muestra con toda cifra (L3, L4; 9/10/2026). nombre_largo: rótulo completo.
+# contiene: ámbitos de esta lista incluidos en este (para la contención territorial de R-CRUCES-01).
+# El departamento 15 entero no es un ámbito de esta lista (es el ubigeo 15): se rotula
+# «departamento de Lima (Lima Metropolitana + Lima Región)» porque la Ley 31140 usa «departamento de Lima» en dos sentidos.
+- ambito_id: LIMA_METROPOLITANA
+  nombre_mostrado: Lima Metropolitana
+  nombre_largo: Lima Metropolitana (provincia de Lima, 43 distritos, sin el Callao)
+  composicion: ["1501"]
+  contiene: []
+  gestion: Municipalidad Metropolitana de Lima
+  fuente_definicion: Ley N.º 31140 (modifica la Ley 27783); 43 distritos de la provincia de Lima, sin el Callao
+  codigo_en_fuentes: {INEI-ENDES 2015-2017: "id_estrato 15-1 (Sede del dpto 15; Ficha ENDES, Cuadro N.º 1)", INEI-ENDES 2018+: "provincia_hogar 1501", INEI-ENAHO: "ubigeo 1501* (= dpto 15 ∧ estrato 1); nunca DOMINIO 8", INEI-POBREZA-INFORME-TECNICO: "Lima Metropolitana 1/"}
+- ambito_id: LIMA_REGION
+  nombre_mostrado: Lima Región (Lima Provincias)
+  nombre_largo: Lima Región (Lima Provincias; departamento 15 sin la provincia de Lima, 9 provincias)
+  composicion: ["15", "-1501"]
+  contiene: []
+  gestion: Gobierno Regional de Lima (sede Huacho)
+  fuente_definicion: Departamento 15 sin la provincia 1501; 9 provincias (Barranca, Cajatambo, Canta, Cañete, Huaral, Huarochirí, Huaura, Oyón, Yauyos). Ley 31140, Disposición Complementaria Final a)
+  codigo_en_fuentes: {PROPIO-ESTADISTICAS-SOCIALES-2020: "159999", INEI-ENDES 2015-2017: "id_estrato 15-2 y 15-3 (Resto urbano y Rural del dpto 15; Ficha ENDES, Cuadro N.º 1)", INEI-ENDES 2018+: "provincia_hogar 15xx sin 1501", INEI-ENDES-PPR: "Departamento de Lima 2/", INEI-ENAHO: "ubigeo 15* sin 1501*", INEI-POBREZA-INFORME-TECNICO: "Lima 2/"}
+- ambito_id: AREA_METROPOLITANA_LIMA_CALLAO
+  nombre_mostrado: Lima Metropolitana y Callao
+  nombre_largo: Lima Metropolitana y Callao (provincia de Lima + Provincia Constitucional del Callao)
+  alias: ["Área Metropolitana de Lima y Callao (ficha ENAHO)", "Lima Metropolitana 1/ y Prov. Const. del Callao (informe técnico de pobreza)", "Lima Metropolitana (región natural de la ENDES hasta 2019)"]
+  composicion: ["1501", "07"]
+  contiene: [LIMA_METROPOLITANA, CALLAO]
+  gestion: null
+  fuente_definicion: Ficha técnica ENAHO 2015-2025, niveles de inferencia (dominio de diseño 8); se rotula siempre «Lima Metropolitana y Callao» (L3)
+  codigo_en_fuentes: {INEI-ENAHO: "DOMINIO 8 (verificado 2024-2025: = 1501 + 07)", INEI-ENDES 2015-2017: "id_estrato 15-1 y 07-*"}
+- ambito_id: CALLAO
+  nombre_mostrado: Callao
+  nombre_largo: Provincia Constitucional del Callao
+  composicion: ["07"]
+  contiene: []
+  gestion: Gobierno Regional del Callao
+  fuente_definicion: Provincia Constitucional del Callao (departamento y provincia 07)
+  codigo_en_fuentes: {INEI-ENDES: "departamento 07 (dominio de la ficha)", INEI-ENAHO: "ubigeo 07* (= dpto 07 ∧ estrato 1); no es dominio de la ficha"}

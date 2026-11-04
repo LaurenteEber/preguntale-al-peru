@@ -1,0 +1,80 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "propio-estadisticas-sociales-2020-2026-10-05",
+  "title": "Estadísticas sociales nacionales por distrito (compilación propia)",
+  "created": "2026-10-06T08:57:32-05:00",
+  "keywords": [
+    "PROPIO-ESTADISTICAS-SOCIALES-2020"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "estadisticas-sociales-nacional-2020",
+      "title": "Estadísticas sociales nacionales por distrito (compilación propia)",
+      "original_filename": "000000 Nacional_Estadísticas sociales_(24Ago20).xlsx",
+      "path": "almacen/sha256/3b/01/3b014946628b28e0da35f67c2968568a7f13d801267633f4a410f1a1a87438c6",
+      "hash": "sha256:3b014946628b28e0da35f67c2968568a7f13d801267633f4a410f1a1a87438c6",
+      "bytes": 89640151,
+      "format": "xlsx",
+      "mediatype": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      "source_id": "PROPIO-ESTADISTICAS-SOCIALES-2020",
+      "publisher": "Eber",
+      "dataset_title": "Estadísticas sociales nacionales por distrito (compilación propia)",
+      "access_url": null,
+      "source_version": "24 de agosto de 2020",
+      "source_version_basis": "declarada",
+      "temporal": "2017–2020",
+      "data_cutoff_basis": "desconocida",
+      "issued": "2020-08-24",
+      "retrieved_at": "2026-10-05",
+      "method": "archivo_propio",
+      "recipe": "PROPIO-ESTADISTICAS-SOCIALES-2020@19ece19",
+      "attributed_to": "Eber",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "no-declarada"
+        }
+      ],
+      "license_basis": "no_declarada",
+      "sources": [
+        {
+          "title": "INEI, Directorio Nacional de Municipalidades… 2020 (Lib1725)",
+          "path": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1725/"
+        },
+        {
+          "title": "INEI, Estimaciones y proyecciones de población 2018-2020, Boletín 26 (Lib1715)",
+          "path": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1715/Libro.pdf"
+        },
+        {
+          "title": "INEI, Sistema de Consulta de Códigos Estandarizados",
+          "path": "http://webinei.inei.gob.pe:8080/sisconcode/publico.htm"
+        },
+        {
+          "title": "PCM, RV N.° 005-2019-PCM/DVGT, anexo 2 (tipología de distritos)",
+          "path": "http://www.pcm.gob.pe/wp-content/uploads/2019/12/RV-N-005-2019-PCM-DVGT.pdf"
+        }
+      ],
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "distrito",
+        "geografia": "GEO2017 (1 874 distritos)"
+      },
+      "known_issues": [
+        "Compilación propia de 2020; las fuentes primarias se declaran por columna en las notas al pie.",
+        "La fila 159999 «Región Lima» es el ámbito Lima Región (9 provincias del departamento de Lima sin la provincia de Lima), no un distrito.",
+        "Nombres con tildes corregidas por el autor respecto a la forma oficial del INEI.",
+        "Coordenadas de la capital del distrito, no del centro del territorio.",
+        "Densidad calculada con la proyección 2019; no usar."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+# GA-09 (ronda 3, 7/10/2026): ubicación curada de establecimientos RENIPRESS cuyo UBIGEO es un código escindido.
+# 160109 «Putumayo» (Maynas) se dividió por la Ley 30186 (2014) en Putumayo 160801, Rosa Panduro 160802 y Yaguas 160804
+# (https://andina.pe/agencia/noticia-promulgan-ley-crea-provincia-putumayo-departamento-loreto-504823.aspx): ya no se
+# redirige automáticamente a 160801 (territorio.CODIGOS_ESCINDIDOS). Hasta la ronda 3, RENIPRESS redirigía 2
+# establecimientos 160109 → 160801 y ninguno parece estar en el distrito de Putumayo (auditoría aud_ga09, H1).
+# Criterio: un establecimiento se cura solo con evidencia del propio crudo RENIPRESS (dirección, coordenadas, red y
+# microrred) y de dim_establecimiento_salud / dim_ubigeo_historico (vecinos y capitales). Lo no curado queda en la
+# provincia 160800 (ubigeo_valido = False, en revision/renipress_ubigeo_invalido.csv).
+# Revisión: 03_auditoria/ola0/pendientes_menores/implementacion/renipress_160109.csv
+- cod_ipress: "00031444"
+  ubigeo_fuente: "160109"
+  ubigeo_inei: "160108"
+  confianza: media
+  evidencia: >-
+    CENTRO MEDICO CACHUY (privado). RENIPRESS dice DISTRITO = PUTUMAYO, pero la dirección es «28 DE JULIO» y las
+    coordenadas (-3,7276; -73,2525) están en la ciudad de Iquitos, a 1,2 km de la capital de Punchana (160108;
+    -3,7286; -73,2419 en dim_ubigeo_historico), a 2,5 km de la de Iquitos (160101) y a 157 km de El Estrecho (160801). Los 10 establecimientos más
+    cercanos (todos a menos de 155 m, entre ellos el Hospital Regional de Loreto 00000003) son de 160108, y
+    00020822 «SEÑOR DE CACHUY» está en «AV. 28 DE JULIO N°1013», PUNCHANA, 160108. No hay red ni microrred.
+  revisado_dueno: false
+# 00037475 PUESTO DE SALUD I-1 YABUYANOS (GORE Loreto, red MAYNAS PERIFERIE, microrred PUTUMAYO, «COMUNIDAD DE
+# YABUYANOS»): coordenadas (-0,9528; -74,2764), a 78 km de la capital de Teniente Manuel Clavero (160803), 134 km de
+# la de Rosa Panduro (160802) y 244 km de la de Putumayo (160801); los 10 establecimientos más cercanos están a 67–83 km
+# y son de 160110 (Torres Causana, Maynas) y 160803 (4 cada uno), 160801 y 160802. Sin polígonos distritales, el distrito no se puede determinar con los datos disponibles: queda en la provincia
+# 160800 (codigo_escindido_contenedor) hasta que el dueño o SUSALUD lo precisen.
+# INFERENCIA (auditoría final de la ronda 3, hallazgo 3): asignarlo a la provincia 1608 supone que el código 160109
+# de RENIPRESS es correcto en el nivel provincial; 4 de sus 10 vecinos más cercanos están en 160110 (Torres Causana,
+# provincia de Maynas), así que también podría estar fuera de Putumayo. Pendiente: cotejar con el código de centro
+# poblado del INEI (comunidad de Yabuyanos) o con SUSALUD. Queda con ubigeo_valido = False y en revisión.

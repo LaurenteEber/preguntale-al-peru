@@ -1,0 +1,98 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pregunta-al-peru/esquemas/consulta_minima.schema.json",
+  "title": "Consulta mínima del motor por intenciones (S1-01)",
+  "description": "Lo que pregunta el usuario, sin el plan de cálculo: ni cifras, ni plantillas, ni años de comparación más allá de «periodo». En el slice 2 el LLM produce exactamente este objeto (P-01). Cada subesquema con «x-error» indica el código del mensaje para el usuario (curados/motor/textos/errores_consulta.yaml).",
+  "type": "object",
+  "additionalProperties": false,
+  "x-error": "campo_desconocido",
+  "required": ["intencion", "territorio"],
+  "properties": {
+    "intencion": {
+      "x-error": "intencion_invalida",
+      "enum": ["nivel_actual", "evolucion", "comparacion", "cruce", "identificar_extremo", "efecto"]
+    },
+    "tema": {
+      "x-error": "tema_invalido",
+      "description": "Valores de dim_indicador.tema (parametros_motor.yaml → temas.vocabulario).",
+      "enum": ["anemia", "desnutricion_cronica", "pobreza_monetaria", "gasto_publico"]
+    },
+    "indicador": {
+      "x-error": "indicador_invalido",
+      "description": "Un dim_indicador.id; la existencia se comprueba contra dim_indicador.yaml.",
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "territorio": {"x-error": "territorio_invalido"},
+    "periodo": {
+      "x-error": "periodo_invalido",
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false, "required": ["tipo"],
+          "properties": {"tipo": {"const": "ultimo"}}
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["tipo", "anio"],
+          "properties": {"tipo": {"const": "anio"}, "anio": {"$ref": "#/$defs/anio"}}
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["tipo"],
+          "properties": {"tipo": {"const": "serie"}, "desde": {"$ref": "#/$defs/anio"}, "hasta": {"$ref": "#/$defs/anio"}}
+        }
+      ]
+    },
+    "comparar_con": {"x-error": "comparar_con_invalido", "$ref": "#/$defs/lugar"},
+    "pregunta_original": {"x-error": "pregunta_invalida", "type": "string", "maxLength": 1000},
+    "idioma": {"x-error": "idioma_invalido", "enum": ["es"], "default": "es"}
+  },
+  "allOf": [
+    {
+      "x-error": "tema_o_indicador",
+      "oneOf": [
+        {"required": ["tema"], "not": {"required": ["indicador"]}},
+        {"required": ["indicador"], "not": {"required": ["tema"]}}
+      ]
+    },
+    {
+      "if": {"properties": {"intencion": {"const": "identificar_extremo"}}, "required": ["intencion"]},
+      "then": {"properties": {"territorio": {"x-error": "territorio_extremo_invalido", "$ref": "#/$defs/extremo"}}},
+      "else": {"properties": {"territorio": {"x-error": "territorio_invalido", "$ref": "#/$defs/lugar"}}}
+    },
+    {
+      "if": {"not": {"properties": {"intencion": {"const": "comparacion"}}, "required": ["intencion"]}},
+      "then": {"x-error": "comparar_con_sin_comparacion", "not": {"required": ["comparar_con"]}}
+    }
+  ],
+  "$defs": {
+    "anio": {"type": "integer", "minimum": 1990, "maximum": 2100},
+    "lugar": {
+      "description": "Lo que escribió la persona, un ubigeo, un ámbito de Lima o todo el país (T-03).",
+      "oneOf": [
+        {
+          "type": "object", "additionalProperties": false, "required": ["texto"],
+          "properties": {"texto": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "\\S"}}
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["ubigeo"],
+          "properties": {"ubigeo": {"type": "string", "pattern": "^([0-9]{2}|[0-9]{4}|[0-9]{6})$"}}
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["ambito"],
+          "properties": {"ambito": {"enum": ["LIMA_METROPOLITANA", "LIMA_REGION", "CALLAO", "AREA_METROPOLITANA_LIMA_CALLAO"]}}
+        },
+        {
+          "type": "object", "additionalProperties": false, "required": ["nacional"],
+          "properties": {"nacional": {"const": true}}
+        }
+      ]
+    },
+    "extremo": {
+      "description": "identificar_extremo: el nivel de las unidades que se ordenan y, opcionalmente, dentro de qué territorio.",
+      "type": "object", "additionalProperties": false, "required": ["nivel"],
+      "properties": {
+        "nivel": {"enum": ["departamento", "provincia", "distrito"]},
+        "dentro_de": {"$ref": "#/$defs/lugar"}
+      }
+    }
+  }
+}

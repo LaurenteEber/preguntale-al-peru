@@ -1,0 +1,38 @@
+# Receta de obtención — generada desde el catálogo y editada a mano (S3: columnas esperadas).
+# Se puede editar a mano; `pap recetas generar` no la sobrescribe salvo con --sobrescribir.
+# Esquema: src/pap/esquemas/receta.schema.json
+id: SUSALUD-RENIPRESS
+strategy: http_pattern
+publisher: SUSALUD
+dataset_title: Registro Nacional de Instituciones Prestadoras de Servicios de Salud
+access_url: https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-entidades-prestadoras-de-servicios-de-salud-renipress
+url_patron: https://www.datosabiertos.gob.pe/sites/default/files/RENIPRESS_{dd}-{mm}-{anio}.csv
+temporal:
+  inicio: null
+  fin: 2026
+spatial:
+  ambito: PE
+  nivel_minimo: establecimiento
+source_version:
+  basis: ninguna
+data_cutoff:
+  basis: desconocida
+licenses:
+- name: ODC-By-1.0
+  title: ODC-BY (Open Data Commons Attribution)
+license_basis: declarada_en_pagina
+known_issues:
+- Padrón de IPRESS públicas y privadas; validar la cobertura de códigos cruzando con SIS, CNV y SIEN.
+espera:
+  formato:
+  - csv
+  columnas: [COD_IPRESS, NOMBRE, UBIGEO, CATEGORIA, ESTADO, NORTE, ESTE]
+catalogo:
+  ola: 0_base
+  estrategia_descarga: descarga_directa_url
+  compuerta_ingesta: aprobada
+  bloquea_mvp: false
+pendientes:
+- Definir cómo se eligen los valores del patrón (ver notas).
+notas: 'Un CSV por mes (RENIPRESS_DD-MM-AAAA.csv) más diccionario PDF; la fecha del nombre no es predecible: leer
+  la lista de recursos de la ficha.'

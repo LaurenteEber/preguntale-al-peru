@@ -1,0 +1,60 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "susalud-renipress-2026-10-06",
+  "title": "Registro Nacional de Instituciones Prestadoras de Servicios de Salud",
+  "created": "2026-10-06T12:12:24-05:00",
+  "keywords": [
+    "SUSALUD-RENIPRESS"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "susalud-renipress",
+      "title": "Registro Nacional de Instituciones Prestadoras de Servicios de Salud",
+      "original_filename": "RENIPRESS_30-09-2026.csv",
+      "path": "almacen/sha256/89/04/89040c55e9c53398465975171fb348109fd11b787d238970161a243115070823",
+      "hash": "sha256:89040c55e9c53398465975171fb348109fd11b787d238970161a243115070823",
+      "bytes": 19852149,
+      "format": "csv",
+      "mediatype": "text/csv",
+      "encoding": "utf-8",
+      "source_id": "SUSALUD-RENIPRESS",
+      "publisher": "SUSALUD",
+      "dataset_title": "Registro Nacional de Instituciones Prestadoras de Servicios de Salud",
+      "access_url": "https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-entidades-prestadoras-de-servicios-de-salud-renipress",
+      "download_url": "https://www.datosabiertos.gob.pe/sites/default/files/RENIPRESS_30-09-2026.csv",
+      "source_version": "RENIPRESS 30-09-2026",
+      "source_version_basis": "declarada",
+      "temporal": "2026",
+      "data_cutoff": "2026-09-30",
+      "data_cutoff_basis": "declarada",
+      "retrieved_at": "2026-10-06T12:12:23-05:00",
+      "method": "http_patron",
+      "recipe": "SUSALUD-RENIPRESS@378d816",
+      "attributed_to": "Eber (Claude en Chrome)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "ODC-By-1.0",
+          "title": "ODC-BY (Open Data Commons Attribution)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "establecimiento"
+      },
+      "known_issues": [
+        "Padrón de IPRESS públicas y privadas; validar la cobertura de códigos cruzando con SIS, CNV y SIEN."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}
