@@ -24,7 +24,7 @@ Es la primera forma de usar el intérprete de punta a punta, y la base de la rev
 3. **`respuesta.json`:**
    - campo `entendimos`, **fuera de las capas**: no cuenta para `capa1_palabras_max`; el `.md` lo imprime primero;
    - bloque `interpretacion`: `resultado`, consulta producida, anclas, modelo, `version_prompt`, reintentos y si vino de la caché;
-   - lo que se guarda de la pregunta, según X-14.
+   - lo que se guarda de la pregunta, según P-03.
 4. **Contrato:** agregar a `docs/especificaciones/contrato_respuesta.md`:
    - el campo `entendimos`;
    - el tipo `mensaje`;
