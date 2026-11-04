@@ -30,3 +30,6 @@ biblioteca/_respaldo*/
 
 # Intermedio del catálogo (lo regenera catalogo/scripts/run.py)
 catalogo/scripts/catalogo_fuentes_v2.json
+
+# Para apagar conf de MCP que se usa solo en cloud
+.claude/settings.local.json
