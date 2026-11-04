@@ -1,0 +1,10 @@
+# Descripción sencilla de cada intención para las instrucciones del intérprete (S2-03). Las intenciones salen de
+# curados/motor/intenciones.yaml; aquí solo se explica cada una. Si se agrega una intención allí, se describe aquí.
+version: 1.0.0
+intenciones:
+  nivel_actual: "cuánto hay de un problema en un lugar (hoy o en un año dado): «¿cuánta anemia hay en Puno?»"
+  evolucion: "cómo cambió un problema en un lugar a lo largo de los años: «¿bajó la pobreza en Cusco?»"
+  comparacion: "cómo se compara un lugar con otro: «¿hay más anemia en Puno que en Cusco?»"
+  cruce: "dos datos del mismo lugar vistos juntos, el gasto y la anemia: «¿cuánto se gastó y cuánta anemia hay en Junín?»"
+  identificar_extremo: "dónde es más alto o más bajo, entre departamentos, provincias o distritos: «¿qué distrito es el más pobre?»"
+  efecto: "si un gasto o un programa sirvió: «¿sirvió lo que se gastó contra la anemia en Ayacucho?»"
