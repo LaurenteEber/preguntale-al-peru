@@ -30,8 +30,9 @@ ejemplos:
   - pregunta: "¿Cuánta pobreza hubo el año pasado en Junín?"
     interpretacion: {resultado: consulta, consulta: {intencion: nivel_actual, tema: pobreza_monetaria, territorio: {texto: Junín}},
                      anclas: {intencion: Cuánta, tema: pobreza, territorio: Junín}}
-  - pregunta: "¿cuánta anemia hay?"
-    interpretacion: {resultado: consulta, consulta: {intencion: nivel_actual, tema: anemia}, anclas: {intencion: cuánta, tema: anemia}}
+  - pregunta: "¿y cuánta desnutrición hay?"
+    interpretacion: {resultado: consulta, consulta: {intencion: nivel_actual, tema: desnutricion_cronica},
+                     anclas: {intencion: cuánta, tema: desnutrición}}
   - pregunta: "¿Cómo va la anemia en Tacna?"
     interpretacion: {resultado: aclaracion, motivo: intencion_ambigua, opciones: [
       {consulta: {intencion: nivel_actual, tema: anemia, territorio: {texto: Tacna}}, anclas: {intencion: Cómo va, tema: anemia, territorio: Tacna}},
