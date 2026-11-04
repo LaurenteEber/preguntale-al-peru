@@ -333,7 +333,7 @@
    "id": "R-REG-06",
    "ambito": "registros",
    "titulo": "Suavizado bayesiano empírico para mapas distritales",
-   "enunciado": "Para mapas o comparaciones entre distritos de tasas de registros puede publicarse una tasa suavizada por bayes empírico (Marshall global o local hacia la provincia), siempre rotulada como estimación de Pregunta al Perú y junto a la cifra cruda con su IC.",
+   "enunciado": "Para mapas o comparaciones entre distritos de tasas de registros puede publicarse una tasa suavizada por bayes empírico (Marshall global o local hacia la provincia), siempre rotulada como estimación de Pregúntale al Perú y junto a la cifra cruda con su IC.",
    "aplica_a": {
     "naturaleza_dato": [
      "registro_administrativo",
@@ -356,7 +356,7 @@
    "parametros": {
     "metodo": "Marshall (1991) momentos: θ_i = m + C_i (r_i − m), C_i = s² / (s² + m/n_i); referencia = provincia (local) o departamento (global)",
     "min_unidades_referencia": 5,
-    "rotulo": "tasa ajustada (estimación Pregunta al Perú)"
+    "rotulo": "tasa ajustada (estimación Pregúntale al Perú)"
    },
    "mensaje_usuario": "En distritos con pocos habitantes, ajustamos la tasa acercándola al promedio de su provincia para evitar valores extremos por azar. Es un cálculo nuestro, no una cifra oficial.",
    "justificacion": "Los estimadores bayesianos empíricos reducen la varianza de tasas de áreas pequeñas acercándolas a una media global o local (Marshall 1991, aplicado a mortalidad infantil); es la práctica estándar de mapeo de enfermedades.",
@@ -850,7 +850,7 @@
    "id": "R-EST-03",
    "ambito": "estimaciones",
    "titulo": "Estimaciones propias (calibración de registros con encuestas)",
-   "enunciado": "Cualquier cifra que Pregunta al Perú derive combinando un registro con una encuesta (p. ej., escalar la anemia SIEN distrital con el cociente ENDES/SIEN departamental) es una estimación modelada propia: no se publica sin modelo documentado, validación fuera de muestra y medida de incertidumbre, y siempre con el rótulo 'estimación de Pregunta al Perú, no cifra oficial'.",
+   "enunciado": "Cualquier cifra que Pregúntale al Perú derive combinando un registro con una encuesta (p. ej., escalar la anemia SIEN distrital con el cociente ENDES/SIEN departamental) es una estimación modelada propia: no se publica sin modelo documentado, validación fuera de muestra y medida de incertidumbre, y siempre con el rótulo 'estimación de Pregúntale al Perú, no cifra oficial'.",
    "aplica_a": {
     "naturaleza_dato": [
      "estimacion_modelada"
@@ -869,9 +869,9 @@
    "accion": "revision_humana",
    "parametros": {
     "validacion_minima": "hold-out por departamento: error absoluto medio vs ENDES ≤ 5 pp en departamentos no usados para ajustar",
-    "rotulo": "estimación de Pregunta al Perú (no oficial)"
+    "rotulo": "estimación de Pregúntale al Perú (no oficial)"
    },
-   "mensaje_usuario": "Esta cifra es un cálculo propio de Pregunta al Perú combinando {fuentes}; no es una cifra oficial y tiene un margen de error de ±{margen} puntos.",
+   "mensaje_usuario": "Esta cifra es un cálculo propio de Pregúntale al Perú combinando {fuentes}; no es una cifra oficial y tiene un margen de error de ±{margen} puntos.",
    "justificacion": "Un ajuste ingenuo produce una estimación de áreas pequeñas sin validar; las estimaciones oficiales SAE del INEI (Mapas de Pobreza y DCI) documentan modelo, simulaciones e IC.",
    "referencias": [
     {
@@ -1129,7 +1129,7 @@
    "campo": "origen",
    "tipo": "enum {oficial, propio}",
    "donde": "indicador",
-   "para_que": "Distinguir estimaciones propias de Pregunta al Perú (R-EST-03)."
+   "para_que": "Distinguir estimaciones propias de Pregúntale al Perú (R-EST-03)."
   }
  ],
  "dependencias": [

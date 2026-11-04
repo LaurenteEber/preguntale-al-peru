@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://pregunta-al-peru/esquemas/receta.schema.json",
+  "$id": "https://preguntale-al-peru/esquemas/receta.schema.json",
   "title": "Receta de obtención de una fuente (pap)",
   "description": "Una receta por fuente del catálogo. Dice de dónde y cómo se obtiene el archivo y qué metadatos fijos lleva. Ver docs/especificaciones/datos_crudos.md.",
   "type": "object",

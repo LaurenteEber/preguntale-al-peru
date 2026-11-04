@@ -1,10 +1,10 @@
-# Pregunta al Perú — Manual de uso
+# Pregúntale al Perú — Manual de uso
 
 **Estado: al 3/11/2026, slice 1 cerrado** (etiqueta `slice-1-cerrado`). Hoy se usa desde la Terminal; lo que viene está marcado ⏳.
 
 ## 1. Qué es y para quién es
 
-Pregunta al Perú responde preguntas sobre problemas del país con **cifras de fuentes públicas oficiales**, por territorio y con los **límites de cada cifra**. Un error en una cifra o una respuesta mal leída es peor que no responder: por eso, cuando los datos no alcanzan, la respuesta dice primero lo que no se puede.
+Pregúntale al Perú responde preguntas sobre problemas del país con **cifras de fuentes públicas oficiales**, por territorio y con los **límites de cada cifra**. Un error en una cifra o una respuesta mal leída es peor que no responder: por eso, cuando los datos no alcanzan, la respuesta dice primero lo que no se puede.
 
 | Quién | Qué puede hacer hoy | Dónde seguir |
 |---|---|---|

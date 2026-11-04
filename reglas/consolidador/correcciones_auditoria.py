@@ -361,7 +361,7 @@ PARCHES_V2 = [
  ('R-ENC-02', 'replace', 'mensaje_usuario', 'para dar una cifra confiable', 'para dar una cifra con suficiente precisión', 'COM-11'),
  ('R-CRUCES-01', 'replace', 'mensaje_usuario', 'solo es confiable hasta ese nivel', 'solo da cifras con suficiente precisión hasta ese nivel', 'COM-11'),
  ('R-REG-03', 'set', 'mensaje_usuario', 'Hay pocos casos en este territorio, así que la cifra puede variar mucho de un año a otro por azar. Por eso {sumamos 3 años | mostramos la provincia}. La cifra real está probablemente entre {ic_inf} y {ic_sup}.', 'COM-14'),
- ('R-EST-03', 'set', 'mensaje_usuario', 'Esta cifra es un cálculo propio de Pregunta al Perú combinando {fuentes}; no es una cifra oficial. El valor real está probablemente entre {inf} % y {sup} %.', 'COM-14'),
+ ('R-EST-03', 'set', 'mensaje_usuario', 'Esta cifra es un cálculo propio de Pregúntale al Perú combinando {fuentes}; no es una cifra oficial. El valor real está probablemente entre {inf} % y {sup} %.', 'COM-14'),
  ('R-GASTO-03', 'replace', 'mensaje_usuario', '{pct}%', '{pct} %', 'COM-14'),
  ('R-ENC-03', 'set', 'mensaje_usuario', "(15–30 %) 'Cifra aproximada: la encuesta tiene pocos datos para este grupo; el valor real podría estar entre {ic_inf} y {ic_sup}.' (>30 %) 'La encuesta no tiene precisión suficiente para dar esta cifra en este territorio o grupo.'", 'COM-13'),
  ('R-ENC-11', 'replace', 'condicion', "p >= 0.05 → rotular 'sin diferencia significativa'", "p >= 0.05 → test_cambio.significativo = false (rótulo 'sin cambio estadísticamente claro')", 'COM-13'),

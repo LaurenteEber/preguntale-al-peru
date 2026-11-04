@@ -21,7 +21,7 @@ Chrome muestra «Error de privacidad» y la extensión de Claude no puede acepta
 ## 2. Registrar (en la carpeta del proyecto)
 
 ```bash
-cd ~/Documents/SideProjects/pregunta-al-peru
+cd ~/Documents/SideProjects/preguntale-al-peru
 B=biblioteca/cruda/bandeja
 U=https://fs.datosabiertos.mef.gob.pe/datastorefiles
 NOTA="Descargado con el certificado HTTPS del MEF vencido; integridad verificada por conciliación con Consulta Amigable"

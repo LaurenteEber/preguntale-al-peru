@@ -549,16 +549,16 @@
     },
     "criterio_tablas_solo_curadas": "D-AUD-1 (decisión del dueño del 10/10/2026, aprobada con cargo a revisión después del piloto): una tabla curada sin crudo propio en el catálogo pasa si está registrada en su manifiesto de la capa 0, ese manifiesto no tiene pruebas bloqueantes fallidas y las filas que usa la cifra están revisadas o confirmadas (dim_dominio: confirmado = true; dim_tema_gasto: tema aprobado por el dueño). Si no, estado_cifra = sin_datos."
    },
-   "mensaje_usuario": "Este dato todavía no está disponible en Pregunta al Perú: una de las fuentes necesarias para calcularlo está en proceso de incorporación.",
+   "mensaje_usuario": "Este dato todavía no está disponible en Pregúntale al Perú: una de las fuentes necesarias para calcularlo está en proceso de incorporación.",
    "justificacion": "Una tasa sin denominador validado no es publicable. Extiende a todos los insumos la decisión de no usar una fuente que no esté aprobada en el catálogo.",
    "referencias": [
     {
-     "titulo": "Pregunta al Perú – Análisis para decidir, 8/10/2026 (catálogo, gasto y auditoría)",
+     "titulo": "Pregúntale al Perú – Análisis para decidir, 8/10/2026 (catálogo, gasto y auditoría)",
      "url": null,
      "ruta": "00_proyecto/analisis_2026-10-08/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Catálogo de fuentes: validación y propuesta de actualización (8/10/2026)",
+     "titulo": "Pregúntale al Perú – Catálogo de fuentes: validación y propuesta de actualización (8/10/2026)",
      "url": null,
      "ruta": "00_proyecto/analisis_2026-10-08/catalogo/informe.md"
     }
@@ -1478,7 +1478,7 @@
    "justificacion": "Varios niveles de inferencia del catálogo son supuestos ('asumido', 'probable', 'inferida del nombre'). La ficha ENSUSALUD 2016 declara inferencia nacional y 'regional' solo para algunos cuestionarios. Publicar un supuesto como representatividad departamental es el error más difícil de detectar por el usuario. La lista cerrada original (ENEDU, ENDO, EPEN, ENSUSALUD…) dejaba fuera a ENDES y ENAHO, las encuestas más usadas: el riesgo existe en toda encuesta muestral (decisión del dueño, 8/10/2026). Lima Metropolitana, Lima Región y el Callao no son dominios de la ficha ENAHO, pero son uniones de estratos completos que el INEI publica, con CV de 4,7–8,5 % y gl ≥ 167 en pobreza 2024–2025: se publican con aviso (decisión del dueño, 9/10/2026, L1).",
    "referencias": [
     {
-     "titulo": "Pregunta al Perú – Análisis para decidir, 8/10/2026 (catálogo, gasto y auditoría)",
+     "titulo": "Pregúntale al Perú – Análisis para decidir, 8/10/2026 (catálogo, gasto y auditoría)",
      "url": null,
      "ruta": "00_proyecto/analisis_2026-10-08/README.md"
     }
@@ -3318,7 +3318,7 @@
    ],
    "ejemplo": "Pobreza monetaria ENAHO 2024: si la cifra nacional del motor difiere en más de 0,1 pp de la del Informe Técnico oficial del INEI, el indicador queda en revisión (factor equivocado, módulo mal unido o base desactualizada).",
    "implementacion": "Campos resultado.version_base {url, fecha_descarga, sha256, factor_usado, version_inei}; tabla validaciones(indicador, anio, nivel, cifra_oficial, url_oficial, estimacion_motor, diferencia). Job que compara mensualmente fechas/tamaños de las bases en el portal del INEI.",
-   "casos_borde": "Indicadores sin cifra oficial publicada (construcciones propias): revisión humana del código por un segundo analista y rótulo 'cálculo propio de Pregunta al Perú con datos de {fuente}'. Si el INEI publica corrección de una base ya usada, se marcan como desactualizadas las respuestas en caché.",
+   "casos_borde": "Indicadores sin cifra oficial publicada (construcciones propias): revisión humana del código por un segundo analista y rótulo 'cálculo propio de Pregúntale al Perú con datos de {fuente}'. Si el INEI publica corrección de una base ya usada, se marcan como desactualizadas las respuestas en caché.",
    "prioridad": "mvp",
    "hallazgos_auditoria_v11": [
     "IMP-12"
@@ -3718,7 +3718,7 @@
    "id": "R-REG-06",
    "ambito": "registros",
    "titulo": "Suavizado bayesiano empírico para mapas distritales",
-   "enunciado": "Para mapas o comparaciones entre distritos de tasas de registros puede publicarse una tasa suavizada por bayes empírico (Marshall global o local hacia la provincia), siempre rotulada como estimación de Pregunta al Perú y junto a la cifra cruda con su IC.",
+   "enunciado": "Para mapas o comparaciones entre distritos de tasas de registros puede publicarse una tasa suavizada por bayes empírico (Marshall global o local hacia la provincia), siempre rotulada como estimación de Pregúntale al Perú y junto a la cifra cruda con su IC.",
    "aplica_a": {
     "naturaleza_dato": [
      "registro_administrativo",
@@ -3741,7 +3741,7 @@
    "parametros": {
     "metodo": "Marshall (1991) momentos: θ_i = m + C_i (r_i − m), C_i = s² / (s² + m/n_i); referencia = provincia (local) o departamento (global)",
     "min_unidades_referencia": 5,
-    "rotulo": "tasa ajustada (estimación Pregunta al Perú)",
+    "rotulo": "tasa ajustada (estimación Pregúntale al Perú)",
     "s2": "s² = max(0, Σ n_i (r_i − m)² / Σ n_i − m / n̄), n̄ = Σ n_i / N; si s² = 0, θ_i = m"
    },
    "mensaje_usuario": "En un distrito pequeño, uno o dos casos cambian mucho la tasa. Para evitar valores extremos por azar, la acercamos al promedio de {nivel_referencia}: cuantos menos habitantes, más se acerca. Es un cálculo nuestro, no una cifra oficial; al lado va la cifra sin ajustar.",
@@ -4071,7 +4071,7 @@
    "id": "R-EST-03",
    "ambito": "estimaciones",
    "titulo": "Estimaciones propias (calibración de registros con encuestas)",
-   "enunciado": "Cualquier cifra que Pregunta al Perú derive combinando un registro con una encuesta (p. ej., escalar la anemia SIEN distrital con el cociente ENDES/SIEN departamental) es una estimación modelada propia: no se publica sin modelo documentado, validación fuera de muestra y medida de incertidumbre, y siempre con el rótulo 'estimación de Pregunta al Perú, no cifra oficial'.",
+   "enunciado": "Cualquier cifra que Pregúntale al Perú derive combinando un registro con una encuesta (p. ej., escalar la anemia SIEN distrital con el cociente ENDES/SIEN departamental) es una estimación modelada propia: no se publica sin modelo documentado, validación fuera de muestra y medida de incertidumbre, y siempre con el rótulo 'estimación de Pregúntale al Perú, no cifra oficial'.",
    "aplica_a": {
     "naturaleza_dato": [
      "estimacion_modelada"
@@ -4090,9 +4090,9 @@
    "accion": "revision_humana",
    "parametros": {
     "validacion_minima": "hold-out por departamento: error absoluto medio vs ENDES ≤ 5 pp en departamentos no usados para ajustar",
-    "rotulo": "estimación de Pregunta al Perú (no oficial)"
+    "rotulo": "estimación de Pregúntale al Perú (no oficial)"
    },
-   "mensaje_usuario": "Esta cifra es un cálculo propio de Pregunta al Perú combinando {fuentes}; no es una cifra oficial. El valor real está probablemente entre {inf} % y {sup} %.",
+   "mensaje_usuario": "Esta cifra es un cálculo propio de Pregúntale al Perú combinando {fuentes}; no es una cifra oficial. El valor real está probablemente entre {inf} % y {sup} %.",
    "justificacion": "Un ajuste ingenuo produce una estimación de áreas pequeñas sin validar; las estimaciones oficiales SAE del INEI (Mapas de Pobreza y DCI) documentan modelo, simulaciones e IC.",
    "referencias": [
     {
@@ -4270,22 +4270,22 @@
      "url": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv"
     },
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
+     "titulo": "Pregúntale al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/transferencias_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
+     "titulo": "Pregúntale al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/reglas_propuestas_v2.csv"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_glosario/auditoria.md"
     }
@@ -4425,17 +4425,17 @@
      "url": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto"
     },
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
+     "titulo": "Pregúntale al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/transferencias_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_glosario/auditoria.md"
     }
@@ -4502,22 +4502,22 @@
    "justificacion": "El PIM cambia durante el año: en los GORE, las líneas sin PIA son el 19–22 % del PIM y se ejecutan al 80–91 %, frente al 95–98 % de las que tenían PIA. Sin el cambio neto, un avance bajo se lee como mala gestión. Medir qué parte de lo no ejecutado se explica por lo añadido da entre 11 % y 80 % según el método: no hay una cifra única honesta, por eso solo se da como rango.",
    "referencias": [
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
+     "titulo": "Pregúntale al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/transferencias_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
+     "titulo": "Pregúntale al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/reglas_propuestas_v2.csv"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_glosario/auditoria.md"
     }
@@ -4570,22 +4570,22 @@
    "justificacion": "El PIA y el PIM son una sola cifra anual y solo el devengado es mensual: la base no dice cuándo llegó el dinero. El primer mes con devengado de una línea nueva es solo una pista; por eso se avisa sin fechar ni culpar. Caso real: el DS 243-2024-EF (28/11/2024) llevó 43,8 millones del FED a 25 GORE en diciembre.",
    "referencias": [
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
+     "titulo": "Pregúntale al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/transferencias_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
+     "titulo": "Pregúntale al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/reglas_propuestas_v2.csv"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_glosario/auditoria.md"
     }
@@ -4646,22 +4646,22 @@
    "justificacion": "El PIM es crédito presupuestario: una autorización de gasto, no caja. Lo no ejecutado en obras y recursos determinados suele volver a asignarse al año siguiente (los equipos del Hospital Regional de Cajamarca, 39 millones, no se gastaron en 2023 y se gastaron completos en 2024); decir que «se perdió» es falso.",
    "referencias": [
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
+     "titulo": "Pregúntale al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/transferencias_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
+     "titulo": "Pregúntale al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/reglas_propuestas_v2.csv"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_glosario/auditoria.md"
     }
@@ -4708,22 +4708,22 @@
    "justificacion": "Lo no ejecutado de un año puede volver a asignarse al siguiente (por ejemplo, como saldo de balance), así que sumar el PIM de varios años cuenta dos veces el mismo crédito. Entre niveles, las transferencias intergubernamentales aparecen en el PIM de quien da y de quien recibe.",
    "referencias": [
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
+     "titulo": "Pregúntale al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/transferencias_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
+     "titulo": "Pregúntale al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/reglas_propuestas_v2.csv"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_glosario/auditoria.md"
     }
@@ -5514,32 +5514,32 @@
      "url": "https://www.mef.gob.pe/contenidos/presu_publ/ppr/estr_program/PP_0150_PRODUCTO_2026.pdf"
     },
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Capa de trazabilidad de programas presupuestales y sociales (W2 v2)",
+     "titulo": "Pregúntale al Perú – Capa de trazabilidad de programas presupuestales y sociales (W2 v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w2_trazabilidad/informe_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Glosario del gasto público v2 (§2: programa frente a función)",
+     "titulo": "Pregúntale al Perú – Glosario del gasto público v2 (§2: programa frente a función)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/glosario_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente de la trazabilidad (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente de la trazabilidad (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_trazabilidad/auditoria.md"
     },
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 1 (piloto)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 1 (piloto)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/decisiones_gasto_piloto.md"
     },
     {
-     "titulo": "Pregunta al Perú – Propuesta dim_tema_gasto v1.2",
+     "titulo": "Pregúntale al Perú – Propuesta dim_tema_gasto v1.2",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/tema_gasto/propuesta_dim_tema_gasto_v1_2.csv"
     }
@@ -5689,27 +5689,27 @@
    "justificacion": "El programa y la función son dos cadenas que se cruzan: en 2025 la función salud suma 30 524 millones y el 63 % no está en ningún programa presupuestal; el PP 1001 suma 3 867 y se reparte en salud (2 708), protección social (1 044) y educación (115). Con un mismo nombre en dos cadenas (agua_saneamiento) se sumaba dos veces el mismo sol: 4 920 + 5 834 (2025, sin transferencias). «Núcleo» y «amplio» sugerían que uno está dentro del otro, y no es así.",
    "referencias": [
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Glosario del gasto público v2 (§2: programa frente a función)",
+     "titulo": "Pregúntale al Perú – Glosario del gasto público v2 (§2: programa frente a función)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/glosario_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
+     "titulo": "Pregúntale al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/reglas_propuestas_v2.csv"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_glosario/auditoria.md"
     },
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 1 (piloto)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 1 (piloto)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/decisiones_gasto_piloto.md"
     }
@@ -5782,17 +5782,17 @@
      "url": "https://www.mef.gob.pe/es/presupuesto-por-resultados/estructura-de-programas"
     },
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Capa de trazabilidad de programas presupuestales y sociales (W2 v2)",
+     "titulo": "Pregúntale al Perú – Capa de trazabilidad de programas presupuestales y sociales (W2 v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w2_trazabilidad/informe_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente de la trazabilidad (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente de la trazabilidad (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_trazabilidad/auditoria.md"
     }
@@ -7120,22 +7120,22 @@
      "url": "https://www.mef.gob.pe/contenidos/presu_publ/anexos/Anexo_08_Ficha_tecnica_indicadores_evaluacion_institucional_financiera_RD030_2019EF5001.pdf"
     },
     {
-     "titulo": "Pregunta al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
+     "titulo": "Pregúntale al Perú – Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/README.md"
     },
     {
-     "titulo": "Pregunta al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
+     "titulo": "Pregúntale al Perú – Transferencias, dinero que llega tarde y ejecución (v2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/transferencias_v2.md"
     },
     {
-     "titulo": "Pregunta al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
+     "titulo": "Pregúntale al Perú – Reglas propuestas v2 (W4, glosario y transferencias)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/w4_glosario_transferencias/reglas_propuestas_v2.csv"
     },
     {
-     "titulo": "Pregunta al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
+     "titulo": "Pregúntale al Perú – Auditoría independiente del glosario y las transferencias (ronda 2)",
      "url": null,
      "ruta": "03_auditoria/ola0/decisiones_gasto/ronda2/aud_glosario/auditoria.md"
     }
@@ -7191,7 +7191,7 @@
      "UGEL/IIEE por ejecutora educativa"
     ]
    },
-   "mensaje_usuario": "Estimación propia de Pregunta al Perú: reparte el gasto regional según {criterio}. No es un dato oficial del MEF.",
+   "mensaje_usuario": "Estimación propia de Pregúntale al Perú: reparte el gasto regional según {criterio}. No es un dato oficial del MEF.",
    "justificacion": "Hay demanda de cifras distritales de gasto en salud y educación, pero el SIAF no las registra; algunas ejecutoras (redes de salud, UGEL) tienen ámbito subdepartamental identificable y permitirían una aproximación provincial si se documenta.",
    "referencias": [
     {
@@ -9013,7 +9013,7 @@
   "frases_estandar": {
    "sin_datos": "Con los datos públicos que usamos no se puede responder {parte} para {territorio} porque {motivo}.",
    "alternativa": "Lo más cercano que sí podemos mostrar es: {alternativa}.",
-   "fuera_alcance": "Esta pregunta pide {tipo} y Pregunta al Perú solo responde con cifras públicas agregadas por territorio. Puedes preguntar sobre: {temas}.",
+   "fuera_alcance": "Esta pregunta pide {tipo} y Pregúntale al Perú solo responde con cifras públicas agregadas por territorio. Puedes preguntar sobre: {temas}.",
    "efecto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro.",
    "asociacion": "Esto compara territorios, no personas: no dice que una cosa cause la otra.",
    "dato_antiguo": "Dato de {año}, anterior a la pandemia: la situación actual probablemente es distinta."

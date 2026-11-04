@@ -1,4 +1,4 @@
-# Esquema de registro v2 — Catálogo de fuentes "Pregunta al Perú"
+# Esquema de registro v2 — Catálogo de fuentes "Pregúntale al Perú"
 
 Cambios frente a v1 (respuesta a la auditoría del 5/10/2026): campos de años tipados, licencia normalizada,
 estado de verificación separado en portal y datos, URL literal separada de la plantilla, base geográfica y tipo de medida,

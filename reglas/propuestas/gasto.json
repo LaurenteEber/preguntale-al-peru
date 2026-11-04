@@ -836,7 +836,7 @@
      "UGEL/IIEE por ejecutora educativa"
     ]
    },
-   "mensaje_usuario": "Estimación propia de Pregunta al Perú: reparte el gasto regional según {criterio}. No es un dato oficial del MEF.",
+   "mensaje_usuario": "Estimación propia de Pregúntale al Perú: reparte el gasto regional según {criterio}. No es un dato oficial del MEF.",
    "justificacion": "Hay demanda de cifras distritales de gasto en salud y educación, pero el SIAF no las registra; algunas ejecutoras (redes de salud, UGEL) tienen ámbito subdepartamental identificable y permitirían una aproximación provincial si se documenta.",
    "referencias": [
     {

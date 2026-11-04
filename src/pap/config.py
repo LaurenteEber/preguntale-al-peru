@@ -64,7 +64,7 @@ def encontrar_raiz(inicio: Path | None = None) -> Path:
             return d
     raise PapError(
         "No encuentro la raíz del proyecto (carpeta con pyproject.toml y biblioteca/). "
-        "Ejecuta pap dentro de la carpeta pregunta-al-peru o define PAP_RAIZ."
+        "Ejecuta pap dentro de la carpeta preguntale-al-peru o define PAP_RAIZ."
     )
 
 

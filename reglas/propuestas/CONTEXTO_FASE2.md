@@ -4,7 +4,7 @@ Lee esto completo antes de proponer nada. Todas las reglas deben servir a este o
 
 ## 1. Qué estamos construyendo
 
-**Pregunta al Perú**: una web donde cualquier persona (ciudadano, periodista, funcionario municipal o regional) hace una pregunta en lenguaje natural sobre un problema del país —"¿cuánta anemia hay en mi provincia y cuánto se gasta en combatirla?"— y recibe una respuesta **calculada** cruzando fuentes públicas oficiales, por territorio (ubigeo), acompañada de una **ficha de límites** que dice qué tan confiable es cada cifra y qué no se puede concluir.
+**Pregúntale al Perú**: una web donde cualquier persona (ciudadano, periodista, funcionario municipal o regional) hace una pregunta en lenguaje natural sobre un problema del país —"¿cuánta anemia hay en mi provincia y cuánto se gasta en combatirla?"— y recibe una respuesta **calculada** cruzando fuentes públicas oficiales, por territorio (ubigeo), acompañada de una **ficha de límites** que dice qué tan confiable es cada cifra y qué no se puede concluir.
 
 Flujo de una respuesta:
 1. Un LLM interpreta la pregunta y elige indicadores de un catálogo curado (NO calcula cifras).

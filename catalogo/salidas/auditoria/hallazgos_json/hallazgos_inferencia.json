@@ -392,7 +392,7 @@
   "campo": "limitaciones / notas",
   "hallazgo": "La nota de SIEN propone 'contrastar con ENDES (departamento) para calibrar sesgo', pero no define el método. Un ajuste ingenuo (escalar SIEN distrital con el cociente ENDES/SIEN departamental) produce una estimación modelada sin validar.",
   "evidencia": "catalogo: INS-CENAN-SIEN.notas.",
-  "recomendacion": "Si se calibra, tratarlo como estimación de áreas pequeñas propia: documentar el modelo, validarlo con un hold-out departamental, publicar la incertidumbre y rotularlo 'estimación modelada Pregunta al Perú', nunca como dato oficial.",
+  "recomendacion": "Si se calibra, tratarlo como estimación de áreas pequeñas propia: documentar el modelo, validarlo con un hold-out departamental, publicar la incertidumbre y rotularlo 'estimación modelada Pregúntale al Perú', nunca como dato oficial.",
   "esfuerzo": "medio",
   "confianza": "media"
  },

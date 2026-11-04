@@ -489,7 +489,7 @@ REFERENCIAS_R4 = [
 # R-GASTO-18 a 21 (NUEVAS_GASTO_R2, ETAPAS_GASTO_R2). Cambios: R-GASTO-05 (compatible con la v4 de la ronda 3), 07, 08, 09
 # y 15 (CAMPOS_REGLAS y PARCHES_REGLAS_R3); patrones nuevos del corrector (PROHIBIDAS_GASTO_R2).
 _R2 = '03_auditoria/ola0/decisiones_gasto/'
-def _ref(titulo, ruta): return {'titulo': 'Pregunta al Perú – ' + titulo, 'url': None, 'ruta': _R2 + ruta}
+def _ref(titulo, ruta): return {'titulo': 'Pregúntale al Perú – ' + titulo, 'url': None, 'ruta': _R2 + ruta}
 REF_R2 = _ref('Decisiones del gasto, ronda 2 (aprobadas por el dueño el 7/10/2026)', 'ronda2/README.md')
 REF_W4_REGLAS = _ref('Reglas propuestas v2 (W4, glosario y transferencias)', 'ronda2/w4_glosario_transferencias/reglas_propuestas_v2.csv')
 REF_TRANSF = _ref('Transferencias, dinero que llega tarde y ejecución (v2)', 'ronda2/w4_glosario_transferencias/transferencias_v2.md')
@@ -1187,7 +1187,7 @@ def _ultimo(rid, ruta):  # último valor que CAMPOS_REGLAS fija para (regla, rut
 def _cambia(texto, viejo, nuevo):  # reemplazo que debe ocurrir exactamente una vez
     assert texto.count(viejo) == 1, viejo[:50]
     return texto.replace(viejo, nuevo)
-REF_ANALISIS_D8 = {'titulo': 'Pregunta al Perú – Análisis para decidir, 8/10/2026 (catálogo, gasto y auditoría)', 'url': None,
+REF_ANALISIS_D8 = {'titulo': 'Pregúntale al Perú – Análisis para decidir, 8/10/2026 (catálogo, gasto y auditoría)', 'url': None,
                    'ruta': '00_proyecto/analisis_2026-10-08/README.md'}
 
 # -- 1. R-ENC-08: toda encuesta muestral (aplica_a.fuentes vacía). tipo_medida y base_geografica también quedan vacías: con
@@ -1286,7 +1286,7 @@ CAMPOS_REGLAS += [
   'bloque catalogo de las recetas ni otra copia de la lista. Las listas de bloqueantes de la ingesta (BLOQUEAN_MVP) deben '
   'leerse de insumos_bloqueantes_mvp.'),
  ('R-DEP-01', 'referencias', [REF_ANALISIS_D8,
-  {'titulo': 'Pregunta al Perú – Catálogo de fuentes: validación y propuesta de actualización (8/10/2026)', 'url': None,
+  {'titulo': 'Pregúntale al Perú – Catálogo de fuentes: validación y propuesta de actualización (8/10/2026)', 'url': None,
    'ruta': '00_proyecto/analisis_2026-10-08/catalogo/informe.md'}]),
 ]
 PARCHES_REGLAS_R3 += [
@@ -1594,7 +1594,7 @@ HALLAZGOS_D8['R-ENC-08'] = HALLAZGOS_D8['R-ENC-08'] + ['auditoría E1, H2, H3 y 
 # especificaciones (dim_ambito, tablas de respaldo y anexo S4) y 18 tipos de prueba de consistencia (PRUEBAS_LIMA_L).
 import copy as _copy
 _L = 'decisión del dueño, 9/10/2026'
-REF_LIMA_L = {'titulo': 'Pregunta al Perú – Lima en tres ámbitos: Lima Metropolitana, Lima Región y Callao (9/10/2026)', 'url': None,
+REF_LIMA_L = {'titulo': 'Pregúntale al Perú – Lima en tres ámbitos: Lima Metropolitana, Lima Región y Callao (9/10/2026)', 'url': None,
               'ruta': '03_auditoria/lima_tres_ambitos/README.md'}
 ROTULOS_LIMA = {
  'LIMA_METROPOLITANA': 'Lima Metropolitana (provincia de Lima)',

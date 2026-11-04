@@ -262,7 +262,7 @@ Plantilla: Cálculo del {fecha} con catálogo v{v_cat} y reglas v{v_reglas}. Ind
 {
  "sin_datos": "Con los datos públicos que usamos no se puede responder {parte} para {territorio} porque {motivo}.",
  "alternativa": "Lo más cercano que sí podemos mostrar es: {alternativa}.",
- "fuera_alcance": "Esta pregunta pide {tipo} y Pregunta al Perú solo responde con cifras públicas agregadas por territorio. Puedes preguntar sobre: {temas}.",
+ "fuera_alcance": "Esta pregunta pide {tipo} y Pregúntale al Perú solo responde con cifras públicas agregadas por territorio. Puedes preguntar sobre: {temas}.",
  "efecto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro.",
  "asociacion": "Esto compara territorios, no personas: no dice que una cosa cause la otra.",
  "dato_antiguo": "Dato de {año}, anterior a la pandemia: la situación actual probablemente es distinta."

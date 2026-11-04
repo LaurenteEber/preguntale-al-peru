@@ -1,4 +1,4 @@
-"""pap: obtener, registrar, verificar y citar archivos crudos de Pregunta al Perú."""
+"""pap: obtener, registrar, verificar y citar archivos crudos de Pregúntale al Perú."""
 
 import pandas as _pd
 

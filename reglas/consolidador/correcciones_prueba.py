@@ -15,7 +15,7 @@ NUEVAS = [
   "ANY(insumo.compuerta_ingesta != 'aprobada' FOR insumo IN indicador.insumos) → estado_cifra = 'sin_datos', motivo = 'insumo_en_ingesta'",
   'suprimir', {'insumos_bloqueantes_mvp': ['INEI-PROYECCIONES-POBLACION-DISTRITAL', 'INEI-CPV2017', 'INEI-DIRECTORIO-MUNICIPALIDADES',
    'MINSA-POBLACION-ESTIMADA', 'INEI-CPV2025', 'MEF-PPR-PROGRAMAS-PRESUPUESTALES']},
-  'Este dato todavía no está disponible en Pregunta al Perú: una de las fuentes necesarias para calcularlo está en proceso de incorporación.',
+  'Este dato todavía no está disponible en Pregúntale al Perú: una de las fuentes necesarias para calcularlo está en proceso de incorporación.',
   'Una tasa sin denominador validado no es publicable. Extiende a todos los insumos la decisión ya tomada de no ingerir sin prueba de humo.',
   'indicador.insumos: lista de IDs del catálogo y de tablas curadas. El validador consulta compuerta_ingesta de cada uno antes de la etapa 1.',
   'Si solo falta un insumo de contraste (no el principal), la cifra se calcula y se omite el contraste con nota en la ficha larga.',

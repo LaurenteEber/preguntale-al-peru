@@ -1,4 +1,4 @@
-# Pregunta al Perú — Guía de operación
+# Pregúntale al Perú — Guía de operación
 
 Versión al 13/10/2026. Cubre lo que hoy funciona: la biblioteca de datos, el cubo y el motor del piloto, todo desde la Terminal. La web y las preguntas en lenguaje libre son de la fase 5. Arquitectura: `arquitectura_y_funcionamiento.md`.
 
@@ -7,7 +7,7 @@ Versión al 13/10/2026. Cubre lo que hoy funciona: la biblioteca de datos, el cu
 **Requisitos:** macOS o Linux, git y [uv](https://docs.astral.sh/uv/). uv instala Python 3.12 por su cuenta.
 
 ```bash
-cd ~/Documents/SideProjects/pregunta-al-peru
+cd ~/Documents/SideProjects/preguntale-al-peru
 git checkout main
 uv sync                 # crea .venv con las versiones exactas de uv.lock
 uv run pap --help       # lista de comandos

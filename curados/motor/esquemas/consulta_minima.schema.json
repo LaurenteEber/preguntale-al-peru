@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://pregunta-al-peru/esquemas/consulta_minima.schema.json",
+  "$id": "https://preguntale-al-peru/esquemas/consulta_minima.schema.json",
   "title": "Consulta mínima del motor por intenciones (S1-01)",
   "description": "Lo que pregunta el usuario, sin el plan de cálculo: ni cifras, ni plantillas, ni años de comparación más allá de «periodo». En el slice 2 el LLM produce exactamente este objeto (P-01). Cada subesquema con «x-error» indica el código del mensaje para el usuario (curados/motor/textos/errores_consulta.yaml).",
   "type": "object",

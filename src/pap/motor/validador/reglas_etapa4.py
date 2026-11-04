@@ -477,7 +477,7 @@ def r_enc_18(c, ctx):
         out.append(Resultado(rid, "revision_humana", "validacion_oficial", clausula="caso borde: construcción propia",
                              modificador=True))
         out.append(Resultado(rid, "rotular", "validacion_oficial", clausula="caso borde: construcción propia", modificador=True,
-                             rotulo=f"cálculo propio de Pregunta al Perú con datos de {fuente}"))
+                             rotulo=f"cálculo propio de Pregúntale al Perú con datos de {fuente}"))
     # (5) P1: Lima Región y Callao de la ENDES no tienen dorada propia (DOR-10): aviso en el registro, no al usuario
     if c.fuente == "INEI-ENDES" and c.nivel in ("LIMA_REGION", "CALLAO") and not c.validada_dorada and not propias:
         out.append(Resultado(rid, "advertir", "validacion_oficial", clausula="DOR-10: ámbito sin dorada propia",

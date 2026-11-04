@@ -58,7 +58,7 @@ shutil.copyfile(os.path.join(HERE, 'inferencia_verificada.csv'), os.path.join(OU
 # ---------------- catálogo MD ----------------
 N = len(d); cnt = lambda k: collections.Counter(r.get(k) for r in d)
 L = []; A = L.append
-A('# Catálogo de fuentes de datos — Pregunta al Perú\n')
+A('# Catálogo de fuentes de datos — Pregúntale al Perú\n')
 ep, ed = cnt('estado_portal'), cnt('estado_datos')
 A(f'Versión 2.0 · {FECHA} · **{N} fuentes** · esquema v2 (`esquema_registro.md`) · corregido tras la auditoría (`03_auditoria/auditoria.md`, `03_auditoria/auditoria_estado.csv`).\n')
 A(f'**Verificación de enlaces:** {ep["confirmado_navegador"]} abiertos en navegador, {ep["confirmado_busqueda"]} confirmados por búsqueda, {ep["no_responde"]} no responden. '

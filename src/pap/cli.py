@@ -447,7 +447,7 @@ def _numeros_elegir(texto: str) -> list[int]:
 
 
 def construir_parser() -> argparse.ArgumentParser:
-    p = argparse.ArgumentParser(prog="pap", description="Obtener, registrar, verificar y citar crudos de Pregunta al Perú.")
+    p = argparse.ArgumentParser(prog="pap", description="Obtener, registrar, verificar y citar crudos de Pregúntale al Perú.")
     p.add_argument("--version", action="version", version=f"pap {__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
 

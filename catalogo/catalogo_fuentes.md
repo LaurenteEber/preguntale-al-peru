@@ -1,4 +1,4 @@
-# Catálogo de fuentes de datos — Pregunta al Perú
+# Catálogo de fuentes de datos — Pregúntale al Perú
 
 Versión 2.0 · 8 de octubre de 2026 · **418 fuentes** · esquema v2 (`esquema_registro.md`) · corregido tras la auditoría (`03_auditoria/auditoria.md`, `03_auditoria/auditoria_estado.csv`).
 
@@ -3124,7 +3124,7 @@ Explorador del CDC para analizar desigualdades en indicadores de salud según me
 | Verificación | portal: confirmado_busqueda · datos: · sin_probar · fecha: — |
 | Priorización | **Referencia** · origen derivada_oficial · capa nucleo_social · puntaje 58 — Cifra oficial ya procesada: sirve para validar que nuestros cálculos coinciden con lo publicado. |
 | Trazabilidad | — |
-| Notas | Útil como referencia metodológica de desigualdad para 'Pregunta al Perú'. |
+| Notas | Útil como referencia metodológica de desigualdad para 'Pregúntale al Perú'. |
 
 <a id="ops-plisa"></a>
 #### OPS-PLISA — PLISA / Portal de datos abiertos de la OPS

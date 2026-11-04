@@ -1,4 +1,4 @@
-# Pregunta al Perú — Arquitectura y funcionamiento
+# Pregúntale al Perú — Arquitectura y funcionamiento
 
 Versión al 3/11/2026 (slice 1 cerrado, etiqueta git `slice-1-cerrado`; piloto cerrado el 13/10/2026, etiqueta `piloto-cerrado`). Estado vivo: `docs/estado.md`.
 

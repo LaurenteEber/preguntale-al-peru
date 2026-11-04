@@ -80,7 +80,7 @@ def _cita(c, alcance: str | None = None, nombre: str | None = None, tx: dict | N
         if o and tx:                                  # S1-09 (A-H3): el documento oficial publica otro valor; no se le atribuye el nuestro
             publicado = tx["publicado_oficial"].format(entidad=o.get("entidad", "INEI"), valor=fmt.pct(o["valor"]))
         sig, ent = SIGLA.get(c.fuente_principal, (c.fuente_principal, ""))
-        src = f"Pregunta al Perú, cálculo propio con {sig} {c.anio}" + (f" ({ent})" if ent and ent not in sig else "")
+        src = f"Pregúntale al Perú, cálculo propio con {sig} {c.anio}" + (f" ({ent})" if ent and ent not in sig else "")
         if c.get("fecha_descarga"):
             src += f", datos descargados el {c.fecha_descarga}"
     nom = c.nombre_ciudadano[0].lower() + c.nombre_ciudadano[1:] if c.nombre_ciudadano else c.indicador_id

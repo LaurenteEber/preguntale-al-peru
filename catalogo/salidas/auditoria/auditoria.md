@@ -1,4 +1,4 @@
-# Auditoría del catálogo y la priorización — Pregunta al Perú
+# Auditoría del catálogo y la priorización — Pregúntale al Perú
 
 5 de octubre de 2026 · alcance: `catalogo_fuentes` v0.3 (404 fuentes), `priorizacion.md` y `prioriza.py`.
 

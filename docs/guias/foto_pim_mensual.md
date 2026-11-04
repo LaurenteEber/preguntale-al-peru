@@ -20,7 +20,7 @@ el PIM **vigente ese día**. Si no guardamos una descarga por mes, ese dato se p
 | **Comando** | ver abajo |
 
 ```bash
-cd ~/Documents/SideProjects/pregunta-al-peru
+cd ~/Documents/SideProjects/preguntale-al-peru
 uv run pap foto-pim registrar ~/Downloads/2026-Gasto-Mensual.csv --corte 2026-11-03 --mover   # fecha «actualizado»
 uv run pap foto-pim listar          # muestra las fotos y avisa si falta algún mes
 git add biblioteca/cruda/capturas/MEF-FOTO-PIM-MENSUAL biblioteca/cruda/verificaciones.jsonl
@@ -82,9 +82,9 @@ Regístralo también con `pap registrar MEF-DA-PRESUPUESTO-EJECUCION-GASTO …`.
 
 **Texto propuesto para la tarea:**
 
-> Tarea mensual de Pregunta al Perú: foto del PIM.
+> Tarea mensual de Pregúntale al Perú: foto del PIM.
 >
-> 1. En la carpeta del proyecto `pregunta-al-peru`, corre `uv run pap foto-pim listar`. Si ya hay una foto con `mes_ref` igual al mes anterior al actual, termina sin hacer nada.
+> 1. En la carpeta del proyecto `preguntale-al-peru`, corre `uv run pap foto-pim listar`. Si ya hay una foto con `mes_ref` igual al mes anterior al actual, termina sin hacer nada.
 > 2. Con Claude en Chrome, abre https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto y lee la fecha «actualizado» del recurso `<AÑO>-Gasto-Mensual.csv` del año en curso. En enero, usa el del año anterior. Si esa fecha es del mes anterior, termina y avísame: se reintenta otro día.
 > 3. Descarga `https://fs.datosabiertos.mef.gob.pe/datastorefiles/<AÑO>-Gasto-Mensual.csv` a Descargas. Nunca el `-Diario`. Si aparece «Error de privacidad», no lo aceptes por tu cuenta: detente y avísame.
 > 4. Espera a que la descarga termine: que no quede `.crdownload` y que el tamaño deje de cambiar.

@@ -992,7 +992,7 @@
    ],
    "ejemplo": "Pobreza monetaria ENAHO 2024: si la cifra nacional del motor difiere en más de 0,1 pp de la del Informe Técnico oficial del INEI, el indicador queda en revisión (factor equivocado, módulo mal unido o base desactualizada).",
    "implementacion": "Campos resultado.version_base {url, fecha_descarga, sha256, factor_usado, version_inei}; tabla validaciones(indicador, anio, nivel, cifra_oficial, url_oficial, estimacion_motor, diferencia). Job que compara mensualmente fechas/tamaños de las bases en el portal del INEI.",
-   "casos_borde": "Indicadores sin cifra oficial publicada (construcciones propias): revisión humana del código por un segundo analista y rótulo 'cálculo propio de Pregunta al Perú con datos de {fuente}'. Si el INEI publica corrección de una base ya usada, se marcan como desactualizadas las respuestas en caché.",
+   "casos_borde": "Indicadores sin cifra oficial publicada (construcciones propias): revisión humana del código por un segundo analista y rótulo 'cálculo propio de Pregúntale al Perú con datos de {fuente}'. Si el INEI publica corrección de una base ya usada, se marcan como desactualizadas las respuestas en caché.",
    "prioridad": "mvp"
   }
  ],

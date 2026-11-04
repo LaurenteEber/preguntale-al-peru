@@ -15,7 +15,7 @@ from .config import Rutas
 from .errores import NoImplementado, PapError
 from .registrar import Opciones, Resultado, registrar
 
-AGENTE = f"pap/{__version__} (Pregunta al Peru; descarga de datos publicos)"
+AGENTE = f"pap/{__version__} (Preguntale al Peru; descarga de datos publicos)"
 REINTENTOS = 3
 
 

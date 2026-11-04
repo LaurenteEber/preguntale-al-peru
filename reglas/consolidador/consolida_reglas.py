@@ -635,7 +635,7 @@ def c(v):
     return str(v).replace('|', '\\|').replace('\n', ' ')
 L = []; A = L.append
 vig = [r for r in reglas if r['estado'] == 'vigente']
-A('# Reglas de publicación y atribución — Pregunta al Perú\n')
+A('# Reglas de publicación y atribución — Pregúntale al Perú\n')
 if _D_R4_1_OPC is None:
     A('> **Decisión pendiente D-R4-1** (años de las celdas sensibles de mortalidad: RMM, TMI y TMN). El dueño aún no '
       'decide entre A (no sumar años), B (periodos fijos de 5 años) y C (periodos fijos de 3 años); el interruptor '

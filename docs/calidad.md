@@ -1,4 +1,4 @@
-# Pregunta al Perú — Calidad: pruebas, regresión y revisión
+# Pregúntale al Perú — Calidad: pruebas, regresión y revisión
 
 Versión al 3/11/2026 (slice 1 cerrado; piloto cerrado el 13/10/2026). Sirve para comprobar que el piloto sigue dando las respuestas aceptadas después de cualquier cambio en datos, reglas o código, y para extender las pruebas.
 
@@ -18,7 +18,7 @@ Versión al 3/11/2026 (slice 1 cerrado; piloto cerrado el 13/10/2026). Sirve par
 ## 2. Prueba rápida (≈ 2 minutos)
 
 ```bash
-cd ~/Documents/SideProjects/pregunta-al-peru && git checkout main
+cd ~/Documents/SideProjects/preguntale-al-peru && git checkout main
 uv sync
 uv run pap calcular                       # debe terminar con todas las pruebas CAL en ✔
 uv run pap validar-reglas                 # casos: 535  ok: 535  fallan: 0
