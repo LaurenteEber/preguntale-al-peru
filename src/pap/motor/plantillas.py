@@ -543,6 +543,13 @@ def evolucion(P: _Plantilla) -> dict:
     constantes = pub and c0.get("precios") == "constantes"
     if pub:
         clave = P.clave_generica(i0, c0, tp)
+        if constantes:                     # S1-16 (M-1): la cifra clave dice que está en soles del año base
+            clave["texto"] = P.t(tp["clave"]["constantes"], **P.valores(vs, anio_base=c0.anio_base_deflactor))
+    sin_par = c0.get("comparacion_no_publicable") if c0 is not None else None
+    if pub and sin_par is None and c0.comparacion and ini is not None and not _publicable(ini) and not verbo(c0):
+        sin_par = int(ini.anio)
+    if pub and sin_par is not None:        # S1-16 (B-1): el año con el que se compara no se puede publicar; va primero
+        P.corta.append(P.t(tp["corta_no_comparable"], **P.valores(vs, a=sin_par)))
     if pub and c0.comparacion:
         a, b = _anios_comp(c0)
         v = verbo(c0)

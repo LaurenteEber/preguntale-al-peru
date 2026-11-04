@@ -9,10 +9,13 @@ corta_sin_comparacion: "Esto es lo que dicen los datos oficiales sobre {sujeto} 
 # registros administrativos; como todo verbo de cambio, va dentro de un marcador {{v:id}} (COM-08): {pasa} y {sentido}.
 corta_soles_constantes: "En {lugar}, {sujeto} {pasa} {c_ini} en {a} a {c_fin} en {b}, en soles de {anio_base}: {sentido}."
 verbo_pasa: pasó de
+# S1-16 (verificación, B-1): la cifra del año con el que se compara no se puede publicar: se dice primero (agents.md §6)
+corta_no_comparable: "No podemos mostrar cómo cambió {sujeto} en {lugar} desde {a}: la cifra de {a} no se puede publicar."
 sentido_monto: {sube: aumentó, baja: disminuyó, igual: no cambió}
 clave:
   proporcion: "de {ciudadano} en {lugar} en {anio}."
   defecto: "es la cifra de {ciudadano} en {lugar} en {anio}."
+  constantes: "es la cifra de {ciudadano} en {lugar} en {anio}, en soles de {anio_base}."   # S1-16 (verificación, M-1)
 tarjeta_inicial:
   titulo: "El punto de partida: {a}"
   texto: "En {a}, {sujeto} era {c_ini} en {lugar} ({fuente})."

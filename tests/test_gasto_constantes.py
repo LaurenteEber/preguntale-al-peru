@@ -118,3 +118,23 @@ def test_cifra_de_un_solo_anio_sigue_en_soles_corrientes(motor):
     assert c["medida"] == "devengado" and "precios" not in c and "anio_base_deflactor" not in c
     assert round(c["valor"] / 1e6) == CONTROLES_NOMINALES[2025]
     assert not any(x["regla"] == "R-GASTO-12" and x["motivo"] != "soles_corrientes" for x in c["resultados"])
+
+
+def test_sin_cifra_publicable_del_anio_comparado_dice_primero_que_no_compara(motor):
+    """Verificación S1-16 (B-1): la cifra de 2023 de Kumpirushiato se suprime (R-GASTO-07); la evolución no compara, lo dice
+    primero y la cifra de 2025 va en soles corrientes, sin el aviso de soles constantes."""
+    r = P.preguntar_minima(motor, {"intencion": "evolucion", "tema": "gasto_publico", "territorio": {"ubigeo": "080915"}})
+    assert r["tipo"] == "respuesta"
+    c1 = r["capas"]["capa1"]
+    assert c1["respuesta_corta"].startswith("No podemos mostrar cómo cambió el gasto en servicios de salud y nutrición infantil "
+                                            "en Kumpirushiato desde 2023: la cifra de 2023 no se puede publicar.")
+    (c,) = r["cifras"].values()
+    assert c["medida"] == "devengado" and "precios" not in c and c["comparacion"] is None
+    assert not any("soles de 2025" in t for t in [c1["respuesta_corta"], *c1["ojo_al_leer"], c1["cifra_clave"]["texto"]])
+
+
+def test_cifra_clave_de_un_anio_que_no_es_el_base_lleva_el_rotulo(motor):
+    """Verificación S1-16 (M-1): con --hasta 2024 la cifra clave (2024) dice que está en soles de 2025."""
+    r = P.preguntar_minima(motor, {"intencion": "evolucion", "tema": "gasto_publico", "territorio": {"texto": "Perú"},
+                                   "periodo": {"tipo": "serie", "hasta": 2024}})
+    assert r["capas"]["capa1"]["cifra_clave"]["texto"].endswith("en Perú en 2024, en soles de 2025.")

@@ -226,6 +226,7 @@ class Motor:
         for spec in consulta["cifras"]:
             c = self.cifra(spec, consulta)
             cifras[spec["id"]] = self.evaluar(c)
+        self._sin_par_constante(consulta, cifras)
         for g in consulta.get("grupos") or []:  # cifras en lote (p. ej. distritos de un grupo robusto, departamentos)
             for spec in plantillas.expandir_grupo(self, g, consulta):
                 cifras[spec["id"]] = self.evaluar(self.cifra(spec, consulta))
@@ -264,6 +265,28 @@ class Motor:
                 "resultados_respuesta": [x.a_dict() for x in res],
                 "corrector": [x.a_dict() for x in res if x.regla in ("R-LENGUAJE-02", "R-LENGUAJE-03", "R-LENGUAJE-06", "R-GASTO-15")],
                 "respuesta_parcial": borrador.get("respuesta_parcial", False), "tipo": "respuesta"}
+
+    def _sin_par_constante(self, consulta: dict, cifras: dict) -> None:
+        """S1-16 (verificación, B-1): una comparación de gasto en soles constantes cuyo año de comparación no se puede publicar
+        (p. ej. R-GASTO-07 suprime la cifra de 2023) no compara nada. La cifra vuelve a soles corrientes, sin comparación
+        (R-GASTO-12: un solo año, soles corrientes), la del otro año sale de la respuesta y la cifra guarda el año con el que
+        no se pudo comparar (`comparacion_no_publicable`) para que la plantilla lo diga primero."""
+        from .planificador import MEDIDA_CONSTANTE, formato_id_cifra
+        specs = {s["id"]: s for s in consulta["cifras"]}
+        for i, spec in list(specs.items()):
+            if spec.get("medida") != MEDIDA_CONSTANTE or spec.get("comparar_con") is None or i not in cifras:
+                continue
+            par = next((j for j, o in specs.items() if o.get("en_serie_con") == int(spec["anio"]) and
+                        (o["indicador"], o["nivel"], str(o["territorio"])) == (spec["indicador"], spec["nivel"], str(spec["territorio"]))), None)
+            if par is None or par not in cifras or cifras[par].estado_cifra not in ("suprimida", "sin_datos"):
+                continue
+            nuevo = {k: v for k, v in spec.items() if k not in ("medida", "comparar_con")}
+            nuevo["id"] = formato_id_cifra(indicador=spec["indicador"], medida=self.medida(spec["indicador"]), nivel=spec["nivel"],
+                                           territorio=spec["territorio"], anio=spec["anio"], rol=spec["rol"], raiz=self.ctx.raiz)
+            c = self.evaluar(self.cifra(nuevo, consulta))
+            c.comparacion_no_publicable = int(spec["comparar_con"])
+            del cifras[i], cifras[par]
+            cifras[nuevo["id"]] = c
 
     def _validar(self, consulta, borrador, cifras):
         ctx = self.ctx
