@@ -67,6 +67,16 @@ def test_consultas_esperadas_validas(entradas):
             assert x.get("tipo") in ("tema", "pregunta"), e["id"]
 
 
+def con_comas(t: dict) -> dict:
+    """La transformación fija de S2-05 (paso 6): «Ayaviri (Melgar, Puno)» → «Ayaviri, Melgar, Puno», antes del resolver."""
+    import re
+    if "texto" in t:
+        m = re.fullmatch(r"\s*([^()]+?)\s*\(([^()]+)\)\s*", t["texto"])
+        if m:
+            return {"texto": f"{m.group(1)}, {m.group(2)}"}
+    return t
+
+
 def _resuelto(r, nivel=None):
     if isinstance(r, Aclaracion):
         ops = [o["territorio"] for o in r.opciones if nivel is None or o["territorio"].nivel == nivel]
@@ -91,7 +101,7 @@ def test_q1_q4_resuelven_como_sus_json(entradas, q):
         assert tc["nivel"] == tj["nivel"] and _resuelto(resolver(tc["dentro_de"], ctx)) == _resuelto(resolver(tj["dentro_de"], ctx))
     else:
         rj = resolver(tj, ctx)
-        rc = resolver(tc, ctx)
+        rc = resolver(con_comas(tc), ctx)
         if q == "q1":                                       # «Huancavelica»: aclaración; con --elegir 1, el departamento
             assert isinstance(rc, Aclaracion)
         assert _resuelto(rc, rj.nivel) == _resuelto(rj)
