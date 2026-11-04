@@ -77,4 +77,4 @@ El agente de la revisión de usuario releyó Q1–Q4 con las mismas 4 personas (
 - «¿Qué puedo hacer?» pasa a un bloque propio bajo la confianza, con texto para cualquier lector.
 - El conteo de palabras va al detalle técnico.
 
-Quedan como estaban, porque son textos de las reglas (`reglas.json`) y su cambio pasa por el consolidador: la frase estándar de efecto («cómo cambió el indicador») y el código NC-TENDENCIA-QUIEBRE en «Límites» de Q1.
+Quedó como estaba, porque es un texto de las reglas (`reglas.json`) y su cambio pasa por el consolidador: el código NC-TENDENCIA-QUIEBRE en «Límites» de Q1. La frase estándar de efecto cambió en la adenda del slice 1 (AD-2, 4/11/2026, por el consolidador): «Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió.»

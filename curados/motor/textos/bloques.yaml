@@ -166,7 +166,7 @@ bloques:
       protegidos:
         sede: "Aparte, sin sumar, los institutos nacionales de referencia con sede en Lima, que atienden a todo el país, gastaron"      # la capa 1 ya dijo que no se incluyen (H5)
     cruce_efecto:
-      atribuible: " En el departamento de Lima solo alrededor del {pct_atribuible} de este gasto se puede ubicar en municipalidades y obras; el resto lo registran entidades sin un distrito."
+      atribuible: " Solo alrededor del {pct_atribuible} del gasto atribuido al departamento de Lima se puede ubicar en municipalidades y obras; el resto lo registran entidades sin un distrito."   # S1-14 (H12): el denominador es todo el departamento 15
       referencia: " {{p:sede}} {linea_ref}."
       protegidos:
         sede: "No incluye a las entidades nacionales con sede en Lima que atienden a todo el país: aparte, sin sumar, los institutos nacionales de referencia gastaron"

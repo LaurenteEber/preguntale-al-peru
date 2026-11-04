@@ -10,6 +10,7 @@ copiarlos. Cada comprobación devuelve una lista de fallos `{"codigo", "detalle"
   nombres          cada nombre de lugar resuelto escrito como su nombre_mostrado (T-02)
   citas            cada cifra usada tiene su línea en `capa3.para_citar` (P-02); sin cifras, sin porcentajes ni montos visibles
   evolucion        S1-13 (AD-1, H11): una evolución muestra las dos cifras que compara, cada una con su marcador
+  cruce            S1-14 (H9): la capa 1 de un cruce no dice «lado a lado» (trae una sola cifra clave, R-04)
 """
 from __future__ import annotations
 
@@ -158,7 +159,16 @@ def evolucion(r: dict) -> list[dict]:
     return out
 
 
+def cruce(r: dict) -> list[dict]:
+    """S1-14 (H9): la capa 1 de una respuesta de cruce no promete cifras «lado a lado»: la otra cifra está en «Más contexto»."""
+    if r["tipo"] != "respuesta" or (r.get("consulta") or {}).get("intencion") != "cruce":
+        return []
+    c1 = r["capas"]["capa1"]
+    textos = [c1["respuesta_corta"], *(c1["ojo_al_leer"] or []), *((c1.get("cifra_clave") or {}).get(k, "") for k in ("valor", "texto"))]
+    return [_fallo("cruce_lado_a_lado_en_capa1", t[:200]) for t in textos if "lado a lado" in t.lower()]
+
+
 def revisar(res: dict, p: dict, lugares: list[str]) -> list[dict]:
     """Todas las comprobaciones sobre una respuesta con capas (respondida o no_se_puede)."""
     return (validador(res) + capa1_maximo(res, p) + corrector(res, p) + marcadores(res) + nombres(res, lugares) + citas(res)
-            + evolucion(res))
+            + evolucion(res) + cruce(res))

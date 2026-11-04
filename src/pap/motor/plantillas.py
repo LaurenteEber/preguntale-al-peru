@@ -885,7 +885,7 @@ def cruce_efecto(P: _Plantilla) -> dict:
             t += P.t(tt["cambio"], **P.valores(vb_, a=a1, b=a2, verbo=P.vb(b_id)))
         if clave["ids"] and P.cf[clave["ids"][0]].nivel in NIVELES_LOCALES:
             t += P.t(tt["sin_nivel_fino"], **vb_)
-        P.ctxs.append({"titulo": _sub(tt["titulo"], vb_), "texto": t, "etiqueta": P.c["no_se_compara"]})
+        P.ctxs.append({"titulo": _sub(tt["titulo"], vb_), "texto": t, "etiqueta": ti.get("etiqueta_otra_cifra") or P.c["no_se_compara"]})
     if P.par["pendientes_dueno"]["cr01_mismo_anio"]["valor"]:     # X-03: el gasto del mismo año que la anemia comparada
         for i, c in A:
             if i not in usados_a and _publicable(c):

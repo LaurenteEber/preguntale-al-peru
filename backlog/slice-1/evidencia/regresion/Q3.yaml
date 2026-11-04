@@ -4,9 +4,26 @@
     de estos servicios para San Juan de Lurigancho. Para saberlo haría falta comparar a niños que recibieron los servicios
     con niños parecidos que no los recibieron.
   despues: Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos
-    datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro. No encontramos una evaluación publicada
-    de estos servicios para San Juan de Lurigancho (Lima, Lima). Para saberlo haría falta comparar a niños que recibieron
+    datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación
+    publicada de estos servicios para San Juan de Lurigancho (Lima, Lima). Para saberlo haría falta comparar a niños que recibieron
     los servicios con niños parecidos que no los recibieron.
-  motivo: 'Nombre largo del distrito («Lima, Lima») la primera vez que se nombra, solo en la capa 2 (T-02: provincia y departamento).
-    Misma información de lugar que antes, sin ninguna afirmación nueva; la capa 1 queda igual (Q2 está en 124 de 125 palabras).'
+  motivo: 'AD-2 (dueño, 4/11/2026, fila R-03 de decisiones.md): la segunda oración de la frase estándar de efecto pasa a «Estos
+    datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió.» (S1-14, H12; cambiada en el
+    consolidador de reglas). Además sigue el nombre largo del distrito («Lima, Lima») la primera vez que se nombra, que ya
+    había aprobado el agente en S1-04 (supuesto S1-04-a: misma información de lugar, sin afirmaciones nuevas).'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[0].texto
+  antes: 'En toda Lima Metropolitana (provincia de Lima) se gastó S/ 260,6 millones en 2025, registrado por unidades ejecutoras
+    con sede en Lima Metropolitana (MEF 2025). En el departamento de Lima solo alrededor del 5 % de este gasto se puede ubicar
+    en municipalidades y obras; el resto lo registran entidades sin un distrito. No incluye a las entidades nacionales con
+    sede en Lima que atienden a todo el país: aparte, sin sumar, los institutos nacionales de referencia gastaron S/ 3,2 millones.'
+  despues: 'En toda Lima Metropolitana (provincia de Lima) se gastó S/ 260,6 millones en 2025, registrado por unidades ejecutoras
+    con sede en Lima Metropolitana (MEF 2025). Solo alrededor del 5 % del gasto atribuido al departamento de Lima se puede
+    ubicar en municipalidades y obras; el resto lo registran entidades sin un distrito. No incluye a las entidades nacionales
+    con sede en Lima que atienden a todo el país: aparte, sin sumar, los institutos nacionales de referencia gastaron S/ 3,2
+    millones.'
+  motivo: 'S1-14 (H12): el porcentaje atribuible dice de qué total es: «del gasto atribuido al departamento de Lima» (el denominador
+    de pct_gasto_atribuible en calculo.py es todo el gasto atribuido al departamento 15), en vez de «de este gasto», que parecía
+    referirse al monto de Lima Metropolitana de la tarjeta. Misma cifra (5 %) y sin afirmación nueva: solo hace explícito
+    lo que ya se afirmaba (agents.md §5.1); corrector sin infracciones; la capa 1 no cambia.'
   aprobado_por: agente

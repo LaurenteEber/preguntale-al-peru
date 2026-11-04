@@ -32,7 +32,7 @@
   {"id": "C03", "debe": "contexto", "nota": "excepción 'por eso' para explicar método", "texto": "En 2020 la encuesta se hizo en parte por teléfono; por eso esa cifra no se usa para calcular la tendencia."},
   {"id": "C04", "debe": "contexto", "nota": "excepción 'debido a' para limitación de datos", "texto": "El gasto solo se muestra por departamento debido a la forma en que el MEF lo registra."},
   {"id": "C05", "debe": "contexto", "nota": "texto renderizado; dato de 2025 (edad <= 2)", "texto": "La tasa es 12,4 por 1 000 nacidos vivos en 2025."},
-  {"id": "C06", "debe": "contexto", "nota": "frase_estandar.efecto (span protegido)", "texto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro."},
+  {"id": "C06", "debe": "contexto", "nota": "frase_estandar.efecto (span protegido)", "texto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió."},
 
   {"id": "B01", "debe": "bloquear", "cat_esperada": ["causal", "cambio sin significancia"], "texto": "Gracias al aumento del gasto, la anemia bajó en Apurímac."},
   {"id": "B02", "debe": "bloquear", "cat_esperada": ["causal", "falacia ecológica"], "texto": "Gracias al programa Juntos, los hogares tienen menos anemia."},

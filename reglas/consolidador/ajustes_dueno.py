@@ -1803,26 +1803,25 @@ AGREGADOS_REGLAS_R3 += [
 # -- 5. R-TERRITORIO-09: «Lima» → preguntar (L4); «Callao» → departamento 07 (auditoría de maquinaria, D1: nombres de la DCF).
 CAMPOS_REGLAS += [
  ('R-TERRITORIO-09', 'parametros.ambiguos_conocidos', {
+  # D-01 (S1-14, 4/11/2026): alineado con T-03 y con el resolver del motor: las tres opciones de T-03, en este orden
   'Lima': ['Lima Metropolitana (provincia de Lima, 1501, 43 distritos)',
            'Lima Región (Lima Provincias): las 9 provincias del departamento sin la provincia de Lima',
-           'departamento de Lima completo (Lima Metropolitana + Lima Región, departamento 15)',
-           'Lima Metropolitana y Callao (1501 + 07; solo encuestas: dominio 8 de la ENAHO)'],
+           'Callao (departamento 07, 7 distritos)'],
   'Callao': ['departamento 07 (Callao, 7 distritos)']}),
  ('R-TERRITORIO-09', 'parametros.sin_respuesta', {
-  'Lima': 'LIMA_METROPOLITANA, ofreciendo los otros tres (L4)',
+  'Lima': 'LIMA_METROPOLITANA, ofreciendo los otros dos (L4, T-03; D-01)',
   'Callao': 'no se pregunta: departamento 07; el distrito 070101 solo si se pide «distrito del Callao» o «Callao Cercado»'}),
  ('R-TERRITORIO-09', 'parametros.rotulos_lima', ROTULOS_LIMA),
 ]
 AGREGADOS_REGLAS_R3 += [
  ('R-TERRITORIO-09', 'casos_borde',
-  ' [' + _L + ', L4] «Lima» sola: se pregunta en este orden: Lima Metropolitana (provincia de Lima), Lima Región (Lima '
-  'Provincias), el departamento de Lima completo y, solo en cifras de encuestas, Lima Metropolitana y Callao. Sin respuesta: '
-  'Lima Metropolitana, ofreciendo los otros. «Callao» sin más: el departamento 07, sin preguntar. ' + _ROT),
+  ' [' + _L + ', L4; T-03, D-01] «Lima» sola: se pregunta en este orden: Lima Metropolitana (provincia de Lima), Lima Región '
+  '(Lima Provincias) y Callao. Sin respuesta: Lima Metropolitana, ofreciendo los otros dos. «Callao» sin más: el departamento '
+  '07, sin preguntar. ' + _ROT),
  ('R-TERRITORIO-09', 'mensaje_usuario',
   ' (Lima) «¿Qué Lima te interesa? Lima Metropolitana (la provincia de Lima), Lima Región (las otras 9 provincias del '
-  'departamento), todo el departamento de Lima (las dos juntas) o, en datos de encuestas, Lima Metropolitana y Callao juntos.» (Lima, sin '
-  'respuesta) «Mostramos Lima Metropolitana (la provincia de Lima). También podemos darte Lima Región, todo el departamento '
-  'de Lima (las dos juntas) o Lima Metropolitana y Callao.»'),
+  'departamento) o el Callao.» (Lima, sin respuesta) «Mostramos Lima Metropolitana (la provincia de Lima). También podemos '
+  'darte Lima Región o el Callao.» (T-03, D-01)'),
 ]
 
 # -- 6. R-GASTO-03 (L6): un solo mecanismo de sesgo de sede para los departamentos 15 y 07 (auditoría de maquinaria, H-A3–H-A5).
@@ -2126,8 +2125,8 @@ def PRUEBAS_LIMA_L(by, vig, NR, CAMPOS, DECISIONES, E, JERGA, MAX, textos, sin_m
     if rot.get('AREA_METROPOLITANA_LIMA_CALLAO') != 'Lima Metropolitana y Callao' or 'Lima Metropolitana y Callao' not in _j.dumps(E['dim_ambito'], ensure_ascii=False):
         F.append(('rotulo_dominio8', 'R-ENC-07/dim_ambito', str(rot)))
     amb = by['R-TERRITORIO-09']['parametros']['ambiguos_conocidos']
-    orden = ['Lima Metropolitana (provincia', 'Lima Región', 'departamento de Lima completo', 'Lima Metropolitana y Callao']
-    if len(amb.get('Lima', [])) != 4 or not all(a.startswith(o) for a, o in zip(amb['Lima'], orden)) \
+    orden = ['Lima Metropolitana (provincia', 'Lima Región', 'Callao']          # T-03 (D-01, S1-14)
+    if len(amb.get('Lima', [])) != 3 or not all(a.startswith(o) for a, o in zip(amb['Lima'], orden)) \
             or amb.get('Callao') != ['departamento 07 (Callao, 7 distritos)']:
         F.append(('territorio09_lima_orden', 'R-TERRITORIO-09', str(amb)))
     g03 = _j.dumps({k: by['R-GASTO-03'].get(k) for k in ('condicion', 'parametros', 'implementacion')}, ensure_ascii=False)
@@ -2448,3 +2447,18 @@ def _p4_quiebre_modo(by):
 TRANSFORMACIONES_P0 = TRANSFORMACIONES_P0 + [_p4_quiebre_modo]
 HALLAZGOS_P0['R-ENC-11'] = HALLAZGOS_P0.get('R-ENC-11', []) + ['P4 (11/10/2026): el quiebre por modo de entrevista bloquea solo la comparación con ese año']
 HALLAZGOS_P0['R-ENC-13'] = HALLAZGOS_P0.get('R-ENC-13', []) + ['P4 (11/10/2026): el quiebre de modo no corta la serie; ENDES 2021 comparable (cierra H7)']
+
+
+# ================================================================ Adenda del slice 1, S1-14 (AD-2, dueño, 4/11/2026)
+# Frase estándar de R-CRUCES-07 ante una pregunta de efecto (fila R-03 de docs/decisiones.md): la segunda oración pasa a
+# «Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió.» La primera no cambia.
+# Antes decía «…y cómo cambió el indicador, pero no si uno causó lo otro», y la respuesta de efecto se contradecía cuando la
+# encuesta no permite decir cómo cambió (H12 de la revisión de usuario).
+_AD2 = 'Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió.'
+CAMPOS_REGLAS += [
+ ('R-CRUCES-07', 'mensaje_usuario',
+  "Saber si un gasto 'sirvió' requiere una evaluación que compare con lo que habría pasado sin él. " + _AD2),   # AD-2
+]
+FRASES_ESTANDAR = {   # AD-2: lo aplica consolida_reglas.py sobre lenguaje.frases_estandar
+ 'efecto': 'Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. ' + _AD2,
+}

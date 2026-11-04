@@ -108,6 +108,10 @@ for s_ in Fl['larga']['secciones']:
 Fl['corta']['ejemplo'] = Fl['corta']['ejemplo'].replace('Usar con cautela', 'Dato con limitaciones')
 P['territorio_denominadores']['especificaciones']['tablas_curadas_mvp'] = CA.TABLAS_MVP
 import ajustes_dueno as AD
+# AD-2 (dueño, 4/11/2026; S1-14): frases estándar que cambia el dueño, junto a las sobrescrituras de prohibidas y notas_corrector
+for _k, _v in getattr(AD, 'FRASES_ESTANDAR', {}).items():
+    assert _k in P['cruces_lenguaje']['lenguaje']['frases_estandar'], _k
+    P['cruces_lenguaje']['lenguaje']['frases_estandar'][_k] = _v
 # Auditoría de E1 (H1): niveles nuevos del vocabulario (region_umc de la ENLA), antes de la nota
 if getattr(AD, 'NIVEL_RANK_D8', None):
     _nota_nr = CA.NIVEL_RANK.pop('nota', ''); CA.NIVEL_RANK.update(AD.NIVEL_RANK_D8)

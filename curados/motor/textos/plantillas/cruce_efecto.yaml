@@ -15,7 +15,9 @@ efecto:
     efecto: "@frase:efecto"
     evaluaciones: "No encontramos una evaluación publicada de estos servicios para {lugar_largo}. Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron."
 cruce:
-  corta: ["Estas cifras se muestran lado a lado: {sujeto_a} y {sujeto_b}. No muestran si una causa la otra."]
+  # S1-14 (H9): la capa 1 trae una sola cifra clave (R-04); la otra cifra del cruce va en «Más contexto»
+  corta: ["La cifra clave es {sujeto_a}. La de {sujeto_b} del mismo lugar está en «Más contexto». No muestran si una causa la otra."]
+  etiqueta_otra_cifra: "Otra fuente: se muestra junto, no explica la cifra clave."   # S1-14 (H9): solo en cruce
   corta_cifra: "Esto es lo que se gastó {nivel_en}:"
   ojo: ["{{p:no_concluir_cruce}}"]
   tarjeta_final: null

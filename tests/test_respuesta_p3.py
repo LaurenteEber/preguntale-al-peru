@@ -41,7 +41,9 @@ def test_respuesta_completa(respuestas, q):
 
 def test_q3_estructura_de_efecto(respuestas):
     t = respuestas["q3"]["texto"]
-    assert "evaluación" in t and "no si uno causó lo otro" in t and "registrado por unidades ejecutoras con sede en" in t
+    # AD-2 (dueño, 4/11/2026; S1-14): frase estándar de efecto de R-CRUCES-07
+    assert "evaluación" in t and "no muestran si el gasto lo cambió" in t and "registrado por unidades ejecutoras con sede en" in t
+    assert "cómo cambió el indicador" not in t
 
 
 def test_q4_sin_ranking_puntual(respuestas):

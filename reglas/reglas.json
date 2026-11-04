@@ -812,15 +812,14 @@
      "Lima": [
       "Lima Metropolitana (provincia de Lima, 1501, 43 distritos)",
       "Lima Región (Lima Provincias): las 9 provincias del departamento sin la provincia de Lima",
-      "departamento de Lima completo (Lima Metropolitana + Lima Región, departamento 15)",
-      "Lima Metropolitana y Callao (1501 + 07; solo encuestas: dominio 8 de la ENAHO)"
+      "Callao (departamento 07, 7 distritos)"
      ],
      "Callao": [
       "departamento 07 (Callao, 7 distritos)"
      ]
     },
     "sin_respuesta": {
-     "Lima": "LIMA_METROPOLITANA, ofreciendo los otros tres (L4)",
+     "Lima": "LIMA_METROPOLITANA, ofreciendo los otros dos (L4, T-03; D-01)",
      "Callao": "no se pregunta: departamento 07; el distrito 070101 solo si se pide «distrito del Callao» o «Callao Cercado»"
     },
     "rotulos_lima": {
@@ -831,7 +830,7 @@
      "departamento_15": "departamento de Lima (Lima Metropolitana + Lima Región)"
     }
    },
-   "mensaje_usuario": "¿A qué {territorio} te refieres? Encontramos varios: {opciones}. (Lima) «¿Qué Lima te interesa? Lima Metropolitana (la provincia de Lima), Lima Región (las otras 9 provincias del departamento), todo el departamento de Lima (las dos juntas) o, en datos de encuestas, Lima Metropolitana y Callao juntos.» (Lima, sin respuesta) «Mostramos Lima Metropolitana (la provincia de Lima). También podemos darte Lima Región, todo el departamento de Lima (las dos juntas) o Lima Metropolitana y Callao.»",
+   "mensaje_usuario": "¿A qué {territorio} te refieres? Encontramos varios: {opciones}. (Lima) «¿Qué Lima te interesa? Lima Metropolitana (la provincia de Lima), Lima Región (las otras 9 provincias del departamento) o el Callao.» (Lima, sin respuesta) «Mostramos Lima Metropolitana (la provincia de Lima). También podemos darte Lima Región o el Callao.» (T-03, D-01)",
    "justificacion": "Sin una llave territorial única todas las reglas siguientes son indeterminadas (homónimos como Ayaviri en Puno y en Lima).",
    "referencias": [],
    "hallazgos_auditoria": [],
@@ -840,7 +839,7 @@
    ],
    "ejemplo": "",
    "implementacion": "Coincidencia exacta normalizada (sin tildes, mayúsculas) sobre nombre y nombres_alternos; si el usuario da provincia o departamento, filtrar por jerarquía. El intérprete (LLM) propone; el motor confirma.",
-   "casos_borde": "Preguntas sin territorio nombrado (\"un distrito de 800 habitantes\"): pedir el nombre; no elegir uno. Si el usuario no responde, ofrecer la cifra nacional o departamental rotulada. [decisión del dueño, 9/10/2026, L4] «Lima» sola: se pregunta en este orden: Lima Metropolitana (provincia de Lima), Lima Región (Lima Provincias), el departamento de Lima completo y, solo en cifras de encuestas, Lima Metropolitana y Callao. Sin respuesta: Lima Metropolitana, ofreciendo los otros. «Callao» sin más: el departamento 07, sin preguntar. Toda cifra lleva el nombre largo del ámbito (L4): «Lima Metropolitana (provincia de Lima)», «Lima Región (Lima Provincias)», «Callao», «Lima Metropolitana y Callao» (dominio 8) y «departamento de Lima (Lima Metropolitana + Lima Región)». Ley 31140: «departamento de Lima» tiene dos sentidos; nunca se usa sin decir cuál.",
+   "casos_borde": "Preguntas sin territorio nombrado (\"un distrito de 800 habitantes\"): pedir el nombre; no elegir uno. Si el usuario no responde, ofrecer la cifra nacional o departamental rotulada. [decisión del dueño, 9/10/2026, L4; T-03, D-01] «Lima» sola: se pregunta en este orden: Lima Metropolitana (provincia de Lima), Lima Región (Lima Provincias) y Callao. Sin respuesta: Lima Metropolitana, ofreciendo los otros dos. «Callao» sin más: el departamento 07, sin preguntar. Toda cifra lleva el nombre largo del ámbito (L4): «Lima Metropolitana (provincia de Lima)», «Lima Región (Lima Provincias)», «Callao», «Lima Metropolitana y Callao» (dominio 8) y «departamento de Lima (Lima Metropolitana + Lima Región)». Ley 31140: «departamento de Lima» tiene dos sentidos; nunca se usa sin decir cuál.",
    "prioridad": "mvp",
    "decisiones_dueno_2026_10_09": [
     "L4: «Lima» → preguntar (LM, LR, departamento, LM + Callao); «Callao» → 07"
@@ -6747,7 +6746,7 @@
     ],
     "evaluaciones_fuente": "MEF-PPR-EVALUACIONES-INDEPENDIENTES + tabla curada evaluaciones_relacionadas"
    },
-   "mensaje_usuario": "Saber si un gasto “sirvió” requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro.",
+   "mensaje_usuario": "Saber si un gasto “sirvió” requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió.",
    "justificacion": "Atribuir un cambio a una intervención exige un contrafactual (Gertler et al.; criterio de 'impacto' del CAD-OCDE). El MEF ya realiza evaluaciones independientes (EDEP y de impacto) de programas como JUNTOS, SIS, Pensión 65 o Cuna Más, que son la fuente adecuada para esa pregunta.",
    "referencias": [
     {
@@ -9014,7 +9013,7 @@
    "sin_datos": "Con los datos públicos que usamos no se puede responder {parte} para {territorio} porque {motivo}.",
    "alternativa": "Lo más cercano que sí podemos mostrar es: {alternativa}.",
    "fuera_alcance": "Esta pregunta pide {tipo} y Pregúntale al Perú solo responde con cifras públicas agregadas por territorio. Puedes preguntar sobre: {temas}.",
-   "efecto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo cambió el indicador, pero no si uno causó lo otro.",
+   "efecto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió.",
    "asociacion": "Esto compara territorios, no personas: no dice que una cosa cause la otra.",
    "dato_antiguo": "Dato de {año}, anterior a la pandemia: la situación actual probablemente es distinta."
   },
