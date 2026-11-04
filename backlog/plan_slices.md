@@ -20,8 +20,6 @@
 
 ## Slice 2 — Intérprete de preguntas (esbozo)
 
-- **Antes, cerrar la adenda del slice 1** (`slice-1/adenda/`): gasto en soles constantes y observaciones medias de la revisión.
-
 - Traducción pregunta → consulta mínima con salida estructurada y validación por esquema; reintento o aclaración si no valida.
 - Conjunto de evaluación de ≥ 100 preguntas reales y reformuladas (incluye fuera de alcance, ambiguas y engañosas), con la consulta esperada; métrica: % de consultas exactas y 0 % de cifras inventadas.
 - El LLM no recibe datos de la biblioteca ni redacta la respuesta: solo la consulta.

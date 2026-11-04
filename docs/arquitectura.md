@@ -1,6 +1,6 @@
 # Pregúntale al Perú — Arquitectura y funcionamiento
 
-Versión al 3/11/2026 (slice 1 cerrado, etiqueta git `slice-1-cerrado`; piloto cerrado el 13/10/2026, etiqueta `piloto-cerrado`). Estado vivo: `docs/estado.md`.
+Versión al 4/11/2026 (slice 1 y su adenda cerrados, etiqueta git `slice-1-adenda-cerrada`; las etiquetas `slice-1-cerrado` y `piloto-cerrado` son de la carpeta de trabajo anterior y no existen en este repositorio, `docs/historia.md`). Estado vivo: `docs/estado.md`.
 
 ## 1. Qué es
 
@@ -132,7 +132,7 @@ Son la fuente de verdad editable (YAML/CSV en git); `pap construir indicadores` 
 - **CAL-11:** cada fila `devengado` del gasto hasta el año base tiene su fila `devengado_constante`, con valor = devengado × factor.
 - **CAL-10:** el SIEN reproduce las cifras oficiales del INS (casos y evaluados exactos: nacional, 24 departamentos y Callao, Lima Región, Ayaviri y San Juan de Lurigancho).
 
-**Huella actual:** `sha256:ba1fbc55…` (desde el 3/11/2026, nombres de T-02). Debe ser idéntica en macOS y Linux.
+**Huella actual:** `sha256:010ea965…` (desde el 4/11/2026, adenda S1-12: soles constantes; la anterior, `ba1fbc55…`, es la del release `biblioteca-ba1fbc55`). Debe ser idéntica en macOS y Linux: en la nube se reproduce con `pap calcular` después de bajar el release.
 
 ### 4.6 Reglas de publicación (`reglas/`)
 - **Contenido:** 96 reglas vigentes (93 del MVP) en 11 etapas:
@@ -174,6 +174,10 @@ Desde el slice 1 (3/11/2026) la persona ya no escribe las cifras ni la plantilla
 7. **Capas** (`capas.py`) y **ficha** (`ficha.py`): se generan el texto final con los números insertados al final, la ficha de límites y la respuesta por capas.
 
 `preguntar.py` une los pasos 1–7 (`preguntar_minima`), y es el mismo camino que usan la CLI y la matriz de cobertura.
+
+**Precios del gasto (adenda, S1-12).** Una comparación de gasto entre años pide `devengado_constante` (planificador) y llega al validador con `precios = constantes`, `anio_base_deflactor` y `factores_deflactor`, como pide R-GASTO-12; la cifra del año con el que se compara lleva la otra como `serie`. Una cifra de un solo año sigue en soles corrientes. La capa 1 dice «pasó de X en 2023 a Y en 2025, en soles de 2025: aumentó» (verbos dentro de `{{v:}}`, sin diferencia ni porcentaje) y la cita da el monto registrado de cada año y el factor.
+
+**Evolución (adenda, S1-13).** «Más contexto» da la cifra del año con el que se compara (AD-1). Si el periodo pedido deja a la forma vigente de la anemia sin dos años, se cuenta la serie de la forma anterior (`intenciones.yaml`, `sin_serie_vigente`; E-06).
 
 | Archivo | Papel |
 |---|---|

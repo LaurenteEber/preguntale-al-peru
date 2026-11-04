@@ -1,6 +1,6 @@
 # Pregúntale al Perú — Manual de uso
 
-**Estado: al 3/11/2026, slice 1 cerrado** (etiqueta `slice-1-cerrado`). Hoy se usa desde la Terminal; lo que viene está marcado ⏳.
+**Estado: al 4/11/2026, slice 1 y su adenda cerrados** (etiqueta `slice-1-adenda-cerrada`; la etiqueta `slice-1-cerrado` es de la carpeta de trabajo anterior y no existe en este repositorio, `docs/historia.md`). Hoy se usa desde la Terminal; lo que viene está marcado ⏳.
 
 ## 1. Qué es y para quién es
 
@@ -218,17 +218,17 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 | # | Quiero saber… | Comando (`uv run pap preguntar …`) | Qué vas a ver |
 |---|---|---|---|
 | 1 ✅ | ¿Cuánta anemia hay en Lima Metropolitana? (**nivel_actual**, Lima) | `--intencion nivel_actual --tema anemia --territorio Lima` → exit 2, y luego el mismo comando con `--elegir 1` | Primero: «Hay varios lugares llamados «Lima». ¿Cuál quieres? 1) Lima Metropolitana… 2) Lima Región… 3) Callao». Luego: «25,3 % … en Lima Metropolitana en 2025», confianza alta |
-| 2 ✅ | ¿Cómo ha cambiado la anemia en Huancavelica? (**evolucion**, anemia) | `--intencion evolucion --tema anemia --territorio "departamento de Huancavelica"` | «No muestra un cambio estadísticamente claro…», 38,6 % en 2025 con la forma vigente; aparte, 53,5 % en 2015 y 54,5 % en 2025 con la forma anterior |
+| 2 ✅ | ¿Cómo ha cambiado la anemia en Huancavelica? (**evolucion**, anemia) | `--intencion evolucion --tema anemia --territorio "departamento de Huancavelica"` | «No muestra un cambio estadísticamente claro…», 38,6 % en 2025 con la forma vigente; en «Más contexto», 53,5 % en 2015 y 54,5 % en 2025 con la forma anterior y 32,9 % en 2024 y 38,6 % en 2025 con la vigente |
 | 3 ✅ | ¿Cuántos niños tienen anemia en Ayaviri? (distrito, **SIEN**) | `--intencion nivel_actual --tema anemia --territorio "Ayaviri, Melgar"` | «No se puede saber cuántos niños de Ayaviri tienen anemia…»; lo más cercano: ≈ 10 % (7 %–12 %) de 547 niños medidos en establecimientos. Confianza media |
 | 4 ✅ | ¿Cuánta desnutrición crónica hay en Ayaviri? (**no se puede**, desnutrición) | `--intencion nivel_actual --tema desnutrición --territorio "Ayaviri, Melgar"` | «No podemos mostrar cuánto hay de desnutrición crónica en Ayaviri por distrito. Sí tenemos la cifra para el departamento de Puno». Sin cifra, exit 0 |
 | 5 ✅ | ¿Qué departamento tiene más anemia? (**identificar_extremo**) | `--intencion identificar_extremo --tema anemia --nivel departamento` | «En 2025, Puno es el departamento con la anemia … más alta, con diferencia estadísticamente clara frente a los demás»: 56,1 % |
 | 6 ✅ | ¿Es mayor la pobreza en Puno que en Cusco? (**comparacion**, pobreza, `--elegir 1,1`) | `--intencion comparacion --tema pobreza --territorio "Cusco" --comparar-con "Puno" --elegir 1,1` | «…mayor en Puno que en Cusco, con una diferencia estadísticamente clara»: 18,8 % frente a 37,5 % (2025). Sin `--elegir`: exit 2 y la aclaración de «Cusco». Con `--elegir 1` solo: pregunta por «Puno» |
 | 7 ✅ | ¿Cuánto se gastó en salud y nutrición infantil en Puno? (**gasto**) | `--intencion nivel_actual --tema gasto --territorio "departamento de Puno"` | «S/ 132,1 millones … en 2025 … registrado por entidades con sede en Puno», con «No leas esta cifra como todo el gasto en Puno» |
-| 8 ✅ | ¿Cómo evolucionó el gasto del país? (gasto, **serie**) | `--intencion evolucion --tema gasto --territorio "Perú" --desde 2023 --hasta 2025` | «S/ 2 455,9 millones en 2025»; contexto: S/ 2 179,2 millones en 2023 |
+| 8 ✅ | ¿Cómo evolucionó el gasto del país? (gasto, **serie**) | `--intencion evolucion --tema gasto --territorio "Perú" --desde 2023 --hasta 2025` | «En Perú, el gasto … pasó de S/ 2 263,9 millones en 2023 a S/ 2 455,9 millones en 2025, en soles de 2025: aumentó.» El monto registrado de 2023 (S/ 2 179,2 millones) y el factor del IPC van en «Para citar» |
 | 9 ✅ | ¿Cuánta pobreza hay en Ayaviri? (**pobreza**, distrito) | `--intencion nivel_actual --tema pobreza --territorio "Ayaviri, Melgar"` | «Entre 23 % y 42 % … en Ayaviri en 2018» (estimación con modelo), confianza **baja** y «cuál es la situación hoy: el dato es de 2018» |
 | 10 ✅ | ¿Y la pobreza de Puno entre 2024 y 2025? (`--desde/--hasta`) | `--intencion evolucion --tema pobreza --territorio "departamento de Puno" --desde 2024 --hasta 2025` | «…se mantuvo sin cambio estadísticamente claro»: 37,5 % en 2025 y 39,9 % en 2024 |
-| 11 ✅ | ¿Cuánta anemia hubo en Puno en 2024? (`--anio`) | `--intencion nivel_actual --tema anemia --territorio "departamento de Puno" --anio 2024` | 53,1 % en 2024. Con `--anio 2019` y el país, «no se puede»: «No hay datos de anemia de 2019 con la forma de medir actual. Sí tenemos la cifra de 2025» |
-| 12 ✅ | ¿Cómo se ven juntos el gasto y la anemia en Puno? (**cruce**) | `--intencion cruce --tema gasto --territorio "departamento de Puno"` | «Estas cifras se muestran lado a lado… No muestran si una causa la otra.» Gasto, cobertura de tamizaje SIEN y anemia ENDES |
+| 11 ✅ | ¿Cuánta anemia hubo en Puno en 2024? (`--anio`) | `--intencion nivel_actual --tema anemia --territorio "departamento de Puno" --anio 2024` | 53,1 % en 2024. Con `--anio 2019` y el país, «no se puede»: «No hay datos de anemia de 2019 con la forma de medir actual. La cifra de 2019 solo existe con la forma de medir anterior…», y ofrece la evolución hasta 2019 |
+| 12 ✅ | ¿Cómo se ven juntos el gasto y la anemia en Puno? (**cruce**) | `--intencion cruce --tema gasto --territorio "departamento de Puno"` | «La cifra clave es el gasto en servicios de salud y nutrición infantil. La de la anemia … del mismo lugar está en «Más contexto». No muestran si una causa la otra.» Gasto, cobertura de tamizaje SIEN y anemia ENDES |
 | 13 ✅ | ¿Sirvió el gasto contra la anemia en Puno? (**efecto**) | `--intencion efecto --tema anemia --territorio "departamento de Puno"` | «No se puede saber si el gasto contra la anemia sirvió en Puno: no encontramos una evaluación publicada», más lo que sí se sabe. Confianza media (respuesta parcial) |
 | 14 ✅ | Preguntar sin saber el tema (**aclaración** de tema) | `--intencion nivel_actual --territorio Puno` | «¿De qué problema quieres saber? 1) Anemia 2) Desnutrición crónica 3) Gasto público en salud y nutrición infantil 4) Pobreza». Exit 2 |
 | 15 ✅ | Preguntar por un tema que no está (educación) | `--intencion nivel_actual --tema educación --territorio Puno` | «Todavía no tenemos datos de ese tema» y los cuatro que sí. Exit 0 |
@@ -264,7 +264,7 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 | **Sin preguntas «dentro de»** | «El más alto dentro de Puno» responde «no se puede»: los rankings son nacionales (`planificador.extremo_dentro_de`: `solo_nacional`) |
 | **Sin ranking de gasto** | R-GASTO-13 |
 | **Cruces solo CR-01** | Gasto × anemia ENDES vigente. Los demás cruces se dan como cifras separadas |
-| **La evolución del gasto no compara años** | Los montos están en soles de cada año y R-GASTO-12 exige soles constantes para comparar; por eso 2023 sale aparte, «no se compara». Ya está decidido deflactar con el IPC de Lima (G-01, R-GASTO-12) y el IPC está en la biblioteca: falta implementarlo (primer pendiente del slice 2) |
+| **La evolución del gasto compara en soles de 2025** | Para comparar años, los montos se ajustan por inflación con el IPC de Lima del último año cerrado (G-01, R-GASTO-12; adenda S1-12). La respuesta no da la diferencia ni el porcentaje de cambio, solo si aumentó o disminuyó. Una cifra de un solo año sigue en soles de ese año |
 | **Sin descargas nuevas** | Agregar fuentes o datos es trabajo aparte (F-04) |
 
 ### Pendientes del dueño detrás de un parámetro
@@ -284,13 +284,13 @@ Siguen abiertas, sin parámetro asociado en el slice 1: X-05 (revisar lo provisi
 
 | Slice | Qué podrá hacer el usuario al terminar | Estado |
 |---|---|---|
-| **1. Motor por intenciones** | Cualquier pregunta estructurada sobre los 9 indicadores, por capas y validada; el motor pregunta si hay ambigüedad | ✅ cerrado el 3/11/2026 |
+| **1. Motor por intenciones** | Cualquier pregunta estructurada sobre los 9 indicadores, por capas y validada; el motor pregunta si hay ambigüedad. La adenda agrega la evolución del gasto en soles constantes y corrige textos de evolución, cruce y efecto | ✅ cerrado el 3/11/2026; adenda cerrada el 4/11/2026 |
 | **2. Intérprete de preguntas** | Escribir la pregunta en lenguaje natural; un LLM la traduce a la consulta del slice 1. Antes, decisión del dueño sobre proveedor, presupuesto y qué se guarda de las preguntas (P-03) | ⏳ |
 | **3. API y web mínima** | Usarlo desde el celular: caja de pregunta, capas, versión de la biblioteca y enlaces oficiales. Antes, X-04 | ⏳ |
 | **4. Beta cerrada** | Un grupo pequeño de personas lo usa en la nube. Antes: prueba con usuarios (P-05), revisión de lo provisional (X-05), despliegue (F-05) y medición sin datos personales (P-03) | ⏳ |
 | **5. Ampliación de datos (Ola 1)** | Preguntar por temas nuevos, uno por sub-slice. Antes: GA-13 y X-06 | ⏳ |
 
-Observaciones del cierre del slice 1 que se resuelven al empezar el slice 2 (`backlog/slice-1/evidencia/cierre.md`) ⏳: el cruce lado a lado muestra en la capa 1 solo el gasto; la evolución no muestra el año con el que compara; la respuesta de efecto tiene una frase de regla que se contradice; la evolución del gasto no explica por qué no compara 2023 con 2025; detalles de redacción.
+Las observaciones del cierre del slice 1 (el cruce que prometía cifras «lado a lado», la evolución que no mostraba el año con el que compara, la frase de efecto que se contradecía y la evolución del gasto que no comparaba años) se resolvieron en la adenda (`backlog/slice-1/evidencia/cierre.md`, sección «Adenda»). Las observaciones bajas que cambian el patrón de Q1–Q4 (H14, H15, H17, H18, H21 y A-H8) se revisan en el slice 3, con la web ⏳.
 
 ## 7. Problemas frecuentes
 

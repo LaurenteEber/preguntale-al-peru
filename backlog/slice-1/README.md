@@ -48,7 +48,7 @@ S1-07 se arma en dos fases: comparación de planes justo después de S1-03 y com
 3. Las aclaraciones de territorio cumplen T-03 (Lima) y R-TERRITORIO-09 (homónimos).
 4. `uv run pytest -q` pasa entero; el cubo no cambia de huella en este slice (solo cambia en S1-00).
 5. Revisión independiente de usuario y estadística «apto» (o «apto con observaciones» ya corregidas) (S1-09).
-6. Documentación al día y etiqueta `slice-1-cerrado` (S1-10).
+6. Documentación al día y etiqueta `slice-1-cerrado` (S1-10; es de la carpeta de trabajo anterior y no existe en este repositorio, `docs/historia.md`).
 
 ## Decisiones que lo gobiernan
 
