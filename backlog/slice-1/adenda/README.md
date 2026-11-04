@@ -20,7 +20,7 @@ La validación del cierre del slice 1 (3/11/2026) dejó dos cosas:
 | ID | Historia | Estado |
 |---|---|---|
 | S1-11 | [Preparar el entorno y la biblioteca](S1-11-preparacion.md) | hecha ([biblioteca](../evidencia/adenda/s1-11_biblioteca.txt), [manifiestos](../evidencia/adenda/s1-11_manifiestos.txt), [pytest](../evidencia/adenda/pytest_base.txt): 714 pasan y 34 `solo_mac`) |
-| S1-12 | [Gasto en soles constantes y su evolución](S1-12-gasto-deflactado.md) | pendiente |
+| S1-12 | [Gasto en soles constantes y su evolución](S1-12-gasto-deflactado.md) | hecha ([cubo](../evidencia/adenda/s1-12_comparacion_cubo.txt): huella nueva `sha256:010ea965…`; [un solo año](../evidencia/adenda/s1-12_un_anio.txt); [respuesta](../evidencia/adenda/s1-12_evolucion_gasto_peru.md); `tests/test_gasto_constantes.py`) |
 | S1-13 | [La evolución muestra los dos años que compara](S1-13-evolucion-anios.md) | pendiente |
 | S1-14 | [Cruce y efecto: textos que no prometen ni contradicen](S1-14-cruce-efecto.md) | pendiente |
 | S1-15 | [Correcciones menores de la revisión](S1-15-menores.md) | pendiente |

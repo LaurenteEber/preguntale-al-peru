@@ -117,6 +117,20 @@
     }
   },
   {
+    "id": "CAL-11",
+    "descripcion": "Gasto (R-GASTO-12, S1-12): cada fila devengado hasta el año base tiene su fila devengado_constante (solo en el gasto) con valor = devengado × factor del IPC",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 8780,
+      "sin_par": 0,
+      "max_dif": 0.0,
+      "anio_base": [
+        2025
+      ]
+    }
+  },
+  {
     "id": "CAL-09",
     "descripcion": "SIEN: numerador nacional = suma de departamentos + Callao; en la cobertura, cota_inf ≤ cota_sup",
     "ok": true,

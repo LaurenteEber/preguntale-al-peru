@@ -1,0 +1,22 @@
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+Filas: antes 39,539, ahora 48,319, nuevas 8,780
+Columnas nuevas: ['anio_base_deflactor', 'factor_deflactor'] · quitadas: []
+version_tabla: antes ['1.1.0'] → ahora ['1.2.0']
+Filas que ya existían y faltan ahora: 0
+Filas nuevas por indicador y medida: {('gasto_ex_pan', 'devengado_constante'): 4397, ('gasto_ex_pan_opcion_c', 'devengado_constante'): 4383}
+Filas que ya existían: 39,539; columnas comparadas: 30 (todas salvo version_tabla): iguales
+
+IPC (dim_ipc, ipc_prom_anual):
+  2023: 111.049113 (meses 12, completo True)
+  2024: 113.659538 (meses 12, completo True)
+  2025: 115.365655 (meses 12, completo True)
+Año base: 2025; factor 2023→2025 = 115.365655 / 111.049113 = 1.0388706
+
+Gasto ex-PAN nacional (millones):
+  2023: devengado 2,179.2 · en soles de 2025 2,263.9 (factor 1.0388706)
+  2024: devengado 2,429.0 · en soles de 2025 2,465.5 (factor 1.0150108)
+  2025: devengado 2,455.9 · en soles de 2025 2,455.9 (factor 1.0000000)
+
+máx |devengado_constante − devengado × factor| = 2.38e-07 soles en 8,780 filas
+
+Resultado: OK

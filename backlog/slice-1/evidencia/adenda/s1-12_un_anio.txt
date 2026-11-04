@@ -1,0 +1,48 @@
+# S1-12: una cifra de un solo año sale igual que antes (4/11/2026)
+# antes: código 3fe9a9d con el cubo ba1fbc55 (respaldo); después: código 779357d con el cubo 010ea965
+# Única diferencia esperada: huella y commit del cubo y version_tabla de la fila de comparación
+
+== efecto__anemia__210801.json
+184,185c184,185
+<         "cubo": "sha256:ba1fbc55eb689141417c21bfef3bdec6680895a000778ef12461a81ada223ba8",
+<         "commit_cubo": "70130b2",
+---
+>         "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+>         "commit_cubo": "779357d",
+590c590
+<                 "version_tabla": "1.1.0",
+---
+>                 "version_tabla": "1.2.0",
+966c966
+<             "reproducibilidad": "C\u00e1lculo con el cubo sha256:ba1fbc55eb68\u2026 (commit 70130b2) y reglas b74f943c76f1. Indicadores: endes_anemia_6_35m_oms2024, gasto_ex_pan, sien_anemia_tamizados_6_35m, sien_cobertura_tamizaje_6_35m."
+---
+>             "reproducibilidad": "C\u00e1lculo con el cubo sha256:010ea965381c\u2026 (commit 779357d) y reglas b74f943c76f1. Indicadores: endes_anemia_6_35m_oms2024, gasto_ex_pan, sien_anemia_tamizados_6_35m, sien_cobertura_tamizaje_6_35m."
+
+== nivel_actual__gasto_publico__lima_metropolitana.json
+106,107c106,107
+<         "cubo": "sha256:ba1fbc55eb689141417c21bfef3bdec6680895a000778ef12461a81ada223ba8",
+<         "commit_cubo": "70130b2",
+---
+>         "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+>         "commit_cubo": "779357d",
+334c334
+<             "reproducibilidad": "C\u00e1lculo con el cubo sha256:ba1fbc55eb68\u2026 (commit 70130b2) y reglas b74f943c76f1. Indicadores: gasto_ex_pan."
+---
+>             "reproducibilidad": "C\u00e1lculo con el cubo sha256:010ea965381c\u2026 (commit 779357d) y reglas b74f943c76f1. Indicadores: gasto_ex_pan."
+
+== nivel_actual__gasto_publico__pe.json
+100,101c100,101
+<         "cubo": "sha256:ba1fbc55eb689141417c21bfef3bdec6680895a000778ef12461a81ada223ba8",
+<         "commit_cubo": "70130b2",
+---
+>         "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+>         "commit_cubo": "779357d",
+278c278
+<             "reproducibilidad": "C\u00e1lculo con el cubo sha256:ba1fbc55eb68\u2026 (commit 70130b2) y reglas b74f943c76f1. Indicadores: gasto_ex_pan."
+---
+>             "reproducibilidad": "C\u00e1lculo con el cubo sha256:010ea965381c\u2026 (commit 779357d) y reglas b74f943c76f1. Indicadores: gasto_ex_pan."
+
+== .md (texto visible): diferencias fuera de la línea de reproducibilidad
+efecto__anemia__210801.md: igual
+nivel_actual__gasto_publico__lima_metropolitana.md: igual
+nivel_actual__gasto_publico__pe.md: igual

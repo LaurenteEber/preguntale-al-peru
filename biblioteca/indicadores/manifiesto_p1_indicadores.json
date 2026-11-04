@@ -1,9 +1,9 @@
 {
   "sprint": "p1_indicadores",
-  "construido": "2026-11-04T11:05:31-05:00",
+  "construido": "2026-11-04T14:28:50-05:00",
   "codigo": {
     "pap": "0.1.0",
-    "commit": "70130b2",
+    "commit": "779357d",
     "sucio": false
   },
   "bibliotecas": {
@@ -114,6 +114,12 @@
       "archivo_original": "vistas_gasto_temas.sql"
     },
     {
+      "source_id": "CAPA0:s3_puentes",
+      "recurso": "dim_ipc",
+      "hash": "sha256:2d33b25a65ce7e0e25adf055e66d616e233a14e75fcad19857f73c4f39858a98",
+      "archivo_original": "dim_ipc.parquet"
+    },
+    {
       "source_id": "CAPA0:s4_mapa_pobreza",
       "recurso": "fact_mapa_pobreza",
       "hash": "sha256:a98a6d888e54a8d108037169ac64ca3ab2ecd9b0f3c8460d2a9ceb32f835b035",
@@ -135,8 +141,8 @@
   "tablas": {
     "fact_indicador": {
       "archivo": "fact_indicador.parquet",
-      "filas": 39539,
-      "hash": "sha256:ba1fbc55eb689141417c21bfef3bdec6680895a000778ef12461a81ada223ba8",
+      "filas": 48319,
+      "hash": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
       "columnas": [
         "indicador_id",
         "anio",
@@ -174,13 +180,15 @@
         "fecha_descarga",
         "anio_cerrado",
         "pct_gasto_atribuible",
+        "anio_base_deflactor",
+        "factor_deflactor",
         "version_tabla"
       ],
       "orden": "indicador_id, anio, nivel, territorio_id, medida, linea"
     }
   },
   "pruebas": {
-    "total": 10,
+    "total": 11,
     "fallidas": [],
     "bloqueantes_fallidas": []
   }
