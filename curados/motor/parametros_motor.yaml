@@ -120,7 +120,13 @@ no_se_puede:
 cli:
   elegir: {valor: "--elegir N se aplica a la primera aclaración de la consulta y se ignora si no hay ninguna; N fuera de rango es un error; con dos lugares ambiguos (comparación) se pasan dos números, --elegir 1,1: uno por aclaración, en orden (S1-09, H3)", supuesto: S1-06}
   nombre_de_archivo_de_salida: {valor: "el nombre del archivo de la consulta (q1.json → q1.json y q1.md); con opciones directas, el id del plan", supuesto: S1-06}
-  codigo_salida: {valor: {respondida: 0, no_se_puede: 0, aclaracion: 2, error: 1}, supuesto: S1-06}
+  codigo_salida:                  # S2-06: filas de la tabla de backlog/slice-2/S2-06-cli.md; un mensaje fijo sale con el código de su motivo o con `mensaje`
+    valor: {respondida: 0, no_se_puede: 0, aclaracion: 2, mensaje: 2, no_disponible: 3, error: 1}
+    supuesto: S1-06
+    nota: "mensaje (no_es_pregunta, otro_idioma, no_entendida) y no_disponible (sin clave, caída, tiempo, límite) los fija la historia S2-06"
+  texto:                          # S2-06: `pap preguntar --texto`
+    valor: "--texto va solo: con archivos, opciones directas o --plan es un error de uso (valen --elegir y --salida); el aviso de recorte se imprime antes de todo; una aclaración imprime solo la pregunta, las opciones y la pista de --elegir (sin «Entendimos»); en el .md, «Entendimos» es el primer párrafo, antes del título; un mensaje fijo sin código propio en codigo_salida (volver_a_preguntar) sale con `mensaje`"
+    supuesto: S2-06
   salida_por_defecto: {valor: salidas/preguntar, nota: "fuera de git (.gitignore); 00_proyecto/piloto/p3/respuestas queda como archivo del piloto", supuesto: S1-06}
 
 matriz_cobertura:

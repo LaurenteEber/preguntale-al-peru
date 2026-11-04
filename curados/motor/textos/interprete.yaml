@@ -35,12 +35,12 @@ entendimos:                        # se arma desde la consulta; lleva años, nun
     nivel_actual: "cuánto hay de {tema}{en_lugar}{periodo}"
     evolucion: "cómo cambió {tema_art}{en_lugar}{periodo}"
     comparacion: "cómo se compara {tema_art}{en_lugar}{con_lugar}{periodo}"
-    cruce:
-      defecto: "{tema_art} y el gasto, vistos juntos{en_lugar}{periodo}"
+    cruce:                         # S2-06: el lugar antes de «el gasto», para que el corrector no lea «gasto … en el distrito»
+      defecto: "{tema_art}{en_lugar} y el gasto, vistos juntos{periodo}"
       gasto_publico: "{tema_art} y los problemas que atiende, vistos juntos{en_lugar}{periodo}"
-    efecto:
-      defecto: "si el gasto sirvió contra {tema_art}{en_lugar}{periodo}"
-      gasto_publico: "si sirvió {tema_art}{en_lugar}{periodo}"
+    efecto:                        # S2-06: sin «sirvió» (causal/evaluativa en el corrector) y con el lugar antes de «el gasto»
+      defecto: "si{en_lugar} el gasto contra {tema_art} tuvo efecto{periodo}"
+      gasto_publico: "si{en_lugar} {tema_art} tuvo efecto{periodo}"
     identificar_extremo: "qué {nivel} tiene más {tema}{dentro_de}{periodo}"
   tema_sin_elegir: "el tema que elijas"
   en_lugar: " en {lugar}"

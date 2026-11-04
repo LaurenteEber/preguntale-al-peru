@@ -39,6 +39,17 @@ Reglas de `no_se_puede`:
 - **Parcial:** si alguna cifra principal sí es publicable, se responde con ella y una oración dice lo que falta («Lo que no pudimos mostrar»).
 - Textos en `curados/motor/textos/no_se_puede.yaml`; códigos de motivo de R-LENGUAJE-05.
 
+## Pregunta en texto libre (slice 2, S2-06)
+
+Extensión para `pap preguntar --texto`: lo de arriba no cambia y la vía estructurada da el mismo `respuesta.json` que antes.
+
+- **`entendimos`:** campo del `respuesta.json` **fuera de las capas** con la frase fija «Entendimos: …», armada por el código desde la consulta resuelta (`curados/motor/textos/interprete.yaml` → `entendimos`). Solo lleva años, nunca otros números; no cuenta para `respuesta.capa1_palabras_max`. Va primero en pantalla y en el `.md`. Es `null` cuando no hay consulta (por ejemplo, fuera de alcance).
+- **`interpretacion`:** bloque del `respuesta.json` con `resultado`, la consulta producida (`consulta`), sus `anclas`, `modelo`, `version_prompt`, `reintentos`, `cache` (si vino de la caché), `descartados`, `avisos` y `datos_personales_quitados`. De la pregunta solo se guarda la versión limpia, en `pregunta_original` (P-03).
+- **Tipo `mensaje`:** cuando el intérprete no da una consulta. Lleva `motivo`, `texto` y `cifras: {}`; sin capas, sin cifras, sin confianza, y no escribe `respuesta.json` ni `.md`. Motivos: `no_es_pregunta`, `otro_idioma`, `no_entendida` y `volver_a_preguntar` (el texto ofrece la vía estructurada, salvo `volver_a_preguntar`), y `no_disponible` (sin clave, caída, tiempo agotado o límite). Textos en `interprete.yaml` y, para `otro_idioma`, `errores_consulta.yaml` → `idioma_invalido`.
+- **Motivos `interprete_*` de `aclaracion`:** la misma forma que la aclaración de arriba (pregunta y opciones numeradas). `interprete_intencion_ambigua` y `interprete_varias_preguntas` (opciones propuestas por el LLM, cada una una consulta completa); `interprete_sin_intencion`, `interprete_sin_lugar` y `interprete_anio_relativo` (opciones armadas por el código).
+- **Motivo `interprete_fuera_de_alcance` de `no_se_puede`:** el intérprete reconoce una pregunta que el motor no responde (un «por qué», una proyección, una opinión). Sigue las reglas de `no_se_puede`; textos en `no_se_puede.yaml`.
+- **Códigos de salida** de `pap preguntar`: `cli.codigo_salida` de `parametros_motor.yaml` (respuesta y «no se puede» 0, aclaración y mensaje 2, `no_disponible` 3, error de uso 1).
+
 ## Implementación
 
 - `pap/motor/capas.py`: arma las capas; no calcula ni decide reglas.

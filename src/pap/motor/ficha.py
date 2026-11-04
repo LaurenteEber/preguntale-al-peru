@@ -242,6 +242,8 @@ def markdown(res: dict) -> str:
     q, k = res["consulta"], res["capas"]
     c1, c2, c3 = k["capa1"], k["capa2"], k["capa3"]
     out = [f"# {q['id']} — {q['pregunta']}", "", c1["respuesta_corta"], ""]
+    if res.get("entendimos"):  # S2-06: pregunta en texto libre; va primero y fuera de las capas
+        out = [res["entendimos"], ""] + out
     cl = c1.get("cifra_clave")
     if cl:
         out += ([f"> **{cl['valor']}** {cl['texto']}  "] if cl["valor"] else [f"> **{cl['texto']}**  "]) + [f"> Fuente: {cl['fuente']}.", ""]

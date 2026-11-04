@@ -15,6 +15,7 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 - **Por qué importa:** S2-04 (grabar), S2-07, S2-08 (grabar), S2-09 y la corrida de S2-10 necesitan el LLM real.
 - **Qué se hace:** según el README del slice, se sigue hasta S2-03 y con lo que no necesita el LLM real.
 - **Propuesta:** agregar la clave como variable secreta del entorno y permitir la salida de red a `api.anthropic.com`.
+- **S2-06:** Q1–Q4 por `--texto` (`tests/interprete/test_cli_texto.py::test_q1_q4_por_texto_con_grabaciones`) usan el LLM grabado y fallan con «falta la grabación» hasta que se graben sus cuatro preguntas.
 
 ### E-03 — La salida estructurada de la API no acepta todo el esquema de S2-01 (S2-04) · registrada (no bloquea)
 - **Qué pasa:** según la documentación del proveedor (https://platform.claude.com/docs/en/build-with-claude/structured-outputs, 4/11/2026), la salida estructurada no acepta `$ref` externos, límites de longitud o número, `minItems` mayor que 1, `if/then` ni (sin documentar) `oneOf`.
@@ -45,3 +46,9 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 | S2-05-f | S2-05 | Textos nuevos: «Entendimos: …» por intención (sin punto final, como el ejemplo de la historia), la etiqueta de cada opción del intérprete es la misma frase con mayúscula inicial, preguntas de las aclaraciones del código, «otro idioma», «no entendimos», la salida por la vía estructurada, «la pregunta venció» y el motivo nuevo `interprete_fuera_de_alcance` | `textos/interprete.yaml`, `textos/no_se_puede.yaml` |
 | S2-05-g | S2-05 | El reintento le dice al LLM el código y el mensaje del error en el mensaje del usuario, después de la pregunta; se graba aparte (la huella incluye el error) | `interprete.reintento_mensaje`, `src/pap/interprete/llm.py` |
 | S2-05-h | S2-05 | Caché en `salidas/interprete/cache/` (fuera de git): una interpretación válida por pregunta limpia, modelo y versión del prompt; las fallas no se guardan | `interprete.cache_carpeta` |
+| S2-06-a | S2-06 | `--texto` va solo: combinarlo con archivos, con las opciones directas o con `--plan` es un error de uso (con `--texto` valen `--elegir` y `--salida`) | `parametros_motor.yaml` → `cli.texto`; mensaje en `textos/cli.yaml` → `texto_y_opciones` |
+| S2-06-b | S2-06 | El aviso de recorte se imprime como primera línea en todos los casos (también antes de una aclaración o un mensaje) | `cli.texto` |
+| S2-06-c | S2-06 | Una aclaración por `--texto` imprime solo la pregunta, las opciones y la pista de `--elegir`, sin «Entendimos» (como la tabla de la historia) | `cli.texto` |
+| S2-06-d | S2-06 | En el `.md`, «Entendimos» es el primer párrafo, antes del título; en `respuesta.json`, la primera clave | `cli.texto`; `src/pap/motor/ficha.py` |
+| S2-06-e | S2-06 | El mensaje `volver_a_preguntar` (se eligió «Escribe…») no tiene fila propia: sale con el código de `mensaje` (2) | `cli.texto`, `cli.codigo_salida` |
+| S2-06-f | S2-06 | «Entendimos» de `efecto` y de `cruce` reescritos para pasar el corrector: sin «sirvió» (causal/evaluativa) y con el lugar antes de «el gasto» (si no, en un distrito se lee «gasto … en el distrito», gasto mal ubicado). Ahora: «si en el distrito de X el gasto contra la anemia tuvo efecto» y «la anemia en el distrito de X y el gasto, vistos juntos» | `textos/interprete.yaml` → `entendimos.intenciones` |

@@ -1,5 +1,6 @@
 """S1-06 — `pap preguntar` con consulta mínima: archivo JSON (uno, varios o una carpeta), opciones directas, aclaración con
 opciones numeradas y `--elegir`, `--plan`, salida por defecto fuera de git, mensajes de una consulta inválida y `--help` en español.
+S2-06: la vía estructurada da los mismos `respuesta.json` que la base de S2-00; `--texto` se prueba en tests/interprete/test_cli_texto.py.
 
 Las pruebas llaman a `cli.main` (y una, al proceso real) con la raíz del proyecto; los resultados van a carpetas temporales.
 Los códigos de salida salen de `cli.codigo_salida` de parametros_motor.yaml. Si falta el cubo, las pruebas FALLAN (agents.md §8)."""
@@ -232,13 +233,33 @@ def test_elegir_invalido_y_sin_nada_que_preguntar(capsys, tmp_path):
     assert codigo == COD["error"] and "no las dos cosas a la vez" in err
 
 
+# ------------------------------------------------------------------------- vía estructurada igual que antes del slice 2 (S2-06)
+
+BASE_ESTRUCTURADA = RAIZ / "backlog" / "slice-2" / "evidencia" / "base_estructurada"
+
+
+def test_via_estructurada_igual_a_la_base_de_s2_00(tmp_path):
+    """Los `respuesta.json` de la vía estructurada, generados con los comandos exactos de `generar.sh`, son iguales a los
+    guardados en S2-00, salvo las rutas (la carpeta de salida se reemplaza antes de comparar)."""
+    salida = tmp_path / "base"
+    p = subprocess.run(["bash", str(BASE_ESTRUCTURADA / "generar.sh"), str(salida)], cwd=RAIZ, capture_output=True, text=True,
+                       env={**__import__("os").environ, "PAP_RAIZ": str(RAIZ)})
+    assert p.returncode == 0, p.stderr[-2000:]
+    esperados = sorted(x.relative_to(BASE_ESTRUCTURADA) for x in BASE_ESTRUCTURADA.rglob("*.json"))
+    assert esperados and sorted(x.relative_to(salida) for x in salida.rglob("*.json")) == esperados
+    for rel in esperados:
+        nuevo = json.loads((salida / rel).read_text(encoding="utf-8").replace(str(salida), "<salida>"))
+        assert nuevo == json.loads((BASE_ESTRUCTURADA / rel).read_text(encoding="utf-8")), rel
+        assert "entendimos" not in nuevo and "interpretacion" not in nuevo, rel
+
+
 # ------------------------------------------------------------------------- ayuda y proceso real
 
 def test_help_en_espanol_para_cada_opcion(capsys):
     sub = next(a for a in cli.construir_parser()._actions if getattr(a, "choices", None) and "preguntar" in a.choices).choices["preguntar"]
     opciones = [a for a in sub._actions]
     esperadas = {"--intencion", "--tema", "--indicador", "--territorio", "--anio", "--desde", "--hasta", "--comparar-con", "--elegir",
-                 "--plan", "--salida", "--help"}
+                 "--plan", "--salida", "--help", "--texto"}
     assert esperadas <= {o for a in opciones for o in a.option_strings}
     for a in opciones:
         assert a.help and len(a.help) > 15, a.option_strings
