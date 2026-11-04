@@ -161,3 +161,23 @@ interprete:                       # slice 2: intérprete de preguntas en texto l
   reintentos_si_no_valida: {valor: 1, alternativa: 0, supuesto: S2-01}
   cache_horas: {valor: 24, decision: P-03}
   aclaracion_max_opciones: {valor: 4, supuesto: S2-01}
+  # S2-04: cliente del LLM (P-07) y limpieza de la pregunta (P-03)
+  modelo: {valor: claude-opus-5-5, decision: P-07, nota: "Claude API ID de Claude Opus 5.5 según https://platform.claude.com/docs/en/about-claude/models/overview (consultado el 4/11/2026)"}
+  api: {url: "https://api.anthropic.com/v1/messages", version: "2026-10-21", nota: "cabecera anthropic-version del ejemplo de salida estructurada (https://platform.claude.com/docs/en/build-with-claude/structured-outputs, 4/11/2026)", supuesto: S2-04}
+  variable_clave: {valor: ANTHROPIC_API_KEY, supuesto: S2-04}
+  temperatura: {valor: 0, supuesto: S2-04}
+  max_tokens: {valor: 2000, supuesto: S2-04}
+  tiempo_max_segundos: {valor: 60, supuesto: S2-04}
+  precios_usd_por_millon: {entrada: 4, salida: 20, nota: "Claude Opus 5.5, base input y output tokens, https://platform.claude.com/docs/en/about-claude/pricing (consultado el 4/11/2026)", decision: P-07}
+  tope_por_corrida: {valor_usd: 5, supuesto: S2-04, nota: "corta una corrida de evaluación; el tope mensual real es el de la consola del proveedor (P-07)"}
+  pregunta_max_caracteres: {valor: 1000, decision: "maxLength de pregunta_original (consulta_minima.schema.json)"}
+  datos_personales:
+    valor:
+      correo: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+      ruc: "(?<!\\d)\\d{11}(?!\\d)"
+      dni: "(?<!\\d)\\d{8}(?!\\d)"
+      celular: "(?<!\\d)9\\d{8}(?!\\d)"
+    reemplazo: "[dato personal]"
+    nota: "los años de 4 cifras no coinciden con ningún patrón; el orden importa (RUC antes que DNI)"
+    decision: P-03
+

@@ -5,3 +5,5 @@ no_es_pregunta: "No encontramos una pregunta. Escribe qué quieres saber, de qu�
 fuera_de_alcance:
   tema: "Todavía no tenemos datos de «{pedido}». Por ahora tenemos {temas}."
   pregunta: "Todavía no respondemos eso («{pedido}»). Podemos decirte cuánto hay hoy, cómo cambió, cómo se compara con otro lugar, dónde es más alto o qué se gastó."
+pregunta_recortada: "Tu pregunta era muy larga: usamos solo sus primeros {n} caracteres."
+no_disponible: "Ahora no podemos interpretar preguntas escritas. Puedes preguntar con las opciones: por ejemplo, `uv run pap preguntar --intencion nivel_actual --tema anemia --territorio Puno`."
