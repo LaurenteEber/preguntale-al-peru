@@ -35,6 +35,7 @@ def _bloqueantes(res):
     return [p["id"] for p in res.pruebas if p["bloqueante"] and not p["ok"]]
 
 
+@pytest.mark.solo_mac
 def test_endes(endes):
     assert _bloqueantes(endes) == []
     t = endes.tablas["endes_nino"]
@@ -47,6 +48,7 @@ def test_endes(endes):
     assert len(ctrl) >= 60 and ctrl.diferencia_pp.abs().max() <= 0.1 + 1e-9
 
 
+@pytest.mark.solo_mac
 def test_endes_universo_unico_y_estrato_anidado(endes):
     import yaml
     defs = yaml.safe_load((RAIZ_REAL / "curados/capa0/definiciones_endes.yaml").read_text(encoding="utf-8"))
@@ -59,6 +61,7 @@ def test_endes_universo_unico_y_estrato_anidado(endes):
     assert set(t[t.ubigeo_agrupado_inei].ubigeo_hogar) <= {"120699"}
 
 
+@pytest.mark.solo_mac
 def test_enaho(enaho):
     assert _bloqueantes(enaho) == []
     t = enaho.tablas["enaho_sumaria"]
@@ -68,6 +71,7 @@ def test_enaho(enaho):
     assert (t.lima_metropolitana_dominio8 == (t.dominio == 8)).all()
 
 
+@pytest.mark.solo_mac
 def test_mapa(mapa):
     assert _bloqueantes(mapa) == []
     t = mapa.tablas["fact_mapa_pobreza"]

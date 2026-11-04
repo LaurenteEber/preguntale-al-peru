@@ -1,0 +1,11 @@
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+OK  biblioteca/dimensiones/manifiesto_piloto_indicadores.json: 15 huellas
+OK  biblioteca/dimensiones/manifiesto_s1_territorio.json: 17 huellas
+OK  biblioteca/dimensiones/manifiesto_s2_poblacion.json: 11 huellas
+OK  biblioteca/dimensiones/manifiesto_s3_gasto.json: 45 huellas
+OK  biblioteca/dimensiones/manifiesto_s3_puentes.json: 8 huellas
+OK  biblioteca/estandarizada/encuestas/manifiesto_s4_enaho.json: 5 huellas
+OK  biblioteca/estandarizada/encuestas/manifiesto_s4_endes.json: 26 huellas
+OK  biblioteca/estandarizada/mapa_pobreza/manifiesto_s4_mapa_pobreza.json: 3 huellas
+OK  biblioteca/indicadores/manifiesto_p1_indicadores.json: 21 huellas
+fact_indicador: sha256:ba1fbc55eb689141417c21bfef3bdec6680895a000778ef12461a81ada223ba8

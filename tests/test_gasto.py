@@ -18,19 +18,23 @@ def res():
     r.tablas["fact_gasto_territorial"].unlink(missing_ok=True)  # Parquet temporal no publicado
 
 
+@pytest.mark.solo_mac
 def test_sin_pruebas_bloqueantes_fallidas(res):
     assert [p["id"] for p in res.pruebas if p["bloqueante"] and not p["ok"]] == []
 
 
+@pytest.mark.solo_mac
 def test_conservacion_exacta(res):
     assert all(p["ok"] for p in res.pruebas if p["id"] == "G-01")
 
 
+@pytest.mark.solo_mac
 def test_pia_igual_a_ley(res):
     g07 = next(p for p in res.pruebas if p["id"] == "G-07")
     assert g07["ok"], g07["detalle"]
 
 
+@pytest.mark.solo_mac
 def test_municipalidades_por_nombre_de_ejecutora(res):  # noqa
     ue = res.tablas["dim_unidad_ejecutora"]
     m = ue[ue.nivel_gobierno == "M"]
@@ -39,6 +43,7 @@ def test_municipalidades_por_nombre_de_ejecutora(res):  # noqa
     assert (m.tipo_entidad_local == "provincial").sum() > 150
 
 
+@pytest.mark.solo_mac
 def test_niveles_de_atribucion_validos(res):
     import duckdb
     f = duckdb.sql(f"SELECT DISTINCT nivel_atribucion, ubigeo_atribucion, ambito_id "
@@ -86,6 +91,7 @@ def test_base_csv_escape_y_montos_invalidos(tmp_path):
     assert r[0] == 3 and r[1] == 1 and float(r[2]) == 105.0 and float(r[3]) == 31.5 and r[4] == 1
 
 
+@pytest.mark.solo_mac
 def test_alcance_y_ambitos_de_lima(res):
     ue = res.tablas["dim_unidad_ejecutora"]
     e = ue[ue.nivel_gobierno == "E"]
@@ -94,6 +100,7 @@ def test_alcance_y_ambitos_de_lima(res):
     assert (mml.ambito_id == "LIMA_METROPOLITANA").all() and len(mml) > 0
 
 
+@pytest.mark.solo_mac
 def test_alcance_solo_con_meta_lima(res):
     import duckdb
     r = duckdb.sql(f"""SELECT count(*) FILTER (WHERE alcance_ejecutora IS NULL),
@@ -103,6 +110,7 @@ def test_alcance_solo_con_meta_lima(res):
     assert r == (0, 0)
 
 
+@pytest.mark.solo_mac
 def test_pruebas_de_la_pieza_a(res):
     """Rondas 1-2 (pieza A): campos nuevos no nulos, conservación por actividad × fuente × rubro × clasificador y
     reparto de Lima con la línea aparte de referencia nacional (incluidas sus obras)."""
@@ -114,6 +122,7 @@ def test_pruebas_de_la_pieza_a(res):
     assert set(ue.loc[ue.referencia_nacional, "sec_ejec"]) == {"1235", "1512"}
 
 
+@pytest.mark.solo_mac
 def test_pruebas_de_la_pieza_c(res):
     """Rondas 1-2 (pieza C): capa de trazabilidad y dim_tema_gasto v1.2 (G-03 para todos los alcances; cifras
     aprobadas desde la capa y desde las vistas; cada sol en ≤ 1 hoja y en ≤ 1 programa social)."""

@@ -25,6 +25,7 @@ def test_ipf_tres_margenes_converge():
     assert np.allclose(np.einsum("ias,aq->sq", x, onehot), m_sq, rtol=1e-3)
 
 
+@pytest.mark.solo_mac
 def test_construccion_real():
     try:
         res = P.construir(Rutas(RAIZ_REAL))

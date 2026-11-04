@@ -48,6 +48,7 @@ def con():
     return c
 
 
+@pytest.mark.solo_mac
 def test_ningun_cui_del_detalle_se_pierde(con):
     faltan, sobran = con.execute("""
         SELECT (SELECT count(DISTINCT cui_n) FROM det WHERE cui_n NOT IN (SELECT cui::BIGINT FROM dim)),
@@ -55,6 +56,7 @@ def test_ningun_cui_del_detalle_se_pierde(con):
     assert (faltan, sobran) == (0, 0)
 
 
+@pytest.mark.solo_mac
 def test_nivel_o_motivo_exclusivos_y_listas_cerradas(con):
     assert con.execute("SELECT count(*) FROM dim WHERE (nivel_comun IS NULL) = (motivo_sin_ubicacion IS NULL)").fetchone()[0] == 0
     motivos = {r[0] for r in con.execute("SELECT DISTINCT motivo_sin_ubicacion FROM dim WHERE motivo_sin_ubicacion IS NOT NULL").fetchall()}
@@ -62,6 +64,7 @@ def test_nivel_o_motivo_exclusivos_y_listas_cerradas(con):
     assert motivos <= MOTIVOS and metodos <= METODOS
 
 
+@pytest.mark.solo_mac
 def test_proyectos_del_detalle_llegan_al_fact_con_metodo(con):
     # no tautológica: se une por número contra el crudo, no por la clave que construye gasto.py
     n = con.execute("""SELECT count(*) FROM fact WHERE tipo_act_proy ILIKE 'PROYECTO%'
@@ -70,6 +73,7 @@ def test_proyectos_del_detalle_llegan_al_fact_con_metodo(con):
     assert n == 0
 
 
+@pytest.mark.solo_mac
 def test_porcentaje_por_metodo(con):
     df = con.execute("SELECT metodo_ubicacion, count(*) n, count(*) / sum(count(*)) OVER () p FROM dim GROUP BY 1").df()
     print(df.to_string())
@@ -80,6 +84,7 @@ def test_porcentaje_por_metodo(con):
     assert df.loc[df.metodo_ubicacion == "nombre_texto", "n"].sum() < 200
 
 
+@pytest.mark.solo_mac
 def test_solo_gl_por_texto(con):
     """Decisión del dueño: el UBIGEO nulo se ubica por nombre solo en gobiernos locales (ni GN ni GORE)."""
     assert G.NIVELES_UBICACION_POR_NOMBRE == ("GL",)
@@ -87,6 +92,7 @@ def test_solo_gl_por_texto(con):
                           AND nivel_gobierno_inv <> 'GL'""").fetchone()[0] == 0
 
 
+@pytest.mark.solo_mac
 def test_alias_al_distrito_correcto(con):
     filas = con.execute("""SELECT d.cui, d.ubigeo_fuente, d.ubigeo_atribucion FROM dim d
                            WHERE metodo_ubicacion = 'codigo_antiguo_alias'""").fetchall()
@@ -95,6 +101,7 @@ def test_alias_al_distrito_correcto(con):
         assert ALIAS_ESPERADO.get(fuente) == destino, (cui, fuente, destino)
 
 
+@pytest.mark.solo_mac
 def test_codigo_escindido_nunca_por_alias(con):
     # 160109 se dividió en tres distritos: solo curado por CUI (a un sucesor) o la provincia que los contiene
     filas = con.execute("""SELECT cui, metodo_ubicacion, ubigeo_atribucion FROM dim
@@ -104,6 +111,7 @@ def test_codigo_escindido_nunca_por_alias(con):
         assert destino[:4] == ESCINDIDO_CONTENEDOR["160109"][:4], (cui, destino)
 
 
+@pytest.mark.solo_mac
 def test_tabla_curada_coherente(con):
     assert CURADA.exists(), CURADA
     cur = yaml.safe_load(CURADA.read_text(encoding="utf-8")) or []
@@ -116,6 +124,7 @@ def test_tabla_curada_coherente(con):
                            [c["ubigeo_inei"]]).fetchone()[0] > 0
 
 
+@pytest.mark.solo_mac
 def test_suma_se_conserva_devengado_y_pim(con):
     for anio, bd, fd, bp, fp in con.execute("""
             SELECT anio, b.dev, f.dev, b.pim, f.pim
@@ -128,6 +137,7 @@ def test_opcion_b_configurada():
     assert G.MULTIDEP_SOLO_META_LIMA is True, "decisión del dueño (7/10/2026): opción B"
 
 
+@pytest.mark.solo_mac
 def test_multidep_del_gn_opcion_b(con):
     sql = """SELECT f.departamento_meta = '15' AS meta_lima, f.nivel_atribucion, count(*) n
              FROM fact f JOIN dim d ON d.cui = lpad(f.producto_proyecto, 7, '0')
@@ -147,6 +157,7 @@ def test_multidep_del_gn_opcion_b(con):
     assert rot == 0
 
 
+@pytest.mark.solo_mac
 def test_municipalidades_con_cui_multidep_siguen_en_su_sede(con):
     n = con.execute("""SELECT count(*) FROM fact WHERE lpad(producto_proyecto, 7, '0') = '2340601'
                        AND nivel_gobierno = 'M' AND nivel_atribucion NOT LIKE '%municipal'""").fetchone()[0]

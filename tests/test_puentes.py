@@ -16,6 +16,7 @@ def res():
         pytest.skip(f"faltan insumos: {e}")
 
 
+@pytest.mark.solo_mac
 def test_construccion_real(res):
     assert [p["id"] for p in res.pruebas if p["bloqueante"] and not p["ok"]] == []
     ipc = res.tablas["dim_ipc"]
@@ -27,6 +28,7 @@ def test_construccion_real(res):
     assert "fact_sien_hb_ubigeo" in res.tablas
 
 
+@pytest.mark.solo_mac
 def test_renipress_160109_no_va_por_alias(res):
     """GA-09: 160109 (Putumayo, escindido por la Ley 30186) ya no se redirige a 160801. Cachuy está en Iquitos
     (Punchana, curado con evidencia); Yabuyanos no se puede ubicar a distrito y queda en la provincia 160800."""
@@ -40,6 +42,7 @@ def test_renipress_160109_no_va_por_alias(res):
     assert e12["ok"], e12["detalle"]
 
 
+@pytest.mark.solo_mac
 def test_sien_pruebas_bloqueantes_y_avisos(res):
     pr = {p["id"]: p for p in res.pruebas}
     for i in ("E-05", "E-10", "E-11"):

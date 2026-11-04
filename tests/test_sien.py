@@ -93,6 +93,7 @@ def test_s07_clave_unica(con):
     assert dup == 0
 
 
+@pytest.mark.solo_mac
 def test_s04_conservacion_contra_el_crudo(con):
     from pap.capa0 import insumos
     from pap.config import Rutas

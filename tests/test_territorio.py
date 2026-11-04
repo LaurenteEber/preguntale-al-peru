@@ -33,6 +33,7 @@ def test_expandir_composicion():
     assert T._expandir([""], d) == sorted(d)
 
 
+@pytest.mark.solo_mac
 def test_construccion_real():
     rutas = Rutas(RAIZ_REAL)
     try:
@@ -62,6 +63,7 @@ def dim_real():
         pytest.skip(f"faltan insumos registrados: {e}")
 
 
+@pytest.mark.solo_mac
 def test_nacional_y_departamentos_desde_1995(dim_real):
     """SP-01: las series departamentales desde 2015 resuelven contra la tabla de ubigeo."""
     dim = dim_real["dim_ubigeo_historico"]
@@ -74,6 +76,7 @@ def test_nacional_y_departamentos_desde_1995(dim_real):
         assert len(T.vigentes_en_anio(dim, anio, "departamento")) == 25
 
 
+@pytest.mark.solo_mac
 def test_pertenencia_anual(dim_real):
     """TE-02: el año del dato decide la versión según el primer año con dato INEI."""
     dim = dim_real["dim_ubigeo_historico"]
@@ -87,6 +90,7 @@ def test_pertenencia_anual(dim_real):
         assert not v.ubigeo_inei.duplicated().any()
 
 
+@pytest.mark.solo_mac
 def test_sangani_codigo_provisional(dim_real):
     dim = dim_real["dim_ubigeo_historico"]
     s = dim[dim.ubigeo_inei == "120307"].iloc[0]
@@ -97,6 +101,7 @@ def test_sangani_codigo_provisional(dim_real):
     assert ((rel.ubigeo_hijo == "120307") & (rel.ubigeo_origen == "120302")).any()
 
 
+@pytest.mark.solo_mac
 def test_dominios_antes_de_2018_no_vacios(dim_real):
     dom = dim_real["dim_dominio"]
     d = dom[dom.dominio_id.str.startswith("departamento_") & (dom.anio < 2018)]

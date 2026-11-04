@@ -1,2 +1,9 @@
 Bajando biblioteca-ba1fbc55…
-curl: (22) The requested URL returned error: 404
+biblioteca-ba1fbc55.tar.zst: OK
+Descomprimiendo en /home/user/preguntale-al-peru/biblioteca…
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+   Building preguntale-al-peru @ file:///home/user/preguntale-al-peru
+      Built preguntale-al-peru @ file:///home/user/preguntale-al-peru
+Uninstalled 1 package in 1ms
+Installed 1 package in 0.75ms
+Listo: 75 Parquet; cubo ba1fbc55…
