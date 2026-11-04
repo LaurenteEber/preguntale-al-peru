@@ -21,7 +21,7 @@ Corte: 4 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas
 ## Qué falta, en orden
 
 1. **Del dueño:** las decisiones pendientes X-01 a X-08 (`decisiones.md`, sección final) y el **respaldo externo del almacén**. Las que tocan el motor por intenciones siguen abiertas en su valor de hoy: X-02 (conteo en «¿cuántos?» del SIEN), X-03 (CR-01 con el gasto del mismo año) y X-04 (un solo intervalo visible); cambiarlas es editar una línea de `parametros_motor.yaml`.
-2. **Adenda del slice 1** (`backlog/slice-1/adenda/`): gasto en soles constantes y observaciones medias de la revisión; necesita las decisiones AD-1 y AD-2.
+2. **Adenda del slice 1** (`backlog/slice-1/adenda/`): gasto en soles constantes y observaciones medias de la revisión; AD-1 y AD-2 aprobadas el 4/11/2026. Empieza por reconstruir la biblioteca en el Mac (S1-11).
 3. **Slice 2 (fase 5b):** intérprete LLM que produzca la consulta mínima (`backlog/plan_slices.md`); después 5c (API y web mínima) y beta cerrada.
 4. **Consultas abiertas del slice 1:** ver `backlog/slice-1/consultas_al_dueno.md` y `backlog/slice-1/evidencia/cierre.md`.
 5. **Antes de la Ola 1:** GA-13 (gasto en proyectos con códigos fuera del detalle de inversiones del MEF) y la separación por producto de las ejecutoras mixtas (X-06).

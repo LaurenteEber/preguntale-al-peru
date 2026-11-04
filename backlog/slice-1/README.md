@@ -19,7 +19,7 @@ consulta mínima (JSON, con esquema)        ← la producirá el LLM en el slice
   → respuesta por capas (contrato_respuesta.md)
 ```
 
-**Adenda (3/11/2026):** las historias S1-11 a S1-16 que concluyen la implementación están en [adenda/](adenda/README.md).
+**Adenda (actualizada el 4/11/2026):** las historias S1-11 a S1-16 que concluyen la implementación están en [adenda/](adenda/README.md).
 
 ## Historias (en orden)
 
