@@ -62,6 +62,14 @@ Algo que cambia cifras, reglas, decisiones, fuentes o privacidad. El agente no l
 - **Mientras tanto:** la tabla no se toca. La respuesta dice cuando no puede usar el año pedido, en vez de descartarlo en silencio.
 - **Respuesta del dueño (3/11/2026):** «en C-05 sí mostramos 2023, ya que contamos con la data». Se agrega 2023 a `comparable_con` del quiebre L11 de `gasto_ex_pan` en `dim_indicador.yaml` (G-07 ya dice 2023–2025; no se edita `decisiones.md`).
 
+### C-06 — La nube no puede bajar la biblioteca: el release `biblioteca-ba1fbc55` no existe en GitHub (S1-11, X-11) · abierta (detiene la adenda)
+- **Qué pasa:** `bash scripts/bajar_biblioteca.sh` termina con error 404 al pedir `SHA256SUMS` (`evidencia/adenda/s1-11_biblioteca.txt`). El 4/11/2026 la API de GitHub dice que el repositorio `LaurenteEber/preguntale-al-peru` es público y que **no tiene ningún release ni etiqueta** (`/releases` y `/tags` vacíos). El paquete que S1-11 da por publicado no está.
+- **Por qué importa:** sin los Parquet no corre `uv run pap` ni la parte de `uv run pytest -q` que usa el cubo. Es `agents.md` §8: no se pueden implementar las historias que tocan cifras o respuestas (S1-12 a S1-16, casi toda la adenda). Y §4 dice que, si no se puede correr el entorno, se detiene el slice y se avisa. Los crudos tampoco están (en la nube `biblioteca/cruda/` solo trae los `datapackage.json`), así que no se puede reconstruir, y S1-11 lo prohíbe igual.
+- **Qué dice el diseño:** X-11 (se trabaja en la nube con la biblioteca publicada en un release); S1-11 tarea 4; `agents.md` §8.
+- **Propuesta:** que el dueño publique desde el Mac el release `biblioteca-ba1fbc55` con `biblioteca-ba1fbc55.tar.zst` (las carpetas `biblioteca/{dimensiones,estandarizada,indicadores}`) y su `SHA256SUMS`, tal como lo espera `scripts/bajar_biblioteca.sh`. Por ejemplo: `gh release create biblioteca-ba1fbc55 biblioteca-ba1fbc55.tar.zst SHA256SUMS`. Después, en una sesión nueva, se retoma S1-11 desde la tarea 4. Alternativa: si el release existe con otro nombre o como borrador, publicarlo o indicar la etiqueta, y el script la recibe como argumento.
+- **Mientras tanto:** está hecho el primer commit de S1-11 (`agents.md` §8 y la marca `solo_mac`), que no necesita el cubo. No hay respaldo ni `pytest_base.txt`, y no se empezó S1-12 a S1-16. La rama `slice-1-adenda` quedó solo en el entorno: el 4/11/2026 GitHub rechazó el push con error 403 («Claude doesn't have GitHub access…»). Hay que reconectar GitHub en claude.ai o instalar la app de Claude en el repositorio.
+- **Respuesta del dueño:**
+
 ## Supuestos aplicados (vacíos tipo B)
 
 Defaults elegidos por el agente según `agents.md` §6. Cada uno está en `curados/motor/parametros_motor.yaml` con `supuesto: S1-xx`, o en los textos de `curados/motor/textos/`.
