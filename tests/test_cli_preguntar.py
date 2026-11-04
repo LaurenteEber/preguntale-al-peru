@@ -62,7 +62,9 @@ def test_elegir_1_responde_como_q1(capsys, tmp_path):
     assert out.startswith("===== evolucion__anemia__09 · semáforo: verde")
     r = json.loads((tmp_path / "evolucion__anemia__09.json").read_text(encoding="utf-8"))
     ref = json.loads((REFERENCIAS / "q1.json").read_text(encoding="utf-8"))
-    nuevas = {clave(c): c for c in r["cifras"].values()}
+    ad1 = ("endes_anemia_6_35m_oms2024", 2024, "departamento", "09", "proporcion", "contexto")   # AD-1 (S1-13): cifra nueva de Q1
+    nuevas = {clave(c): c for c in r["cifras"].values() if clave(c) != ad1}
+    assert len(r["cifras"]) == len(nuevas) + 1
     esperadas = {clave(c): c for c in ref["cifras"].values() if clave(c) != ("endes_anemia_6_35m", 2022, "departamento", "09", "proporcion", "contexto")}
     assert set(nuevas) == set(esperadas)
     for k, c in nuevas.items():

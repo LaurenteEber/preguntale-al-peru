@@ -151,8 +151,14 @@ temas:
         - cuando: {principal: [endes_anemia_6_35m_oms2024, endes_anemia_6_35m]}
           decision: E-06                       # las dos formas de medir en paralelo, cada una con su alcance
           bloques: [dos_formas_anemia]
+          sin_serie_vigente:                   # S1-13 (A-H6, E-06): la forma vigente tiene menos de dos años en el periodo
+            vigente: endes_anemia_6_35m_oms2024  # → se cuenta la serie de la forma anterior; la vigente, como contexto
+            bloques: [forma_anterior_sola]
+            decision: "E-06 (A-H6)"
           cifras:
             - {indicador: endes_anemia_6_35m_oms2024, rol: principal, comparar_con: anterior_disponible, decision: E-06}
+            - {indicador: endes_anemia_6_35m_oms2024, rol: contexto, anio: {comparado_de: endes_anemia_6_35m_oms2024},
+               decision: "R-04 (AD-1)"}                # la cifra del año con el que se compara, con su cita
             - {indicador: endes_anemia_6_35m, rol: principal, comparar_con: primero_serie, decision: E-06}
             - {indicador: endes_anemia_6_35m, rol: contexto, anio: primero_serie, decision: E-06}
         - cuando: {principal: [sien_anemia_tamizados_6_35m]}

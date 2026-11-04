@@ -192,3 +192,25 @@ def test_ajuste_de_capa1_no_toca_lo_que_cabe():
     largo = ["palabra " * 130, "otra cosa", "y otra"]
     quedan, pasan = K._ajustar_capa1(RAIZ, largo, ["x", *largo])
     assert quedan == largo[:1] and pasan == largo[1:]                # nunca baja de ojo_al_leer.min (1)
+
+
+def test_reducida_evolucion_muestra_las_dos_cifras(mundo):
+    """S1-13 (AD-1, H11): toda evolución respondida de la matriz reducida muestra las dos cifras que compara, cada una con su
+    marcador (la comprobación `evolucion` de matriz/comprobar.py, que también corre en la matriz completa)."""
+    vistas = 0
+    for c in mundo["reducida"]:
+        if c["intencion"] != "evolucion":
+            continue
+        _, res = R.correr_caso(mundo["motor"], mundo["p"], mundo["nombre"], c)
+        if res is None or res["tipo"] != "respuesta":
+            continue
+        assert C.evolucion(res) == [], c["id"]
+        comparadas = [i for i, x in res["cifras"].items() if x["rol"] == "principal" and x.get("comparacion")
+                      and i not in res["comparaciones_bloqueadas"]]
+        vistas += bool(comparadas)
+        for i in comparadas:                       # sin el marcador de la cifra de comparación, la comprobación falla
+            otra = next(k for k, x in res["cifras"].items() if k != i and int(x["anio"]) == int(res["cifras"][i]["comparacion"]["anio"])
+                        and x["indicador_id"] == res["cifras"][i]["indicador_id"])
+            roto = dict(res, texto_con_marcadores=res["texto_con_marcadores"].replace("{{c:%s}}" % otra, ""))
+            assert [f["codigo"] for f in C.evolucion(roto)] == ["evolucion_sin_las_dos_cifras"]
+    assert vistas >= 2, vistas                     # la reducida (60 casos fijos) trae al menos dos evoluciones comparadas

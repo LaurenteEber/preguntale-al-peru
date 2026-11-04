@@ -288,6 +288,13 @@ def test_nombres_antiguos_dan_las_mismas_capas(raiz, motor, q):
     viejo = motor.responder(antiguo)
     sin_ids = lambda c: {**c, "cifra_clave": c["cifra_clave"] and {k: v for k, v in c["cifra_clave"].items() if k != "ids"}}   # noqa: E731
     assert sin_ids(viejo["capas"]["capa1"]) == sin_ids(nuevo["capas"]["capa1"])      # los ids de los q*.yaml son otros
+    if q == "q1":          # AD-1 (S1-13): el q1.yaml archivado no trae la cifra vigente de 2024 que el plan nuevo agrega al final
+        mc = nuevo["capas"]["capa2"]["mas_contexto"]
+        assert mc[-1]["titulo"] == "2024 y 2025, con la forma de medir actual"
+        nuevo["capas"]["capa2"] = {**nuevo["capas"]["capa2"], "mas_contexto": mc[:-1]}
+        citas = nuevo["capas"]["capa3"]["para_citar"]
+        assert "(forma de medir vigente desde 2024), Huancavelica, 2024." in citas[-1]
+        nuevo["capas"]["capa3"] = {**nuevo["capas"]["capa3"], "para_citar": citas[:-1]}
     assert viejo["capas"]["capa2"] == nuevo["capas"]["capa2"]
     assert viejo["capas"]["capa3"]["glosario"] == nuevo["capas"]["capa3"]["glosario"]
     assert viejo["capas"]["capa3"]["para_citar"] == nuevo["capas"]["capa3"]["para_citar"]

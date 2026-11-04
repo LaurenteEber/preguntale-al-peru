@@ -545,6 +545,10 @@ def evolucion(P: _Plantilla) -> dict:
         P.ojo.append(P.ojo_generico(c0))
         if _sin_cambio(c0):
             P.ojo.append(P.c["ojo_sin_cambio"])
+        sola = P.bloque("forma_anterior_sola")
+        if sola and P.sec("ojo_vigente"):  # S1-13 (A-H6): la serie es de la forma anterior; se nombra la vigente
+            anios_v = sorted(int(a) for a in P.m.ctx.indicadores[sola["vigente"]]["anios_disponibles"])
+            P.ojo.append(P.t(P.sec("ojo_vigente"), **P.valores(vs, anio_vigente=anios_v[0])))
         if constantes:                     # S1-12: el mensaje de R-GASTO-12 prevalece sobre la plantilla (agents.md §3)
             m = next((r.mensaje for r in (c0.evaluacion.resultados if c0.evaluacion else [])
                       if r.regla == "R-GASTO-12" and r.motivo == "soles_constantes" and r.mensaje), None)
@@ -555,13 +559,18 @@ def evolucion(P: _Plantilla) -> dict:
         ti = tp["tarjeta_inicial"]
         vi = P.valores(vs, a=int(ini.anio), c_ini=P.cm(ini_id), fuente=P.vars_cifra(ini)["fuente"])
         P.usadas.append(ini_id)
+        comparada = bool(c0.comparacion) and int(ini.anio) == int(c0.comparacion["anio"]) and not _bloqueada(c0)
         etiqueta = (_sub(ti["etiqueta_constantes"], {"anio_base": c0.anio_base_deflactor})
-                    if constantes and not _bloqueada(c0) else ti["etiqueta"])
-        P.ctxs.append({"titulo": _sub(ti["titulo"], vi), "texto": P.t(ti["texto"], **vi), "etiqueta": etiqueta})
+                    if constantes and comparada else ti["etiqueta"])
+        texto = (P.t(ti["texto_comparada"], **P.valores(vi, b=int(c0.anio), c_fin=P.cm(i0))) if comparada   # AD-1
+                 else P.t(ti["texto"], **vi))
+        P.ctxs.append({"titulo": _sub(ti["titulo"], vi), "texto": texto, "etiqueta": None if comparada and not constantes else etiqueta})
         gastadas.add(ini_id)
+    sola = P.bloque("forma_anterior_sola")
     for i, c in P.cf.items():
         if i not in gastadas and _publicable(c):
-            P.ctxs.append(P.tarjeta_generica(c, i))
+            otra_forma = sola and c.indicador_id == sola["vigente"]
+            P.ctxs.append(P.tarjeta_generica(c, i, P.sec("etiqueta_vigente") if otra_forma else None))
     return P.cierre(clave=clave, tema=P.q.get("tema"), nivel_respuesta=_nivel_respuesta(P, c0), territorio_nombre=_lugar(c0),
                     glosario_extra=("soles_constantes",) if constantes else ())
 
@@ -607,6 +616,12 @@ def _evolucion_dos_formas(P: _Plantilla, series: list) -> dict:
     tf = s("tarjeta_formas")
     P.ctxs.append({"titulo": tf["titulo"], "texto": P.t(tf["texto"] if quiebre is not None else tf["texto_sin_quiebre"], **vs),
                    "etiqueta": None})
+    ini1_id, ini1 = _inicial(P, c1)
+    if _publicable(c1) and _publicable(ini1) and s("tarjeta_vigente"):     # AD-1: el año con el que se compara, con su cita
+        tv = s("tarjeta_vigente")                                          # (al final: las tarjetas anteriores no cambian)
+        P.usadas.append(ini1_id)
+        P.ctxs.append({"titulo": _sub(tv["titulo"], vs), "etiqueta": None,
+                       "texto": P.t(tv["texto"], **P.valores(vs, c_ini=P.cm(ini1_id), c_fin=P.cm(i1)))})
     return P.cierre(clave=clave, tema=P.q.get("tema"), nivel_respuesta=_nivel_respuesta(P, c1), territorio_nombre=_lugar(c1))
 
 

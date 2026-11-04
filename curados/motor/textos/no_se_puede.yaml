@@ -156,6 +156,7 @@ motivos:
     motivo: "Los datos de {tema} que usamos para {lugar} solo permiten una cifra, sin otro año comparable. Por eso no se puede decir si subió o bajó."
     cercano:
       anio: "Sí tenemos la cifra de {anio} para {lugar}, la más reciente. Puedes preguntar por ella."
+      anio_hasta: "Sí tenemos la cifra de {anio} para {lugar}, con datos hasta {anio}. Puedes preguntar por ella."   # S1-13 (N-2): no es el último año del indicador
       ninguna: "Por ahora no tenemos una cifra para ofrecerte."
   mismo_lugar:                    # S1-09 (warning): comparar un lugar consigo mismo
     regla: null

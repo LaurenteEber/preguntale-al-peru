@@ -9,6 +9,7 @@ copiarlos. Cada comprobación devuelve una lista de fallos `{"codigo", "detalle"
   marcadores       sin `{{…}}`, IDs de regla, de indicador, de cruce, códigos NC-… ni nombres de columnas en el texto visible
   nombres          cada nombre de lugar resuelto escrito como su nombre_mostrado (T-02)
   citas            cada cifra usada tiene su línea en `capa3.para_citar` (P-02); sin cifras, sin porcentajes ni montos visibles
+  evolucion        S1-13 (AD-1, H11): una evolución muestra las dos cifras que compara, cada una con su marcador
 """
 from __future__ import annotations
 
@@ -136,6 +137,28 @@ def citas(r: dict) -> list[dict]:
     return out
 
 
+REGLAS_COMPARACION = {"R-ENC-11", "R-ENC-13", "R-ENC-14", "R-CRUCES-04", "R-REG-10", "R-GASTO-09", "R-GASTO-12"}
+
+
+def evolucion(r: dict) -> list[dict]:
+    """S1-13 (AD-1, H11): en una evolución respondida, cada cifra principal cuya comparación no quedó bloqueada se muestra junto
+    con la cifra del año con el que se compara; las dos están en las cifras usadas y su marcador va en el texto."""
+    if r["tipo"] != "respuesta" or (r.get("consulta") or {}).get("intencion") != "evolucion":
+        return []
+    cifras, texto, out = r.get("cifras") or {}, r.get("texto_con_marcadores") or "", []
+    for i, c in cifras.items():
+        comp = c.get("comparacion")
+        if c.get("rol") != "principal" or not comp or i in (r.get("comparaciones_bloqueadas") or []) or \
+                any(b.get("regla") in REGLAS_COMPARACION for b in c.get("bloqueos_cruce") or []):
+            continue
+        par = [k for k, x in cifras.items() if k != i and (x["indicador_id"], x["nivel"], str(x["territorio_id"]), int(x["anio"])) ==
+               (c["indicador_id"], c["nivel"], str(c["territorio_id"]), int(comp["anio"]))]
+        if not par or "{{c:%s}}" % par[0] not in texto or "{{c:%s}}" % i not in texto:
+            out.append(_fallo("evolucion_sin_las_dos_cifras", {"cifra": i, "anio_comparado": int(comp["anio"])}))
+    return out
+
+
 def revisar(res: dict, p: dict, lugares: list[str]) -> list[dict]:
     """Todas las comprobaciones sobre una respuesta con capas (respondida o no_se_puede)."""
-    return (validador(res) + capa1_maximo(res, p) + corrector(res, p) + marcadores(res) + nombres(res, lugares) + citas(res))
+    return (validador(res) + capa1_maximo(res, p) + corrector(res, p) + marcadores(res) + nombres(res, lugares) + citas(res)
+            + evolucion(res))

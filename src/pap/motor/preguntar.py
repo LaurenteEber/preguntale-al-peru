@@ -252,7 +252,9 @@ def _alternativas(motor, plan: dict, codigo: str, detalle: dict, cifra_base=None
             return "ninguna", {}, []
         alt = {"tipo": "anio", "anio": int(c.anio), "nivel": c.nivel, "territorio_id": str(c.territorio_id),
                "nombre": _nombre_cifra(motor, c), "texto": str(int(c.anio)), "lugar": _lugar_consulta(c.nivel, c.territorio_id)}
-        return "anio", {"anio": alt["anio"], "lugar": alt["nombre"]}, [alt]
+        ultimo = max(int(a) for a in motor.ctx.indicadores[c.indicador_id]["anios_disponibles"])
+        clave = "anio" if int(c.anio) == ultimo else "anio_hasta"     # S1-13 (N-2): «la más reciente» solo del último año
+        return clave, {"anio": alt["anio"], "lugar": alt["nombre"]}, [alt]
     if codigo == "nivel_no_valido":
         if plan.get("intencion") == "identificar_extremo":
             if not detalle.get("nivel_planificado"):

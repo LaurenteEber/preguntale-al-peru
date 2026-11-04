@@ -16,5 +16,6 @@ clave:
 tarjeta_inicial:
   titulo: "El punto de partida: {a}"
   texto: "En {a}, {sujeto} era {c_ini} en {lugar} ({fuente})."
+  texto_comparada: "En {lugar}, {sujeto} fue {c_ini} en {a} y {c_fin} en {b}."   # AD-1: las dos cifras que compara
   etiqueta: "Otro año: no se compara con la cifra clave."
   etiqueta_constantes: "En soles de {anio_base}, para compararlo con la cifra clave."   # S1-12

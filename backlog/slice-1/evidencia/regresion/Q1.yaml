@@ -12,9 +12,11 @@
   antes: '65,0 % (intervalo: 59,1 % a 70,6 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024),
     Huancavelica, 2022. Fuente: INEI, ENDES 2022 Departamento de Huancavelica, cap. 9 Nutrición, p. 66 (texto: «la anemia
     en el año 2022, afectó a 65,0% de niñas y niños de 6 a 35 meses»; 2021: 57,4%).'
-  despues: ''
-  motivo: 'C-01 (dueño, 3/11/2026, fila E-06 de decisiones.md): Q1 ya no muestra el pico de 2022; la serie se cuenta con su
-    primer y último año. Se quita la cita de la cifra de 2022, que ya no se usa.'
+  despues: '32,9 % (intervalo: 27,7 % a 38,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024),
+    Huancavelica, 2024. Fuente: INEI, ENDES 2024 Departamento de Huancavelica, cap. 9 Nutrición, p. 70 (texto; Gráfico 9.5).'
+  motivo: 'C-01 (dueño, 3/11/2026, fila E-06 de decisiones.md) y AD-1 (dueño, 4/11/2026, fila R-04 de decisiones.md): se quita
+    la cita de la cifra de 2022, que ya no se usa (C-01), y en su lugar va la cita de la anemia vigente de 2024, la cifra
+    con la que se compara la de 2025 (AD-1, S1-13).'
   aprobado_por: dueño
 - capa: reglas
   antes: R-TERRITORIO-09 · revision_humana · endes_anemia_6_35m/2025/departamento/09/proporcion/principal
@@ -32,3 +34,17 @@
     resuelto y esa revisión falsa desaparece; es la corrección esperada (S1-07, tarea 4). Solo era una acción `revision_humana`:
     no cambia cifras, semáforos, confianza ni bloqueos.'
   aprobado_por: agente
+- capa: capa2.mas_contexto[2].texto
+  antes: ''
+  despues: Con la forma de medir que usa hoy el Ministerio de Salud, la anemia fue 32,9 % en 2024 y 38,6 % en 2025.
+  motivo: 'AD-1 (dueño, 4/11/2026, fila R-04 de decisiones.md): en una evolución, «Más contexto» da también la cifra del año
+    con el que se compara. Se agrega la tarjeta con la anemia de 2024 con la forma vigente junto a la de 2025, con su marcador
+    y su cita (S1-13). Va al final para no mover las tarjetas que ya estaban.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[2].titulo
+  antes: ''
+  despues: 2024 y 2025, con la forma de medir actual
+  motivo: 'AD-1 (dueño, 4/11/2026, fila R-04 de decisiones.md): en una evolución, «Más contexto» da también la cifra del año
+    con el que se compara. Se agrega la tarjeta con la anemia de 2024 con la forma vigente junto a la de 2025, con su marcador
+    y su cita (S1-13). Va al final para no mover las tarjetas que ya estaban.'
+  aprobado_por: dueño

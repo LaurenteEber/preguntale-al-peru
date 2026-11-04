@@ -148,7 +148,9 @@ def test_e06_evolucion_endes_dos_criterios_en_paralelo(plan, motor):
     assert (v["anio"], v["comparar_con"]) == (motor.anio(ENDES_V, None), 2024)        # el año anterior disponible
     assert (a["anio"], a["comparar_con"]) == (motor.anio(ENDES_A, None), 2015)        # el primer año de la serie
     assert primero["anio"] == 2015 and "comparar_con" not in primero
-    assert len(p["cifras"]) == 3                                                     # sin años intermedios (C-01)
+    comparada = uno(p, ENDES_V, "contexto")                                          # AD-1 (S1-13): el año con el que se compara
+    assert comparada["anio"] == v["comparar_con"] and "comparar_con" not in comparada
+    assert len(p["cifras"]) == 4                                                     # sin años intermedios (C-01)
     assert all(c["territorio"] == "09" and c["nivel"] == "departamento" for c in p["cifras"])
     assert not [c for c in p["cifras"] if c["anio"] == 2022]
 

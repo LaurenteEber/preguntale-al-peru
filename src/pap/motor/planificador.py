@@ -40,6 +40,29 @@ def cargar_intenciones(raiz) -> dict:
     return _leer(str(raiz), str(RUTA_INTENCIONES))
 
 
+def _sin_serie_vigente(motor, caso: dict, plan: dict, hechas: list[dict], motivos: list[dict], cita) -> None:
+    """S1-13 (A-H6, E-06): en una evolución con las dos formas de medir, si el periodo deja a la forma vigente sin dos años
+    que comparar pero la anterior sí los tiene, se responde con la serie de la anterior. La cifra vigente del periodo, si la
+    hay, pasa a contexto; si el indicador no tiene ese año, se quita (el «Ojo al leer» la nombra). Si ninguna de las dos
+    formas tiene dos años, sigue el «no se puede»."""
+    regla = caso.get("sin_serie_vigente")
+    if not regla:
+        return
+    vig = next((h for h in hechas if h["indicador"] == regla["vigente"] and h["rol"] == "principal"), None)
+    otra = [h for h in hechas if h["indicador"] != regla["vigente"] and h["rol"] == "principal" and h.get("comparar_con") is not None]
+    sin_serie = [m for m in motivos if m["motivo"] == "serie_un_solo_anio" and m.get("indicador") == regla["vigente"]]
+    if vig is None or vig.get("comparar_con") is not None or not otra or not sin_serie:
+        return
+    cita(regla)
+    for m in sin_serie:
+        motivos.remove(m)
+    if int(vig["anio"]) in _anios(motor, vig["indicador"]):
+        vig["rol"] = "contexto"
+    else:
+        hechas.remove(vig)
+    plan["bloques"] = list(regla["bloques"])
+
+
 def _soles_constantes(motor, hechas: list[dict]) -> None:
     """S1-12 (G-01, R-GASTO-12): una comparación de gasto entre años va en soles constantes del último año cerrado. La cifra
     que compara (`comparar_con`) y la del año con el que se compara piden `devengado_constante`; la segunda guarda el año
@@ -455,6 +478,7 @@ def planificar(consulta_minima: dict, resuelto, motor, *, parametros: dict | Non
                     igual.setdefault("comparar_con", spec["comparar_con"])
                 continue
             hechas.append(spec)
+    _sin_serie_vigente(motor, caso, plan, hechas, motivos, cita)
     _soles_constantes(motor, hechas)
     for h in hechas:
         h["id"] = formato_id_cifra(indicador=h["indicador"], medida=motor.medida(h["indicador"], h.get("medida")), nivel=h["nivel"],

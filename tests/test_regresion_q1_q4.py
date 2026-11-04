@@ -27,6 +27,8 @@ from conftest import RAIZ_REAL
 
 QS = ["q1", "q2", "q3", "q4"]
 CLAVE_2022_Q1 = ("endes_anemia_6_35m", 2022, "departamento", "09", "proporcion", "contexto")   # anemia_hvca_2022_ant
+# AD-1 (dueño, 4/11/2026, fila R-04): la evolución da también la cifra vigente del año con el que se compara (S1-13)
+CLAVE_2024_Q1 = ("endes_anemia_6_35m_oms2024", 2024, "departamento", "09", "proporcion", "contexto")
 
 
 @pytest.fixture(scope="module")
@@ -70,6 +72,7 @@ def test_planes(raiz, motor, q):
     esperado = por_clave(motor, manual(raiz, q)["cifras"])
     if q == "q1":
         assert esperado.pop(CLAVE_2022_Q1, "falta") is None      # la diferencia aprobada (C-01) se retira solo de q1.yaml
+        esperado[CLAVE_2024_Q1] = None                            # la diferencia aprobada (AD-1) se agrega al plan
     plan = generado(raiz, motor, q)
     assert por_clave(motor, plan["cifras"]) == esperado
     assert (plan.get("grupos") or []) == (manual(raiz, q).get("grupos") or [])
@@ -180,6 +183,10 @@ def test_respuestas(raiz, motor, nuevas, q):
     if q == "q1":                                   # C-01 (dueño, 3/11/2026): sin la cifra de 2022
         ref["cifras"] = {i: c for i, c in ref["cifras"].items() if clave_dict(c) != CLAVE_2022_Q1}
         ref["resultados_respuesta"] = [x for x in ref["resultados_respuesta"] if x["objetivo"] != "anemia_hvca_2022_ant"]
+        new = dict(new, cifras={i: c for i, c in new["cifras"].items() if clave_dict(c) != CLAVE_2024_Q1})   # AD-1
+        nuevas_ids = {i for i, c in nuevas[q]["cifras"].items() if clave_dict(c) == CLAVE_2024_Q1}
+        assert len(nuevas_ids) == 1, "AD-1: Q1 debe traer la cifra vigente de 2024 como contexto"
+        new["resultados_respuesta"] = [x for x in new["resultados_respuesta"] if x["objetivo"] not in nuevas_ids]
     rc, nc = cifras_por_clave(ref), cifras_por_clave(new)
     # --- iguales exactos
     assert set(nc) == set(rc), (set(nc) ^ set(rc))

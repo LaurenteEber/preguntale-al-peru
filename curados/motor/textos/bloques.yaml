@@ -48,6 +48,9 @@ bloques:
       ojo:
         - "No compares esta cifra con las de años anteriores a {anio_vigente}: se medía de otra forma, que da cifras más altas."
         - "«Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
+      tarjeta_vigente:                       # AD-1 (dueño, 4/11/2026): la cifra del año con el que se compara
+        titulo: "{a1} y {b1}, con la forma de medir actual"
+        texto: "Con la forma de medir que usa hoy el Ministerio de Salud, la anemia fue {c_ini} en {a1} y {c_fin} en {b1}."
       tarjeta_anterior:
         titulo: "Desde {a2}, con la forma de medir anterior"
         con_inicio: "Con la forma de medir anterior, que permite comparar desde {a2} con la misma regla, la anemia fue {c_ini} en {a2} y {c_fin} en {b2}"
@@ -59,6 +62,14 @@ bloques:
         titulo: "Por qué hay dos formas de medir"
         texto: "{{p:dos_formas}} {{p:quiebres}}"
         texto_sin_quiebre: "{{p:dos_formas}}"
+
+  forma_anterior_sola:                       # S1-13 (A-H6, E-06): el periodo pedido solo tiene la serie de la forma anterior
+    cuando: {plan_bloques: [forma_anterior_sola]}
+    glosario: [forma_de_medir, cambio_claro, endes]
+    vigente: endes_anemia_6_35m_oms2024
+    evolucion:
+      ojo_vigente: "Con la forma de medir actual solo hay datos desde {anio_vigente}. Esta serie usa la anterior, que da cifras más altas."
+      etiqueta_vigente: "Otra forma de medir: no se compara con la cifra clave."
 
   # ---------------------------------------------------------------- SIEN: registro de niños medidos (S-01)
   sien:
