@@ -36,3 +36,6 @@ packages = ["src/pap"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+markers = [
+    "solo_mac: needs the raw store (biblioteca/cruda/); runs only on the owner's Mac (X-11)",
+]

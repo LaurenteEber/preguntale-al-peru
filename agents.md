@@ -95,7 +95,7 @@ En este orden:
 
 ## 8. Entorno y comandos
 
-- Mac del dueño, uv + Python 3.12: `uv sync`; ayuda: `uv run pap --help`.
+- Se trabaja en el Mac del dueño o en Claude Code en la nube, con uv y Python 3.12 (`uv sync`; ayuda: `uv run pap --help`). En la nube, la biblioteca se baja con `scripts/bajar_biblioteca.sh` (los Parquet del release de GitHub cuya etiqueta nombra la huella del cubo). `pap construir` desde los crudos solo corre en el Mac, donde está el almacén. Una prueba que necesita los crudos lleva la marca `solo_mac` y se deja fuera en la nube con `-m "not solo_mac"`; la evidencia dice cuántas y cuáles quedaron fuera.
 - **Si no puedes correr `uv run pytest -q` ni `uv run pap`** (otro equipo, sin Python 3.12, sin la biblioteca de Parquet): no implementes historias que toquen cifras o respuestas. Escribe la consulta en `consultas_al_dueno.md` y detente; solo puedes avanzar en lo que no necesita el cubo (esquemas, textos, documentación).
 - Las pruebas nuevas que dependen del cubo o de la biblioteca **fallan** si faltan, no se saltan (no copiar el `pytest.skip` de `test_respuesta_p3.py`): un salto daría un falso verde.
 - Pruebas: `uv run pytest -q`.
