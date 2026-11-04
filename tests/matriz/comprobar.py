@@ -143,15 +143,22 @@ REGLAS_COMPARACION = {"R-ENC-11", "R-ENC-13", "R-ENC-14", "R-CRUCES-04", "R-REG-
 
 def evolucion(r: dict) -> list[dict]:
     """S1-13 (AD-1, H11): en una evolución respondida, cada cifra principal cuya comparación no quedó bloqueada se muestra junto
-    con la cifra del año con el que se compara; las dos están en las cifras usadas y su marcador va en el texto."""
+    con la cifra del año con el que se compara; las dos están en las cifras usadas y su marcador va en el texto. Si la respuesta
+    no compara (el año de comparación no aparece en el texto visible, p. ej. porque esa cifra se suprimió), no hay nada que
+    mostrar."""
     if r["tipo"] != "respuesta" or (r.get("consulta") or {}).get("intencion") != "evolucion":
         return []
     cifras, texto, out = r.get("cifras") or {}, r.get("texto_con_marcadores") or "", []
+    c = r["capas"]                                         # lo que la respuesta dice (sin «Datos de», citas ni glosario)
+    dichos = [c["capa1"]["respuesta_corta"], *c["capa1"]["ojo_al_leer"]] + \
+        [x for t in c["capa2"]["mas_contexto"] for x in (t["titulo"], t["texto"])]
     for i, c in cifras.items():
         comp = c.get("comparacion")
         if c.get("rol") != "principal" or not comp or i in (r.get("comparaciones_bloqueadas") or []) or \
                 any(b.get("regla") in REGLAS_COMPARACION for b in c.get("bloqueos_cruce") or []):
             continue
+        if not any(str(int(comp["anio"])) in t for t in dichos):
+            continue                                       # la respuesta no compara con ese año: no lo promete
         par = [k for k, x in cifras.items() if k != i and (x["indicador_id"], x["nivel"], str(x["territorio_id"]), int(x["anio"])) ==
                (c["indicador_id"], c["nivel"], str(c["territorio_id"]), int(comp["anio"]))]
         if not par or "{{c:%s}}" % par[0] not in texto or "{{c:%s}}" % i not in texto:
