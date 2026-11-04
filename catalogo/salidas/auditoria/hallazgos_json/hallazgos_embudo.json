@@ -1,0 +1,381 @@
+[
+ {
+  "id": "EMB-01",
+  "area": "embudo",
+  "severidad": "critica",
+  "registros": [
+   "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+   "INEI-CPV2017",
+   "RENIEC-POBLACION-IDENTIFICADA-DNI",
+   "MINSA-PADRON-NOMINAL"
+  ],
+  "campo": "capa/ola",
+  "hallazgo": "La Capa 0 no tiene un denominador de población por distrito, año, edad y sexo. La proyección distrital es solo población total (desagregaciones=['año']) y quizá viene solo en PDF; RENIEC mide población identificada con DNI, no población residente. Sin denominadores por edad no se pueden calcular coberturas del foco duro: anemia y DCI en <5 años, vacunación en <1 año, matrícula de 3-5, 6-11 y 12-16 años, Pensión 65 en ≥65 años.",
+  "evidencia": "catalogo_fuentes.json: INEI-PROYECCIONES-POBLACION-DISTRITAL.desagregaciones=['año'], detalle_descarga='confirmar si incluye anexo en Excel o solo PDF'; priorizacion.md:297 promete 'población por distrito y año' sin edad/sexo",
+  "recomendacion": "Agregar a la Ola 0 un denominador por edad simple o quinquenal y sexo por distrito: la población estimada MINSA por distrito y edad (la que usan REUNIS e HIS para coberturas), las proyecciones INEI por grupos de edad (departamento/provincia) y el CPV2017 por edad como base. Definir una regla de denominador por indicador (Padrón Nominal para <6, MINSA para coberturas de salud, INEI para tasas) y documentar sus diferencias.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-02",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "PCM-RENLIM",
+   "INEI-PNDA-UBIGEOS",
+   "PNDA-UBIGEO-EQUIVALENCIAS",
+   "INEI-IDE-LIMITES"
+  ],
+  "campo": "capa/ola",
+  "hallazgo": "Falta un ubigeo histórico (creación, escisión y cambio de código de distritos después de 2017). Las series 2012–2026 de MEF, SIS, SIAGIE y CNV traen ubigeos que no existen en el CPV2017 ni en las proyecciones. La tabla de equivalencias cubre solo INEI↔RENIEC, no el cambio en el tiempo. PCM-RENLIM (demarcación por ley) está en fuera_de_alcance.",
+  "evidencia": "PCM-RENLIM.ola=fuera_de_alcance; INEI-PNDA-UBIGEOS.limitaciones='Verificar fecha de corte frente a creaciones distritales recientes'; ningún registro trae una tabla de vigencia de ubigeo (búsqueda 'creación de distrito|demarcación' → solo RENLIM, IDE, GEOCATMIN)",
+  "recomendacion": "Llevar PCM-RENLIM a la Ola 0 y construir una dimensión ubigeo con vigencia (desde, hasta, padre_origen, ley) y una regla de reasignación de distritos nuevos a su distrito madre para comparar series.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-03",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+   "MEF-PPR-PROGRAMAS-PRESUPUESTALES",
+   "MEF-DA-GASTO-PPR"
+  ],
+  "campo": "capa/ola",
+  "hallazgo": "La Capa 0 no tiene las dimensiones necesarias para cruzar gasto con resultados: (a) un maestro de unidades ejecutoras/pliegos con su ubigeo y nivel de gobierno, vacío que el documento reconoce pero al que no asigna ninguna fuente ni ola; (b) un catálogo de programas presupuestales, productos y actividades con el resultado o indicador que persiguen (PP 0001 → DCI y anemia, PP 0090 → logros de aprendizaje). MEF-PPR-PROGRAMAS-PRESUPUESTALES quedó en 'referencia' con puntaje 38.",
+  "evidencia": "priorizacion.md:288 (vacío 'tabla maestra de unidades ejecutoras' sin ola asignada); MEF-PPR-PROGRAMAS-PRESUPUESTALES.ola=referencia, puntaje 38; prioriza.py:16-22 la mete en GASTO, pero la regla de derivada (prioriza.py:114-118) la manda a referencia",
+  "recomendacion": "Agregar a la Ola 0: (1) dim_unidad_ejecutora, derivada de las columnas de la ejecutora en el CSV de gasto del MEF, con ubigeo y nivel de gobierno; (2) dim_programa_presupuestal (PP, producto, actividad, indicador de resultado, año), tomada de MEF-PPR-PROGRAMAS-PRESUPUESTALES y de los anexos de la Ley de Presupuesto. Pasar MEF-PPR-PROGRAMAS-PRESUPUESTALES de referencia a 0_base.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-04",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "SUSALUD-RENIPRESS"
+  ],
+  "campo": "ola/url_datos",
+  "hallazgo": "El puente IPRESS→ubigeo de la Ola 0 apunta a un dataset que, según el propio registro, no se actualiza desde noviembre de 2021. Los establecimientos creados o recategorizados después de esa fecha no cruzarían con SIS, HIS, CNV y SIEN. La alternativa que el registro menciona (dataset MINSA 'minsa-ipress' con coordenadas) no está catalogada como fuente aparte.",
+  "evidencia": "SUSALUD-RENIPRESS.limitaciones='El dataset SUSALUD en PNDA no se actualiza desde nov-2021; preferir MINSA - IPRESS o la consulta RENIPRESS en línea'",
+  "recomendacion": "Crear un registro MINSA-IPRESS (o RENAES) como puente principal en la Ola 0 y dejar SUSALUD-RENIPRESS como ruta_alterna o histórico. Antes de ingerir, validar la cobertura de códigos IPRESS cruzando con SIS-ATENCIONES y CNV.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-05",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "MINEDU-ESCALE-PADRON",
+   "MINEDU-SIGMED-DESCARGAS"
+  ],
+  "campo": "ola/estrategia_descarga",
+  "hallazgo": "El puente IE→ubigeo de la Ola 0 (padrón ESCALE) depende de scraping_dinamico detrás de un anti-bot (Check Point). Cinco fuentes de la Ola 1 cuelgan de él (SIAGIE, ECE, ENLA, Censo Educativo, Wasi Mikuna, PRONIED) y la Ola 0 debería ser la capa más robusta. La ruta alternativa con descarga de archivos (SIGMED) quedó en la Ola 2.",
+  "evidencia": "MINEDU-ESCALE-PADRON.estrategia_descarga=scraping_dinamico, detalle='desafío anti-bot (Check Point CloudGuard)'; MINEDU-SIGMED-DESCARGAS.ola=2_expansion (descarga_manual); priorizacion.md:292",
+  "recomendacion": "Subir MINEDU-SIGMED-DESCARGAS a la Ola 0 como ruta primaria del padrón (o buscar el padrón en la PNDA o en el CKAN de MINEDU) y dejar ESCALE-PADRON como ruta de validación. Probar la descarga real antes de cerrar la Ola 0.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EMB-06",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "MEF-DA-GASTO-DEVENGADO-MENSUAL",
+   "MEF-DA-GASTO-DEVENGADO-SECTORES",
+   "MEF-DA-GASTO-PPR",
+   "MEF-DA-GASTO-GPNNA",
+   "MEF-DA-PRESUPUESTO-EJECUCION-GASTO"
+  ],
+  "campo": "ola",
+  "hallazgo": "Hay duplicados funcionales de gasto MEF dentro de la Ola 1 que no se marcaron como ruta_alterna. DEVENGADO-SECTORES es una partición por sector del mismo devengado. GASTO-PPR equivale, según su propio registro, a filtrar PROGRAMA_PPTO en el dataset completo. DEVENGADO-MENSUAL es la agregación mensual de PRESUPUESTO-EJECUCION-GASTO. Así se contradice la regla 'una sola ruta por dato' y se arriesga tener cifras que no cuadran.",
+  "evidencia": "MEF-DA-GASTO-DEVENGADO-SECTORES.descripcion='Partición por sector... para descargas más pequeñas'; MEF-DA-GASTO-PPR.detalle_descarga='Alternativa equivalente: filtrar PROGRAMA_PPTO en el dataset completo de gasto'; priorizacion.md:16 (regla de una sola ruta); prioriza.py:24-31 (ALTERNA no los incluye)",
+  "recomendacion": "Elegir un solo dataset de gasto (PRESUPUESTO-EJECUCION-GASTO, con PIA, PIM, certificado y devengado, CUI y ubigeo de la ejecutora) y añadir a ALTERNA: DEVENGADO-SECTORES y GASTO-PPR → PRESUPUESTO-EJECUCION-GASTO. Mantener DEVENGADO-MENSUAL solo si aporta el corte mensual que el otro no trae (comprobarlo) y GPNNA por el marcador de niñez, que no se puede reconstruir, documentándolo como capa de etiquetas.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-07",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "MINSA-HIS",
+   "MINSA-REUNIS",
+   "MINSA-INMUNIZACIONES"
+  ],
+  "campo": "ola",
+  "hallazgo": "MINSA-HIS y MINSA-REUNIS son la misma ruta. HIS no tiene microdato público y sus agregados se publican en REUNIS; el url_portal de HIS apunta a REUNIS. Las dos están en la Ola 1, mientras que MINSA-INMUNIZACIONES, que es otro tablero de REUNIS, está en la Ola 2. El documento dice que la vacunación 'queda en la Ola 2' y a la vez declara REUNIS indispensable en la Ola 1 porque 'concentra indicadores... inmunizaciones'.",
+  "evidencia": "MINSA-HIS.detalle_descarga='No hay microdato nominal público. Agregados por EESS en REUNIS'; MINSA-HIS.url_portal=minsa.gob.pe/reunis/?op=3...; MINSA-REUNIS.detalle='op=2&niv=9 = inmunizaciones'; priorizacion.md:289",
+  "recomendacion": "Dejar en la Ola 1 una sola fuente, MINSA-REUNIS, con alcance explícito de tableros: atenciones HIS, inmunizaciones, CRED y anemia. Marcar MINSA-HIS como ruta_alterna (o como 'sistema de origen' sin ingesta) y llevar MINSA-INMUNIZACIONES a la Ola 1 como submódulo de REUNIS, o fusionarlo. Corregir el vacío de priorizacion.md:289.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-08",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "INEI-ENCO",
+   "INEI-ENEDIS",
+   "SUSALUD-ENSUSALUD",
+   "MINEDU-ENDO",
+   "INEI-ENEDU"
+  ],
+  "campo": "ola",
+  "hallazgo": "Hay series cerradas o de una sola edición en la Ola 1. ENCO es de 2006, ENEDIS de 2012, ENSUSALUD de 2014–2016 (ediciones posteriores no confirmadas), ENDO de 2021 (solo departamental y en descarga manual) y ENEDU sin cobertura temporal conocida. La SEGUNDA lista bajó las series COVID por estar cerradas, pero no aplicó el mismo criterio a estas. Todas tienen prioridad_mvp 'baja' o 'media'.",
+  "evidencia": "INEI-ENCO.cobertura_temporal='2006', prioridad_mvp=baja; INEI-ENEDIS='2012'; SUSALUD-ENSUSALUD='2014–2016'; MINEDU-ENDO='...2021'; INEI-ENEDU=None; prioriza.py:36-43 (SEGUNDA aplica 'serie cerrada' solo a COVID)",
+  "recomendacion": "Mover a 3_complementaria o referencia: ENCO. Mover a 2_expansion: ENEDIS (la discapacidad se cubre mejor con el CPV2017), ENSUSALUD, ENDO y ENEDU (esta hasta confirmar años). Añadir una regla de vigencia para la Ola 1 (último año ≥ 2022, salvo excepción ESENCIAL).",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-09",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [],
+  "campo": "regla (prioriza.py)",
+  "hallazgo": "El código contradice el documento sobre factibilidad. El documento dice que en la Ola 1 entra la 'descarga por API o URL estable' y el embudo la llama 'descargables de forma automatizable'. El código usa fac ≥ 0.6, y descarga_manual (definida como 'portal sin URL estable') vale exactamente 0.6, así que pasa. Diez de las 43 fuentes de la Ola 1 son de descarga manual: MEF-OXI-BASE, HIS, SINADEF, ENSUSALUD, ECE, ENLA, PRONIED, ENDO, CONTIGO y Mapa de Pobreza (esta por excepción).",
+  "evidencia": "prioriza.py:51 (descarga_manual: 0.6) y :106 (fac >= 0.6); priorizacion.md:15 y :26; esquema_registro.md (VOCAB_ESTRATEGIA: descarga_manual = portal sin URL estable)",
+  "recomendacion": "Elegir una opción: (a) subir el umbral a fac > 0.6 y mantener por ESENCIAL solo las manuales indispensables (ECE, SINADEF, Mapa de Pobreza); o (b) corregir el documento para decir 'descarga directa o manual sin scraping' y estimar el costo de mantenimiento manual por fuente y año.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-10",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "INEI-MICRODATOS",
+   "SGTD-PNDA",
+   "INEI-DATOS-ABIERTOS",
+   "MEF-DATOS-ABIERTOS-PORTAL"
+  ],
+  "campo": "ola",
+  "hallazgo": "Los portales que son el canal de descarga de buena parte de las Olas 0 y 1 están clasificados como 'fuera_de_alcance'. INEI-MICRODATOS sirve ENAHO, ENDES, ENAPRES, ENCO, ENEDU y ENEDIS. SGTD-PNDA (CKAN/DKAN) sirve unas 25 fuentes de la Ola 1 y de la Ola 0. El motivo que registran ('Tema fuera del foco y sin dato primario cruzable') es falso y puede llevar a que el equipo de ingesta los ignore o no los monitoree.",
+  "evidencia": "INEI-MICRODATOS.ola=fuera_de_alcance (puntaje 86); SGTD-PNDA.ola=fuera_de_alcance; las fuentes de la Ola 1 tienen url_portal en proyectos.inei.gob.pe/microdatos y datosabiertos.gob.pe; prioriza.py:61-63 (multitematica sin secundarias → complementaria)",
+  "recomendacion": "Crear una ola o etiqueta 'infraestructura_acceso' para los catálogos y portales que actúan como conectores. Ingerirlos como fuente de metadatos (listado de datasets, fechas de modificación) para detectar actualizaciones de las fuentes de las Olas 0 y 1.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-11",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [
+   "MEF-DA-GASTO-PPR",
+   "PNDA-UBIGEO-EQUIVALENCIAS",
+   "INEI-PNDA-UBIGEOS"
+  ],
+  "campo": "estado_enlace",
+  "hallazgo": "La Ola 1 (39 de 43) y la Ola 0 (11 de 12) se apoyan en enlaces 'confirmado_busqueda', es decir, nunca abiertos. El embudo da por descargables fuentes cuyo archivo no se ha visto (MEF-DA-GASTO-PPR devolvió 403; PNDA-UBIGEO-EQUIVALENCIAS redirigió a login). El puntaje solo penaliza 'no_responde'.",
+  "evidencia": "Conteo en el JSON: estado_enlace de la Ola 1 = 39 confirmado_busqueda y 4 confirmado_navegador; MEF-DA-GASTO-PPR.detalle='Ficha PNDA devolvió 403'; PNDA-UBIGEO-EQUIVALENCIAS.limitaciones='página redirigió a login'; prioriza.py:75",
+  "recomendacion": "Exigir, como puerta de entrada a las Olas 0 y 1, una prueba de humo: descargar un archivo real, registrar su tamaño, columnas, presencia de ubigeo y fecha de corte. Hasta pasarla, la fuente queda en '1_pendiente_verificacion'.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-12",
+  "area": "embudo",
+  "severidad": "alta",
+  "registros": [],
+  "campo": "criterio (priorizacion.md)",
+  "hallazgo": "La Ola 1 tiene 43 fuentes y es demasiado grande para un MVP, que necesita tres capas de curaduría y fichas de indicador por fuente. Falta además un criterio de 'preguntas que habilita': el embudo prioriza por atributos de la fuente (origen, llave, descarga), no por las preguntas que el producto debe responder. Por eso entran fuentes de bajo valor marginal (OXI, Cierre de inversiones, Formato 12B, ENSUSALUD, ENDO) mientras faltan denominadores por edad.",
+  "evidencia": "priorizacion.md:28-34 (Ola 1 = 43); prioriza.py:70-86 (el puntaje no tiene ningún término de demanda ni de preguntas)",
+  "recomendacion": "Definir de 10 a 15 preguntas ancla (p. ej. '¿cuánto se gastó en el PP 0001 en mi distrito y cómo evolucionaron la anemia y la DCI?', '¿qué colegios de mi distrito tienen bajos logros y cuánto se invirtió en ellos?') y una matriz pregunta × fuente. Formar una Ola 1a (MVP, unas 12–15 fuentes: ENAHO, ENDES, SIEN, Padrón Nominal, CNV, SIS-ATENCIONES, SIAGIE, ECE/Censo Educativo, JUNTOS, Pensión 65, Wasi Mikuna, MEF gasto con un solo dataset, Seguimiento PI, Mapa de Pobreza) y pasar el resto a una Ola 1b. Añadir al puntaje un término de 'n.º de preguntas ancla que habilita'.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-13",
+  "area": "embudo",
+  "severidad": "media",
+  "registros": [],
+  "campo": "embudo (priorizacion.md)",
+  "hallazgo": "La aritmética del embudo no cierra. El documento dice '43 = 53 − 10 + 3', pero 53 − 10 + 3 = 46. El paso 5 (53) incluye tres rutas alternas (SIS-ATENCIONES-PNDA, SIS-AFILIADOS-PNDA y ESSALUD-EMERGENCIAS-PNDA) que el código saca antes por ALTERNA. Los pasos 1 a 4 (230/104/94/74) tampoco descuentan alternas (sin ellas: 220/94/84/71/50).",
+  "evidencia": "priorizacion.md:23-28; reproducido con el JSON: pasos con alternas 230/104/94/74/53, sin alternas 220/94/84/71/50; 50 − 10 + 3 = 43",
+  "recomendacion": "Recalcular el embudo excluyendo las rutas alternas desde el paso 1, o añadir una línea explícita '− 3 rutas alternas'. Generar el bloque del embudo desde prioriza.py para que no se desfase.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-14",
+  "area": "embudo",
+  "severidad": "media",
+  "registros": [
+   "RENIEC-POBLACION-IDENTIFICADA",
+   "RENIEC-POBLACION-IDENTIFICADA-DNI",
+   "INEI-UBIGEO-CODIGOS",
+   "INEI-PNDA-UBIGEOS",
+   "SIS-ATENCIONES-PNDA"
+  ],
+  "campo": "ola (ALTERNA)",
+  "hallazgo": "Algunas elecciones de ALTERNA no siguen el motivo declarado ('descarga más estable'). RENIEC-POBLACION-IDENTIFICADA (api_ckan, 2012–2026) queda como alterna de la versión DNI (descarga directa, desde 2021-09), lo que deja una serie más corta y una ruta menos automatizable. INEI-UBIGEO-CODIGOS llega a centro poblado y no es la misma información que la lista distrital de la PNDA. SIS-ATENCIONES-PNDA es el dataset concreto, mientras que el preferido apunta a la página de grupo.",
+  "evidencia": "prioriza.py:24-31 y :96; RENIEC-POBLACION-IDENTIFICADA.estrategia=api_ckan, cobertura='2012–2026'; RENIEC-...-DNI.cobertura='2021-09–2026-T2'; INEI-UBIGEO-CODIGOS.nivel=centro_poblado",
+  "recomendacion": "Invertir la preferencia en RENIEC, o mantener ambas como tramos de la serie. Sacar INEI-UBIGEO-CODIGOS de ALTERNA y tratarlo como fuente del maestro de centros poblados, junto a INEI-DIRECTORIO-CCPP. En los pares SIS, preferir la URL del dataset concreto. Ajustar el texto del motivo por cada caso.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EMB-15",
+  "area": "embudo",
+  "severidad": "media",
+  "registros": [
+   "MEF-OXI-BASE",
+   "MEF-INVERSIONES-BRECHAS",
+   "MEF-FORMATO-12B",
+   "MEF-CIERRE-INVERSIONES"
+  ],
+  "campo": "ola",
+  "hallazgo": "La Ola 1 tiene cinco datasets de inversión, sin contar el maestro de inversiones de la Ola 0, todos ligados por CUI. Su valor marginal para el MVP social es bajo o están desactualizados. OXI es una modalidad de financiamiento (tema principal economía/empresas, descarga manual). Inversiones-Brechas tiene corte 2023. Formato 12B se solapa con Seguimiento PI. Cierre de inversiones tiene prioridad_mvp 'media'.",
+  "evidencia": "MEF-OXI-BASE.estrategia=descarga_manual, sec=['economia_empresas_produccion']; MEF-INVERSIONES-BRECHAS.cobertura='corte 2023'; MEF-CIERRE-INVERSIONES.prioridad_mvp=media; prioriza.py:16-22 (GASTO los fuerza a la capa gasto_publico)",
+  "recomendacion": "Dejar en la Ola 1 MEF-SEGUIMIENTO-PI (ejecución por CUI) sobre el maestro MEF-DETALLE-INVERSIONES de la Ola 0, filtrado por función salud, educación, saneamiento y protección social. Mover OXI, Formato 12B, Cierre e Inversiones-Brechas a la Ola 2. La modalidad OxI ya se puede identificar en el maestro.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EMB-16",
+  "area": "embudo",
+  "severidad": "media",
+  "registros": [
+   "INEI-SIRTOD",
+   "INEI-ESTADIST",
+   "INEI-ODS",
+   "MCLCP-SEGUIMIENTO-CONCERTADO",
+   "MIDAGRI-AGRORURAL",
+   "INEI-ENPHR-2014",
+   "RENIEC-REGISTROS-CIVILES-ELECTORAL"
+  ],
+  "campo": "capa",
+  "hallazgo": "La regla de capa ignora las temáticas secundarias salvo cuando la principal es 'multitematica', y las multitemáticas sin secundarias caen en complementaria y luego en fuera_de_alcance. Así, INEI-SIRTOD (indicadores sociales oficiales por distrito, 1950–2018+), ESTADIST e INEI-ODS quedan fuera de alcance cuando deberían ser 'referencia' para validar. MCLCP (seguimiento concertado de pobreza y programas sociales) también queda fuera. En cambio, puntaje() y _core sí usan las secundarias, lo que es incoherente.",
+  "evidencia": "prioriza.py:61-62 vs :79-80 y :91; INEI-SIRTOD.ola=fuera_de_alcance (nivel distrito, ubigeo_inei); MCLCP-SEGUIMIENTO-CONCERTADO.sec=['pobreza_condiciones_vida','programas_sociales'] → fuera_de_alcance",
+  "recomendacion": "Unificar la regla: capa nucleo_social si la temática principal o alguna secundaria está en NUCLEO (o asignar peso a la secundaria). Corregir las temáticas de SIRTOD, ESTADIST y ODS (añadir secundarias sociales) y moverlas a 'referencia'. Revisar RENIEC-REGISTROS-CIVILES (hechos vitales por distrito) como posible Ola 2 de población.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-17",
+  "area": "embudo",
+  "severidad": "media",
+  "registros": [
+   "MEF-GEOINVIERTE",
+   "MINEDU-SIGMED-DESCARGAS",
+   "INEI-IDE-LIMITES",
+   "MVCS-GEOVIVIENDA",
+   "MINEM-SIG-DGER",
+   "SUNASS-GEOSUNASS"
+  ],
+  "campo": "origen",
+  "hallazgo": "La regla de origen trata todo lo 'geoespacial' como derivada_oficial. Sin embargo, GEOINVIERTE (georreferencia de cada CUI), SIGMED (capa de IIEE del padrón) o MINEM-SIG-DGER (electrificación por centro poblado) son registros primarios publicados en formato geográfico. Esto los aleja de la Ola 1 aunque sean puentes de cruce.",
+  "evidencia": "prioriza.py:65-68 (naturaleza 'geoespacial' no está en PRIM_NAT); MEF-GEOINVIERTE.origen=derivada_oficial, ola=2_expansion",
+  "recomendacion": "Clasificar el origen por quién levanta el dato, no por el formato: añadir 'geoespacial' a PRIM_NAT cuando la unidad de observación sea un objeto (IE, CUI, IPRESS, centro poblado), o revisar estos casos uno por uno.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EMB-18",
+  "area": "embudo",
+  "severidad": "media",
+  "registros": [],
+  "campo": "puntaje_prioridad",
+  "hallazgo": "El puntaje discrimina poco y premia el acceso por encima de la relevancia. Doce fuentes empatan en 100. Una fuente ajena al foco (rel = 0.3) con descarga directa a nivel distrital obtiene 86, igual a la mediana de la Ola 1 y por encima de ENDES y ENAHO (84). El origen no entra en el puntaje, así que secundarias como WORLDPOP-PERU y OOKLA (95) o META-RWI (92) superan a fuentes primarias del núcleo. La vigencia vale 0 cuando cobertura_temporal es nula, lo que castiga los datasets MEF sin años registrados (PPR, SECTORES, GPNNA). El orden interno sí es estable ante cambios de pesos de ±10 pp (solo REUNIS y Censo Educativo se mueven unos 10 puestos).",
+  "evidencia": "prioriza.py:70-86; JSON: 12 registros con puntaje 100; 9 registros con rel 0.3 y puntaje ≥ 84 (MEF-DA-PRESUPUESTO-EJECUCION-INGRESO, ONPE-RESULTADOS-MESA-DA, MINAM-GEOBOSQUES…); WORLDPOP-PERU 95, OOKLA-OPEN-DATA 95",
+  "recomendacion": "Subir el peso de relevancia (≥ 0.30) y bajar el de factibilidad (0.20). Añadir un término de origen (primaria 1, derivada 0.6, secundaria 0.3) y otro de preguntas habilitadas. Imputar vigencia nula como 'desconocida' (0.3) y no 0. Eliminar el techo de 100 con desempates (frecuencia, rezago).",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-19",
+  "area": "embudo",
+  "severidad": "media",
+  "registros": [
+   "INEI-CPV2025",
+   "INEI-CPV2017",
+   "GITHUB-UBIGEO-PERU-AUMENTADO"
+  ],
+  "campo": "ola",
+  "hallazgo": "La Ola 0 mezcla tablas listas con piezas no usables o frágiles. CPV2025 solo tiene preliminares departamentales y no sirve hoy como denominador. CPV2017 depende de REDATAM con scraping_dinamico, aunque el INEI publica microdatos censales descargables. GITHUB-UBIGEO-PERU-AUMENTADO es secundaria de un tercero y se usa como maestro de centros poblados con coordenadas.",
+  "evidencia": "INEI-CPV2025.nivel=departamento, cobertura='2025 (resultados preliminares)'; INEI-CPV2017.estrategia=scraping_dinamico; GITHUB-UBIGEO-PERU-AUMENTADO.origen=secundaria, sector=Académico",
+  "recomendacion": "Marcar CPV2025 como '0_base_pendiente', con disparador de reemplazo. Para CPV2017, preferir los microdatos o tabulados descargables del INEI y dejar REDATAM como ruta alterna. Usar GITHUB solo como herramienta de reconciliación, con prueba de concordancia contra INEI-DIRECTORIO-CCPP, y nunca como fuente de verdad.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EMB-20",
+  "area": "embudo",
+  "severidad": "media",
+  "registros": [
+   "MVCS-DATASS",
+   "SUNASS-ADP",
+   "SUNASS-CONEXIONES-ACTIVAS",
+   "MVCS-PNSU-PROYECTOS",
+   "MVCS-PNSR-PROYECTOS",
+   "MINCUL-BDPI"
+  ],
+  "campo": "ola",
+  "hallazgo": "El agua y el saneamiento quedaron en el foco ampliado (Ola 2) y la Base de Datos de Pueblos Indígenas en la Ola 3 (puntaje 95), aunque son determinantes directos de preguntas del foco duro. El agua segura explica parte de la anemia y la EDA. La lengua y la pertenencia indígena por centro poblado determinan la EIB y la salud intercultural. La regla de capa los separa por etiqueta temática, no por uso.",
+  "evidencia": "MINCUL-BDPI.ola=3_complementaria, puntaje 95, nivel centro_poblado; SUNASS-ADP y MVCS-PNSU-PROYECTOS en 2_expansion; priorizacion.md:12",
+  "recomendacion": "Si se adopta el criterio de preguntas ancla (EMB-12), subir a la Ola 1b las fuentes de agua y saneamiento que una pregunta ancla de anemia/EDA necesite (SUNASS-CONEXIONES-ACTIVAS, PNSR/PNSU por CUI) y MINCUL-BDPI como dimensión de centro poblado en la Ola 0.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EMB-21",
+  "area": "embudo",
+  "severidad": "baja",
+  "registros": [
+   "INEI-MAPA-POBREZA"
+  ],
+  "campo": "motivo_ola",
+  "hallazgo": "El Mapa de Pobreza entra por excepción como 'única cifra oficial por distrito', pero su último dato es de 2018, con base en el CPV2017 y la ENAHO 2018. El motivo no advierte que está congelado y que cualquier cruce con gasto de 2019–2026 compara periodos distintos.",
+  "evidencia": "INEI-MAPA-POBREZA.cobertura_temporal='2007–2018'; prioriza.py:34",
+  "recomendacion": "Mantenerlo en la Ola 1 y añadir al motivo y a la ficha la advertencia de 'foto 2018'. Buscar una actualización con el CPV2025 y registrar como referencia el IDH distrital del PNUD (2019) como contraste.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-22",
+  "area": "embudo",
+  "severidad": "baja",
+  "registros": [
+   "MEF-DA-GASTO-GPNNA"
+  ],
+  "campo": "capa",
+  "hallazgo": "El documento lista GPNNA en la sección 'Gasto e inversión pública' de la Ola 1, pero en el JSON su capa es nucleo_social y no gasto_publico, porque no está en la lista GASTO y su temática principal es programas_sociales.",
+  "evidencia": "priorizacion.md:132; MEF-DA-GASTO-GPNNA.capa=nucleo_social; prioriza.py:16-22",
+  "recomendacion": "Añadir MEF-DA-GASTO-GPNNA a GASTO para que capa, puntaje (rel 0.9) y documento coincidan.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EMB-23",
+  "area": "embudo",
+  "severidad": "baja",
+  "registros": [
+   "DHS-PERU-ENDES",
+   "INEI-ENDES"
+  ],
+  "campo": "ola/origen",
+  "hallazgo": "DHS-PERU-ENDES está como 'secundaria/referencia', pero son los mismos microdatos de la ENDES redistribuidos con coordenadas desplazadas de conglomerado, un valor añadido que la fuente INEI no publica. Funcionalmente es una ruta alterna con complemento geográfico, no una referencia.",
+  "evidencia": "DHS-PERU-ENDES.llaves=['coordenadas','conglomerado_vivienda'], ola=referencia",
+  "recomendacion": "Marcarla como ruta_alterna de INEI-ENDES, con una nota de uso de los GPS de conglomerado (requiere registro en DHS) para análisis espaciales finos.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EMB-24",
+  "area": "embudo",
+  "severidad": "baja",
+  "registros": [
+   "MINSA-PADRON-NOMINAL",
+   "DEVIDA-OPD"
+  ],
+  "campo": "código (prioriza.py)",
+  "hallazgo": "Hay detalles del código que no están documentados. El caso especial de MINSA-PADRON-NOMINAL en _core es redundante: ya cumple la regla poblacion_demografia + secundaria del núcleo. prioriza.py lee desde 'out/catalogo_fuentes.json', no desde la carpeta auditada. DEVIDA-OPD está como encuesta_muestral/primaria aunque su propio motivo dice 'reportes de estudios'.",
+  "evidencia": "prioriza.py:3, :91, :38",
+  "recomendacion": "Quitar el caso especial, parametrizar la ruta de entrada y reclasificar DEVIDA-OPD como indicadores_derivados.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ }
+]

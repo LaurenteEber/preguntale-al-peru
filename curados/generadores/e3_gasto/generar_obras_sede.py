@@ -11,7 +11,7 @@ Curaduría (revisión a mano por nombre del proyecto, de mayor a menor monto):
               biblioteca pública, riego) → se quedan en Lima
   INCLUIR_A   CUI de la clase a que son sede o función nacional y la palabra clave no detectó
   FUERA_YAML_QUEDA  CUI de las ejecutoras fuera del YAML que sirven a residentes de Lima → se quedan
-Uso (desde codigo/ingesta): uv run --frozen python <esta carpeta>/generar_obras_sede.py <raiz> [--salida ruta]"""
+Uso (desde la raíz del repositorio): uv run --frozen python <esta carpeta>/generar_obras_sede.py <raiz> [--salida ruta]"""
 import re
 import sys
 from pathlib import Path

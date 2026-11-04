@@ -692,8 +692,8 @@ Microdato presupuestal del gasto de los tres niveles de gobierno proveniente de 
 | Descarga | **descarga_directa_url** — Archivo anual {anio}-Gasto.csv para 2012–2024; para 2025–2026 usar SOLO {anio}-Gasto-Mensual.csv (nunca sumar -Mensual y -Diario: duplica). CUI = PRODUCTO_PROYECTO cuando TIPO_ACT_PROY indica proyecto. |
 | Licencia | otra-abierta (Otro (abierto)) · redistribución: sí · registro: no |
 | Limitaciones | El ubigeo distrital es el de la SEDE DE LA UNIDAD EJECUTORA; la meta solo trae DEPARTAMENTO_META. Atribuir a distrito solo el gasto de municipalidades (NIVEL_GOBIERNO=M) o inversiones ubicadas por CUI en MEF-DETALLE-INVERSIONES; el gasto del Gobierno Nacional y Regional va a departamento por DEPARTAMENTO_META. Las transferencias se registran de nuevo como gasto del receptor: no sumarlas. Construir el ubigeo como DEPARTAMENTO(2)+PROVINCIA(2)+DISTRITO(2)_EJECUTORA y validarlo contra la tabla INEI. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **1 · Núcleo** · origen primaria · capa gasto_publico · puntaje 88 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **1 · Núcleo** · origen primaria · capa gasto_publico · puntaje 88 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
 | Trazabilidad | EXA-A-01,INF-01,EXA-A-10,INT-02 (fuente) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Columnas esperadas (por conocimiento previo, validar con diccionario): ANO_EJE, MES_EJE, NIVEL_GOBIERNO, SECTOR, PLIEGO, SEC_EJEC, EJECUTORA, DEPARTAMENTO/PROVINCIA/DISTRITO_EJECUTORA, SEC_FUNC, PROGRAMA_PPTO, PRODUCTO_PROYECTO, ACTIVIDAD_ACCION_OBRA, FUNCION, DIVISION_FUNCIONAL, GRUPO_FUNCIONAL, META, DEPARTAMENTO/PROVINCIA/DISTRITO_META, FUENTE_FINANCIAMIENTO, RUBRO, GENERICA..ESPECIFICA_DET, MONTO_PIA, MONTO_PIM, MONTO_CERTIFICADO, MONTO_COMPROMETIDO, MONTO_DEVENGADO, MONTO_GIRADO. Última modificación vista: 2026-07-02. [Auditoría C-01: no existen columnas PROVINCIA_META ni DISTRITO_META.] [Prueba de humo 2026-10-05] 2024-Gasto.csv pesa 10,2 GB; 2025-Gasto-Mensual 10,5 GB; 2026-Gasto-Mensual 7,0 GB (actualizado 02-10-2026). Columnas confirmadas (*_EJECUTORA, DEPARTAMENTO_META, PRODUCTO_PROYECTO). Ingerir por streaming y particionar por año. |
 
@@ -1483,8 +1483,8 @@ Base de datos con la información general de todas las inversiones registradas e
 | Descarga | **descarga_directa_url** — GET directo al CSV en fs.datosabiertos.mef.gob.pe (sin auth). Diccionario y metadatos en CSV aparte (metadatos: https://www.datosabiertos.gob.pe/sites/default/files/Detalle_Inversiones_Metadatos.csv). Archivo grande: descargar en streaming y comparar ETag/Last-Modified para detectar actualización. |
 | Licencia | otra-abierta (Otra (abierta) según PNDA) · redistribución: sí · registro: no |
 | Limitaciones | La localización puede ser multi-distrito (inversiones con varias ubicaciones) o solo departamental; costos actualizados vs. viables difieren; inversiones SNIP antiguas con campos incompletos. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen primaria · capa base · puntaje 100 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Maestro de inversiones: CUI → ubigeo, función y sector. |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen primaria · capa base · puntaje 100 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Maestro de inversiones: CUI → ubigeo, función y sector. |
 | Trazabilidad | EXA-A-18 (auditor) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Tabla maestra del ciclo de inversión: une con Seguimiento (devengados), Cierre, Brechas y Formato 12B vía CUI. [Prueba de humo 2026-10-05] DETALLE_INVERSIONES.csv (247 MB; actualizado 04-10-2026; UTF-8 con BOM): CODIGO_UNICO, CODIGO_SNIP, SEC_EJEC, UBIGEO. |
 
@@ -2163,8 +2163,8 @@ Encuesta continua de hogares que mide pobreza monetaria (gasto/ingreso), condici
 | Descarga | **descarga_directa_url** — Códigos de encuesta-año confirmados: 2019=687 (ficha técnica 687), 2023=906, 2024=966 (resto: obtener de cambiaPeriodo.asp o tablas de enahodata/PeruData); 1997–2003 en DBF. Módulos corte transversal: 01 vivienda/hogar, 02 miembros, 03 educación, 04 salud, 05 empleo e ingresos, 34 sumarias (pobreza), 85 gobernabilidad, 37 programas sociales, etc. URL: .../descarga/{STATA\|SPSS\|CSV}/{cod}-Modulo{NN}.zip. Docs: .../DocumentosMetodologicos/{AÑO}-55/ (p.ej. 6_Calidad-ENAHO.pdf, 20_Diccionario_2024.pdf). Portal ASP clásico. Flujo AJAX: CambiaEnc.asp (encuesta→años) → CambiaAnio.asp (año→periodos) → cambiaPeriodo.asp (periodo→tabla de módulos con links). Descarga directa predecible: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{SPSS\|STATA\|CSV\|DBF}/{codigo_encuesta_anio}-Modulo{codigo_modulo}.zip (ej. ENAHO 2024 = 966-Modulo01.zip). Ficha técnica: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo_encuesta_anio}-Ficha.pdf. Documentos metodológicos: .../Descarga/DocumentosMetodologicos/{AÑO}-{codigo_tipo_encuesta}/{archivo}.pdf. Nombres de encuesta con caracteres Windows-1252 deben codificarse con escape() de JS (%96), no UTF-8. Sin captcha ni registro conocidos. Bash del entorno no tuvo salida a *.inei.gob.pe (proxy 403): probar desde otro entorno. |
 | Licencia | uso-libre-con-cita (uso libre con cita) · redistribución: sí · registro: no |
 | Limitaciones | Representativa solo a nivel departamental (24 dptos + Callao + Lima Metropolitana) y región natural/área; NO por provincia ni distrito aunque la base trae UBIGEO distrital. Estimados trimestrales solo nacional y urbano/rural. 2020: 49% entrevistas telefónicas (16 mar–30 sep) con cuestionario reducido (se mantuvieron preguntas de pobreza), tasa de respuesta 73.1%. Factores de expansión (factor07 hogar; fac500a empleo) recalibrados a proyecciones de población: usar el factor publicado para cada año/versión. Muestra 2024: 36 594 viviendas. Según la ficha técnica (§ Niveles de inferencia), los dominios anuales son 24 departamentos (cada uno dominio de estudio) y el Área Metropolitana de Lima y Callao: el Callao no es un dominio propio. Ver catalogo/inferencia_verificada.csv. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
 | Trazabilidad | INF-17 (auditor) / R-ENC-08 (inferencia_verificada, 8/10/2026) (fuente) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Pobreza monetaria 2025 = 25,7% (publicado 5 may 2026). Código 2025 no confirmado en esta sesión. La muestra integra componente panel; ver INEI-ENAHO-PANEL. [Prueba de humo 2026-10-05] Módulo 01 de la ENAHO 2024 (código 966) en STATA, SPSS y CSV (8–9 MB); módulo 34 (sumaria) 17,9 MB. |
 
@@ -2191,8 +2191,8 @@ Estimación en áreas pequeñas (método ELL del Banco Mundial) de la incidencia
 | Descarga | **descarga_manual** — Tablas en anexos PDF (1 874 distritos con IC y grupo robusto); extracción con pdfplumber. Edición 2013: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1261/Libro.pdf. Lib1724 = desagregación infradistrital 2018. |
 | Licencia | uso-libre-con-cita (uso libre con cita) · redistribución: sí · registro: no |
 | Limitaciones | Estimación modelada (ELL) con ENAHO 2017–2018 y Censo 2017: comparar solo por intervalos/grupos robustos; IC muy amplios en distritos pequeños. Última edición 2018 (no hay mapa posterior confirmado). No comparable directamente entre ediciones por cambios de método/insumos. Anterior al salto de pobreza de 2020 (20,2 % → 30,1 % nacional): publicar siempre con el año 2018, intervalo de confianza y grupo robusto; no restar ni combinar con ENAHO de otros años. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **1 · Núcleo** · origen derivada_oficial · capa nucleo_social · puntaje 82 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Indispensable por excepción: Única pobreza oficial por distrito (2018, estimación con IC); publicar con las reglas de C-03. |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **1 · Núcleo** · origen derivada_oficial · capa nucleo_social · puntaje 82 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Indispensable por excepción: Única pobreza oficial por distrito (2018, estimación con IC); publicar con las reglas de C-03. |
 | Trazabilidad | EXA-A-14,INF-02 (auditor) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Única fuente oficial de pobreza monetaria distrital. Esperar posible nuevo mapa con Censo 2025. [Prueba de humo 2026-10-05] Lib1718/Libro.pdf (43,7 MB, 2020). |
 
@@ -2446,8 +2446,8 @@ Maestro de todas las IPRESS públicas, privadas y mixtas: código único, catego
 | Descarga | **descarga_directa_url** — Un CSV por mes (RENIPRESS_DD-MM-AAAA.csv) más diccionario PDF; la fecha del nombre no es predecible: leer la lista de recursos de la ficha. |
 | Licencia | ODC-By-1.0 (ODC-BY (Open Data Commons Attribution)) · redistribución: sí · registro: no |
 | Limitaciones | Padrón de IPRESS públicas y privadas; validar la cobertura de códigos cruzando con SIS, CNV y SIEN. |
-| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen primaria · capa base · puntaje 96 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Puente establecimiento de salud → ubigeo (mensual). |
+| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen primaria · capa base · puntaje 96 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Puente establecimiento de salud → ubigeo (mensual). |
 | Trazabilidad | EXA-A-08,EMB-04,INT-13 (fuente) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Registros fusionados | SUSALUD-RENIPRESS-PNDA |
 | Notas | TABLA PUENTE CLAVE: código RENIPRESS -> ubigeo para todas las fuentes por establecimiento (SIEN, HIS, SIS, CNV, vacunas). [Fusionado con registro SUSALUD-RENIPRESS-PNDA] [Prueba de humo 2026-10-05] RENIPRESS_30-09-2026.csv (19,9 MB; ";"): trae COD_IPRESS, UBIGEO, COD_UE, NORTE/ESTE, CATEGORIA, ESTADO. |
@@ -3351,8 +3351,8 @@ Microdatos de evaluaciones antropométricas y de hemoglobina de niños <5 años,
 | Descarga | **descarga_directa_url** — ZIPs por grupo poblacional y periodo (2012–2026) + diccionario 2012–2026 en PNDA. Plataforma Nacional de Datos Abiertos (Drupal/DKAN). Cada dataset tiene recursos con URL de descarga en /sites/default/files/... o enlaces externos; se puede listar vía /api/3/action/package_show?id=<slug> (API CKAN-compatible de DKAN; confirmar). Desde este entorno el portal devolvió 403/robots en fetch: probar con navegador/Playwright. |
 | Licencia | ODC-By-1.0 (ODC-BY (Open Data Commons Attribution)) · redistribución: sí · registro: no |
 | Limitaciones | Solo niños que acuden a EESS (sesgo de selección: no es prevalencia poblacional como ENDES); cobertura de tamizaje variable; cambio de puntos de corte de anemia OMS 2024 rompe serie. Mide niños tamizados en EESS: rotular "proporción de tamizados con anemia", no prevalencia. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 100 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 100 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
 | Trazabilidad | INF-08,INF-07 (auditor) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Fuente más fina (EESS) para anemia/DCI; contrastar con ENDES (departamento) para calibrar sesgo. Última actualización PNDA 8-sep-2026. [Prueba de humo 2026-10-05] ZIP semestrales por departamento (40 archivos; ej. BD SIEN Niños 2012, 62,6 MB; ficha modificada 05-08-2026). |
 
@@ -3379,8 +3379,8 @@ Encuesta (programa DHS) sobre fecundidad, salud materno-infantil, nutrición inf
 | Descarga | **descarga_directa_url** — Módulos por cuestionario (RECH0, RECH1, REC0111, REC21, REC42, RECH6 antropometría/anemia, CSALUD01...). Código de tipo de encuesta en docs = 5 (.../DocumentosMetodologicos/2024-5/). También en datosabiertos.gob.pe (ZIP completo + diccionarios). Portal ASP clásico. Flujo AJAX: CambiaEnc.asp (encuesta→años) → CambiaAnio.asp (año→periodos) → cambiaPeriodo.asp (periodo→tabla de módulos con links). Descarga directa predecible: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{SPSS\|STATA\|CSV\|DBF}/{codigo_encuesta_anio}-Modulo{codigo_modulo}.zip (ej. ENAHO 2024 = 966-Modulo01.zip). Ficha técnica: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo_encuesta_anio}-Ficha.pdf. Documentos metodológicos: .../Descarga/DocumentosMetodologicos/{AÑO}-{codigo_tipo_encuesta}/{archivo}.pdf. Nombres de encuesta con caracteres Windows-1252 deben codificarse con escape() de JS (%96), no UTF-8. Sin captcha ni registro conocidos. Bash del entorno no tuvo salida a *.inei.gob.pe (proxy 403): probar desde otro entorno. |
 | Licencia | ODbL-1.0 (ODbL (en datosabiertos.gob.pe) / uso libre con cita) · redistribución: sí · registro: no |
 | Limitaciones | Muestra 2024: 36 760 viviendas; inferencia anual departamental (24 + Callao) y por área/región; no provincial/distrital. Algunos indicadores (anemia) con IC amplios en dptos pequeños. Cambio de umbral de anemia por altitud (OMS 2024) puede generar quiebre de serie; verificar en informe. Ubigeo y conglomerado presentes pero geo-desplazado en versiones DHS internacionales. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
 | Trazabilidad | EXA-B-08,INF-08,INF-17,INT-06 (auditor) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Probables códigos ENDES (gist RRMaximiliano, módulos de 4 dígitos, no confirmado): 2015=506, 2016=579, 2017=615, 2018=650, 2019=701. Series 1986–2024 en https://proyectos.inei.gob.pe/files/publicaciones/2024/SERIES_ANUALES_1986_2024.pdf. Informes departamentales en proyectos.inei.gob.pe/endes/2024/departamentales/. [Prueba de humo 2026-10-05] ENDES 2025 disponible en el portal de microdatos (código de encuesta 1038, módulos 1629 en adelante; ZIP de 5,8 MB probado). |
 
@@ -4989,8 +4989,8 @@ Estimaciones y proyecciones oficiales de población total por distrito y año, b
 | Descarga | **descarga_manual** — Ficha gob.pe (publicada 31-12-2025) con un adjunto XLSX de 212,6 KB 'Perú: Población Total Proyectada al 30 de Junio de cada año, según Departamento, Provincia y Distrito, 2018-2026'; la URL cdn del adjunto no se mostró en el fetch (obtenerla desde la página con navegador). Ediciones anteriores en PDF: Lib1715 (2018-2020, 1 874 distritos) y Lib1860 (2018-2022, 1 890 distritos, Boletín 27). |
 | Licencia | uso-libre-con-cita (uso libre con cita) · redistribución: sí · registro: no |
 | Limitaciones | Solo población total: el INEI declara que a nivel provincial y distrital no proyecta por sexo ni edad. Base Censo 2017; el INEI la valida y actualiza al cierre de cada año (se usa para distribuir FONCOMUN). Deberá rebasarse con el Censo 2025. |
-| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen derivada_oficial · capa base · puntaje 90 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Población total proyectada por distrito y año 2018–2026. |
+| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen derivada_oficial · capa base · puntaje 90 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Población total proyectada por distrito y año 2018–2026. |
 | Trazabilidad | vacío 1 (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Agregado el 5/10/2026 al detectar el vacío de denominadores intercensales durante la priorización. Cubre 1 892 distritos. Lib1860 incluye Anexo 3 'Dispositivos legales de modificación de ámbitos territoriales' (útil para ubigeo histórico; 16 distritos creados 2020–2021). [Prueba de humo 2026-10-05] La ficha de gob.pe tiene el XLSX en cdn.www.gob.pe; no se descargó. |
 
@@ -5017,8 +5017,8 @@ Proyecciones oficiales de población por departamento, sexo, edad simple y grupo
 | Descarga | **descarga_directa_url** — PDF estático; extraer cuadros por departamento con pdfplumber/camelot. No se halló versión XLSX. |
 | Licencia | uso-libre-con-cita (—) · redistribución: — · registro: no |
 | Limitaciones | Solo hasta departamento: el INEI declara que a nivel provincial y distrital proyecta únicamente población total (ambos sexos) sin desagregación por edad. Base Censo 2017, desfasada frente al Censo 2025 (omisión 4,25 %). |
-| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen derivada_oficial · capa base · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Población por edad simple y sexo, departamental, 1995–2030. |
+| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen derivada_oficial · capa base · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Población por edad simple y sexo, departamental, 1995–2030. |
 | Trazabilidad | vacío 1 (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Publicado enero 2020. Para distrito×edad combinar total distrital INEI con estructura etaria del Censo 2017 (cuadro 1 de los tomos de resultados definitivos) o usar la población estimada MINSA. [Prueba de humo 2026-10-05] Lib1722/libro.pdf (7,9 MB). |
 
@@ -5045,8 +5045,8 @@ Edición anterior de la proyección distrital (Lib1860, 1 890 distritos). Se usa
 | Descarga | **descarga_manual** — PDF del boletín y «Anexo 1» (XLSX) desde la ficha de gob.pe. |
 | Licencia | uso-libre-con-cita (—) · redistribución: sí · registro: no |
 | Limitaciones | Reemplazada por INEI-PROYECCIONES-POBLACION-DISTRITAL (2018–2026): no usar sus cifras como denominador; solo como documento de altas de distritos. |
-| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen derivada_oficial · capa base · puntaje 82 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Boletín 27: altas de distritos 2018–2022 para el ubigeo histórico. |
+| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen derivada_oficial · capa base · puntaje 82 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Boletín 27: altas de distritos 2018–2022 para el ubigeo histórico. |
 | Trazabilidad | vacío R-DEP-01 / territorio (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Agregada por decisión del dueño del 8/10/2026 (docs/decisiones.md; análisis 00_proyecto/analisis_2026-10-08/catalogo/): la capa 0 (dim_ubigeo_historico) la usa. |
 
@@ -5129,8 +5129,8 @@ Censo de población y vivienda con características demográficas, educación, s
 | Descarga | **scraping_dinamico** — REDATAM WebServer (formularios; procesamiento por área geográfica: dpto/prov/distrito/centro poblado). Para tablas masivas: automatizar POST al procesador REDATAM o usar sistema a nivel de manzana (INEI-CPV2017-MANZANA). Base REDATAM también difundida vía CELADE/CEPAL. Resultados definitivos en PDF/Excel por departamento: https://censo2017.inei.gob.pe/resultados-definitivos-de-los-censos-nacionales-2017/ |
 | Licencia | uso-libre-con-cita (uso libre con cita) · redistribución: sí · registro: no |
 | Limitaciones | Omisión censal estimada omisión censal oficial ≈5,9 % (29,38 M censados frente a 31,24 M estimados); censo de derecho/hecho en un día. Base de microdatos completa no se descarga libremente en formato plano (REDATAM). |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen primaria · capa base · puntaje 71 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Línea de base de población y vivienda; distrito × sexo × edad simple. |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen primaria · capa base · puntaje 71 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Línea de base de población y vivienda; distrito × sexo × edad simple. |
 | Trazabilidad | vacío 1 (investigacion) / EXA-A-13,INF-19 (fuente) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Base fundamental para denominadores distritales y de centro poblado hasta que se publiquen resultados definitivos del Censo 2025. Base fundamental para denominadores distritales y de centro poblado hasta que se publiquen bases del Censo 2025. Tabla distrito × sexo × edad simple ya tabulada: Tomo I de los resultados definitivos por departamento, Cuadro N.º 1 'Población censada, por área urbana y rural; y sexo, según provincia, distrito y edades simples' (y Cuadro N.º 2 por grupos de edad). Ej. Tacna: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1564/23TOMO_01.pdf. Patrón: /Est/Lib{NNNN}/{cod_dep}TOMO_01.pdf con número de Lib distinto por departamento (Lib1544–Lib1619 aprox.), así que hay que mapear 25 URLs. Extraer de PDF o, preferible, regenerar con REDATAM. |
 
@@ -9274,8 +9274,8 @@ Serie mensual del IPC de Lima Metropolitana que publica el BCRP (BCRPData) a par
 | Descarga | **api_rest** — API JSON de BCRPData; desde la red de Claude el dominio está bloqueado: se baja con el navegador del dueño. |
 | Licencia | uso-libre-con-cita (—) · redistribución: sí · registro: no |
 | Limitaciones | El último mes puede revisarse; el promedio del año en curso es parcial (dim_ipc.anio_completo). |
-| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen derivada_oficial · capa base · puntaje 72 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Deflactor del gasto a soles constantes (IPC Lima Metropolitana, BCRP PN38705PM). |
+| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen derivada_oficial · capa base · puntaje 72 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Deflactor del gasto a soles constantes (IPC Lima Metropolitana, BCRP PN38705PM). |
 | Trazabilidad | vacío R-DEP-01 / R-GASTO-12 (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Agregada por decisión del dueño del 8/10/2026 (docs/decisiones.md; análisis 00_proyecto/analisis_2026-10-08/catalogo/): la capa 0 la usa (dim_ipc) y no estaba en el catálogo. |
 
@@ -10681,8 +10681,8 @@ Tablas de ubigeo INEI↔RENIEC para departamentos, provincias, distritos y centr
 | Descarga | **descarga_directa_url** — raw.githubusercontent.com/jmcastagnetto/ubigeo-peru-aumentado/<rama>/<archivo>.csv |
 | Licencia | MIT (MIT) · redistribución: sí · registro: no |
 | Limitaciones | Indicadores congelados en años específicos (2019/2020); no oficial. Corte 2021: no incluye distritos creados después. Usar solo como puente INEI↔RENIEC, validado contra la tabla INEI vigente. Solo 111 códigos son idénticos en INEI y RENIEC y 997 existen en ambos sistemas pero apuntan a distritos distintos: nunca unir por código sin indicar el sistema. Filas a corregir: 150144 Huachipa (centro poblado, no distrito), San Antonio (Moquegua, Ley 31216) sin código INEI, códigos antiguos duplicados 160109/160114. Falta Alto Trujillo (Ley 31644, 2022). Falta también Santa Rosa de Loreto (Ley 32403, 2025, segregado de Yavarí), el distrito 1 892. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen secundaria · capa base · puntaje 92 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Puente INEI↔RENIEC y centro poblado con coordenadas (secundaria, corte 2021; solo como herramienta validada). |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen secundaria · capa base · puntaje 92 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Puente INEI↔RENIEC y centro poblado con coordenadas (secundaria, corte 2021; solo como herramienta validada). |
 | Trazabilidad | EXA-A-15,INT-05 (auditor) / PR-20,PR-26 (orquestador) / HEC-10 (orquestador) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Excelente tabla puente lista para usar en el MVP; citar fuentes originales (CEPLAN, INEI, MINSA, PNUD, WFP). [Prueba de humo 2026-10-05] ubigeo_distrito.csv (410 KB, ~1 895 filas) con columnas inei y reniec: sirve como puente de equivalencias. |
 
@@ -10709,8 +10709,8 @@ Tabla oficial de códigos de ubigeo INEI de departamentos, provincias y distrito
 | Descarga | **descarga_directa_url** — Recursos de la ficha: ZIP completo https://www.inei.gob.pe/media/DATOS_ABIERTOS/UBIGEOS/UBIGEOS_2022_1891_distritos.zip ; XLSX https://www.datosabiertos.gob.pe/sites/default/files/UBIGEO%202022_1891%20distritos.xlsx ; muestra CSV https://www.datosabiertos.gob.pe/sites/default/files/Data_Muestra_ubigeos.csv ; metadatos JSON https://www.datosabiertos.gob.pe/api/3/action/package_show?id=fd98ecaf-c53c-44ed-be1c-a37b7afc6f3e. |
 | Licencia | ODbL-1.0 (Open Data Commons Open Database License (ODbL)) · redistribución: sí · registro: no |
 | Limitaciones | Verificar fecha de corte frente a creaciones distritales recientes. Corte 2022 con 1 891 distritos; el INEI ya trabaja con 1 892 (proyecciones 2018–2026): completar con esa lista. |
-| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen primaria · capa base · puntaje 92 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Lista oficial de ubigeos INEI (corte 2022; completar con 1 892 distritos). |
+| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen primaria · capa base · puntaje 92 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Lista oficial de ubigeos INEI (corte 2022; completar con 1 892 distritos). |
 | Trazabilidad | vacío 2 (investigacion) / EXA-A-09 (auditor) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Tabla maestra base para el modelo de cruce. Versión 2022 con 1 891 distritos (las proyecciones 2018-2026 usan 1 892: falta al menos un distrito creado después). No trae fecha de creación ni distrito de origen; para eso ver INEI-DIRECTORIO-MUNICIPALIDADES y Lib1860 Anexo 3. [Prueba de humo 2026-10-05] UBIGEOS_2022_1891_distritos.zip (22,6 KB). |
 
@@ -10794,8 +10794,8 @@ Archivo propio del dueño con datos generales por distrito (capital, coordenadas
 | Descarga | **descarga_manual** — No se descarga: el dueño lo entregó (captura 2026-10-05). |
 | Licencia | no-especificada (—) · redistribución: no · registro: no |
 | Limitaciones | Compilación propia de 2020; fuentes primarias en notas al pie (Lib1725, Lib1715, PCM RV 005-2019). Coordenadas de la capital; densidad con la proyección 2019 (no usar). No redistribuir el archivo. |
-| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen secundaria · capa base · puntaje 79 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Archivo propio: semilla GEO2017 del ubigeo histórico (no redistribuible). |
+| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen secundaria · capa base · puntaje 79 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Archivo propio: semilla GEO2017 del ubigeo histórico (no redistribuible). |
 | Trazabilidad | vacío R-DEP-01 / territorio (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Agregada por decisión del dueño del 8/10/2026 (docs/decisiones.md; análisis 00_proyecto/analisis_2026-10-08/catalogo/). No es fuente pública: se cataloga solo para trazabilidad y R-DEP-01. |
 
@@ -10822,8 +10822,8 @@ Directorio anual de municipalidades con autoridades, contacto, coordenadas de la
 | Descarga | **descarga_manual** — Ficha gob.pe 2025 (publicada 29-04-2025) con PDF (13,3 MB) y 'Cuadros en Excel' (ZIP 4,3 MB); URL cdn de los adjuntos no visible en el fetch. Existe además 'Directorio Nacional de Municipalidades Provinciales y Distritales – Julio 2025' (XLSX 245 KB): https://www.gob.pe/en/institucion/inei/informes-publicaciones/3908763-directorio-nacional-de-municipalidades-provinciales-y-distritales-julio-2025. Ediciones antiguas en cdn.www.gob.pe (2019, 2020) y Lib1809 (2021). |
 | Licencia | uso-libre-con-cita (—) · redistribución: — · registro: no |
 | Limitaciones | El cuadro de dispositivo legal (sección 1.2) no trae ubigeo en la edición 2021 (sí nombres); no consigna el distrito de origen de los distritos nuevos: hay que leerlo en la ley. Cuadros en PDF; verificar si el ZIP Excel incluye la tabla de leyes. |
-| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen primaria · capa base · puntaje 75 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Ley y fecha de creación de cada distrito: base del ubigeo histórico. |
+| Verificación | portal: confirmado_navegador · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen primaria · capa base · puntaje 75 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Ley y fecha de creación de cada distrito: base del ubigeo histórico. |
 | Trazabilidad | vacío 2 (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Edición 2025: 196 municipalidades provinciales y 1 695 distritales (autoridades al 3-02-2025). Edición 2021 indica 13 distritos creados en 2020–2021 (Ayacucho, Cusco, Huancavelica, San Martín, Ucayali). Complementos para ubigeo histórico: INEI Lib1860 (Boletín 27, proyecciones 2018-2022) Anexo 3 'Dispositivos legales de modificación de ámbitos territoriales' (16 distritos creados 2020–2021) https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1860/libro.pdf; tabla PNDA de ubigeos 2022 con 1 891 distritos; proyecciones 2018-2026 con 1 892 distritos. |
 
@@ -11588,8 +11588,8 @@ Número de personas con DNI por ubicación de domicilio declarado, sexo y grupo 
 | Descarga | **descarga_directa_url** — PNDA slugs 'población-identificada-con-dni-registro-nacional-de-identificación-y-estado-civil-reniec-1' y '-2'. Portal estadístico es consulta dinámica (timeout desde esta red). Nuevo sitio identidad.reniec.gob.pe/estadisticas. |
 | Licencia | ODC-By-1.0 (ODC-BY (PNDA)) · redistribución: sí · registro: no |
 | Limitaciones | UBIGEO RENIEC ≠ UBIGEO INEI (requiere tabla de equivalencia). Domicilio declarado en DNI suele estar desactualizado (sesgo hacia lugar de origen). Incluye fallecidos no depurados. Mide población con DNI según domicilio declarado, no población residente: subcuenta a menores sin DNI y extranjeros. Usar como contraste, no como denominador principal. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-10-10 |
-| Priorización | **0 · Base** · origen primaria · capa base · puntaje 100 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-10-10) — Población identificada con DNI por distrito, edad y sexo (contraste; no es población residente). |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
+| Priorización | **0 · Base** · origen primaria · capa base · puntaje 100 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Población identificada con DNI por distrito, edad y sexo (contraste; no es población residente). |
 | Trazabilidad | INF-14,EMB-14 (fuente) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | [Prueba de humo 2026-10-05] La ficha anterior (-1) solo tenía diccionario; el dataset vigente es "RENIEC - Población identificada con DNI" (23 XLSX, último 03-08-2026). |
 

@@ -23,7 +23,7 @@ Definida el 9/10/2026 a partir del informe del analista (`analista/informe.md`) 
 ## 3. Cómo queda en el repo
 
 ```
-codigo/verificador_r/
+verificador_r/
   verificar.R          # oráculo (contrato pap-verificador/1)
   .Rprofile, renv.lock, renv/activate.R, renv/settings.json   # en git; renv/library/ fuera
   casos/<caso>.json    # 20–30 cifras doradas, con la cifra del INEI y su cita
@@ -74,10 +74,10 @@ El registro guarda las filas de R en git, así que pytest compara svy contra R a
 2. **El R del contenedor de Claude** (survey compilado desde github.com/cran/survey en la misma versión del lock, con `r-recommended`) puede firmar registros como `entorno: respaldo-contenedor`, para trabajar sin tu Mac. **Recomendación: sí**, con una compuerta en el código: para publicar se exige al menos un registro `mac-renv` vigente (A11).
 3. **Estrato ENAHO:** departamento × estrato (recomendado, §5).
 
-## 7. En tu Mac (una vez, cuando exista `codigo/verificador_r/`)
+## 7. En tu Mac (una vez, cuando exista `verificador_r/`)
 
 ```bash
-cd ~/Documents/SideProjects/pregunta-al-peru/codigo/verificador_r
+cd verificador_r   # desde la raíz del repositorio
 Rscript -e 'install.packages("renv", repos="https://cloud.r-project.org")'
 Rscript -e 'renv::init(bare=TRUE, restart=FALSE)'
 Rscript -e 'options(pkgType="binary"); renv::install(c("survey","jsonlite"))'

@@ -4,7 +4,7 @@
   {
    "id": "BCRP-IPC-LIMA",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/BCRP-IPC-LIMA/2026-10-06"
@@ -17,7 +17,7 @@
   {
    "id": "GITHUB-UBIGEO-PERU-AUMENTADO",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/GITHUB-UBIGEO-PERU-AUMENTADO/2026-10-06"
@@ -30,7 +30,7 @@
   {
    "id": "INEI-CPV2017",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-CPV2017/2026-10-06"
@@ -43,7 +43,7 @@
   {
    "id": "INEI-DIRECTORIO-MUNICIPALIDADES",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-DIRECTORIO-MUNICIPALIDADES/2026-10-06"
@@ -56,7 +56,7 @@
   {
    "id": "INEI-ENAHO",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-ENAHO/2026-10-07",
@@ -71,7 +71,7 @@
   {
    "id": "INEI-ENDES",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07",
@@ -126,7 +126,7 @@
   {
    "id": "INEI-MAPA-POBREZA",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-MAPA-POBREZA/2026-10-07",
@@ -141,7 +141,7 @@
   {
    "id": "INEI-PNDA-UBIGEOS",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-PNDA-UBIGEOS/2026-10-06"
@@ -154,7 +154,7 @@
   {
    "id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-PROYECCIONES-DEPARTAMENTAL-EDAD/2026-10-06"
@@ -168,7 +168,7 @@
   {
    "id": "INEI-PROYECCIONES-DISTRITAL-2018-2022",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-PROYECCIONES-DISTRITAL-2018-2022/2026-10-06"
@@ -181,7 +181,7 @@
   {
    "id": "INEI-PROYECCIONES-POBLACION-DISTRITAL",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-PROYECCIONES-POBLACION-DISTRITAL/2026-10-06"
@@ -194,7 +194,7 @@
   {
    "id": "INS-CENAN-SIEN",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INS-CENAN-SIEN/2026-10-06"
@@ -207,7 +207,7 @@
   {
    "id": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06",
@@ -224,7 +224,7 @@
   {
    "id": "MEF-DETALLE-INVERSIONES",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/MEF-DETALLE-INVERSIONES/2026-10-06"
@@ -237,7 +237,7 @@
   {
    "id": "PROPIO-ESTADISTICAS-SOCIALES-2020",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/PROPIO-ESTADISTICAS-SOCIALES-2020/2026-10-05"
@@ -250,7 +250,7 @@
   {
    "id": "RENIEC-POBLACION-IDENTIFICADA",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/RENIEC-POBLACION-IDENTIFICADA/2026-10-06"
@@ -263,7 +263,7 @@
   {
    "id": "SUSALUD-RENIPRESS",
    "uso": "capa0",
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/SUSALUD-RENIPRESS/2026-10-06"

@@ -14,7 +14,7 @@ __pycache__/
 .venv/
 
 # Salidas locales de pap preguntar y de la matriz (cli.salida_por_defecto)
-salidas/
+/salidas/
 
 # Biblioteca: en git solo metadatos (capturas/*/datapackage.json, verificaciones.jsonl, manifiestos, pruebas).
 # Los crudos, los Parquet y los derivados se reconstruyen con `pap construir` y `pap calcular`.

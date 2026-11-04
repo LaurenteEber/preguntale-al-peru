@@ -26,9 +26,9 @@ Corte: 3 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas
 5. **Antes de la Ola 1:** GA-13 (gasto en proyectos con códigos fuera del detalle de inversiones del MEF) y la separación por producto de las ejecutoras mixtas (X-06).
 6. **Deuda menor:**
    - validar con terceros los 3 patrones de aviso del corrector (corpus de ≥ 40 oraciones escrito por otra persona);
-   - prueba automática de campos fuera del diccionario (scripts en `04_reglas/auditoria/scripts/`);
+   - prueba automática de campos fuera del diccionario (por escribir; la auditoría de reglas la hizo a mano);
    - URL de la Declaración de la Comisión Consultiva sobre la pobreza 2021;
-   - registrar con `pap registrar --mover` los 16 PDF de `03_auditoria/validacion_doradas/fuentes/` (sin dejar copia, F-04);
+   - registrar con `pap registrar --mover` los 16 PDF de las doradas, que esperan en `biblioteca/cruda/bandeja/validacion_doradas/` (fuera de git; sus huellas están en `tests/fixtures/validacion_doradas_SHA256SUMS`), sin dejar copia (F-04);
    - el Excel propio está dos veces (almacén y raíz de `biblioteca/cruda/`): son el mismo archivo (huella `3b014946…`); la copia de la raíz se puede quitar cuando haya respaldo;
    - revisar las doradas de 2025 cuando salga el informe definitivo de la ENDES 2025 (hoy preliminar);
    - Huancavelica 2015: bajar «ENDES 2015 Nacional y Departamental»;

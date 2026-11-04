@@ -7475,17 +7475,17 @@
     "muestreo_revision_humana_pct": 5,
     "ver": "clave lenguaje",
     "prueba_corrector": {
-     "corpus": "codigo/pruebas/corpus_reserva.json + codigo/pruebas/corpus_auditor.json (los que lee consolida_reglas.py)",
+     "corpus": "reglas/consolidador/pruebas/corpus_reserva.json + reglas/consolidador/pruebas/corpus_auditor.json (los que lee consolida_reglas.py)",
      "resultado": "se recalcula en cada consolidación; el consolidador falla con cualquier falso positivo o no detectada (parametros.puerta_ci)",
      "meta_mvp": "corpus ≥ 200 oraciones con 40 % de reserva"
     },
     "poblacion_censada": "cifras de INEI-CPV2025 por provincia o distrito van siempre con {{u:personas_censadas}}; la palabra 'población' sola solo para la población total con omisión o la proyección",
     "puerta_ci": "el consolidador falla si el corrector tiene algún falso positivo o no detectada en los corpus de prueba (tolerancia 0; más estricta que el 5 % propuesto); meta MVP: corpus ≥ 200 oraciones con 40 % de reserva",
     "poblacion_censada_verificacion": {
-     "funcion": "codigo/corrector_estructural.py: personas_censadas(texto, cifras)",
+     "funcion": "reglas/consolidador/corrector_estructural.py: personas_censadas(texto, cifras)",
      "patron_cifra": "\\{\\{c:([^}]+)\\}\\}",
      "marcador_exigido": "{{u:personas_censadas}}",
-     "casos": "codigo/pruebas/casos_personas_censadas.json (los corre consolida_reglas.py; un fallo es una prueba de consistencia fallida)"
+     "casos": "reglas/consolidador/pruebas/casos_personas_censadas.json (los corre consolida_reglas.py; un fallo es una prueba de consistencia fallida)"
     }
    },
    "mensaje_usuario": null,

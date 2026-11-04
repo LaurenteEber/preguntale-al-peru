@@ -186,7 +186,7 @@ K = {
  'C-V3-4 mensaje de R-CRUCES-06 válido para cualquier nivel': 'en vez de departamentos' not in R['R-CRUCES-06']['mensaje_usuario'],
  'C-V3-4 enunciado de R-CRUCES-06 = parámetro': out['chequeos']['CRUCES06_enunciado_vs_param'][0] == [str(out['chequeos']['CRUCES06_enunciado_vs_param'][1])],
  'C-V3-5/HEC-01 personas_censadas en la condición y en el diccionario': 'personas_censadas' in R['R-LENGUAJE-02']['condicion'] and 'personas_censadas' in dic['poblacion_objetivo']['para_que'],
- 'COM-07 prueba_corrector apunta a los corpus del consolidador': 'codigo/pruebas' in json.dumps(R['R-LENGUAJE-02']['parametros'].get('prueba_corrector'), ensure_ascii=False),
+ 'COM-07 prueba_corrector apunta a los corpus del consolidador': 'consolidador/pruebas' in json.dumps(R['R-LENGUAJE-02']['parametros'].get('prueba_corrector'), ensure_ascii=False),
  'COM-07 corpus ≥ 200 oraciones únicas (reserva + auditor + ronda 4)': out['chequeos']['corpus']['total'] >= 200,
  'C-R3-4/COM-13 R-GASTO-05: cada texto ≤ 300 y sin bloqueo del corrector (lo reescribe l_mensajes)': all(len(t) <= 300 for t in _textos(g05)) and not bloquea(g05),
  'C-R3-1 R-GASTO-02 sin cláusulas viejas y con GA-09': not any(out['ronda3']['GASTO02_condicion_conserva_texto_original']) and 'multidepartamental_mef' in R['R-GASTO-02']['condicion'] and 'nacional' not in re.sub(r'nacional_multidepartamental|Gobierno Nacional', '', R['R-GASTO-02']['enunciado']),

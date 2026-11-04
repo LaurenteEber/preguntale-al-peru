@@ -1,0 +1,306 @@
+[
+ {
+  "id": "EXA-A-01",
+  "area": "exactitud",
+  "severidad": "critica",
+  "registros": [
+   "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+   "MEF-DA-GASTO-DEVENGADO-MENSUAL",
+   "MEF-DA-GASTO-GPNNA",
+   "MEF-SEGUIMIENTO-PI"
+  ],
+  "campo": "llaves_cruce / nivel_territorial_disponible / notas / limitaciones",
+  "hallazgo": "El único ubigeo distrital de los datasets de gasto MEF es el de la UNIDAD EJECUTORA (DEPARTAMENTO/PROVINCIA/DISTRITO_EJECUTORA). La ubicación de la meta solo existe a nivel DEPARTAMENTO (DEPARTAMENTO_META). Las notas listan columnas 'PROVINCIA/DISTRITO_META' que no existen y las limitaciones sugieren que 'la meta puede tener ubigeo propio' distrital. Asignar gasto a distritos con este ubigeo atribuye todo el gasto de GN/GR (y de UGEL, redes de salud, etc.) al distrito sede de la ejecutora: cifras distritales erróneas. Además DISTRITO_EJECUTORA es un código de 2 dígitos dentro de la provincia (hay que concatenar dep+prov+dist).",
+  "evidencia": "Diccionarios: https://fs.datosabiertos.mef.gob.pe/datastorefiles/Gastos_Diccionario.csv, Gasto_Devengado_Diccionario.csv, GPNNA_Diccionario.csv y Seguimiento_PI_Diccionario.csv: geografía = *_EJECUTORA (dep/prov/dist) + DEPARTAMENTO_META ('Código de Departamento del Ubigeo de la meta'); no hay PROVINCIA_META ni DISTRITO_META.",
+  "recomendacion": "Cambiar llave a 'ubigeo_inei (sede de la ejecutora)' y nivel de la meta = departamento; corregir notas (eliminar PROVINCIA/DISTRITO_META); en limitaciones: 'el gasto solo es territorializable a distrito para gobiernos locales (ejecutora=municipalidad); para GN/GR solo a departamento vía DEPARTAMENTO_META'. Para distrito usar Detalle de inversiones (UBIGEO por CUI) o Consulta Amigable. Construir ubigeo = DEP(2)+PROV(2)+DIST(2) y validar contra tabla INEI.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-02",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "MEF-DA-GASTO-PPR"
+  ],
+  "campo": "descripcion / cobertura_temporal / url_datos",
+  "hallazgo": "El dataset 'Ejecución del Gasto Presupuestal por Resultados (PpR)' de la PNDA NO contiene la ejecución de Programas Presupuestales actuales: solo 'Programas Estratégicos' 2009–2011 (3 CSV). Está en Ola 1 como si fuera la serie PpR.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/ejecuci%C3%B3n-del-gasto-presupuestal-por-resultados-ppr → recursos 2009/2010/2011-Programas-Estrategicos.csv + Programas_Estrategicos_Diccionario.csv; descripción 'Información de 2009 al 2011 relacionada a los Programas Estratégicos'; modificado 2023-09-28.",
+  "recomendacion": "cobertura_temporal='2009–2011'; periodicidad='única (histórica)'; url_datos=https://fs.datosabiertos.mef.gob.pe/datastorefiles/{2009|2010|2011}-Programas-Estrategicos.csv; mover a ola 'referencia'. Para PP actuales usar PROGRAMA_PPTO del dataset Presupuesto y Ejecución de Gasto.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-03",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "MEF-DA-GASTO-DEVENGADO-SECTORES"
+  ],
+  "campo": "cobertura_temporal / periodicidad / ola",
+  "hallazgo": "Dataset congelado y parcial: solo 2012–2023, última modificación 2023-09-20, y solo sectores 03, 05, 06, 07. Es un subconjunto del gasto total ya incluido en MEF-DA-PRESUPUESTO-EJECUCION-GASTO. Periodicidad 'diaria' y cobertura null son incorrectas.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto-%E2%80%93-devengado-sectores : 'Información de Gasto en formato Devengado Mensual de 2012 al 2023 de Sectores'; modificado 2023-09-20; archivos {AÑO}-Gasto-Devengado-sector{03|05|06|07}.csv y {AÑO}-Gasto-Diario-Devengado-sectorNN.csv.",
+  "recomendacion": "cobertura_temporal='2012–2023 (sectores 03,05,06,07)'; periodicidad='discontinuado'; sacar de Ola 1 (ola 'referencia' o fusionar como duplicado del dataset completo).",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-04",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "MEF-DA-GASTO-DEVENGADO-MENSUAL",
+   "MEF-DA-PRESUPUESTO-EJECUCION-GASTO"
+  ],
+  "campo": "duplicación / detalle_descarga",
+  "hallazgo": "Ambos registros son la misma fuente (SIAF/Consulta Amigable, mismos niveles y clasificadores). 'Devengado Mensual' es una versión ancha (MONTO_DEVENGADO_ENERO…DICIEMBRE, sin MES_EJE ni fases mensuales) del dataset 'Presupuesto y Ejecución de Gasto' (formato largo con MES_EJE y todas las fases). Ingerir ambos duplica montos. Además, para 2025–2026 cada dataset publica archivo -Mensual y -Diario del mismo año: cargar ambos también duplica.",
+  "evidencia": "Gasto_Devengado_Diccionario.csv (68 columnas, 12 columnas mensuales de devengado) vs Gastos_Diccionario.csv; recursos 2025-Gasto-Mensual.csv y 2025-Gasto-Diario.csv en https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto.",
+  "recomendacion": "Marcar MEF-DA-GASTO-DEVENGADO-MENSUAL como derivado/duplicado (ola 'ruta_alterna'); ingerir solo MEF-DA-PRESUPUESTO-EJECUCION-GASTO; regla explícita: por año usar el archivo anual (≤2024) o SOLO el -Mensual (2025–2026), nunca -Mensual + -Diario.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-05",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "MEF-SEGUIMIENTO-PI"
+  ],
+  "campo": "llaves_cruce / limitaciones",
+  "hallazgo": "El dataset no trae CODIGO_SNIP ni columna CUI explícita ni ubigeo del proyecto: solo PRODUCTO_PROYECTO (código de proyecto SIAF, equivalente al CUI) y ubigeo de la ejecutora + DEPARTAMENTO_META. La limitación 'ubicación heredada del Banco de Inversiones (multi-distrito)' es falsa.",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Seguimiento_PI_Diccionario.csv (41 columnas: …PRODUCTO_PROYECTO, DEPARTAMENTO_META…, MONTO_EJECUCION_TOTAL; sin CODIGO_UNICO/CODIGO_SNIP/UBIGEO).",
+  "recomendacion": "llaves_cruce=['cui_inversion (vía PRODUCTO_PROYECTO)','pliego_unidad_ejecutora (sec_ejec)','ubigeo_inei (ejecutora)']; quitar codigo_snip; limitaciones: 'ubigeo de la ejecutora; ubicación del proyecto solo por join con MEF-DETALLE-INVERSIONES.UBIGEO vía CUI'. url_datos=https://fs.datosabiertos.mef.gob.pe/datastorefiles/{2014..2026}-Seguimiento-PI.csv.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-06",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "MEF-INVERSIONES-BRECHAS"
+  ],
+  "campo": "nivel_territorial_disponible / llaves_cruce / notas",
+  "hallazgo": "El CSV no tiene ubigeo ni código de indicador: columnas CODIGO_UNICO, DES_SERVICIO, DES_BRECHA, DES_UM, ESPACIO_GEOGRAFICO (texto), ANIO, VALOR, CONTRIBUCION, ANIO_PROC. nivel 'distrito' y la nota 'otro = código de indicador de brecha (Formato 4-A)' son incorrectos.",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Inversiones_Brechas_Diccionario.csv; ficha PNDA modificada 2023-10-15.",
+  "recomendacion": "nivel_territorial_disponible: null/'no estructurado' (ESPACIO_GEOGRAFICO texto; ubicar vía CUI→Detalle de inversiones); llaves_cruce=['cui_inversion']; llave de indicador = texto DES_BRECHA (requiere normalización).",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-07",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "INEI-CPV2025"
+  ],
+  "campo": "nivel_territorial_disponible / cobertura_temporal / limitaciones / url_datos",
+  "hallazgo": "El registro afirma que a oct-2026 solo hay resultados preliminares departamentales. Falso: resultados preliminares nacionales/departamentales del 29-may-2026 y luego presentación de resultados definitivos (jul-2026) con resultados provinciales y distritales; el tablero oficial consulta población censada por departamento, provincia y distrito. Omisión censal 4,25%.",
+  "evidencia": "https://elbuho.pe/?p=433796 (28-ago-2026, usa https://censos2025.inei.gob.pe/resultados/poblacion-censada/indicadores con datos de provincia y distritos); https://sistemas.inei.gob.pe/dir-segmentacion-ci/postcensal/prod/adjuntos/publicaciones/Presentacion_resultados.pdf (resultados definitivos, provincias y distritos, 34 157 732 hab., omisión 4,25%); https://andina.pe/agencia/noticia-poblacion-total-del-peru-se-eleva-a-34-millones-157-mil-732-habitantes-informa-inei-1077241.aspx",
+  "recomendacion": "nivel_territorial_disponible='distrito'; cobertura_temporal='2025 (resultados definitivos publicados jul-2026)'; url_datos=https://censos2025.inei.gob.pe/resultados/poblacion-censada/indicadores; estrategia scraping_dinamico (SPA) hasta que haya descarga/REDATAM; actualizar notas de CPV2017/proyecciones: CPV2025 ya puede ser el denominador distrital de 2025.",
+  "esfuerzo": "medio",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-A-08",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "SUSALUD-RENIPRESS"
+  ],
+  "campo": "url_datos / detalle_descarga / limitaciones / url_portal",
+  "hallazgo": "url_datos apunta al dataset viejo (modificado 2021-11-04, recursos externos en datos.susalud.gob.pe). Existe en la PNDA el dataset SUSALUD vigente, actualizado mensualmente hasta set-2026. La limitación 'no se actualiza desde nov-2021; preferir MINSA-IPRESS' es por tanto errónea. url_portal es un post de blog.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-entidades-prestadoras-de-servicios-de-salud-renipress (SUSALUD, ODC-BY, modificado 2026-09-30, recurso https://www.datosabiertos.gob.pe/sites/default/files/RENIPRESS_30-09-2026.csv + 'Diccionario de datos RENIPRESS.pdf').",
+  "recomendacion": "url_datos=https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-entidades-prestadoras-de-servicios-de-salud-renipress; detalle: patrón /sites/default/files/RENIPRESS_DD-MM-AAAA.csv (fecha de corte mensual, no predecible → listar vía API PNDA); periodicidad='mensual'; quitar limitación de 2021; url_portal=consulta RENIPRESS de SUSALUD.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-09",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "INEI-PNDA-UBIGEOS"
+  ],
+  "campo": "licencia / url_datos / cobertura_temporal",
+  "hallazgo": "Licencia real ODbL (no ODC-BY). url_datos null aunque hay archivos directos. Corte 2022 con 1 891 distritos; INEI ya usa 1 892 distritos (proyecciones dic-2025), así que la tabla maestra está desactualizada.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/ubigeos-c%C3%B3digos-de-ubicaci%C3%B3n-geogr%C3%A1fica-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-inei (ODbL, modificado 2023-09-07, 'UBIGEO 2022_1891 distritos.xlsx', https://www.inei.gob.pe/media/DATOS_ABIERTOS/UBIGEOS/UBIGEOS_2022_1891_distritos.zip); ficha gob.pe 6894980 cita 1 892 distritos.",
+  "recomendacion": "licencia='ODbL'; url_datos=https://www.datosabiertos.gob.pe/sites/default/files/UBIGEO%202022_1891%20distritos.xlsx; cobertura_temporal='corte 2022 (1 891 distritos)'; completar el distrito faltante con la lista de las proyecciones 2018–2026 o CPV2025.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-10",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "MEF-DA-PRESUPUESTO-EJECUCION-GASTO"
+  ],
+  "campo": "url_datos / detalle_descarga / llaves_cruce",
+  "hallazgo": "url_datos no es una URL sino una plantilla en texto; detalle dice que el nombre de los anuales 'no está confirmado' (sí lo está). cui_inversion figura como llave pero no hay columna CUI: el CUI está en PRODUCTO_PROYECTO cuando TIPO_ACT_PROY indica proyecto.",
+  "evidencia": "Ficha PNDA: 2012…2024-Gasto.csv, 2025/2026-Gasto-Mensual.csv y -Diario.csv, Gastos_Diccionario.csv; diccionario sin columna CUI.",
+  "recomendacion": "url_datos=https://fs.datosabiertos.mef.gob.pe/datastorefiles/{AÑO}-Gasto.csv (2012–2024) | {AÑO}-Gasto-Mensual.csv (2025–2026); anotar 'cui_inversion = PRODUCTO_PROYECTO si TIPO_ACT_PROY=proyecto'.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-11",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "MEF-DA-TRANSFERENCIAS"
+  ],
+  "campo": "periodicidad / llaves_cruce",
+  "hallazgo": "Periodicidad 'anual' imprecisa: los CSV traen MES_PRC (mes de proceso) y montos autorizado/acreditado, con un archivo por año que se actualiza. El ubigeo es el de la ejecutora receptora.",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Transferencias_Diccionario.csv (ANO_PRC, MES_PRC, …, SEC_EJEC, DEPARTAMENTO/PROVINCIA/DISTRITO_EJECUTORA, MONTO_AUTORIZADO, MONTO_ACREDITADO).",
+  "recomendacion": "periodicidad='mensual (archivo anual)'; llave 'ubigeo_inei (ejecutora receptora; construir dep+prov+dist)'.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-12",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "MEF-DA-GASTO-GPNNA"
+  ],
+  "campo": "cobertura_temporal / periodicidad / url_datos",
+  "hallazgo": "Campos nulos que ya se pueden llenar: cobertura 2023–2026, datos mensuales (MES_EJE), archivos con nombre predecible.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/gasto-en-ni%C3%B1ez-y-adolescencia-gpnna : GPNNA_2023…2026.csv + GPNNA_Diccionario.csv; modificado 2026-04-08.",
+  "recomendacion": "cobertura_temporal='2023–2026'; periodicidad='mensual'; url_datos=https://fs.datosabiertos.mef.gob.pe/datastorefiles/GPNNA_{AÑO}.csv.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-13",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "INEI-CPV2017"
+  ],
+  "campo": "limitaciones",
+  "hallazgo": "La omisión censal 2017 no es ~3–4%: población censada 29 381 884 vs población total estimada 31 237 385 (omisión ≈5,9%).",
+  "evidencia": "Cifras oficiales de resultados definitivos CPV2017 (INEI, 'Perú: Resultados Definitivos', 2018) — no reabierto en esta sesión.",
+  "recomendacion": "Reemplazar por 'omisión censal ≈5,9% (31,2 M población total vs 29,4 M censada)'.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-A-14",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "INEI-MAPA-POBREZA"
+  ],
+  "campo": "url_datos",
+  "hallazgo": "url_datos apunta a Lib1724, pero la publicación principal 'Mapa de Pobreza Monetaria Provincial y Distrital 2018' (1 874 distritos) es Lib1718.",
+  "evidencia": "Paquete R perupobreza2018 (1 874 filas) cita https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf",
+  "recomendacion": "url_datos=https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf; conservar Lib1724 solo si se confirma qué contiene.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-A-15",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "GITHUB-UBIGEO-PERU-AUMENTADO"
+  ],
+  "campo": "cobertura_temporal / limitaciones",
+  "hallazgo": "Última actualización del repo ~ago-2021: no incluye distritos creados después (INEI ya reporta 1 892). cobertura_temporal null.",
+  "evidencia": "https://github.com/jmcastagnetto/ubigeo-peru-aumentado (nota más reciente 2021-08-16 sobre distritos nuevos; rama main; archivos ubigeo_{departamento|provincia|distrito|ccpp}.{csv,json,rds}).",
+  "recomendacion": "cobertura_temporal='corte 2021'; detalle_descarga=raw.githubusercontent.com/jmcastagnetto/ubigeo-peru-aumentado/main/ubigeo_distrito.csv; usar solo como puente RENIEC↔INEI, validando contra tabla INEI vigente.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-A-16",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "INEI-PROYECCIONES-POBLACION-DISTRITAL"
+  ],
+  "campo": "detalle_descarga",
+  "hallazgo": "Pendiente 'confirmar si incluye Excel' ya resoluble: la ficha trae XLSX (212,6 KB), publicada 31-dic-2025, 1 892 distritos.",
+  "evidencia": "https://cdna.www.gob.pe/en/institucion/inei/informes-publicaciones/6894980-peru-poblacion-total-proyectada-al-30-de-junio-de-cada-ano-segun-departamento-provincia-y-distrito-2018-2026",
+  "recomendacion": "formatos=['XLSX']; detalle: 'XLSX adjunto en ficha gob.pe (descarga manual; gob.pe bloquea bots)'.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-A-17",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "MEF-CIERRE-INVERSIONES"
+  ],
+  "campo": "llaves_cruce / url_documentacion",
+  "hallazgo": "No verificable: el diccionario enlazado en la ficha (Cierre_Inversiones_diccionario.csv) devuelve 404; no se pudo confirmar que el CSV traiga CODIGO_SNIP ni UBIGEO.",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Cierre_Inversiones_diccionario.csv → 404 (5-oct-2026).",
+  "recomendacion": "Verificar cabecera del CSV al ingerir; si no hay ubigeo, ubicar vía CUI → MEF-DETALLE-INVERSIONES.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-A-18",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "MEF-FORMATO-12B",
+   "MEF-DETALLE-INVERSIONES"
+  ],
+  "campo": "url_portal / periodicidad",
+  "hallazgo": "No verificable: las fichas PNDA de Formato 12B y Detalle de inversiones están bloqueadas por robots.txt. Para Detalle sí se confirmó el diccionario (CODIGO_UNICO, CODIGO_SNIP, SEC_EJEC, UBIGEO, LATITUD, LONGITUD); la URL del CSV y la periodicidad mensual no se confirmaron. Para 12B no se confirmó nada.",
+  "evidencia": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/Detalle_Inversiones_Diccionario.csv (62 columnas); fichas → ROBOTS_DISALLOWED.",
+  "recomendacion": "Confirmar recursos con navegador antes de ingerir; anotar en 12B que url_datos es desconocida.",
+  "esfuerzo": "bajo",
+  "confianza": "baja"
+ },
+ {
+  "id": "EXA-A-19",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "PNDA-UBIGEO-EQUIVALENCIAS"
+  ],
+  "campo": "entidad / notas",
+  "hallazgo": "No verificable (la ficha redirige a login). La nota 'Amazonas=01 vs 01 pero orden distinto en varios' es confusa y no sirve como regla de conversión.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/codigos-equivalentes-de-ubigeo-del-peru → página de login de la PNDA.",
+  "recomendacion": "Reemplazar por un ejemplo verificado (p. ej. Callao y Lima tienen códigos de departamento distintos en RENIEC e INEI) tras abrir el archivo; mientras tanto usar el puente de GITHUB-UBIGEO-PERU-AUMENTADO.",
+  "esfuerzo": "bajo",
+  "confianza": "baja"
+ },
+ {
+  "id": "EXA-A-20",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "INEI-DIRECTORIO-CCPP"
+  ],
+  "campo": "url_datos",
+  "hallazgo": "url_datos es una ruta de prueba solo http (sige.inei.gob.pe/test/atlas/): frágil para la ingesta y no es una descarga.",
+  "evidencia": "Valor del propio registro; nota de validación Chrome 'SIGE, solo http'.",
+  "recomendacion": "Usar como url_datos la capa de centros poblados de la IDE INEI (WFS/GPKG en https://ide.inei.gob.pe/) o las tablas Lib1541; dejar SIGE como consulta.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-A-21",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "MINEDU-ESCALE-PADRON",
+   "INEI-ENCO",
+   "INEI-ENEDIS",
+   "RENIEC-POBLACION-IDENTIFICADA-DNI",
+   "INEI-IDE-LIMITES",
+   "MEF-OXI-BASE"
+  ],
+  "campo": "varios",
+  "hallazgo": "Sin contraste completo en esta auditoría: ESCALE (anti-bot), ENCO/ENEDIS (portal INEI bloqueado). En RENIEC, IDE INEI y OXI lo verificado coincide (RENIEC trimestral 2021-09 a 2026-T2 con ODC-BY; IDE con GPKG/RAR 2023 + WMS/WFS; OXI XLSX con corte 31-08-2026 y ubigeo de la entidad). No se confirmó que RENIEC use ubigeo RENIEC ni que la base OXI traiga RUC.",
+  "evidencia": "Fichas PNDA RENIEC (modificada 2026-08-03), https://ide.inei.gob.pe/, https://www.mef.gob.pe/es/obras-por-impuestos/estadisticas",
+  "recomendacion": "Revisar cabeceras al ingerir (RENIEC: tipo de ubigeo; OXI: columna RUC).",
+  "esfuerzo": "bajo",
+  "confianza": "baja"
+ }
+]

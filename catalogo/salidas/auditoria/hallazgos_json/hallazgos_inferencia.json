@@ -1,0 +1,417 @@
+[
+ {
+  "id": "INF-01",
+  "area": "inferencia",
+  "severidad": "critica",
+  "registros": [
+   "MEF-DA-GASTO-DEVENGADO-MENSUAL",
+   "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+   "MEF-DA-GASTO-DEVENGADO-SECTORES",
+   "MEF-DA-GASTO-PPR",
+   "MEF-DA-GASTO-GPNNA",
+   "MEF-DA-TRANSFERENCIAS"
+  ],
+  "campo": "nivel_territorial_inferencia / nivel_territorial_disponible",
+  "hallazgo": "Los 6 datasets de gasto MEF de la Ola 1 declaran nivel 'distrito' (disponible e inferencia), pero el ubigeo es el de la unidad ejecutora/pliego, no el del lugar de beneficio. Las limitaciones lo mencionan, pero el campo estructurado dice 'distrito' y prioriza.py le da cruzabilidad 1.0. GPNNA, DEVENGADO-SECTORES y GASTO-PPR ni siquiera listan ubigeo_inei en llaves_cruce, aunque declaran 'distrito'. Un cruce 'gasto per cápita del distrito vs anemia/pobreza' atribuiría a Lima (o a la capital donde está la UE) el gasto del Gobierno Nacional y de los GORE (p. ej., JUNTOS, Wasi Mikuna, hospitales regionales), y daría cero en los distritos que reciben el servicio.",
+  "evidencia": "catalogo_fuentes.json: limitaciones de MEF-DA-GASTO-DEVENGADO-MENSUAL ('el gasto del Gobierno Nacional se registra mayormente en Lima salvo que la meta tenga ubigeo propio'); llaves_cruce de MEF-DA-GASTO-GPNNA/SECTORES/PPR sin ubigeo; prioriza.py NIVEL['distrito']=1.0; priorizacion.md §7 fila 'tabla maestra de unidades ejecutoras'",
+  "recomendacion": "Usar nivel_territorial_inferencia=null para fuentes presupuestales y agregar el campo 'base_territorial'='ubigeo_ejecutora'. Regla: solo atribuir gasto a un distrito cuando (a) el pliego es una municipalidad distrital o provincial (nivel de gobierno=M) o (b) la meta o inversión tiene ubigeo propio (CUI→ubigeo vía MEF-DETALLE-INVERSIONES); el resto se publica a nivel departamental con la etiqueta 'gasto registrado por la sede de la ejecutora', o se excluye. En cada cifra distrital, mostrar el porcentaje del gasto con ubigeo asignable.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-02",
+  "area": "inferencia",
+  "severidad": "critica",
+  "registros": [
+   "INEI-MAPA-POBREZA"
+  ],
+  "campo": "limitaciones / reglas de publicación",
+  "hallazgo": "El Mapa de Pobreza 2018 es la única cifra distrital, pero es anterior al choque de 2020: la pobreza nacional pasó de 20,2 % (2019) a 30,1 % (2020) y en 2024 sigue por encima de 2018. Si la web responde '¿cuánta pobreza hay en el distrito X?' con el valor de 2018, la cifra está desactualizada en varios puntos y de forma desigual (más en zonas urbanas). Las reglas de §8 no dicen cómo publicar una estimación small-area: con intervalo, sin ranking puntual y sin combinarla con la ENAHO de otro año.",
+  "evidencia": "catalogo: INEI-MAPA-POBREZA cobertura_temporal 2007–2018 y limitaciones; priorizacion.md §4 nota 'indispensable'; §8 no menciona estimaciones modeladas. Serie ENAHO de pobreza: INEI, Informe Técnico de Pobreza Monetaria.",
+  "recomendacion": "Publicar siempre con el año ('2018'), el IC al 95 % y el grupo/estrato robusto del INEI en vez de un ranking puntual. Prohibir: (1) restas o tendencias entre el Mapa 2018 y la ENAHO de otros años; (2) 'actualizar' el Mapa con la variación departamental de la ENAHO sin etiquetarlo como estimación propia; (3) comparar distritos cuyos IC se solapan. Si el ancho del IC supera 20 pp, mostrar solo el intervalo. Mostrar un aviso fijo: 'anterior a la pandemia; nivel actual probablemente distinto'.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-03",
+  "area": "inferencia",
+  "severidad": "critica",
+  "registros": [],
+  "campo": "priorizacion.md §8 (reglas de encuestas)",
+  "hallazgo": "§8 dice 'se guardan con su CV y solo se publican en el nivel de representatividad', pero no fija umbrales de CV ni un mínimo de casos, no exige intervalos y no trata subpoblaciones. 'Representativa por departamento' vale para el diseño y los indicadores principales, no para cualquier subgrupo (p. ej., anemia en niños de 6–35 meses en Madre de Dios, o victimización rural en Tumbes). Sin umbrales, un motor automático publicará cifras con CV>30 % o con menos de 25 casos.",
+  "evidencia": "priorizacion.md §8, viñeta 'Encuestas'. Práctica INEI: las cifras con CV>15 % se marcan como referenciales en los cuadros ENAHO; la convención DHS/ENDES pone entre paréntesis las cifras con 25–49 casos sin ponderar y suprime las de menos de 25.",
+  "recomendacion": "Regla automática por celda: n sin ponderar <25 → suprimir; 25–49 → mostrar entre paréntesis como 'referencial'; CV ≤15 % → publicar; 15 %<CV≤30 % → 'referencial' con IC; CV>30 % → suprimir o agrupar años. Siempre IC al 95 % con diseño complejo (estrato + conglomerado + factor; svy/survey, linealización de Taylor). Evaluar la regla por subgrupo y no solo por dominio.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-04",
+  "area": "inferencia",
+  "severidad": "critica",
+  "registros": [],
+  "campo": "priorizacion.md §8 (cruces territoriales)",
+  "hallazgo": "No hay ninguna regla contra la falacia ecológica ni contra el MAUP. El producto ('cruzar gasto con resultados por ubigeo') invita a mostrar correlaciones entre distritos o departamentos (más gasto en X ↔ menos anemia) y a leerlas como efecto o como relación individual. Tampoco se exige que las dos fuentes del cruce tengan el mismo nivel territorial válido: hoy se podría cruzar gasto 'distrital' con ENAHO, que solo es válida por departamento.",
+  "evidencia": "priorizacion.md §1 ('El valor del proyecto es cruzar gasto con resultados'), §8; no aparece 'ecológ' en el documento.",
+  "recomendacion": "Agregar reglas: (1) un cruce se calcula al nivel territorial válido más grueso entre sus fuentes (min. común), nunca al más fino; (2) toda correlación territorial se rotula como 'asociación entre territorios, no efecto ni relación individual'; (3) prohibido el lenguaje causal sin diseño de evaluación; (4) reportar n de territorios e incertidumbre (IC de la correlación); (5) no cruzar con encuestas por debajo del dominio de inferencia.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-05",
+  "area": "inferencia",
+  "severidad": "alta",
+  "registros": [
+   "SIS-AFILIADOS",
+   "SIS-ATENCIONES",
+   "SIS-AFILIADOS-PNDA",
+   "SIS-ATENCIONES-PNDA"
+  ],
+  "campo": "llaves_cruce",
+  "hallazgo": "Mismos datos, distinta llave: SIS-AFILIADOS y SIS-ATENCIONES (Ola 1) declaran ubigeo_inei, pero sus rutas alternas (el mismo dataset en la PNDA) declaran ubigeo_reniec, y la nota de PNDA-UBIGEO-EQUIVALENCIAS dice que el SIS usa ubigeo RENIEC. Si en realidad es RENIEC, un join directo con la tabla INEI no da error: asigna los datos a otros distritos o departamentos (los códigos de departamento difieren, p. ej. Lima y Callao).",
+  "evidencia": "catalogo: llaves_cruce de SIS-AFILIADOS ['ubigeo_inei',…] vs SIS-AFILIADOS-PNDA ['ubigeo_reniec']; notas de PNDA-UBIGEO-EQUIVALENCIAS.",
+  "recomendacion": "Verificar contra el diccionario de datos del SIS antes de la ingesta. Regla de estandarización: en cada fuente, comprobar el sistema de ubigeo empíricamente (porcentaje de códigos que existen en INEI y en RENIEC, más una validación con el nombre del distrito) y rechazar la carga si menos del 99 % de los códigos casa con nombre. Registrar 'sistema_ubigeo' por fuente y versión.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "INF-06",
+  "area": "inferencia",
+  "severidad": "alta",
+  "registros": [
+   "PNDA-UBIGEO-EQUIVALENCIAS",
+   "INEI-PNDA-UBIGEOS",
+   "GITHUB-UBIGEO-PERU-AUMENTADO"
+  ],
+  "campo": "limitaciones / Ola 0",
+  "hallazgo": "La tabla de equivalencias INEI–RENIEC, que sostiene todos los cruces con RENIEC, SIS, ONPE y JNE, tiene la entidad publicadora sin confirmar (la página redirigió a login). Ninguna tabla de Ola 0 declara la versión del ubigeo ni el historial de distritos creados (cada año se crean distritos nuevos por partición). Las encuestas usan el ubigeo del marco muestral, el Censo 2017 el de 2017 y los registros el vigente: un distrito partido después de 2017 queda con numerador nuevo y denominador viejo.",
+  "evidencia": "catalogo: PNDA-UBIGEO-EQUIVALENCIAS.limitaciones; INEI-PNDA-UBIGEOS.limitaciones ('Verificar fecha de corte'); INEI-CPV2007.limitaciones; priorizacion.md §8 Ola 0 lo exige, pero ninguna fuente lo provee.",
+  "recomendacion": "Construir una tabla ubigeo_historico (código, vigente_desde, vigente_hasta, padre/hijos y ley de creación) y una matriz de equivalencias validada en dos fuentes (INEI y RENIEC/ONPE). Regla: los cruces entre años usan la geografía 'congelada' de un año base (p. ej., 2017), con los distritos nuevos re-agregados al distrito de origen. Marcar el ubigeo de GITHUB-UBIGEO-PERU-AUMENTADO como solo de contraste.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-07",
+  "area": "inferencia",
+  "severidad": "alta",
+  "registros": [
+   "INS-CENAN-SIEN",
+   "MINSA-PADRON-NOMINAL",
+   "MINSA-CNV-NACIDOS-VIVOS",
+   "MINSA-HIS",
+   "SIS-ATENCIONES",
+   "ESSALUD-DATOS-ABIERTOS",
+   "MINSA-SINADEF",
+   "CDC-VIGILANCIA-DATOS-ABIERTOS",
+   "PAIS-TAMBOS-ATENCIONES",
+   "MINSA-INMUNIZACIONES"
+  ],
+  "campo": "nivel_territorial_inferencia",
+  "hallazgo": "Los registros administrativos llevan un 'nivel de inferencia' que no tiene sentido: el esquema manda copiar el nivel disponible. SIEN y Padrón Nominal declaran incluso 'distrito' como inferencia, lo que sugiere representatividad poblacional. El problema real de un registro es la cobertura, el sesgo de selección (quién acude) y la base geográfica: ubigeo del establecimiento vs. residencia, porque la gente se atiende y da a luz fuera de su distrito. El catálogo no tiene un campo que distinga 'lugar de atención' de 'lugar de residencia', y eso genera coberturas mayores al 100 % (ya reconocidas en MINSA-INMUNIZACIONES) y tasas falsas en distritos cabecera.",
+  "evidencia": "esquema_registro.md ('Censos/registros: igual al disponible'); catalogo: INS-CENAN-SIEN inf='distrito', MINSA-PADRON-NOMINAL inf='distrito'; limitaciones de ESSALUD ('ubigeo de establecimiento, no de residencia') y MINSA-INMUNIZACIONES ('coberturas >100%').",
+  "recomendacion": "Para registros y presupuestales, poner nivel_territorial_inferencia=null y crear 3 campos: 'base_geografica' (residencia | establecimiento | ejecutora | domicilio_fiscal | ocurrencia), 'tipo_medida' (prevalencia | cobertura | produccion/atenciones | stock | notificacion) y 'cobertura_estimada' (% de la población objetivo que capta el registro). Regla: para tasas, usar el ubigeo de residencia cuando exista (CNV: residencia de la madre; SINADEF: residencia y no ocurrencia); si solo hay ubigeo del establecimiento, publicar a nivel de red/provincia/departamento, no a nivel distrital.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-08",
+  "area": "inferencia",
+  "severidad": "alta",
+  "registros": [
+   "INS-CENAN-SIEN",
+   "INEI-ENDES",
+   "MINSA-REUNIS"
+  ],
+  "campo": "limitaciones (anemia)",
+  "hallazgo": "El cambio de punto de corte de anemia está confirmado: la ENDES 2024 publica la anemia con los dos criterios, RM 363-2022-MINSA y RM 251-2024-MINSA (OMS 2024: corte de 10,5 g/dL en 6–23 meses y nuevo algoritmo de ajuste por altitud). El catálogo lo deja como 'verificar' en ENDES y no lo menciona en REUNIS. Si se mezclan años con criterios distintos, se fabrica una caída artificial de la anemia. Además, SIEN mide anemia en niños tamizados en EESS, no prevalencia, y su nivel 'distrito' se confundirá con la ENDES.",
+  "evidencia": "https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes15/pdf/Cap09.pdf (gráficos 9.1–9.2 con criterio anterior y 9.3–9.4 con RM 251-2024-MINSA)",
+  "recomendacion": "Guardar el indicador de anemia con un atributo obligatorio 'criterio' ∈ {OMS2001/RM363-2022, OMS2024/RM251-2024} y no unir series entre criterios sin un puente: recalcular desde los microdatos (hemoglobina y altitud) con ambos criterios para todos los años disponibles. En SIEN, rotular 'proporción de anemia entre niños evaluados en EESS' y no mostrarla junto a la ENDES como si fuera la misma medida.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-09",
+  "area": "inferencia",
+  "severidad": "alta",
+  "registros": [
+   "INEI-ENCO",
+   "INEI-ENEDIS",
+   "SUSALUD-ENSUSALUD",
+   "MINEDU-UMC-ECE"
+  ],
+  "campo": "ola / cobertura_temporal",
+  "hallazgo": "Fuentes de una sola edición o con serie cerrada entraron al núcleo porque prioriza.py no usa la vigencia para asignar ola (solo para el puntaje): ENCO (2006, de hace 20 años), ENEDIS (2012), ENSUSALUD (última edición confirmada 2016) y ECE censal (última 2019). Si se publican como respuesta a preguntas de hoy, inducen a error. ENEDIS (2012, ~5 %) y Censo 2017 (~10 % de la población con alguna dificultad) usan definiciones distintas de discapacidad y no son comparables, y la limitación de ENEDIS lo sugiere como sustituto sin advertirlo.",
+  "evidencia": "prioriza.py: la vigencia solo pesa 15 % del puntaje y no entra en la regla de ola; catálogo: periodicidad 'única' en INEI-ENCO e INEI-ENEDIS. Cifras de discapacidad: INEI, ENEDIS 2012 (5,2 %) y Censo 2017 (10,4 %), recordadas sin verificar en esta sesión.",
+  "recomendacion": "Agregar a prioriza.py la regla: último dato < (año actual − 6) → 'referencia/histórica', fuera de la Ola 1. Agregar el campo 'año_referencia' a cada indicador y mostrarlo junto a la cifra. En discapacidad, documentar el quiebre de definición (escala Washington Group vs ENEDIS) y prohibir restas entre ambas fuentes.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-10",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "INEI-ENCO"
+  ],
+  "campo": "nivel_territorial_inferencia / limitaciones",
+  "hallazgo": "La sospecha sobre 'ENCO representativa por provincia' no se sostiene como error de diseño: el informe ENCO 2006 del INEI declara inferencia provincial anual (195 provincias, ~382 671 viviendas) y distrital solo 'a partir del tercer año', que nunca llegó porque la encuesta se discontinuó. El catálogo la marca como 'no confirmado' y la describe como 'nivel provincial/distrital agregado', lo cual es engañoso en lo distrital. El problema real es la antigüedad (2006), no el nivel.",
+  "evidencia": "https://ftp.ibge.gov.br/Metodos_Alternativos_Censo/Terceiro_Seminario/4_metodos_alternativos_para_censos_demograficos_-_experiencia_da_america_latina/informe_enco_2006_peru.pdf (niveles: nacional, departamental, provincial anual; distrital desde el 3.er año)",
+  "recomendacion": "Mantener inferencia='provincia' (anual 2006) con cita a la ficha; quitar 'distrital' de la descripción; verificar los CV provinciales reales antes de usarla; reclasificar a referencia/histórica (ver INF-09).",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-11",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "SUSALUD-ENSUSALUD"
+  ],
+  "campo": "nivel_territorial_inferencia / unidad_observacion",
+  "hallazgo": "La ficha de ENSUSALUD 2016 declara inferencia nacional para todos los cuestionarios y 'regional' solo para los de usuarios de consulta externa y de médicos/enfermeras (181 EESS, 25 528 entrevistas). Mide satisfacción de usuarios atendidos en establecimientos seleccionados, no de la población. El nivel 'establecimiento' disponible no permite inferir por establecimiento: con 181 EESS, la muestra por IPRESS es pequeña.",
+  "evidencia": "https://www.inei.gob.pe/descargar/encuestas/documentos/01_ficha_tecnica.PDF (ENSUSALUD 2016: 'Nacional: para todos los tipos de cuestionarios'; 'Regional: para los cuestionarios' de usuarios de consulta externa y médicos/enfermeras)",
+  "recomendacion": "Cambiar a inferencia='nacional' por defecto, con 'departamento' solo para los cuestionarios de consulta externa y de médicos/enfermeras; prohibir resultados por IPRESS; agregar a limitaciones 'población: usuarios atendidos (sesgo de supervivencia del servicio)'; confirmar si existe una edición posterior a 2016 antes de dejarla en la Ola 1.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-12",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "INEI-ENAHO",
+   "INEI-ENDES",
+   "INEI-ENAPRES",
+   "MINEDU-UMC-ENLA",
+   "INEI-EPEN"
+  ],
+  "campo": "nivel_territorial_inferencia (dominios)",
+  "hallazgo": "El vocabulario territorial no tiene 'dominio': los dominios reales no coinciden con el ubigeo de departamento. Lima se divide en Lima Metropolitana (provincia 1501) y Lima Provincias/Región Lima, a veces con Callao incluido o separado según el año y la encuesta. ENLA y la UMC reportan por región/DRE, no por departamento; ENAPRES mide victimización solo en ciudades urbanas. Un join por los 2 primeros dígitos del ubigeo asigna mal Lima y Callao y extiende al ámbito rural indicadores que solo son urbanos.",
+  "evidencia": "catalogo: limitaciones de INEI-ENAHO ('24 dptos + Callao + Lima Metropolitana'), INEI-ENAPRES ('victimización solo en área urbana'); resultados ENLA 2023 por región 'Lima Provincias' (repositorio.minedu.gob.pe/handle/20.500.12799/10492).",
+  "recomendacion": "Agregar el campo 'dominios_inferencia' (lista controlada: nacional, urbano, rural, región natural, departamento, Lima Metropolitana, Lima Provincias, Callao, ciudades principales) y una tabla de mapeo dominio→ubigeos por encuesta y año. El cruce con otras fuentes se hace por dominio, no por el código de departamento.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-13",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "INEI-ENEDU",
+   "MINEDU-ENDO",
+   "INEI-ENEDIS",
+   "OSIPTEL-ERESTEL",
+   "INEI-ENPHR-2014",
+   "INSM-EESM",
+   "INEI-EPEN"
+  ],
+  "campo": "nivel_territorial_inferencia",
+  "hallazgo": "Hay niveles de inferencia asumidos sin ficha. ENEDU: 'asumido departamental' (la ficha 2019 solo da 11 279 IIEE y no declara nivel); ENDO: no confirmado y con ediciones remotas de 2020–2021 cuyo diseño puede no ser probabilístico; ENEDIS: no confirmado; ERESTEL: 'probable'; ENPHR: 'inferida del nombre'; INSM-EESM: 'departamento' cuando solo representa ciudades estudiadas; EPEN: inferencia departamental anual no verificada. Como prioriza.py usa este campo para el puntaje, los supuestos inflan la cruzabilidad.",
+  "evidencia": "catalogo: limitaciones de cada registro; https://www.inei.gob.pe/descargar/encuestas/documentos/ficha_tecnica_12.pdf (ENEDU 2019, sin nivel de inferencia explícito); la ficha ENDO remoto 2020 no se pudo abrir (anti-bot).",
+  "recomendacion": "Agregar el campo 'inferencia_verificada' (true/false + cita de la ficha). Regla: si es false, la cifra no se publica por debajo del nivel nacional hasta verificar. Para INSM-EESM, poner inferencia='ciudad' (o 'nacional'=null) y marcar 'solo ciudades estudiadas'; para ENDO 2020–2021, confirmar el diseño muestral y excluirla si fue autoselección.",
+  "esfuerzo": "medio",
+  "confianza": "media"
+ },
+ {
+  "id": "INF-14",
+  "area": "inferencia",
+  "severidad": "alta",
+  "registros": [
+   "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+   "RENIEC-POBLACION-IDENTIFICADA-DNI",
+   "MINSA-PADRON-NOMINAL",
+   "INEI-CPV2025"
+  ],
+  "campo": "limitaciones / desagregaciones (denominadores)",
+  "hallazgo": "No hay una regla de denominador. Hay tres poblaciones distritales incompatibles: las proyecciones INEI (desagregaciones solo 'año': no consta que traigan edad y sexo por distrito, pero los indicadores sociales necesitan menores de 1, menores de 5, 6–35 meses, 65+), RENIEC (residencia del DNI, subcuenta a menores sin DNI y a extranjeros, sobrecuenta lugares de origen) y Padrón Nominal (menores de 6, calidad municipal). Usar una u otra cambia las coberturas en decenas de puntos en distritos chicos. Además, cuando salgan los resultados del Censo 2025, las proyecciones 2018–2026 se reemplazarán y cambiarán todas las tasas pasadas.",
+  "evidencia": "catalogo: INEI-PROYECCIONES-POBLACION-DISTRITAL.desagregaciones=['año'] y limitaciones; RENIEC-POBLACION-IDENTIFICADA-DNI.limitaciones; MINSA-INMUNIZACIONES.limitaciones ('Denominador (población MINSA vs Padrón Nominal) altera coberturas'); priorizacion.md §7.",
+  "recomendacion": "Fijar un denominador oficial por indicador en la ficha (p. ej., cobertura en menores de 5: Padrón Nominal y proyección INEI como contraste) y publicar la sensibilidad cuando difieran más de 10 %. Versionar los denominadores (vintage: 'proyección base CPV2017' / 'base CPV2025'): numerador y denominador del mismo vintage, sin mezclar. Coberturas mayores al 100 % → no se publican; se agregan a provincia. Verificar si el INEI publica la proyección distrital por edad y sexo; si no, documentar el método de prorrateo como estimación propia.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-15",
+  "area": "inferencia",
+  "severidad": "alta",
+  "registros": [],
+  "campo": "priorizacion.md §8 (números pequeños)",
+  "hallazgo": "Para los registros (defunciones, casos CDC, nacimientos, violencia), §8 solo pide marcar 'atención, no prevalencia'. No hay regla de números pequeños: en distritos de menos de 1 000 o 2 000 habitantes, 1 o 2 eventos generan tasas extremas que encabezarán cualquier ranking (mortalidad, incidencia de dengue o TBC).",
+  "evidencia": "priorizacion.md §8; catálogo: CDC-VIGILANCIA-DATOS-ABIERTOS y MINSA-SINADEF con nivel distrito.",
+  "recomendacion": "Regla: suprimir o agregar las tasas con numerador <5 o denominador <1 000 (o <30 nacimientos para tasas por nacido vivo); para mapas y rankings distritales, usar suavizado bayesiano empírico o agregación a provincia o a 3 años móviles, rotulado como tal; publicar el IC de Poisson.",
+  "esfuerzo": "medio",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-16",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [],
+  "campo": "priorizacion.md §8 (pooling y comparación temporal)",
+  "hallazgo": "No hay reglas para (a) agrupar años (pooling) cuando un subgrupo no alcanza la precisión, (b) comparar dos años o dos territorios (la superposición de IC no equivale a un test) ni (c) ordenar rankings departamentales. El INEI no publica rankings departamentales de pobreza puntuales: agrupa los departamentos en grupos de pobreza estadísticamente semejantes con IC al 95 %.",
+  "evidencia": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1699/cap03.pdf (grupos de departamentos con niveles de pobreza estadísticamente semejantes, prueba t y K-S, IC 95 %)",
+  "recomendacion": "Regla: un cambio o una diferencia se declara solo si el test de diferencia con diseño complejo da p<0,05 (si no: 'sin cambio estadísticamente significativo'); los rankings se publican por grupos (réplica del método INEI); el pooling de 2–3 años se permite con el factor reescalado (factor/k) y la etiqueta del periodo (p. ej., '2022–2024').",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-17",
+  "area": "inferencia",
+  "severidad": "alta",
+  "registros": [
+   "INEI-ENAHO",
+   "INEI-ENDES",
+   "INEI-ENAPRES"
+  ],
+  "campo": "limitaciones (quiebres 2020–2021)",
+  "hallazgo": "La ENAHO documenta el 2020 (telefónico, cuestionario reducido, tasa de respuesta del 73,1 %), pero ENAPRES solo dice 'verificar' y la ENDES no menciona la pandemia: en 2020 la ENDES suspendió el trabajo de campo presencial y pasó en parte a entrevista telefónica, con efecto en los indicadores antropométricos y de hemoglobina. Tampoco se advierte que en la ENAHO 2020–2021 los indicadores fuera del módulo de pobreza tienen tasas de no respuesta y modos distintos.",
+  "evidencia": "catalogo: INEI-ENDES.limitaciones (sin mención a 2020); INEI-ENAPRES.limitaciones ('2020–2021 con entrevista telefónica parcial (verificar)'). El detalle de la ENDES 2020 no se verificó en esta sesión.",
+  "recomendacion": "Agregar a cada encuesta el campo 'anios_con_quiebre' con la nota metodológica del INEI. Regla: los años 2020 (y 2021 si aplica) salen de las tendencias por defecto o se muestran con un marcador de 'modo de entrevista distinto'; en la ENDES, no publicar la DCI ni la anemia de 2020 sin revisar la cobertura de medición.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "INF-18",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "INEI-ENAHO"
+  ],
+  "campo": "limitaciones (pobreza departamental)",
+  "hallazgo": "La limitación de la ENAHO no advierte que, aun por departamento, la pobreza monetaria anual tiene IC amplios. El INEI publica grupos de departamentos y no cifras puntuales comparables. Tampoco dice que los factores de expansión se reajustan con nuevas proyecciones (y lo harán con el Censo 2025), lo que puede revisar la serie hacia atrás.",
+  "evidencia": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1699/cap03.pdf; catalogo INEI-ENAHO.limitaciones.",
+  "recomendacion": "Agregar a limitaciones: 'pobreza departamental: usar los IC y los grupos robustos del INEI; validar contra el Informe Técnico oficial (diferencia aceptable <0,1 pp)'. Versionar los microdatos por fecha de descarga y por la versión de factores; si el INEI re-pondera, recalcular la serie completa.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-19",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "INEI-CPV2017",
+   "INEI-CPV2025",
+   "INEI-PROYECCIONES-POBLACION-DISTRITAL"
+  ],
+  "campo": "limitaciones",
+  "hallazgo": "La omisión censal de 2017 que figura en el catálogo ('~3–4 %, verificar') no coincide con la oficial: el INEI informó una población censada de 29 381 884, una total de 31 237 385 y una omisión del 5,9 %. Usar la población censada como denominador en vez de la total subestima la población y sobrestima las tasas, sobre todo donde la omisión es mayor. La comparación 2017 (censo de hecho, en un día) vs. 2025 (de derecho, periodo extendido) ya está anotada, pero no hay una regla.",
+  "evidencia": "https://andina.pe/agencia/noticia-inei-somos-31-millones-237385-peruanos-714547.aspx (omisión 5,9 %)",
+  "recomendacion": "Corregir la limitación de INEI-CPV2017 a 'omisión censal 5,9 % (población total 31 237 385 vs censada 29 381 884)'. Regla: el denominador de 2017 es la población total (ajustada por omisión) cuando la tasa es poblacional; la censada solo para indicadores de estructura dentro del censo. Prohibido calcular 'crecimiento 2017–2025' por distrito sin ajustar por el cambio de modalidad.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-20",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "MINEDU-UMC-ECE",
+   "MINEDU-UMC-ENLA"
+  ],
+  "campo": "limitaciones / nivel_territorial_inferencia",
+  "hallazgo": "La ECE (censal, inferencia 'establecimiento') no tiene una regla de tamaño mínimo por IE: en escuelas unidocentes o multigrado con pocos evaluados, el porcentaje 'satisfactorio' es muy volátil. La serie censal termina en 2019; desde 2022 la ENLA es muestral, con otra población evaluada y otros grados, así que no puede empalmarse a nivel de IE ni de distrito. ENLA requiere valores plausibles y pesos, y su dominio es la región/DRE.",
+  "evidencia": "catalogo: MINEDU-UMC-ECE.cobertura_temporal y limitaciones; MINEDU-UMC-ENLA.limitaciones.",
+  "recomendacion": "Regla: publicar la ECE por IE solo con 10 o más evaluados (o agregar a UGEL/distrito) y con la advertencia de 2019 como último año; prohibido presentar 'tendencia' ECE 2019 → ENLA 2022+ por debajo del nivel regional. En ENLA, calcular con valores plausibles (reglas de Rubin) y pesos; publicar solo nacional, por estrato y por región.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "INF-21",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "MEF-DA-TRANSFERENCIAS",
+   "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+   "MEF-DA-GASTO-DEVENGADO-MENSUAL",
+   "MEF-SEGUIMIENTO-PI",
+   "MEF-OXI-BASE"
+  ],
+  "campo": "limitaciones (agregación)",
+  "hallazgo": "Hay un riesgo de doble conteo que no está declarado. Las transferencias a gobiernos subnacionales se vuelven a registrar como gasto de la entidad receptora. Los datasets de devengado mensual y de ejecución total contienen la misma información en granularidades distintas. El seguimiento de PI y Obras por Impuestos se solapa con el gasto de inversión (la genérica 2.6). Sumar fuentes 'para el distrito' infla el gasto. Tampoco hay reglas de deflactación ni de per cápita.",
+  "evidencia": "catalogo: limitaciones de MEF-DA-TRANSFERENCIAS ('Montos transferidos ≠ ejecutados'); prioriza.py coloca DEVENGADO-MENSUAL y PRESUPUESTO-EJECUCION-GASTO ambos en Ola 1.",
+  "recomendacion": "Definir una sola fuente canónica de gasto (devengado por ejecutora) y usar las transferencias solo como 'origen del financiamiento'; nunca sumarlas. Las series multianuales se expresan en soles constantes (deflactor IPC Lima o deflactor implícito del PBI, a declarar) y el per cápita con el denominador vintage de INF-14.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-22",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "INEI-ENDES",
+   "INEI-ENAHO",
+   "INEI-ENAPRES",
+   "INEI-ENCO"
+  ],
+  "campo": "nivel_territorial_disponible",
+  "hallazgo": "En las encuestas, el nivel 'disponible' figura como manzana_conglomerado y el catálogo §4 lo muestra como 'manzana_conglomerado / departamento'. Para un motor automático, el nivel disponible invita a agregar por distrito o conglomerado. En los microdatos públicos el conglomerado es anónimo o está desplazado (DHS) y no sirve para unir con otras fuentes; además, los ubigeos distritales del microdato no son una 'llave de cruce' válida para estimar.",
+  "evidencia": "priorizacion.md §4 (columna Territorio); catalogo llaves_cruce incluye conglomerado_vivienda; INEI-ENDES.limitaciones (geo-desplazado en DHS).",
+  "recomendacion": "Para encuestas_muestrales, marcar 'conglomerado_vivienda' como llave solo de diseño (varianza), no de cruce. Bloquear en el código cualquier agregación de una encuesta a un nivel más fino que dominios_inferencia (salvo una estimación de áreas pequeñas propia, documentada y rotulada como 'estimación modelada').",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "INF-23",
+  "area": "inferencia",
+  "severidad": "media",
+  "registros": [
+   "INEI-MAPA-POBREZA",
+   "MIDIS-PMA-MAPA-VULNERABILIDAD",
+   "PNUD-IDH-DISTRITAL",
+   "MEF-BRECHAS-VALORES",
+   "CEPLAN-BRECHAS-TERRITORIALES"
+  ],
+  "campo": "naturaleza_dato / nivel_territorial_inferencia",
+  "hallazgo": "Las estimaciones modeladas y los índices derivados declaran inferencia 'distrito' igual que un censo, sin distinguir que su incertidumbre es de modelo (ELL/SAE) y a menudo no publicada. Si se cruzan con variables censales (por ejemplo, NBI de 2017) usadas como covariables del propio modelo, la correlación es circular. MEF-BRECHAS-VALORES y CEPLAN-BRECHAS mezclan años y fuentes.",
+  "evidencia": "catalogo: INEI-MAPA-POBREZA inf=distrito, descripción 'combinando Censo 2017 y ENAHO'; MEF-BRECHAS-VALORES.limitaciones ('años base distintos').",
+  "recomendacion": "Agregar 'incertidumbre_publicada' (IC/EE: sí/no) y 'covariables_modelo' a las estimaciones modeladas. Regla: no cruzar una estimación modelada con sus propias covariables (p. ej., pobreza del Mapa vs. NBI/servicios del Censo 2017) y no publicarla sin IC. Para los índices compuestos, mostrar el año de cada componente.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "INF-24",
+  "area": "inferencia",
+  "severidad": "baja",
+  "registros": [
+   "MINSA-SINADEF"
+  ],
+  "campo": "limitaciones",
+  "hallazgo": "La cifra de subregistro de defunciones ('~20–30 % en zonas rurales/Amazonía según estudios') no tiene cita. Además, SINADEF tiene un quiebre por cobertura creciente desde 2017 (más defunciones registradas por mayor adopción del sistema) que no está declarado: una tendencia creciente puede ser solo un artefacto de cobertura.",
+  "evidencia": "catalogo: MINSA-SINADEF.limitaciones (sin fuente).",
+  "recomendacion": "Citar una estimación oficial de cobertura (INEI/MINSA/OPS) o quitar el número. Agregar: 'cobertura del registro creciente 2017–2019; no interpretar el crecimiento de defunciones como aumento de mortalidad sin ajustar por cobertura'. Usar el ubigeo de residencia.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "INF-25",
+  "area": "inferencia",
+  "severidad": "baja",
+  "registros": [
+   "INS-CENAN-SIEN",
+   "MINSA-HIS",
+   "MINSA-REUNIS"
+  ],
+  "campo": "limitaciones / notas",
+  "hallazgo": "La nota de SIEN propone 'contrastar con ENDES (departamento) para calibrar sesgo', pero no define el método. Un ajuste ingenuo (escalar SIEN distrital con el cociente ENDES/SIEN departamental) produce una estimación modelada sin validar.",
+  "evidencia": "catalogo: INS-CENAN-SIEN.notas.",
+  "recomendacion": "Si se calibra, tratarlo como estimación de áreas pequeñas propia: documentar el modelo, validarlo con un hold-out departamental, publicar la incertidumbre y rotularlo 'estimación modelada Pregunta al Perú', nunca como dato oficial.",
+  "esfuerzo": "medio",
+  "confianza": "media"
+ },
+ {
+  "id": "INF-26",
+  "area": "inferencia",
+  "severidad": "baja",
+  "registros": [
+   "CONTIGO-USUARIOS",
+   "JUNTOS-HOGARES-UBIGEO",
+   "PENSION65-USUARIOS",
+   "CUNAMAS-USUARIOS",
+   "MIDIS-SISFOH-PGH"
+  ],
+  "campo": "limitaciones",
+  "hallazgo": "Los padrones de programas sociales sirven para medir la cobertura de la población objetivo, pero el denominador (población elegible: pobres extremos, adultos de 65+ en pobreza, PcD severa) solo existe como estimación de encuesta o como SISFOH, que tiene autoselección. Un cálculo de 'cobertura = usuarios / población del distrito' o '/ pobres del Mapa 2018' combina años y conceptos distintos. Esa regla falta.",
+  "evidencia": "catalogo: CONTIGO-USUARIOS.limitaciones; MIDIS-SISFOH-PGH.limitaciones; MIDIS-INFOMIDIS ('Usuarios ≠ población objetivo').",
+  "recomendacion": "La ficha de cada indicador de cobertura de un programa declara el denominador (y su año y fuente). Si el denominador es una estimación (Mapa de Pobreza, ENAHO), la cobertura hereda su IC y se publica como rango; no publicar 'filtración' o 'subcobertura' distrital con el Mapa 2018 sin ese rango.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ }
+]

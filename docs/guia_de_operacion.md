@@ -20,7 +20,7 @@ uv run pap --help       # lista de comandos
 ## 2. Consultar lo que ya está calculado
 
 ### 2.1 Ver las respuestas del piloto
-Las del primer piloto están archivadas en `00_proyecto/piloto/p3/respuestas/q1.md` … `q4.md` (las nuevas salen en `salidas/preguntar/`, ver 4.1), por capas: lo visible, «Más contexto», «Para citar y verificar» y, al final, el detalle técnico (tabla de cifras, ficha larga y reglas aplicadas). El `.json` trae lo mismo, estructurado; las capas van en `capas.capa1/2/3`.
+Las del primer piloto tienen su referencia en `tests/referencias/q1.json` … `q4.json` (las nuevas salen en `salidas/preguntar/`, ver 4.1), por capas: lo visible, «Más contexto», «Para citar y verificar» y, al final, el detalle técnico (tabla de cifras, ficha larga y reglas aplicadas). El `.json` trae lo mismo, estructurado; las capas van en `capas.capa1/2/3`.
 
 ### 2.2 Consultar el cubo de indicadores con SQL
 
@@ -102,7 +102,7 @@ uv run pap calcular                   # cubo fact_indicador
 ### 3.4 Editar datos curados (indicadores, doradas, cruces, listas)
 1. Edita el archivo en `curados/capa0/`: `dim_indicador.yaml`, `cifras_doradas.csv`, `cruces_permitidos.yaml`, `grupos_oficiales_inei.csv`, etc.
    - **Doradas:** solo con cita de un documento oficial: `tipo_cita = oficial_inei`, u `oficial_ins` para el SIEN. La prueba DOR-04 rechaza cualquier otra.
-   - **Doradas de registros** (SIEN): `proposito = control_registro`, tolerancia 0 y número de evaluados en `casos_publicados`. Se generan desde el archivo oficial con `03_auditoria/validacion_doradas_sien/generar_doradas_sien.py`, sin transcribir a mano.
+   - **Doradas de registros** (SIEN): `proposito = control_registro`, tolerancia 0 y número de evaluados en `casos_publicados`. Se generan desde el archivo oficial con `curados/generadores/sien/generar_doradas_sien.py` (ver su `README.md`), sin transcribir a mano.
 2. Haz commit y luego corre `uv run pap construir indicadores` y `uv run pap calcular`.
 3. Corre las pruebas del piloto ([calidad.md](calidad.md), §3).
 4. Registra la decisión en `docs/decisiones.md` si cambia un criterio.
@@ -265,7 +265,7 @@ Implementa [especificaciones/datos_crudos.md](especificaciones/datos_crudos.md).
 | `pap citar HUELLA\|ID [--corta]` | Cita del archivo (formato DataCite/APA adaptado) o línea de ficha corta |
 | `pap indice` | Reconstruye `biblioteca/cruda/indice.duckdb` (tablas `recursos`, `verificaciones`, vista `fuentes_estado`) |
 | `pap recetas generar\|validar\|sincronizar` | Genera recetas desde el catálogo (no sobrescribe sin `--sobrescribir`) o las valida. `validar` también compara el bloque `catalogo:` de cada receta con `catalogo/catalogo_fuentes.json` y `bloquea_mvp` con R-DEP-01 de `reglas/reglas.json` (única fuente de los bloqueantes); `sincronizar` copia esos valores al bloque y valida |
-| `pap foto-pim registrar ARCHIVO [--corte AAAA-MM-DD] [--mover]` | **DESACTIVADO (decisión del 8/10/2026): `registrar` y `extraer` se niegan.** Foto mensual del PIM (receta `MEF-FOTO-PIM-MENSUAL`): extrae la tabla `foto_pim` y registra el `{año}-Gasto-Mensual.csv` como captura fechada. `extraer [--rehacer]` la rehace desde el almacén; `listar` muestra las fotos y los meses que faltan; `vistas` imprime las vistas DuckDB. Guía: `biblioteca/cruda/GUIA_FOTO_PIM_MENSUAL.md` |
+| `pap foto-pim registrar ARCHIVO [--corte AAAA-MM-DD] [--mover]` | **DESACTIVADO (decisión del 8/10/2026): `registrar` y `extraer` se niegan.** Foto mensual del PIM (receta `MEF-FOTO-PIM-MENSUAL`): extrae la tabla `foto_pim` y registra el `{año}-Gasto-Mensual.csv` como captura fechada. `extraer [--rehacer]` la rehace desde el almacén; `listar` muestra las fotos y los meses que faltan; `vistas` imprime las vistas DuckDB. Guía: [guias/foto_pim_mensual.md](guias/foto_pim_mensual.md) |
 
 ### Flujo de una descarga manual
 

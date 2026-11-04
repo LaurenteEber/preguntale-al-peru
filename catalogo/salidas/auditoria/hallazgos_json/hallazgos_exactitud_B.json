@@ -1,0 +1,323 @@
+[
+ {
+  "id": "EXA-B-01",
+  "area": "exactitud",
+  "severidad": "critica",
+  "registros": [
+   "MINSA-PADRON-NOMINAL"
+  ],
+  "campo": "cobertura_temporal; periodicidad; nivel_territorial_disponible; url_datos",
+  "hallazgo": "El dataset PNDA 'MINSA - PADRON NOMINAL NIÑOS' no es una serie 2017–2025 mensual: es un único archivo estático de 2017 preparado para un hackatón (BD_PADRON_HACKATON.csv, publicado 23-sep-2017). 'Última modificación 2025-08-07' es una fecha de migración del portal, no de los datos. No hay padrón nominal abierto actualizado.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/minsa-padron-nominal-ni%C3%B1os -> recurso https://www.datosabiertos.gob.pe/sites/default/files/recursos/2017/09/BD_PADRON_HACKATON.csv (issued 2017-09-23)",
+  "recomendacion": "cobertura_temporal='2017 (corte único, hackatón)'; periodicidad='única'; marcar como no apto para Ola 1. Los agregados vigentes se obtienen de los tableros de padronnominal/REUNIS (scraping) o pidiéndolos por transparencia. No usarlo como denominador de primera infancia.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-02",
+  "area": "exactitud",
+  "severidad": "critica",
+  "registros": [
+   "MINSA-HIS"
+  ],
+  "campo": "url_datos; cobertura_temporal; estrategia_descarga",
+  "hallazgo": "url_datos apunta a 'MINSA - SALUD MENTAL', un dataset temático estático de 2017 (ATENDIDOS ene–sep 2017, MAMIS, TAMIZAJE), no al HIS. No se encontró descarga pública del HIS (ni nominal ni agregada por EESS) en la PNDA. La cobertura '~2010–2026' y la periodicidad 'mensual' no tienen respaldo en ningún recurso descargable.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/minsa-salud-mental (recursos de 2017; issued 2017-09-20; licencia 'License Not Specified')",
+  "recomendacion": "url_datos=null; estrategia_descarga='scraping_dinamico' (tableros REUNIS) o 'solicitud_acceso_informacion'; cobertura_temporal=null o la del tablero REUNIS concreto; licencia de los datasets temáticos='no especificada' (no ODC-BY). Reclasificar los datasets temáticos de 2017 como recursos históricos aparte.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-03",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "CDC-VIGILANCIA-DATOS-ABIERTOS"
+  ],
+  "campo": "periodicidad; cobertura_temporal; llaves_cruce",
+  "hallazgo": "El dataset de dengue es un CSV histórico consolidado 2000–2024 (datos_abiertos_vigilancia_dengue_2000_2024.csv, modificado 17-dic-2025), no un dataset semanal hasta 2026. 'semana' es una variable dentro del archivo, no la frecuencia de publicación. Los 13 campos (departamento, provincia, distrito, enfermedad, ano, semana, diagnostic, tipo_dx, diresa, ubigeo, edad, tipo_edad, sexo) no incluyen código de establecimiento ni RENIPRESS. Además, la página de usuario lista hoy menos datasets de vigilancia (dengue, malaria, leishmaniosis, EDA…) de los 11 que se asumen.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/vigilancia-epidemiol%C3%B3gica-de-dengue",
+  "recomendacion": "periodicidad='anual (recarga del histórico)'; cobertura_temporal='2000–2024'; llaves_cruce=['ubigeo_inei'] (quitar codigo_renipress_ipress); nivel_territorial_disponible='distrito'. url_datos directa: https://www.datosabiertos.gob.pe/sites/default/files/datos_abiertos_vigilancia_dengue_2000_2024.csv (el nombre cambia con cada recarga). Para datos semanales vigentes, usar la Sala situacional del CDC (otra fuente).",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-04",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "CONTIGO-USUARIOS"
+  ],
+  "campo": "url_datos; estrategia_descarga; nivel_territorial_disponible; llaves_cruce",
+  "hallazgo": "El grupo PNDA de CONTIGO al que apunta url_datos no tiene datasets publicados ('No datasets were found'). No hay datos abiertos que respalden el nivel distrito, el formato CSV ni la llave ubigeo.",
+  "evidencia": "https://www.datosabiertos.gob.pe/group/programa-nacional-de-entrega-de-la-pensi%C3%B3n-no-contributiva-personas-con-discapacidad-severa-en",
+  "recomendacion": "url_datos=null; formatos=[]; estrategia_descarga='solicitud_acceso_informacion'; nivel y llaves=null hasta tener evidencia. Sacarlo de la Ola 1.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-05",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "MINSA-SINADEF"
+  ],
+  "campo": "detalle_descarga; estrategia_descarga",
+  "hallazgo": "El recurso de datos no está en Google Drive: es un enlace compartido de Nextcloud del MINSA (drive.minsa.gob.pe/s/<token>/download). La receta 'gdown sobre el ID de Drive' fallaría. El diccionario se llama Diccionario_Datos_SINADEF.xlsx, no SINADEF_Datos.xlsx.",
+  "evidencia": "Recurso CSV en https://www.datosabiertos.gob.pe/dataset/informaci%C3%B3n-de-fallecidos-del-sistema-inform%C3%A1tico-nacional-de-defunciones-sinadef-ministerio: https://drive.minsa.gob.pe/s/PigmdwnCGEdyqos/download",
+  "recomendacion": "detalle_descarga: GET directo (curl/requests) a https://drive.minsa.gob.pe/s/PigmdwnCGEdyqos/download (enlace compartido de Nextcloud, el token puede rotar; volver a leerlo de la ficha PNDA en cada corrida). estrategia_descarga='descarga_directa_url'. Corregir el nombre del diccionario.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-06",
+  "area": "exactitud",
+  "severidad": "alta",
+  "registros": [
+   "SIS-AFILIADOS"
+  ],
+  "campo": "cobertura_temporal; periodicidad; nivel_territorial_disponible; llaves_cruce; datos nominales",
+  "hallazgo": "No es un 'corte vigente' único: hay ZIP mensuales de dic-2021 a ago-2026 (OPENDATA_AFILIADOS_DS01_AAAAMM.zip), modificados el 1-sep-2026. Según el diccionario, los datos son conteos agregados (TOTAL DE AFILIADOS por combinación de variables), no registros nominales. UBIGEO DISTRITO es del domicilio y está 'codificado de acuerdo al INEI'. Incluye CÓDIGO IPRESS de adscripción y CÓDIGO UNIDAD EJECUTORA. El campo 'DOCUMENTO DE IDENTIDAD' es el tipo de documento, no el DNI.",
+  "evidencia": "Diccionario: https://www.datosabiertos.gob.pe/sites/default/files/Diccionario_Datos%20-%20DS-01%20-%20SIS%20-%20Afiliados.pdf ; ZIP de ejemplo: .../OPENDATA_AFILIADOS_DS01_202501.zip",
+  "recomendacion": "cobertura_temporal='2021-12 – 2026-08'; periodicidad='mensual'; nivel_territorial_disponible='establecimiento' (IPRESS de adscripción) con distrito de domicilio; llaves_cruce=['ubigeo_inei','codigo_renipress_ipress','pliego_unidad_ejecutora (sec_ejec)']; URL predecible OPENDATA_AFILIADOS_DS01_{AAAAMM}.zip. Anotar: agregado, sin DNI.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-07",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "SIS-ATENCIONES"
+  ],
+  "campo": "cobertura_temporal; llaves_cruce",
+  "hallazgo": "Ya existe el ZIP del II semestre 2025 (OPENDATA_DS_01_2025_07_12_ATENCIONES.zip), así que la cobertura no termina en '2025 (I semestre)'. El diccionario v2 trae UBIGEO_DISTRITO (de la atención), COD_IPRESS (RENIPRESS, 10 caracteres), COD_UNIDAD_EJECUTORA y conteo ATENCIONES por mes: los datos son agregados. El diccionario no dice si el ubigeo es INEI o RENIEC (en afiliados sí dice INEI).",
+  "evidencia": "Diccionario https://www.datosabiertos.gob.pe/sites/default/files/Diccionario_Datos%20-%20DS-01%20-%20SIS%20-%20Atenciones_v2.pdf",
+  "recomendacion": "cobertura_temporal='2017–2025 (II semestre), granularidad mensual'; agregar 'pliego_unidad_ejecutora (sec_ejec)' a llaves_cruce; en la ingesta, validar los ubigeos contra la tabla INEI antes de dar por hecho el tipo. Patrón de URL: OPENDATA_DS_01_{AÑO}_{01_06|07_12}_ATENCIONES.zip.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-08",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "INEI-ENDES"
+  ],
+  "campo": "cobertura_temporal; url_datos",
+  "hallazgo": "Los resultados de la ENDES 2025 se publicaron el 19-jun-2026, así que '1986–2024 (2025 en curso)' está desactualizado. url_datos ('…/sites/default/files/2024.zip') es un nombre de archivo genérico que no se pudo vincular a ninguna ficha ENDES por búsqueda; la ficha PNDA bloqueó el fetch por robots. No es una URL fiable por año.",
+  "evidencia": "https://elcomercio.pe/peru/endes-2025-lactancia-materna-en-menores-de-seis-meses-aumento-a-711-noticia/ (19/06/2026); búsqueda de la URL 2024.zip sin resultados",
+  "recomendacion": "cobertura_temporal='1986–2025'; url_datos=portal de microdatos INEI (proyectos.inei.gob.pe/microdatos) con el código de encuesta por año; verificar en navegador si existe el ZIP 2025 en la PNDA y bajo qué nombre antes de fijarlo.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-B-09",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "ESSALUD-DATOS-ABIERTOS"
+  ],
+  "campo": "licencia; cobertura_temporal",
+  "hallazgo": "El dataset de url_datos declara la licencia 'Other (Public Domain)', no ODC-BY. Su cobertura es exactamente 2015–2022 (modificado 18-jul-2024).",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/atenciones-en-consulta-externa-essalud",
+  "recomendacion": "licencia='Other (Public Domain)' para este dataset y revisar los demás uno por uno; cobertura_temporal='2015–2022' (consulta externa).",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-10",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "SUSALUD-DATOS-ABIERTOS"
+  ],
+  "campo": "cobertura_temporal; unidad de observación",
+  "hallazgo": "cobertura_temporal está en null: la ficha publica CSV mensuales de sep-2025 a ago-2026 (modificada 24-sep-2026), lo que parece una ventana móvil de 12 meses. Los registros son atenciones con ID de paciente anonimizado (CIE-10, costos), solo de IPRESS privadas que facturan ≥20 UIT al mes, no de todo el sector.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/registro-de-datos-de-atenciones-de-la-cobertura-prestacional-de-salud-del-sector-privado",
+  "recomendacion": "cobertura_temporal='2025-09 – 2026-08 (ventana móvil; archivar cada mes para tener historia)'; anotar en limitaciones el umbral de 20 UIT y que es solo sector privado.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-11",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "PRONIED-INTERVENCIONES"
+  ],
+  "campo": "llaves_cruce; cobertura_temporal; estrategia_descarga",
+  "hallazgo": "La ficha describe códigos de inversión, entidad ejecutora, n.º de IIEE vinculadas, montos y región/provincia/distrito (por nombre). No menciona código de local escolar ni ubigeo. Además, la serie en url_datos son cortes puntuales (sep-2024, jun-2025, sep-2025, feb-2026), no 'anual/continua', y cobertura_temporal está en null.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/proyectos-que-reciben-asistencia-t%C3%A9cnica-instituciones-educativas-nivel-nacional-%E2%80%93-programa (modificado 25-feb-2026)",
+  "recomendacion": "llaves_cruce=['cui_inversion'] hasta confirmar con el diccionario XLSX; poner ubigeo y codigo_local_escolar solo si el diccionario los trae. cobertura_temporal='cortes 2024-09 a 2026-02'; periodicidad='irregular (cortes)'; estrategia='descarga_directa_url' (CSV estáticos en la PNDA).",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-B-12",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "PENSION65-USUARIOS"
+  ],
+  "campo": "url_datos; cobertura_temporal; periodicidad",
+  "hallazgo": "url_datos ('pensión-65-información-de-usuarios-2022-0') redirige al login de la PNDA, así que es un slug inválido o privado. El dataset vigente es el de url_portal: 14 CSV bimestrales 'trama_UO_usuarios_AAAAMM.csv' de jun-2023 a dic-2025 (modificado 7-ene-2026).",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/informaci%C3%B3n-de-usuarios-del-programa-pensi%C3%B3n-65",
+  "recomendacion": "url_datos=https://www.datosabiertos.gob.pe/dataset/informaci%C3%B3n-de-usuarios-del-programa-pensi%C3%B3n-65; cobertura_temporal='2023-06 – 2025-12'; periodicidad='bimestral'. Antes de ingerir, confirmar en el CSV si son conteos o registros por usuario.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-B-13",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "PAIS-TAMBOS-ATENCIONES"
+  ],
+  "campo": "cobertura_temporal; licencia; url_datos",
+  "hallazgo": "url_datos ('…-4') es el III trimestre 2023 (modificado 19-oct-2023). La ficha indica que hay datasets trimestrales relacionados para 2023–2026, así que la cobertura '~2020–2023' está desactualizada. La ficha no declara licencia ODC-BY. Sí trae UBIGEO y código de centro poblado.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/atenciones-realizadas-en-los-tambos-programa-nacional-plataformas-de-acci%C3%B3n-para-la-4",
+  "recomendacion": "cobertura_temporal='~2020–2026 (trimestral; un dataset por trimestre)'; licencia='no especificada'; en detalle_descarga, listar los datasets del publicador PNPAIS en lugar de fijar un slug con sufijo numérico.",
+  "esfuerzo": "medio",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-B-14",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "CUNAMAS-USUARIOS"
+  ],
+  "campo": "licencia; formatos; nivel_territorial_disponible; cobertura_temporal",
+  "hallazgo": "La ficha del dataset de url_datos (SAF 2023-III, modificado 17-oct-2023) no especifica licencia, su recurso es un archivo de texto y trae ubigeo más centro poblado. El catálogo dice ODC-BY, CSV y nivel distrito, y no se confirmó ningún periodo posterior a 2023-III.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/cuna-mas-servicio-de-acompa%C3%B1amiento-familias-20233trim",
+  "recomendacion": "licencia='no especificada'; formatos=['TXT'] (verificar el delimitador); nivel_territorial_disponible='centro_poblado'; llaves_cruce += 'codigo_centro_poblado'; cobertura_temporal='hasta 2023-III confirmado'.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-B-15",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "WASIMIKUNA-IIEE"
+  ],
+  "campo": "url_datos; cobertura_temporal; entidad",
+  "hallazgo": "url_datos es el dataset 'Qali Warma IIEE' de 2021 (issued 22-mar-2021, modificado 18-jun-2021): un solo listado de IIEE, no una serie 2021–2024. Sobre la entidad: Wasi Mikuna reemplazó a Qali Warma en dic-2024, y en abr-2025 el DS 006-2025-MIDIS declaró la extinción de las modalidades de entrega y la emergencia del servicio. La prensa lo reportó como 'extinción de Wasi Mikuna', pero gob.pe/wasimikuna siguió emitiendo resoluciones en 2025. El estado institucional vigente en 2026 no está claro.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/programa-nacional-de-alimentaci%C3%B3n-escolar-qali-warma-iiee ; https://gestion.pe/peru/politica/gobierno-oficializa-la-extincion-de-wasi-mikuna-tras-reportes-de-intoxicacion-de-escolares-noticia/",
+  "recomendacion": "Fijar url_datos por año (slugs -2022/-2023/-2024) tras verificarlos; cobertura_temporal según los slugs confirmados; añadir en notas el DS 006-2025-MIDIS y confirmar con la normativa en gob.pe el nombre y la existencia vigente del programa.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-B-16",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "MINEDU-CENSO-EDUCATIVO"
+  ],
+  "campo": "url_datos; estrategia_descarga",
+  "hallazgo": "url_datos ('escale.minedu.gob.pe/uee') es una portada. Los archivos del censo están en una ruta predecible e indexada: https://escale.minedu.gob.pe/documents/inicio/Bases de datos/A. Censo Educativo/{AÑO}/…, con resultados 2025 ya publicados (00_Dicionario_Datos_Resultado_2025.pdf).",
+  "evidencia": "https://escale.minedu.gob.pe/documents/inicio/Bases de datos/A. Censo Educativo/2025/00_Dicionario_Datos_Resultado_2025.pdf",
+  "recomendacion": "url_datos='https://escale.minedu.gob.pe/documents/inicio/Bases de datos/A. Censo Educativo/'; estrategia='descarga_directa_url' con navegador headless (por el anti-bot) iterando por año; cobertura hasta 2025 (resultado del ejercicio) confirmada.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-17",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "MINSA-CNV-NACIDOS-VIVOS"
+  ],
+  "campo": "url_datos; unidad_organica",
+  "hallazgo": "url_datos está en null aunque la ficha expone un CSV directo (CNV_MINSA_CORTE_30112025.csv) y los auxiliares (ubigeos INEI, IPRESS). La cobertura declarada en la ficha es 01-ene-2015 a 31-ago-2025 y la última modificación es 12-dic-2025: dado el compromiso trimestral, la actualización está atrasada.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/registros-de-nacidos-vivos-en-el-per%C3%BA-2015%E2%80%932025 -> https://www.datosabiertos.gob.pe/sites/default/files/CNV_MINSA_CORTE_30112025.csv",
+  "recomendacion": "url_datos=https://www.datosabiertos.gob.pe/sites/default/files/CNV_MINSA_CORTE_30112025.csv (el nombre cambia con cada corte: volver a leerlo de la ficha); anotar el retraso respecto del compromiso trimestral.",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-18",
+  "area": "exactitud",
+  "severidad": "media",
+  "registros": [
+   "MINSA-SINADEF"
+  ],
+  "campo": "llaves_cruce",
+  "hallazgo": "No se pudo confirmar que el CSV de SINADEF traiga un código ubigeo. Las versiones abiertas históricas traían solo nombres de país/departamento/provincia/distrito de domicilio, y la ficha no lo documenta.",
+  "evidencia": "Ficha PNDA sin columnas; el diccionario Diccionario_Datos_SINADEF.xlsx no se pudo abrir",
+  "recomendacion": "Revisar el diccionario; si no hay código, llaves_cruce=['otro'] (nombres) y prever un paso de normalización nombre→ubigeo_inei.",
+  "esfuerzo": "bajo",
+  "confianza": "baja"
+ },
+ {
+  "id": "EXA-B-19",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "JUNTOS-HOGARES-UBIGEO"
+  ],
+  "campo": "cobertura_temporal; llaves_cruce",
+  "hallazgo": "El dataset 2025 tiene 4 bimestres (I–IV) y se modificó el 17-sep-2025; no se confirmó si hay un dataset 2026. La ficha no aclara si el ubigeo es INEI o RENIEC. Además, la URL sin 'www.' no resuelve (DNS), y es la que usa url_datos.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/resumen-de-hogares-afiliados-y-abonados-por-ubigeo-2025-programa-juntos ; la variante https://datosabiertos.gob.pe/... falló por DNS",
+  "recomendacion": "Usar host www. en url_datos y url_portal; probar el slug -2026-; validar los ubigeos contra la tabla INEI/RENIEC en la ingesta.",
+  "esfuerzo": "bajo",
+  "confianza": "media"
+ },
+ {
+  "id": "EXA-B-20",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "CUNAMAS-USUARIOS",
+   "PAIS-TAMBOS-ATENCIONES",
+   "FONCODES-PROYECTOS",
+   "ESSALUD-DATOS-ABIERTOS",
+   "SUSALUD-DATOS-ABIERTOS",
+   "CDC-VIGILANCIA-DATOS-ABIERTOS",
+   "JUNTOS-HOGARES-UBIGEO"
+  ],
+  "campo": "url_portal / url_datos (host)",
+  "hallazgo": "Varias URL usan 'https://datosabiertos.gob.pe' sin www, y desde el fetcher ese host no resolvió (DNS). Con www. las mismas fichas sí abrieron.",
+  "evidencia": "Fetch de https://datosabiertos.gob.pe/dataset/... -> 'Name or service not known'; la misma ruta con www. funcionó",
+  "recomendacion": "Normalizar todas las URL de la PNDA a https://www.datosabiertos.gob.pe/...",
+  "esfuerzo": "bajo",
+  "confianza": "alta"
+ },
+ {
+  "id": "EXA-B-21",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "FONCODES-PROYECTOS"
+  ],
+  "campo": "url_datos",
+  "hallazgo": "No verificable: 'foncodes-proyectos-productivos-2022' (con www.) redirige al login de la PNDA, señal de un slug inexistente o privado. No se encontró por búsqueda.",
+  "evidencia": "https://www.datosabiertos.gob.pe/dataset/foncodes-proyectos-productivos-2022 -> página de login",
+  "recomendacion": "Verificar en navegador el slug correcto del publicador FONCODES; mientras tanto, url_datos=null.",
+  "esfuerzo": "bajo",
+  "confianza": "baja"
+ },
+ {
+  "id": "EXA-B-22",
+  "area": "exactitud",
+  "severidad": "baja",
+  "registros": [
+   "MINEDU-UMC-ECE",
+   "MINEDU-UMC-ENLA",
+   "INEI-ENEDU",
+   "MINEDU-ENDO",
+   "INEI-ENAPRES",
+   "SUSALUD-ENSUSALUD",
+   "MINSA-REUNIS",
+   "INS-CENAN-SIEN"
+  ],
+  "campo": "llaves_cruce / nivel_territorial_disponible / url_datos",
+  "hallazgo": "No verificable desde este entorno (sitios UMC, ESCALE, INEI y REUNIS con 403/anti-bot o sin resultados indexados). Riesgos detectados: (a) ECE/ENLA/ENEDU/ENDO declaran nivel 'establecimiento' y llave codigo_modular_ie, pero en bases muestrales el código de IE suele venir anonimizado. (b) El ZIP de ENAPRES (inei.gob.pe/media/DATOS_ABIERTOS/ENAPRES/DATA/2023.zip) no aparece indexado. (c) SIEN: el diccionario es un ZIP y la ficha no confirma si trae RENIPRESS/ubigeo ni si es por registro individual. (d) REUNIS: la misma URL op=3&niv=6&tbl=2 se usa como url_portal de MINSA-HIS y como url_datos de MINSA-REUNIS.",
+  "evidencia": "Fetch con 403 en minsa.gob.pe/reunis; búsquedas sin resultados para la URL de ENAPRES; ficha SIEN: diccionario 'Diccionario de datos 2012-2026.zip'",
+  "recomendacion": "Validar en navegador (Chrome) y, mientras tanto, marcar estos campos como 'no verificado'. No asumir el código modular en muestras (ENLA/ENEDU/ENDO) hasta revisar el diccionario.",
+  "esfuerzo": "medio",
+  "confianza": "baja"
+ }
+]

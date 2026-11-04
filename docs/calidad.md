@@ -102,7 +102,7 @@ Las cifras del INEI se contrastaron con los PDF oficiales en la auditoría P4 (`
 
 ## 5. Lista de verificación manual (después de un cambio grande)
 
-Corre `uv run pap preguntar tests/fixtures/consultas_piloto/q*.yaml` (escribe en `salidas/preguntar/`, fuera de git; `00_proyecto/piloto/p3/respuestas/` es solo el archivo del piloto, de antes de T-02) y abre `salidas/preguntar/qN.md`. Revisa:
+Corre `uv run pap preguntar tests/fixtures/consultas_piloto/q*.yaml` (escribe en `salidas/preguntar/`, fuera de git; `tests/referencias/q1.json` … `q4.json` son las referencias de la regresión) y abre `salidas/preguntar/qN.md`. Revisa:
 
 1. [ ] El semáforo coincide con el §4; si cambió, ¿hay una decisión o corrección que lo explique?
 2. [ ] Cada cifra coincide con su dorada (columna «IC del INEI» y `6_contraste_oficial`: «Nuestra cifra coincide»).
@@ -135,7 +135,7 @@ Corre `uv run pap preguntar tests/fixtures/consultas_piloto/q*.yaml` (escribe en
 **Una pregunta nueva del piloto**
 1. Con el motor por intenciones no hace falta una plantilla: escribe la consulta mínima (JSON, en `curados/motor/consultas_minimas/`) y corre `pap preguntar`. Si hace falta una intención nueva, va en `intenciones.yaml` y una plantilla genérica.
 2. Agrega su semáforo a `ESPERADO` en `test_respuesta_p3.py` (solo para consultas del piloto) o una referencia en `tests/referencias/` y escribe sus pruebas propias.
-3. Lo ideal es que un analista independiente escriba antes su esperado en `04_reglas/prueba/`.
+3. Lo ideal es que un analista independiente escriba antes su esperado en `tests/referencias/`.
 
 ## 7. Si algo falla
 

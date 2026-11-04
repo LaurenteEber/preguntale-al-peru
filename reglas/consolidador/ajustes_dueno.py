@@ -313,7 +313,7 @@ DECISIONES_R3 = [  # (id, tema, opciones, recomendación, reglas, decisión)
 
 # Guardia: CAMPOS_REGLAS reemplaza campos enteros después de todas las capas (propuestas, prueba, auditoría, renombres,
 # POST_RENOMBRE y capas del dueño). Si el campo ya no es el de la propuesta original, la sobrescritura debe estar aquí a
-# propósito (consolida_reglas.py falla si no; prueba negativa: codigo/pruebas/prueba_guardia.py). Se usa |= para no
+# propósito (consolida_reglas.py falla si no; prueba negativa: reglas/consolidador/pruebas/prueba_guardia.py). Se usa |= para no
 # depender del orden de los bloques (la propuesta l_mensajes agrega los suyos).
 SOBRESCRITURAS_CONSCIENTES = globals().get('SOBRESCRITURAS_CONSCIENTES', set()) | {
  ('R-GASTO-05', 'mensaje_usuario'),     # ronda 3 (v4) sobre PARCHES_V3 (COM-13); la reescribe l_mensajes

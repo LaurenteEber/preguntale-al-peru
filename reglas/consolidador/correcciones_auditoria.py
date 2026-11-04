@@ -495,12 +495,12 @@ PARCHES_V4 = [
  ('R-CRUCES-06', 'replace', 'mensaje_usuario', 'Si se comparara por provincias en vez de departamentos, el resultado podría ser otro.', 'Si se comparara con territorios más grandes o más pequeños, el resultado podría ser otro.', 'C-V3-4'),
  ('R-CRUCES-06', 'replace', 'enunciado', 'con al menos 10 territorios válidos', 'con al menos 20 territorios válidos', 'C-V3-4'),
  ('R-CRUCES-06', 'replace', 'enunciado', 'Con menos de 10 territorios', 'Con menos de 20 territorios', 'C-V3-4'),
- # población censada (HEC-01, C-V3-5): regla estructural ejecutable (codigo/corrector_estructural.py) y universo en el diccionario
+ # población censada (HEC-01, C-V3-5): regla estructural ejecutable (reglas/consolidador/corrector_estructural.py) y universo en el diccionario
  ('R-LENGUAJE-02', 'replace', 'condicion', "gasto por CUI → 'obras ubicadas en'",
   "gasto por CUI → 'obras ubicadas en'; cada {{c:id}} de INEI-CPV2025 por provincia o distrito va en una oración con {{u:personas_censadas}} (parametros.poblacion_censada), si no → regenerar", 'HEC-01, C-V3-5'),
- ('R-LENGUAJE-02', 'set', 'parametros.poblacion_censada_verificacion', {'funcion': 'codigo/corrector_estructural.py: personas_censadas(texto, cifras)', 'patron_cifra': r'\{\{c:([^}]+)\}\}', 'marcador_exigido': '{{u:personas_censadas}}', 'casos': 'codigo/pruebas/casos_personas_censadas.json (los corre consolida_reglas.py; un fallo es una prueba de consistencia fallida)'}, 'HEC-01, C-V3-5'),
+ ('R-LENGUAJE-02', 'set', 'parametros.poblacion_censada_verificacion', {'funcion': 'reglas/consolidador/corrector_estructural.py: personas_censadas(texto, cifras)', 'patron_cifra': r'\{\{c:([^}]+)\}\}', 'marcador_exigido': '{{u:personas_censadas}}', 'casos': 'reglas/consolidador/pruebas/casos_personas_censadas.json (los corre consolida_reglas.py; un fallo es una prueba de consistencia fallida)'}, 'HEC-01, C-V3-5'),
  # corrector (COM-07): la referencia apunta a los corpus que de verdad lee el consolidador
- ('R-LENGUAJE-02', 'set', 'parametros.prueba_corrector', {'corpus': 'codigo/pruebas/corpus_reserva.json + codigo/pruebas/corpus_auditor.json (los que lee consolida_reglas.py)', 'resultado': 'se recalcula en cada consolidación; el consolidador falla con cualquier falso positivo o no detectada (parametros.puerta_ci)', 'meta_mvp': 'corpus ≥ 200 oraciones con 40 % de reserva'}, 'COM-07'),
+ ('R-LENGUAJE-02', 'set', 'parametros.prueba_corrector', {'corpus': 'reglas/consolidador/pruebas/corpus_reserva.json + reglas/consolidador/pruebas/corpus_auditor.json (los que lee consolida_reglas.py)', 'resultado': 'se recalcula en cada consolidación; el consolidador falla con cualquier falso positivo o no detectada (parametros.puerta_ci)', 'meta_mvp': 'corpus ≥ 200 oraciones con 40 % de reserva'}, 'COM-07'),
 ]
 CAMPOS_V4 = [
  ('poblacion_objetivo', 'indicador', 'poblacion_objetivo, poblacion_objetivo_dominio, universo', 'Grupo al que se refiere la cifra y universo (p. ej., niños 6–35 meses; solo atendidos). Valores del marcador {{u:id}}: tamizados, atendidos, notificados, usuarios y personas_censadas (cifras del INEI-CPV2025 sin ajuste por omisión; R-LENGUAJE-02).'),

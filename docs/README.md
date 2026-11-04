@@ -13,6 +13,6 @@
 
 **Especificaciones** (`especificaciones/`): [stack](especificaciones/stack.md) · [contrato de respuesta](especificaciones/contrato_respuesta.md) · [contrato del validador](especificaciones/contrato_validador.md) · [motor](especificaciones/motor.md) · [datos crudos](especificaciones/datos_crudos.md) · [catálogo](especificaciones/catalogo.md).
 
-**Guías** (`guias/`): [agregar un indicador](guias/agregar_indicador.md) · [descargar del MEF](guias/descarga_mef.md) · [personas para la revisión de usuario](guias/personas_revision.md) · [verificador con R (diferido)](guias/verificador_r.md).
+**Guías** (`guias/`): [agregar un indicador](guias/agregar_indicador.md) · [descargar del MEF](guias/descarga_mef.md) · [personas para la revisión de usuario](guias/personas_revision.md) · [verificador con R (diferido)](guias/verificador_r.md) · [foto mensual del PIM (desactivada)](guias/foto_pim_mensual.md).
 
 Reglas de publicación: [../reglas/README.md](../reglas/README.md). Catálogo de fuentes: [../catalogo/README.md](../catalogo/README.md). Biblioteca: [../biblioteca/README.md](../biblioteca/README.md). Backlog: [../backlog/README.md](../backlog/README.md).

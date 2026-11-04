@@ -74,7 +74,7 @@ for rid, campo, viejo, nuevo in CA.POST_RENOMBRE:
 _D_R4_1_OPC = getattr(CA, 'D_R4_1', None)
 CA_INICIO_SINADEF = 2017  # catálogo: MINSA-SINADEF cobertura_temporal 2017–2026 (F3)
 if _D_R4_1_OPC is not None and _D_R4_1_OPC not in CA.OPCIONES_D_R4_1:
-    raise SystemExit(f"D_R4_1 no válido: {_D_R4_1_OPC!r}. Use None (pendiente), 'A', 'B' o 'C' en codigo/correcciones_auditoria.py")
+    raise SystemExit(f"D_R4_1 no válido: {_D_R4_1_OPC!r}. Use None (pendiente), 'A', 'B' o 'C' en reglas/consolidador/correcciones_auditoria.py")
 _D_R4_1 = CA.OPCIONES_D_R4_1[_D_R4_1_OPC] if _D_R4_1_OPC is not None else CA.PENDIENTE_D_R4_1
 for t in CA.PARCHES_V2 + CA.PARCHES_V3 + getattr(CA, 'PARCHES_V4', []) + _D_R4_1:
     rid, op, pr = t[0], t[1], t[-1]; r = by[rid]
@@ -301,7 +301,7 @@ DECISION_DUENO = {  # columna 'Decisión Eber' (5/10/2026)
 DECISIONES = [(a, b, cc, d, e, DECISION_DUENO.get(a, 'Adoptada (recomendación).')) for a, b, cc, d, e in DECISIONES]
 DECISIONES += list(getattr(AD, 'DECISIONES_R3', [])) + list(getattr(AD, 'DECISIONES_GASTO_R2', [])) + list(getattr(AD, 'DECISIONES_D8', []))
 # D-R4-1 (ronda 4): fila visible en la tabla de decisiones; mientras el interruptor siga en None queda «PENDIENTE»
-_D_R4_1_TXT = ('PENDIENTE: sin decidir (interruptor D_R4_1 = None en codigo/correcciones_auditoria.py). Mientras tanto se '
+_D_R4_1_TXT = ('PENDIENTE: sin decidir (interruptor D_R4_1 = None en reglas/consolidador/correcciones_auditoria.py). Mientras tanto se '
                'aplica el estado seguro: RMM, TMI y TMN sin ventanas de varios años por debajo del nivel nacional (solo años '
                'sueltos). Explicación: auditoria/ronda4/explicacion_D-R4-1.md.') if _D_R4_1_OPC is None else CA.D_R4_1_TEXTO[_D_R4_1_OPC]
 DECISIONES_PENDIENTES = [] if _D_R4_1_OPC is not None else [dict(

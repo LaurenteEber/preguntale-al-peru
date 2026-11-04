@@ -2,7 +2,7 @@
 curados/capa0/ejecutoras_alcance.yaml v3 a partir de la v2 (salida de la pieza A, copiada sin cambios en
 ejecutoras_alcance_v2_antes.yaml de esta carpeta). Reproducible e idempotente: siempre parte de esa copia.
 
-Uso (desde codigo/ingesta): uv run --frozen python <esta carpeta>/generar_yaml_e3.py <raiz> [--salida ruta]
+Uso (desde la raíz del repositorio): uv run --frozen python <esta carpeta>/generar_yaml_e3.py <raiz> [--salida ruta]
 
 Cambios:
   1. Las 166 ejecutoras sin decisión individual (paso no_evaluado_criterio_unico) se confirman en bloque:

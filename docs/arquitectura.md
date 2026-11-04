@@ -25,7 +25,7 @@ Una web donde cualquier persona hace una pregunta sobre un problema del país (�
 | **No se publica nada que las reglas no permitan** | 96 reglas de publicación y atribución (68 en el validador del piloto), aplicadas a cada cifra y a cada respuesta |
 | **Solo fuentes oficiales** | Las cifras de referencia («doradas») citan documentos oficiales: del INEI y, para el SIEN, del INS. Una prueba falla si aparece otra cita (decisiones del 11 y 12/10/2026) |
 | **Validado contra lo publicado** | El cubo debe reproducir las cifras doradas del INEI (±0,1 pp) o no se construye |
-| **Independencia** | Cada pieza importante pasó por analistas, auditores y verificadores que no la construyeron (`03_auditoria/`, `00_proyecto/piloto/p2`, `p4`) |
+| **Independencia** | Cada pieza importante pasó por analistas, auditores y verificadores que no la construyeron (registro en `docs/historia.md`) |
 | **Mantenible por una persona** | Python + SQL, sin servidores: DuckDB, Parquet y una CLI propia (`pap`) |
 
 ## 3. Vista general del flujo
@@ -56,7 +56,7 @@ Una web donde cualquier persona hace una pregunta sobre un problema del país (�
 
 ## 4. Componentes
 
-### 4.1 Catálogo y priorización (`catalogo/`, `02_priorizacion/`)
+### 4.1 Catálogo y priorización (`catalogo/`)
 - **Catálogo v2:** 418 fuentes con esquema, estrategia de descarga y compuerta («aprobada» por prueba de humo o por captura verificada).
 - **Olas:** Ola 0 (referencia, denominadores y puentes: 19 fuentes) y Ola 1 (núcleo: 29 fuentes).
 - **Regenerar:** `just catalogo` o `catalogo/scripts/`. `catalogo/inferencia_verificada.csv` declara, por fuente × año, hasta qué nivel territorial infiere cada encuesta.
@@ -217,21 +217,21 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 - **Validación:** el validador revisa todo el texto visible (corta + clave + «Ojo» + contexto).
 - **Textos fijos:** `curados/motor/textos/glosario.yaml` y `que_hacer.yaml`, este último con `revisado_dueno`.
 - **Semáforo:** el interno (verde, ámbar, rojo) se muestra como confianza alta, media o baja.
-- **Verificación:** la hizo un revisor independiente de usuario (`03_auditoria/revision_usuario/`).
+- **Verificación:** la hizo un revisor independiente de usuario (anterior al repositorio; ver `docs/historia.md`).
 
 ## 5. Mapa del repositorio
 
 | Carpeta | Contenido |
 |---|---|
-| `00_proyecto/` | Plan de fases, estado actual, **decisiones del dueño** (`decisiones.md`), stack, investigación, piloto (`piloto/`: especificación, P1–P4, contrato de respuesta, respuestas archivadas) y esta documentación |
-| `catalogo/`, `02_priorizacion/` | Catálogo de fuentes y embudo de priorización |
-| `03_auditoria/` | Auditorías independientes: catálogo, Ola 0, gasto, Lima en tres ámbitos, tablas curadas, S4, validación de doradas (INEI y SIEN contra el INS) y revisión de usuario |
-| `reglas/` | Reglas (generadas), su código generador, la prueba de reglas (`prueba/`, con el esperado ajustado) y sus auditorías |
+| `docs/` | Documentación vigente: **decisiones del dueño** (`decisiones.md`), estado, hoja de ruta, manual, esta arquitectura, especificaciones (`especificaciones/`) y guías (`guias/`); `historia.md` explica las citas a documentos anteriores al repositorio |
+| `catalogo/` | Catálogo de fuentes, embudo de priorización y auditoría del catálogo (`salidas/`) |
+| `curados/generadores/` | Scripts que generaron tablas curadas (gasto E3/P3, doradas del SIEN), con sus insumos de revisión |
+| `reglas/` | Reglas (generadas: `reglas.json`, `reglas.md`, ficha y especificaciones de capa 0), su generador y sus verificaciones (`consolidador/`, `consolidador/pruebas/`), propuestas y alcance del piloto |
 | `biblioteca/` | Datos: cruda, dimensiones, estandarizada, indicadores (los Parquet y los crudos no van a git) |
 | `src/pap/` | La CLI `pap`: `cli.py`, ingesta (`registrar`, `descargar`, `verificar`, `citar`, `almacen`, `indice`, `recetas`), `capa0/` (construcciones) y `motor/` (cálculo, validador, respuesta) |
 | `tests/` | 748 pruebas automáticas (pytest) |
 | `curados/capa0/` | Tablas curadas editables (fuente de verdad) |
-| `curados/motor/` | Catálogo de intenciones, parámetros, consultas mínimas, consultas del piloto archivadas (`consultas/piloto/`), esquema, casos del validador y textos fijos (`textos/`) |
+| `curados/motor/` | Catálogo de intenciones, parámetros, consultas mínimas, esquemas y textos fijos (`textos/`); las consultas del piloto archivadas y los casos del validador están en `tests/fixtures/consultas_piloto/` y `tests/casos_validador/` |
 | `backlog/` | Plan por slices (`plan_slices.md`) y el slice 1 con su evidencia (`backlog/slice-1/evidencia/`) |
 | `salidas/` | Respuestas que escribe `pap preguntar` (no va a git) |
 | `catalogo/scripts/` | Generador del catálogo |

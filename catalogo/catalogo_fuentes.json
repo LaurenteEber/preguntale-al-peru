@@ -262,7 +262,7 @@
   "notas": "Columnas esperadas (por conocimiento previo, validar con diccionario): ANO_EJE, MES_EJE, NIVEL_GOBIERNO, SECTOR, PLIEGO, SEC_EJEC, EJECUTORA, DEPARTAMENTO/PROVINCIA/DISTRITO_EJECUTORA, SEC_FUNC, PROGRAMA_PPTO, PRODUCTO_PROYECTO, ACTIVIDAD_ACCION_OBRA, FUNCION, DIVISION_FUNCIONAL, GRUPO_FUNCIONAL, META, DEPARTAMENTO/PROVINCIA/DISTRITO_META, FUENTE_FINANCIAMIENTO, RUBRO, GENERICA..ESPECIFICA_DET, MONTO_PIA, MONTO_PIM, MONTO_CERTIFICADO, MONTO_COMPROMETIDO, MONTO_DEVENGADO, MONTO_GIRADO. Última modificación vista: 2026-07-02. [Auditoría C-01: no existen columnas PROVINCIA_META ni DISTRITO_META.] [Prueba de humo 2026-10-05] 2024-Gasto.csv pesa 10,2 GB; 2025-Gasto-Mensual 10,5 GB; 2026-Gasto-Mensual 7,0 GB (actualizado 02-10-2026). Columnas confirmadas (*_EJECUTORA, DEPARTAMENTO_META, PRODUCTO_PROYECTO). Ingerir por streaming y particionar por año.",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": "https://fs.datosabiertos.mef.gob.pe/datastorefiles/{anio}-Gasto.csv",
   "anio_inicio": 2012,
   "anio_fin": 2026,
@@ -292,12 +292,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06; biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06-2; biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06-3 · 3 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06; biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06-2; biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06-3 · 3 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/MEF-DA-PRESUPUESTO-EJECUCION-GASTO/2026-10-06",
@@ -2548,7 +2548,7 @@
   "notas": "Tabla maestra del ciclo de inversión: une con Seguimiento (devengados), Cierre, Brechas y Formato 12B vía CUI. [Prueba de humo 2026-10-05] DETALLE_INVERSIONES.csv (247 MB; actualizado 04-10-2026; UTF-8 con BOM): CODIGO_UNICO, CODIGO_SNIP, SEC_EJEC, UBIGEO.",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 2001,
   "anio_fin": 2026,
@@ -2575,12 +2575,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/MEF-DETALLE-INVERSIONES/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/MEF-DETALLE-INVERSIONES/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/MEF-DETALLE-INVERSIONES/2026-10-06"
@@ -4422,7 +4422,7 @@
   "notas": "Pobreza monetaria 2025 = 25,7% (publicado 5 may 2026). Código 2025 no confirmado en esta sesión. La muestra integra componente panel; ver INEI-ENAHO-PANEL. [Prueba de humo 2026-10-05] Módulo 01 de la ENAHO 2024 (código 966) en STATA, SPSS y CSV (8–9 MB); módulo 34 (sumaria) 17,9 MB.",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 1997,
   "anio_fin": 2025,
@@ -4456,12 +4456,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-ENAHO/2026-10-07; biblioteca/cruda/capturas/INEI-ENAHO/2026-10-07-2 · 2 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-ENAHO/2026-10-07; biblioteca/cruda/capturas/INEI-ENAHO/2026-10-07-2 · 2 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-ENAHO/2026-10-07",
@@ -4534,7 +4534,7 @@
   "notas": "Única fuente oficial de pobreza monetaria distrital. Esperar posible nuevo mapa con Censo 2025. [Prueba de humo 2026-10-05] Lib1718/Libro.pdf (43,7 MB, 2020).",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 2007,
   "anio_fin": 2018,
@@ -4562,12 +4562,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-MAPA-POBREZA/2026-10-07; biblioteca/cruda/capturas/INEI-MAPA-POBREZA/2026-10-09 · 2 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-MAPA-POBREZA/2026-10-07; biblioteca/cruda/capturas/INEI-MAPA-POBREZA/2026-10-09 · 2 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-MAPA-POBREZA/2026-10-07",
@@ -5242,7 +5242,7 @@
   "notas": "TABLA PUENTE CLAVE: código RENIPRESS -> ubigeo para todas las fuentes por establecimiento (SIEN, HIS, SIS, CNV, vacunas). [Fusionado con registro SUSALUD-RENIPRESS-PNDA] [Prueba de humo 2026-10-05] RENIPRESS_30-09-2026.csv (19,9 MB; \";\"): trae COD_IPRESS, UBIGEO, COD_UE, NORTE/ESTE, CATEGORIA, ESTADO.",
   "estado_portal": "confirmado_navegador",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": "https://www.datosabiertos.gob.pe/sites/default/files/RENIPRESS_{dd}-{mm}-{anio}.csv",
   "anio_inicio": null,
   "anio_fin": 2026,
@@ -5273,12 +5273,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/SUSALUD-RENIPRESS/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/SUSALUD-RENIPRESS/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/SUSALUD-RENIPRESS/2026-10-06"
@@ -7913,7 +7913,7 @@
   "notas": "Fuente más fina (EESS) para anemia/DCI; contrastar con ENDES (departamento) para calibrar sesgo. Última actualización PNDA 8-sep-2026. [Prueba de humo 2026-10-05] ZIP semestrales por departamento (40 archivos; ej. BD SIEN Niños 2012, 62,6 MB; ficha modificada 05-08-2026).",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 2012,
   "anio_fin": 2026,
@@ -7941,12 +7941,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INS-CENAN-SIEN/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INS-CENAN-SIEN/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INS-CENAN-SIEN/2026-10-06"
@@ -8042,7 +8042,7 @@
   "notas": "Probables códigos ENDES (gist RRMaximiliano, módulos de 4 dígitos, no confirmado): 2015=506, 2016=579, 2017=615, 2018=650, 2019=701. Series 1986–2024 en https://proyectos.inei.gob.pe/files/publicaciones/2024/SERIES_ANUALES_1986_2024.pdf. Informes departamentales en proyectos.inei.gob.pe/endes/2024/departamentales/. [Prueba de humo 2026-10-05] ENDES 2025 disponible en el portal de microdatos (código de encuesta 1038, módulos 1629 en adelante; ZIP de 5,8 MB probado).",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{formato}/{codigo}-Modulo{modulo}.zip",
   "anio_inicio": 1986,
   "anio_fin": 2025,
@@ -8072,12 +8072,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-10; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-11; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-12; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-13; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-14; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-15; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-16; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-17; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-18; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-19; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-2; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-20; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-21; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-22; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-3; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-4; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-5; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-6; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-7; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-8; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-9 · 22 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-10; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-11; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-12; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-13; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-14; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-15; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-16; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-17; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-18; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-19; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-2; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-20; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-21; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-22; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-3; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-4; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-5; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-6; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-7; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-8; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-9 · 22 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07",
@@ -12772,7 +12772,7 @@
   "notas": "Agregado el 5/10/2026 al detectar el vacío de denominadores intercensales durante la priorización. Cubre 1 892 distritos. Lib1860 incluye Anexo 3 'Dispositivos legales de modificación de ámbitos territoriales' (útil para ubigeo histórico; 16 distritos creados 2020–2021). [Prueba de humo 2026-10-05] La ficha de gob.pe tiene el XLSX en cdn.www.gob.pe; no se descargó.",
   "estado_portal": "confirmado_navegador",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 2018,
   "anio_fin": 2026,
@@ -12799,12 +12799,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-PROYECCIONES-POBLACION-DISTRITAL/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-PROYECCIONES-POBLACION-DISTRITAL/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-PROYECCIONES-POBLACION-DISTRITAL/2026-10-06"
@@ -12884,7 +12884,7 @@
   "prioridad_mvp": "media",
   "estado_portal": "confirmado_navegador",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "ids_fusionados": [],
   "id_ruta_principal": null,
   "notas": "Publicado enero 2020. Para distrito×edad combinar total distrital INEI con estructura etaria del Censo 2017 (cuadro 1 de los tomos de resultados definitivos) o usar la población estimada MINSA. [Prueba de humo 2026-10-05] Lib1722/libro.pdf (7,9 MB).",
@@ -12901,12 +12901,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-PROYECCIONES-DEPARTAMENTAL-EDAD/2026-10-06 · 2 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-PROYECCIONES-DEPARTAMENTAL-EDAD/2026-10-06 · 2 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-PROYECCIONES-DEPARTAMENTAL-EDAD/2026-10-06"
@@ -12942,7 +12942,7 @@
   "prioridad_mvp": null,
   "estado_portal": "confirmado_navegador",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "ids_fusionados": [],
   "id_ruta_principal": null,
   "origen": "derivada_oficial",
@@ -13003,12 +13003,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-PROYECCIONES-DISTRITAL-2018-2022/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-PROYECCIONES-DISTRITAL-2018-2022/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-PROYECCIONES-DISTRITAL-2018-2022/2026-10-06"
@@ -13289,7 +13289,7 @@
   "notas": "Base fundamental para denominadores distritales y de centro poblado hasta que se publiquen resultados definitivos del Censo 2025. Base fundamental para denominadores distritales y de centro poblado hasta que se publiquen bases del Censo 2025. Tabla distrito × sexo × edad simple ya tabulada: Tomo I de los resultados definitivos por departamento, Cuadro N.º 1 'Población censada, por área urbana y rural; y sexo, según provincia, distrito y edades simples' (y Cuadro N.º 2 por grupos de edad). Ej. Tacna: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1564/23TOMO_01.pdf. Patrón: /Est/Lib{NNNN}/{cod_dep}TOMO_01.pdf con número de Lib distinto por departamento (Lib1544–Lib1619 aprox.), así que hay que mapear 25 URLs. Extraer de PDF o, preferible, regenerar con REDATAM.",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 2017,
   "anio_fin": 2017,
@@ -13324,12 +13324,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-CPV2017/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-CPV2017/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-CPV2017/2026-10-06"
@@ -24293,7 +24293,7 @@
   "prioridad_mvp": null,
   "estado_portal": "confirmado_navegador",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "ids_fusionados": [],
   "id_ruta_principal": null,
   "origen": "derivada_oficial",
@@ -24350,12 +24350,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/BCRP-IPC-LIMA/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/BCRP-IPC-LIMA/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/BCRP-IPC-LIMA/2026-10-06"
@@ -28066,7 +28066,7 @@
   "notas": "Excelente tabla puente lista para usar en el MVP; citar fuentes originales (CEPLAN, INEI, MINSA, PNUD, WFP). [Prueba de humo 2026-10-05] ubigeo_distrito.csv (410 KB, ~1 895 filas) con columnas inei y reniec: sirve como puente de equivalencias.",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 2021,
   "anio_fin": 2021,
@@ -28109,12 +28109,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/GITHUB-UBIGEO-PERU-AUMENTADO/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/GITHUB-UBIGEO-PERU-AUMENTADO/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/GITHUB-UBIGEO-PERU-AUMENTADO/2026-10-06"
@@ -28180,7 +28180,7 @@
   "notas": "Tabla maestra base para el modelo de cruce. Versión 2022 con 1 891 distritos (las proyecciones 2018-2026 usan 1 892: falta al menos un distrito creado después). No trae fecha de creación ni distrito de origen; para eso ver INEI-DIRECTORIO-MUNICIPALIDADES y Lib1860 Anexo 3. [Prueba de humo 2026-10-05] UBIGEOS_2022_1891_distritos.zip (22,6 KB).",
   "estado_portal": "confirmado_navegador",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 2022,
   "anio_fin": 2022,
@@ -28214,12 +28214,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-PNDA-UBIGEOS/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-PNDA-UBIGEOS/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-PNDA-UBIGEOS/2026-10-06"
@@ -28428,7 +28428,7 @@
   "prioridad_mvp": null,
   "estado_portal": "confirmado_navegador",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "ids_fusionados": [],
   "id_ruta_principal": null,
   "origen": "secundaria",
@@ -28488,12 +28488,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/PROPIO-ESTADISTICAS-SOCIALES-2020/2026-10-05 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/PROPIO-ESTADISTICAS-SOCIALES-2020/2026-10-05 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/PROPIO-ESTADISTICAS-SOCIALES-2020/2026-10-05"
@@ -28569,7 +28569,7 @@
   "prioridad_mvp": "media",
   "estado_portal": "confirmado_navegador",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "ids_fusionados": [],
   "id_ruta_principal": null,
   "notas": "Edición 2025: 196 municipalidades provinciales y 1 695 distritales (autoridades al 3-02-2025). Edición 2021 indica 13 distritos creados en 2020–2021 (Ayacucho, Cusco, Huancavelica, San Martín, Ucayali). Complementos para ubigeo histórico: INEI Lib1860 (Boletín 27, proyecciones 2018-2022) Anexo 3 'Dispositivos legales de modificación de ámbitos territoriales' (16 distritos creados 2020–2021) https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1860/libro.pdf; tabla PNDA de ubigeos 2022 con 1 891 distritos; proyecciones 2018-2026 con 1 892 distritos.",
@@ -28586,12 +28586,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-DIRECTORIO-MUNICIPALIDADES/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/INEI-DIRECTORIO-MUNICIPALIDADES/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-DIRECTORIO-MUNICIPALIDADES/2026-10-06"
@@ -30591,7 +30591,7 @@
   "notas": "[Prueba de humo 2026-10-05] La ficha anterior (-1) solo tenía diccionario; el dataset vigente es \"RENIEC - Población identificada con DNI\" (23 XLSX, último 03-08-2026).",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-10-10",
+  "fecha_verificacion": "2026-11-04",
   "url_patron": null,
   "anio_inicio": 2012,
   "anio_fin": 2026,
@@ -30619,12 +30619,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/RENIEC-POBLACION-IDENTIFICADA/2026-10-06 · 1 huella(s) verificada(s) el 2026-10-10"
+    "evidencia": "biblioteca/cruda/capturas/RENIEC-POBLACION-IDENTIFICADA/2026-10-06 · 1 huella(s) verificada(s) el 2026-11-04"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-10-10",
+   "fecha_verificacion": "2026-11-04",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/RENIEC-POBLACION-IDENTIFICADA/2026-10-06"

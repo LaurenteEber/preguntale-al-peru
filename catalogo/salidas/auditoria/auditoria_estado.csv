@@ -1,0 +1,133 @@
+id,tema,severidad,estado,registros_corregidos,detalle
+COB-01,A-08,alta,corregido_parcial,MINSA-INMUNIZACIONES,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-02,A-08,alta,corregido_parcial,,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-03,A-08,alta,corregido_parcial,,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-04,A-08,alta,corregido_parcial,,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-05,A-04,alta,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+COB-06,A-04,media,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+COB-07,A-04,media,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+COB-08,A-04,media,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+COB-09,A-08,alta,corregido_parcial,,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-10,C-05,alta,corregido_parcial,MEF-PPR-PROGRAMAS-PRESUPUESTALES,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+COB-11,A-08,media,corregido_parcial,MINEDU-CENSO-EDUCATIVO,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-12,A-08,media,corregido_parcial,,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-13,A-08,media,corregido_parcial,,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-14,A-08,baja,corregido_parcial,,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+COB-15,A-08,baja,corregido_parcial,,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+EMB-01,C-05,critica,corregido_parcial,,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EMB-02,C-05,alta,corregido_parcial,,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EMB-03,C-05,alta,corregido_parcial,MEF-PPR-PROGRAMAS-PRESUPUESTALES,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EMB-04,C-05,alta,corregido_parcial,SUSALUD-RENIPRESS,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EMB-05,C-05,alta,corregido_parcial,MINEDU-ESCALE-PADRON,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EMB-06,A-01,alta,corregido,MEF-DA-GASTO-DEVENGADO-MENSUAL; MEF-DA-GASTO-DEVENGADO-SECTORES; MEF-DA-GASTO-PPR,Rutas alternas y regla -Mensual/-Diario.
+EMB-07,A-08,alta,corregido_parcial,MINSA-HIS; MINSA-INMUNIZACIONES; MINSA-REUNIS,"Agregados Mapa DCI, mortalidad neonatal, ETI, RRHH salud, Vaso de Leche, Evaluación Diagnóstica; vacunación en la Ola 1 por excepción. Sin fuente pública: RUBPVL, INFORHUS, vacunación abierta."
+EMB-08,A-02,alta,corregido,,Regla de vigencia en el embudo.
+EMB-09,A-03,alta,corregido,,"Umbral de descarga, pesos y aritmética verificada al generar."
+EMB-10,A-04,alta,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+EMB-11,C-06,alta,corregido,,"Prueba de humo en Chrome: 32 aprobadas, 11 con enlace confirmado; URL literales separadas de las plantillas; host PNDA normalizado."
+EMB-12,A-09,alta,pendiente_fase3,,Preguntas ancla y Ola 1a en la Fase 3 (la Ola 1 bajó de 43 a 29).
+EMB-13,A-03,media,corregido,,"Umbral de descarga, pesos y aritmética verificada al generar."
+EMB-14,A-03,media,corregido,RENIEC-POBLACION-IDENTIFICADA,"Umbral de descarga, pesos y aritmética verificada al generar."
+EMB-15,A-01,media,corregido,,Rutas alternas y regla -Mensual/-Diario.
+EMB-16,A-04,media,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+EMB-17,A-04,media,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+EMB-18,A-03,media,corregido,,"Umbral de descarga, pesos y aritmética verificada al generar."
+EMB-19,C-05,media,corregido_parcial,,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EMB-20,A-04,media,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+EMB-21,C-03,baja,corregido_catalogo,,Limitación y regla de uso escritas en el registro; aplicación en la Fase 2.
+EMB-22,A-03,baja,corregido,,"Umbral de descarga, pesos y aritmética verificada al generar."
+EMB-23,A-04,baja,corregido,,"Regla de capa, infraestructura de acceso y origen geoespacial."
+EMB-24,A-03,baja,corregido,,"Umbral de descarga, pesos y aritmética verificada al generar."
+EXA-A-01,C-01,critica,corregido_catalogo,MEF-DA-PRESUPUESTO-EJECUCION-GASTO; MEF-SEGUIMIENTO-PI,"base_geografica=ejecutora, llaves y limitaciones corregidas; cruzabilidad acotada en el embudo. La regla de cálculo se implementa en la Fase 2."
+EXA-A-02,C-04,alta,corregido,MEF-DA-GASTO-PPR,Las cinco fuentes salieron de la Ola 1 con sus datos corregidos.
+EXA-A-03,C-04,alta,corregido,MEF-DA-GASTO-DEVENGADO-SECTORES,Las cinco fuentes salieron de la Ola 1 con sus datos corregidos.
+EXA-A-04,A-01,alta,corregido,MEF-DA-GASTO-DEVENGADO-MENSUAL,Rutas alternas y regla -Mensual/-Diario.
+EXA-A-05,A-11,alta,corregido,MEF-SEGUIMIENTO-PI,Correcciones aplicadas con trazabilidad por registro.
+EXA-A-06,A-11,alta,corregido,MEF-INVERSIONES-BRECHAS,Correcciones aplicadas con trazabilidad por registro.
+EXA-A-07,C-05,alta,corregido_parcial,,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EXA-A-08,C-05,alta,corregido_parcial,SUSALUD-RENIPRESS,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EXA-A-09,C-05,media,corregido_parcial,INEI-PNDA-UBIGEOS,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EXA-A-10,A-11,media,corregido,MEF-DA-PRESUPUESTO-EJECUCION-GASTO,Correcciones aplicadas con trazabilidad por registro.
+EXA-A-11,A-11,media,corregido,MEF-DA-TRANSFERENCIAS,Correcciones aplicadas con trazabilidad por registro.
+EXA-A-12,A-11,media,corregido,MEF-DA-GASTO-GPNNA,Correcciones aplicadas con trazabilidad por registro.
+EXA-A-13,A-05,media,corregido_catalogo,INEI-CPV2017,"Campo anios_con_quiebre, omisión censal y ENDES 2025 corregidos; regla de uso en la Fase 2."
+EXA-A-14,C-03,media,corregido_catalogo,INEI-MAPA-POBREZA,Limitación y regla de uso escritas en el registro; aplicación en la Fase 2.
+EXA-A-15,C-05,media,corregido_parcial,GITHUB-UBIGEO-PERU-AUMENTADO,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EXA-A-16,C-05,baja,corregido_parcial,,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EXA-A-17,A-11,baja,corregido,,Correcciones aplicadas con trazabilidad por registro.
+EXA-A-18,A-11,baja,corregido,MEF-DETALLE-INVERSIONES,Correcciones aplicadas con trazabilidad por registro.
+EXA-A-19,C-05,baja,corregido_parcial,PNDA-UBIGEO-EQUIVALENCIAS,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+EXA-A-20,A-11,baja,corregido,INEI-DIRECTORIO-CCPP,Correcciones aplicadas con trazabilidad por registro.
+EXA-A-21,A-11,baja,corregido,,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-01,C-04,critica,corregido,MINSA-PADRON-NOMINAL,Las cinco fuentes salieron de la Ola 1 con sus datos corregidos.
+EXA-B-02,C-04,critica,corregido,MINSA-HIS,Las cinco fuentes salieron de la Ola 1 con sus datos corregidos.
+EXA-B-03,A-11,alta,corregido,CDC-VIGILANCIA-DATOS-ABIERTOS,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-04,C-04,alta,corregido,CONTIGO-USUARIOS,Las cinco fuentes salieron de la Ola 1 con sus datos corregidos.
+EXA-B-05,A-11,alta,corregido,MINSA-SINADEF,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-06,A-06,alta,corregido_parcial,SIS-AFILIADOS,SIS-AFILIADOS confirmado como ubigeo INEI; SIS-ATENCIONES se valida empíricamente en la ingesta (Fase 2).
+EXA-B-07,A-11,media,corregido,SIS-ATENCIONES,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-08,A-05,media,corregido_catalogo,INEI-ENDES,"Campo anios_con_quiebre, omisión censal y ENDES 2025 corregidos; regla de uso en la Fase 2."
+EXA-B-09,A-11,media,corregido,ESSALUD-DATOS-ABIERTOS,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-10,A-11,media,corregido,SUSALUD-DATOS-ABIERTOS,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-11,A-11,media,corregido,PRONIED-INTERVENCIONES,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-12,A-11,media,corregido,PENSION65-USUARIOS,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-13,A-11,media,corregido,PAIS-TAMBOS-ATENCIONES,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-14,A-11,media,corregido,CUNAMAS-USUARIOS,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-15,A-11,media,corregido,WASIMIKUNA-IIEE,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-16,A-11,media,corregido,MINEDU-CENSO-EDUCATIVO,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-17,A-11,media,corregido,MINSA-CNV-NACIDOS-VIVOS,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-18,A-11,media,corregido,MINSA-SINADEF,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-19,A-11,baja,corregido,JUNTOS-HOGARES-UBIGEO,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-20,C-06,baja,corregido,,"Prueba de humo en Chrome: 32 aprobadas, 11 con enlace confirmado; URL literales separadas de las plantillas; host PNDA normalizado."
+EXA-B-21,A-11,baja,corregido,FONCODES-PROYECTOS,Correcciones aplicadas con trazabilidad por registro.
+EXA-B-22,A-11,baja,corregido,,Correcciones aplicadas con trazabilidad por registro.
+INF-01,C-01,critica,corregido_catalogo,MEF-DA-GASTO-GPNNA; MEF-DA-PRESUPUESTO-EJECUCION-GASTO,"base_geografica=ejecutora, llaves y limitaciones corregidas; cruzabilidad acotada en el embudo. La regla de cálculo se implementa en la Fase 2."
+INF-02,C-03,critica,corregido_catalogo,INEI-MAPA-POBREZA,Limitación y regla de uso escritas en el registro; aplicación en la Fase 2.
+INF-03,C-02,critica,pendiente_fase2,,Reglas de publicación: se escriben en la Fase 2.
+INF-04,C-02,critica,pendiente_fase2,,Reglas de publicación: se escriben en la Fase 2.
+INF-05,A-06,alta,corregido_parcial,SIS-AFILIADOS; SIS-ATENCIONES,SIS-AFILIADOS confirmado como ubigeo INEI; SIS-ATENCIONES se valida empíricamente en la ingesta (Fase 2).
+INF-06,C-05,alta,corregido_parcial,PNDA-UBIGEO-EQUIVALENCIAS,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+INF-07,A-07,alta,corregido,INS-CENAN-SIEN,Inferencia vacía en registros; campos base_geografica y tipo_medida.
+INF-08,A-05,alta,corregido_catalogo,INEI-ENDES; INS-CENAN-SIEN; MINSA-REUNIS,"Campo anios_con_quiebre, omisión censal y ENDES 2025 corregidos; regla de uso en la Fase 2."
+INF-09,A-02,alta,corregido,MINEDU-UMC-ECE,Regla de vigencia en el embudo.
+INF-10,A-07,media,corregido,,Inferencia vacía en registros; campos base_geografica y tipo_medida.
+INF-11,A-07,media,corregido,SUSALUD-ENSUSALUD,Inferencia vacía en registros; campos base_geografica y tipo_medida.
+INF-12,A-06,media,corregido_parcial,,SIS-AFILIADOS confirmado como ubigeo INEI; SIS-ATENCIONES se valida empíricamente en la ingesta (Fase 2).
+INF-13,A-07,media,corregido,,Inferencia vacía en registros; campos base_geografica y tipo_medida.
+INF-14,C-05,alta,corregido_parcial,RENIEC-POBLACION-IDENTIFICADA; RENIEC-POBLACION-IDENTIFICADA-DNI,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+INF-15,C-02,alta,pendiente_fase2,,Reglas de publicación: se escriben en la Fase 2.
+INF-16,C-02,media,pendiente_fase2,,Reglas de publicación: se escriben en la Fase 2.
+INF-17,A-05,alta,corregido_catalogo,INEI-ENAHO; INEI-ENAPRES; INEI-ENDES,"Campo anios_con_quiebre, omisión censal y ENDES 2025 corregidos; regla de uso en la Fase 2."
+INF-18,C-02,media,pendiente_fase2,,Reglas de publicación: se escriben en la Fase 2.
+INF-19,A-05,media,corregido_catalogo,INEI-CPV2017,"Campo anios_con_quiebre, omisión censal y ENDES 2025 corregidos; regla de uso en la Fase 2."
+INF-20,C-02,media,corregido_parcial,MINEDU-UMC-ECE,Reglas de publicación: se escriben en la Fase 2.
+INF-21,C-01,media,corregido_catalogo,MEF-DA-TRANSFERENCIAS,"base_geografica=ejecutora, llaves y limitaciones corregidas; cruzabilidad acotada en el embudo. La regla de cálculo se implementa en la Fase 2."
+INF-22,A-07,media,corregido,,Inferencia vacía en registros; campos base_geografica y tipo_medida.
+INF-23,C-02,media,pendiente_fase2,,Reglas de publicación: se escriben en la Fase 2.
+INF-24,A-05,baja,corregido_catalogo,,"Campo anios_con_quiebre, omisión censal y ENDES 2025 corregidos; regla de uso en la Fase 2."
+INF-25,A-07,baja,corregido,,Inferencia vacía en registros; campos base_geografica y tipo_medida.
+INF-26,A-07,baja,corregido,,Inferencia vacía en registros; campos base_geografica y tipo_medida.
+INT-01,C-06,critica,corregido,,"Prueba de humo en Chrome: 32 aprobadas, 11 con enlace confirmado; URL literales separadas de las plantillas; host PNDA normalizado."
+INT-02,C-06,critica,corregido,MEF-DA-PRESUPUESTO-EJECUCION-GASTO,"Prueba de humo en Chrome: 32 aprobadas, 11 con enlace confirmado; URL literales separadas de las plantillas; host PNDA normalizado."
+INT-03,A-06,alta,corregido_parcial,SIS-AFILIADOS; SIS-AFILIADOS-PNDA; SIS-ATENCIONES-PNDA,SIS-AFILIADOS confirmado como ubigeo INEI; SIS-ATENCIONES se valida empíricamente en la ingesta (Fase 2).
+INT-04,A-11,alta,corregido,CEPLAN-INFO-DEPARTAMENTAL-BRECHAS; SUNASS-AREA-PRESTACION,Correcciones aplicadas con trazabilidad por registro.
+INT-05,C-05,alta,corregido_parcial,GITHUB-UBIGEO-PERU-AUMENTADO; PNDA-UBIGEO-EQUIVALENCIAS,"Agregados población por edad (INEI departamental, MINSA distrital en tablero), Directorio de Municipalidades, maestro de ejecutoras, estructura programática; RENIPRESS, padrón de IIEE y Censo 2025 corregidos. Pendiente: construir el ubigeo histórico y el cruce 0001/0002→1001 (no hay tabla oficial)."
+INT-06,C-06,alta,corregido,INEI-ENDES,"Prueba de humo en Chrome: 32 aprobadas, 11 con enlace confirmado; URL literales separadas de las plantillas; host PNDA normalizado."
+INT-07,A-10,alta,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-08,A-10,alta,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-09,C-06,alta,corregido,,"Prueba de humo en Chrome: 32 aprobadas, 11 con enlace confirmado; URL literales separadas de las plantillas; host PNDA normalizado."
+INT-10,A-03,alta,corregido,,"Umbral de descarga, pesos y aritmética verificada al generar."
+INT-11,A-02,alta,corregido,,Regla de vigencia en el embudo.
+INT-12,A-10,alta,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-13,C-06,alta,corregido,SUSALUD-RENIPRESS,"Prueba de humo en Chrome: 32 aprobadas, 11 con enlace confirmado; URL literales separadas de las plantillas; host PNDA normalizado."
+INT-14,A-10,alta,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-15,A-10,media,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-16,A-10,media,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-17,A-07,media,corregido,,Inferencia vacía en registros; campos base_geografica y tipo_medida.
+INT-18,A-10,media,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-19,C-06,media,corregido,,"Prueba de humo en Chrome: 32 aprobadas, 11 con enlace confirmado; URL literales separadas de las plantillas; host PNDA normalizado."
+INT-20,A-10,media,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-21,A-02,media,corregido,,Regla de vigencia en el embudo.
+INT-22,A-10,media,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-23,A-10,baja,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
+INT-24,A-10,baja,corregido,,Esquema v2 tipado y test_catalogo.py (0 errores).
