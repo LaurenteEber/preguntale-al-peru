@@ -1,0 +1,7 @@
+# Textos del intérprete de preguntas en texto libre (slice 2). Lo lee el dueño sin leer Python; los mensajes de error del
+# contrato están en errores_consulta.yaml (S2-01). Las historias siguientes (S2-05, S2-06) agregan los suyos.
+version: 1.0.0
+no_es_pregunta: "No encontramos una pregunta. Escribe qué quieres saber, de qué problema y de qué lugar; por ejemplo: «¿Cuánta anemia hay en Puno?»."
+fuera_de_alcance:
+  tema: "Todavía no tenemos datos de «{pedido}». Por ahora tenemos {temas}."
+  pregunta: "Todavía no respondemos eso («{pedido}»). Podemos decirte cuánto hay hoy, cómo cambió, cómo se compara con otro lugar, dónde es más alto o qué se gastó."

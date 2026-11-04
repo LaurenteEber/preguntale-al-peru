@@ -153,3 +153,11 @@ plantillas:
       naturaleza: [encuesta_muestral]
       niveles: {departamento: el departamento, LIMA_METROPOLITANA: Lima Metropolitana, LIMA_REGION: Lima Región, CALLAO: el Callao, nacional: todo el país}
     decision: "R-LENGUAJE-01 (reglas_asignacion de NC-NIVEL, dueño 3/11/2026, C-04)"
+
+interprete:                       # slice 2: intérprete de preguntas en texto libre (backlog/slice-2/README.md, «Defaults que fija el backlog»)
+  sin_lugar: {valor: aclarar, opciones: [nacional, escribir], alternativa: nacional, supuesto: S2-01}            # «Todo el Perú» o «Escribe el lugar»
+  sin_intencion: {valor: nivel_actual, alternativa: aclarar, supuesto: S2-01}                                  # «anemia en Puno»
+  anios_relativos: {valor: aclarar, opciones: [ultimo, escribir], supuesto: S2-01}                             # «el año pasado»
+  reintentos_si_no_valida: {valor: 1, alternativa: 0, supuesto: S2-01}
+  cache_horas: {valor: 24, decision: P-03}
+  aclaracion_max_opciones: {valor: 4, supuesto: S2-01}

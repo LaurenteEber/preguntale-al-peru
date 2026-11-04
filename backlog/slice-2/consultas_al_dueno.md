@@ -20,3 +20,5 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 
 | ID | Historia | Qué se supuso | Dónde vive |
 |---|---|---|---|
+| S2-01-a | S2-01 | Defaults del intérprete del README (`sin_lugar`, `sin_intencion`, `anios_relativos`, `reintentos_si_no_valida`, `aclaracion_max_opciones`); `cache_horas` es decisión P-03 | `parametros_motor.yaml` → `interprete` |
+| S2-01-b | S2-01 | Textos de los errores nuevos del contrato y de «no es pregunta» / «fuera de alcance» | `errores_consulta.yaml`, `textos/interprete.yaml` |

@@ -52,7 +52,7 @@ Según `../slice-1/evidencia/cierre.md` §Adenda: el gasto entre años sale en s
 | ID | Historia | LLM real | Estado |
 |---|---|---|---|
 | S2-00 | [Preparación](S2-00-preparacion.md) | no | hecha ([base](evidencia/s2-00_base.txt)) |
-| S2-01 | [Contrato de la interpretación](S2-01-contrato-interpretacion.md) | no | pendiente |
+| S2-01 | [Contrato de la interpretación](S2-01-contrato-interpretacion.md) | no | hecha (`tests/interprete/test_contrato.py`) |
 | S2-02 | [Conjunto de evaluación (independiente)](S2-02-conjunto-evaluacion.md) | no | pendiente |
 | S2-03 | [Vocabulario e instrucciones desde datos curados](S2-03-vocabulario-prompt.md) | no | pendiente |
 | S2-04 | [Limpieza, cliente del LLM, grabaciones y presupuesto](S2-04-cliente-llm.md) | sí, para grabar | pendiente |
