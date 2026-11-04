@@ -11,14 +11,16 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-2/S2-nn-*
 
 | ID | Specs | Route | Status | Commit |
 |---|---|---|---|---|
-| T0 S2-00 | S2-00 | inline | done | |
-| T1 S2-01 | S2-01 | inline | pending | |
-| T2 S2-02 | S2-02 | independent subagent (story requires it) | pending | |
-| T3 S2-03 | S2-03 | inline | pending | |
-| T4 S2-04 | S2-04 | inline; recordings blocked (E-02) | pending | |
+| T0 S2-00 | S2-00 | inline | done | cf73eed |
+| T1 S2-01 | S2-01 | inline | done | 5043fc1 |
+| T2 S2-02 | S2-02 | independent subagent (story requires it) | in progress | 3030a46 (brief) |
+| T3 S2-03 | S2-03 | inline | done (cross test waits for S2-02) | 5b37fee |
+| T4 S2-04 | S2-04 | inline; recordings blocked (E-02) | partial | 3476a32 |
+| T5 S2-05 | S2-05 | delegated writer (context backstop) | in progress | |
 | T5–T10 | S2-05..S2-10 | inline; LLM parts blocked (E-02) | pending | |
 
 ## Log
 
 - L1 (2026-11-04, user, verbatim): see `odd/tasks/slice-1-adenda.md` L1; L2 «ok, pero usa ODD para la implemenación».
 - L2: S2-00 done. No API key and no write access to GitHub (E-01, E-02 in `backlog/slice-2/consultas_al_dueno.md`).
+- L3: S2-04 found that structured outputs reject oneOf/if/external $ref/length limits; client sends a simplified schema (E-03). S2-05 delegated (context reason) with fake-LLM tests; recordings blocked by E-02.
