@@ -40,6 +40,25 @@ def cargar_intenciones(raiz) -> dict:
     return _leer(str(raiz), str(RUTA_INTENCIONES))
 
 
+def _soles_constantes(motor, hechas: list[dict]) -> None:
+    """S1-12 (G-01, R-GASTO-12): una comparación de gasto entre años va en soles constantes del último año cerrado. La cifra
+    que compara (`comparar_con`) y la del año con el que se compara piden `devengado_constante`; la segunda guarda el año
+    de la primera (`en_serie_con`) para que el validador la trate como parte de la misma serie. Una cifra de un solo año
+    sigue en soles corrientes."""
+    for h in hechas:
+        a2 = h.get("comparar_con")
+        if a2 is None or motor.ctx.indicadores[h["indicador"]]["naturaleza_dato"] != "presupuestal_financiero":
+            continue
+        h["medida"] = MEDIDA_CONSTANTE
+        for o in hechas:
+            if o is not h and (o["indicador"], o["nivel"], o["territorio"], int(o["anio"])) == \
+                    (h["indicador"], h["nivel"], h["territorio"], int(a2)):
+                o["medida"], o["en_serie_con"] = MEDIDA_CONSTANTE, int(h["anio"])
+
+
+MEDIDA_CONSTANTE = "devengado_constante"
+
+
 def formato_id_cifra(*, indicador, medida, nivel, territorio, anio, rol, raiz=None, formato: str | None = None) -> str:
     """Id estable de cifra con el formato de parametros_motor.yaml (`planificador.formato_id_cifra`)."""
     if formato is None:
@@ -436,10 +455,12 @@ def planificar(consulta_minima: dict, resuelto, motor, *, parametros: dict | Non
                     igual.setdefault("comparar_con", spec["comparar_con"])
                 continue
             hechas.append(spec)
+    _soles_constantes(motor, hechas)
     for h in hechas:
-        h["id"] = formato_id_cifra(indicador=h["indicador"], medida=motor.medida(h["indicador"]), nivel=h["nivel"],
+        h["id"] = formato_id_cifra(indicador=h["indicador"], medida=motor.medida(h["indicador"], h.get("medida")), nivel=h["nivel"],
                                    territorio=h["territorio"], anio=h["anio"], rol=h["rol"], formato=fmt)
-    plan["cifras"] = [{k: h[k] for k in ("id", "indicador", "anio", "nivel", "territorio", "rol", "comparar_con", "nivel_pedido")
+    plan["cifras"] = [{k: h[k] for k in ("id", "indicador", "anio", "nivel", "territorio", "rol", "medida", "comparar_con",
+                                         "en_serie_con", "nivel_pedido")
                        if k in h} for h in hechas]
     # lo que los metadatos fijos ya dicen (no la precisión ni la privacidad: eso es del validador)
     vistos = set()

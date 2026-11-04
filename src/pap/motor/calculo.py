@@ -27,7 +27,7 @@ from ..capa0.gasto import CONTROLES_R2
 from ..config import Rutas
 from . import biblioteca
 
-VERSION_TABLA = "1.1.0"
+VERSION_TABLA = "1.2.0"
 Z95 = 1.959963984540054
 DECIMALES = 8  # redondeo de las estadísticas: misma huella en macOS y Linux
 COLUMNAS = [
@@ -36,7 +36,9 @@ COLUMNAS = [
     "cota_inf", "cota_sup", "grupo_robusto_nacional", "grupo_robusto_regional", "metodo_territorio", "avisos",
     "estado_calculo", "motivo_calculo", "validada_dorada", "indicador_validado",
     # v1.1.0 (P2, 10/10/2026): campos que piden las reglas (R-GASTO-03, R-REG-09, R-REG-12, R-GASTO-07)
-    "poblacion", "ubigeo_inei", "fecha_corte", "fecha_descarga", "anio_cerrado", "pct_gasto_atribuible", "version_tabla"]
+    "poblacion", "ubigeo_inei", "fecha_corte", "fecha_descarga", "anio_cerrado", "pct_gasto_atribuible",
+    # v1.2.0 (S1-12, 4/11/2026): soles constantes del gasto (G-01, R-GASTO-12); nulas fuera de `devengado_constante`
+    "anio_base_deflactor", "factor_deflactor", "version_tabla"]
 CLAVE = ["indicador_id", "anio", "nivel", "territorio_id", "medida", "linea"]
 AMBITOS = (ambitos_lima.LIMA_METROPOLITANA, ambitos_lima.LIMA_REGION, ambitos_lima.CALLAO)
 ROTULOS = {ambitos_lima.LIMA_METROPOLITANA: "Lima Metropolitana (provincia de Lima)",
@@ -375,7 +377,54 @@ def _calcular_gasto(rutas: Rutas, inds: dict, nombres: dict, res: Resultado) -> 
             y, m = map(int, fc.split("-")[:2])
             f["fecha_corte"] = (pd.Timestamp(y, m, 1) + pd.offsets.MonthEnd(0)).date().isoformat()
         f["anio_cerrado"] = cerrado
-    return filas
+    return filas + _deflactar(rutas, filas, res)
+
+
+def _deflactar(rutas: Rutas, filas: list[dict], res: Resultado) -> list[dict]:
+    """S1-12 (G-01, R-GASTO-12): una fila `devengado_constante` por cada fila `devengado` del gasto, en soles del último
+    año cerrado. Año base: el mayor año con el IPC completo (`anio_completo`) y con gasto en el cubo. Factor:
+    ipc_prom_anual(base) / ipc_prom_anual(año). El PIM y el PIA no se deflactan. Sin el IPC completo de un año del gasto,
+    se detiene con error."""
+    ins = insumos.tabla(rutas, "dim_ipc")
+    res.insumos.append(ins)
+    ipc = pd.read_parquet(ins.ruta)
+    return filas_constantes(filas, ipc)
+
+
+def anio_base_deflactor(ipc: pd.DataFrame, anios_gasto) -> int:
+    completos = set(ipc[ipc.anio_completo.astype(bool)].anio.astype(int))
+    con_gasto = sorted(a for a in {int(a) for a in anios_gasto} if a in completos)
+    if not con_gasto:
+        raise ValueError("S1-12: ningún año del gasto tiene el IPC completo (dim_ipc.anio_completo)")
+    return con_gasto[-1]
+
+
+def factores_deflactor(ipc: pd.DataFrame, anios_gasto) -> tuple[int, dict[int, float]]:
+    """(año base, {año: factor}) para los años del gasto. Lee `ipc_prom_anual` tal cual (no recalcula el promedio)."""
+    anios = sorted({int(a) for a in anios_gasto})
+    base = anio_base_deflactor(ipc, anios)
+    prom = {}
+    for a in anios:
+        x = ipc[ipc.anio.astype(int) == a]
+        if x.empty or not bool(x.anio_completo.astype(bool).all()) or x.ipc_prom_anual.isna().any():
+            raise ValueError(f"S1-12: falta el IPC completo de {a} en dim_ipc (meses con dato: "
+                             f"{int(x.meses_con_dato.max()) if not x.empty else 0}); no se puede deflactar el gasto")
+        prom[a] = float(x.ipc_prom_anual.iloc[0])
+    return base, {a: prom[base] / prom[a] for a in anios if a <= base}
+
+
+def filas_constantes(filas: list[dict], ipc: pd.DataFrame) -> list[dict]:
+    dev = [f for f in filas if f["medida"] == "devengado" and f["indicador_id"] in GASTO_TEMA]
+    base, factor = factores_deflactor(ipc, [f["anio"] for f in dev])
+    out = []
+    for f in dev:
+        if f["anio"] not in factor:
+            continue  # un año posterior al base (aún sin IPC completo) no se expresa en soles del base
+        g = dict(f)
+        g.update(medida="devengado_constante", valor=f["valor"] * factor[f["anio"]], anio_base_deflactor=base,
+                 factor_deflactor=factor[f["anio"]])
+        out.append(g)
+    return out
 
 
 # ======================================================================= Mapa de Pobreza 2018
@@ -542,6 +591,18 @@ def _pruebas(cubo: pd.DataFrame, inds: dict, rep: pd.DataFrame, res: Resultado) 
     res.prueba("CAL-08", "Gasto (R-GASTO-01): nacional = departamentos + Callao + líneas aparte del 15 y el 07 (los "
                "gasto sin departamento, en su línea del nacional); LM + LR + no asignable = departamento 15 "
                "(±1 sol)", not malos, {"malos": malos})
+    # S1-12: soles constantes (R-GASTO-12): solo del devengado del gasto, una por cada fila devengado, valor = devengado × factor
+    k = ["indicador_id", "anio", "nivel", "territorio_id", "linea"]
+    cst = cubo[cubo.medida == "devengado_constante"]
+    dev = cubo[(cubo.medida == "devengado") & cubo.indicador_id.isin(list(GASTO_TEMA))]
+    dev = dev[dev.anio <= (cst.anio_base_deflactor.max() if len(cst) else -1)]
+    par = dev.merge(cst, on=k, how="outer", suffixes=("_d", "_c"), indicator=True)
+    dif = (par.valor_c - par.valor_d * par.factor_deflactor_c).abs()
+    res.prueba("CAL-11", "Gasto (R-GASTO-12, S1-12): cada fila devengado hasta el año base tiene su fila devengado_constante "
+               "(solo en el gasto) con valor = devengado × factor del IPC", len(cst) > 0 and bool((par._merge == "both").all())
+               and set(cst.indicador_id) <= set(GASTO_TEMA) and bool((dif < 1e-4).all()) and cst.anio_base_deflactor.nunique() == 1,
+               {"filas": len(cst), "sin_par": int((par._merge != "both").sum()), "max_dif": float(dif.max()) if len(dif) else None,
+                "anio_base": sorted(int(x) for x in cst.anio_base_deflactor.dropna().unique())})
     sien = cubo[(cubo.indicador_id == "sien_anemia_tamizados_6_35m")]
     nac = sien[sien.nivel == "nacional"].set_index("anio").numerador
     suma = sien[sien.nivel.isin(["departamento", ambitos_lima.CALLAO])].groupby("anio").numerador.sum()
@@ -585,6 +646,8 @@ def construir(rutas: Rutas) -> Resultado:
         cubo[c] = cubo[c].astype("Float64").round(DECIMALES)
     for c in ("poblacion", "pct_gasto_atribuible"):
         cubo[c] = cubo[c].astype("Float64").round(DECIMALES)
+    cubo["anio_base_deflactor"] = cubo.anio_base_deflactor.astype("Int64")
+    cubo["factor_deflactor"] = cubo.factor_deflactor.astype("Float64")    # sin redondear: valor = devengado × factor
     cubo["anio_cerrado"] = cubo.anio_cerrado.astype("boolean")
     for c in ("ubigeo_inei", "fecha_corte", "fecha_descarga"):
         cubo[c] = cubo[c].astype("string")

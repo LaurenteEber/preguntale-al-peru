@@ -48,10 +48,13 @@ Acceso por atributo: `c.campo` devuelve `None` si falta. `c.req("campo")` lanza 
 
 **f2) Campos del cubo v1.1.0** (agregados en P2): `poblacion` (total del territorio, proyección distrital oficial; el establecimiento lleva la de su distrito); `ubigeo_inei`; `fecha_corte` (corte declarado; nulo si la fuente no lo declara) y `fecha_descarga`; `anio_cerrado`; `pct_gasto_atribuible` (fracción 0–1, R-GASTO-03).
 
+**f3) Campos del cubo v1.2.0** (S1-12): `anio_base_deflactor` (entero) y `factor_deflactor` (doble), solo en las filas `medida = devengado_constante`; nulos en las demás.
+
 **g) Gasto, de la fila y su consulta:**
 - `pct_gasto_atribuible`;
 - en la línea de la cifra: `linea, avisos` (`sesgo_sede`, `linea_referencia_nacional`, `ejecutoras_mixtas`, `callao_canasta_no_comparable`);
-- `fase_gasto` (`devengado` | `pim` | `pia` = `medida`), `precios` (`corrientes`), `anio_cerrado` (bool), `fecha_corte`;
+- `fase_gasto` (`devengado` | `pim` | `pia`), `precios` (`corrientes` | `constantes`), `anio_cerrado` (bool), `fecha_corte`;
+- en soles constantes (S1-12, R-GASTO-12): una serie o comparación de gasto entre años pide `medida = devengado_constante` y llega con `precios = constantes`, `anio_base_deflactor` (el último año cerrado) y `factores_deflactor` ({año: factor}, IPC de Lima, promedio anual). La cifra del año con el que se compara llega con `serie` (la fila del otro año). `devengado` sigue siendo el monto registrado en soles de su año. Una cifra de un solo año va en soles corrientes;
 - `bloque_consolidado` (siempre `gasto_final` en `gasto_tema`), `tema_id, cadena`, `pim, pia, devengado` (si el motor los junta en una cifra).
 
 ## 3. La respuesta (`Respuesta`, ámbito «respuesta», etapas 8–10)

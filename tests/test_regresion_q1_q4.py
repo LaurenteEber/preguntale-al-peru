@@ -111,6 +111,12 @@ def referencia(q):
     return json.loads((REFERENCIAS / f"{q}.json").read_text(encoding="utf-8"))
 
 
+def sin_version(v):
+    """S1-12: el cubo pasó a la versión 1.2.0 (soles constantes) sin cambiar ninguna fila anterior; la versión de la tabla
+    que arrastra la fila de comparación no es una diferencia de la respuesta."""
+    return {k: x for k, x in v.items() if k != "version_tabla"} if isinstance(v, dict) else v
+
+
 def cifras_por_clave(r):
     out = {}
     for i, c in r["cifras"].items():
@@ -179,7 +185,7 @@ def test_respuestas(raiz, motor, nuevas, q):
     assert set(nc) == set(rc), (set(nc) ^ set(rc))
     for k, (_, c) in nc.items():
         for campo in CAMPOS_CIFRA:
-            assert c[campo] == rc[k][1][campo], (k, campo)
+            assert sin_version(c[campo]) == sin_version(rc[k][1][campo]), (k, campo)
     assert new["semaforo_respuesta"] == ref["semaforo_respuesta"]
     assert new["capas"]["capa1"]["confianza"]["nivel"] == ref["capas"]["capa1"]["confianza"]["nivel"]
     assert new["respuesta_parcial"] == ref["respuesta_parcial"]

@@ -123,11 +123,13 @@ Son la fuente de verdad editable (YAML/CSV en git); `pap construir indicadores` 
 - **Encuestas:** svy con el diseño complejo (Taylor), IC **Korn-Graubard** (variante NCHS), años y estratos según R-ENC-10.
 - **SIEN:** Wilson y dos cotas.
 - **Gasto:** suma por `gasto_tema` con la guardia del gasto.
+- **Gasto en soles constantes (desde la versión 1.2.0 del cubo, S1-12):** cada fila `devengado` tiene su fila `devengado_constante` = devengado × factor, con `anio_base_deflactor` y `factor_deflactor`. Año base: el mayor año con el IPC completo y con gasto (hoy 2025); factor: `ipc_prom_anual(base) / ipc_prom_anual(año)` de `dim_ipc` (BCRP PN38705PM). El PIM y el PIA no se deflactan. El motor usa estas filas solo para comparar años (R-GASTO-12).
 - **Mapa 2018:** el intervalo publicado.
 
 **Pruebas que debe pasar el cubo**
 - **CAL-03:** reproduce todas las doradas bloqueantes.
 - **CAL-07 y CAL-08:** los controles del gasto y la conservación R-GASTO-01 dan exacto.
+- **CAL-11:** cada fila `devengado` del gasto hasta el año base tiene su fila `devengado_constante`, con valor = devengado × factor.
 - **CAL-10:** el SIEN reproduce las cifras oficiales del INS (casos y evaluados exactos: nacional, 24 departamentos y Callao, Lima Región, Ayaviri y San Juan de Lurigancho).
 
 **Huella actual:** `sha256:ba1fbc55…` (desde el 3/11/2026, nombres de T-02). Debe ser idéntica en macOS y Linux.

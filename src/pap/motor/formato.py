@@ -38,6 +38,9 @@ def intervalo(ic_inf: float, ic_sup: float, d: int = 0) -> str:
     return f"entre {pct(ic_inf, d)} y {pct(ic_sup, d)}"
 
 
+MEDIDAS_MONTO = ("devengado", "devengado_constante", "pim", "pia")  # montos en soles (S1-12: también los constantes)
+
+
 def monto(soles: float) -> str:
     """>= S/ 1 millón: millones con 1 decimal; < 1 millón: miles enteros (soles corrientes)."""
     if soles is None:

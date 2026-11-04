@@ -63,7 +63,7 @@ def _valor_cita(c) -> str:
         return f"{fmt.intervalo(c.ic_inf, c.ic_sup, 1)} (rango probable)"
     if c.medida == "cobertura":
         return f"{fmt.intervalo(c.cota_inf, c.cota_sup, 1)}"
-    if c.medida in ("devengado", "pim", "pia"):
+    if c.medida in fmt.MEDIDAS_MONTO:
         return fmt.monto(c.valor)
     ii = c.get("ic_inei")
     lo, hi, quien = (ii["ic_inf"], ii["ic_sup"], "intervalo del INEI") if ii else (c.ic_inf, c.ic_sup, "intervalo")
@@ -85,7 +85,12 @@ def _cita(c, alcance: str | None = None, nombre: str | None = None, tx: dict | N
             src += f", datos descargados el {c.fecha_descarga}"
     nom = c.nombre_ciudadano[0].lower() + c.nombre_ciudadano[1:] if c.nombre_ciudadano else c.indicador_id
     al = f" ({alcance})" if alcance else ""
-    return f"{_valor_cita(c)}: {nom}{al}, {nombre or c.territorio_nombre}, {c.anio}. Fuente: {src}{publicado}."
+    valor = _valor_cita(c)
+    if c.get("precios") == "constantes" and tx:            # S1-12: se cita el monto nominal del año y el factor del IPC
+        factor = (c.get("factores_deflactor") or {}).get(int(c.anio))
+        valor = tx["cita_constantes"].format(valor=valor, anio_base=c.anio_base_deflactor, anio=c.anio,
+                                             nominal=fmt.monto(c.devengado), factor=fmt._num(factor, 7))
+    return f"{valor}: {nom}{al}, {nombre or c.territorio_nombre}, {c.anio}. Fuente: {src}{publicado}."
 
 
 def _sin_parentesis(t: str) -> str:

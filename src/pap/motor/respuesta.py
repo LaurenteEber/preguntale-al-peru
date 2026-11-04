@@ -53,7 +53,13 @@ def _limpio(d: dict | None) -> dict | None:
         except Exception:
             pass
         out[k] = v
+    for k in SOLO_CONSTANTES:     # S1-12: columnas del cubo 1.2.0 que solo tienen valor en los montos en soles constantes
+        if out.get(k, 0) is None:
+            del out[k]
     return out
+
+
+SOLO_CONSTANTES = ("anio_base_deflactor", "factor_deflactor")
 
 
 class Motor:
@@ -100,6 +106,11 @@ class Motor:
                 g = self.fila(ind_id, anio, spec["nivel"], spec["territorio"], med)
                 f[med] = g["valor"] if g else None
             f["fase_gasto"], f["precios"] = "devengado", "corrientes"
+            if f.get("medida") == "devengado_constante":            # S1-12 (R-GASTO-12): serie o comparación entre años
+                otro = spec.get("comparar_con") or spec.get("en_serie_con")
+                g = self.fila(ind_id, otro, spec["nivel"], spec["territorio"], f["medida"]) if otro is not None else None
+                f["precios"], f["anio_base_deflactor"] = "constantes", int(f["anio_base_deflactor"])
+                f["factores_deflactor"] = {int(x["anio"]): float(x["factor_deflactor"]) for x in (f, g) if x}
             f["bloque_consolidado"] = "gasto_final"
             f["tema_id"] = ind.get("tema_id")
             f["cadena"] = "concepto" if str(ind.get("tema_id", "")).startswith("cpt_") else None
@@ -115,6 +126,9 @@ class Motor:
                 g = dict(g)
                 g["prueba_cambio"] = self.prueba_cambio(g, f)
                 c.comparacion = g
+        if spec.get("en_serie_con") is not None:     # S1-12: la cifra del año con el que se compara es parte de la serie
+            g = self.fila(ind_id, spec["en_serie_con"], spec["nivel"], spec["territorio"], spec.get("medida"))
+            c.serie = [g] if g else None
         if spec.get("serie"):
             c.serie = [x for x in (self.fila(ind_id, a, spec["nivel"], spec["territorio"], spec.get("medida"))
                                    for a in ind["anios_disponibles"]) if x]
@@ -302,6 +316,8 @@ class Motor:
                   "pct_gasto_atribuible", "pim", "devengado", "lineas_aparte", "grupo_robusto_nacional", "comparacion",
                   "traza", "metodo_ic", "ic_inei", "contraste_oficial")
         d = {k: (c.get(k) if not hasattr(c.get(k), "item") else c.get(k).item()) for k in campos}
+        if c.get("precios") == "constantes":          # S1-12: solo en las cifras en soles constantes (las demás no cambian)
+            d.update({k: c.get(k) for k in ("precios", "anio_base_deflactor", "factores_deflactor")})
         d["resultados"] = [r.a_dict() for r in ev.resultados] if ev else []
         d["accion_final"] = ev.accion_final if ev else "suprimir"
         d["bloqueos_cruce"] = [r.a_dict() for r in ev.bloqueos_cruce] if ev else []

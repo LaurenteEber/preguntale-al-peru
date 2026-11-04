@@ -521,6 +521,7 @@ def evolucion(P: _Plantilla) -> dict:
     clave = {"ids": [], "valor": "", "texto": ""}
     vs = P.vars_cifra(c0)
     ini_id, ini = _inicial(P, c0)
+    constantes = pub and c0.get("precios") == "constantes"
     if pub:
         clave = P.clave_generica(i0, c0, tp)
     if pub and c0.comparacion:
@@ -528,6 +529,12 @@ def evolucion(P: _Plantilla) -> dict:
         v = verbo(c0)
         if v:
             P.corta.append(P.t(tp["corta_con_verbo"], **P.valores(vs, a=a, b=b, verbo=P.vb(i0))))
+        elif constantes and _publicable(ini) and not _bloqueada(c0):          # S1-12: gasto en soles constantes
+            P.v[f"{i0}__pasa"] = tp["verbo_pasa"]
+            P.v[f"{i0}__sentido"] = tp["sentido_monto"]["sube" if c0.valor > ini.valor else "baja" if c0.valor < ini.valor else "igual"]
+            P.corta.append(P.t(tp["corta_soles_constantes"], **P.valores(
+                vs, a=a, b=b, c_ini=P.cm(ini_id), c_fin=P.cm(i0), anio_base=c0.anio_base_deflactor,
+                pasa="{{v:%s__pasa}}" % i0, sentido="{{v:%s__sentido}}" % i0)))
         elif _publicable(ini) and not _bloqueada(c0):          # S1-09 (A-H1): con la comparación bloqueada nunca «pasó de X a Y»
             P.corta.append(P.t(tp["corta_sin_prueba"], **P.valores(vs, a=a, b=b, c_ini=P.cm(ini_id), c_fin=P.cm(i0))))
         else:
@@ -538,17 +545,25 @@ def evolucion(P: _Plantilla) -> dict:
         P.ojo.append(P.ojo_generico(c0))
         if _sin_cambio(c0):
             P.ojo.append(P.c["ojo_sin_cambio"])
+        if constantes:                     # S1-12: el mensaje de R-GASTO-12 prevalece sobre la plantilla (agents.md §3)
+            m = next((r.mensaje for r in (c0.evaluacion.resultados if c0.evaluacion else [])
+                      if r.regla == "R-GASTO-12" and r.motivo == "soles_constantes" and r.mensaje), None)
+            if m:
+                P.ojo.append(m)
     gastadas = {i0}
     if pub and _publicable(ini):
         ti = tp["tarjeta_inicial"]
         vi = P.valores(vs, a=int(ini.anio), c_ini=P.cm(ini_id), fuente=P.vars_cifra(ini)["fuente"])
         P.usadas.append(ini_id)
-        P.ctxs.append({"titulo": _sub(ti["titulo"], vi), "texto": P.t(ti["texto"], **vi), "etiqueta": ti["etiqueta"]})
+        etiqueta = (_sub(ti["etiqueta_constantes"], {"anio_base": c0.anio_base_deflactor})
+                    if constantes and not _bloqueada(c0) else ti["etiqueta"])
+        P.ctxs.append({"titulo": _sub(ti["titulo"], vi), "texto": P.t(ti["texto"], **vi), "etiqueta": etiqueta})
         gastadas.add(ini_id)
     for i, c in P.cf.items():
         if i not in gastadas and _publicable(c):
             P.ctxs.append(P.tarjeta_generica(c, i))
-    return P.cierre(clave=clave, tema=P.q.get("tema"), nivel_respuesta=_nivel_respuesta(P, c0), territorio_nombre=_lugar(c0))
+    return P.cierre(clave=clave, tema=P.q.get("tema"), nivel_respuesta=_nivel_respuesta(P, c0), territorio_nombre=_lugar(c0),
+                    glosario_extra=("soles_constantes",) if constantes else ())
 
 
 def _evolucion_dos_formas(P: _Plantilla, series: list) -> dict:
@@ -907,7 +922,7 @@ def valor_cifra(c, opciones: dict | None = None) -> str:
         u = opciones.get("umbral_tamizaje")
         cerca = u is not None and any(abs(x - u) < 1 for x in (c.cota_inf, c.cota_sup))
         return fmt.intervalo(c.cota_inf, c.cota_sup, 1 if cerca else 0)
-    if c.medida in ("devengado", "pim", "pia"):
+    if c.medida in fmt.MEDIDAS_MONTO:
         return fmt.monto(c.valor)
     lo, hi = c.ic_inf, c.ic_sup
     ii = c.get("ic_inei")

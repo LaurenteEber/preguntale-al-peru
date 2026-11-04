@@ -4,6 +4,12 @@ version: 1.0.0
 corta_con_verbo: "Entre {a} y {b}, {sujeto} {verbo} en {lugar}."
 corta_sin_prueba: "Entre {a} y {b}, {sujeto} pasó de {c_ini} a {c_fin} en {lugar}."
 corta_sin_comparacion: "Esto es lo que dicen los datos oficiales sobre {sujeto} en {lugar}:"
+# S1-12 (G-01, R-GASTO-12): gasto de dos años en soles constantes del último año cerrado. Sin diferencia ni porcentaje
+# (no están en el cubo, P-01); el sentido sale de comparar las dos cifras del cubo. R-LENGUAJE-02 permite «aumentó» en
+# registros administrativos; como todo verbo de cambio, va dentro de un marcador {{v:id}} (COM-08): {pasa} y {sentido}.
+corta_soles_constantes: "En {lugar}, {sujeto} {pasa} {c_ini} en {a} a {c_fin} en {b}, en soles de {anio_base}: {sentido}."
+verbo_pasa: pasó de
+sentido_monto: {sube: aumentó, baja: disminuyó, igual: no cambió}
 clave:
   proporcion: "de {ciudadano} en {lugar} en {anio}."
   defecto: "es la cifra de {ciudadano} en {lugar} en {anio}."
@@ -11,3 +17,4 @@ tarjeta_inicial:
   titulo: "El punto de partida: {a}"
   texto: "En {a}, {sujeto} era {c_ini} en {lugar} ({fuente})."
   etiqueta: "Otro año: no se compara con la cifra clave."
+  etiqueta_constantes: "En soles de {anio_base}, para compararlo con la cifra clave."   # S1-12

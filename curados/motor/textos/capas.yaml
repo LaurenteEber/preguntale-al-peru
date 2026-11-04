@@ -1,3 +1,5 @@
 # Textos de las capas de la respuesta que arma capas.py (contrato de respuesta). Lo lee el dueño sin leer Python.
 version: 1.0.0
 publicado_oficial: "; el {entidad} publicó {valor}"      # S1-09 (A-H3): la cita es de nuestro cálculo y el documento oficial publica otro valor
+# S1-12 (G-01, R-GASTO-12): cita de un monto en soles constantes, con el monto registrado de su año y el factor del IPC
+cita_constantes: "{valor} en soles de {anio_base} (monto registrado en {anio}: {nominal}; factor de inflación: {factor})"

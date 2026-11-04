@@ -162,10 +162,12 @@ def _precision(c) -> str:
     if c.medida == "cobertura":
         return (f"Dos cotas: {fmt.pct(c.cota_inf)} contando a los niños por su procedencia y {fmt.pct(c.cota_sup)} "
                 "sumando a los atendidos sin procedencia registrada.")
-    if c.medida in ("devengado", "pim", "pia"):
+    if c.medida in fmt.MEDIDAS_MONTO:
         pa = c.pct_gasto_atribuible
         extra = f" El {fmt.pct(100 * pa, 0)} del gasto del departamento se puede ubicar en municipalidades y obras." if pa is not None else ""
-        return "Monto registrado (devengado), en soles corrientes." + extra
+        precios = (f"en soles de {c.anio_base_deflactor} (ajustado por inflación)" if c.get("precios") == "constantes"
+                   else "en soles corrientes")                 # S1-12 (R-GASTO-12)
+        return f"Monto registrado (devengado), {precios}." + extra
     if c.metodo_ic == "wilson":
         return f"Basado en {int(c.n_muestra):,} niños tamizados".replace(",", fmt.FINO) + \
             f"; el valor está probablemente entre {fmt.pct(c.ic_inf)} y {fmt.pct(c.ic_sup)}."
@@ -274,7 +276,7 @@ def markdown(res: dict) -> str:
             vv = f"{_n(c['ic_inf'])}–{_n(c['ic_sup'])} %"
         elif c["medida"] == "cobertura":
             vv = f"{_n(c['cota_inf'])}–{_n(c['cota_sup'])} %"
-        elif c["medida"] in ("devengado", "pim", "pia"):
+        elif c["medida"] in fmt.MEDIDAS_MONTO:
             vv = f"S/ {_n(v / 1e6, 2)} M"
         else:
             vv = f"{_n(v)} % ({_n(c['ic_inf'])}–{_n(c['ic_sup'])})" if v is not None else "—"
