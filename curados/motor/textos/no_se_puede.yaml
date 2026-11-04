@@ -92,9 +92,13 @@ motivos:
     alcance: total
     corta: "No tenemos datos de {tema} de {anio_pedido}."
     corta_formas: "No hay datos de {tema} de {anio_pedido} con la forma de medir actual."   # el tema tiene más de una forma de medir (formas_de_medir)
+    # S1-15 (H7, E-06): el año solo existe con la forma anterior, que se muestra en la evolución; sin ninguna forma, sin «actual» (N1)
+    corta_forma_anterior: "No hay datos de {tema} de {anio_pedido} con la forma de medir actual. La cifra de {anio_pedido} solo existe con la forma de medir anterior, que se muestra al preguntar cómo cambió {tema_art}."
+    corta_ninguna_forma: "No hay datos de {tema} de {anio_pedido}."
     motivo: "Tenemos datos de {tema}: {anios}. De otros años no hay datos incorporados."
     cercano:
       anio: "Sí tenemos la cifra de {anio} para {lugar}. Puedes preguntar por ese año."
+      evolucion_hasta: "Puedes preguntar cómo cambió {tema_art} en {lugar} hasta {anio_pedido}."   # S1-15 (H7)
       ninguna: "Por ahora no tenemos un año cercano con una cifra que se pueda mostrar."
   nivel_no_valido:
     regla: nivel_no_representativo

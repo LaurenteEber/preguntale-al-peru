@@ -122,9 +122,10 @@ def test_anio_sin_datos_ofrece_el_mas_cercano(raiz, motor, parametros):
     corta, cercano = revisar(raiz, parametros, r, motivo="anio_sin_datos")
     assert "2030" in corta and "2025" in cercano and r["alternativas"][0]["anio"] == 2025          # el anterior más reciente
     assert r["motivo"]["regla_lenguaje_05"] == "anio_no_disponible"
-    r = P.preguntar_minima(motor, consulta(periodo={"tipo": "anio", "anio": 2019}))                # no hay anterior: el último disponible
+    # no hay anterior: el último disponible. S1-15 (H7): 2010, sin ninguna serie (2019 está en la forma anterior y ofrece la evolución)
+    r = P.preguntar_minima(motor, consulta(periodo={"tipo": "anio", "anio": 2010}))
     corta, cercano = revisar(raiz, parametros, r, motivo="anio_sin_datos")
-    assert "2019" in corta and "2025" in cercano and r["alternativas"][0]["anio"] == 2025
+    assert "2010" in corta and "2025" in cercano and r["alternativas"][0]["anio"] == 2025
     assert r["alternativas"][0]["lugar"] == {"ubigeo": "21"}                                         # y lo que se podría preguntar
 
 

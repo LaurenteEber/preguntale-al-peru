@@ -45,6 +45,14 @@ def parametros(raiz) -> dict:
     return _yaml(str(raiz), str(RUTA_PARAMETROS))
 
 
+# S1-15 (N-3): clase de nivel para unir los lugares de una comparación en un solo «No permite concluir»: los niveles del
+# ubigeo son cada uno su clase; los ámbitos (cualquier otro nivel, p. ej. los de Lima, T-03) son una sola
+_NIVELES_UBIGEO = ("nacional", "departamento", "provincia", "distrito")
+
+
+def _clase_nivel(nivel: str) -> str:
+    return nivel if nivel in _NIVELES_UBIGEO else "ambito"
+
 # ======================================================================= estado de las cifras (salida del validador)
 
 def _publicable(c) -> bool:
@@ -338,11 +346,21 @@ class _Plantilla:
         """`plantillas.nc_respaldo` de parametros_motor.yaml (R-LENGUAJE-01, C-04): si ninguna cifra dio un código, una
         cifra principal de la naturaleza y el nivel indicados lleva ese código, con el nivel en palabras."""
         cond = self.par["plantillas"]["nc_respaldo"]["valor"]
+        lugares = []                       # (clase de nivel, nivel en palabras) de cada cifra principal que lleva el código
         for i in dict.fromkeys(self.usadas):
             c = self.cf[i]
             if c.rol == "principal" and c.naturaleza_dato in cond["naturaleza"] and c.nivel in cond["niveles"]:
-                return [[cond["codigo"], {"nivel_publicado": cond["niveles"][c.nivel]}]]
-        return []
+                lugar = (_clase_nivel(c.nivel), cond["niveles"][c.nivel])
+                if lugar not in lugares:
+                    lugares.append(lugar)
+            if lugares and self.q.get("intencion") != "comparacion":
+                break                          # fuera de una comparación, como antes: la primera cifra principal
+        if not lugares:
+            return []
+        # S1-15 (N-3): en una comparación, los dos lugares; del mismo nivel, unidos con « y »; de niveles distintos, uno por lugar
+        if len({k for k, _ in lugares}) == 1:
+            return [[cond["codigo"], {"nivel_publicado": " y ".join(t for _, t in lugares)}]]
+        return [[cond["codigo"], {"nivel_publicado": t, "_por_lugar": True}] for _, t in lugares]
 
     def cierre(self, *, clave: dict, tema, nivel_respuesta=None, territorio_nombre="", territorio_ficha=None,
                motivo_confianza=None, alcance=None, cruces=None, glosario_extra=()) -> dict:
@@ -369,7 +387,8 @@ class _Plantilla:
         d = {"corta": self.corta, "clave": clave, "ojo": ojo, "contexto": self.ctxs,
              "cifras_usadas": list(dict.fromkeys(self.usadas)), "verbos": {k: x for k, x in self.v.items() if x},
              "universos": self.u, "protegidos": self.p, "entidades": self.e, "glosario": list(dict.fromkeys(glos)),
-             "tema": tema, "nc": list({n: (n, prm) for n, prm in reversed(nc)}.values())[::-1], "nivel_respuesta": nivel_respuesta,
+             "tema": tema, "nc": list({(n, prm["nivel_publicado"]) if prm.get("_por_lugar") else n: (n, prm)   # N-3: uno por lugar
+                                       for n, prm in reversed(nc)}.values())[::-1], "nivel_respuesta": nivel_respuesta,
              "territorio_nombre": territorio_nombre, "respuesta_parcial": bool(self.q.get("respuesta_parcial")),
              "opciones": {"intervalo_visible": pend["intervalo_visible"]["valor"], "umbral_tamizaje": self.umbral}}
         if territorio_ficha:

@@ -236,6 +236,9 @@ def _alternativas(motor, plan: dict, codigo: str, detalle: dict, cifra_base=None
     if codigo == "anio_sin_datos":
         spec = _spec_principal(plan, ind)
         pedido = int(detalle["anio_pedido"])
+        alt = _evolucion_hasta(motor, plan, detalle, pedido)
+        if alt:                                # S1-15 (H7, E-06): el año solo está con otra forma de medir, en la evolución
+            return "evolucion_hasta", {}, [alt]
         disp = sorted(int(a) for a in detalle["anios_disponibles"])
         orden = [y for y in reversed(disp) if y < pedido] + [y for y in reversed(disp) if y > pedido]   # anio_mas_cercano: anterior_primero; sin anterior, el último
         for y in orden if spec else []:
@@ -308,6 +311,25 @@ def _alternativas(motor, plan: dict, codigo: str, detalle: dict, cifra_base=None
     return "ninguna", {}, []
 
 
+def _evolucion_hasta(motor, plan: dict, detalle: dict, pedido: int) -> dict | None:
+    """S1-15 (H7): el año pedido no está en la forma de medir vigente pero sí en otra del mismo tema (`anios_por_indicador`).
+    E-06 manda que «¿cuánta hay?» muestre solo la vigente; la otra se ve al preguntar cómo cambió. Se ofrece esa evolución
+    hasta el año pedido, solo si se puede responder (S1-13, A-H6)."""
+    otras = [i for i, a in (detalle.get("anios_por_indicador") or {}).items() if i != detalle.get("indicador") and pedido in a]
+    cm = copy.deepcopy(plan.get("consulta_minima") or {})
+    if not otras or not cm:
+        return None
+    cm.update(intencion="evolucion", periodo={"tipo": "serie", "hasta": pedido})
+    try:
+        p = preguntar_minima(motor, cm, solo_plan=True)
+    except (ConsultaInvalida, TypeError, KeyError):
+        return None
+    p = p.get("plan", p)
+    if p.get("aclaracion") or p.get("motivos_no_se_puede"):
+        return None
+    return {"tipo": "evolucion", "anio": pedido, "texto": str(pedido), "consulta_minima": cm}
+
+
 # ======================================================================= respuesta «no se puede»
 
 def respuesta_no_se_puede(motor, plan: dict, motivo: dict | str, *, cifras: dict | None = None, cifra_base=None) -> dict:
@@ -330,6 +352,9 @@ def respuesta_no_se_puede(motor, plan: dict, motivo: dict | str, *, cifras: dict
         tid = motor.ctx.indicadores[cifra_base.indicador_id].get("tema")
         v["tema"], v["tema_art"] = tx["temas"].get(tid, v["tema"]), tx["temas_art"].get(tid, v["tema_art"])
     corta_txt = m["corta_formas"] if detalle.get("anios_por_indicador") and m.get("corta_formas") else m["corta"]   # S1-09 (H7): sin contradecir la forma anterior
+    if codigo == "anio_sin_datos" and detalle.get("anios_por_indicador"):          # S1-15 (H7)
+        en_alguna = any(int(detalle["anio_pedido"]) in a for a in detalle["anios_por_indicador"].values())
+        corta_txt = m["corta_forma_anterior"] if clave == "evolucion_hasta" else corta_txt if en_alguna else m["corta_ninguna_forma"]
     corta = " ".join(oraciones(_fmt(corta_txt, v))[:maxo])
     cercano = _fmt(m["cercano"][clave], v)
     texto_motivo = _fmt(m["motivo"], v)

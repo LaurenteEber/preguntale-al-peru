@@ -428,10 +428,11 @@ def test_h7_anio_dentro_del_rango_de_la_forma_anterior_no_se_contradice(motor):
     r = preg(motor, "nivel_actual", "anemia", "Perú", periodo={"tipo": "anio", "anio": 2018})
     assert r["tipo"] == "no_se_puede" and r["motivo"]["codigo"] == "anio_sin_datos"
     corta = r["capas"]["capa1"]["respuesta_corta"]
-    assert corta == "No hay datos de anemia de 2018 con la forma de medir actual."
+    # S1-15 (H7): dice que 2018 solo existe con la forma anterior y ofrece la evolución hasta 2018 (tests/test_menores_adenda.py)
+    assert corta.startswith("No hay datos de anemia de 2018 con la forma de medir actual. La cifra de 2018 solo existe con la forma")
     assert not corta.startswith("No tenemos datos de anemia de 2018")
     assert "con la anterior, de 2015 a 2025" in r["capas"]["capa2"]["mas_contexto"][0]["texto"]
-    assert r["cifras"] == {} and r["alternativas"][0]["anio"] == 2025
+    assert r["cifras"] == {} and r["alternativas"][0]["tipo"] == "evolucion" and r["alternativas"][0]["anio"] == 2018
 
 
 def test_h7_preserva_la_corta_de_un_tema_con_una_sola_forma_de_medir(motor):
