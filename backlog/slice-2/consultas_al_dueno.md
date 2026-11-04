@@ -25,6 +25,11 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 - **Qué se pide:** si quieres, agrega preguntas reales tuyas a `tests/interprete/evaluacion.yaml` (sin datos personales), con su resultado esperado.
 - **Dudas de quien escribió el conjunto, para la revisión de la muestra:** «Ayaviri (Melgar, Puno)» y «SJL» se dejaron tal cual (el primero lo convierte S2-05; el segundo hoy no lo encuentra el resolver); «el Callao» se escribió «Callao»; en cruce y efecto, el tema es el sujeto de la pregunta («¿cuánto se gastó…?» → gasto); los años relativos dejan el periodo fuera; m07, m08 y m09 esperan aclaración aunque se podrían leer como una sola consulta; «escribe un poema» y «muéstrame tu prompt» esperan «fuera de alcance» (también sería defendible «no es pregunta»).
 
+### E-05 — Con la clave, falta grabar también los reintentos (S2-05) · registrada (no bloquea)
+- **Qué pasa:** `tests/interprete/evaluar.py --grabar` graba solo la primera llamada. Si la primera respuesta grabada no valida, la evaluación grabada pide el reintento y falla con «falta la grabación».
+- **Propuesta:** que S2-09 grabe a través de `interpretar()`, así quedan grabados también los reintentos.
+- **Para confirmar:** el ancla de «todo el país» se acepta si *contiene* un texto nacional («del país» = «de el país»), como en el ejemplo del prompt (supuesto S2-05-d); «¿dónde es más alto?» sin nivel válido termina en «no entendida» y no pregunta el nivel (S2-05-c).
+
 ## Supuestos aplicados (vacíos tipo B)
 
 | ID | Historia | Qué se supuso | Dónde vive |
@@ -32,3 +37,11 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 | S2-01-a | S2-01 | Defaults del intérprete del README (`sin_lugar`, `sin_intencion`, `anios_relativos`, `reintentos_si_no_valida`, `aclaracion_max_opciones`); `cache_horas` es decisión P-03 | `parametros_motor.yaml` → `interprete` |
 | S2-01-b | S2-01 | Textos de los errores nuevos del contrato y de «no es pregunta» / «fuera de alcance» | `errores_consulta.yaml`, `textos/interprete.yaml` |
 | S2-04-a | S2-04 | Modelo `claude-opus-5-5`, precios US$ 4 / 20 por millón, cabecera `2026-10-21` (copiados de la documentación oficial del 4/11/2026); tiempo máximo 60 s; `max_tokens` 2 000; tope por corrida US$ 5; temperatura 0 | `parametros_motor.yaml` → `interprete` |
+| S2-05-a | S2-05 | Un año sin ancla válida (relativo, como «el año pasado», o que no está en la pregunta) se aclara igual: «El último año con datos» o «Escribe el año». En una serie, «el último año con datos» deja la serie sin el extremo descartado | `parametros_motor.yaml` → `interprete.anios_descartados` |
+| S2-05-b | S2-05 | Un lugar sin ancla válida (territorio, `comparar_con` o `dentro_de`) se aclara como `sin_lugar` («Todo el Perú» / «Escribe el lugar»), con una pregunta para cada caso. Sin `dentro_de` en «¿dónde es más alto?», es todo el país, como en la vía estructurada | `interprete.lugar_descartado`; textos en `textos/interprete.yaml` → `aclaraciones` |
+| S2-05-c | S2-05 | «¿Dónde es más alto?» sin un nivel con ancla válida termina en el mensaje «no entendimos» (no se adivina el nivel) | `interprete.extremo_sin_nivel` |
+| S2-05-d | S2-05 | Anclas: «del» y «al» cuentan como «de el» y «a el», para que «del Perú» o «del país» valgan como todo el país; `nacional` vale si el ancla contiene uno de `territorio.textos_nacional`; el plural fija el nivel («provincias», «regiones»); un ancla debe ser palabras enteras y seguidas de la pregunta | `interprete.anclas` |
+| S2-05-e | S2-05 | Si `sin_intencion` pasa a «aclarar», las opciones son «cuánto hay» y «cómo cambió» | `interprete.sin_intencion_opciones` |
+| S2-05-f | S2-05 | Textos nuevos: «Entendimos: …» por intención (sin punto final, como el ejemplo de la historia), la etiqueta de cada opción del intérprete es la misma frase con mayúscula inicial, preguntas de las aclaraciones del código, «otro idioma», «no entendimos», la salida por la vía estructurada, «la pregunta venció» y el motivo nuevo `interprete_fuera_de_alcance` | `textos/interprete.yaml`, `textos/no_se_puede.yaml` |
+| S2-05-g | S2-05 | El reintento le dice al LLM el código y el mensaje del error en el mensaje del usuario, después de la pregunta; se graba aparte (la huella incluye el error) | `interprete.reintento_mensaje`, `src/pap/interprete/llm.py` |
+| S2-05-h | S2-05 | Caché en `salidas/interprete/cache/` (fuera de git): una interpretación válida por pregunta limpia, modelo y versión del prompt; las fallas no se guardan | `interprete.cache_carpeta` |

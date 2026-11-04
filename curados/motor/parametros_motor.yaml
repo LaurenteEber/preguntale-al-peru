@@ -181,3 +181,15 @@ interprete:                       # slice 2: intérprete de preguntas en texto l
     nota: "los años de 4 cifras no coinciden con ningún patrón; el orden importa (RUC antes que DNI)"
     decision: P-03
 
+  # S2-05: interpretar (validar, anclar, aclarar y «Entendimos»)
+  reintento_mensaje: {valor: "Tu respuesta anterior no cumple el contrato ({error}). Responde de nuevo con una interpretación que lo cumpla.", supuesto: S2-05, nota: "va al LLM en el mensaje del usuario, después de la pregunta; no lo ve la persona"}
+  cache_carpeta: {valor: salidas/interprete/cache, supuesto: S2-05, nota: "fuera de git (P-03); en pytest va a una carpeta temporal"}
+  sin_intencion_opciones: {valor: [nivel_actual, evolucion], supuesto: S2-05, nota: "solo si sin_intencion es «aclarar»"}
+  extremo_sin_nivel: {valor: no_entendida, supuesto: S2-05, nota: "«¿dónde es más alto?» sin un nivel con ancla válida: no se adivina el nivel"}
+  anios_descartados: {valor: "cualquier año sin ancla válida (relativo o que no está en la pregunta) se aclara como anios_relativos", supuesto: S2-05}
+  lugar_descartado: {valor: "un lugar sin ancla válida (territorio, comparar_con o dentro_de) se aclara como sin_lugar; sin dentro_de en «¿dónde es más alto?» es todo el país, como en la vía estructurada", supuesto: S2-05}
+  anclas:
+    contracciones: {valor: {del: "de el", al: "a el"}, supuesto: S2-05, nota: "para que «del país» contenga «el país» (textos_nacional)"}
+    nacional: {valor: "el ancla contiene, como palabras seguidas, uno de territorio.textos_nacional", supuesto: S2-05}
+    plurales_nivel: {valor: ["s", "es"], supuesto: S2-05, nota: "«provincias», «regiones» fijan el nivel como «provincia», «región»"}
+    en_pregunta: {valor: "palabras seguidas de la pregunta normalizada (no basta un pedazo de palabra)", supuesto: S2-05}

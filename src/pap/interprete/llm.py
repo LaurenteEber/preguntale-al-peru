@@ -6,8 +6,9 @@
   (https://platform.claude.com/docs/en/build-with-claude/structured-outputs): se le manda una versión simplificada del
   esquema (`esquema_para_api`). La validación completa la hace el código con el esquema de S2-01.
 - La clave se lee de la variable `interprete.variable_clave`; nunca se escribe en archivos, registros ni errores.
-- Grabaciones (tests/interprete/grabaciones/): una por (pregunta limpia, modelo, version_prompt). En pytest solo se
-  reproducen; se graban con `tests/interprete/evaluar.py --grabar`.
+- Grabaciones (tests/interprete/grabaciones/): una por (pregunta limpia, modelo, version_prompt) y, en el reintento de S2-05,
+  también por el error que se le devuelve al LLM (`error_previo`). En pytest solo se reproducen; se graban con
+  `tests/interprete/evaluar.py --grabar`.
 - Uso: `salidas/interprete/uso.jsonl` (fuera de git) con los campos de P-03; `interprete.tope_por_corrida` corta una corrida."""
 from __future__ import annotations
 
@@ -104,12 +105,13 @@ def esquema_para_api(esquema: dict, externos: dict) -> dict:
 
 # ---------------------------------------------------------------------------------------------- grabaciones
 
-def huella_grabacion(pregunta_limpia: str, modelo: str, version_prompt: str) -> str:
-    return hashlib.sha256(json.dumps([pregunta_limpia, modelo, version_prompt], ensure_ascii=False).encode("utf-8")).hexdigest()[:24]
+def huella_grabacion(pregunta_limpia: str, modelo: str, version_prompt: str, error_previo: str | None = None) -> str:
+    clave = [pregunta_limpia, modelo, version_prompt] + ([error_previo] if error_previo else [])
+    return hashlib.sha256(json.dumps(clave, ensure_ascii=False).encode("utf-8")).hexdigest()[:24]
 
 
-def ruta_grabacion(raiz, pregunta_limpia: str, modelo: str, version_prompt: str) -> Path:
-    return Path(raiz) / "tests/interprete/grabaciones" / f"{huella_grabacion(pregunta_limpia, modelo, version_prompt)}.json"
+def ruta_grabacion(raiz, pregunta_limpia: str, modelo: str, version_prompt: str, error_previo: str | None = None) -> Path:
+    return Path(raiz) / "tests/interprete/grabaciones" / f"{huella_grabacion(pregunta_limpia, modelo, version_prompt, error_previo)}.json"
 
 
 def _de_cuerpo(cuerpo: dict, modelo: str, version_prompt: str, latencia: float, par: dict) -> RespuestaLLM:
@@ -137,19 +139,25 @@ class Cliente:
         self.tope = float(self.par["tope_por_corrida"]["valor_usd"] if tope_usd is None else tope_usd)
         self.gastado = 0.0
 
-    def _cuerpo(self, prompt: str, pregunta_limpia: str) -> dict:
+    def _cuerpo(self, prompt: str, pregunta_limpia: str, error_previo: str | None = None) -> dict:
         from ..motor.interpretacion import RUTA_CONSULTA, RUTA_ESQUEMA
         esq = json.loads((self.raiz / RUTA_ESQUEMA).read_text(encoding="utf-8"))
         cm = json.loads((self.raiz / RUTA_CONSULTA).read_text(encoding="utf-8"))
         return {"model": self.par["modelo"]["valor"], "max_tokens": int(self.par["max_tokens"]["valor"]),
                 "temperature": self.par["temperatura"]["valor"], "system": prompt,
-                "messages": [{"role": "user", "content": f"{DELIM_INICIO}\n{pregunta_limpia}\n{DELIM_FIN}"}],
+                "messages": [{"role": "user", "content": self._turno(pregunta_limpia, error_previo)}],
                 "output_config": {"format": {"type": "json_schema",
                                              "schema": esquema_para_api(esq, {"consulta_minima.schema.json": cm})}}}
 
-    def interpretar_crudo(self, prompt: str, pregunta_limpia: str, version_prompt: str) -> RespuestaLLM:
+    def _turno(self, pregunta_limpia: str, error_previo: str | None) -> str:
+        """La pregunta como dato delimitado y, en el reintento (S2-05), el error de la respuesta anterior."""
+        t = f"{DELIM_INICIO}\n{pregunta_limpia}\n{DELIM_FIN}"
+        return t + "\n\n" + self.par["reintento_mensaje"]["valor"].format(error=error_previo) if error_previo else t
+
+    def interpretar_crudo(self, prompt: str, pregunta_limpia: str, version_prompt: str,
+                          error_previo: str | None = None) -> RespuestaLLM:
         modelo = self.par["modelo"]["valor"]
-        ruta = ruta_grabacion(self.raiz, pregunta_limpia, modelo, version_prompt)
+        ruta = ruta_grabacion(self.raiz, pregunta_limpia, modelo, version_prompt, error_previo)
         if self.modo == "reproducir":
             if not ruta.exists():
                 raise FaltaGrabacion(f"falta la grabación {ruta.name} de «{pregunta_limpia}»; corre "
@@ -167,7 +175,7 @@ class Cliente:
         t0 = time.monotonic()
         try:
             with httpx.Client(transport=self.transporte, timeout=float(self.par["tiempo_max_segundos"]["valor"])) as h:
-                resp = h.post(self.par["api"]["url"], headers=cab, json=self._cuerpo(prompt, pregunta_limpia))
+                resp = h.post(self.par["api"]["url"], headers=cab, json=self._cuerpo(prompt, pregunta_limpia, error_previo))
         except httpx.TimeoutException:
             raise NoDisponible("tiempo_agotado") from None
         except httpx.HTTPError:
@@ -183,8 +191,10 @@ class Cliente:
         self.gastado += r.costo_usd
         if self.modo == "grabar":
             ruta.parent.mkdir(parents=True, exist_ok=True)
-            ruta.write_text(json.dumps({"pregunta_limpia": pregunta_limpia, "modelo": modelo, "version_prompt": version_prompt,
-                                        "latencia_s": r.latencia_s, "respuesta": cuerpo}, ensure_ascii=False, indent=1) + "\n",
+            g = {"pregunta_limpia": pregunta_limpia, "modelo": modelo, "version_prompt": version_prompt}
+            if error_previo:
+                g["error_previo"] = error_previo
+            ruta.write_text(json.dumps({**g, "latencia_s": r.latencia_s, "respuesta": cuerpo}, ensure_ascii=False, indent=1) + "\n",
                             encoding="utf-8")
             r.grabacion = ruta.name
         return r

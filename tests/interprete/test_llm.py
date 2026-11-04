@@ -128,3 +128,24 @@ def test_fallas_dan_no_disponible(raiz_tmp, monkeypatch, caso, motivo):
     with pytest.raises(L.NoDisponible) as e:
         L.Cliente(raiz_tmp, modo="vivo", transporte=transporte(api)).interpretar_crudo(prompt, "anemia en Puno", version)
     assert e.value.motivo == motivo and CLAVE not in str(e.value)
+
+
+def test_el_reintento_lleva_el_error_y_tiene_su_propia_grabacion(raiz_tmp, monkeypatch):
+    """S2-05: el reintento manda el error en el mensaje del usuario (no en las instrucciones) y se graba aparte."""
+    monkeypatch.setenv("ANTHROPIC_API_KEY", CLAVE)
+    pedidos = []
+
+    def api(req):
+        pedidos.append(json.loads(req.content))
+        return httpx.Response(200, json=respuesta_api())
+    prompt, version = armar(raiz_tmp)
+    c = L.Cliente(raiz_tmp, modo="grabar", transporte=transporte(api))
+    a = c.interpretar_crudo(prompt, "anemia en Puno", version)
+    b = c.interpretar_crudo(prompt, "anemia en Puno", version, error_previo="falta_ancla: falta un ancla")
+    assert a.grabacion != b.grabacion
+    assert pedidos[0]["messages"][0]["content"] == "<pregunta>\nanemia en Puno\n</pregunta>"
+    assert pedidos[1]["messages"][0]["content"].startswith("<pregunta>\nanemia en Puno\n</pregunta>\n\n")
+    assert "falta_ancla: falta un ancla" in pedidos[1]["messages"][0]["content"] and "falta un ancla" not in pedidos[1]["system"]
+    r = L.Cliente(raiz_tmp, modo="reproducir").interpretar_crudo(prompt, "anemia en Puno", version, error_previo="falta_ancla: falta un ancla")
+    assert r.grabacion == b.grabacion
+    assert L.huella_grabacion("x", "m", "v") == L.huella_grabacion("x", "m", "v", None)        # sin error, la huella de S2-04

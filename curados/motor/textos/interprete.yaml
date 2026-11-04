@@ -7,3 +7,55 @@ fuera_de_alcance:
   pregunta: "Todavía no respondemos eso («{pedido}»). Podemos decirte cuánto hay hoy, cómo cambió, cómo se compara con otro lugar, dónde es más alto o qué se gastó."
 pregunta_recortada: "Tu pregunta era muy larga: usamos solo sus primeros {n} caracteres."
 no_disponible: "Ahora no podemos interpretar preguntas escritas. Puedes preguntar con las opciones: por ejemplo, `uv run pap preguntar --intencion nivel_actual --tema anemia --territorio Puno`."
+# S2-05 — interpretar: mensajes fijos, aclaraciones armadas por el código y «Entendimos»
+otro_idioma: "Por ahora solo respondemos preguntas en español."
+no_entendida: "No entendimos la pregunta. ¿Puedes escribirla de otra forma?"
+via_estructurada: "También puedes preguntar con las opciones: por ejemplo, `uv run pap preguntar --intencion nivel_actual --tema anemia --territorio Puno`."
+volver_a_preguntar: "Escribe la pregunta de nuevo con el lugar o el año que quieres saber."
+elegir_vencida: "La pregunta venció; escríbela de nuevo, sin --elegir."
+aclaraciones:
+  intencion_ambigua: "¿Qué quieres saber?"
+  varias_preguntas: "Tu mensaje tiene más de una pregunta. ¿Cuál respondemos?"
+  sin_intencion: "¿Qué quieres saber?"
+  sin_lugar:
+    territorio: "¿De qué lugar quieres saber?"
+    comparar_con: "¿Con qué lugar quieres comparar?"
+    dentro_de: "¿En qué lugar buscamos?"
+  anio_relativo: "¿De qué año quieres saber?"
+  opciones_sin_lugar:              # parametros_motor.yaml → interprete.sin_lugar.opciones, en ese orden
+    nacional: "Todo el Perú"
+    escribir: "Escribe el lugar"
+  opciones_anio:                   # parametros_motor.yaml → interprete.anios_relativos.opciones, en ese orden
+    ultimo: "El último año con datos"
+    escribir: "Escribe el año"
+entendimos:                        # se arma desde la consulta; lleva años, nunca otros números
+  prefijo: "Entendimos: {frase}"
+  opcion: "{frase}"                # etiqueta de cada opción de una aclaración del intérprete (con la primera letra en mayúscula)
+  intenciones:
+    nivel_actual: "cuánto hay de {tema}{en_lugar}{periodo}"
+    evolucion: "cómo cambió {tema_art}{en_lugar}{periodo}"
+    comparacion: "cómo se compara {tema_art}{en_lugar}{con_lugar}{periodo}"
+    cruce:
+      defecto: "{tema_art} y el gasto, vistos juntos{en_lugar}{periodo}"
+      gasto_publico: "{tema_art} y los problemas que atiende, vistos juntos{en_lugar}{periodo}"
+    efecto:
+      defecto: "si el gasto sirvió contra {tema_art}{en_lugar}{periodo}"
+      gasto_publico: "si sirvió {tema_art}{en_lugar}{periodo}"
+    identificar_extremo: "qué {nivel} tiene más {tema}{dentro_de}{periodo}"
+  tema_sin_elegir: "el tema que elijas"
+  en_lugar: " en {lugar}"
+  con_lugar: " con {lugar}"
+  dentro_de: " en {lugar}"
+  lugar_literal: "«{texto}»"       # el lugar todavía no está resuelto (homónimos): se repite lo que escribió la persona
+  lugar_resuelto:
+    departamento: "el departamento de {nombre}"
+    provincia: "la provincia de {nombre}"
+    distrito: "el distrito de {nombre}"
+    nacional: "todo el Perú"
+    defecto: "{nombre}"
+  niveles: {departamento: departamento, provincia: provincia, distrito: distrito}
+  periodo:
+    anio: " en {anio}"
+    desde_hasta: " entre {desde} y {hasta}"
+    desde: " desde {desde}"
+    hasta: " hasta {hasta}"
