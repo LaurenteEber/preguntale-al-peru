@@ -69,3 +69,56 @@ Están en `consultas_al_dueno.md` («Supuestos aplicados») y cada uno se cambia
 4. **Las tablas curadas y las reglas tienen huecos que solo aparecen al generalizar** (C-04, C-05). Vale reservar tiempo del dueño para responder rápido.
 5. **El texto de las reglas que llega al usuario** (la estructura de efecto, por ejemplo) también necesita revisión de lenguaje. Cambia solo con el consolidador.
 6. **La huella del cubo sirve de seguro**: comprobar que no cambió después de cada cambio de datos curados evitó dudas sobre las cifras.
+
+## Adenda (S1-11 a S1-16, 4/11/2026)
+
+Trabajada en Claude Code en la nube (X-11), rama `slice-1-adenda` desde `main` (`0166c59`). Historias y evidencia: `../adenda/README.md` y `adenda/`.
+
+### Qué puede hacer ahora el usuario
+
+- **Ver cómo cambió el gasto.** `evolucion gasto_publico Perú` dice «pasó de S/ 2 263,9 millones en 2023 a S/ 2 455,9 millones en 2025, en soles de 2025: aumentó». Los montos de años distintos se comparan ajustados por inflación (IPC de Lima del último año cerrado, G-01 y R-GASTO-12; factor 2023→2025 = 1,0388706, comprobado a mano). No se muestra la diferencia ni el porcentaje. «Para citar» da el monto registrado de cada año y el factor. Si la cifra del año con el que se compara no se puede publicar, la respuesta lo dice primero y no compara.
+- **Ver los dos años que compara una evolución.** «Más contexto» trae también la cifra del año de partida (AD-1). La evolución de anemia hasta 2024 o hasta 2018 ahora responde, con la forma de medir anterior (E-06).
+- **Leer cruces y efectos sin contradicciones.** El cruce ya no promete cifras «lado a lado» en la capa 1 (H9). La frase de efecto es la de AD-2 («…cómo está el indicador; no muestran si el gasto lo cambió»). El 5 % de Lima dice de qué total es.
+- **Mejoras menores:**
+  - «Lima» ofrece Lima Metropolitana, Lima Región y Callao también en la regla (D-01);
+  - una comparación nombra los dos lugares en «No permite concluir» (N-3);
+  - para anemia de 2018 se explica que solo existe con la forma anterior y se ofrece la evolución (H7).
+
+### Cómo se comprobó
+
+- **Cubo:** las 39 539 filas que ya existían no cambiaron (salvo `version_tabla`). Se agregaron 8 780 filas `devengado_constante`. Huella nueva: `sha256:010ea965…` (`adenda/s1-12_comparacion_cubo.txt`).
+- **Q1–Q4:** sin cambios de cifras, semáforos ni confianza. Las diferencias de texto están aprobadas en `regresion/Q1.yaml` (AD-1, dueño) y `Q3.yaml` (AD-2, dueño; el 5 %, agente).
+- **Pruebas:** `uv run pytest -q -m "not solo_mac"` da 743 en verde. 34 pruebas piden los crudos y llevan la marca `solo_mac` (`adenda/pytest_base.txt`).
+- **Matriz completa:** 5 086 casos, 0 errores, 0 fallos (`adenda/matriz.md`).
+- **Reglas** regeneradas solo con el consolidador: vp3 sin cierres abiertos, guardia con 0 fallos, `validar-reglas` 535/535.
+- **Verificación independiente:**
+  - primera vuelta: «no apto» por B-1 (evolución del gasto sin año comparable) y A-1 (yo había relajado la comprobación de la matriz en vez de corregir el motor);
+  - corregido en una tanda;
+  - segunda vuelta: **«apto con observaciones»** (`adenda/verificacion.md`).
+
+### Qué quedó fuera
+
+- Lo que ya excluía la adenda: LLM, web, datos nuevos, X-06, y las observaciones bajas que cambian el patrón de Q1–Q4 (H14, H15, H17, H18, H21 y A-H8). Van al slice 3.
+- Las observaciones de la verificación que ya estaban antes de la adenda. Están listadas en `adenda/verificacion.md`; por ejemplo, la evolución de `gasto_ex_pan_opcion_c` dice «no tenemos dos años».
+
+### Supuestos que el dueño debe revisar
+
+S1-11-a y S1-11-b, S1-12-a a S1-12-c, S1-13-a a S1-13-c, S1-14-a y S1-14-b, S1-15-a y S1-15-b, S1-16-a (`../consultas_al_dueno.md`). Los que más importan:
+- **S1-12-a:** los verbos de cambio van en marcadores `{{v:}}`.
+- **S1-12-c:** el release de la biblioteca trae el cubo anterior.
+- **S1-13-c y S1-14-b:** las referencias de la regresión no se reescribieron.
+
+### Consultas abiertas
+
+- **C-06 (resto):** GitHub rechaza el push (error 403). La rama, la fusión a `main`, la etiqueta `slice-1-adenda-cerrada` y `adenda/pytest_main.txt` quedan pendientes hasta que vuelva el acceso.
+- **Observaciones bajas de la verificación:**
+  - B-2: «solo hay datos desde 2024» frente a «el INEI publicó años anteriores con ella»; es la frase literal de S1-13;
+  - B-3: aprobaciones mezcladas en una sola entrada de `Q1.yaml` y `Q3.yaml`;
+  - B-4: el año base se deduce por dos caminos.
+
+### Qué se aprendió para el slice siguiente
+
+1. **La matriz completa encuentra lo que la reducida no.** Los 11 casos de gasto sin año comparable solo aparecieron en la corrida completa. Conviene correrla al cerrar cada historia que toque una plantilla.
+2. **Ante un fallo de la matriz, se corrige la respuesta, no la comprobación.** El verificador lo marcó (A-1) y tenía razón.
+3. **Un cambio de huella del cubo en la nube obliga a recalcular** (`pap calcular` es determinista) o a publicar un release nuevo con la huella nueva.
+4. **La comparación de la regresión es por posición.** Lo nuevo va al final para no mover lo que ya estaba aprobado.

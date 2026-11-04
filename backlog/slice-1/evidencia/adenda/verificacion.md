@@ -89,4 +89,44 @@ Comprobé cada una con la misma consulta corrida sobre `0166c59` y el cubo del r
 
 ## Corrección y segunda verificación
 
-(pendiente)
+Correcciones del implementador (una sola tanda, para los hallazgos B-1, A-1 y M-1):
+
+| Hallazgo | Corrección | Commit |
+|---|---|---|
+| A-1 | Se revierte la relajación de `tests/matriz/comprobar.py::evolucion`: vuelve la comprobación estricta | `9c284db` |
+| B-1 | Si la cifra del año con el que se compara no se puede publicar, la cifra vuelve a soles corrientes y sin comparación (`respuesta.py`, `_sin_par_constante`), y la respuesta lo dice primero: «No podemos mostrar cómo cambió … desde {año}: la cifra de {año} no se puede publicar.» (`evolucion.yaml`, `corta_no_comparable`). Prueba en `tests/test_gasto_constantes.py` | `a5039e0` |
+| M-1 | La cifra clave en soles constantes dice «…en {año}, en soles de {año base}.» (`evolucion.yaml`, `clave.constantes`). Prueba en `tests/test_gasto_constantes.py` | `a5039e0` |
+| B-2 | Sin cambio, por decisión del implementador (no del dueño): S1-13 pide literalmente «con la forma de medir actual solo hay datos desde 2024» y E-06 la respalda. Queda como observación para el dueño | — |
+| B-3, B-4 | Sin cambio (bajos). B-4 ya tiene una prueba que ata los dos caminos al año de hoy (`test_anio_base_coincide_con_el_validador`). Quedan anotados en `../../consultas_al_dueno.md` | — |
+
+Matriz completa regenerada después de la corrección: 5 086 casos, 0 errores, 0 fallos (`matriz.md`, commit `3806606`).
+
+Informe del verificador, tal como lo entregó (en el punto B-2, «el dueño lo deja así» debe leerse «el implementador lo deja así»: el dueño todavía no se pronunció):
+
+### Segunda verificación (limitada a B-1, A-1 y M-1)
+
+Verificación limitada sobre HEAD `3806606`, en una sola pasada y solo lectura. No edité nada del repositorio; `git status` sigue limpio al terminar.
+
+**Veredicto final de la adenda: apto con observaciones.**
+- Los tres hallazgos están corregidos, la matriz da 0 fallos y las pruebas pasan.
+- Quedan abiertas las observaciones bajas de la primera verificación:
+  - B-2: el dueño lo deja así, porque S1-13 pide literalmente esa frase.
+  - B-3 y B-4.
+  - Las observaciones que ya estaban en la base.
+
+| Hallazgo | Estado | Evidencia |
+|---|---|---|
+| B-1 (evolución del gasto cuando no se puede publicar la cifra del año de comparación) | **corregido** | **Kumpirushiato (080915), evolución sin año:** la respuesta empieza con «No podemos mostrar cómo cambió el gasto … en Kumpirushiato desde 2023: la cifra de 2023 no se puede publicar.». La cifra clave es S/ 69 mil de 2025, en soles corrientes (`gasto_ex_pan__devengado__distrito__080915__2025__principal`). Ya no hay comparación ni aparece el «Ojo» de soles constantes, y la cita no lleva factor. **Caso «intermedio» (`--anio 2024`, la consulta de `0026.md`):** ahora muestra **S/ 75 mil**, que es el monto registrado (74 815), no los S/ 76 mil deflactados de antes. Dice primero el «no podemos mostrar…», y R-GASTO-12 queda en `rotular · soles_corrientes`, sin `bloqueos_cruce`. **Perú, evolución normal:** cifras, comparación, «Ojo», «Para citar» y semáforo sin cambios frente a la primera corrida. El único cambio es el rótulo de M-1 en la cifra clave (capa 1: de 95 a 99 palabras) |
+| A-1 (comprobación de la matriz relajada) | **corregido** | `git diff 5206221~1 HEAD -- tests/matriz/comprobar.py` sale vacío (0 líneas): la comprobación estricta volvió (commit `9c284db`). Corrí yo la matriz completa con la comprobación estricta: **5 086 casos, 0 errores, 0 fallos**, salida 0 |
+| M-1 (la cifra clave en soles constantes no tenía rótulo) | **corregido** | `--hasta 2024` (Perú) da «**S/ 2 465,5 millones** es la cifra de gasto … en Perú en 2024, **en soles de 2025**.». La comparación 2023→2024 y la cita, con el monto registrado de S/ 2 429,0 millones y el factor 1,0150108, no cambiaron |
+
+**Comandos corridos**
+
+| Comando | Resultado |
+|---|---|
+| `git diff 5206221~1 HEAD -- tests/matriz/comprobar.py \| wc -l` | 0 |
+| `uv run pap preguntar --intencion evolucion --tema gasto_publico --territorio "Kumpirushiato, La Convención"` (sin año y con `--anio 2024`) | salida 0; resultado descrito en B-1 |
+| `uv run pap preguntar --intencion evolucion --tema gasto_publico --territorio "Perú"` | salida 0; diferencia con la primera corrida: solo «, en soles de 2025» en la cifra clave |
+| `uv run pap preguntar --intencion evolucion --tema gasto_publico --territorio "Perú" --hasta 2024` | salida 0; resultado descrito en M-1 |
+| `uv run python tests/matriz/correr.py --salida salidas/matriz_verificador2` | 5 086 casos, 0 errores, **0 fallos**, salida 0 (7,9 min) |
+| `uv run pytest -q -m "not solo_mac" -p no:cacheprovider` | **743 pasan**, 34 excluidas, 0 fallos (4 min 9 s), salida 0 |
