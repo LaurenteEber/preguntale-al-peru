@@ -1,0 +1,217 @@
+{
+  "sprint": "s4_endes",
+  "construido": "2026-11-04T11:04:58-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2015-hogar",
+      "hash": "sha256:8a348b2419759a86765ca7e05459a50d11c75113fe0fc31641cb70b44529ba5d",
+      "archivo_original": "504-Modulo64.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2015-anemia",
+      "hash": "sha256:5cbe2c9e249959b77b85c06aee2d37b55d8ef54b21b3128f9c3da39b81742975",
+      "archivo_original": "504-Modulo74.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2016-hogar",
+      "hash": "sha256:4555897dbdd29e86d303c828fbd57b04f611943327f2269347690ef4171dedc2",
+      "archivo_original": "548-Modulo64.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2016-anemia",
+      "hash": "sha256:9a8877d0e9bf9cb097d3ffcbfa2574df2a9650268687c7263223f63b9d763453",
+      "archivo_original": "548-Modulo74.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2017-hogar",
+      "hash": "sha256:bd6d3c4657712643657a66539466ca4b216664698af9e9273562a6b08274d19a",
+      "archivo_original": "605-Modulo64.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2017-anemia",
+      "hash": "sha256:0faf60166b7bbd3638c9b1d8443d4c014d04481fb6bed6b74558aecc8f269509",
+      "archivo_original": "605-Modulo74.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2018-hogar",
+      "hash": "sha256:52e4848dc22800f767e477053d7daada3f7360f5d03d1cd022d6785319955a39",
+      "archivo_original": "638-Modulo64.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2018-anemia",
+      "hash": "sha256:3f3404b444895da2def53d20bfabac7afc4563b5a87a14453cf41967ef6d9afd",
+      "archivo_original": "638-Modulo74.zip"
+    },
+    {
+      "source_id": "CAPA0:s1_territorio",
+      "recurso": "dim_ubigeo_historico",
+      "hash": "sha256:9857c9a48a821e98b997ed72e1bf40579c13e674ff21254d0f5c2246cc7d2261",
+      "archivo_original": "dim_ubigeo_historico.parquet"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2019-hogar",
+      "hash": "sha256:0f93549a141fda8cc9db5935a0011fcde024a398739ed45906fec213d5ad17cf",
+      "archivo_original": "691-Modulo64.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2019-anemia",
+      "hash": "sha256:5831d3326670c6eca5c9b53a0307630c2abed756b16ad693e29b3fc53a72d3f4",
+      "archivo_original": "691-Modulo74.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2020-hogar",
+      "hash": "sha256:744d22dbd27f91fbfe5975b6791a09573298f746401a66cf8e08f67d07023e8f",
+      "archivo_original": "739-Modulo1629.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2020-anemia",
+      "hash": "sha256:14ccd50e8b663d1e689fbb06509bc8165fc05566cbcdc8a12594a5eddf31c0de",
+      "archivo_original": "739-Modulo1638.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2021-hogar",
+      "hash": "sha256:1dd766bf2d6dd65b8ec0f9463ea9718fa22e60cff1514488de3f448caf3a5508",
+      "archivo_original": "760-Modulo1629.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2021-anemia",
+      "hash": "sha256:2c53236b8ee41db677111ff221c4691b0dab3574900987e05ca8fb15550a7702",
+      "archivo_original": "760-Modulo1638.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2022-hogar",
+      "hash": "sha256:371659e83fc4283fe591b2602a6807ff958b7303e0c7a8df99186b74fa354da1",
+      "archivo_original": "786-Modulo1629.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2022-anemia",
+      "hash": "sha256:0d022f82ea63f7dc6001de824e452850ddd9c47b6ed23ad2977383bca37c4419",
+      "archivo_original": "786-Modulo1638.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2023-hogar",
+      "hash": "sha256:4ca224d983f708c699a177acbb6cd29dea2197bff46ae33cf140c88f0891a4cc",
+      "archivo_original": "910-Modulo1629.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2023-anemia",
+      "hash": "sha256:6a0d3dd0aeb6a2d2c894264f1fa8f70c95e610523dd315fd149f09d2ded498e5",
+      "archivo_original": "910-Modulo1638.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2024-hogar",
+      "hash": "sha256:d40ca096acd91aa296742820c872350006ea55e44354cefae6f6bbd24c27838c",
+      "archivo_original": "968-Modulo1629.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2024-anemia",
+      "hash": "sha256:0f5ead4cd363a48b72b45d78f7c7d8313e8ab2ad98ac6d3dc8f087b282e3fab5",
+      "archivo_original": "968-Modulo1638.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2025-hogar",
+      "hash": "sha256:f989759e441d8b993e0b38e1a1c1aaf141fb3d9c70fff402e20d80e1cf23fbea",
+      "archivo_original": "1038-Modulo1629.zip"
+    },
+    {
+      "source_id": "INEI-ENDES",
+      "recurso": "endes-2025-anemia",
+      "hash": "sha256:ee9fdc045a7670e3588074c5d7c02b5609140fd37b02d7292239f435f7096942",
+      "archivo_original": "1038-Modulo1638.zip"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "definiciones_endes.yaml",
+      "hash": "sha256:40a9c5be198489b0c7edfd7f233447064b864f67f831908292b89c0f189e6f01",
+      "archivo_original": "definiciones_endes.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "cifras_control_inei.yaml",
+      "hash": "sha256:be9a1475e588b4608004e66775081c2c2b31b9ad662fbd6855a24d833c9be3f2",
+      "archivo_original": "cifras_control_inei.yaml"
+    }
+  ],
+  "tablas": {
+    "endes_nino": {
+      "archivo": "endes_nino.parquet",
+      "filas": 236869,
+      "hash": "sha256:0f3b40b4174d057376bfb64408354fadbf3c7b492c357a237cd9683317bf0e72",
+      "columnas": [
+        "fuente_id",
+        "anio",
+        "id_hogar",
+        "idx_nino",
+        "id_conglomerado",
+        "id_estrato",
+        "departamento",
+        "area",
+        "ubigeo_hogar",
+        "provincia_hogar",
+        "ambito_lima",
+        "ambito_lima_metodo",
+        "ubigeo_agrupado_inei",
+        "peso",
+        "fuente_peso",
+        "peso_hogar",
+        "peso_medicion",
+        "pernocto",
+        "residente_habitual",
+        "edad_meses",
+        "sexo",
+        "hb_resultado",
+        "hb_medida",
+        "hb_observada",
+        "hb_ajustada_hist",
+        "anemia_hist_nivel",
+        "anemia_hist",
+        "hb_ajustada_oms2024",
+        "anemia_oms2024_nivel",
+        "anemia_oms2024",
+        "talla_resultado",
+        "haz",
+        "haz_bandera",
+        "haz_valido",
+        "dci",
+        "dci_severa",
+        "version_tabla"
+      ],
+      "orden": "anio, id_hogar, idx_nino"
+    }
+  },
+  "pruebas": {
+    "total": 98,
+    "fallidas": [],
+    "bloqueantes_fallidas": []
+  }
+}

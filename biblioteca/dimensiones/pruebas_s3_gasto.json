@@ -1,0 +1,838 @@
+[
+  {
+    "id": "G-11",
+    "descripcion": "Ningún monto ilegible en los CSV (PIA, PIM, devengado)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2023": {
+        "montos_invalidos": 0,
+        "filas_csv": 10740972
+      },
+      "2024": {
+        "montos_invalidos": 0,
+        "filas_csv": 11191489
+      },
+      "2025": {
+        "montos_invalidos": 0,
+        "filas_csv": 11440287
+      }
+    }
+  },
+  {
+    "id": "G-10",
+    "descripcion": "Todo CUI del detalle MEF está en dim_inversion_ubicacion con nivel_comun o motivo_sin_ubicacion",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "inversiones": 150138,
+      "en_dimension": 150138,
+      "con_nivel_o_motivo": 150138,
+      "motivos": [
+        "ubigeo_nulo_texto_gn_no_fiable",
+        "ubigeo_inexistente",
+        "ubigeo_nulo_sin_texto"
+      ],
+      "filas_sin_codigo_unico": 67
+    }
+  },
+  {
+    "id": "G-20",
+    "descripcion": "CUI con ubigeo válido, alias o curado (≥ 99 %; el resto, con método o motivo)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "ubigeo_valido/-": 149861,
+      "sin_ubicacion/ubigeo_nulo_texto_gn_no_fiable": 125,
+      "multidepartamental_mef/-": 102,
+      "nombre_texto/-": 21,
+      "sin_ubicacion/ubigeo_nulo_sin_texto": 12,
+      "curado_por_cui/-": 9,
+      "codigo_antiguo_alias/-": 5,
+      "sin_ubicacion/ubigeo_inexistente": 2,
+      "codigo_escindido_contenedor/-": 1
+    }
+  },
+  {
+    "id": "G-05",
+    "descripcion": "Municipalidades distritales y provinciales con sede en un distrito válido (≥ 99 %)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "municipalidades_anio": 5674,
+      "validas": 5674
+    }
+  },
+  {
+    "id": "G-06",
+    "descripcion": "GR Lima → Lima Región y pliego regional de la Municipalidad de Lima → Lima Metropolitana",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "LIMA_METROPOLITANA": [
+        "MUNICIPALIDAD METROPOLITANA DE LIMA"
+      ],
+      "LIMA_REGION": [
+        "GOBIERNO REGIONAL DEL DEPARTAMENTO DE LIMA"
+      ]
+    }
+  },
+  {
+    "id": "G-14",
+    "descripcion": "fact_gasto_territorial: la clave es única (incluye ámbito y ejecutora)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": 0
+  },
+  {
+    "id": "G-17c",
+    "descripcion": "Vistas del motor: temático = gasto final consolidado; gasto final + (b) + fondos + (a) = total del fact = total de la base; (b) del fact = (b) de la base (tolerancia 0)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2023": {
+        "tematico": "211588889158.92",
+        "entregado_fuera": "5143858639.16",
+        "fondos": "1352174400.00",
+        "intergub": "4967198814.90"
+      },
+      "2024": {
+        "tematico": "231746962485.87",
+        "entregado_fuera": "2579856500.12",
+        "fondos": "47500000.00",
+        "intergub": "4522383051.50"
+      },
+      "2025": {
+        "tematico": "246479561418.93",
+        "entregado_fuera": "2820017540.42",
+        "fondos": "195000000.00",
+        "intergub": "4180715579.00"
+      }
+    }
+  },
+  {
+    "id": "G-01",
+    "descripcion": "2023: Σ por niveles de atribución = total nacional del archivo (devengado y PIM, tolerancia 0)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "devengado": "223052121012.98",
+      "atribuido": "223052121012.98"
+    }
+  },
+  {
+    "id": "G-01",
+    "descripcion": "2024: Σ por niveles de atribución = total nacional del archivo (devengado y PIM, tolerancia 0)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "devengado": "238896702037.49",
+      "atribuido": "238896702037.49"
+    }
+  },
+  {
+    "id": "G-01",
+    "descripcion": "2025: Σ por niveles de atribución = total nacional del archivo (devengado y PIM, tolerancia 0)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "devengado": "253675294538.35",
+      "atribuido": "253675294538.35"
+    }
+  },
+  {
+    "id": "G-25",
+    "descripcion": "Actividad, clasificador de gasto, fuente/rubro, grupo funcional y marcas de alcance presentes y no nulos en toda fila de fact_gasto_territorial",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "actividad": 0,
+      "clasificador": 0,
+      "fuente_rubro": 0,
+      "grupo_categoria": 0,
+      "marcas": 0
+    }
+  },
+  {
+    "id": "G-25b",
+    "descripcion": "Un solo nombre por año y código (actividad, genérica, clasificador 2.4, fuente, rubro)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "nom_actividad": 0,
+      "nom_generica": 0,
+      "nom_clasificador": 0,
+      "nom_fuente": 0,
+      "nom_rubro": 0
+    }
+  },
+  {
+    "id": "G-26",
+    "descripcion": "Conservación exacta por año × ejecutora × actividad × fuente × rubro × clasificador (PIM y devengado, base = fact)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "llaves_con_diferencia": 0
+    }
+  },
+  {
+    "id": "G-27",
+    "descripcion": "Lima (dpto 15) y Callao (07): cuenta_en_ambito + referencia nacional (aparte, con sus obras) + alcance nacional = total atribuido al dpto (tolerancia 0); cuenta_en_ambito = dpto ∈ {15, 07} ∧ alcance ≠ nacional ∧ ¬referencia_nacional ∧ ¬obra_sede_nacional y cuenta_en_lima = cuenta_en_ambito ∧ dpto 15, fila a fila (E3, P3); ninguna fila de referencia nacional ni de alcance nacional cuenta en su ámbito; las UE de referencia nacional en el 15 son las del YAML",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2023/07": {
+        "ambito": "3223767078.84",
+        "referencia_nacional": "0.00",
+        "nacional": "3758568767.70"
+      },
+      "2023/15": {
+        "ambito": "21887926869.30",
+        "referencia_nacional": "634411667.20",
+        "nacional": "36261158647.35"
+      },
+      "2024/07": {
+        "ambito": "3639138197.70",
+        "referencia_nacional": "0.00",
+        "nacional": "2776747797.33"
+      },
+      "2024/15": {
+        "ambito": "26877678718.79",
+        "referencia_nacional": "712330496.49",
+        "nacional": "32709645265.24"
+      },
+      "2025/07": {
+        "ambito": "3668382163.14",
+        "referencia_nacional": "0.00",
+        "nacional": "2503332408.70"
+      },
+      "2025/15": {
+        "ambito": "28042960564.69",
+        "referencia_nacional": "777919521.25",
+        "nacional": "35646080779.18"
+      }
+    }
+  },
+  {
+    "id": "G-37",
+    "descripcion": "Obras de sede o función nacional (obras_sede_nacional.yaml): cada (CUI, ejecutora) está en la fact como obra del GN en el dpto 15 o 07, ninguna cuenta en su ámbito y la marca no aparece en otras filas",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "no_encontradas": 0,
+      "sin_marca": 0,
+      "en_ambito": 0,
+      "marca_fuera_de_obras_gn_15_07": 0,
+      "obras_lista": 222,
+      "gasto_final_millones": {
+        "2023": 478.6,
+        "2024": 511.3,
+        "2025": 675.5
+      },
+      "gasto_final_millones_callao": {
+        "2023": 9.1,
+        "2024": 38.4,
+        "2025": 11.2
+      }
+    }
+  },
+  {
+    "id": "G-12",
+    "descripcion": "Ejecutoras nacionales con meta en Lima clasificadas por alcance (sin clasificar ≤ 3 % del devengado)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2023": 0.0,
+      "2024": 0.0,
+      "2025": 0.0
+    }
+  },
+  {
+    "id": "G-40",
+    "descripcion": "P3 (L6): ejecutoras nacionales con meta en el Callao clasificadas por alcance_callao (sin clasificar ≤ 3 % del devengado); el alcance de la fila es no_aplica fuera del GN por meta 15 o 07",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2023": 0.0,
+      "2024": 0.0,
+      "2025": 0.0012
+    }
+  },
+  {
+    "id": "G-39",
+    "descripcion": "P3 (Ley 31140; H-A2, H-08, H-P3-6): en el dpto 15, toda fila del GR Lima está en Lima Región, la del pliego regional de la MML en Lima Metropolitana y ninguna es del GR Callao (pasa al 07); el gasto con meta o CUI en otro departamento, la deuda y lo multidepartamental se quedan donde están",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "CALLAO/2023": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 29.47
+      },
+      "CALLAO/2024": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 43.52
+      },
+      "CALLAO/2025": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 37.12
+      },
+      "LIMA_METROPOLITANA/2023": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 0.0
+      },
+      "LIMA_METROPOLITANA/2024": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 0.0
+      },
+      "LIMA_METROPOLITANA/2025": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 0.0
+      },
+      "LIMA_REGION/2023": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 6.23
+      },
+      "LIMA_REGION/2024": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 19.2
+      },
+      "LIMA_REGION/2025": {
+        "fuera": 0,
+        "fuera_del_15_07_millones": 15.27
+      }
+    }
+  },
+  {
+    "id": "G-42",
+    "descripcion": "Auditoría de P3 (H-P3-1): el Callao incluye entidades que en LM se cuentan como nacionales o mixtas; su peso sigue en 12-22 % (el aviso de v_gasto_por_ambito dice ≈ 15-17 %)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "2023": {
+        "callao": 3006.4,
+        "canasta_comparable": 2400.6,
+        "pct_no_comparable": 20.1
+      },
+      "2024": {
+        "callao": 3496.3,
+        "canasta_comparable": 2859.5,
+        "pct_no_comparable": 18.2
+      },
+      "2025": {
+        "callao": 3514.1,
+        "canasta_comparable": 2896.3,
+        "pct_no_comparable": 17.6
+      }
+    }
+  },
+  {
+    "id": "G-41",
+    "descripcion": "P3 (H-A4): v_gasto_por_ambito = gasto final del 15 y el 07 sin solapes (tolerancia 0); LM, LR y Callao = filas cuenta_en_ambito de su territorio; ninguna fila en «revisar»",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2023": {
+        "LM": 16998.3,
+        "LR": 3679.3,
+        "CALLAO": 3006.4
+      },
+      "2024": {
+        "LM": 20771.7,
+        "LR": 4567.6,
+        "CALLAO": 3496.3
+      },
+      "2025": {
+        "LM": 22106.2,
+        "LR": 4459.5,
+        "CALLAO": 3514.1
+      }
+    }
+  },
+  {
+    "id": "G-13",
+    "descripcion": "Revisión: distritos donde un solo CUI del Gobierno Nacional (> S/ 10 M) es más de la mitad de su gasto",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "casos": 233
+    }
+  },
+  {
+    "id": "G-16",
+    "descripcion": "nacional_multidepartamental: proyectos del GN/GORE con CUI en otro departamento que la meta (GA-02) y «-MUL.DEP-» del GN/GORE (GA-09) con el filtro de meta [AND b.departamento_meta = '15'] (millones: total y parte «-MUL.DEP-»; revisión en inversiones_meta_distinta.csv)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "2023": {
+        "total": 2901.5,
+        "mul_dep": 353.8
+      },
+      "2024": {
+        "total": 3549.8,
+        "mul_dep": 264.9
+      },
+      "2025": {
+        "total": 4242.5,
+        "mul_dep": 209.4
+      }
+    }
+  },
+  {
+    "id": "G-21",
+    "descripcion": "Todo proyecto cuyo CUI (como número) está en el detalle MEF llega con método de ubicación",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas_sin_unir": 0,
+      "devengado": "0.00"
+    }
+  },
+  {
+    "id": "G-22",
+    "descripcion": "Solo los CUI de gobiernos locales se ubican por el texto DEPARTAMENTO/PROVINCIA/DISTRITO (en el GN suele ser la sede; en el GORE no está autorizado)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "cui_gn_por_texto": 0,
+      "cui_no_gl_por_texto": 0
+    }
+  },
+  {
+    "id": "G-24",
+    "descripcion": "Ubicación curada por CUI: el CUI trae ese código escindido y el destino es un distrito de la provincia contenedora (para 160109, un distrito de 1608; no necesariamente uno de sus sucesores)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "cui_mal_curados": []
+    }
+  },
+  {
+    "id": "G-23",
+    "descripcion": "Revisión: % del devengado en proyectos por método de ubicación del CUI",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "2023/ubigeo_valido": 69.67,
+      "2023/cui_fuera_del_detalle": 28.64,
+      "2023/multidepartamental_mef": 1.25,
+      "2023/sin_ubicacion": 0.44,
+      "2023/nombre_texto": 0.01,
+      "2024/ubigeo_valido": 79.83,
+      "2024/cui_fuera_del_detalle": 18.62,
+      "2024/multidepartamental_mef": 1.18,
+      "2024/sin_ubicacion": 0.37,
+      "2024/nombre_texto": 0.0,
+      "2025/ubigeo_valido": 86.61,
+      "2025/cui_fuera_del_detalle": 12.16,
+      "2025/multidepartamental_mef": 0.97,
+      "2025/sin_ubicacion": 0.26,
+      "2025/nombre_texto": 0.0
+    }
+  },
+  {
+    "id": "G-04",
+    "descripcion": "Devengado en proyectos ubicado por CUI ≥ 60% cada año (las series de inversión distrital entre años con > 5 pp de diferencia se marcan no comparables)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "cobertura": {
+        "2023": 0.6453,
+        "2024": 0.7408,
+        "2025": 0.7986
+      },
+      "no_comparables": [
+        2024,
+        2025
+      ]
+    }
+  },
+  {
+    "id": "G-07",
+    "descripcion": "PIA nacional del archivo = PIA de la Ley de Presupuesto (± 0,5 %)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "diferencia_relativa": {
+        "2023": 0.0,
+        "2024": 0.0,
+        "2025": -0.0
+      },
+      "pia_archivo_millones": {
+        "2023": 214790.3,
+        "2024": 240806.2,
+        "2025": 251801.0
+      }
+    }
+  },
+  {
+    "id": "G-15",
+    "descripcion": "Toda específica de la genérica 2.4 está en lista_transferencias.yaml v2.1.0",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": []
+  },
+  {
+    "id": "G-15b",
+    "descripcion": "Ninguna fila fuera de la genérica 2.4 lleva categoría de transferencia",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 0
+    }
+  },
+  {
+    "id": "G-17",
+    "descripcion": "Conservación: la lista no duplica ni pierde filas ni soles; cada fila tiene un bloque (tolerancia 0)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2023": {
+        "filas": 2102870,
+        "devengado": "223052121012.98"
+      },
+      "2024": {
+        "filas": 2339977,
+        "devengado": "238896702037.49"
+      },
+      "2025": {
+        "filas": 2359258,
+        "devengado": "253675294538.35"
+      }
+    }
+  },
+  {
+    "id": "G-17b",
+    "descripcion": "Revisión: toda combinación de excepción tiene filas en la base (si no, cambió el código de actividad)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": []
+  },
+  {
+    "id": "G-18",
+    "descripcion": "Revisión: transferencias intergubernamentales ≤ PIM fuente 4 del nivel receptor",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": [
+      {
+        "anio": 2023,
+        "destino": "E",
+        "otorgado": 1861.2,
+        "pim_f4": 2260.6
+      },
+      {
+        "anio": 2023,
+        "destino": "M",
+        "otorgado": 1979.6,
+        "pim_f4": 2735.1
+      },
+      {
+        "anio": 2023,
+        "destino": "R",
+        "otorgado": 1126.4,
+        "pim_f4": 1532.5
+      },
+      {
+        "anio": 2024,
+        "destino": "E",
+        "otorgado": 1713.5,
+        "pim_f4": 2837.6
+      },
+      {
+        "anio": 2024,
+        "destino": "M",
+        "otorgado": 1484.3,
+        "pim_f4": 2978.9
+      },
+      {
+        "anio": 2024,
+        "destino": "R",
+        "otorgado": 1324.6,
+        "pim_f4": 1615.8
+      },
+      {
+        "anio": 2025,
+        "destino": "E",
+        "otorgado": 1930.0,
+        "pim_f4": 2906.8
+      },
+      {
+        "anio": 2025,
+        "destino": "M",
+        "otorgado": 1079.7,
+        "pim_f4": 2472.0
+      },
+      {
+        "anio": 2025,
+        "destino": "R",
+        "otorgado": 1171.0,
+        "pim_f4": 1386.9
+      }
+    ]
+  },
+  {
+    "id": "G-18b",
+    "descripcion": "Revisión: filas intergubernamentales cuyo nombre de actividad sugiere un receptor fuera de la base (centros poblados, caminos vecinales, IVP, beneficencias). Solo avisa; no clasifica",
+    "ok": false,
+    "bloqueante": false,
+    "detalle": [
+      {
+        "anio": 2023,
+        "clasificador_transferencia": "2.4.2.3.1.3",
+        "nivel_gobierno": "M",
+        "actividad_accion_obra": "5001275",
+        "actividad": "TRANSFERENCIAS FINANCIERAS PARA EL MANTENIMIENTO RUTINARIO DE CAMINOS VECINALES",
+        "ejecutoras": 1,
+        "devengado_millones": 0.04
+      },
+      {
+        "anio": 2024,
+        "clasificador_transferencia": "2.4.2.3.1.3",
+        "nivel_gobierno": "M",
+        "actividad_accion_obra": "5001452",
+        "actividad": "MANTENIMIENTO RUTINARIO DE CAMINOS VECINALES NO PAVIMENTADOS",
+        "ejecutoras": 2,
+        "devengado_millones": 0.01
+      }
+    ]
+  },
+  {
+    "id": "G-08",
+    "descripcion": "Conciliación con la Consulta Amigable por año × nivel de gobierno (≤ 0.5%)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_relativa": 0.001282,
+      "completo": true,
+      "fuente": "MEF, Consulta Amigable (consulta del dueño, 2026-10-06)"
+    }
+  },
+  {
+    "id": "G-08b",
+    "descripcion": "Conciliación estricta (≤ 0,05 %; GA-06): año × nivel con diferencia mayor, a explicar",
+    "ok": false,
+    "bloqueante": false,
+    "detalle": [
+      {
+        "anio": 2023,
+        "nivel_gobierno": "R",
+        "dif_rel_devengado": 0.001282
+      }
+    ]
+  },
+  {
+    "id": "G-34",
+    "descripcion": "cobertura_anio: los años con montos son exactamente los años de la base (2023-2025)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "cobertura": [
+        2023,
+        2024,
+        2025
+      ],
+      "base": [
+        2023,
+        2024,
+        2025
+      ]
+    }
+  },
+  {
+    "id": "G-35",
+    "descripcion": "Un nombre por año y código de programa, producto y nodo (si no, se publica el menor y se avisa)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "codigos_con_varios_nombres": 0
+    }
+  },
+  {
+    "id": "G-28b",
+    "descripcion": "rel_concepto_nodo: clave única (año, concepto, nodo, filtros)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "repetidas": 0
+    }
+  },
+  {
+    "id": "G-31",
+    "descripcion": "Los nodos que W1 v2 documenta para 2023-2025 están entre los resueltos desde la base para el mismo concepto",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "nodos_w1": 86,
+      "faltan": []
+    }
+  },
+  {
+    "id": "G-28",
+    "descripcion": "Conceptos: cada fila de la fact cae como máximo en una hoja (alcance concepto, todos los bloques)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas_en_dos_hojas": 0,
+      "devengado": "0.00"
+    }
+  },
+  {
+    "id": "G-36",
+    "descripcion": "Conceptos: gasto final (bloque_consolidado) = devengado sin transferencias (es_transferencia)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "diferencia_soles": 0.0
+    }
+  },
+  {
+    "id": "G-33",
+    "descripcion": "Conceptos: todo el gasto final de actividades del PP 1001 está en alguna hoja (cobertura 100 %)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2023": 1.0,
+      "2024": 1.0,
+      "2025": 1.0
+    }
+  },
+  {
+    "id": "G-30",
+    "descripcion": "Cifras aprobadas (millones, sin transferencias): serie por concepto ex-PAN, opción C, opción D y PP 1001 completo",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "obtenido": {
+        "grupo_expan": {
+          "2023": 2179,
+          "2024": 2429,
+          "2025": 2456
+        },
+        "grupo_opcion_c": {
+          "2023": 2056,
+          "2024": 2327,
+          "2025": 2366
+        },
+        "grupo_anemia_estricta": {
+          "2023": 138,
+          "2024": 184,
+          "2025": 208
+        },
+        "pp_1001_dit": {
+          "2023": 2750,
+          "2024": 3607,
+          "2025": 3867
+        }
+      },
+      "aprobado": {
+        "grupo_expan": {
+          "2023": 2179,
+          "2024": 2429,
+          "2025": 2456
+        },
+        "grupo_opcion_c": {
+          "2023": 2056,
+          "2024": 2327,
+          "2025": 2366
+        },
+        "grupo_anemia_estricta": {
+          "2023": 138,
+          "2024": 184,
+          "2025": 208
+        },
+        "pp_1001_dit": {
+          "2023": 2750,
+          "2024": 3607,
+          "2025": 3867
+        }
+      }
+    }
+  },
+  {
+    "id": "G-29",
+    "descripcion": "Programas sociales: cada fila de la fact pertenece como máximo a un programa social",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas_en_dos_programas": 0
+    }
+  },
+  {
+    "id": "G-03",
+    "descripcion": "dim_tema_gasto v1.2, todos los alcances: gramática y prefijo = cadena; cada tema en cada año; clave única; dentro de cada cadena ningún sol en dos temas (salvo alternativa_de); cada programa del año con tema pp_ o sin_tema",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "gramatica_o_prefijo": [],
+      "temas_con_varias_cadenas": [],
+      "tema_sin_filas_en_anio": [
+        [
+          "ppxfun_1001_educacion",
+          2023
+        ],
+        [
+          "ps_pae",
+          2023
+        ],
+        [
+          "ps_pae",
+          2024
+        ]
+      ],
+      "filas_repetidas": 0,
+      "superposicion": {},
+      "programas_sin_marca": 0
+    }
+  },
+  {
+    "id": "G-32",
+    "descripcion": "El acceso del motor (macro gasto_tema) reproduce las cifras aprobadas",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "obtenido": {
+        "grupo_expan": {
+          "2023": 2179,
+          "2024": 2429,
+          "2025": 2456
+        },
+        "grupo_opcion_c": {
+          "2023": 2056,
+          "2024": 2327,
+          "2025": 2366
+        },
+        "grupo_anemia_estricta": {
+          "2023": 138,
+          "2024": 184,
+          "2025": 208
+        },
+        "pp_1001_dit": {
+          "2023": 2750,
+          "2024": 3607,
+          "2025": 3867
+        }
+      }
+    }
+  },
+  {
+    "id": "G-38",
+    "descripcion": "Línea aparte de los programas sociales (v_programa_social_linea_aparte) = lo registrado por la ejecutora con esos clasificadores, sin filas del gasto final (tolerancia 0)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "empleo_temporal/2023": 605.6,
+      "empleo_temporal/2024": 535.7,
+      "empleo_temporal/2025": 409.0
+    }
+  },
+  {
+    "id": "G-09",
+    "descripcion": "Quiebre del PAN identificado (años con devengado en PP 0001 y/o 1001)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "2023": "1001",
+      "2024": "1001",
+      "2025": "1001"
+    }
+  }
+]

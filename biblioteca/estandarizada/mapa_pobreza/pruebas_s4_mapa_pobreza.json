@@ -1,0 +1,101 @@
+[
+  {
+    "id": "M-01",
+    "descripcion": "Los distritos del Mapa son exactamente los vigentes al 30/6/2018 en dim_ubigeo_historico",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "mapa": 1874,
+      "dim": 1874,
+      "solo_mapa": [],
+      "solo_dim": []
+    }
+  },
+  {
+    "id": "M-02",
+    "descripcion": "Las 196 provincias del Mapa son las vigentes en 2018 y cada distrito tiene su provincia",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "provincias": 196
+    }
+  },
+  {
+    "id": "M-03",
+    "descripcion": "Intervalos completos y coherentes: 0 ≤ inferior ≤ superior ≤ 100",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "M-04",
+    "descripcion": "Anexo1, Anexo2, A3 y A4 traen el mismo intervalo para cada territorio",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "diferencia_maxima": 0.0
+    }
+  },
+  {
+    "id": "M-05",
+    "descripcion": "Los distritos de un mismo agrupamiento comparten intervalo y provincia",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "agrupamientos": 197,
+      "distritos": 476
+    }
+  },
+  {
+    "id": "M-06",
+    "descripcion": "Grupos robustos nacionales de distritos: 28, todos con grupo; solo Pachangara (150906) inferido por su agrupamiento (grupo 16 con 106 distritos, Cuadro N.º 4)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "sin_grupo": [],
+      "inferidos": [
+        "150906"
+      ],
+      "grupo_16": 106
+    }
+  },
+  {
+    "id": "M-07",
+    "descripcion": "Grupos robustos provinciales: 16, del 1 al 16 (A4)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "M-08",
+    "descripcion": "Grupos robustos regionales: cada distrito tiene uno y el número por departamento es el del Cuadro N.º 5 del Libro",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": {}
+    }
+  },
+  {
+    "id": "M-09",
+    "descripcion": "La ubicación nacional (Anexo2) es un orden completo de 1 a 1 874",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "M-10",
+    "descripcion": "La población 2020 de los distritos suma la de su provincia (±1 por redondeo)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "diferencia_maxima": 0.0
+    }
+  },
+  {
+    "id": "M-11",
+    "descripcion": "Todo territorio tiene nombre vigente y grupo comparable GEO2017",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  }
+]

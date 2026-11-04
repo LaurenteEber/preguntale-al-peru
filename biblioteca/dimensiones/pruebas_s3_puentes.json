@@ -1,0 +1,178 @@
+[
+  {
+    "id": "I-01",
+    "descripcion": "IPC mensual sin huecos desde 2010-01 hasta el último mes publicado",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "desde": "2010-01",
+      "hasta": "2026-08",
+      "meses": 200
+    }
+  },
+  {
+    "id": "I-02",
+    "descripcion": "Base del índice: dic. 2021 = 100",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-01",
+    "descripcion": "RENIPRESS: código IPRESS único (8 dígitos)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-02",
+    "descripcion": "RENIPRESS: ubigeo de cada establecimiento es un distrito vigente (≥ 99 %)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "pct_valido": 0.99997,
+      "invalidos": [
+        "160800"
+      ],
+      "corregidos_codigo_antiguo": 2
+    }
+  },
+  {
+    "id": "E-12",
+    "descripcion": "RENIPRESS: un código escindido (160109) nunca se redirige por alias; cada fila curada existe en el crudo con ese ubigeo y apunta a un distrito; el resto queda en la provincia contenedora",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "curados_no_aplicados_o_destino_invalido": [],
+      "escindidos_por_alias": 0,
+      "por_metodo": {
+        "fuente": 36126,
+        "curado": 1,
+        "codigo_escindido_contenedor": 1
+      }
+    }
+  },
+  {
+    "id": "E-05",
+    "descripcion": "SIEN: ubigeo del establecimiento con 6 dígitos y existente en dim_ubigeo_historico en el 100 % de las filas",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 2400507,
+      "nulos": 0,
+      "invalidos": 0,
+      "filas_con_5_digitos_en_el_crudo": {
+        "Ubigeo_EESS": 898936,
+        "UbigeoPN": 785500,
+        "UbigeoREN": 898936
+      }
+    }
+  },
+  {
+    "id": "E-06",
+    "descripcion": "SIEN-Hb 6-35 m: procedencia del niño (UbigeoPN) ubicada ≥ 95 % (R-TERRITORIO-08, por carga). Si no, la cobertura por procedencia va solo a departamento o nacional, con el % sin procedencia como residuo",
+    "ok": false,
+    "bloqueante": false,
+    "detalle": {
+      "pct_pn_ubicado_nacional": 0.8456,
+      "nivel_carga": "solo_departamento_o_nacional",
+      "departamentos_por_nivel": {
+        "solo_departamento_o_nacional": 23,
+        "distrito_con_advertencia": 2
+      }
+    }
+  },
+  {
+    "id": "E-07",
+    "descripcion": "SIEN-Hb: UbigeoREN informado en el 100 % y existente en dim_ubigeo_historico",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "nulos": 0,
+      "invalidos": 0,
+      "fuera_geo2017": 979
+    }
+  },
+  {
+    "id": "E-08",
+    "descripcion": "SIEN-Hb (todo el ZIP): Hbc = Hemoglobina − ajuste OMS 2024 por AlturaREN (≥ 500 m), sin NaN; Dx_anemia (normal/leve/moderada/severa) igual al de los cortes OMS 2024; un REN por establecimiento y una altitud por REN",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "filas": 1241981,
+      "hbc_distinta_de_oms2024_o_nan": 0,
+      "dx_nulo_o_no_valido": 0,
+      "dx_distinto_de_cortes_oms2024": 0,
+      "edad_fuera_de_6_59m_o_nula": 0,
+      "altura_ren_cero": 163,
+      "eess_con_varios_ren": 0,
+      "ren_con_varias_altitudes": 0
+    }
+  },
+  {
+    "id": "E-10",
+    "descripcion": "SIEN-Hb: Dx_anemia válido y edad en 6-59 m en el 100 % de las filas (si no, esas filas van a grupo_edad='fuera_de_rango' y no cuentan como anemia)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "dx_nulo_o_no_valido": 0,
+      "edad_fuera_de_6_59m_o_nula": 0
+    }
+  },
+  {
+    "id": "E-09",
+    "descripcion": "SIEN: el ZIP trae los mismos archivos por DIRESA en Hb y en Pt",
+    "ok": false,
+    "bloqueante": false,
+    "detalle": {
+      "Hb": 29,
+      "Pt": 18,
+      "faltan_en_Pt": [
+        "Niños LIMA REGION.csv",
+        "Niños LORETO.csv",
+        "Niños MADRE DE DIOS.csv",
+        "Niños MOQUEGUA.csv",
+        "Niños PASCO.csv",
+        "Niños PIURA.csv",
+        "Niños PUNO.csv",
+        "Niños SAN MARTIN.csv",
+        "Niños TACNA.csv",
+        "Niños TUMBES.csv",
+        "Niños UCAYALI.csv"
+      ]
+    }
+  },
+  {
+    "id": "E-11",
+    "descripcion": "fact_sien_hb_ubigeo: clave única (anio, id_insumo, cod_ipress, 3 ubigeos, grupo_edad), anio único en el ZIP y Σ filas = filas Hb leídas del crudo en esta corrida",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "duplicados_clave": 0,
+      "anio": 2025,
+      "filas_tabla": 1241981,
+      "filas_crudo": 1241981
+    }
+  },
+  {
+    "id": "E-03",
+    "descripcion": "SIEN 2025: el 100 % de los establecimientos se ubica (código RENIPRESS o ubigeo válido)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "establecimientos": 8433,
+      "no_ubicados": [],
+      "pct_en_renipress": 1.0
+    }
+  },
+  {
+    "id": "E-04",
+    "descripcion": "SIEN 2025: el ubigeo del establecimiento coincide con el de RENIPRESS (≥ 98 %)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "pct": 0.99893,
+      "distintos": 9
+    }
+  }
+]

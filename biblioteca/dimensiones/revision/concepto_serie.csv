@@ -1,0 +1,55 @@
+concepto_id,anio,devengado_millones,comparable_con_anio_anterior,motivo_quiebre
+agua_consumo_humano,2023,103.6,sin_anio_anterior,2022 sin montos en la base; eventos del año: L10 traslado (comparable_por_actividad)
+agua_consumo_humano,2024,83.9,si,
+agua_consumo_humano,2025,106.4,si,"nodos nuevos: 31.5%; evento comparable: L11 division (comparable por concepto, no por programa)"
+atencion_anemia_nino,2023,30.5,sin_anio_anterior,2022 sin montos en la base
+atencion_anemia_nino,2024,53.0,si,
+atencion_anemia_nino,2025,75.3,si,
+comunicacion_anemia,2023,19.7,sin_anio_anterior,2022 sin montos en la base; eventos del año: L10 traslado (comparable_por_actividad)
+comunicacion_anemia,2024,18.3,si,
+comunicacion_anemia,2025,16.8,si,
+consejeria_familias,2023,239.3,sin_anio_anterior,2022 sin montos en la base; eventos del año: L09 absorcion_total (no_comparable_en_nivel_programa; comparable_por_concepto)
+consejeria_familias,2024,288.4,si,
+consejeria_familias,2025,267.4,si,
+control_calidad_alimentos,2023,23.9,sin_anio_anterior,2022 sin montos en la base
+control_calidad_alimentos,2024,29.6,si,
+control_calidad_alimentos,2025,28.7,si,
+cred_sin_suplemento_hierro,2023,316.5,sin_anio_anterior,2022 sin montos en la base
+cred_sin_suplemento_hierro,2024,378.6,si,
+cred_sin_suplemento_hierro,2025,400.9,si,
+cuidado_diurno_otros_ejecutores,2023,0.1,sin_anio_anterior,2022 sin montos en la base
+cuidado_diurno_otros_ejecutores,2024,111.5,no,evento de linaje: L12 cambio_de_contenido (producto no comparable 2023-2024; los conceptos de Cuna Más sí)
+cuidado_diurno_otros_ejecutores,2025,137.8,si,
+cuna_mas_acompanamiento_familias,2023,190.9,sin_anio_anterior,2022 sin montos en la base
+cuna_mas_acompanamiento_familias,2024,426.7,si,
+cuna_mas_acompanamiento_familias,2025,536.7,si,
+cuna_mas_cuidado_diurno,2023,294.7,sin_anio_anterior,2022 sin montos en la base
+cuna_mas_cuidado_diurno,2024,365.7,si,
+cuna_mas_cuidado_diurno,2025,446.5,si,
+gestion_cuidado_infantil,2023,13.4,sin_anio_anterior,2022 sin montos en la base
+gestion_cuidado_infantil,2024,18.4,si,
+gestion_cuidado_infantil,2025,21.9,si,
+gestion_nutricion,2023,145.7,sin_anio_anterior,2022 sin montos en la base; eventos del año: L09 absorcion_total (no_comparable_en_nivel_programa; comparable_por_concepto)
+gestion_nutricion,2024,155.1,si,
+gestion_nutricion,2025,152.2,si,
+ira_eda,2023,253.3,sin_anio_anterior,2022 sin montos en la base
+ira_eda,2024,278.3,si,
+ira_eda,2025,314.9,si,
+ira_eda_complicada,2023,146.9,sin_anio_anterior,2022 sin montos en la base
+ira_eda_complicada,2024,176.4,si,
+ira_eda_complicada,2025,186.2,si,
+otras_prevalentes,2023,95.0,sin_anio_anterior,2022 sin montos en la base; eventos del año: L09 absorcion_total (no_comparable_en_nivel_programa; comparable_por_concepto)
+otras_prevalentes,2024,80.7,si,
+otras_prevalentes,2025,83.6,si,
+parasitosis,2023,48.7,sin_anio_anterior,2022 sin montos en la base; eventos del año: L09 absorcion_total (no_comparable_en_nivel_programa; comparable_por_concepto)
+parasitosis,2024,52.1,si,
+parasitosis,2025,51.8,si,
+suplemento_hierro_adolescente,2023,9.9,sin_anio_anterior,2022 sin montos en la base
+suplemento_hierro_adolescente,2024,17.4,si,
+suplemento_hierro_adolescente,2025,25.2,si,
+suplemento_hierro_vitA_nino,2023,97.5,sin_anio_anterior,2022 sin montos en la base
+suplemento_hierro_vitA_nino,2024,113.6,si,
+suplemento_hierro_vitA_nino,2025,107.5,si,
+vacunas,2023,658.6,sin_anio_anterior,2022 sin montos en la base
+vacunas,2024,721.0,si,
+vacunas,2025,664.0,si,

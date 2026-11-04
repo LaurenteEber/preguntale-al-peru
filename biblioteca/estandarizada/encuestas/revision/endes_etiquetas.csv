@@ -1,0 +1,50 @@
+anio,archivo,variable,etiqueta
+2015,504-Modulo74/RECH6.SAV,HC56,Hemoglobin level adjusted by altitude (g/dl - 1 decimal)
+2015,504-Modulo74/RECH6.SAV,HC57,Anemia level
+2015,504-Modulo74/RECH6.SAV,HC70,Ht/A Standard deviations (according to WHO)
+2015,(diseño),estratos_con_un_conglomerado,0 de 73
+2016,548-Modulo74/RECH6.sav,HC56,Hemoglobin level adjusted by altitude (g/dl - 1 decimal)
+2016,548-Modulo74/RECH6.sav,HC57,Anemia level
+2016,548-Modulo74/RECH6.sav,HC70,Ht/A Standard deviations (according to WHO)
+2016,(diseño),estratos_con_un_conglomerado,0 de 73
+2017,605-Modulo74/RECH6.SAV,HC56,Hemoglobin level adjusted by altitude (g/dl - 1 decimal)
+2017,605-Modulo74/RECH6.SAV,HC57,Anemia level
+2017,605-Modulo74/RECH6.SAV,HC70,Ht/A Standard deviations (according to WHO)
+2017,(diseño),estratos_con_un_conglomerado,0 de 73
+2018,638-Modulo74/RECH6.SAV,HC56,Nivel de Hemoglobina ajustado por altitud (g-dl - 1 decimal)
+2018,638-Modulo74/RECH6.SAV,HC57,Nivel de Anemia
+2018,638-Modulo74/RECH6.SAV,HC70,Altura/Edad Desviación Standard (de acuerdo con WHO)
+2018,(diseño),estratos_con_un_conglomerado,0 de 248
+2019,Modulo74/RECH6.SAV,HC56,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal)
+2019,Modulo74/RECH6.SAV,HC57,Nivel de anemia
+2019,Modulo74/RECH6.SAV,HC70,Talla/Edad de la Desviación Estándar de la mediana de referencia (según la OMS)
+2019,(diseño),estratos_con_un_conglomerado,0 de 248
+2020,739-Modulo1638/RECH6.sav,HC56,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal)
+2020,739-Modulo1638/RECH6.sav,HC57,Nivel de anemia
+2020,739-Modulo1638/RECH6.sav,HC70,Talla/Edad de la Desviación Estándar de la mediana de referencia (según la OMS)
+2020,739-Modulo1638/RECH6.sav,HV005A,Factor mediciones niño
+2020,(diseño),estratos_con_un_conglomerado,10 de 245
+2021,760-Modulo1638/RECH6.dta,HC56,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal)
+2021,760-Modulo1638/RECH6.dta,HC57,Nivel de anemia
+2021,760-Modulo1638/RECH6.dta,HC70,Talla/Edad de la Desviación Estándar de la mediana de referencia (según la OMS)
+2021,(diseño),estratos_con_un_conglomerado,17 de 240
+2022,786-Modulo1638/RECH6.dta,HC56,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal)
+2022,786-Modulo1638/RECH6.dta,HC57,Nivel de anemia
+2022,786-Modulo1638/RECH6.dta,HC70,Talla/Edad de la Desviación Estándar de la mediana de referencia (según la OMS)
+2022,(diseño),estratos_con_un_conglomerado,17 de 240
+2023,910-Modulo1638/RECH6_2023.dta,HC56,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal)
+2023,910-Modulo1638/RECH6_2023.dta,HC57,Nivel de anemia
+2023,910-Modulo1638/RECH6_2023.dta,HC70,Talla/Edad de la Desviación Estándar de la mediana de referencia (según la OMS)
+2023,(diseño),estratos_con_un_conglomerado,18 de 240
+2024,968-Modulo1638/RECH6_2024.dta,HC56,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal) RM 363-2022-MINSA
+2024,968-Modulo1638/RECH6_2024.dta,HC56A,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal) NUEVA DIRECTRIZ OMS 2
+2024,968-Modulo1638/RECH6_2024.dta,HC57,Nivel de anemia RM 363-2022-MINSA
+2024,968-Modulo1638/RECH6_2024.dta,HC57A,Nivel de anemia NUEVA DIRECTRIZ OMS 2024/RM 251-2024-MINSA
+2024,968-Modulo1638/RECH6_2024.dta,HC70,Talla/Edad de la Desviación Estándar de la mediana de referencia (según la OMS)
+2024,(diseño),estratos_con_un_conglomerado,18 de 240
+2025,1036-Modulo1638/RECH6_2025.dta,HC56,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal) RM 363-2022-MINSA
+2025,1036-Modulo1638/RECH6_2025.dta,HC56A,Nivel de hemoglobina ajustado por altitud (g/dl-1 decimal) NUEVA DIRECTRIZ OMS 2
+2025,1036-Modulo1638/RECH6_2025.dta,HC57,Nivel de anemia RM 363-2022-MINSA
+2025,1036-Modulo1638/RECH6_2025.dta,HC57A,Nivel de anemia NUEVA DIRECTRIZ OMS 2024/RM 251-2024-MINSA
+2025,1036-Modulo1638/RECH6_2025.dta,HC70,Talla/Edad de la Desviación Estándar de la mediana de referencia (según la OMS)
+2025,(diseño),estratos_con_un_conglomerado,18 de 240

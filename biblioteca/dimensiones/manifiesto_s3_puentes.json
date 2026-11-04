@@ -1,0 +1,129 @@
+{
+  "sprint": "s3_puentes",
+  "construido": "2026-11-04T10:59:25-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "CAPA0:s1_territorio",
+      "recurso": "dim_ubigeo_historico",
+      "hash": "sha256:9857c9a48a821e98b997ed72e1bf40579c13e674ff21254d0f5c2246cc7d2261",
+      "archivo_original": "dim_ubigeo_historico.parquet"
+    },
+    {
+      "source_id": "BCRP-IPC-LIMA",
+      "recurso": "bcrp-ipc-lima",
+      "hash": "sha256:6eca3ec59df9b1505d50b5faf8c7e6f849a9d1e7892bc460a0390f6cca208828",
+      "archivo_original": "BCRP_PN38705PM_2010-01_2026-12.json"
+    },
+    {
+      "source_id": "SUSALUD-RENIPRESS",
+      "recurso": "susalud-renipress",
+      "hash": "sha256:89040c55e9c53398465975171fb348109fd11b787d238970161a243115070823",
+      "archivo_original": "RENIPRESS_30-09-2026.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "renipress_ubicacion_curada.yaml",
+      "hash": "sha256:e7619868964123f13d493cae4eb890dca661342fc0470e4255a414121c3c2686",
+      "archivo_original": "renipress_ubicacion_curada.yaml"
+    },
+    {
+      "source_id": "INS-CENAN-SIEN",
+      "recurso": "ins-cenan-sien",
+      "hash": "sha256:b05f29b160841198785afebb9bea4b72f84fa00b0c4eebbf6b2186981868469e",
+      "archivo_original": "BD SIEN-HIS Niños menores de 5 años 2025.zip"
+    }
+  ],
+  "tablas": {
+    "dim_ipc": {
+      "archivo": "dim_ipc.parquet",
+      "filas": 200,
+      "hash": "sha256:2d33b25a65ce7e0e25adf055e66d616e233a14e75fcad19857f73c4f39858a98",
+      "columnas": [
+        "anio",
+        "mes",
+        "indice",
+        "ipc_prom_anual",
+        "meses_con_dato",
+        "anio_completo",
+        "ipc_prom_parcial",
+        "serie",
+        "base",
+        "version_tabla"
+      ],
+      "orden": "anio, mes"
+    },
+    "dim_establecimiento_salud": {
+      "archivo": "dim_establecimiento_salud.parquet",
+      "filas": 36128,
+      "hash": "sha256:d93bab860a0b0c8a09a1a09d0ad324b8c581411b3510cf19664aac5a1fb97199",
+      "columnas": [
+        "cod_ipress",
+        "nombre",
+        "institucion",
+        "clasificacion",
+        "tipo_establecimiento",
+        "categoria",
+        "categoria_fuente",
+        "estado",
+        "ubigeo_inei",
+        "diris_diresa",
+        "red",
+        "microred",
+        "cod_ue",
+        "unidad_ejecutora",
+        "lat",
+        "lon",
+        "inicio_actividad",
+        "ubigeo_fuente",
+        "metodo_ubigeo",
+        "evidencia_ubigeo",
+        "ubigeo_corregido",
+        "ubigeo_valido",
+        "subsector",
+        "activo_al_corte",
+        "fecha_corte",
+        "fuente_corte",
+        "version_tabla"
+      ],
+      "orden": "cod_ipress"
+    },
+    "fact_sien_hb_ubigeo": {
+      "archivo": "fact_sien_hb_ubigeo.parquet",
+      "filas": 138055,
+      "hash": "sha256:6ac3ea04a210d573247ce7028ec808df303527c3f0b6b5f7ce1db3391d887b8a",
+      "columnas": [
+        "anio",
+        "id_insumo",
+        "cod_ipress",
+        "ubigeo_eess",
+        "ubigeo_procedencia",
+        "ubigeo_ref_altitud",
+        "grupo_edad",
+        "filas",
+        "filas_con_anemia",
+        "filas_dx_valido",
+        "unidad",
+        "criterio_anemia",
+        "version_tabla"
+      ],
+      "orden": "anio, id_insumo, cod_ipress, ubigeo_eess, ubigeo_procedencia, ubigeo_ref_altitud, grupo_edad"
+    }
+  },
+  "pruebas": {
+    "total": 14,
+    "fallidas": [
+      "E-06",
+      "E-09"
+    ],
+    "bloqueantes_fallidas": []
+  }
+}

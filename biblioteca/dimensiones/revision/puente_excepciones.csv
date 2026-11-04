@@ -1,0 +1,8 @@
+ubigeo_inei,ubigeo_reniec,nombre,decision,motivo
+150144,,SANTA MARIA DE HUACHIPA,descartado,"centro poblado Santa María de Huachipa (Lurigancho), no es distrito"
+160109,150107,PUTUMAYO,descartado,código INEI anterior a la provincia de Putumayo (2014); vigente: 160801
+160114,150114,TENIENTE MANUEL CLAVERO,descartado,código INEI anterior a la provincia de Putumayo (2014); vigente: 160803
+180107,170107,SAN ANTONIO,emparejado_por_nombre,GitHub sin código INEI (Ley 31216); se asigna por provincia + nombre exacto
+130112,120113,Alto Trujillo,emparejado_por_nombre,ausente en GitHub 2021; tomado de RENIEC (provincia + nombre exacto)
+160405,150605,Santa Rosa de Loreto,emparejado_por_nombre,ausente en GitHub 2021; tomado de RENIEC (provincia + nombre exacto)
+120307,,Sangani,pendiente,sin código RENIEC conocido (distrito posterior al corte de GitHub 2021)

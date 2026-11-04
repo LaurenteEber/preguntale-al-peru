@@ -1,0 +1,235 @@
+{
+  "sprint": "piloto_indicadores",
+  "construido": "2026-11-04T11:05:11-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "CURADO",
+      "recurso": "dim_indicador.yaml",
+      "hash": "sha256:6443b772ec6ed1b03e1c0eb66c51cb087822405736ba8e405bdfa670b917f6be",
+      "archivo_original": "dim_indicador.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "cruces_permitidos.yaml",
+      "hash": "sha256:24b7e8cdff32d93c270c1112ff8a188d99173b7de5f843097f697813acc5cd9f",
+      "archivo_original": "cruces_permitidos.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "cifras_doradas.csv",
+      "hash": "sha256:1fa63e085b8801fbdaae25cd77c3dcc09a3d28ee2eb7b7500ec86d2c39f038db",
+      "archivo_original": "cifras_doradas.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "definiciones_endes.yaml",
+      "hash": "sha256:40a9c5be198489b0c7edfd7f233447064b864f67f831908292b89c0f189e6f01",
+      "archivo_original": "definiciones_endes.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "dominios.yaml",
+      "hash": "sha256:ebc0403711b1f458124e705e3213c1c0d15106815e615a7b45755b6827ae71c8",
+      "archivo_original": "dominios.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "vistas_gasto.sql",
+      "hash": "sha256:308897ec9a870d2fa762ef331c77d3fbdc2ea3cd4697515038795d88611f5288",
+      "archivo_original": "vistas_gasto.sql"
+    },
+    {
+      "source_id": "CAPA0:s4_endes",
+      "recurso": "endes_nino",
+      "hash": "sha256:0f3b40b4174d057376bfb64408354fadbf3c7b492c357a237cd9683317bf0e72",
+      "archivo_original": "endes_nino.parquet"
+    },
+    {
+      "source_id": "CAPA0:s4_enaho",
+      "recurso": "enaho_sumaria",
+      "hash": "sha256:0ea814339edbf1f471f572c09d341b5dd84ff863cd3361d490c3ba8a3728c3d1",
+      "archivo_original": "enaho_sumaria.parquet"
+    },
+    {
+      "source_id": "CAPA0:s4_mapa_pobreza",
+      "recurso": "fact_mapa_pobreza",
+      "hash": "sha256:a98a6d888e54a8d108037169ac64ca3ab2ecd9b0f3c8460d2a9ceb32f835b035",
+      "archivo_original": "fact_mapa_pobreza.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_puentes",
+      "recurso": "fact_sien_hb_ubigeo",
+      "hash": "sha256:6ac3ea04a210d573247ce7028ec808df303527c3f0b6b5f7ce1db3391d887b8a",
+      "archivo_original": "fact_sien_hb_ubigeo.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_gasto",
+      "recurso": "dim_tema_gasto",
+      "hash": "sha256:b46f5da5448953b67aa29ad99a6005e7edec4a73664dd7ea5950ff716b4e714c",
+      "archivo_original": "dim_tema_gasto.parquet"
+    },
+    {
+      "source_id": "CAPA0:s2_poblacion",
+      "recurso": "fact_poblacion_grupo",
+      "hash": "sha256:6541e8c2718cfae0378c898c49dae1353e7feb746fc66b864eb8c8eb07c6a389",
+      "archivo_original": "fact_poblacion_grupo.parquet"
+    }
+  ],
+  "tablas": {
+    "dim_indicador": {
+      "archivo": "dim_indicador.parquet",
+      "filas": 9,
+      "hash": "sha256:dd0c3fd15ba5f2ac5826f27b12b69050b489c9cedef65b73d03bafa5ba119236",
+      "columnas": [
+        "indicador_id",
+        "estado_propuesta",
+        "preguntas",
+        "nombre_ciudadano",
+        "nombre_tecnico",
+        "tema",
+        "concepto_medido",
+        "rank_concepto",
+        "criterio_medicion",
+        "fuente_principal",
+        "naturaleza_dato",
+        "tipo_medida",
+        "base_geografica",
+        "base_geografica_usada",
+        "columna_ubigeo",
+        "sistema_ubigeo",
+        "tipo_estimacion",
+        "unidad",
+        "origen_cifra",
+        "poblacion_objetivo",
+        "universo",
+        "unidad_observacion",
+        "es_socioeconomico",
+        "velocidad_cambio",
+        "sensibilidad_divulgacion",
+        "subregistro_conocido",
+        "insumos",
+        "requiere_denominador",
+        "tipo_denominador",
+        "denominador_principal",
+        "denominadores_contraste",
+        "denominador_tipo_poblacion",
+        "vintage_denominador",
+        "metodo_denominador",
+        "requiere_estandarizacion",
+        "n_desagregaciones_adicionales",
+        "tasa_suavizada",
+        "periodicidad_estimacion",
+        "nivel_territorial_inferencia",
+        "dominios_inferencia",
+        "tipo_aplicacion",
+        "modulo_encuesta",
+        "niveles_validos",
+        "niveles_no_validos",
+        "anios_disponibles",
+        "quiebres",
+        "anios_con_quiebre",
+        "variables_diseno",
+        "metodo_ic",
+        "validado_contra_oficial",
+        "tabla_origen",
+        "definicion",
+        "rotulo_medida",
+        "rotulos_obligatorios",
+        "notas",
+        "ambito_lima_usado",
+        "ranking",
+        "denominador_ambitos_lima",
+        "cifra_por_entidad",
+        "rol_gasto",
+        "tema_id",
+        "cadena",
+        "alternativa_de",
+        "fase_gasto_defecto",
+        "precios",
+        "es_desglose_de",
+        "anio_referencia",
+        "incertidumbre_publicada",
+        "covariables_modelo",
+        "comparable_con_ediciones",
+        "version_tabla"
+      ],
+      "orden": "indicador_id"
+    },
+    "cruces_permitidos": {
+      "archivo": "cruces_permitidos.parquet",
+      "filas": 3,
+      "hash": "sha256:3347082517a7965ea7945056b08062d236b5adb2a9fc9ac414698a4c99bd3b96",
+      "columnas": [
+        "id_cruce",
+        "estado_propuesta",
+        "indicador_a",
+        "indicador_b",
+        "pregunta",
+        "nivel_minimo",
+        "ventana_anios",
+        "rezago_anios",
+        "anios_comunes",
+        "presentacion",
+        "poblacion_objetivo_comun",
+        "nota_metodologica",
+        "aprobado_por",
+        "fecha_aprobacion",
+        "subdivision_lima",
+        "version_tabla"
+      ],
+      "orden": "id_cruce"
+    },
+    "cifras_doradas": {
+      "archivo": "cifras_doradas.parquet",
+      "filas": 206,
+      "hash": "sha256:cd7ebc5b0499a822c39825bcc2842a2033a1d24e127c031a809a4bab494d9bcc",
+      "columnas": [
+        "id_cifra",
+        "indicador_id",
+        "fuente_id",
+        "anio",
+        "nivel",
+        "territorio",
+        "definicion_lima",
+        "criterio",
+        "valor_publicado",
+        "ic_inf_publicado",
+        "ic_sup_publicado",
+        "cv_publicado",
+        "casos_publicados",
+        "decimales",
+        "comparacion",
+        "tolerancia_pp",
+        "tolerancia_cv",
+        "bloqueante",
+        "proposito",
+        "documento",
+        "url",
+        "cuadro_pagina",
+        "fecha_publicacion",
+        "tipo_cita",
+        "verificado_por",
+        "nota",
+        "version_tabla"
+      ],
+      "orden": "id_cifra"
+    }
+  },
+  "pruebas": {
+    "total": 32,
+    "fallidas": [
+      "IND-06",
+      "DOR-10"
+    ],
+    "bloqueantes_fallidas": []
+  }
+}

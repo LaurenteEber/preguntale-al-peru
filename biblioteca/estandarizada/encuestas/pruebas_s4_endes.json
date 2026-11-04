@@ -1,0 +1,869 @@
+[
+  {
+    "id": "E-2015-01",
+    "descripcion": "ENDES 2015: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 25527,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2015-02",
+    "descripcion": "ENDES 2015: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2015-03",
+    "descripcion": "ENDES 2015: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2015-04",
+    "descripcion": "ENDES 2015: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 1
+    }
+  },
+  {
+    "id": "E-2015-05",
+    "descripcion": "ENDES 2015: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2015-08",
+    "descripcion": "ENDES 2015: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 73,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2015-09",
+    "descripcion": "ENDES 2015: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2016-01",
+    "descripcion": "ENDES 2016: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 22682,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2016-02",
+    "descripcion": "ENDES 2016: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2016-03",
+    "descripcion": "ENDES 2016: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2016-04",
+    "descripcion": "ENDES 2016: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2016-05",
+    "descripcion": "ENDES 2016: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2016-08",
+    "descripcion": "ENDES 2016: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 73,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2016-09",
+    "descripcion": "ENDES 2016: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2017-01",
+    "descripcion": "ENDES 2017: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 22483,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2017-02",
+    "descripcion": "ENDES 2017: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2017-03",
+    "descripcion": "ENDES 2017: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2017-04",
+    "descripcion": "ENDES 2017: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2017-05",
+    "descripcion": "ENDES 2017: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2017-08",
+    "descripcion": "ENDES 2017: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 73,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2017-09",
+    "descripcion": "ENDES 2017: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2018-01",
+    "descripcion": "ENDES 2018: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 24288,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2018-02",
+    "descripcion": "ENDES 2018: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2018-03",
+    "descripcion": "ENDES 2018: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2018-04",
+    "descripcion": "ENDES 2018: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2018-05",
+    "descripcion": "ENDES 2018: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2018-06",
+    "descripcion": "ENDES 2018: el ubigeo del hogar existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "E-2018-07",
+    "descripcion": "ENDES 2018: el ubigeo del hogar es del mismo departamento que HV024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": 0
+    }
+  },
+  {
+    "id": "E-2018-08",
+    "descripcion": "ENDES 2018: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 248,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2018-09",
+    "descripcion": "ENDES 2018: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2019-01",
+    "descripcion": "ENDES 2019: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 22143,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2019-02",
+    "descripcion": "ENDES 2019: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2019-03",
+    "descripcion": "ENDES 2019: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2019-04",
+    "descripcion": "ENDES 2019: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2019-05",
+    "descripcion": "ENDES 2019: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2019-06",
+    "descripcion": "ENDES 2019: el ubigeo del hogar existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "E-2019-07",
+    "descripcion": "ENDES 2019: el ubigeo del hogar es del mismo departamento que HV024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": 0
+    }
+  },
+  {
+    "id": "E-2019-08",
+    "descripcion": "ENDES 2019: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 248,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2019-09",
+    "descripcion": "ENDES 2019: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2020-01",
+    "descripcion": "ENDES 2020: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 13529,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2020-02",
+    "descripcion": "ENDES 2020: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2020-03",
+    "descripcion": "ENDES 2020: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2020-04",
+    "descripcion": "ENDES 2020: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2020-05",
+    "descripcion": "ENDES 2020: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2020-06",
+    "descripcion": "ENDES 2020: el ubigeo del hogar existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "E-2020-07",
+    "descripcion": "ENDES 2020: el ubigeo del hogar es del mismo departamento que HV024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": 0
+    }
+  },
+  {
+    "id": "E-2020-08",
+    "descripcion": "ENDES 2020: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 245,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2020-09",
+    "descripcion": "ENDES 2020: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2021-01",
+    "descripcion": "ENDES 2021: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 22741,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2021-02",
+    "descripcion": "ENDES 2021: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2021-03",
+    "descripcion": "ENDES 2021: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2021-04",
+    "descripcion": "ENDES 2021: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2021-05",
+    "descripcion": "ENDES 2021: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2021-06",
+    "descripcion": "ENDES 2021: el ubigeo del hogar existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "E-2021-07",
+    "descripcion": "ENDES 2021: el ubigeo del hogar es del mismo departamento que HV024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": 0
+    }
+  },
+  {
+    "id": "E-2021-08",
+    "descripcion": "ENDES 2021: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 240,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2021-09",
+    "descripcion": "ENDES 2021: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2022-01",
+    "descripcion": "ENDES 2022: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 22424,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2022-02",
+    "descripcion": "ENDES 2022: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2022-03",
+    "descripcion": "ENDES 2022: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2022-04",
+    "descripcion": "ENDES 2022: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2022-05",
+    "descripcion": "ENDES 2022: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2022-06",
+    "descripcion": "ENDES 2022: el ubigeo del hogar existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "E-2022-07",
+    "descripcion": "ENDES 2022: el ubigeo del hogar es del mismo departamento que HV024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": 0
+    }
+  },
+  {
+    "id": "E-2022-08",
+    "descripcion": "ENDES 2022: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 240,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2022-09",
+    "descripcion": "ENDES 2022: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2023-01",
+    "descripcion": "ENDES 2023: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 21464,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2023-02",
+    "descripcion": "ENDES 2023: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2023-03",
+    "descripcion": "ENDES 2023: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2023-04",
+    "descripcion": "ENDES 2023: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2023-05",
+    "descripcion": "ENDES 2023: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2023-06",
+    "descripcion": "ENDES 2023: el ubigeo del hogar existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "E-2023-07",
+    "descripcion": "ENDES 2023: el ubigeo del hogar es del mismo departamento que HV024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": 0
+    }
+  },
+  {
+    "id": "E-2023-08",
+    "descripcion": "ENDES 2023: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 240,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2023-09",
+    "descripcion": "ENDES 2023: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2024-01",
+    "descripcion": "ENDES 2024: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 20290,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2024-02",
+    "descripcion": "ENDES 2024: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2024-03",
+    "descripcion": "ENDES 2024: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2024-04",
+    "descripcion": "ENDES 2024: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2024-05",
+    "descripcion": "ENDES 2024: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2024-06",
+    "descripcion": "ENDES 2024: el ubigeo del hogar existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "E-2024-07",
+    "descripcion": "ENDES 2024: el ubigeo del hogar es del mismo departamento que HV024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": 0
+    }
+  },
+  {
+    "id": "E-2024-08",
+    "descripcion": "ENDES 2024: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 240,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2024-09",
+    "descripcion": "ENDES 2024: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2025-01",
+    "descripcion": "ENDES 2025: cada niño de RECH6 se une a RECH1 (miembro) y a RECH0 (hogar)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 19298,
+      "sin_rech1": 0,
+      "sin_rech0": 0
+    }
+  },
+  {
+    "id": "E-2025-02",
+    "descripcion": "ENDES 2025: clave (id_hogar, idx_nino) única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2025-03",
+    "descripcion": "ENDES 2025: 25 departamentos (HV024) y pesos positivos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "departamentos": [],
+      "pesos_no_positivos": 0
+    }
+  },
+  {
+    "id": "E-2025-04",
+    "descripcion": "ENDES 2025: todo niño con hemoglobina medida tiene nivel de anemia (HC57)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "medidos_sin_nivel": 0
+    }
+  },
+  {
+    "id": "E-2025-05",
+    "descripcion": "ENDES 2025: edades entre 0 y 59 meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-2025-06",
+    "descripcion": "ENDES 2025: el ubigeo del hogar existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "E-2025-07",
+    "descripcion": "ENDES 2025: el ubigeo del hogar es del mismo departamento que HV024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": 0
+    }
+  },
+  {
+    "id": "E-2025-08",
+    "descripcion": "ENDES 2025: cada estrato de diseño cae en un solo departamento y una sola área",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "estratos": 240,
+      "mezclados": 0
+    }
+  },
+  {
+    "id": "E-2025-09",
+    "descripcion": "ENDES 2025: cada conglomerado está en un solo estrato",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-11",
+    "descripcion": "ENDES: todo niño de los dpto 15 y 07 tiene ámbito de Lima; desde 2018 LM ⇔ provincia 1501",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "sin_ambito_por_anio": {},
+      "lm_igual_1501": true
+    }
+  },
+  {
+    "id": "E-12",
+    "descripcion": "ENDES: ningún estrato ni conglomerado de los dpto 15 y 07 mezcla ámbitos (todos los años)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "id_estrato": 0,
+      "id_conglomerado": 0
+    }
+  },
+  {
+    "id": "E-08",
+    "descripcion": "ENDES: la nueva directriz OMS 2024 (HC57A) solo existe desde 2024",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-09",
+    "descripcion": "ENDES: el peso de las mediciones (HV005A) solo se usa en 2020",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "E-10",
+    "descripcion": "ENDES: las cifras nacionales reproducen las publicadas por el INEI (±0.1 pp)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "comparadas": 88,
+      "fuera": []
+    }
+  }
+]

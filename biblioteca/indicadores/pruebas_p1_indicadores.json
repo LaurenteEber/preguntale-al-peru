@@ -1,0 +1,133 @@
+[
+  {
+    "id": "CAL-01",
+    "descripcion": "fact_indicador: la clave (indicador, año, nivel, territorio, medida, línea) es única",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "repetidas": 0
+    }
+  },
+  {
+    "id": "CAL-02",
+    "descripcion": "fact_indicador: cada indicador tiene filas en todos sus niveles válidos y años disponibles (dim_indicador)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "huecos": {}
+    }
+  },
+  {
+    "id": "CAL-03",
+    "descripcion": "R-ENC-18: el cubo reproduce TODAS las cifras doradas bloqueantes de encuestas (cifra a ± 0,1 pp, casos exactos y CV ± tolerancia donde el INEI los publica)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "comparadas": 50,
+      "fallan": []
+    }
+  },
+  {
+    "id": "CAL-04",
+    "descripcion": "Mapa de Pobreza 2018: el intervalo del cubo es el publicado (control de ingesta)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "fallan": []
+    }
+  },
+  {
+    "id": "CAL-05",
+    "descripcion": "Cifras doradas de control (no bloqueantes) que tienen fila en el cubo: se reproducen",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "comparadas": 101,
+      "fallan": [],
+      "sin_fila": [
+        "DOR-OMS-2023-PE",
+        "DOR-OMS-2023-09",
+        "DOR-OMS-2023-21",
+        "DOR-OMS-2023-LM1501",
+        "DOR-OMS-2018-PE",
+        "DOR-POB-2024-RESTO_URBANO",
+        "DOR-POB-2025-RESTO_URBANO"
+      ]
+    }
+  },
+  {
+    "id": "CAL-10",
+    "descripcion": "Registros (SIEN): el cubo reproduce las cifras oficiales del INS (cifra a 1 decimal y número de evaluados exactos; 12/10/2026)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "comparadas": 29,
+      "fallan": []
+    }
+  },
+  {
+    "id": "CAL-06",
+    "descripcion": "V4: el CV de la ENAHO con svy difiere ≤ 0,5 puntos del publicado (aviso, no bloquea)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "comparadas": 60,
+      "max_dif": 0.429
+    }
+  },
+  {
+    "id": "CAL-07",
+    "descripcion": "Gasto: el devengado nacional del cubo reproduce los controles aprobados (ex-PAN por concepto y opción C, 2023–2025, millones)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "obtenido": {
+        "grupo_expan": {
+          "2023": 2179,
+          "2024": 2429,
+          "2025": 2456
+        },
+        "grupo_opcion_c": {
+          "2023": 2056,
+          "2024": 2327,
+          "2025": 2366
+        }
+      },
+      "control": {
+        "grupo_expan": {
+          "2023": 2179,
+          "2024": 2429,
+          "2025": 2456
+        },
+        "grupo_opcion_c": {
+          "2023": 2056,
+          "2024": 2327,
+          "2025": 2366
+        }
+      }
+    }
+  },
+  {
+    "id": "CAL-08",
+    "descripcion": "Gasto (R-GASTO-01): nacional = departamentos + Callao + líneas aparte del 15 y el 07 (los gasto sin departamento, en su línea del nacional); LM + LR + no asignable = departamento 15 (±1 sol)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "malos": {}
+    }
+  },
+  {
+    "id": "CAL-09",
+    "descripcion": "SIEN: numerador nacional = suma de departamentos + Callao; en la cobertura, cota_inf ≤ cota_sup",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "nacional": {
+        "2025": 107834.0
+      },
+      "suma": {
+        "2025": 107834.0
+      }
+    }
+  }
+]

@@ -1,0 +1,222 @@
+{
+  "sprint": "s1_territorio",
+  "construido": "2026-11-04T10:57:34-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "PROPIO-ESTADISTICAS-SOCIALES-2020",
+      "recurso": "estadisticas-sociales-nacional-2020",
+      "hash": "sha256:3b014946628b28e0da35f67c2968568a7f13d801267633f4a410f1a1a87438c6",
+      "archivo_original": "000000 Nacional_Estadísticas sociales_(24Ago20).xlsx"
+    },
+    {
+      "source_id": "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+      "recurso": "inei-proyecciones-poblacion-distrital",
+      "hash": "sha256:9436df29b883fd4a9db3705040a6668ff4efe7047c2643249b6b6bedd90d5c8b",
+      "archivo_original": "6894980-peru-poblacion-total-proyectada-al-30-de-junio-de-cada-ano-segun-departamento-provincia-y-distrito-2018-2026.xlsx"
+    },
+    {
+      "source_id": "INEI-PROYECCIONES-DISTRITAL-2018-2022",
+      "recurso": "inei-proyecciones-distrital-2018-2022-3464927-anexo-1",
+      "hash": "sha256:0321fe37b6dc564a048788f8734e24ab221efebf05460d437acb0c7587963a06",
+      "archivo_original": "3464927-anexo-1.xlsx"
+    },
+    {
+      "source_id": "INEI-PNDA-UBIGEOS",
+      "recurso": "inei-pnda-ubigeos",
+      "hash": "sha256:d0ea9598a15c6fcb33bdeb8d81a84494403f37075a2f9f102b40868204f155c5",
+      "archivo_original": "UBIGEOS_2022_1891_distritos.zip"
+    },
+    {
+      "source_id": "GITHUB-UBIGEO-PERU-AUMENTADO",
+      "recurso": "github-ubigeo-peru-aumentado",
+      "hash": "sha256:6a2cde8fb82e336285da4d684241450e8a36630e42799652c8d72b596ec252e4",
+      "archivo_original": "ubigeo_distrito.csv"
+    },
+    {
+      "source_id": "INEI-DIRECTORIO-MUNICIPALIDADES",
+      "recurso": "inei-directorio-municipalidades",
+      "hash": "sha256:2fa36eda8042c24af4ca7aa0e20b6f5f6713713f7e924d329843c3cb290b1f86",
+      "archivo_original": "6722617-directorio-nacional-de-gobiernos-regionales-municipalidades-provinciales-distritales-y-de-centros-poblados-2025-cuadros-en-excel.zip"
+    },
+    {
+      "source_id": "RENIEC-POBLACION-IDENTIFICADA",
+      "recurso": "reniec-poblacion-identificada",
+      "hash": "sha256:f275987af1def5a9b156309559d9f490190b7d3395a3cfafd5a1a3d401de4548",
+      "archivo_original": "BD_DAbiertos_16_OPP_2026_06.01.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "altas_post2017.yaml",
+      "hash": "sha256:8fc854da37176cfe412c7fec8ba10fe03401f875028a061269fcce34ab2c89f0",
+      "archivo_original": "altas_post2017.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "ajustes_limites.yaml",
+      "hash": "sha256:a792d04a0e8c0d02a1466660573c56f4f2878f43b855a94cda451655b06ae74b",
+      "archivo_original": "ajustes_limites.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "ambitos.yaml",
+      "hash": "sha256:7edf8f5e47f091510e768c6f39a6431a443eacebab710ccd70b5338ce2374b19",
+      "archivo_original": "ambitos.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "dominios.yaml",
+      "hash": "sha256:ebc0403711b1f458124e705e3213c1c0d15106815e615a7b45755b6827ae71c8",
+      "archivo_original": "dominios.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "nombres_mostrados.yaml",
+      "hash": "sha256:ce332035a49c07bb6eabd62c50bea3e18ebdcee796aef79601071c103953c92c",
+      "archivo_original": "nombres_mostrados.yaml"
+    }
+  ],
+  "tablas": {
+    "dim_ubigeo_historico": {
+      "archivo": "dim_ubigeo_historico.parquet",
+      "filas": 2134,
+      "hash": "sha256:9857c9a48a821e98b997ed72e1bf40579c13e674ff21254d0f5c2246cc7d2261",
+      "columnas": [
+        "id_version",
+        "ubigeo_inei",
+        "ubigeo_reniec",
+        "nivel",
+        "ubigeo_padre",
+        "nombre",
+        "nombre_normalizado",
+        "nombres_alternos",
+        "nombre_oficial_inei",
+        "nombre_mostrado",
+        "fuente_nombre_mostrado",
+        "grupo_comparable_geo2017",
+        "region_natural_ref",
+        "pct_poblacion_urbana_cpv2017",
+        "tipologia_pcm",
+        "anio_primeros_datos_registros",
+        "version_tabla",
+        "vigente_desde",
+        "vigente_hasta",
+        "origen",
+        "territorio_modificado",
+        "norma_legal",
+        "fecha_publicacion_norma",
+        "url_norma",
+        "fecha_alta_inei",
+        "capital_legal",
+        "lat_capital",
+        "lon_capital",
+        "altitud_capital",
+        "fuente",
+        "estado_verificacion",
+        "anio_datos_desde",
+        "anio_datos_hasta",
+        "estado_ubigeo"
+      ],
+      "orden": "ubigeo_inei, vigente_desde"
+    },
+    "rel_ubigeo_origen": {
+      "archivo": "rel_ubigeo_origen.parquet",
+      "filas": 21,
+      "hash": "sha256:094deb840c2972ea552f06c955d0ba9d663c4c4850431f9943d0af63a248d4f5",
+      "columnas": [
+        "ubigeo_hijo",
+        "ubigeo_origen",
+        "tipo",
+        "es_origen_principal",
+        "poblacion_cedida_cpv2017",
+        "norma_legal",
+        "fuente",
+        "version_tabla"
+      ],
+      "orden": "ubigeo_hijo, ubigeo_origen"
+    },
+    "puente_ubigeo": {
+      "archivo": "puente_ubigeo.parquet",
+      "filas": 1892,
+      "hash": "sha256:ae2786b641ae4af914cbe0578bc7c6962e4799afa91cb964654af4cb21045278",
+      "columnas": [
+        "ubigeo_inei",
+        "ubigeo_reniec",
+        "nivel",
+        "vigente_desde",
+        "vigente_hasta",
+        "metodo_emparejamiento",
+        "nombre_inei",
+        "nombre_reniec",
+        "sim_nombre",
+        "fuente",
+        "version"
+      ],
+      "orden": "ubigeo_inei"
+    },
+    "dim_ambito": {
+      "archivo": "dim_ambito.parquet",
+      "filas": 4,
+      "hash": "sha256:b103696d2b109df7baa93bcab6de0c261b335ef965b18675e2e47033090b40f9",
+      "columnas": [
+        "ambito_id",
+        "nombre_mostrado",
+        "nombre_largo",
+        "alias",
+        "contiene",
+        "composicion",
+        "distritos_vigentes",
+        "n_distritos",
+        "gestion",
+        "fuente_definicion",
+        "codigo_en_fuentes",
+        "version_tabla"
+      ],
+      "orden": "ambito_id"
+    },
+    "dim_dominio": {
+      "archivo": "dim_dominio.parquet",
+      "filas": 698,
+      "hash": "sha256:954ef2aef7e51e4207332d47a9df3f312666f46579d3191afe1c1d300ee64070",
+      "columnas": [
+        "encuesta_id",
+        "anio",
+        "nivel_definicion",
+        "incluye_callao",
+        "confirmado",
+        "fuente_definicion",
+        "nota",
+        "composicion_aproximada_geo2017",
+        "codigo_en_microdatos",
+        "codigo_verificado",
+        "tipo",
+        "metodo",
+        "identificable_microdatos",
+        "ambito_id",
+        "rotulo",
+        "alias",
+        "version_tabla",
+        "dominio_id",
+        "dominio_nombre",
+        "composicion",
+        "reconstruible_con_ubigeo",
+        "ubigeos",
+        "avisos"
+      ],
+      "orden": "encuesta_id, anio, dominio_id"
+    }
+  },
+  "pruebas": {
+    "total": 39,
+    "fallidas": [],
+    "bloqueantes_fallidas": []
+  }
+}

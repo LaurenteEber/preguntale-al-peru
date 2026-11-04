@@ -1,0 +1,138 @@
+{
+  "sprint": "s2_poblacion",
+  "construido": "2026-11-04T10:59:01-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "INEI-PROYECCIONES-POBLACION-DISTRITAL",
+      "recurso": "inei-proyecciones-poblacion-distrital",
+      "hash": "sha256:9436df29b883fd4a9db3705040a6668ff4efe7047c2643249b6b6bedd90d5c8b",
+      "archivo_original": "6894980-peru-poblacion-total-proyectada-al-30-de-junio-de-cada-ano-segun-departamento-provincia-y-distrito-2018-2026.xlsx"
+    },
+    {
+      "source_id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+      "recurso": "inei-proyecciones-departamental-edad-6855196-proyecciones-departamental-edad-simple-1995-2030",
+      "hash": "sha256:32b4e7e81744562fc95266c0595d0ef7e25e31388e7dd906d440533d2552bb4d",
+      "archivo_original": "6855196-proyecciones-departamental-edad-simple-1995-2030.pdf"
+    },
+    {
+      "source_id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+      "recurso": "inei-proyecciones-departamental-edad-6855233-proyecciones-departamento-1995-2030",
+      "hash": "sha256:84ebadb3dfce916700b0fb175e7b43614b75b7d7a5bdbbef37d49b6d58be88e1",
+      "archivo_original": "6855233-proyecciones-departamento-1995-2030.pdf"
+    },
+    {
+      "source_id": "INEI-CPV2017",
+      "recurso": "inei-cpv2017",
+      "hash": "sha256:06a0bf932f3950f79766afe6e0366f83db1e75203ecc40c547a8f46a396ef502",
+      "archivo_original": "cpv2017_edad_simple_sexo_distrito.csv"
+    },
+    {
+      "source_id": "PROPIO-ESTADISTICAS-SOCIALES-2020",
+      "recurso": "estadisticas-sociales-nacional-2020",
+      "hash": "sha256:3b014946628b28e0da35f67c2968568a7f13d801267633f4a410f1a1a87438c6",
+      "archivo_original": "000000 Nacional_Estadísticas sociales_(24Ago20).xlsx"
+    },
+    {
+      "source_id": "CAPA0:s1_territorio",
+      "recurso": "dim_ubigeo_historico",
+      "hash": "sha256:9857c9a48a821e98b997ed72e1bf40579c13e674ff21254d0f5c2246cc7d2261",
+      "archivo_original": "dim_ubigeo_historico.parquet"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "altas_post2017.yaml",
+      "hash": "sha256:8fc854da37176cfe412c7fec8ba10fe03401f875028a061269fcce34ab2c89f0",
+      "archivo_original": "altas_post2017.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "redatam_cpv2017_edad_sexo.txt",
+      "hash": "sha256:b83f2bc5e9a3c79a6a24647cb0d2f24725fd10c7291bc7bc8f2bcc3ee38872a0",
+      "archivo_original": "redatam_cpv2017_edad_sexo.txt"
+    }
+  ],
+  "tablas": {
+    "fact_poblacion": {
+      "archivo": "fact_poblacion.parquet",
+      "filas": 6336409,
+      "hash": "sha256:d6874ff2f50bb08a4a3f7dd957e8b0a4ada380789c80e36dd85e9ad8d1c368ff",
+      "columnas": [
+        "fuente_id",
+        "vintage",
+        "metodo",
+        "geografia_base",
+        "ubigeo_inei",
+        "nivel",
+        "anio",
+        "fecha_referencia",
+        "edad_min",
+        "edad_max",
+        "sexo",
+        "valor",
+        "semilla",
+        "iteraciones_ipf",
+        "error_max_ipf",
+        "version_tabla"
+      ],
+      "orden": "fuente_id, vintage, metodo, geografia_base, ubigeo_inei, anio, sexo, edad_min, edad_max"
+    },
+    "fact_poblacion_grupo": {
+      "archivo": "fact_poblacion_grupo.parquet",
+      "filas": 454132,
+      "hash": "sha256:6541e8c2718cfae0378c898c49dae1353e7feb746fc66b864eb8c8eb07c6a389",
+      "columnas": [
+        "fuente_id",
+        "vintage",
+        "metodo",
+        "geografia_base",
+        "ubigeo_inei",
+        "nivel",
+        "anio",
+        "fecha_referencia",
+        "sexo",
+        "grupo_id",
+        "meses_min",
+        "meses_max",
+        "valor",
+        "derivacion",
+        "supuesto",
+        "p0",
+        "p1",
+        "p2",
+        "version_tabla"
+      ],
+      "orden": "fuente_id, vintage, metodo, geografia_base, ubigeo_inei, anio, sexo, grupo_id"
+    },
+    "puente_geo2017": {
+      "archivo": "puente_geo2017.parquet",
+      "filas": 1874,
+      "hash": "sha256:83d671abc9eb66676ac89fbbc863380b036eb6528a34bfe6e2398c2ac36cf28a",
+      "columnas": [
+        "grupo_comparable_geo2017",
+        "ubigeo_2017",
+        "n_miembros_2017",
+        "poblacion_2018",
+        "peso_pob_2018",
+        "fuente_peso",
+        "version_tabla"
+      ],
+      "orden": "grupo_comparable_geo2017, ubigeo_2017"
+    }
+  },
+  "pruebas": {
+    "total": 35,
+    "fallidas": [
+      "P2-08b"
+    ],
+    "bloqueantes_fallidas": []
+  }
+}

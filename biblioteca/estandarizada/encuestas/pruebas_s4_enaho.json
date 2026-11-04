@@ -1,0 +1,80 @@
+[
+  {
+    "id": "H-2024-01",
+    "descripcion": "ENAHO 2024: clave (conglomerado, vivienda, hogar) única y sin nulos en diseño",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "H-2024-02",
+    "descripcion": "ENAHO 2024: el ubigeo existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "H-2024-03",
+    "descripcion": "ENAHO 2024: 25 departamentos y factor positivo",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "H-2024-04",
+    "descripcion": "ENAHO 2024: dominio 8 = provincia 1501 + Callao (07)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "d8_fuera": 0,
+      "faltan_en_d8": 0
+    }
+  },
+  {
+    "id": "H-2025-01",
+    "descripcion": "ENAHO 2025: clave (conglomerado, vivienda, hogar) única y sin nulos en diseño",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "H-2025-02",
+    "descripcion": "ENAHO 2025: el ubigeo existe en dim_ubigeo_historico ese año",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "fuera": [],
+      "n": 0
+    }
+  },
+  {
+    "id": "H-2025-03",
+    "descripcion": "ENAHO 2025: 25 departamentos y factor positivo",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "H-2025-04",
+    "descripcion": "ENAHO 2025: dominio 8 = provincia 1501 + Callao (07)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "d8_fuera": 0,
+      "faltan_en_d8": 0
+    }
+  },
+  {
+    "id": "H-10",
+    "descripcion": "ENAHO: las cifras reproducen las publicadas por el INEI (±0.1 pp)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "comparadas": 48,
+      "fuera": []
+    }
+  }
+]

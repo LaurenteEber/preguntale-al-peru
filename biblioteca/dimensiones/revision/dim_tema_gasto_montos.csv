@@ -1,0 +1,85 @@
+anio,tema_id,cadena,devengado_millones,alternativa_de,comparable_con_anio_anterior,motivo_quiebre
+2023,cpt_grupo_anemia_estricta,concepto,137.9,cpt_grupo_expan,sin_anio_anterior,2022 sin montos en la base
+2024,cpt_grupo_anemia_estricta,concepto,184.1,cpt_grupo_expan,si,
+2025,cpt_grupo_anemia_estricta,concepto,208.0,cpt_grupo_expan,si,
+2023,cpt_grupo_expan,concepto,2179.2,,sin_anio_anterior,2022 sin montos en la base; eventos del año: L09 absorcion_total (no_comparable_en_nivel_programa; comparable_por_concepto); L10 traslado (comparable_por_actividad)
+2024,cpt_grupo_expan,concepto,2429.0,,si,
+2025,cpt_grupo_expan,concepto,2455.9,,si,"nodos nuevos: 1.4%; evento comparable: L11 division (comparable por concepto, no por programa)"
+2023,cpt_grupo_opcion_c,concepto,2055.9,cpt_grupo_expan,sin_anio_anterior,2022 sin montos en la base; eventos del año: L09 absorcion_total (no_comparable_en_nivel_programa; comparable_por_concepto)
+2024,cpt_grupo_opcion_c,concepto,2326.8,cpt_grupo_expan,si,
+2025,cpt_grupo_opcion_c,concepto,2366.2,cpt_grupo_expan,no,"evento de linaje: L11 division (comparable por concepto, no por programa)"
+2023,div_educacion_basica,division,28710.0,,sin_anio_anterior,2022 sin montos en la base
+2024,div_educacion_basica,division,32132.1,,si,temas por función: los quiebres de programas no aplican (R-GASTO-09)
+2025,div_educacion_basica,division,33312.0,,si,temas por función: los quiebres de programas no aplican (R-GASTO-09)
+2023,fun_proteccion_social,funcion,9089.1,,sin_anio_anterior,2022 sin montos en la base
+2024,fun_proteccion_social,funcion,9565.7,,si,temas por función: los quiebres de programas no aplican (R-GASTO-09)
+2025,fun_proteccion_social,funcion,10268.6,,si,temas por función: los quiebres de programas no aplican (R-GASTO-09)
+2023,fun_salud,funcion,25979.6,,sin_anio_anterior,2022 sin montos en la base
+2024,fun_salud,funcion,28652.1,,si,temas por función: los quiebres de programas no aplican (R-GASTO-09)
+2025,fun_salud,funcion,30524.3,,si,temas por función: los quiebres de programas no aplican (R-GASTO-09)
+2023,fun_saneamiento,funcion,4703.9,,sin_anio_anterior,2022 sin montos en la base
+2024,fun_saneamiento,funcion,5408.3,,si,temas por función: los quiebres de programas no aplican (R-GASTO-09)
+2025,fun_saneamiento,funcion,5833.8,,si,temas por función: los quiebres de programas no aplican (R-GASTO-09)
+2023,pp_0002_materno_neonatal,programa,2199.8,,sin_anio_anterior,2022 sin montos en la base
+2024,pp_0002_materno_neonatal,programa,2403.8,,si,
+2025,pp_0002_materno_neonatal,programa,2631.5,,si,
+2023,pp_0082_0083_agua_saneamiento,programa,3864.0,,sin_anio_anterior,2022 sin montos en la base
+2024,pp_0082_0083_agua_saneamiento,programa,4680.2,,si,
+2025,pp_0082_0083_agua_saneamiento,programa,4920.2,,si,nodos nuevos: 0.3%
+2023,pp_0090_logros_aprendizaje,programa,24397.2,,sin_anio_anterior,2022 sin montos en la base
+2024,pp_0090_logros_aprendizaje,programa,26986.8,,si,nodos nuevos: 0.0%
+2025,pp_0090_logros_aprendizaje,programa,28776.9,,si,nodos nuevos: 0.0%
+2023,pp_0150_acceso_educacion,programa,391.3,,sin_anio_anterior,2022 sin montos en la base
+2024,pp_0150_acceso_educacion,programa,388.3,,si,
+2025,pp_0150_acceso_educacion,programa,448.9,,si,
+2023,pp_1001_dit,programa,2749.6,,sin_anio_anterior,2022 sin montos en la base; eventos del año: L09 absorcion_total (no_comparable_en_nivel_programa; comparable_por_concepto)
+2024,pp_1001_dit,programa,3606.9,,si,
+2025,pp_1001_dit,programa,3866.8,,no,"evento de linaje: L11 division (comparable por concepto, no por programa)"
+2024,ppxfun_1001_educacion,programa_x_funcion,95.6,,sin_anio_anterior,sin gasto del tema en 2023
+2025,ppxfun_1001_educacion,programa_x_funcion,115.1,,si,
+2023,ppxfun_1001_proteccion_social,programa_x_funcion,502.1,,sin_anio_anterior,2022 sin montos en la base
+2024,ppxfun_1001_proteccion_social,programa_x_funcion,843.9,,si,
+2025,ppxfun_1001_proteccion_social,programa_x_funcion,1043.9,,si,
+2023,ppxfun_1001_salud,programa_x_funcion,2247.5,,sin_anio_anterior,2022 sin montos en la base; eventos del año: L09 absorcion_total (no_comparable_en_nivel_programa; comparable_por_concepto)
+2024,ppxfun_1001_salud,programa_x_funcion,2667.4,,si,
+2025,ppxfun_1001_salud,programa_x_funcion,2707.8,,no,"evento de linaje: L11 division (comparable por concepto, no por programa)"
+2023,ps_alimentacion_escolar,programa_social,2504.8,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_alimentacion_escolar,programa_social,2364.0,,si,evento comparable: L22 renombre (comparable)
+2025,ps_alimentacion_escolar,programa_social,2273.1,,no,"evento de linaje: L24 traslado (no_comparable: el PCA 2025 incluye las ollas comunes (+305,8 M; 219,5 M venían de Qali Warma))"
+2023,ps_contigo,programa_social,234.3,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_contigo,programa_social,271.9,,si,
+2025,ps_contigo,programa_social,274.0,,si,
+2023,ps_cuna_mas,programa_social,515.7,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_cuna_mas,programa_social,831.8,,si,
+2025,ps_cuna_mas,programa_social,1028.5,,si,
+2023,ps_empleo_temporal,programa_social,40.6,,sin_anio_anterior,2022 sin montos en la base; eventos del año: L26 renombre (comparable)
+2024,ps_empleo_temporal,programa_social,34.5,,si,
+2025,ps_empleo_temporal,programa_social,37.6,,si,
+2023,ps_foncodes,programa_social,421.5,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_foncodes,programa_social,481.1,,si,
+2025,ps_foncodes,programa_social,448.7,,si,
+2023,ps_inabif,programa_social,352.7,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_inabif,programa_social,417.0,,si,
+2025,ps_inabif,programa_social,433.8,,si,
+2023,ps_jovenes_productivos,programa_social,13.5,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_jovenes_productivos,programa_social,18.0,,si,
+2025,ps_jovenes_productivos,programa_social,17.0,,si,
+2023,ps_juntos,programa_social,1155.5,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_juntos,programa_social,1101.6,,si,
+2025,ps_juntos,programa_social,1114.0,,si,
+2025,ps_pae,programa_social,2.8,,sin_anio_anterior,primer año del programa social en la base
+2023,ps_pais,programa_social,69.5,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_pais,programa_social,101.5,,si,
+2025,ps_pais,programa_social,84.5,,si,
+2023,ps_pca,programa_social,245.2,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_pca,programa_social,245.7,,si,
+2025,ps_pca,programa_social,551.5,,no,"evento de linaje: L24 traslado (no_comparable: el PCA 2025 incluye las ollas comunes (+305,8 M; 219,5 M venían de Qali Warma))"
+2023,ps_pension65,programa_social,1356.6,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_pension65,programa_social,1301.5,,si,
+2025,ps_pension65,programa_social,1634.2,,si,
+2023,ps_vaso_de_leche,programa_social,525.9,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_vaso_de_leche,programa_social,529.7,,si,
+2025,ps_vaso_de_leche,programa_social,530.6,,si,
+2023,ps_warmi_nan,programa_social,338.8,,sin_anio_anterior,2022 sin montos en la base
+2024,ps_warmi_nan,programa_social,331.6,,si,
+2025,ps_warmi_nan,programa_social,361.9,,si,evento comparable: L28 renombre (comparable)

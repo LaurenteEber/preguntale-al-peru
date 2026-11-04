@@ -1,0 +1,81 @@
+{
+  "sprint": "s4_enaho",
+  "construido": "2026-11-04T11:05:01-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "INEI-ENAHO",
+      "recurso": "enaho-2024-sumaria",
+      "hash": "sha256:5ee98dad87810d42d7e252401d8366feac2fbce151c7af986d9644a40952567c",
+      "archivo_original": "966-Modulo34.zip"
+    },
+    {
+      "source_id": "CAPA0:s1_territorio",
+      "recurso": "dim_ubigeo_historico",
+      "hash": "sha256:9857c9a48a821e98b997ed72e1bf40579c13e674ff21254d0f5c2246cc7d2261",
+      "archivo_original": "dim_ubigeo_historico.parquet"
+    },
+    {
+      "source_id": "INEI-ENAHO",
+      "recurso": "enaho-2025-sumaria",
+      "hash": "sha256:d16fb8ce674485d43ca1a0cf385576f94c38431e34140a741d569dcf85ba8959",
+      "archivo_original": "1031-Modulo34.zip"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "cifras_control_inei.yaml",
+      "hash": "sha256:be9a1475e588b4608004e66775081c2c2b31b9ad662fbd6855a24d833c9be3f2",
+      "archivo_original": "cifras_control_inei.yaml"
+    }
+  ],
+  "tablas": {
+    "enaho_sumaria": {
+      "archivo": "enaho_sumaria.parquet",
+      "filas": 67393,
+      "hash": "sha256:0ea814339edbf1f471f572c09d341b5dd84ff863cd3361d490c3ba8a3728c3d1",
+      "columnas": [
+        "fuente_id",
+        "anio",
+        "mes",
+        "id_conglomerado",
+        "vivienda",
+        "hogar",
+        "ubigeo",
+        "departamento",
+        "provincia",
+        "ambito_lima",
+        "lima_metropolitana_dominio8",
+        "dominio",
+        "estrato",
+        "id_estrato_diseno",
+        "area",
+        "mieperho",
+        "totmieho",
+        "factor07",
+        "peso_persona",
+        "pobreza",
+        "pobre",
+        "pobre_extremo",
+        "linea",
+        "linpe",
+        "gashog2d",
+        "inghog2d",
+        "version_tabla"
+      ],
+      "orden": "anio, id_conglomerado, vivienda, hogar"
+    }
+  },
+  "pruebas": {
+    "total": 9,
+    "fallidas": [],
+    "bloqueantes_fallidas": []
+  }
+}

@@ -1,0 +1,10 @@
+metodo_ubicacion,motivo,cui,pct
+ubigeo_valido,-,149861,99.816
+sin_ubicacion,ubigeo_nulo_texto_gn_no_fiable,125,0.083
+multidepartamental_mef,-,102,0.068
+nombre_texto,-,21,0.014
+sin_ubicacion,ubigeo_nulo_sin_texto,12,0.008
+curado_por_cui,-,9,0.006
+codigo_antiguo_alias,-,5,0.003
+sin_ubicacion,ubigeo_inexistente,2,0.001
+codigo_escindido_contenedor,-,1,0.001

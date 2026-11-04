@@ -1,0 +1,65 @@
+{
+  "sprint": "s4_mapa_pobreza",
+  "construido": "2026-11-04T11:05:02-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "INEI-MAPA-POBREZA",
+      "recurso": "mapa-pobreza-2018-anexo",
+      "hash": "sha256:fcc465d75abe7f7e20107d67fc3a947d606e2176d0c00fecb02ceafcca913f00",
+      "archivo_original": "Anexo Estadístico.xlsx"
+    },
+    {
+      "source_id": "CAPA0:s1_territorio",
+      "recurso": "dim_ubigeo_historico",
+      "hash": "sha256:9857c9a48a821e98b997ed72e1bf40579c13e674ff21254d0f5c2246cc7d2261",
+      "archivo_original": "dim_ubigeo_historico.parquet"
+    }
+  ],
+  "tablas": {
+    "fact_mapa_pobreza": {
+      "archivo": "fact_mapa_pobreza.parquet",
+      "filas": 2070,
+      "hash": "sha256:a98a6d888e54a8d108037169ac64ca3ab2ecd9b0f3c8460d2a9ceb32f835b035",
+      "columnas": [
+        "fuente_id",
+        "edicion",
+        "anio_referencia",
+        "geografia_base",
+        "nivel",
+        "ubigeo_inei",
+        "nombre_mostrado",
+        "nombre_fuente",
+        "grupo_comparable_geo2017",
+        "poblacion_proyectada_2020",
+        "pobreza_ic_inf",
+        "pobreza_ic_sup",
+        "id_agrupamiento",
+        "estimado_en_agrupamiento",
+        "grupo_robusto_nacional",
+        "grupo_nacional_inferido",
+        "orden_nacional",
+        "grupo_robusto_regional",
+        "ambito_grupo_regional",
+        "orden_regional",
+        "hoja_origen",
+        "fila_anexo2",
+        "version_tabla"
+      ],
+      "orden": "edicion, nivel, ubigeo_inei"
+    }
+  },
+  "pruebas": {
+    "total": 11,
+    "fallidas": [],
+    "bloqueantes_fallidas": []
+  }
+}

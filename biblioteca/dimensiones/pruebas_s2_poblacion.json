@@ -1,0 +1,328 @@
+[
+  {
+    "id": "P2-01",
+    "descripcion": "2018: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2018: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-01",
+    "descripcion": "2019: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2019: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-01",
+    "descripcion": "2020: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2020: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-01",
+    "descripcion": "2021: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2021: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-01",
+    "descripcion": "2022: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2022: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-01",
+    "descripcion": "2023: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2023: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-01",
+    "descripcion": "2024: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2024: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-01",
+    "descripcion": "2025: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2025: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-01",
+    "descripcion": "2026: Σ distritos = provincia y = departamento (exacto)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-02",
+    "descripcion": "2026: total departamental idéntico en proyección distrital, Boletín 25 y Boletín 39",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_dif_b25": 0.0,
+      "max_dif_b39": 0.0
+    }
+  },
+  {
+    "id": "P2-03",
+    "descripcion": "Boletines: edades suman al total (B25) y hombres + mujeres = total (B39)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P2-04",
+    "descripcion": "Edad simple (B25) y quinquenios (B39) coinciden por grupo de edad",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif": 0.0
+    }
+  },
+  {
+    "id": "P2-05",
+    "descripcion": "Censo 2017 (REDATAM): 1874 distritos y total censado = 29,381,884",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distritos": 1874,
+      "total": 29381884
+    }
+  },
+  {
+    "id": "P2-06",
+    "descripcion": "IPF converge en todos los departamentos y años (tolerancia 0.001, ≤ 100 iteraciones)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "peor_error": 9.870251525212141e-07,
+      "max_iteraciones": 5
+    }
+  },
+  {
+    "id": "P2-07",
+    "descripcion": "Prorrateo: cada distrito suma su total oficial (error relativo ≤ 0,001)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "max_error_relativo": 7.017543859645234e-05
+    }
+  },
+  {
+    "id": "P2-08",
+    "descripcion": "Series GEO2017 2018-2026 sin saltos aislados (población continua por grupo)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": []
+  },
+  {
+    "id": "P2-08b",
+    "descripcion": "Cambios de tendencia > 1.5 pp en la tasa anual por grupo (empalme de ediciones INEI: 2018-2020 = Lib1715, 2021+ = ediciones posteriores; las variaciones 2020→2021 se rotulan)",
+    "ok": false,
+    "bloqueante": false,
+    "detalle": {
+      "grupos_por_anio": {
+        "2020": 3,
+        "2021": 139,
+        "2022": 7,
+        "2023": 6,
+        "2024": 5,
+        "2025": 1
+      }
+    }
+  },
+  {
+    "id": "P2-18",
+    "descripcion": "GEO2017: los mismos códigos (grupos comparables) en oficial, prorrateo y censo (PO-06)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "oficial": 1869,
+      "prorrateo_propio": 1869,
+      "censado": 1869
+    }
+  },
+  {
+    "id": "P2-09",
+    "descripcion": "Ninguna cifra (territorio, año, edad, sexo) existe en dos vintages: cada serie usa una sola edición",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "celdas_con_dos_vintages": 0,
+      "vintages": [
+        "CPV2017|censada|ed=2018-10",
+        "INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01",
+        "INEI-PROY-DEP-SEXO-QQ|base=CPV2017|ed=2019-10",
+        "INEI-PROY-DIST|base=CPV2017|ed=2025-12",
+        "PROP-IPF|dist=INEI-ed2025-12|edad=B25-ed2020-01|sexo=B39-ed2019-10|semilla=CPV2017"
+      ]
+    }
+  },
+  {
+    "id": "P2-13",
+    "descripcion": "Niveles: 000000 = nacional y 25 departamentos en cada serie (vintage, método, año)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas_000000_mal_etiquetadas": 0,
+      "series_con_otro_numero": {}
+    }
+  },
+  {
+    "id": "P2-14",
+    "descripcion": "6-35 meses entre P1+P2 y P0+P1+P2 (cota) en cada territorio, año y sexo",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": 0
+  },
+  {
+    "id": "P2-15",
+    "descripcion": "6-35 meses: Σ distritos (prorrateo) = departamento (Boletín 25), error ≤ 0,001",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "comparados": 225,
+      "max_error": 9.060022649155714e-07
+    }
+  },
+  {
+    "id": "P2-16",
+    "descripcion": "Cada distrito-año del prorrateo tiene los 4 grupos en meses",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": 0
+  },
+  {
+    "id": "P2-17",
+    "descripcion": "puente_geo2017: 1 874 distritos de 2017 y pesos que suman 1 en cada grupo",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "filas": 1874,
+      "max_desvio": 0.0
+    }
+  },
+  {
+    "id": "P2-10",
+    "descripcion": "Ningún valor para distritos nuevos antes de su primer año de pertenencia (anio_datos_desde)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": 0
+  },
+  {
+    "id": "P2-11",
+    "descripcion": "Control: proyección 2018-2019 igual a la del archivo propio (Lib1715) en los 1 874 distritos",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "distintos": {
+        "2018": 0,
+        "2019": 0,
+        "2020": 2
+      },
+      "2020_distintos": [
+        "090707",
+        "090717"
+      ]
+    }
+  },
+  {
+    "id": "P2-12",
+    "descripcion": "Control: población 2017 del archivo propio (censada + omisión) / censada REDATAM entre 1,00 y 1,30",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "mediana": 1.0618,
+      "fuera_de_rango": 1
+    }
+  }
+]

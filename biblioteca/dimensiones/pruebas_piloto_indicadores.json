@@ -1,0 +1,447 @@
+[
+  {
+    "id": "IND-01",
+    "descripcion": "dim_indicador: id único y en snake_case",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "ids": [
+        "endes_anemia_6_35m",
+        "endes_anemia_6_35m_oms2024",
+        "endes_dci_menores_5",
+        "sien_anemia_tamizados_6_35m",
+        "sien_cobertura_tamizaje_6_35m",
+        "gasto_ex_pan",
+        "gasto_ex_pan_opcion_c",
+        "enaho_pobreza_monetaria",
+        "mapa_pobreza_2018"
+      ]
+    }
+  },
+  {
+    "id": "IND-02",
+    "descripcion": "dim_indicador: estado válido (activo_piloto | piloto_ampliado)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "IND-03",
+    "descripcion": "dim_indicador: ningún campo obligatorio vacío (R-MOTOR-02 suprimiría la cifra); en las encuestas, variables_diseno.factor/estrato/conglomerado (R-ENC-01) y dominios_inferencia.anual (R-ENC-06)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "faltan": {}
+    }
+  },
+  {
+    "id": "IND-04",
+    "descripcion": "dim_indicador: valores dentro de los vocabularios controlados (reglas.json, con VOCABULARIOS_INDICADOR)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "fuera": {}
+    }
+  },
+  {
+    "id": "IND-05",
+    "descripcion": "R-DEP-01: todo insumo (numerador, denominador o crudo de tabla curada) está en el catálogo con compuerta «aprobada»",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "no_aprobados": {}
+    }
+  },
+  {
+    "id": "IND-06",
+    "descripcion": "R-DEP-01: insumos de contraste no aprobados (se omiten con nota; no hacen caer la cifra)",
+    "ok": false,
+    "bloqueante": false,
+    "detalle": {
+      "contraste": {
+        "sien_cobertura_tamizaje_6_35m": [
+          "MINSA-POBLACION-ESTIMADA=enlace_confirmado"
+        ]
+      }
+    }
+  },
+  {
+    "id": "IND-07",
+    "descripcion": "R-DEP-01 (D-AUD-1): cada tabla solo curada que usa un indicador (dim_dominio, dim_tema_gasto) está en su manifiesto de la capa 0 sin pruebas bloqueantes fallidas",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "usadas": {
+        "endes_anemia_6_35m": [
+          "dim_dominio"
+        ],
+        "endes_anemia_6_35m_oms2024": [
+          "dim_dominio"
+        ],
+        "endes_dci_menores_5": [
+          "dim_dominio"
+        ],
+        "gasto_ex_pan": [
+          "dim_tema_gasto"
+        ],
+        "gasto_ex_pan_opcion_c": [
+          "dim_tema_gasto"
+        ],
+        "enaho_pobreza_monetaria": [
+          "dim_dominio"
+        ]
+      },
+      "sin_respaldo": {}
+    }
+  },
+  {
+    "id": "IND-08",
+    "descripcion": "dim_indicador: la definición (definiciones_endes.yaml) o el tema (dim_tema_gasto) existen y la tabla de origen está registrada en un manifiesto de la capa 0",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "problemas": {}
+    }
+  },
+  {
+    "id": "IND-09",
+    "descripcion": "dim_indicador: anios_disponibles = años con dato en la tabla de origen",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "distintos": {}
+    }
+  },
+  {
+    "id": "IND-10",
+    "descripcion": "Encuestas: validado_contra_oficial = false hasta que el motor pase las cifras doradas (R-ENC-18)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "IND-11",
+    "descripcion": "Gasto: ningún texto dice «gasto del PAN» (decisión del 7/10/2026: el PAN termina en 2022)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "con_texto": []
+    }
+  },
+  {
+    "id": "IND-12",
+    "descripcion": "dim_indicador: niveles en NIVEL_RANK (incluye «establecimiento» desde P0); ámbitos de Lima con nivel = ambito_id, su rango y su rótulo; asignación con ambitos_lima; ranking = 26 unidades de R-ENC-12 (L8)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "malos": {}
+    }
+  },
+  {
+    "id": "IND-13",
+    "descripcion": "dim_indicador: TODOS los años de cada nivel de Lima de una encuesta tienen en dominios.yaml (dim_dominio) una regla confirmada, con o sin marca anios_condicionados (H2)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "sin_confirmar": {}
+    }
+  },
+  {
+    "id": "IND-14",
+    "descripcion": "L7: el denominador propio (IPF) declarado en dim_indicador, ejecutado tal cual, cuadra: LM + LR = departamento 15 oficial y el Callao del IPF = oficial del 07 (H3)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "malos": {},
+      "sien_cobertura_tamizaje_6_35m": {
+        "max_dif_15": 0.014,
+        "anios": [
+          2018,
+          2026
+        ]
+      }
+    }
+  },
+  {
+    "id": "CRU-01",
+    "descripcion": "cruces_permitidos: id único, estado válido y a lo sumo max_cruces_mvp activos (R-CRUCES-11)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "activos": 1
+    }
+  },
+  {
+    "id": "CRU-02",
+    "descripcion": "cruces_permitidos: trae los campos de R-CRUCES-11.campos_tabla",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "faltan": {}
+    }
+  },
+  {
+    "id": "CRU-04",
+    "descripcion": "cruces_permitidos: los cruces activos tienen el visto del dueño (aprobado_por, fecha_aprobacion)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "sin_visto": []
+    }
+  },
+  {
+    "id": "CRU-05",
+    "descripcion": "cruces_permitidos: presentación válida (lado_a_lado | asociacion | cociente)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "presentaciones": [
+        "lado_a_lado"
+      ]
+    }
+  },
+  {
+    "id": "CRU-03",
+    "descripcion": "cruces_permitidos: indicadores existentes, conceptos distintos, ventana y rezago dentro de R-CRUCES-03 y años comunes con dato en ambos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "malos": {}
+    }
+  },
+  {
+    "id": "CRU-06",
+    "descripcion": "cruces_permitidos (L5): nivel_minimo departamento y subdivisión LM, LR y Callao con mapeo completo resultado ↔ gasto (ambito_lima ↔ ambito_gasto), niveles válidos en ambos indicadores y años condicionados solo con dim_dominio confirmado",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "malos": {}
+    }
+  },
+  {
+    "id": "DOR-01",
+    "descripcion": "cifras_doradas: columnas esperadas, id_cifra único",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "columnas": [
+        "id_cifra",
+        "indicador_id",
+        "fuente_id",
+        "anio",
+        "nivel",
+        "territorio",
+        "definicion_lima",
+        "criterio",
+        "valor_publicado",
+        "ic_inf_publicado",
+        "ic_sup_publicado",
+        "cv_publicado",
+        "casos_publicados",
+        "decimales",
+        "comparacion",
+        "tolerancia_pp",
+        "tolerancia_cv",
+        "bloqueante",
+        "proposito",
+        "documento",
+        "url",
+        "cuadro_pagina",
+        "fecha_publicacion",
+        "tipo_cita",
+        "verificado_por",
+        "nota"
+      ]
+    }
+  },
+  {
+    "id": "DOR-02",
+    "descripcion": "cifras_doradas: sin llaves (indicador, año, nivel, territorio, criterio) repetidas entre bloqueantes",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "repetidas": []
+    }
+  },
+  {
+    "id": "DOR-03",
+    "descripcion": "cifras_doradas: indicador_id y criterio casan con dim_indicador (pobreza extrema = control)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "sin_indicador": [],
+      "criterio": []
+    }
+  },
+  {
+    "id": "DOR-04",
+    "descripcion": "cifras_doradas: nivel dentro de NIVEL_RANK (ámbitos de Lima: nivel = territorio = ambito_id); propósito válido y cita solo de documentos oficiales (INEI; INS para el SIEN, 12/10/2026)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "nivel_fuera": [],
+      "ambito_mal_nivel": []
+    }
+  },
+  {
+    "id": "DOR-05",
+    "descripcion": "R-ENC-18: el núcleo es bloqueante, solo con cita oficial del INEI y con la tolerancia de la regla (0.1 pp)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "DOR-06",
+    "descripcion": "R-ENC-18: cada indicador de encuesta tiene en el núcleo la cifra nacional y ≥ 3 departamentos (un ámbito como Lima Metropolitana no cuenta)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "cobertura": {
+        "endes_anemia_6_35m": {
+          "nacional": 3,
+          "departamentos": [
+            "09",
+            "16",
+            "21"
+          ]
+        },
+        "endes_anemia_6_35m_oms2024": {
+          "nacional": 1,
+          "departamentos": [
+            "09",
+            "16",
+            "21"
+          ]
+        },
+        "endes_dci_menores_5": {
+          "nacional": 3,
+          "departamentos": [
+            "01",
+            "06",
+            "09",
+            "16"
+          ]
+        },
+        "enaho_pobreza_monetaria": {
+          "nacional": 2,
+          "departamentos": [
+            "06",
+            "09",
+            "11",
+            "16",
+            "21"
+          ]
+        }
+      },
+      "huecos": {}
+    }
+  },
+  {
+    "id": "DOR-10",
+    "descripcion": "Lima en tres ámbitos: cada indicador de encuesta con LM, LR o Callao válidos tiene al menos una cifra dorada bloqueante por ámbito en algún año (aviso)",
+    "ok": false,
+    "bloqueante": false,
+    "detalle": {
+      "sin_dorada": {
+        "endes_anemia_6_35m": [
+          "LIMA_REGION"
+        ],
+        "endes_anemia_6_35m_oms2024": [
+          "CALLAO",
+          "LIMA_REGION"
+        ],
+        "endes_dci_menores_5": [
+          "CALLAO",
+          "LIMA_METROPOLITANA",
+          "LIMA_REGION"
+        ]
+      }
+    }
+  },
+  {
+    "id": "DOR-07",
+    "descripcion": "R-ENC-18: nuestros datos estandarizados reproducen todas las cifras del núcleo (cifra puntual redondeada ± tolerancia y casos exactos donde el INEI los publica)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "fallan": []
+    }
+  },
+  {
+    "id": "DOR-08",
+    "descripcion": "Mapa de Pobreza 2018: el intervalo de la tabla es el publicado (control de ingesta, a 1 decimal)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "fallan": []
+    }
+  },
+  {
+    "id": "DOR-11",
+    "descripcion": "cifras_doradas: IC publicado coherente (ic_inf ≤ valor ≤ ic_sup, simétrico, semiancho ≈ 1,96·CV·valor con la holgura del redondeo) y, donde hay tolerancia_cv, nuestro CV (Taylor) igual al publicado",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "ic_incoherente": [],
+      "cv_fuera_de_tolerancia": []
+    }
+  },
+  {
+    "id": "DOR-12",
+    "descripcion": "ENAHO (D-ENA-1): el CV publicado es dato y no bloquea; aviso si nuestro CV difiere > 0.5 puntos",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "comparadas": 72,
+      "max_dif": 0.429,
+      "lejos": []
+    }
+  },
+  {
+    "id": "DOR-09",
+    "descripcion": "Cifras de control (no bloqueantes): las calculables se reproducen",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "comparadas": 112,
+      "fallan": [],
+      "no_calculables": [
+        "DOR-OMS-2023-PE",
+        "DOR-OMS-2023-09",
+        "DOR-OMS-2023-21",
+        "DOR-OMS-2023-LM1501",
+        "DOR-OMS-2018-PE",
+        "DOR-SIEN-2025-01",
+        "DOR-SIEN-2025-02",
+        "DOR-SIEN-2025-03",
+        "DOR-SIEN-2025-04",
+        "DOR-SIEN-2025-05",
+        "DOR-SIEN-2025-06",
+        "DOR-SIEN-2025-CALLAO",
+        "DOR-SIEN-2025-08",
+        "DOR-SIEN-2025-09",
+        "DOR-SIEN-2025-10",
+        "DOR-SIEN-2025-11",
+        "DOR-SIEN-2025-12",
+        "DOR-SIEN-2025-13",
+        "DOR-SIEN-2025-14",
+        "DOR-SIEN-2025-15",
+        "DOR-SIEN-2025-16",
+        "DOR-SIEN-2025-17",
+        "DOR-SIEN-2025-18",
+        "DOR-SIEN-2025-19",
+        "DOR-SIEN-2025-20",
+        "DOR-SIEN-2025-21",
+        "DOR-SIEN-2025-22",
+        "DOR-SIEN-2025-23",
+        "DOR-SIEN-2025-24",
+        "DOR-SIEN-2025-25",
+        "DOR-SIEN-2025-PE",
+        "DOR-SIEN-2025-LIMA_REGION",
+        "DOR-SIEN-2025-LM1501",
+        "DOR-SIEN-2025-210801",
+        "DOR-SIEN-2025-150132"
+      ]
+    }
+  }
+]

@@ -1,0 +1,460 @@
+[
+  {
+    "id": "T-01",
+    "descripcion": "La base GEO2017 tiene 1874 distritos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": 1874
+  },
+  {
+    "id": "T-02",
+    "descripcion": "Proyección 2018-2026 = base GEO2017 + altas documentadas anteriores a su corte (por código)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "sobran": [],
+      "faltan": [],
+      "altas_posteriores_al_corte": [
+        "120307"
+      ],
+      "altas_anteriores_al_corte_sin_dato": []
+    }
+  },
+  {
+    "id": "T-03",
+    "descripcion": "Provincias y departamentos iguales en la semilla y en la proyección",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "T-04",
+    "descripcion": "PNDA 2022 (1 891): difiere de la proyección solo en los distritos creados después de su corte",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "faltan": [
+        "160405"
+      ],
+      "sobran": []
+    }
+  },
+  {
+    "id": "T-04",
+    "descripcion": "Directorio 2025: difiere de la proyección solo en los distritos creados después de su corte",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "faltan": [
+        "160405"
+      ],
+      "sobran": []
+    }
+  },
+  {
+    "id": "T-04",
+    "descripcion": "Boletín 27 (1 890): difiere de la proyección solo en los distritos creados después de su corte",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "faltan": [
+        "130112",
+        "160405"
+      ],
+      "sobran": []
+    }
+  },
+  {
+    "id": "P-01",
+    "descripcion": "Puente: biyección (ningún código INEI ni RENIEC repetido)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "inei": [],
+      "reniec": []
+    }
+  },
+  {
+    "id": "P-02",
+    "descripcion": "Puente: nombre coincidente (similitud ≥ 0,90) en ≥ 99,5 % de los pares",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": 0.9952
+  },
+  {
+    "id": "P-03",
+    "descripcion": "Puente: 0 códigos INEI no vigentes",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "P-04",
+    "descripcion": "Puente: cobertura = 1 o cada faltante documentado como excepción",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "cobertura": 0.99947,
+      "pendientes": [
+        "120307"
+      ]
+    }
+  },
+  {
+    "id": "P-05",
+    "descripcion": "Puente validado contra el listado de RENIEC (código y nombre)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "pares_en_reniec": 1892,
+      "pares": 1892,
+      "nombre_distinto": [
+        [
+          "100106",
+          "090105",
+          "QUISQUI (KICHKI)",
+          "Quisqui"
+        ]
+      ]
+    }
+  },
+  {
+    "id": "P-06",
+    "descripcion": "Puente = equivalencia INEI–RENIEC que publica la propia RENIEC en su dataset",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "comparados": 1892,
+      "difieren": []
+    }
+  },
+  {
+    "id": "T-19",
+    "descripcion": "Ortografía del nombre mostrado: cada corrección de nombres_mostrados.yaml coincide con su fuente y se aplicó (si la fuente cambió, revisar la fila)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": []
+  },
+  {
+    "id": "T-20",
+    "descripcion": "Ningún nombre mostrado con tilde grave, abreviatura «Prov.» ni «Del» en mayúscula dentro del nombre",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": []
+  },
+  {
+    "id": "T-10",
+    "descripcion": "Distritos vigentes hoy = GEO2017 (1874) + altas con ley vigente (1893)",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "vigentes": 1893,
+      "esperados": 1893
+    }
+  },
+  {
+    "id": "T-11",
+    "descripcion": "Un solo registro vigente por ubigeo en cualquier fecha",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": []
+  },
+  {
+    "id": "T-12",
+    "descripcion": "Jerarquía: todo padre existe y está vigente; prefijo del distrito = provincia",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": []
+  },
+  {
+    "id": "T-13",
+    "descripcion": "Todo distrito vigente tiene grupo comparable y todo grupo contiene un distrito de 2017",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "T-14",
+    "descripcion": "Ningún código es un centro poblado ni un código antiguo",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": null
+  },
+  {
+    "id": "T-15",
+    "descripcion": "Toda alta tiene ley, fecha de publicación y origen",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": 19
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2018: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2019: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2020: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2021: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2022: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2023: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2024: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2025: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-16",
+    "descripcion": "Proyección 2026: Σ distritos = provincia y = departamento",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": {
+      "max_dif_departamento": 0,
+      "max_dif_provincia": 0
+    }
+  },
+  {
+    "id": "T-18",
+    "descripcion": "Población continua por grupo comparable (sin saltos aislados de un año > 5 pp sobre su tendencia)",
+    "ok": true,
+    "bloqueante": false,
+    "detalle": []
+  },
+  {
+    "id": "T-17",
+    "descripcion": "Pertenencia anual: cada año, los distritos con dato en la proyección = los de vigentes_en_anio()",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "con_dato_sin_version": [],
+      "version_sin_dato": []
+    }
+  },
+  {
+    "id": "A-01",
+    "descripcion": "Lima Metropolitana = 43 distritos; Lima Región = 128; Callao = 7",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "LIMA_METROPOLITANA": 43,
+      "LIMA_REGION": 128,
+      "AREA_METROPOLITANA_LIMA_CALLAO": 50,
+      "CALLAO": 7
+    }
+  },
+  {
+    "id": "A-02",
+    "descripcion": "Superficie de Lima Región (suma de sus distritos) = fila 159999 del archivo propio",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "suma": 32208.36,
+      "159999": 32208.36000000001
+    }
+  },
+  {
+    "id": "D-01",
+    "descripcion": "dim_dominio: ninguna encuesta-año tiene dos dominios con los mismos distritos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": []
+  },
+  {
+    "id": "D-02",
+    "descripcion": "dim_dominio: el dominio 8 de la ENAHO es solo area_metropolitana_lima_callao = 1501 + 0701, una vez por año 2015–2025",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "mal_definidos": [],
+      "por_anio": {
+        "2015": 1,
+        "2016": 1,
+        "2017": 1,
+        "2018": 1,
+        "2019": 1,
+        "2020": 1,
+        "2021": 1,
+        "2022": 1,
+        "2023": 1,
+        "2024": 1,
+        "2025": 1
+      }
+    }
+  },
+  {
+    "id": "D-03",
+    "descripcion": "dim_dominio: Lima Metropolitana (1501) nunca se codifica como dominio 8 ni incluye al Callao",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": []
+  },
+  {
+    "id": "D-04",
+    "descripcion": "dim_dominio: LM y LR son ámbito publicado en ENDES y ENAHO; el Callao es dominio de diseño en la ENDES y ámbito publicado en la ENAHO",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "('ENAHO', 'callao')": [
+        "ambito_publicado"
+      ],
+      "('ENAHO', 'lima_metropolitana')": [
+        "ambito_publicado"
+      ],
+      "('ENAHO', 'lima_provincias')": [
+        "ambito_publicado"
+      ],
+      "('ENDES', 'callao')": [
+        "dominio_diseno"
+      ],
+      "('ENDES', 'lima_metropolitana')": [
+        "ambito_publicado"
+      ],
+      "('ENDES', 'lima_provincias')": [
+        "ambito_publicado"
+      ]
+    }
+  },
+  {
+    "id": "D-05",
+    "descripcion": "dim_dominio: LM, LR y Callao confirmados 2015–2025 en ENDES y ENAHO, identificables en microdatos",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "('ENAHO', 'callao')": [
+        2015,
+        2025,
+        11
+      ],
+      "('ENAHO', 'lima_metropolitana')": [
+        2015,
+        2025,
+        11
+      ],
+      "('ENAHO', 'lima_provincias')": [
+        2015,
+        2025,
+        11
+      ],
+      "('ENDES', 'callao')": [
+        2015,
+        2025,
+        11
+      ],
+      "('ENDES', 'lima_metropolitana')": [
+        2015,
+        2025,
+        11
+      ],
+      "('ENDES', 'lima_provincias')": [
+        2015,
+        2025,
+        11
+      ]
+    }
+  },
+  {
+    "id": "D-06",
+    "descripcion": "dim_dominio: ENDES LM/LR por estrato en 2015–2017 y por ubigeo desde 2018; fuente = Cuadro N.º 1",
+    "ok": true,
+    "bloqueante": true,
+    "detalle": {
+      "2015": [
+        "estrato_hv022"
+      ],
+      "2016": [
+        "estrato_hv022"
+      ],
+      "2017": [
+        "estrato_hv022"
+      ],
+      "2018": [
+        "ubigeo"
+      ],
+      "2019": [
+        "ubigeo"
+      ],
+      "2020": [
+        "ubigeo"
+      ],
+      "2021": [
+        "ubigeo"
+      ],
+      "2022": [
+        "ubigeo"
+      ],
+      "2023": [
+        "ubigeo"
+      ],
+      "2024": [
+        "ubigeo"
+      ],
+      "2025": [
+        "ubigeo"
+      ]
+    }
+  }
+]

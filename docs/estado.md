@@ -1,6 +1,6 @@
 # Estado actual del proyecto
 
-Corte: 3 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas) al cerrar cada fase o cuando cambia el estado de una fuente. Las decisiones vigentes y las pendientes del dueño están solo en `decisiones.md`; la historia, en git y en los informes de `03_auditoria/`.
+Corte: 4 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas) al cerrar cada fase o cuando cambia el estado de una fuente. Las decisiones vigentes y las pendientes del dueño están solo en `decisiones.md`; la historia, en `historia.md`.
 
 ## Resumen
 
@@ -11,7 +11,8 @@ Corte: 3 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas
 | Capa 0 (Ola 0) | Construida, auditada y corregida: territorio (`dim_ubigeo_historico` 1 893 distritos vigentes, con Sangani provisional; desde el 2/11 con la ortografía de T-02, pendiente de reconstruir), población (oficial, censada e IPF), gasto MEF 2023–2025 con trazabilidad de programas, RENIPRESS, IPC y SIEN 2025. Reproducible bit a bit |
 | Insumos del piloto (S4) | ENDES 2015–2025 (236 869 niños), ENAHO 2024–2025 (67 393 hogares) y Mapa de Pobreza 2018; reproducen 136 cifras del INEI (±0,1 pp) |
 | Tablas curadas del piloto | `dim_indicador` (9), `cruces_permitidos` (CR-01 activo) y `cifras_doradas` (206; todas con cita oficial; incluyen 30 del SIEN contra el INS) |
-| Cubo, validador y motor | Cubo `fact_indicador` (huella `ba1fbc55…`, reconstruido el 3/11/2026 con los nombres de T-02, commit `82cad3a`; solo cambiaron 14 nombres de territorio, ninguna cifra: `backlog/slice-1/evidencia/s1-00_comparacion_cubo.txt`); validador de 68 reglas; motor por intenciones (slice 1, fase 5a): consulta mínima → resolver territorial → planificador → plantillas por intención → capas, con «no se puede» y aclaraciones; Q1–Q4 son su regresión y la matriz de cobertura (5 086 casos, 0 fallos) lo prueba (`pap preguntar`). La huella del cubo no cambió en el slice (`ba1fbc55…`). 748 pruebas |
+| Cubo, validador y motor | Cubo `fact_indicador` (huella `ba1fbc55…`, reconstruido el 3/11/2026 con los nombres de T-02 en la carpeta de trabajo; solo cambiaron 14 nombres de territorio, ninguna cifra: `backlog/slice-1/evidencia/s1-00_comparacion_cubo.txt`); validador de 68 reglas; motor por intenciones (slice 1, fase 5a): consulta mínima → resolver territorial → planificador → plantillas por intención → capas, con «no se puede» y aclaraciones; Q1–Q4 son su regresión y la matriz de cobertura (5 086 casos, 0 fallos) lo prueba (`pap preguntar`). La huella del cubo no cambió en el slice (`ba1fbc55…`). 748 pruebas |
+| Repositorio | **Migrado el 4/11/2026** a `preguntale-al-peru`, autocontenido (la carpeta de trabajo anterior no se publica). Validado reconstruyendo todo desde los crudos: las 35 tablas salen iguales salvo 3 que cambian solo en textos de procedencia con rutas (`dim_indicador.tabla_origen`, `dim_tema_gasto.revisado_por`, `dim_glosario_gasto`); el cubo repite su huella `ba1fbc55…`; 748 pruebas en verde y matriz reducida sin fallos. Las etiquetas y commits citados abajo son de la carpeta de trabajo |
 | Piloto (fase 4) | **Cerrado el 13/10/2026** (etiqueta `piloto-cerrado`) |
 | Fase 5a (motor por intenciones, slice 1) | **Hecha el 3/11/2026** (etiqueta `slice-1-cerrado`); cierre en `backlog/slice-1/evidencia/cierre.md` |
 | Fase 5b y 5c (intérprete LLM, API y web) | **No iniciadas**; siguiente: slice 2 (`backlog/plan_slices.md`) |

@@ -1,0 +1,187 @@
+{
+  "sprint": "p1_indicadores",
+  "construido": "2026-11-04T11:05:31-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "CURADO",
+      "recurso": "dim_indicador.yaml",
+      "hash": "sha256:6443b772ec6ed1b03e1c0eb66c51cb087822405736ba8e405bdfa670b917f6be",
+      "archivo_original": "dim_indicador.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "cifras_doradas.csv",
+      "hash": "sha256:1fa63e085b8801fbdaae25cd77c3dcc09a3d28ee2eb7b7500ec86d2c39f038db",
+      "archivo_original": "cifras_doradas.csv"
+    },
+    {
+      "source_id": "CAPA0:s1_territorio",
+      "recurso": "dim_ubigeo_historico",
+      "hash": "sha256:9857c9a48a821e98b997ed72e1bf40579c13e674ff21254d0f5c2246cc7d2261",
+      "archivo_original": "dim_ubigeo_historico.parquet"
+    },
+    {
+      "source_id": "CAPA0:s4_endes",
+      "recurso": "endes_nino",
+      "hash": "sha256:0f3b40b4174d057376bfb64408354fadbf3c7b492c357a237cd9683317bf0e72",
+      "archivo_original": "endes_nino.parquet"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "definiciones_endes.yaml",
+      "hash": "sha256:40a9c5be198489b0c7edfd7f233447064b864f67f831908292b89c0f189e6f01",
+      "archivo_original": "definiciones_endes.yaml"
+    },
+    {
+      "source_id": "CAPA0:s4_enaho",
+      "recurso": "enaho_sumaria",
+      "hash": "sha256:0ea814339edbf1f471f572c09d341b5dd84ff863cd3361d490c3ba8a3728c3d1",
+      "archivo_original": "enaho_sumaria.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_puentes",
+      "recurso": "fact_sien_hb_ubigeo",
+      "hash": "sha256:6ac3ea04a210d573247ce7028ec808df303527c3f0b6b5f7ce1db3391d887b8a",
+      "archivo_original": "fact_sien_hb_ubigeo.parquet"
+    },
+    {
+      "source_id": "CAPA0:s2_poblacion",
+      "recurso": "fact_poblacion_grupo",
+      "hash": "sha256:6541e8c2718cfae0378c898c49dae1353e7feb746fc66b864eb8c8eb07c6a389",
+      "archivo_original": "fact_poblacion_grupo.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_puentes",
+      "recurso": "dim_establecimiento_salud",
+      "hash": "sha256:d93bab860a0b0c8a09a1a09d0ad324b8c581411b3510cf19664aac5a1fb97199",
+      "archivo_original": "dim_establecimiento_salud.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_gasto",
+      "recurso": "fact_gasto_territorial",
+      "hash": "sha256:46dde2120eeb7c6367806e901e4c739fd745625f74490e99a63f01bd2b4fd3b0",
+      "archivo_original": "fact_gasto_territorial.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_gasto",
+      "recurso": "dim_tema_gasto",
+      "hash": "sha256:b46f5da5448953b67aa29ad99a6005e7edec4a73664dd7ea5950ff716b4e714c",
+      "archivo_original": "dim_tema_gasto.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_gasto",
+      "recurso": "rel_concepto_grupo",
+      "hash": "sha256:72b552aa9189e2eff5ed908687ef7eaebe898b6ded5432e3d1fc9ddf2029441e",
+      "archivo_original": "rel_concepto_grupo.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_gasto",
+      "recurso": "rel_concepto_nodo",
+      "hash": "sha256:64cf5b94aea2063879dbff62dd03630699505ddfee09dbc2ab9a182d244561ae",
+      "archivo_original": "rel_concepto_nodo.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_gasto",
+      "recurso": "rel_programa_social_ejecutora",
+      "hash": "sha256:205c3e826ab585384786b52749cddd04dfbe9d3d752b58e0a5de925390350caa",
+      "archivo_original": "rel_programa_social_ejecutora.parquet"
+    },
+    {
+      "source_id": "CAPA0:s3_gasto",
+      "recurso": "rel_programa_social_linea_aparte",
+      "hash": "sha256:83cc4aa1bf37695413aaa0986b523e230b39045fdf16cc8a67fa167d287119f3",
+      "archivo_original": "rel_programa_social_linea_aparte.parquet"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "vistas_gasto.sql",
+      "hash": "sha256:308897ec9a870d2fa762ef331c77d3fbdc2ea3cd4697515038795d88611f5288",
+      "archivo_original": "vistas_gasto.sql"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "vistas_gasto_temas.sql",
+      "hash": "sha256:4657ad1599a88ae79566419cb47e0ade1d3d421642694fa59bb7cb6307a7ac3b",
+      "archivo_original": "vistas_gasto_temas.sql"
+    },
+    {
+      "source_id": "CAPA0:s4_mapa_pobreza",
+      "recurso": "fact_mapa_pobreza",
+      "hash": "sha256:a98a6d888e54a8d108037169ac64ca3ab2ecd9b0f3c8460d2a9ceb32f835b035",
+      "archivo_original": "fact_mapa_pobreza.parquet"
+    },
+    {
+      "source_id": "CAPA0:s2_poblacion",
+      "recurso": "fact_poblacion",
+      "hash": "sha256:d6874ff2f50bb08a4a3f7dd957e8b0a4ada380789c80e36dd85e9ad8d1c368ff",
+      "archivo_original": "fact_poblacion.parquet"
+    },
+    {
+      "source_id": "INS-CENAN-SIEN",
+      "recurso": "ins-cenan-sien",
+      "hash": "sha256:b05f29b160841198785afebb9bea4b72f84fa00b0c4eebbf6b2186981868469e",
+      "archivo_original": "BD SIEN-HIS Niños menores de 5 años 2025.zip"
+    }
+  ],
+  "tablas": {
+    "fact_indicador": {
+      "archivo": "fact_indicador.parquet",
+      "filas": 39539,
+      "hash": "sha256:ba1fbc55eb689141417c21bfef3bdec6680895a000778ef12461a81ada223ba8",
+      "columnas": [
+        "indicador_id",
+        "anio",
+        "nivel",
+        "territorio_id",
+        "territorio_nombre",
+        "medida",
+        "linea",
+        "criterio",
+        "valor",
+        "ee",
+        "cv",
+        "ic_inf",
+        "ic_sup",
+        "metodo_ic",
+        "gl",
+        "n_muestra",
+        "n_efectivo",
+        "deff",
+        "numerador",
+        "denominador",
+        "cota_inf",
+        "cota_sup",
+        "grupo_robusto_nacional",
+        "grupo_robusto_regional",
+        "metodo_territorio",
+        "avisos",
+        "estado_calculo",
+        "motivo_calculo",
+        "validada_dorada",
+        "indicador_validado",
+        "poblacion",
+        "ubigeo_inei",
+        "fecha_corte",
+        "fecha_descarga",
+        "anio_cerrado",
+        "pct_gasto_atribuible",
+        "version_tabla"
+      ],
+      "orden": "indicador_id, anio, nivel, territorio_id, medida, linea"
+    }
+  },
+  "pruebas": {
+    "total": 10,
+    "fallidas": [],
+    "bloqueantes_fallidas": []
+  }
+}

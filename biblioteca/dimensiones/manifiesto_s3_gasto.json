@@ -1,0 +1,648 @@
+{
+  "sprint": "s3_gasto",
+  "construido": "2026-11-04T11:04:48-05:00",
+  "codigo": {
+    "pap": "0.1.0",
+    "commit": "70130b2",
+    "sucio": false
+  },
+  "bibliotecas": {
+    "duckdb": "1.5.6",
+    "pandas": "3.0.6"
+  },
+  "insumos": [
+    {
+      "source_id": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+      "recurso": "gasto-2023",
+      "hash": "sha256:350a2c23b8854076578577c18dc7571f7d51f8d5b5d1de3eb06c0896ab426fd3",
+      "archivo_original": "2023-Gasto.csv"
+    },
+    {
+      "source_id": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+      "recurso": "gasto-2024",
+      "hash": "sha256:df9f83ae5b60a633ec0b345110e5e29a047666c06813f1fc8efee349b2daa94f",
+      "archivo_original": "2024-Gasto.csv"
+    },
+    {
+      "source_id": "MEF-DA-PRESUPUESTO-EJECUCION-GASTO",
+      "recurso": "gasto-2025",
+      "hash": "sha256:5aed95cb3b31916e5090d64ee6d45f8acc45041494098582411d388f464b36ef",
+      "archivo_original": "2025-Gasto-Mensual.csv"
+    },
+    {
+      "source_id": "ESTANDARIZADA:gasto_base",
+      "recurso": "gasto_base_2023_350a2c23b885_dbc61cbf.parquet",
+      "hash": "sha256:4bb2caacbe527ebc2c18f6bfe71dfa9c7d52b8e6e2cf1bd5d26aa67eeeb7604d",
+      "archivo_original": "gasto_base_2023_350a2c23b885_dbc61cbf.parquet"
+    },
+    {
+      "source_id": "ESTANDARIZADA:gasto_base",
+      "recurso": "gasto_base_2024_df9f83ae5b60_dbc61cbf.parquet",
+      "hash": "sha256:07a85b393198f2eba593b9368ec53fb420381c32271e62f508f0ac7c61615cdc",
+      "archivo_original": "gasto_base_2024_df9f83ae5b60_dbc61cbf.parquet"
+    },
+    {
+      "source_id": "ESTANDARIZADA:gasto_base",
+      "recurso": "gasto_base_2025_5aed95cb3b31_dbc61cbf.parquet",
+      "hash": "sha256:4750b9e9f5e4e5049e8d42cba4a64b971c641d838cf67cf41addf5643eb44a95",
+      "archivo_original": "gasto_base_2025_5aed95cb3b31_dbc61cbf.parquet"
+    },
+    {
+      "source_id": "MEF-DETALLE-INVERSIONES",
+      "recurso": "mef-detalle-inversiones",
+      "hash": "sha256:0fb1d61d0175c80713a6df839a57d7b150ac757b8425804589e2f6646f6a2e4a",
+      "archivo_original": "DETALLE_INVERSIONES.csv"
+    },
+    {
+      "source_id": "CAPA0:s1_territorio",
+      "recurso": "dim_ubigeo_historico",
+      "hash": "sha256:9857c9a48a821e98b997ed72e1bf40579c13e674ff21254d0f5c2246cc7d2261",
+      "archivo_original": "dim_ubigeo_historico.parquet"
+    },
+    {
+      "source_id": "CAPA0:s1_territorio",
+      "recurso": "rel_ubigeo_origen",
+      "hash": "sha256:094deb840c2972ea552f06c955d0ba9d663c4c4850431f9943d0af63a248d4f5",
+      "archivo_original": "rel_ubigeo_origen.parquet"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "control_consulta_amigable.yaml",
+      "hash": "sha256:5065435ab3821c40470024c3b03b336c072ee8c6baaefe2b8b48b85c2b72ba19",
+      "archivo_original": "control_consulta_amigable.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "ejecutoras_alcance.yaml",
+      "hash": "sha256:e816420d16e6b7de983fb0432af4e4983a72b6519e318a82d3a96f770c329849",
+      "archivo_original": "ejecutoras_alcance.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "inversiones_ubicacion_curada.yaml",
+      "hash": "sha256:469062d40c9d6e9cf33e1d9287e822489249b4e080a16fdcacc0b6b7d390e373",
+      "archivo_original": "inversiones_ubicacion_curada.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "lista_transferencias.yaml",
+      "hash": "sha256:b1819fb7927e466edfbdc3962874be68afa8368f7f3faf5b76995059cbf2cfd8",
+      "archivo_original": "lista_transferencias.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "vistas_gasto.sql",
+      "hash": "sha256:308897ec9a870d2fa762ef331c77d3fbdc2ea3cd4697515038795d88611f5288",
+      "archivo_original": "vistas_gasto.sql"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "vistas_gasto_temas.sql",
+      "hash": "sha256:4657ad1599a88ae79566419cb47e0ade1d3d421642694fa59bb7cb6307a7ac3b",
+      "archivo_original": "vistas_gasto_temas.sql"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "obras_sede_nacional.yaml",
+      "hash": "sha256:0728f8fece668db8f7e7d89268debe02acd129866d09a3077e7c0b753bfe81c5",
+      "archivo_original": "obras_sede_nacional.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/programas_presupuestales.csv",
+      "hash": "sha256:2cc4ab910036cf6dac2254faa901c20b00afd3001ff7983cefa0e7756ae03673",
+      "archivo_original": "trazabilidad/programas_presupuestales.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/programa_politica.csv",
+      "hash": "sha256:0de7acb2d49d56ffc633596dd4ad9a1a27c0a6f317e5c057bc581e19cddb2a72",
+      "archivo_original": "trazabilidad/programa_politica.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/conceptos.csv",
+      "hash": "sha256:9c7a57aafe8f26a41ab808e6df7cd65a24d47680cb83ba779913020987c64b68",
+      "archivo_original": "trazabilidad/conceptos.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/concepto_grupo.csv",
+      "hash": "sha256:e9770c8d12679ba7b63122f53ed010fc0fe73d674c9a0da6a94fcada45dcf450",
+      "archivo_original": "trazabilidad/concepto_grupo.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/map_concepto_nodo.csv",
+      "hash": "sha256:096b778bea65cf6af4fb42056a328d84784f0822f2f78b822ac5ae8ba7b52f0e",
+      "archivo_original": "trazabilidad/map_concepto_nodo.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/nodos_documentales.csv",
+      "hash": "sha256:c582bdc5ddbac0addf52d86858d966d4078f8c0ec0318c80584e7d9b46258641",
+      "archivo_original": "trazabilidad/nodos_documentales.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/cobertura_anio.csv",
+      "hash": "sha256:7e3a7b3eb7377c4f3e2076d9883ce2b5446a3d944fa44eb8ff4a158b00dbfdb3",
+      "archivo_original": "trazabilidad/cobertura_anio.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/linaje.csv",
+      "hash": "sha256:1283b4418e462d07ee13c64496a1d4e8f08a7d13d0bd1a67e7297b83fbe1cba2",
+      "archivo_original": "trazabilidad/linaje.csv"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/programas_sociales.yaml",
+      "hash": "sha256:87656f6e5677983db3a55155e74a1420ad8070d62cf2cf953efae53deef5dcaf",
+      "archivo_original": "trazabilidad/programas_sociales.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/temas_gasto.yaml",
+      "hash": "sha256:8b3266b86b000d1424bf3fae4020f13d5edaf810b623b29751bde38e498e7c4a",
+      "archivo_original": "trazabilidad/temas_gasto.yaml"
+    },
+    {
+      "source_id": "CURADO",
+      "recurso": "trazabilidad/glosario_gasto.csv",
+      "hash": "sha256:7e7e7724d87e312ca5cecf62b532001675dba00289e8b45cd8898c6c6d96c873",
+      "archivo_original": "trazabilidad/glosario_gasto.csv"
+    }
+  ],
+  "tablas": {
+    "dim_unidad_ejecutora": {
+      "archivo": "dim_unidad_ejecutora.parquet",
+      "filas": 8581,
+      "hash": "sha256:b8c91de8ea08b28f3de385b90a70099147ebf9a0c189ba60394023a483e2984f",
+      "columnas": [
+        "anio",
+        "sec_ejec",
+        "nivel_gobierno",
+        "sector_nombre",
+        "pliego",
+        "pliego_nombre",
+        "ejecutora_nombre",
+        "ubigeo_sede",
+        "n_sedes",
+        "tipo_entidad_local",
+        "alcance_ejecutora",
+        "criterio_alcance",
+        "referencia_nacional",
+        "verificar_procedencia",
+        "ejecutora_mixta",
+        "confianza_alcance",
+        "paso_criterio_alcance",
+        "alcance_revisado_dueno",
+        "alcance_ejecutora_callao",
+        "criterio_alcance_callao",
+        "ejecutora_mixta_callao",
+        "verificar_procedencia_callao",
+        "alcance_callao_revisado_dueno",
+        "actividades_nacionales_callao",
+        "ambito_pliego_regional",
+        "ambito_id",
+        "sede_valida",
+        "version_tabla"
+      ],
+      "orden": "anio, sec_ejec"
+    },
+    "dim_inversion_ubicacion": {
+      "archivo": "dim_inversion_ubicacion.parquet",
+      "filas": 150138,
+      "hash": "sha256:f44ae7882597cbe3830c5068ff28b27a485eb14851d4a68e7014bf95340dc7b1",
+      "columnas": [
+        "cui",
+        "ubigeos",
+        "n_ubicaciones",
+        "ubicacion_principal",
+        "nivel_comun",
+        "ubigeo_atribucion",
+        "metodo_ubicacion",
+        "confianza_ubicacion",
+        "motivo_sin_ubicacion",
+        "ubigeo_fuente",
+        "departamento_txt",
+        "provincia_txt",
+        "distrito_txt",
+        "nombre_inversion",
+        "estado",
+        "situacion",
+        "nivel_gobierno_inv",
+        "entidad",
+        "sec_ejec_uep",
+        "funcion_inv",
+        "tipologia",
+        "costo_actualizado",
+        "devengado_acumulado_anio_anterior",
+        "devengado_anio_actual",
+        "pim_anio_actual",
+        "avance_fisico",
+        "avance_ejecucion",
+        "ultima_declaracion_avance",
+        "fecha_viabilidad",
+        "habitantes_beneficiarios",
+        "lat",
+        "lon",
+        "fecha_snapshot",
+        "version_tabla"
+      ],
+      "orden": "cui"
+    },
+    "dim_programa": {
+      "archivo": "dim_programa.parquet",
+      "filas": 1097,
+      "hash": "sha256:9a2243b4351d8abef190fad571e52d245acbfe48c52fe538e6912f75580b5e98",
+      "columnas": [
+        "programa_ppto",
+        "anio",
+        "origen",
+        "estado_anio",
+        "nombre_mef",
+        "nombre_oficial",
+        "rotulo",
+        "tipo",
+        "tipo_historico",
+        "anio_desde",
+        "anio_hasta",
+        "n_productos",
+        "n_nodos_actividad",
+        "tiene_proyectos",
+        "presente_anio_anterior",
+        "tema_programa",
+        "estado",
+        "eventos",
+        "evidencia",
+        "url",
+        "confianza",
+        "version_tabla"
+      ],
+      "orden": "programa_ppto, anio"
+    },
+    "dim_producto": {
+      "archivo": "dim_producto.parquet",
+      "filas": 1417,
+      "hash": "sha256:7c750755963f03b86101dfc8759b68352dbfa348a1568456a70f60f357b9f693",
+      "columnas": [
+        "anio",
+        "programa_ppto",
+        "producto_proyecto",
+        "producto_proyecto_nombre",
+        "n_actividades",
+        "presente_anio_anterior",
+        "codigo_generico",
+        "version_tabla"
+      ],
+      "orden": "anio, programa_ppto, producto_proyecto"
+    },
+    "dim_actividad": {
+      "archivo": "dim_actividad.parquet",
+      "filas": 6224,
+      "hash": "sha256:e9db2aa102e3a0eea7c8ea8f581105b1741f32dbb8b2d587845e4eb2bb9cfae4",
+      "columnas": [
+        "anio",
+        "programa_ppto",
+        "producto_proyecto",
+        "actividad_accion_obra",
+        "actividad_accion_obra_nombre",
+        "n_ejecutoras",
+        "presente_anio_anterior",
+        "programas_de_la_actividad_anio_anterior",
+        "version_tabla"
+      ],
+      "orden": "anio, programa_ppto, producto_proyecto, actividad_accion_obra"
+    },
+    "dim_concepto": {
+      "archivo": "dim_concepto.parquet",
+      "filas": 23,
+      "hash": "sha256:2741c52d118ffb63fadca13aaa4ebc1cd71efc0e89e9cc1ddfcaa47ca283a8c6",
+      "columnas": [
+        "concepto_id",
+        "nombre_ciudadano",
+        "nivel",
+        "definicion",
+        "alcance",
+        "nota_alcance",
+        "grupos",
+        "tema_id",
+        "anio_primer_nodo",
+        "anio_ultimo_nodo",
+        "version_tabla"
+      ],
+      "orden": "concepto_id"
+    },
+    "rel_concepto_grupo": {
+      "archivo": "rel_concepto_grupo.parquet",
+      "filas": 31,
+      "hash": "sha256:72b552aa9189e2eff5ed908687ef7eaebe898b6ded5432e3d1fc9ddf2029441e",
+      "columnas": [
+        "grupo_id",
+        "concepto_id",
+        "restriccion_programa_ppto",
+        "version_tabla"
+      ],
+      "orden": "grupo_id, concepto_id"
+    },
+    "rel_concepto_nodo": {
+      "archivo": "rel_concepto_nodo.parquet",
+      "filas": 318,
+      "hash": "sha256:64cf5b94aea2063879dbff62dd03630699505ddfee09dbc2ab9a182d244561ae",
+      "columnas": [
+        "anio",
+        "concepto_id",
+        "programa_ppto",
+        "producto_proyecto",
+        "actividad_accion_obra",
+        "sec_ejec",
+        "excluye_sec_ejec",
+        "funcion",
+        "excluye_funcion",
+        "origen",
+        "regla_id",
+        "rotulo_programa",
+        "programa_ppto_nombre",
+        "producto_proyecto_nombre",
+        "actividad_accion_obra_nombre",
+        "tipo_cambio",
+        "evidencia",
+        "url",
+        "confianza",
+        "nota",
+        "version_tabla"
+      ],
+      "orden": "anio, concepto_id, programa_ppto, producto_proyecto, actividad_accion_obra, sec_ejec, funcion"
+    },
+    "rel_linaje": {
+      "archivo": "rel_linaje.parquet",
+      "filas": 28,
+      "hash": "sha256:aec8c803dddab6512abc8d1c2f14673d8d00de04975e69983fbf330950553e64",
+      "columnas": [
+        "id_evento",
+        "nivel",
+        "origen",
+        "destino",
+        "tipo_cambio",
+        "tipo_cambio_detalle",
+        "anio_min",
+        "anio_max",
+        "norma_o_evidencia",
+        "url",
+        "confianza",
+        "comparabilidad",
+        "conceptos_afectados",
+        "programas_afectados",
+        "programas_sociales_afectados",
+        "comparable_por_concepto",
+        "comparable_por_programa",
+        "comparable_por_programa_social",
+        "fuente_curaduria",
+        "version_tabla"
+      ],
+      "orden": "id_evento"
+    },
+    "rel_programa_politica": {
+      "archivo": "rel_programa_politica.parquet",
+      "filas": 8,
+      "hash": "sha256:e8f3f4c9ed319a585925bcf74eefa9053546eecef3d761a6829a028d9435e94a",
+      "columnas": [
+        "origen",
+        "destino",
+        "relacion",
+        "anios",
+        "nota",
+        "url",
+        "confianza",
+        "version_tabla"
+      ],
+      "orden": "origen, destino, relacion"
+    },
+    "dim_programa_social": {
+      "archivo": "dim_programa_social.parquet",
+      "filas": 40,
+      "hash": "sha256:8f9b407cfdcf7420d92fe89f970af5f8ff6355196a4ec26b0562d92838e83dac",
+      "columnas": [
+        "id_programa_social",
+        "anio",
+        "tema_id",
+        "alcance",
+        "criterio",
+        "nivel_gobierno",
+        "codigos",
+        "nombre_mef",
+        "con_registro_en_anio",
+        "nombre_propio",
+        "nombres_en_el_anio",
+        "nombre_cambia_en_anio",
+        "nombre_mef_difiere",
+        "etiqueta",
+        "norma_nombre",
+        "url_nombre",
+        "confianza_nombre",
+        "nombre_oficial",
+        "sector_adscripcion",
+        "vigencia_hasta",
+        "financiamiento_w2",
+        "nota",
+        "id_w2",
+        "linea_aparte_id",
+        "linea_aparte_rotulo",
+        "linea_aparte_obligatoria",
+        "revisado_por",
+        "version_tabla"
+      ],
+      "orden": "id_programa_social, anio"
+    },
+    "rel_programa_social_ejecutora": {
+      "archivo": "rel_programa_social_ejecutora.parquet",
+      "filas": 14,
+      "hash": "sha256:205c3e826ab585384786b52749cddd04dfbe9d3d752b58e0a5de925390350caa",
+      "columnas": [
+        "id_programa_social",
+        "criterio",
+        "nivel_gobierno",
+        "sec_ejec",
+        "actividad_accion_obra",
+        "tema_id",
+        "version_tabla"
+      ],
+      "orden": "id_programa_social, sec_ejec, actividad_accion_obra"
+    },
+    "rel_programa_social_financiamiento": {
+      "archivo": "rel_programa_social_financiamiento.parquet",
+      "filas": 259,
+      "hash": "sha256:9fd088e6aade3c8ef3e7e7351bda35da7c28900409de947c6d2d0d1948d9fefa",
+      "columnas": [
+        "anio",
+        "id_programa_social",
+        "programa_ppto",
+        "producto_proyecto",
+        "tipo_act_proy",
+        "n_ejecutoras",
+        "devengado_gasto_final",
+        "pim_gasto_final",
+        "devengado_fuera_del_gasto_final",
+        "producto_proyecto_nombre",
+        "programa_ppto_nombre",
+        "alcance",
+        "nota_suma",
+        "version_tabla"
+      ],
+      "orden": "anio, id_programa_social, programa_ppto, producto_proyecto, tipo_act_proy"
+    },
+    "rel_programa_social_linea_aparte": {
+      "archivo": "rel_programa_social_linea_aparte.parquet",
+      "filas": 2,
+      "hash": "sha256:83cc4aa1bf37695413aaa0986b523e230b39045fdf16cc8a67fa167d287119f3",
+      "columnas": [
+        "id_programa_social",
+        "tema_id",
+        "linea_aparte_id",
+        "rotulo",
+        "obligatoria",
+        "nivel_gobierno",
+        "sec_ejec",
+        "clasificador_gasto",
+        "version_tabla"
+      ],
+      "orden": "id_programa_social, linea_aparte_id, sec_ejec, clasificador_gasto"
+    },
+    "cobertura_por_anio": {
+      "archivo": "cobertura_por_anio.parquet",
+      "filas": 414,
+      "hash": "sha256:e9b1b1790a1107272c6bc19cc3f47f3a8e39d75ceea8d45c79b951f4191efc1a",
+      "columnas": [
+        "concepto_id",
+        "anio",
+        "nivel",
+        "estado_anio",
+        "origen_nodos",
+        "con_montos",
+        "comparable_con_anio_anterior",
+        "motivo_quiebre",
+        "peso_nodos_nuevos",
+        "eventos_linaje",
+        "version_tabla"
+      ],
+      "orden": "concepto_id, anio"
+    },
+    "dim_tema_gasto": {
+      "archivo": "dim_tema_gasto.parquet",
+      "filas": 87,
+      "hash": "sha256:b46f5da5448953b67aa29ad99a6005e7edec4a73664dd7ea5950ff716b4e714c",
+      "columnas": [
+        "anio",
+        "tema_id",
+        "cadena",
+        "codigo_origen",
+        "nivel",
+        "llave_union",
+        "programa_ppto",
+        "funcion",
+        "division_funcional",
+        "concepto_grupo_id",
+        "nivel_gobierno",
+        "sec_ejec",
+        "actividad_accion_obra",
+        "alternativa_de",
+        "etiqueta_ciudadana",
+        "excluye_transferencias",
+        "comparable_con_anio_anterior",
+        "motivo_quiebre",
+        "version",
+        "revisado_por"
+      ],
+      "orden": "anio, tema_id, programa_ppto, funcion, division_funcional, sec_ejec, actividad_accion_obra"
+    },
+    "dim_glosario_gasto": {
+      "archivo": "dim_glosario_gasto.parquet",
+      "filas": 42,
+      "hash": "sha256:3d22209b0d99fc4c0822928d203ca6e689ed132e61a73f840939207767d87999",
+      "columnas": [
+        "id",
+        "termino",
+        "grupo",
+        "cadena",
+        "columna_base",
+        "definicion_tecnica",
+        "norma",
+        "url",
+        "definicion_simple",
+        "responde",
+        "no_responde",
+        "error_tipico",
+        "uso_en_web",
+        "ejemplo_base",
+        "version_glosario",
+        "version_tabla"
+      ],
+      "orden": "id"
+    },
+    "fact_gasto_territorial": {
+      "archivo": "fact_gasto_territorial.parquet",
+      "filas": 6802105,
+      "hash": "sha256:46dde2120eeb7c6367806e901e4c739fd745625f74490e99a63f01bd2b4fd3b0",
+      "columnas": [
+        "anio",
+        "mes",
+        "nivel_atribucion",
+        "ubigeo_atribucion",
+        "departamento_atribucion",
+        "ambito_id",
+        "sec_ejec",
+        "nivel_gobierno",
+        "alcance_ejecutora",
+        "departamento_meta",
+        "programa_ppto",
+        "producto_proyecto",
+        "actividad_accion_obra",
+        "funcion",
+        "division_funcional",
+        "grupo_funcional",
+        "categoria_gasto",
+        "generica",
+        "clasificador_gasto",
+        "nivel_clasificador",
+        "fuente_financiamiento",
+        "rubro",
+        "tipo_act_proy",
+        "categoria_transferencia",
+        "es_transferencia",
+        "es_transferencia_intergub",
+        "bloque_consolidado",
+        "referencia_nacional",
+        "verificar_procedencia",
+        "ejecutora_mixta",
+        "obra_sede_nacional",
+        "cuenta_en_lima",
+        "cuenta_en_ambito",
+        "consistencia_meta",
+        "metodo_ubicacion_cui",
+        "cui_redirigido_origen",
+        "actividad_accion_obra_nombre",
+        "generica_nombre",
+        "clasificador_gasto_nombre",
+        "fuente_financiamiento_nombre",
+        "rubro_nombre",
+        "pia",
+        "pim",
+        "devengado",
+        "fecha_corte_datos",
+        "es_anio_cerrado",
+        "version_tabla"
+      ],
+      "orden": "anio, mes, nivel_atribucion, ubigeo_atribucion, ambito_id, sec_ejec, departamento_meta, programa_ppto, producto_proyecto, actividad_accion_obra, funcion, division_funcional, grupo_funcional, categoria_gasto, generica, clasificador_gasto, fuente_financiamiento, rubro, tipo_act_proy, categoria_transferencia"
+    }
+  },
+  "pruebas": {
+    "total": 49,
+    "fallidas": [
+      "G-18b",
+      "G-08b"
+    ],
+    "bloqueantes_fallidas": []
+  }
+}
