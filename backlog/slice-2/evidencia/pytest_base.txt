@@ -1,0 +1,49 @@
+warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be removed in a future release. Use `UV_SYSTEM_CERTS` instead.
+........................................................................ [  9%]
+........................................................................ [ 19%]
+........................................................................ [ 29%]
+........................................................................ [ 38%]
+........................................................................ [ 48%]
+........................................................................ [ 58%]
+........................................................................ [ 67%]
+........................................................................ [ 77%]
+........................................................................ [ 87%]
+........................................................................ [ 97%]
+......................                                                   [100%]
+742 passed, 34 deselected in 273.73s (0:04:33)
+
+# Pruebas fuera en la nube (solo_mac, F-05): 34
+tests/test_gasto.py::test_sin_pruebas_bloqueantes_fallidas
+tests/test_gasto.py::test_conservacion_exacta
+tests/test_gasto.py::test_pia_igual_a_ley
+tests/test_gasto.py::test_municipalidades_por_nombre_de_ejecutora
+tests/test_gasto.py::test_niveles_de_atribucion_validos
+tests/test_gasto.py::test_alcance_y_ambitos_de_lima
+tests/test_gasto.py::test_alcance_solo_con_meta_lima
+tests/test_gasto.py::test_pruebas_de_la_pieza_a
+tests/test_gasto.py::test_pruebas_de_la_pieza_c
+tests/test_inversiones_ubicacion.py::test_ningun_cui_del_detalle_se_pierde
+tests/test_inversiones_ubicacion.py::test_nivel_o_motivo_exclusivos_y_listas_cerradas
+tests/test_inversiones_ubicacion.py::test_proyectos_del_detalle_llegan_al_fact_con_metodo
+tests/test_inversiones_ubicacion.py::test_porcentaje_por_metodo
+tests/test_inversiones_ubicacion.py::test_solo_gl_por_texto
+tests/test_inversiones_ubicacion.py::test_alias_al_distrito_correcto
+tests/test_inversiones_ubicacion.py::test_codigo_escindido_nunca_por_alias
+tests/test_inversiones_ubicacion.py::test_tabla_curada_coherente
+tests/test_inversiones_ubicacion.py::test_suma_se_conserva_devengado_y_pim
+tests/test_inversiones_ubicacion.py::test_multidep_del_gn_opcion_b
+tests/test_inversiones_ubicacion.py::test_municipalidades_con_cui_multidep_siguen_en_su_sede
+tests/test_poblacion.py::test_construccion_real
+tests/test_puentes.py::test_construccion_real
+tests/test_puentes.py::test_renipress_160109_no_va_por_alias
+tests/test_puentes.py::test_sien_pruebas_bloqueantes_y_avisos
+tests/test_s4_insumos.py::test_endes
+tests/test_s4_insumos.py::test_endes_universo_unico_y_estrato_anidado
+tests/test_s4_insumos.py::test_enaho
+tests/test_s4_insumos.py::test_mapa
+tests/test_sien.py::test_s04_conservacion_contra_el_crudo
+tests/test_territorio.py::test_construccion_real
+tests/test_territorio.py::test_nacional_y_departamentos_desde_1995
+tests/test_territorio.py::test_pertenencia_anual
+tests/test_territorio.py::test_sangani_codigo_provisional
+tests/test_territorio.py::test_dominios_antes_de_2018_no_vacios

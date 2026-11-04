@@ -1,0 +1,891 @@
+{
+ "capas": {
+  "capa1": {
+   "respuesta_corta": "No se puede saber cuántos niños de Huancavelica (Huancavelica) tienen anemia con los datos disponibles. Lo más cercano es lo que registran los establecimientos de salud de la provincia:",
+   "cifra_clave": {
+    "ids": [
+     "sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal"
+    ],
+    "valor": "alrededor de 22 % (entre 21 % y 23 %)",
+    "texto": "de 3 364 niñas y niños de 6 a 35 meses a quienes se les midió la hemoglobina en establecimientos públicos de Huancavelica (Huancavelica) tenía anemia en su último control de 2025.",
+    "fuente": "SIEN 2025 (INS)"
+   },
+   "ojo_al_leer": [
+    "No es la cifra de todos los niños de Huancavelica (Huancavelica): solo de los que fueron a un establecimiento.",
+    "No la leas como «hay poca anemia»: el INS advierte que estos registros podrían subestimarla."
+   ],
+   "confianza": {
+    "nivel": "media",
+    "texto": "Confianza en los datos: media. Mide algo cercano, no exactamente lo preguntado.",
+    "ficha": "Confianza en los datos: media (dato con limitaciones): mide algo cercano, no exactamente lo preguntado."
+   },
+   "que_hacer": {
+    "texto": "Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6 meses.",
+    "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
+    "url": "https://www.gob.pe/69889-que-es-la-anemia-prevencion",
+    "revisado_dueno": false
+   },
+   "palabras": 117
+  },
+  "capa2": {
+   "mas_contexto": [
+    {
+     "titulo": "Todo el departamento de Huancavelica (encuesta a hogares)",
+     "texto": "Para todo Huancavelica se estima que 38,6 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). La encuesta no permite dar una cifra para Huancavelica.",
+     "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave."
+    },
+    {
+     "titulo": "¿A cuántos niños se les mide la hemoglobina?",
+     "texto": "En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a entre 63 % y 64 % de los niños de 6 a 35 meses del departamento de Huancavelica (SIEN 2025, INS). Se midió a más de la mitad de los niños.",
+     "etiqueta": null
+    },
+    {
+     "titulo": "Por qué esta cifra es más baja que la de la encuesta",
+     "texto": "El INS advierte que sus cifras son de niños atendidos en establecimientos del MINSA, que no son estrictamente comparables con la ENDES y que, como no a todos los atendidos se les mide la hemoglobina, podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño.",
+     "etiqueta": null
+    }
+   ],
+   "avisos": [
+    "No la compares con la cifra de todo Huancavelica: miden cosas distintas.",
+    "Hay dos cifras sobre anemia en niñas y niños de 6 a 35 meses y no coinciden porque miden cosas distintas: niños medidos en establecimientos frente a una muestra de todos los hogares del departamento. Usamos el SIEN como cifra principal porque es la única fuente que llega al provincia.",
+    "Estas cifras vienen de fuentes de distinto tipo (encuesta a hogares, registro de atenciones): se muestran juntas para dar contexto y cada una mide algo distinto."
+   ],
+   "limites": [
+    "Datos de: SIEN 2025 (INS) · ENDES 2025 (INEI)",
+    "Territorio: provincia de Huancavelica (Huancavelica) (algunas cifras solo están por departamento)",
+    "No permite concluir: cuántos niños del distrito tienen anemia: solo sabemos de los que se les midió la hemoglobina en establecimientos."
+   ]
+  },
+  "capa3": {
+   "para_citar": [
+    "21,9 % (intervalo: 20,5 % a 23,3 %): niñas y niños de 6 a 35 meses tamizados con anemia en establecimientos del MINSA y de los gobiernos regionales, Huancavelica (Huancavelica), 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
+    "38,6 % (intervalo del INEI: 32,0 % a 45,1 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Huancavelica, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58).",
+    "entre 62,9 % y 64,4 %: niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100), Huancavelica, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06."
+   ],
+   "glosario": [
+    {
+     "termino": "medir la hemoglobina (tamizaje)",
+     "definicion": "análisis de una gota de sangre que se hace en el establecimiento de salud para saber si la niña o el niño tiene anemia."
+    },
+    {
+     "termino": "SIEN",
+     "definicion": "Sistema de Información del Estado Nutricional del INS: registra a los niños atendidos en los establecimientos de salud del MINSA y de los gobiernos regionales."
+    },
+    {
+     "termino": "ENDES",
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños."
+    }
+   ]
+  }
+ },
+ "consulta": {
+  "id": "nivel_actual__anemia__090100",
+  "pregunta": "nivel_actual anemia Huancavelica",
+  "intencion": "nivel_actual",
+  "tema": "anemia",
+  "territorio": {
+   "nivel": "provincia",
+   "id": "090100",
+   "nombre_pedido": "Huancavelica"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "cifras": [
+   {
+    "id": "sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal",
+    "indicador": "sien_anemia_tamizados_6_35m",
+    "anio": 2025,
+    "nivel": "provincia",
+    "territorio": "090100",
+    "rol": "principal"
+   },
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   },
+   {
+    "id": "sien_cobertura_tamizaje_6_35m__cobertura__departamento__09__2025__contexto",
+    "indicador": "sien_cobertura_tamizaje_6_35m",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   }
+  ],
+  "grupos": [],
+  "cruce": null,
+  "bloques": [],
+  "tema_gasto": null,
+  "avisos_periodo": [],
+  "formas_sin_serie": [],
+  "respuesta_parcial": false,
+  "estructura_efecto": false,
+  "lado_a_lado": false,
+  "no_se_puede": null,
+  "motivos_no_se_puede": [],
+  "omitidas": [],
+  "decisiones": [
+   "R-04",
+   "S-01",
+   "S-01 / E-06"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "nivel_actual",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "Huancavelica"
+   },
+   "idioma": "es"
+  },
+  "desambiguados": {
+   "provincia:090100": "Huancavelica (Huancavelica)"
+  }
+ },
+ "version_biblioteca": {
+  "cubo": "sha256:68f2a609ec002f54403802c92104c64c01c70ebca4fc46ebc4df293877f58eb2",
+  "commit_cubo": "acc9861",
+  "reglas": "f26641b3a40c"
+ },
+ "cifras": {
+  "sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal": {
+   "indicador_id": "sien_anemia_tamizados_6_35m",
+   "anio": 2025,
+   "nivel": "provincia",
+   "territorio_id": "090100",
+   "territorio_nombre": "Huancavelica",
+   "medida": "proporcion",
+   "valor": 21.87871581,
+   "ee": null,
+   "cv": null,
+   "ic_inf": 20.51415832,
+   "ic_sup": 23.30742523,
+   "n_muestra": 3364,
+   "numerador": 736.0,
+   "denominador": 3364.0,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "principal",
+   "nivel_pedido": "provincia",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "ambar",
+   "motivos_semaforo": [
+    {
+     "criterio": "tipo_medida_vs_concepto",
+     "puntaje": 1
+    },
+    {
+     "criterio": "base_geografica",
+     "puntaje": 1
+    }
+   ],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "provincia",
+     "territorio_id": "090100",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "wilson",
+   "ic_inei": null,
+   "contraste_oficial": null,
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-REG-02",
+     "accion": "rotular",
+     "motivo": "base_establecimiento",
+     "clausula": "denominador atendido en el establecimiento",
+     "detalle": {
+      "base": "establecimiento"
+     },
+     "rotulo": "en establecimientos ubicados en Huancavelica"
+    },
+    {
+     "regla": "R-REG-01",
+     "accion": "rotular",
+     "motivo": "tipo_medida",
+     "clausula": "registro: rótulo de tipo_medida obligatorio",
+     "detalle": {
+      "tipo_medida": "notificacion_vigilancia",
+      "lista_prohibida": [
+       "prevalencia",
+       "incidencia",
+       "tasa de anemia del distrito",
+       "% de los niños del distrito",
+       "% de la población",
+       "tiene anemia el X % de"
+      ],
+      "marcadores_pendientes": [
+       "quien",
+       "accion_registro",
+       "sistema"
+      ]
+     },
+     "mensaje": "Este dato cuenta solo a {quien} que {accion_registro} {sistema}; no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra.",
+     "rotulo": "niños tamizados con anemia en establecimientos de salud del MINSA y de los gobiernos regionales (no es la prevalencia de la población)"
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "advertir",
+     "motivo": "fecha_corte",
+     "clausula": "caso borde: sin fecha de corte declarada",
+     "detalle": {
+      "fecha_descarga": "2026-10-06"
+     },
+     "aviso": "sin_fecha_corte",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "rotular",
+     "motivo": "fecha_corte",
+     "clausula": "fecha de corte",
+     "detalle": {
+      "fecha_corte": "2026-10-06",
+      "cierre": "2026-06-30",
+      "es_preliminar": false
+     },
+     "rotulo": "datos al 2026-10-06"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 1",
+     "detalle": {
+      "semaforo": "ambar",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 1,
+       "base_geografica": 1,
+       "cobertura_registro": 0
+      },
+      "motivos": [
+       {
+        "criterio": "tipo_medida_vs_concepto",
+        "puntaje": 1
+       },
+       {
+        "criterio": "base_geografica",
+        "puntaje": 1
+       }
+      ],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato con limitaciones: mide algo cercano, no exactamente lo preguntado",
+     "rotulo": "Dato con limitaciones"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
+  "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__contexto": {
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "anio": 2025,
+   "nivel": "departamento",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "medida": "proporcion",
+   "valor": 38.58800337,
+   "ee": 3.35298758,
+   "cv": 8.68919686,
+   "ic_inf": 31.92008196,
+   "ic_sup": 45.58795999,
+   "n_muestra": 242,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "contexto",
+   "nivel_pedido": "provincia",
+   "estado_cifra": "agregada",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "09",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "agregar_nivel",
+     "estado": "agregada",
+     "motivos": [
+      "nivel_no_representativo"
+     ]
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": {
+    "ic_inf": 32.0,
+    "ic_sup": 45.1,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "id_cifra": "DOR-OMS-2025-09"
+   },
+   "contraste_oficial": {
+    "valor": 38.6,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "criterio": "RM251-2024/OMS2024",
+    "id_cifra": "DOR-OMS-2025-09",
+    "entidad": "INEI"
+   },
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-ENC-06",
+     "accion": "agregar_nivel",
+     "motivo": "nivel_no_representativo",
+     "clausula": "nivel pedido más fino que la inferencia",
+     "detalle": {
+      "nivel_pedido": "provincia",
+      "nivel_territorial_inferencia": "departamento",
+      "contenedor": [
+       "departamento",
+       "09"
+      ],
+      "periodicidad": "anual"
+     },
+     "mensaje": "La encuesta no permite dar una cifra con suficiente precisión para Huancavelica. Mostramos la de Huancavelica, que incluye a Huancavelica; la situación en Huancavelica puede ser distinta.",
+     "nivel_minimo": "departamento"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "agregar_nivel",
+   "bloqueos_cruce": []
+  },
+  "sien_cobertura_tamizaje_6_35m__cobertura__departamento__09__2025__contexto": {
+   "indicador_id": "sien_cobertura_tamizaje_6_35m",
+   "anio": 2025,
+   "nivel": "departamento",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "medida": "cobertura",
+   "valor": 64.38942105,
+   "ee": null,
+   "cv": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "n_muestra": 10688,
+   "numerador": 10447.0,
+   "denominador": 16599.0,
+   "cota_inf": 62.93752636,
+   "cota_sup": 64.38942105,
+   "rol": "contexto",
+   "nivel_pedido": "provincia",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "09",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": null,
+   "ic_inei": null,
+   "contraste_oficial": null,
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-DEP-01",
+     "accion": "rotular",
+     "motivo": "contraste_no_aprobado",
+     "clausula": "contraste no aprobado: se omite",
+     "detalle": {
+      "contraste_omitido": [
+       {
+        "id": "MINSA-POBLACION-ESTIMADA",
+        "compuerta": "enlace_confirmado"
+       }
+      ],
+      "destino": "ficha_larga"
+     },
+     "modificador": true
+    },
+    {
+     "regla": "R-DENOMINADORES-01",
+     "accion": "rotular",
+     "motivo": "denominador",
+     "clausula": "denominador de la matriz",
+     "detalle": {
+      "tipo_denominador": "cobertura_salud_por_edad",
+      "denominador_principal": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD|6-35m|T",
+      "efectivo": {
+       "fuente_id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+       "metodo": "oficial",
+       "geografia_base": "vigente_2025",
+       "rotulo": null,
+       "vintage": "INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01"
+      }
+     },
+     "mensaje": "Calculado sobre la población de niñas y niños de 6 a 35 meses residentes en el departamento o ámbito (LM, LR, Callao) (INEI-PROYECCIONES-DEPARTAMENTAL-EDAD, 2025)."
+    },
+    {
+     "regla": "R-REG-01",
+     "accion": "rotular",
+     "motivo": "tipo_medida",
+     "clausula": "registro: rótulo de tipo_medida obligatorio",
+     "detalle": {
+      "tipo_medida": "cobertura_programa",
+      "lista_prohibida": [
+       "prevalencia",
+       "incidencia",
+       "tasa de anemia del distrito",
+       "% de los niños del distrito",
+       "% de la población",
+       "tiene anemia el X % de"
+      ],
+      "marcadores_pendientes": [
+       "quien",
+       "accion_registro",
+       "sistema"
+      ]
+     },
+     "mensaje": "Este dato cuenta solo a {quien} que {accion_registro} {sistema}; no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra.",
+     "rotulo": "niños con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional, de cada 100 niños de 6 a 35 meses del departamento (no equivale a toda la población atendida)"
+    },
+    {
+     "regla": "R-REG-07",
+     "accion": "rotular",
+     "motivo": "cobertura_registro",
+     "clausula": "SIEN: dos cotas",
+     "detalle": {
+      "cota_inf": 62.93752636,
+      "cota_sup": 64.38942105,
+      "umbral_pct": 50,
+      "semaforo_usa": "cota_sup"
+     },
+     "rotulo": "entre 63 y 64 de cada 100 niños",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "advertir",
+     "motivo": "fecha_corte",
+     "clausula": "caso borde: sin fecha de corte declarada",
+     "detalle": {
+      "fecha_descarga": "2026-10-06"
+     },
+     "aviso": "sin_fecha_corte",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "rotular",
+     "motivo": "fecha_corte",
+     "clausula": "fecha de corte",
+     "detalle": {
+      "fecha_corte": "2026-10-06",
+      "cierre": "2026-06-30",
+      "es_preliminar": false
+     },
+     "rotulo": "datos al 2026-10-06"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0,
+       "cobertura_registro": 0,
+       "denominador": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  }
+ },
+ "cruces": [],
+ "semaforo_respuesta": "ambar",
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal"
+ ],
+ "texto": "No se puede saber cuántos niños de Huancavelica (Huancavelica) tienen anemia con los datos disponibles. Lo más cercano es lo que registran los establecimientos de salud de la provincia: alrededor de 22 % (entre 21 % y 23 %) de 3 364 niñas y niños de 6 a 35 meses a quienes se les midió la hemoglobina en establecimientos públicos de Huancavelica (Huancavelica) tenía anemia en su último control de 2025. No es la cifra de todos los niños de Huancavelica (Huancavelica): solo de los que fueron a un establecimiento. No la leas como «hay poca anemia»: el INS advierte que estos registros podrían subestimarla. No la compares con la cifra de todo Huancavelica: miden cosas distintas. Para todo Huancavelica se estima que 38,6 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). La encuesta no permite dar una cifra para Huancavelica. En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a entre 63 % y 64 % de los niños de 6 a 35 meses del departamento de Huancavelica (SIEN 2025, INS). Se midió a más de la mitad de los niños. El INS advierte que sus cifras son de niños atendidos en establecimientos del MINSA, que no son estrictamente comparables con la ENDES y que, como no a todos los atendidos se les mide la hemoglobina, podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño.",
+ "texto_con_marcadores": "{{p:no_se_puede}} Lo más cercano es lo que registran los establecimientos de salud de la provincia: {{c:sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal}} de {{e:n_sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal}} {{u:ninos_n}} a quienes se les midió la hemoglobina en establecimientos públicos de Huancavelica (Huancavelica) tenía anemia en su último control de 2025. No es la cifra de todos los niños de Huancavelica (Huancavelica): solo de los que fueron a un establecimiento. No la leas como «hay poca anemia»: el INS advierte que estos registros podrían subestimarla. No la compares con la cifra de todo Huancavelica: miden cosas distintas. Para todo Huancavelica se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__contexto}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). La encuesta no permite dar una cifra para Huancavelica. En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__09__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS). {{p:cobertura}} {{p:ins}} {{p:altitud}}",
+ "ficha": {
+  "corta": "Confianza en los datos: media (dato con limitaciones): mide algo cercano, no exactamente lo preguntado.\nDatos de: SIEN 2025 (INS) · ENDES 2025 (INEI)\nTerritorio: provincia de Huancavelica (Huancavelica) (algunas cifras solo están por departamento)\nNo permite concluir: cuántos niños del distrito tienen anemia: solo sabemos de los que se tamizaron en establecimientos.",
+  "larga": {
+   "cifras": {
+    "sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal": {
+     "1_origen": "Niñas y niños de 6 a 35 meses tamizados con anemia en establecimientos del MINSA y de los gobiernos regionales. SIEN (INS), 2025. Es un registro de los niños atendidos en establecimientos de salud. Datos descargados el 2026-10-06.",
+     "2_territorio": "La cifra se presenta por provincia (Huancavelica).",
+     "3_que_mide": "Mide niños tamizados con anemia en establecimientos de salud del MINSA y de los gobiernos regionales (no es la prevalencia de la población).",
+     "4_precision": "Basado en 3 364 niños tamizados; el valor está probablemente entre 20,5 % y 23,3 %.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "estado": "publicable",
+     "semaforo": "ambar",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "Este dato cuenta solo a las niñas y los niños que tuvieron una medición de hemoglobina en un establecimiento de salud y quedaron registrados en el SIEN (INS); no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra."
+     ]
+    },
+    "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__contexto": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024). ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica). Se pidió por provincia; la fuente no alcanza ese nivel.",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir vigente desde 2024 (RM 251-2024-MINSA).",
+     "4_precision": "El valor real está probablemente entre 31,9 % y 45,6 % (coeficiente de variación 8,7 %, 242 casos en la muestra). El INEI publica para esta cifra un intervalo entre 32,0 % y 45,1 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 38,6 % con la forma de medir vigente desde 2024 (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Nuestra cifra coincide.",
+     "estado": "agregada",
+     "semaforo": "verde",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025."
+     ]
+    },
+    "sien_cobertura_tamizaje_6_35m__cobertura__departamento__09__2025__contexto": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100). SIEN (INS), 2025. Es un registro de los niños atendidos en establecimientos de salud. Datos descargados el 2026-10-06.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica). Se pidió por provincia; la fuente no alcanza ese nivel.",
+     "3_que_mide": "Mide niños con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional, de cada 100 niños de 6 a 35 meses del departamento (no equivale a toda la población atendida).",
+     "4_precision": "Dos cotas: 62,9 % contando a los niños por su procedencia y 64,4 % sumando a los atendidos sin procedencia registrada.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "estado": "publicable",
+     "semaforo": "verde",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "Calculado sobre la población de niñas y niños de 6 a 35 meses residentes en el departamento (la proyección de población del INEI, 2025).",
+      "Este dato cuenta solo a las niñas y los niños que tuvieron una medición de hemoglobina en un establecimiento de salud y quedaron registrados en el SIEN (INS); no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra."
+     ]
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Cuántos niños del distrito tienen anemia: solo sabemos de los que se tamizaron en establecimientos."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:68f2a609ec00… (commit acc9861) y reglas f26641b3a40c. Indicadores: endes_anemia_6_35m_oms2024, sien_anemia_tamizados_6_35m, sien_cobertura_tamizaje_6_35m."
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "avisos_al_usuario": [
+  {
+   "regla": "R-CRUCES-08",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__contexto",
+   "texto": "Hay dos cifras sobre anemia en niñas y niños de 6 a 35 meses y no coinciden porque miden cosas distintas: niños medidos en establecimientos frente a una muestra de todos los hogares del departamento. Usamos el SIEN como cifra principal porque es la única fuente que llega al provincia."
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "objetivo": "respuesta",
+   "texto": "Este párrafo combina datos de distinto tipo: encuesta a hogares, registro de atenciones. Se presentan juntos para dar contexto, no porque uno explique al otro."
+  }
+ ],
+ "resultados_respuesta": [
+  {
+   "regla": "R-CRUCES-08",
+   "accion": "rotular",
+   "motivo": "fuente_complementaria",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "anemia_6_35m",
+    "principal": "sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal"
+   },
+   "rotulo": "complementaria",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__contexto"
+  },
+  {
+   "regla": "R-CRUCES-08",
+   "accion": "rotular",
+   "motivo": "divergencia_fuentes",
+   "clausula": "|valor_principal − valor_secundaria| > umbral_divergencia",
+   "detalle": {
+    "concepto": "anemia_6_35m",
+    "divergencia": 16.709,
+    "umbral": 5.0,
+    "bloque": "Por qué las cifras no coinciden"
+   },
+   "mensaje": "Hay dos cifras sobre anemia_6_35m y no coinciden porque miden cosas distintas: {explicacion_corta}. Usamos INS-CENAN-SIEN como cifra principal porque {razon}.",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__contexto",
+   "modificador": true
+  },
+  {
+   "regla": "R-CRUCES-08",
+   "accion": "advertir",
+   "motivo": "vintage_distinta",
+   "clausula": "una_vintage_por_respuesta",
+   "detalle": {
+    "vintages": [
+     "INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01",
+     "no_aplica"
+    ]
+   },
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-CRUCES-10",
+   "accion": "rotular",
+   "motivo": "semaforo_respuesta",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "semaforo_respuesta": "ambar",
+    "motivos": [
+     "peor_cifra_principal:sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal"
+    ],
+    "semaforo_cruces": {}
+   },
+   "mensaje": "Confianza de esta respuesta: Dato con limitaciones. Mide algo cercano, no exactamente lo preguntado.",
+   "rotulo": "Dato con limitaciones",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "párrafo con >= 2 naturaleza_dato",
+   "detalle": {
+    "naturalezas": [
+     "encuesta_muestral",
+     "registro_administrativo"
+    ]
+   },
+   "mensaje": "Este párrafo combina datos de distinto tipo: encuesta_muestral, registro_administrativo. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "(a)–(e) del párrafo mixto",
+   "detalle": {
+    "fallas": [
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "{{p:no_se_puede}} Lo más cercano es lo que registran los establecimientos de salud de la provincia: {{c:sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal}} de {{e:n_sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal}} {{u:ninos_n}} a quienes se les midió la hemoglobina en establecimientos públicos de Huancavelica (Huancavelica) tenía anemia en su último control de 2025."
+     },
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__09__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS)."
+     }
+    ]
+   },
+   "modo": "corrector",
+   "objetivo": "respuesta"
+  }
+ ],
+ "corrector": [
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "párrafo con >= 2 naturaleza_dato",
+   "detalle": {
+    "naturalezas": [
+     "encuesta_muestral",
+     "registro_administrativo"
+    ]
+   },
+   "mensaje": "Este párrafo combina datos de distinto tipo: encuesta_muestral, registro_administrativo. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "(a)–(e) del párrafo mixto",
+   "detalle": {
+    "fallas": [
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "{{p:no_se_puede}} Lo más cercano es lo que registran los establecimientos de salud de la provincia: {{c:sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal}} de {{e:n_sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal}} {{u:ninos_n}} a quienes se les midió la hemoglobina en establecimientos públicos de Huancavelica (Huancavelica) tenía anemia en su último control de 2025."
+     },
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__09__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS)."
+     }
+    ]
+   },
+   "modo": "corrector",
+   "objetivo": "respuesta"
+  }
+ ],
+ "respuesta_parcial": false,
+ "tipo": "respuesta",
+ "consulta_minima": {
+  "intencion": "nivel_actual",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "Huancavelica"
+  },
+  "idioma": "es"
+ },
+ "plan": {
+  "id": "nivel_actual__anemia__090100",
+  "pregunta": "nivel_actual anemia Huancavelica",
+  "intencion": "nivel_actual",
+  "tema": "anemia",
+  "territorio": {
+   "nivel": "provincia",
+   "id": "090100",
+   "nombre_pedido": "Huancavelica"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "cifras": [
+   {
+    "id": "sien_anemia_tamizados_6_35m__proporcion__provincia__090100__2025__principal",
+    "indicador": "sien_anemia_tamizados_6_35m",
+    "anio": 2025,
+    "nivel": "provincia",
+    "territorio": "090100",
+    "rol": "principal"
+   },
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   },
+   {
+    "id": "sien_cobertura_tamizaje_6_35m__cobertura__departamento__09__2025__contexto",
+    "indicador": "sien_cobertura_tamizaje_6_35m",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   }
+  ],
+  "grupos": [],
+  "cruce": null,
+  "bloques": [],
+  "tema_gasto": null,
+  "avisos_periodo": [],
+  "formas_sin_serie": [],
+  "respuesta_parcial": false,
+  "estructura_efecto": false,
+  "lado_a_lado": false,
+  "no_se_puede": null,
+  "motivos_no_se_puede": [],
+  "omitidas": [],
+  "decisiones": [
+   "R-04",
+   "S-01",
+   "S-01 / E-06"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "nivel_actual",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "Huancavelica"
+   },
+   "idioma": "es"
+  },
+  "desambiguados": {
+   "provincia:090100": "Huancavelica (Huancavelica)"
+  }
+ }
+}

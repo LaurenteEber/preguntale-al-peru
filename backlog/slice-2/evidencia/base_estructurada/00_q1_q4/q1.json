@@ -1,0 +1,920 @@
+{
+ "capas": {
+  "capa1": {
+   "respuesta_corta": "En Huancavelica, la anemia en niñas y niños pequeños no muestra un cambio estadísticamente claro: ni entre 2024 y 2025 con la forma de medir actual, ni entre 2015 y 2025 con la anterior.",
+   "cifra_clave": {
+    "ids": [
+     "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal"
+    ],
+    "valor": "38,6 %",
+    "texto": "de las niñas y los niños de 6 a 35 meses de Huancavelica tenía anemia en 2025, con la forma de medir que usa hoy el Ministerio de Salud.",
+    "fuente": "ENDES 2025 (INEI); el INEI publica la misma cifra (38,6 %)"
+   },
+   "ojo_al_leer": [
+    "No compares esta cifra con las de años anteriores a 2024: se medía de otra forma, que da cifras más altas.",
+    "«Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
+   ],
+   "confianza": {
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025.",
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025."
+   },
+   "que_hacer": {
+    "texto": "Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6 meses.",
+    "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
+    "url": "https://www.gob.pe/69889-que-es-la-anemia-prevencion",
+    "revisado_dueno": false
+   },
+   "palabras": 115
+  },
+  "capa2": {
+   "mas_contexto": [
+    {
+     "titulo": "Desde 2015, con la forma de medir anterior",
+     "texto": "Con la forma de medir anterior, que permite comparar desde 2015 con la misma regla, la anemia fue 53,5 % en 2015 y 54,5 % en 2025: entre 2015 y 2025 se mantuvo sin cambio estadísticamente claro.",
+     "etiqueta": "Otra forma de medir: no se compara con la cifra clave."
+    },
+    {
+     "titulo": "Por qué hay dos formas de medir",
+     "texto": "Desde 2024 el Ministerio de Salud usa otro nivel de hemoglobina para definir la anemia y otro ajuste por la altitud. El INEI publica las cifras con las dos formas. Con la forma vigente solo hemos incorporado 2024 y 2025, aunque el INEI también publicó años anteriores con ella. La cifra de 2020 no se usa para comparar: ese año, por la pandemia, la medición se hizo solo en parte de la muestra.",
+     "etiqueta": null
+    },
+    {
+     "titulo": "2024 y 2025, con la forma de medir actual",
+     "texto": "Con la forma de medir que usa hoy el Ministerio de Salud, la anemia fue 32,9 % en 2024 y 38,6 % en 2025.",
+     "etiqueta": null
+    }
+   ],
+   "avisos": [],
+   "limites": [
+    "Datos de: ENDES 2015–2025 (INEI)",
+    "Territorio: departamento de Huancavelica",
+    "No permite concluir: si el indicador subió o bajó entre 2015 (forma de medir anterior) y 2025 (forma de medir vigente): cambió la forma de medirlo."
+   ]
+  },
+  "capa3": {
+   "para_citar": [
+    "38,6 % (intervalo del INEI: 32,0 % a 45,1 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Huancavelica, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58).",
+    "54,5 % (intervalo del INEI: 47,4 % a 61,6 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Huancavelica, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06A (RM 363-2022-MINSA), según departamento, p. 54 (PDF 56).",
+    "53,5 % (intervalo: 48,4 % a 58,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Huancavelica, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI).",
+    "32,9 % (intervalo: 27,7 % a 38,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Huancavelica, 2024. Fuente: INEI, ENDES 2024 Departamento de Huancavelica, cap. 9 Nutrición, p. 70 (texto; Gráfico 9.5)."
+   ],
+   "glosario": [
+    {
+     "termino": "forma de medir la anemia",
+     "definicion": "el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior da cifras más altas."
+    },
+    {
+     "termino": "cambio estadísticamente claro",
+     "definicion": "una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error."
+    },
+    {
+     "termino": "ENDES",
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños."
+    }
+   ]
+  }
+ },
+ "consulta": {
+  "id": "evolucion__anemia__09",
+  "pregunta": "¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica?",
+  "intencion": "evolucion",
+  "tema": "anemia",
+  "territorio": {
+   "nivel": "departamento",
+   "id": "09",
+   "nombre_pedido": "Huancavelica"
+  },
+  "periodo": {
+   "tipo": "serie",
+   "desde": 2015,
+   "hasta": "ultimo"
+  },
+  "plantilla": "evolucion",
+  "cifras": [
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "principal",
+    "comparar_con": 2024
+   },
+   {
+    "id": "endes_anemia_6_35m__proporcion__departamento__09__2025__principal",
+    "indicador": "endes_anemia_6_35m",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "principal",
+    "comparar_con": 2015
+   },
+   {
+    "id": "endes_anemia_6_35m__proporcion__departamento__09__2015__contexto",
+    "indicador": "endes_anemia_6_35m",
+    "anio": 2015,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   },
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   }
+  ],
+  "grupos": [],
+  "cruce": null,
+  "bloques": [
+   "dos_formas_anemia"
+  ],
+  "tema_gasto": null,
+  "avisos_periodo": [],
+  "formas_sin_serie": [],
+  "respuesta_parcial": false,
+  "estructura_efecto": false,
+  "lado_a_lado": false,
+  "no_se_puede": null,
+  "motivos_no_se_puede": [],
+  "omitidas": [],
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07",
+   "R-04 / AD-1"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "evolucion",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "departamento de Huancavelica"
+   },
+   "periodo": {
+    "tipo": "serie"
+   },
+   "pregunta_original": "¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica?",
+   "idioma": "es"
+  },
+  "desambiguados": {}
+ },
+ "version_biblioteca": {
+  "cubo": "sha256:68f2a609ec002f54403802c92104c64c01c70ebca4fc46ebc4df293877f58eb2",
+  "commit_cubo": "acc9861",
+  "reglas": "f26641b3a40c"
+ },
+ "cifras": {
+  "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal": {
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "anio": 2025,
+   "nivel": "departamento",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "medida": "proporcion",
+   "valor": 38.58800337,
+   "ee": 3.35298758,
+   "cv": 8.68919686,
+   "ic_inf": 31.92008196,
+   "ic_sup": 45.58795999,
+   "n_muestra": 242,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "principal",
+   "nivel_pedido": "departamento",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": {
+    "indicador_id": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "departamento",
+    "territorio_id": "09",
+    "territorio_nombre": "Huancavelica",
+    "medida": "proporcion",
+    "linea": "cifra",
+    "criterio": "RM251-2024/OMS2024",
+    "valor": 32.93858236,
+    "ee": 2.5410923,
+    "cv": 7.71463772,
+    "ic_inf": 27.67157024,
+    "ic_sup": 38.54315718,
+    "metodo_ic": "korn-graubard",
+    "gl": 91,
+    "n_muestra": 303,
+    "n_efectivo": 342.08714388,
+    "deff": 0.88281599,
+    "numerador": null,
+    "denominador": null,
+    "cota_inf": null,
+    "cota_sup": null,
+    "grupo_robusto_nacional": null,
+    "grupo_robusto_regional": null,
+    "metodo_territorio": "departamento_hv024",
+    "avisos": "[]",
+    "estado_calculo": "calculada",
+    "motivo_calculo": null,
+    "validada_dorada": "DOR-OMS-2024-09",
+    "indicador_validado": true,
+    "poblacion": 335142.0,
+    "ubigeo_inei": "090000",
+    "fecha_corte": null,
+    "fecha_descarga": null,
+    "anio_cerrado": true,
+    "pct_gasto_atribuible": null,
+    "version_tabla": "1.2.0",
+    "anio_base_deflactor": null,
+    "factor_deflactor": null,
+    "prueba_cambio": {
+     "diferencia": 5.6494,
+     "ee_diferencia": 4.2071,
+     "z": 1.3428,
+     "p_valor": 0.179327,
+     "significativa": false,
+     "anios": [
+      2024,
+      2025
+     ]
+    }
+   },
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "09",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": {
+    "ic_inf": 32.0,
+    "ic_sup": 45.1,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "id_cifra": "DOR-OMS-2025-09"
+   },
+   "contraste_oficial": {
+    "valor": 38.6,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "criterio": "RM251-2024/OMS2024",
+    "id_cifra": "DOR-OMS-2025-09",
+    "entidad": "INEI"
+   },
+   "resultados": [
+    {
+     "regla": "R-ENC-05",
+     "accion": "rotular",
+     "motivo": "formato",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "38,6 % (entre 31,9 % y 45,6 %), ENDES 2025, Huancavelica; basado en 242 niñas y niños encuestados.",
+     "rotulo": "38,6 % (entre 31,9 % y 45,6 %), ENDES 2025, Huancavelica; basado en 242 niñas y niños encuestados."
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar",
+      "semaforo_comparacion": {
+       "semaforo": "verde",
+       "puntajes": {
+        "precision_cifra": 0,
+        "quiebre": 0
+       },
+       "motivos": []
+      }
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
+  "endes_anemia_6_35m__proporcion__departamento__09__2025__principal": {
+   "indicador_id": "endes_anemia_6_35m",
+   "anio": 2025,
+   "nivel": "departamento",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "medida": "proporcion",
+   "valor": 54.50814738,
+   "ee": 3.63363215,
+   "cv": 6.6662184,
+   "ic_inf": 47.02591971,
+   "ic_sup": 61.84305729,
+   "n_muestra": 242,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "principal",
+   "nivel_pedido": "departamento",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": {
+    "indicador_id": "endes_anemia_6_35m",
+    "anio": 2015,
+    "nivel": "departamento",
+    "territorio_id": "09",
+    "territorio_nombre": "Huancavelica",
+    "medida": "proporcion",
+    "linea": "cifra",
+    "criterio": "RM363-2022/OMS2001",
+    "valor": 53.47082695,
+    "ee": 2.45498162,
+    "cv": 4.59125425,
+    "ic_inf": 48.39527933,
+    "ic_sup": 58.49358619,
+    "metodo_ic": "korn-graubard",
+    "gl": 90,
+    "n_muestra": 392,
+    "n_efectivo": 412.80575733,
+    "deff": 0.94717671,
+    "numerador": null,
+    "denominador": null,
+    "cota_inf": null,
+    "cota_sup": null,
+    "grupo_robusto_nacional": null,
+    "grupo_robusto_regional": null,
+    "metodo_territorio": "departamento_hv024",
+    "avisos": "[]",
+    "estado_calculo": "calculada",
+    "motivo_calculo": null,
+    "validada_dorada": null,
+    "indicador_validado": true,
+    "poblacion": null,
+    "ubigeo_inei": "090000",
+    "fecha_corte": null,
+    "fecha_descarga": null,
+    "anio_cerrado": true,
+    "pct_gasto_atribuible": null,
+    "version_tabla": "1.2.0",
+    "anio_base_deflactor": null,
+    "factor_deflactor": null,
+    "prueba_cambio": {
+     "diferencia": 1.0373,
+     "ee_diferencia": 4.3852,
+     "z": 0.2365,
+     "p_valor": 0.813007,
+     "significativa": false,
+     "anios": [
+      2015,
+      2025
+     ]
+    }
+   },
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "09",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": {
+    "ic_inf": 47.4,
+    "ic_sup": 61.6,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06A (RM 363-2022-MINSA), según departamento, p. 54 (PDF 56)",
+    "id_cifra": "DOR-ANE-2025-09"
+   },
+   "contraste_oficial": {
+    "valor": 54.5,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06A (RM 363-2022-MINSA), según departamento, p. 54 (PDF 56)",
+    "criterio": "RM363-2022/OMS2001",
+    "id_cifra": "DOR-ANE-2025-09",
+    "entidad": "INEI"
+   },
+   "resultados": [
+    {
+     "regla": "R-ENC-05",
+     "accion": "rotular",
+     "motivo": "formato",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "54,5 % (entre 47,0 % y 61,8 %), ENDES 2025, Huancavelica; basado en 242 niñas y niños encuestados.",
+     "rotulo": "54,5 % (entre 47,0 % y 61,8 %), ENDES 2025, Huancavelica; basado en 242 niñas y niños encuestados."
+    },
+    {
+     "regla": "R-ENC-13",
+     "accion": "advertir",
+     "motivo": "quiebre",
+     "clausula": "serie abarca un año con quiebre no comparable",
+     "detalle": {
+      "anios_quiebre": [
+       2020
+      ],
+      "excluir_de_tendencia": [
+       2020
+      ],
+      "fuente": "INEI-ENDES"
+     },
+     "mensaje": "En 2020 la encuesta se hizo en parte por teléfono por la pandemia; esa cifra no es del todo comparable con los demás años y no se usa para calcular la tendencia.",
+     "aviso": "quiebre_modo_entrevista"
+    },
+    {
+     "regla": "R-ENC-14",
+     "accion": "advertir",
+     "motivo": "criterio_anterior",
+     "clausula": "principal con criterio anterior y existe el vigente: solo como referencia",
+     "detalle": {
+      "criterio": "RM363-2022/OMS2001",
+      "principal_sugerida": "endes_anemia_6_35m_oms2024",
+      "regla_tramos": "comparar solo dentro del mismo criterio, con todos los años en que la fuente lo publica; cifra principal = criterio RM 251-2024 del año más reciente; el criterio anterior como serie larga rotulada. Después del MVP: recalcular la serie histórica con el criterio vigente desde microdatos (decisión D1)"
+     },
+     "aviso": "criterio_anterior_referencia"
+    },
+    {
+     "regla": "R-CRUCES-04",
+     "accion": "rotular",
+     "motivo": "quiebre",
+     "clausula": "hay quiebre pero misma definición (versión homologada)",
+     "detalle": {
+      "anio_a": 2015,
+      "anio_b": 2025,
+      "quiebres": [
+       2020,
+       2024
+      ],
+      "criterio": "RM363-2022/OMS2001"
+     },
+     "rotulo": "misma_definicion_en_ambos_anios"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar",
+      "semaforo_comparacion": {
+       "semaforo": "verde",
+       "puntajes": {
+        "precision_cifra": 0,
+        "quiebre": 0
+       },
+       "motivos": []
+      }
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
+  "endes_anemia_6_35m__proporcion__departamento__09__2015__contexto": {
+   "indicador_id": "endes_anemia_6_35m",
+   "anio": 2015,
+   "nivel": "departamento",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "medida": "proporcion",
+   "valor": 53.47082695,
+   "ee": 2.45498162,
+   "cv": 4.59125425,
+   "ic_inf": 48.39527933,
+   "ic_sup": 58.49358619,
+   "n_muestra": 392,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "contexto",
+   "nivel_pedido": "departamento",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "09",
+     "anio": 2015,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": null,
+   "contraste_oficial": null,
+   "resultados": [
+    {
+     "regla": "R-ENC-05",
+     "accion": "rotular",
+     "motivo": "formato",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "53,5 % (entre 48,4 % y 58,5 %), ENDES 2015, Huancavelica; basado en 392 niñas y niños encuestados.",
+     "rotulo": "53,5 % (entre 48,4 % y 58,5 %), ENDES 2015, Huancavelica; basado en 392 niñas y niños encuestados."
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2015.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
+  "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto": {
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "anio": 2024,
+   "nivel": "departamento",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "medida": "proporcion",
+   "valor": 32.93858236,
+   "ee": 2.5410923,
+   "cv": 7.71463772,
+   "ic_inf": 27.67157024,
+   "ic_sup": 38.54315718,
+   "n_muestra": 303,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "contexto",
+   "nivel_pedido": "departamento",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": "DOR-OMS-2024-09",
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "09",
+     "anio": 2024,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": null,
+   "contraste_oficial": {
+    "valor": 32.9,
+    "documento": "INEI, ENDES 2024 Departamento de Huancavelica, cap. 9 Nutrición",
+    "cuadro_pagina": "p. 70 (texto; Gráfico 9.5)",
+    "criterio": "RM251-2024/OMS2024",
+    "id_cifra": "DOR-OMS-2024-09",
+    "entidad": "INEI"
+   },
+   "resultados": [
+    {
+     "regla": "R-ENC-05",
+     "accion": "rotular",
+     "motivo": "formato",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "32,9 % (entre 27,7 % y 38,5 %), ENDES 2024, Huancavelica; basado en 303 niñas y niños encuestados.",
+     "rotulo": "32,9 % (entre 27,7 % y 38,5 %), ENDES 2024, Huancavelica; basado en 303 niñas y niños encuestados."
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2024.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  }
+ },
+ "cruces": [],
+ "semaforo_respuesta": "verde",
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal",
+  "peor_cifra_principal:endes_anemia_6_35m__proporcion__departamento__09__2025__principal"
+ ],
+ "texto": "En Huancavelica, la anemia en niñas y niños pequeños no muestra un cambio estadísticamente claro: ni entre 2024 y 2025 con la forma de medir actual, ni entre 2015 y 2025 con la anterior. 38,6 % de las niñas y los niños de 6 a 35 meses de Huancavelica tenía anemia en 2025, con la forma de medir que usa hoy el Ministerio de Salud. No compares esta cifra con las de años anteriores a 2024: se medía de otra forma, que da cifras más altas. «Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. Con la forma de medir anterior, que permite comparar desde 2015 con la misma regla, la anemia fue 53,5 % en 2015 y 54,5 % en 2025: entre 2015 y 2025 se mantuvo sin cambio estadísticamente claro. Desde 2024 el Ministerio de Salud usa otro nivel de hemoglobina para definir la anemia y otro ajuste por la altitud. El INEI publica las cifras con las dos formas. Con la forma vigente solo hemos incorporado 2024 y 2025, aunque el INEI también publicó años anteriores con ella. La cifra de 2020 no se usa para comparar: ese año, por la pandemia, la medición se hizo solo en parte de la muestra. Con la forma de medir que usa hoy el Ministerio de Salud, la anemia fue 32,9 % en 2024 y 38,6 % en 2025.",
+ "texto_con_marcadores": "En Huancavelica, la anemia en niñas y niños pequeños no muestra un cambio estadísticamente claro: ni entre 2024 y 2025 con la forma de medir actual, ni entre 2015 y 2025 con la anterior. {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal}} de {{u:ninos}} de Huancavelica tenía anemia en 2025, con la forma de medir que usa hoy el Ministerio de Salud. No compares esta cifra con las de años anteriores a 2024: se medía de otra forma, que da cifras más altas. «Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. Con la forma de medir anterior, que permite comparar desde 2015 con la misma regla, la anemia fue {{c:endes_anemia_6_35m__proporcion__departamento__09__2015__contexto}} en 2015 y {{c:endes_anemia_6_35m__proporcion__departamento__09__2025__principal}} en 2025: entre 2015 y 2025 {{v:endes_anemia_6_35m__proporcion__departamento__09__2025__principal}}. {{p:dos_formas}} {{p:quiebres}} Con la forma de medir que usa hoy el Ministerio de Salud, la anemia fue {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto}} en 2024 y {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal}} en 2025.",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENDES 2015–2025 (INEI)\nTerritorio: departamento de Huancavelica\nNo permite concluir: si el indicador subió o bajó entre 2015 (forma de medir anterior) y 2025 (forma de medir vigente): cambió la forma de medirlo.",
+  "larga": {
+   "cifras": {
+    "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024). ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica).",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir vigente desde 2024 (RM 251-2024-MINSA).",
+     "4_precision": "El valor real está probablemente entre 31,9 % y 45,6 % (coeficiente de variación 8,7 %, 242 casos en la muestra). El INEI publica para esta cifra un intervalo entre 32,0 % y 45,1 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "Entre 2024 y 2025: sin cambio estadísticamente claro (prueba de diferencia con el diseño de la encuesta, al 95 % de confianza).",
+     "6_contraste_oficial": "El INEI publica 38,6 % con la forma de medir vigente desde 2024 (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Nuestra cifra coincide.",
+     "estado": "publicable",
+     "semaforo": "verde",
+     "avisos": [
+      "38,6 % (entre 31,9 % y 45,6 %), ENDES 2025, Huancavelica; basado en 242 niñas y niños encuestados."
+     ]
+    },
+    "endes_anemia_6_35m__proporcion__departamento__09__2025__principal": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024). ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica).",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir anterior a 2024 (RM 363-2022-MINSA).",
+     "4_precision": "El valor real está probablemente entre 47,0 % y 61,8 % (coeficiente de variación 6,7 %, 242 casos en la muestra). El INEI publica para esta cifra un intervalo entre 47,4 % y 61,6 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06A (RM 363-2022-MINSA), según departamento, p. 54 (PDF 56)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "Entre 2015 y 2025: sin cambio estadísticamente claro (prueba de diferencia con el diseño de la encuesta, al 95 % de confianza).",
+     "6_contraste_oficial": "El INEI publica 54,5 % con la forma de medir anterior a 2024 (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06A (RM 363-2022-MINSA), según departamento, p. 54 (PDF 56)). Nuestra cifra coincide.",
+     "estado": "publicable",
+     "semaforo": "verde",
+     "avisos": [
+      "54,5 % (entre 47,0 % y 61,8 %), ENDES 2025, Huancavelica; basado en 242 niñas y niños encuestados.",
+      "En 2020 la encuesta se hizo en parte por teléfono por la pandemia; esa cifra no es del todo comparable con los demás años y no se usa para calcular la tendencia."
+     ]
+    },
+    "endes_anemia_6_35m__proporcion__departamento__09__2015__contexto": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024). ENDES (INEI), 2015. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica).",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir anterior a 2024 (RM 363-2022-MINSA).",
+     "4_precision": "El valor real está probablemente entre 48,4 % y 58,5 % (coeficiente de variación 4,6 %, 392 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "estado": "publicable",
+     "semaforo": "verde",
+     "avisos": [
+      "53,5 % (entre 48,4 % y 58,5 %), ENDES 2015, Huancavelica; basado en 392 niñas y niños encuestados."
+     ]
+    },
+    "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024). ENDES (INEI), 2024. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica).",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir vigente desde 2024 (RM 251-2024-MINSA).",
+     "4_precision": "El valor real está probablemente entre 27,7 % y 38,5 % (coeficiente de variación 7,7 %, 303 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 32,9 % con la forma de medir vigente desde 2024 (ENDES 2024 Departamento de Huancavelica, cap. 9 Nutrición, p. 70 (texto; Gráfico 9.5)). Nuestra cifra coincide.",
+     "estado": "publicable",
+     "semaforo": "verde",
+     "avisos": [
+      "32,9 % (entre 27,7 % y 38,5 %), ENDES 2024, Huancavelica; basado en 303 niñas y niños encuestados."
+     ]
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Si el indicador subió o bajó entre 2015 (forma de medir anterior) y 2025 (forma de medir vigente): cambió la forma de medirlo."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:68f2a609ec00… (commit acc9861) y reglas f26641b3a40c. Indicadores: endes_anemia_6_35m, endes_anemia_6_35m_oms2024."
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "avisos_al_usuario": [],
+ "resultados_respuesta": [
+  {
+   "regla": "R-ENC-11",
+   "accion": "rotular",
+   "motivo": "prueba_cambio",
+   "clausula": "p >= alfa → significativo = false",
+   "detalle": {
+    "diferencia": 5.6494,
+    "p_valor": 0.179327,
+    "significativa": false,
+    "origen": "motor",
+    "alfa": 0.05,
+    "direccion": null,
+    "anios": [
+     2024,
+     2025
+    ]
+   },
+   "rotulo": "sin cambio estadísticamente claro",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal"
+  },
+  {
+   "regla": "R-ENC-11",
+   "accion": "rotular",
+   "motivo": "prueba_cambio",
+   "clausula": "p >= alfa → significativo = false",
+   "detalle": {
+    "diferencia": 1.0373,
+    "p_valor": 0.813007,
+    "significativa": false,
+    "origen": "motor",
+    "alfa": 0.05,
+    "direccion": null,
+    "anios": [
+     2015,
+     2025
+    ]
+   },
+   "rotulo": "sin cambio estadísticamente claro",
+   "objetivo": "endes_anemia_6_35m__proporcion__departamento__09__2025__principal"
+  },
+  {
+   "regla": "R-CRUCES-10",
+   "accion": "rotular",
+   "motivo": "semaforo_respuesta",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "semaforo_respuesta": "verde",
+    "motivos": [
+     "peor_cifra_principal:endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal",
+     "peor_cifra_principal:endes_anemia_6_35m__proporcion__departamento__09__2025__principal"
+    ],
+    "semaforo_cruces": {}
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "rotulo": "Dato sólido",
+   "objetivo": "respuesta"
+  }
+ ],
+ "corrector": [],
+ "respuesta_parcial": false,
+ "tipo": "respuesta",
+ "consulta_minima": {
+  "intencion": "evolucion",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "departamento de Huancavelica"
+  },
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica?",
+  "idioma": "es"
+ },
+ "plan": {
+  "id": "evolucion__anemia__09",
+  "pregunta": "¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica?",
+  "intencion": "evolucion",
+  "tema": "anemia",
+  "territorio": {
+   "nivel": "departamento",
+   "id": "09",
+   "nombre_pedido": "Huancavelica"
+  },
+  "periodo": {
+   "tipo": "serie",
+   "desde": 2015,
+   "hasta": "ultimo"
+  },
+  "plantilla": "evolucion",
+  "cifras": [
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "principal",
+    "comparar_con": 2024
+   },
+   {
+    "id": "endes_anemia_6_35m__proporcion__departamento__09__2025__principal",
+    "indicador": "endes_anemia_6_35m",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "principal",
+    "comparar_con": 2015
+   },
+   {
+    "id": "endes_anemia_6_35m__proporcion__departamento__09__2015__contexto",
+    "indicador": "endes_anemia_6_35m",
+    "anio": 2015,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   },
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   }
+  ],
+  "grupos": [],
+  "cruce": null,
+  "bloques": [
+   "dos_formas_anemia"
+  ],
+  "tema_gasto": null,
+  "avisos_periodo": [],
+  "formas_sin_serie": [],
+  "respuesta_parcial": false,
+  "estructura_efecto": false,
+  "lado_a_lado": false,
+  "no_se_puede": null,
+  "motivos_no_se_puede": [],
+  "omitidas": [],
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07",
+   "R-04 / AD-1"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "evolucion",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "departamento de Huancavelica"
+   },
+   "periodo": {
+    "tipo": "serie"
+   },
+   "pregunta_original": "¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica?",
+   "idioma": "es"
+  },
+  "desambiguados": {}
+ }
+}

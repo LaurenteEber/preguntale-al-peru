@@ -1,0 +1,1653 @@
+{
+ "capas": {
+  "capa1": {
+   "respuesta_corta": "No se puede saber si el gasto contra la anemia sirvió en San Juan de Lurigancho: no encontramos una evaluación publicada. Lo que sí se sabe es lo gastado en el distrito:",
+   "cifra_clave": {
+    "ids": [
+     "gasto_ex_pan__devengado__distrito__150132__2025__principal"
+    ],
+    "valor": "S/ 4,0 millones",
+    "texto": "en servicios de salud y nutrición infantil en 2025, solo de la municipalidad y de obras ubicadas en el distrito (sin lo que gastan el Ministerio de Salud y otras entidades).",
+    "fuente": "gasto registrado en el MEF 2025"
+   },
+   "ojo_al_leer": [
+    "No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo."
+   ],
+   "confianza": {
+    "nivel": "baja",
+    "texto": "Confianza en los datos: baja. La anemia del distrito solo se conoce por el registro de los niños medidos, que cubre a una parte de ellos.",
+    "ficha": "Confianza en los datos: baja (dato muy aproximado): el registro cubre solo a una parte de la población."
+   },
+   "que_hacer": {
+    "texto": "Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6 meses.",
+    "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
+    "url": "https://www.gob.pe/69889-que-es-la-anemia-prevencion",
+    "revisado_dueno": false
+   },
+   "palabras": 106
+  },
+  "capa2": {
+   "mas_contexto": [
+    {
+     "titulo": "Gasto en toda Lima Metropolitana",
+     "texto": "En toda Lima Metropolitana (provincia de Lima) se gastó S/ 260,6 millones en 2025, registrado por unidades ejecutoras con sede en Lima Metropolitana (MEF 2025). Solo alrededor del 5 % del gasto atribuido al departamento de Lima se puede ubicar en municipalidades y obras; el resto lo registran entidades sin un distrito. No incluye a las entidades nacionales con sede en Lima que atienden a todo el país: aparte, sin sumar, los institutos nacionales de referencia gastaron S/ 3,2 millones.",
+     "etiqueta": "Otro territorio: no se suma ni se compara con la cifra clave."
+    },
+    {
+     "titulo": "Anemia en los niños medidos en el distrito (registro)",
+     "texto": "En 2025, de las niñas y los niños de 6 a 35 meses a quienes se les midió la hemoglobina en establecimientos ubicados en el distrito, alrededor de 8 % (entre 7,8 % y 8,6 %) tenía anemia en su último control del año (SIEN 2025, INS). En Lima Metropolitana se midió la hemoglobina a entre 30 % y 38 % de los niños de 6 a 35 meses que viven allí (SIEN 2025, INS; población estimada con cálculo propio). En Lima Metropolitana, a menos de la mitad de los niños se les midió la hemoglobina: la anemia de los niños medidos puede no representar a todos. El INS advierte que sus registros podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño. Solo tenemos el SIEN de 2025: no podemos mostrar cómo cambió en el distrito.",
+     "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave."
+    },
+    {
+     "titulo": "Anemia en Lima Metropolitana (encuesta a hogares)",
+     "texto": "Para Lima Metropolitana (provincia de Lima) se estima que 25,3 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Lima Metropolitana, la anemia se mantuvo sin cambio estadísticamente claro. La encuesta no da cifras por distrito.",
+     "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave."
+    },
+    {
+     "titulo": "Qué haría falta para saber si sirvió",
+     "texto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación publicada de estos servicios para San Juan de Lurigancho (Lima, Lima). Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron.",
+     "etiqueta": null
+    }
+   ],
+   "avisos": [
+    "Las cifras del cruce no cubren exactamente al mismo grupo: una se refiere a servicios para niñas y niños menores de 5 años y sus familias; la otra, a niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior.",
+    "Hay dos cifras sobre anemia en niñas y niños de 6 a 35 meses y no coinciden porque miden cosas distintas: niños medidos en establecimientos del distrito frente a una muestra de todos los hogares de Lima Metropolitana. Usamos el SIEN como cifra principal porque es la única fuente que llega al distrito.",
+    "Estas cifras vienen de fuentes de distinto tipo (encuesta a hogares, gasto registrado, registro de atenciones): se muestran juntas para dar contexto y cada una mide algo distinto."
+   ],
+   "limites": [
+    "Datos de: Gasto MEF 2025 (devengado) · SIEN 2025 (INS) · ENDES 2024–2025 (INEI)",
+    "Territorio: distrito de San Juan de Lurigancho (algunas cifras solo están por Lima Metropolitana)",
+    "No permite concluir: que el gasto haya causado los cambios en la anemia: estos datos no comparan con lo que habría pasado sin el programa o gasto. Cuántos niños del distrito tienen anemia: solo sabemos de los que se les midió la hemoglobina en establecimientos."
+   ]
+  },
+  "capa3": {
+   "para_citar": [
+    "S/ 4,0 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado) (solo de la municipalidad y de obras ubicadas en el distrito; sin el gasto del Ministerio de Salud ni de otras entidades), San Juan de Lurigancho, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
+    "S/ 260,6 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Lima Metropolitana (provincia de Lima), 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
+    "8,2 % (intervalo: 7,8 % a 8,6 %): niñas y niños de 6 a 35 meses tamizados con anemia en establecimientos del MINSA y de los gobiernos regionales, San Juan de Lurigancho, 2025. Fuente: INS, Indicadores Niños – diciembre 2025 (Base de Datos HIS-Minsa), periodo enero a diciembre 2025, Cuadro N.º 15, fila LIMA / LIMA / SAN JUAN DE LURIGANCHO (150132).",
+    "entre 30,3 % y 37,7 %: niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100), Lima Metropolitana (provincia de Lima), 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
+    "25,3 % (intervalo del INEI: 21,9 % a 28,7 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Lima Metropolitana (provincia de Lima), 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)."
+   ],
+   "glosario": [
+    {
+     "termino": "gastado (devengado)",
+     "definicion": "lo que la entidad ya debe pagar porque recibió el bien o el servicio. Es distinto del presupuesto, que es lo que tiene autorizado gastar en el año."
+    },
+    {
+     "termino": "servicios de salud y nutrición infantil",
+     "definicion": "los que antes eran del Programa Articulado Nutricional: controles de crecimiento, vacunas, hierro y vitamina A, atención de la anemia, de infecciones respiratorias y diarreas, consejería y agua segura, para menores de 5 años y sus familias."
+    },
+    {
+     "termino": "medir la hemoglobina (tamizaje)",
+     "definicion": "análisis de una gota de sangre que se hace en el establecimiento de salud para saber si la niña o el niño tiene anemia."
+    },
+    {
+     "termino": "SIEN",
+     "definicion": "Sistema de Información del Estado Nutricional del INS: registra a los niños atendidos en los establecimientos de salud del MINSA y de los gobiernos regionales."
+    },
+    {
+     "termino": "ENDES",
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños."
+    },
+    {
+     "termino": "cambio estadísticamente claro",
+     "definicion": "una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error."
+    }
+   ]
+  }
+ },
+ "consulta": {
+  "id": "efecto__gasto_publico__150132",
+  "pregunta": "¿Cuánto se gastó contra la anemia en San Juan de Lurigancho y sirvió?",
+  "intencion": "efecto",
+  "tema": "gasto_publico",
+  "territorio": {
+   "nivel": "distrito",
+   "id": "150132",
+   "nombre_pedido": "San Juan de Lurigancho"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "cifras": [
+   {
+    "id": "gasto_ex_pan__devengado__distrito__150132__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "anio": 2025,
+    "nivel": "distrito",
+    "territorio": "150132",
+    "rol": "principal"
+   },
+   {
+    "id": "gasto_ex_pan__devengado__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+    "indicador": "gasto_ex_pan",
+    "anio": 2025,
+    "nivel": "LIMA_METROPOLITANA",
+    "territorio": "LIMA_METROPOLITANA",
+    "rol": "contexto"
+   },
+   {
+    "id": "sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal",
+    "indicador": "sien_anemia_tamizados_6_35m",
+    "anio": 2025,
+    "nivel": "distrito",
+    "territorio": "150132",
+    "rol": "principal"
+   },
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2025,
+    "nivel": "LIMA_METROPOLITANA",
+    "territorio": "LIMA_METROPOLITANA",
+    "rol": "contexto",
+    "comparar_con": 2024
+   },
+   {
+    "id": "sien_cobertura_tamizaje_6_35m__cobertura__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+    "indicador": "sien_cobertura_tamizaje_6_35m",
+    "anio": 2025,
+    "nivel": "LIMA_METROPOLITANA",
+    "territorio": "LIMA_METROPOLITANA",
+    "rol": "contexto"
+   }
+  ],
+  "grupos": [],
+  "cruce": "CR-01",
+  "bloques": [],
+  "tema_gasto": "cpt_grupo_expan",
+  "avisos_periodo": [],
+  "formas_sin_serie": [],
+  "respuesta_parcial": true,
+  "estructura_efecto": true,
+  "lado_a_lado": true,
+  "no_se_puede": null,
+  "motivos_no_se_puede": [],
+  "omitidas": [],
+  "decisiones": [
+   "G-07",
+   "G-07 / R-03 / S-01",
+   "R-CRUCES-07 / E-06",
+   "R-CRUCES-07 / R-03",
+   "R-CRUCES-07 / T-03",
+   "S-01"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "efecto",
+   "tema": "gasto_publico",
+   "territorio": {
+    "texto": "San Juan de Lurigancho"
+   },
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "¿Cuánto se gastó contra la anemia en San Juan de Lurigancho y sirvió?",
+   "idioma": "es"
+  },
+  "desambiguados": {}
+ },
+ "version_biblioteca": {
+  "cubo": "sha256:68f2a609ec002f54403802c92104c64c01c70ebca4fc46ebc4df293877f58eb2",
+  "commit_cubo": "acc9861",
+  "reglas": "f26641b3a40c"
+ },
+ "cifras": {
+  "gasto_ex_pan__devengado__distrito__150132__2025__principal": {
+   "indicador_id": "gasto_ex_pan",
+   "anio": 2025,
+   "nivel": "distrito",
+   "territorio_id": "150132",
+   "territorio_nombre": "San Juan de Lurigancho",
+   "medida": "devengado",
+   "valor": 3960205.2,
+   "ee": null,
+   "cv": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "n_muestra": null,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "principal",
+   "nivel_pedido": "distrito",
+   "estado_cifra": "referencial",
+   "semaforo_cifra": "ambar",
+   "motivos_semaforo": [
+    {
+     "criterio": "precision",
+     "puntaje": 1
+    }
+   ],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": 0.04779916,
+   "pim": 3961590.0,
+   "devengado": 3960205.2,
+   "lineas_aparte": [],
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "distrito",
+     "territorio_id": "150132",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar_referencial",
+     "estado": "referencial",
+     "motivos": [
+      "ubicacion_principal",
+      "pct_atribuible_bajo"
+     ]
+    }
+   ],
+   "metodo_ic": null,
+   "ic_inei": null,
+   "contraste_oficial": null,
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": "gasto: último año cerrado + acumulado de cartera activa (R-GASTO-17)"
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-GASTO-02",
+     "accion": "publicar_referencial",
+     "motivo": "ubicacion_principal",
+     "clausula": "(5) inversión distrital: ubicación principal",
+     "detalle": {
+      "inversion_ubicacion_unica": null,
+      "incluye_inversion_cui": null
+     },
+     "rotulo": "ubicación principal registrada; la obra puede abarcar otros distritos"
+    },
+    {
+     "regla": "R-GASTO-03",
+     "accion": "publicar_referencial",
+     "motivo": "pct_atribuible_bajo",
+     "clausula": "pct_gasto_atribuible < 0,50",
+     "detalle": {
+      "pct_gasto_atribuible": 0.04779916,
+      "umbral": 0.5,
+      "mostrar_siempre_pct": true,
+      "respuesta_principal": {
+       "respuesta_parcial": true,
+       "nota": "NC-GASTO-LUGAR"
+      },
+      "respaldo": "departamento == '15' → respuesta_parcial (gasto municipal y de obras) con NC-GASTO-LUGAR; en otro caso, cifra departamental"
+     },
+     "mensaje": "Incluye el gasto de la municipalidad y de los proyectos de inversión ubicados aquí, de cualquier entidad. No incluye lo que el ministerio y el gobierno regional gastan en servicios (como personal de salud). En departamento de Lima (Lima Metropolitana + Lima Región), el 4 % del gasto en este tema puede ubicarse por distrito o provincia.",
+     "rotulo": "gasto municipal y de proyectos ubicados en el territorio"
+    },
+    {
+     "regla": "R-GASTO-12",
+     "accion": "rotular",
+     "motivo": "soles_corrientes",
+     "clausula": "un solo año → soles corrientes",
+     "detalle": {
+      "precios": "corrientes"
+     },
+     "rotulo": "soles corrientes de 2025"
+    },
+    {
+     "regla": "R-GASTO-05",
+     "accion": "rotular",
+     "motivo": "transferencias",
+     "clausula": "(3) cifra temática: solo gasto final",
+     "detalle": {
+      "bloque_consolidado": "gasto_final",
+      "tema_id": "cpt_grupo_expan",
+      "pendiente": "monto (b) no disponible en el cubo"
+     },
+     "rotulo": "sin transferencias"
+    },
+    {
+     "regla": "R-GASTO-06",
+     "accion": "rotular",
+     "motivo": "fase_gasto",
+     "clausula": "fase en el rótulo",
+     "detalle": {
+      "fase_gasto": "DEVENGADO",
+      "columna": "MONTO_DEVENGADO"
+     },
+     "mensaje": "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM).",
+     "rotulo": "gastado (devengado)"
+    },
+    {
+     "regla": "R-GASTO-07",
+     "accion": "rotular",
+     "motivo": "avance",
+     "clausula": "año cerrado: PIM final",
+     "detalle": {
+      "pim": 3961590.0,
+      "avance_pct": 99.96504433825812,
+      "anio_cerrado": true,
+      "fecha_corte": "2025-12-31",
+      "denominador": "PIM final"
+     },
+     "rotulo": "avance respecto del PIM final, datos al 2025-12-31"
+    },
+    {
+     "regla": "R-GASTO-08",
+     "accion": "rotular",
+     "motivo": "tema_gasto",
+     "clausula": "rótulo := etiqueta_ciudadana / nombre propio por año",
+     "detalle": {
+      "tema_id": "cpt_grupo_expan",
+      "cadena": "concepto",
+      "version": "1.2"
+     },
+     "rotulo": "Servicios de salud y nutrición infantil que antes eran del PAN"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 1",
+     "detalle": {
+      "semaforo": "ambar",
+      "puntajes": {
+       "precision": 1,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [
+       {
+        "criterio": "precision",
+        "puntaje": 1
+       }
+      ],
+      "escalado": false,
+      "accion_vigente": "publicar_referencial"
+     },
+     "mensaje": "Dato con limitaciones: hay pocos datos para esta cifra",
+     "rotulo": "Dato con limitaciones"
+    }
+   ],
+   "accion_final": "publicar_referencial",
+   "bloqueos_cruce": []
+  },
+  "gasto_ex_pan__devengado__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto": {
+   "indicador_id": "gasto_ex_pan",
+   "anio": 2025,
+   "nivel": "LIMA_METROPOLITANA",
+   "territorio_id": "LIMA_METROPOLITANA",
+   "territorio_nombre": "Lima Metropolitana (provincia de Lima)",
+   "medida": "devengado",
+   "valor": 260593096.7,
+   "ee": null,
+   "cv": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "n_muestra": null,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "contexto",
+   "nivel_pedido": "distrito",
+   "estado_cifra": "agregada",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [
+    "sesgo_sede",
+    "linea_referencia_nacional",
+    "ejecutoras_mixtas"
+   ],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": 0.04779916,
+   "pim": 266403115.0,
+   "devengado": 260593096.7,
+   "lineas_aparte": [
+    {
+     "linea": "referencia_nacional",
+     "devengado": 3189253.55
+    },
+    {
+     "linea": "sede_nacional",
+     "devengado": 353016108.5
+    }
+   ],
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "LIMA_METROPOLITANA",
+     "territorio_id": "LIMA_METROPOLITANA",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "agregar_nivel",
+     "estado": "agregada",
+     "motivos": [
+      "nivel_no_representativo"
+     ]
+    }
+   ],
+   "metodo_ic": null,
+   "ic_inei": null,
+   "contraste_oficial": null,
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": "gasto: último año cerrado + acumulado de cartera activa (R-GASTO-17)"
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-GASTO-01",
+     "accion": "agregar_nivel",
+     "motivo": "nivel_no_representativo",
+     "clausula": "gasto de ministerios/GORE solo por departamento",
+     "detalle": {
+      "metodo_territorio": "ambito_gasto"
+     },
+     "mensaje": "Según dónde se registra: ambito_gasto. El MEF ubica el gasto de ministerios y gobiernos regionales solo por departamento; por eso esta cifra no se puede bajar a provincia o distrito.",
+     "nivel_minimo": "departamento"
+    },
+    {
+     "regla": "R-GASTO-03",
+     "accion": "rotular",
+     "motivo": "linea_referencia_nacional",
+     "clausula": "Lima: línea aparte de refnac",
+     "detalle": {
+      "refnac": 3189253.55,
+      "linea": "referencia_nacional AND departamento_atribucion = '15' (no se suma); va siempre con toda cifra de Lima, también cuando es 0 (decisión del dueño, 8/10/2026)"
+     },
+     "mensaje": "Aparte, sin sumar: S/ 3,2 millones de institutos de referencia nacional ubicados en Lima, que atienden a pacientes de todo el país."
+    },
+    {
+     "regla": "R-GASTO-03",
+     "accion": "advertir",
+     "motivo": "sesgo_sede",
+     "clausula": "Lima: aviso de sesgo de sede",
+     "detalle": {
+      "pct_sede": 38
+     },
+     "mensaje": "Cerca del 38 % del gasto de ministerios, programas y gobiernos regionales que se ubica por departamento lo registran entidades nacionales con sede en Lima. Lo que atiende a todo el país no se cuenta aquí. Comparar Lima con otras regiones tiene límites.",
+     "aviso": "sesgo_sede"
+    },
+    {
+     "regla": "R-GASTO-03",
+     "accion": "advertir",
+     "motivo": "ejecutoras_mixtas",
+     "clausula": "Lima: advertencia de mixtas",
+     "detalle": {
+      "obligatoria": true,
+      "programas_mixtos": []
+     },
+     "mensaje": "El gasto en Lima no incluye la parte local de algunos programas nacionales, porque sus cuentas no separan Lima del resto del país.",
+     "aviso": "ejecutoras_mixtas"
+    },
+    {
+     "regla": "R-GASTO-12",
+     "accion": "rotular",
+     "motivo": "soles_corrientes",
+     "clausula": "un solo año → soles corrientes",
+     "detalle": {
+      "precios": "corrientes"
+     },
+     "rotulo": "soles corrientes de 2025"
+    },
+    {
+     "regla": "R-GASTO-05",
+     "accion": "rotular",
+     "motivo": "transferencias",
+     "clausula": "(3) cifra temática: solo gasto final",
+     "detalle": {
+      "bloque_consolidado": "gasto_final",
+      "tema_id": "cpt_grupo_expan",
+      "pendiente": "monto (b) no disponible en el cubo"
+     },
+     "rotulo": "sin transferencias"
+    },
+    {
+     "regla": "R-GASTO-06",
+     "accion": "rotular",
+     "motivo": "fase_gasto",
+     "clausula": "fase en el rótulo",
+     "detalle": {
+      "fase_gasto": "DEVENGADO",
+      "columna": "MONTO_DEVENGADO"
+     },
+     "mensaje": "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM).",
+     "rotulo": "gastado (devengado)"
+    },
+    {
+     "regla": "R-GASTO-07",
+     "accion": "rotular",
+     "motivo": "avance",
+     "clausula": "año cerrado: PIM final",
+     "detalle": {
+      "pim": 266403115.0,
+      "avance_pct": 97.81908770098278,
+      "anio_cerrado": true,
+      "fecha_corte": "2025-12-31",
+      "denominador": "PIM final"
+     },
+     "rotulo": "avance respecto del PIM final, datos al 2025-12-31"
+    },
+    {
+     "regla": "R-GASTO-08",
+     "accion": "rotular",
+     "motivo": "tema_gasto",
+     "clausula": "rótulo := etiqueta_ciudadana / nombre propio por año",
+     "detalle": {
+      "tema_id": "cpt_grupo_expan",
+      "cadena": "concepto",
+      "version": "1.2"
+     },
+     "rotulo": "Servicios de salud y nutrición infantil que antes eran del PAN"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "agregar_nivel",
+   "bloqueos_cruce": []
+  },
+  "sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal": {
+   "indicador_id": "sien_anemia_tamizados_6_35m",
+   "anio": 2025,
+   "nivel": "distrito",
+   "territorio_id": "150132",
+   "territorio_nombre": "San Juan de Lurigancho",
+   "medida": "proporcion",
+   "valor": 8.20759494,
+   "ee": null,
+   "cv": null,
+   "ic_inf": 7.83286963,
+   "ic_sup": 8.59857468,
+   "n_muestra": 19750,
+   "numerador": 1621.0,
+   "denominador": 19750.0,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "principal",
+   "nivel_pedido": "distrito",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "rojo",
+   "motivos_semaforo": [
+    {
+     "criterio": "cobertura_registro",
+     "puntaje": 2
+    },
+    {
+     "criterio": "tipo_medida_vs_concepto",
+     "puntaje": 1
+    },
+    {
+     "criterio": "base_geografica",
+     "puntaje": 1
+    }
+   ],
+   "avisos": [],
+   "validada_dorada": "DOR-SIEN-2025-150132",
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "distrito",
+     "territorio_id": "150132",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "wilson",
+   "ic_inei": null,
+   "contraste_oficial": {
+    "valor": 8.2,
+    "documento": "INS, Indicadores Niños – diciembre 2025 (Base de Datos HIS-Minsa), periodo enero a diciembre 2025",
+    "cuadro_pagina": "Cuadro N.º 15, fila LIMA / LIMA / SAN JUAN DE LURIGANCHO (150132)",
+    "criterio": "RM251-2024/OMS2024",
+    "id_cifra": "DOR-SIEN-2025-150132",
+    "entidad": "INS"
+   },
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-REG-02",
+     "accion": "rotular",
+     "motivo": "base_establecimiento",
+     "clausula": "denominador atendido en el establecimiento",
+     "detalle": {
+      "base": "establecimiento"
+     },
+     "rotulo": "en establecimientos ubicados en San Juan de Lurigancho"
+    },
+    {
+     "regla": "R-REG-01",
+     "accion": "rotular",
+     "motivo": "tipo_medida",
+     "clausula": "registro: rótulo de tipo_medida obligatorio",
+     "detalle": {
+      "tipo_medida": "notificacion_vigilancia",
+      "lista_prohibida": [
+       "prevalencia",
+       "incidencia",
+       "tasa de anemia del distrito",
+       "% de los niños del distrito",
+       "% de la población",
+       "tiene anemia el X % de"
+      ],
+      "marcadores_pendientes": [
+       "quien",
+       "accion_registro",
+       "sistema"
+      ]
+     },
+     "mensaje": "Este dato cuenta solo a {quien} que {accion_registro} {sistema}; no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra.",
+     "rotulo": "niños tamizados con anemia en establecimientos de salud del MINSA y de los gobiernos regionales (no es la prevalencia de la población)"
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "advertir",
+     "motivo": "fecha_corte",
+     "clausula": "caso borde: sin fecha de corte declarada",
+     "detalle": {
+      "fecha_descarga": "2026-10-06"
+     },
+     "aviso": "sin_fecha_corte",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "rotular",
+     "motivo": "fecha_corte",
+     "clausula": "fecha de corte",
+     "detalle": {
+      "fecha_corte": "2026-10-06",
+      "cierre": "2026-06-30",
+      "es_preliminar": false
+     },
+     "rotulo": "datos al 2026-10-06"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 2",
+     "detalle": {
+      "semaforo": "rojo",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 1,
+       "base_geografica": 1,
+       "cobertura_registro": 2
+      },
+      "motivos": [
+       {
+        "criterio": "cobertura_registro",
+        "puntaje": 2
+       },
+       {
+        "criterio": "tipo_medida_vs_concepto",
+        "puntaje": 1
+       },
+       {
+        "criterio": "base_geografica",
+        "puntaje": 1
+       }
+      ],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato muy aproximado: el registro cubre solo a una parte de la población",
+     "rotulo": "Dato muy aproximado"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
+  "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto": {
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "anio": 2025,
+   "nivel": "LIMA_METROPOLITANA",
+   "territorio_id": "LIMA_METROPOLITANA",
+   "territorio_nombre": "Lima Metropolitana (provincia de Lima)",
+   "medida": "proporcion",
+   "valor": 25.32059166,
+   "ee": 1.72390902,
+   "cv": 6.80832834,
+   "ic_inf": 21.97576394,
+   "ic_sup": 28.89746977,
+   "n_muestra": 771,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "contexto",
+   "nivel_pedido": "distrito",
+   "estado_cifra": "agregada",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [
+    "ambito_no_dominio"
+   ],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": {
+    "indicador_id": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "LIMA_METROPOLITANA",
+    "territorio_id": "LIMA_METROPOLITANA",
+    "territorio_nombre": "Lima Metropolitana (provincia de Lima)",
+    "medida": "proporcion",
+    "linea": "cifra",
+    "criterio": "RM251-2024/OMS2024",
+    "valor": 23.96814995,
+    "ee": 1.63024025,
+    "cv": 6.80169414,
+    "ic_inf": 20.80976252,
+    "ic_sup": 27.35357249,
+    "metodo_ic": "korn-graubard",
+    "gl": 285,
+    "n_muestra": 724,
+    "n_efectivo": 685.68847258,
+    "deff": 1.05441469,
+    "numerador": null,
+    "denominador": null,
+    "cota_inf": null,
+    "cota_sup": null,
+    "grupo_robusto_nacional": null,
+    "grupo_robusto_regional": null,
+    "metodo_territorio": "ubigeo",
+    "avisos": "[\"ambito_no_dominio\"]",
+    "estado_calculo": "calculada",
+    "motivo_calculo": null,
+    "validada_dorada": "DOR-OMS-2024-LM1501",
+    "indicador_validado": true,
+    "poblacion": 10292408.0,
+    "ubigeo_inei": null,
+    "fecha_corte": null,
+    "fecha_descarga": null,
+    "anio_cerrado": true,
+    "pct_gasto_atribuible": null,
+    "version_tabla": "1.2.0",
+    "anio_base_deflactor": null,
+    "factor_deflactor": null,
+    "prueba_cambio": {
+     "diferencia": 1.3524,
+     "ee_diferencia": 2.3727,
+     "z": 0.57,
+     "p_valor": 0.568671,
+     "significativa": false,
+     "anios": [
+      2024,
+      2025
+     ]
+    }
+   },
+   "traza": [
+    {
+     "nivel": "LIMA_METROPOLITANA",
+     "territorio_id": "LIMA_METROPOLITANA",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "agregar_nivel",
+     "estado": "agregada",
+     "motivos": [
+      "nivel_no_representativo"
+     ]
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": {
+    "ic_inf": 21.9,
+    "ic_sup": 28.7,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "id_cifra": "DOR-OMS-2025-LM1501"
+   },
+   "contraste_oficial": {
+    "valor": 25.3,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "criterio": "RM251-2024/OMS2024",
+    "id_cifra": "DOR-OMS-2025-LM1501",
+    "entidad": "INEI"
+   },
+   "resultados": [
+    {
+     "regla": "R-ENC-06",
+     "accion": "agregar_nivel",
+     "motivo": "nivel_no_representativo",
+     "clausula": "nivel pedido más fino que la inferencia",
+     "detalle": {
+      "nivel_pedido": "distrito",
+      "nivel_territorial_inferencia": "departamento",
+      "contenedor": [
+       "departamento",
+       "15"
+      ],
+      "periodicidad": "anual"
+     },
+     "mensaje": "La encuesta no permite dar una cifra con suficiente precisión para San Juan de Lurigancho. Mostramos la de departamento de Lima (Lima Metropolitana + Lima Región), que incluye a San Juan de Lurigancho; la situación en San Juan de Lurigancho puede ser distinta.",
+     "nivel_minimo": "departamento"
+    },
+    {
+     "regla": "R-ENC-07",
+     "accion": "rotular",
+     "motivo": "dominio_lima",
+     "clausula": "departamento 15/07",
+     "detalle": {
+      "nivel": "LIMA_METROPOLITANA",
+      "territorio_id": "LIMA_METROPOLITANA",
+      "area": "total"
+     },
+     "mensaje": "Esta cifra corresponde a Lima Metropolitana (provincia de Lima), no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+     "rotulo": "Lima Metropolitana (provincia de Lima)"
+    },
+    {
+     "regla": "R-ENC-08",
+     "accion": "advertir",
+     "motivo": "ambito_no_dominio",
+     "clausula": "ámbito publicado (L1)",
+     "detalle": {
+      "ambito": "LIMA_METROPOLITANA",
+      "cita": "Ficha técnica ENDES 2025"
+     },
+     "mensaje": "El INEI publica esta cifra para Lima Metropolitana (provincia de Lima), aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+     "aviso": "ambito_no_dominio"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar",
+      "semaforo_comparacion": {
+       "semaforo": "verde",
+       "puntajes": {
+        "precision_cifra": 0,
+        "quiebre": 0
+       },
+       "motivos": []
+      }
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "agregar_nivel",
+   "bloqueos_cruce": []
+  },
+  "sien_cobertura_tamizaje_6_35m__cobertura__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto": {
+   "indicador_id": "sien_cobertura_tamizaje_6_35m",
+   "anio": 2025,
+   "nivel": "LIMA_METROPOLITANA",
+   "territorio_id": "LIMA_METROPOLITANA",
+   "territorio_nombre": "Lima Metropolitana (provincia de Lima)",
+   "medida": "cobertura",
+   "valor": 37.71284362,
+   "ee": null,
+   "cv": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "n_muestra": 130395,
+   "numerador": 104619.0,
+   "denominador": 345757.539,
+   "cota_inf": 30.25790856,
+   "cota_sup": 37.71284362,
+   "rol": "contexto",
+   "nivel_pedido": "distrito",
+   "estado_cifra": "referencial",
+   "semaforo_cifra": "rojo",
+   "motivos_semaforo": [
+    {
+     "criterio": "cobertura_registro",
+     "puntaje": 2
+    },
+    {
+     "criterio": "precision",
+     "puntaje": 1
+    },
+    {
+     "criterio": "denominador",
+     "puntaje": 1
+    }
+   ],
+   "avisos": [
+    "denominador_propio_ipf"
+   ],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "LIMA_METROPOLITANA",
+     "territorio_id": "LIMA_METROPOLITANA",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar_referencial",
+     "estado": "referencial",
+     "motivos": [
+      "denominador_propio",
+      "seleccion"
+     ]
+    }
+   ],
+   "metodo_ic": null,
+   "ic_inei": null,
+   "contraste_oficial": null,
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-DEP-01",
+     "accion": "rotular",
+     "motivo": "contraste_no_aprobado",
+     "clausula": "contraste no aprobado: se omite",
+     "detalle": {
+      "contraste_omitido": [
+       {
+        "id": "MINSA-POBLACION-ESTIMADA",
+        "compuerta": "enlace_confirmado"
+       }
+      ],
+      "destino": "ficha_larga"
+     },
+     "modificador": true
+    },
+    {
+     "regla": "R-DENOMINADORES-01",
+     "accion": "rotular",
+     "motivo": "denominador",
+     "clausula": "denominador de la matriz",
+     "detalle": {
+      "tipo_denominador": "cobertura_salud_por_edad",
+      "denominador_principal": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD|6-35m|T",
+      "efectivo": {
+       "fuente_id": "PROPIO-PRORRATEO-IPF",
+       "metodo": "propio",
+       "geografia_base": "vigente_2025",
+       "rotulo": "población estimada (cálculo propio)",
+       "vintage": "PROPIO-PRORRATEO-IPF|crudos=INEI-PROYECCIONES-POBLACION-DISTRITAL+INEI-PROYECCIONES-DEPARTAMENTAL-EDAD"
+      }
+     },
+     "mensaje": "Calculado sobre la población de niñas y niños de 6 a 35 meses residentes en el departamento o ámbito (LM, LR, Callao) (población estimada (cálculo propio), 2025).",
+     "rotulo": "población estimada (cálculo propio)"
+    },
+    {
+     "regla": "R-DENOMINADORES-05",
+     "accion": "publicar_referencial",
+     "motivo": "denominador_propio",
+     "clausula": "s nulo y prorrateo propio",
+     "detalle": {
+      "s": null,
+      "metodo": "propio",
+      "rango_indicador": null
+     },
+     "rotulo": "población estimada (cálculo propio)"
+    },
+    {
+     "regla": "R-REG-01",
+     "accion": "rotular",
+     "motivo": "tipo_medida",
+     "clausula": "registro: rótulo de tipo_medida obligatorio",
+     "detalle": {
+      "tipo_medida": "cobertura_programa",
+      "lista_prohibida": [
+       "prevalencia",
+       "incidencia",
+       "tasa de anemia del distrito",
+       "% de los niños del distrito",
+       "% de la población",
+       "tiene anemia el X % de"
+      ],
+      "marcadores_pendientes": [
+       "quien",
+       "accion_registro",
+       "sistema"
+      ]
+     },
+     "mensaje": "Este dato cuenta solo a {quien} que {accion_registro} {sistema}; no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra.",
+     "rotulo": "niños con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional, de cada 100 niños de 6 a 35 meses del departamento (no equivale a toda la población atendida)"
+    },
+    {
+     "regla": "R-REG-07",
+     "accion": "rotular",
+     "motivo": "cobertura_registro",
+     "clausula": "SIEN: dos cotas",
+     "detalle": {
+      "cota_inf": 30.25790856,
+      "cota_sup": 37.71284362,
+      "umbral_pct": 50,
+      "semaforo_usa": "cota_sup"
+     },
+     "rotulo": "entre 30 y 38 de cada 100 niños",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-07",
+     "accion": "publicar_referencial",
+     "motivo": "seleccion",
+     "clausula": "SIEN: cota_sup < umbral",
+     "detalle": {
+      "cota_inf": 30.25790856,
+      "cota_sup": 37.71284362,
+      "umbral_pct": 50,
+      "semaforo_usa": "cota_sup"
+     },
+     "aviso": "advertencia_seleccion"
+    },
+    {
+     "regla": "R-REG-07",
+     "accion": "rotular",
+     "motivo": "denominador",
+     "clausula": "L7: denominador propio (LM y LR)",
+     "detalle": {
+      "ambito": "LIMA_METROPOLITANA"
+     },
+     "mensaje": "La población de niños de este ámbito es una estimación propia.",
+     "rotulo": "población estimada (cálculo propio)",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "advertir",
+     "motivo": "fecha_corte",
+     "clausula": "caso borde: sin fecha de corte declarada",
+     "detalle": {
+      "fecha_descarga": "2026-10-06"
+     },
+     "aviso": "sin_fecha_corte",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "rotular",
+     "motivo": "fecha_corte",
+     "clausula": "fecha de corte",
+     "detalle": {
+      "fecha_corte": "2026-10-06",
+      "cierre": "2026-06-30",
+      "es_preliminar": false
+     },
+     "rotulo": "datos al 2026-10-06"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 2",
+     "detalle": {
+      "semaforo": "rojo",
+      "puntajes": {
+       "precision": 1,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0,
+       "cobertura_registro": 2,
+       "denominador": 1
+      },
+      "motivos": [
+       {
+        "criterio": "cobertura_registro",
+        "puntaje": 2
+       },
+       {
+        "criterio": "precision",
+        "puntaje": 1
+       },
+       {
+        "criterio": "denominador",
+        "puntaje": 1
+       }
+      ],
+      "escalado": false,
+      "accion_vigente": "publicar_referencial"
+     },
+     "mensaje": "Dato muy aproximado: el registro cubre solo a una parte de la población",
+     "rotulo": "Dato muy aproximado"
+    }
+   ],
+   "accion_final": "publicar_referencial",
+   "bloqueos_cruce": []
+  }
+ },
+ "cruces": [
+  {
+   "id_cruce": "CR-01",
+   "a": "gasto_ex_pan__devengado__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+   "b": "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+   "presentacion": "lado_a_lado",
+   "operacion": "lado_a_lado",
+   "nivel": "LIMA_METROPOLITANA",
+   "anios": [
+    2025
+   ]
+  }
+ ],
+ "semaforo_respuesta": "rojo",
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal",
+  "respuesta_parcial"
+ ],
+ "texto": "No se puede saber si el gasto contra la anemia sirvió en San Juan de Lurigancho: no encontramos una evaluación publicada. Lo que sí se sabe es lo gastado en el distrito: S/ 4,0 millones en servicios de salud y nutrición infantil en 2025, solo de la municipalidad y de obras ubicadas en el distrito (sin lo que gastan el Ministerio de Salud y otras entidades). No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo. En toda Lima Metropolitana (provincia de Lima) se gastó S/ 260,6 millones en 2025, registrado por unidades ejecutoras con sede en Lima Metropolitana (MEF 2025). Solo alrededor del 5 % del gasto atribuido al departamento de Lima se puede ubicar en municipalidades y obras; el resto lo registran entidades sin un distrito. No incluye a las entidades nacionales con sede en Lima que atienden a todo el país: aparte, sin sumar, los institutos nacionales de referencia gastaron S/ 3,2 millones. En 2025, de las niñas y los niños de 6 a 35 meses a quienes se les midió la hemoglobina en establecimientos ubicados en el distrito, alrededor de 8 % (entre 7,8 % y 8,6 %) tenía anemia en su último control del año (SIEN 2025, INS). En Lima Metropolitana se midió la hemoglobina a entre 30 % y 38 % de los niños de 6 a 35 meses que viven allí (SIEN 2025, INS; población estimada con cálculo propio). En Lima Metropolitana, a menos de la mitad de los niños se les midió la hemoglobina: la anemia de los niños medidos puede no representar a todos. El INS advierte que sus registros podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño. Solo tenemos el SIEN de 2025: no podemos mostrar cómo cambió en el distrito. Para Lima Metropolitana (provincia de Lima) se estima que 25,3 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Lima Metropolitana, la anemia se mantuvo sin cambio estadísticamente claro. La encuesta no da cifras por distrito. Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación publicada de estos servicios para San Juan de Lurigancho (Lima, Lima). Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron.",
+ "texto_con_marcadores": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el distrito: {{c:gasto_ex_pan__devengado__distrito__150132__2025__principal}} en servicios de salud y nutrición infantil en 2025, solo de la municipalidad y de obras ubicadas en el distrito (sin lo que gastan el Ministerio de Salud y otras entidades). {{p:no_concluir_gasto}} En toda Lima Metropolitana (provincia de Lima) se gastó {{c:gasto_ex_pan__devengado__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto}} en 2025, registrado por unidades ejecutoras con sede en Lima Metropolitana (MEF 2025). Solo alrededor del {{e:pct_atribuible}} del gasto atribuido al departamento de Lima se puede ubicar en municipalidades y obras; el resto lo registran entidades sin un distrito. {{p:sede}} {{e:linea_ref}}. En 2025, de {{u:ninos}} a quienes se les midió la hemoglobina en establecimientos ubicados en el distrito, {{c:sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal}} tenía anemia en su último control del año (SIEN 2025, INS). En Lima Metropolitana se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto}} de {{u:ninos_residen}} (SIEN 2025, INS; población estimada con cálculo propio). {{p:cobertura}} {{p:ins}} {{p:altitud}} {{p:sin_evolucion}} Para Lima Metropolitana (provincia de Lima) se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Lima Metropolitana, la anemia {{v:endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto}}. La encuesta no da cifras por distrito. {{p:efecto}} {{p:evaluaciones}}",
+ "ficha": {
+  "corta": "Confianza en los datos: baja (dato muy aproximado): el registro cubre solo a una parte de la población.\nDatos de: Gasto MEF 2025 (devengado) · SIEN 2025 (INS) · ENDES 2024–2025 (INEI)\nTerritorio: distrito de San Juan de Lurigancho (algunas cifras solo están por Lima Metropolitana)\nNo permite concluir: que el gasto haya causado los cambios en la anemia: estos datos no comparan con lo que habría pasado sin el programa o gasto. Cuántos niños del distrito tienen anemia: solo sabemos de los que se tamizaron en establecimientos.",
+  "larga": {
+   "cifras": {
+    "gasto_ex_pan__devengado__distrito__150132__2025__principal": {
+     "1_origen": "Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado). Gasto MEF (MEF), 2025. Es el gasto registrado por las entidades públicas.",
+     "2_territorio": "La cifra se presenta por distrito (San Juan de Lurigancho).",
+     "3_que_mide": "Mide servicios de salud y nutrición infantil que antes eran del PAN (devengado, sin transferencias).",
+     "4_precision": "Monto registrado (devengado), en soles corrientes. El 5 % del gasto del departamento se puede ubicar en municipalidades y obras.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "estado": "referencial",
+     "semaforo": "ambar",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM)."
+     ]
+    },
+    "gasto_ex_pan__devengado__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto": {
+     "1_origen": "Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado). Gasto MEF (MEF), 2025. Es el gasto registrado por las entidades públicas.",
+     "2_territorio": "La cifra se presenta para Lima Metropolitana (provincia de Lima). Se pidió por distrito; la fuente no alcanza ese nivel.",
+     "3_que_mide": "Mide servicios de salud y nutrición infantil que antes eran del PAN (devengado, sin transferencias).",
+     "4_precision": "Monto registrado (devengado), en soles corrientes. El 5 % del gasto del departamento se puede ubicar en municipalidades y obras.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "estado": "agregada",
+     "semaforo": "verde",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "Aparte, sin sumar: S/ 3,2 millones de institutos de referencia nacional ubicados en Lima, que atienden a pacientes de todo el país.",
+      "Cerca del 38 % del gasto de ministerios, programas y gobiernos regionales que se ubica por departamento lo registran entidades nacionales con sede en Lima. Lo que atiende a todo el país no se cuenta aquí. Comparar Lima con otras regiones tiene límites.",
+      "El gasto en Lima no incluye la parte local de algunos programas nacionales, porque sus cuentas no separan Lima del resto del país.",
+      "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM)."
+     ]
+    },
+    "sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal": {
+     "1_origen": "Niñas y niños de 6 a 35 meses tamizados con anemia en establecimientos del MINSA y de los gobiernos regionales. SIEN (INS), 2025. Es un registro de los niños atendidos en establecimientos de salud. Datos descargados el 2026-10-06.",
+     "2_territorio": "La cifra se presenta por distrito (San Juan de Lurigancho).",
+     "3_que_mide": "Mide niños tamizados con anemia en establecimientos de salud del MINSA y de los gobiernos regionales (no es la prevalencia de la población).",
+     "4_precision": "Basado en 19 750 niños tamizados; el valor está probablemente entre 7,8 % y 8,6 %.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INS publica 8,2 % con la forma de medir vigente desde 2024 (Indicadores Niños – diciembre 2025 (Base de Datos HIS-Minsa), periodo enero a diciembre 2025, Cuadro N.º 15, fila LIMA / LIMA / SAN JUAN DE LURIGANCHO (150132)). Nuestra cifra coincide.",
+     "estado": "publicable",
+     "semaforo": "rojo",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "Este dato cuenta solo a las niñas y los niños que tuvieron una medición de hemoglobina en un establecimiento de salud y quedaron registrados en el SIEN (INS); no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra."
+     ]
+    },
+    "sien_cobertura_tamizaje_6_35m__cobertura__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100). SIEN (INS), 2025. Es un registro de los niños atendidos en establecimientos de salud. Datos descargados el 2026-10-06.",
+     "2_territorio": "La cifra se presenta para Lima Metropolitana (provincia de Lima). Se pidió por distrito; la fuente no alcanza ese nivel.",
+     "3_que_mide": "Mide niños con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional, de cada 100 niños de 6 a 35 meses de Lima Metropolitana (no equivale a toda la población atendida).",
+     "4_precision": "Dos cotas: 30,3 % contando a los niños por su procedencia y 37,7 % sumando a los atendidos sin procedencia registrada.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "estado": "referencial",
+     "semaforo": "rojo",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "Calculado sobre la población de niñas y niños de 6 a 35 meses residentes en Lima Metropolitana (población estimada (cálculo propio), 2025).",
+      "Este dato cuenta solo a las niñas y los niños que tuvieron una medición de hemoglobina en un establecimiento de salud y quedaron registrados en el SIEN (INS); no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra.",
+      "La población de niños de este ámbito es una estimación propia."
+     ]
+    },
+    "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024). ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta para Lima Metropolitana (provincia de Lima). Se pidió por distrito; la fuente no alcanza ese nivel.",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir vigente desde 2024 (RM 251-2024-MINSA).",
+     "4_precision": "El valor real está probablemente entre 22,0 % y 28,9 % (coeficiente de variación 6,8 %, 771 casos en la muestra). El INEI publica para esta cifra un intervalo entre 21,9 % y 28,7 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "Entre 2024 y 2025: sin cambio estadísticamente claro (prueba de diferencia con el diseño de la encuesta, al 95 % de confianza).",
+     "6_contraste_oficial": "El INEI publica 25,3 % con la forma de medir vigente desde 2024 (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Nuestra cifra coincide.",
+     "estado": "agregada",
+     "semaforo": "verde",
+     "avisos": [
+      "Esta cifra corresponde a Lima Metropolitana (provincia de Lima), no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+      "El INEI publica esta cifra para Lima Metropolitana (provincia de Lima), aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es."
+     ]
+    }
+   },
+   "cruces": {
+    "CR-01": "Se muestran lado a lado gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado) y niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) para Lima Metropolitana en 2025. Esto compara territorios, no personas: no dice que una cosa cause la otra."
+   },
+   "no_concluir": [
+    "Que el gasto haya causado los cambios en la anemia: estos datos no comparan con lo que habría pasado sin el programa o gasto.",
+    "Cuántos niños del distrito tienen anemia: solo sabemos de los que se tamizaron en establecimientos.",
+    "Cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito.",
+    "Si el gasto fue eficiente o 'cuánto costó' reducir el problema."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:68f2a609ec00… (commit acc9861) y reglas f26641b3a40c. Indicadores: endes_anemia_6_35m_oms2024, gasto_ex_pan, sien_anemia_tamizados_6_35m, sien_cobertura_tamizaje_6_35m."
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "avisos_al_usuario": [
+  {
+   "regla": "R-CRUCES-05",
+   "objetivo": "cruce:CR-01",
+   "texto": "Ojo: Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado) se refiere a servicios para niñas y niños menores de 5 años y sus familias (CRED, vacunas, hierro y vitamina A, atención de anemia, IRA/EDA, parasitosis, consejería, comunicación, agua para consumo humano) y Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) a niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior; no son del todo el mismo grupo."
+  },
+  {
+   "regla": "R-CRUCES-08",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+   "texto": "Hay dos cifras sobre anemia en niñas y niños de 6 a 35 meses y no coinciden porque miden cosas distintas: niños medidos en establecimientos del distrito frente a una muestra de todos los hogares de Lima Metropolitana. Usamos el SIEN como cifra principal porque es la única fuente que llega al distrito."
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "objetivo": "respuesta",
+   "texto": "Este párrafo combina datos de distinto tipo: encuesta a hogares, gasto registrado, registro de atenciones. Se presentan juntos para dar contexto, no porque uno explique al otro."
+  }
+ ],
+ "resultados_respuesta": [
+  {
+   "regla": "R-CRUCES-01",
+   "accion": "agregar_nivel",
+   "motivo": "nivel_no_representativo",
+   "clausula": "nivel_pedido < nivel_cruce",
+   "detalle": {
+    "nivel_cruce": "LIMA_METROPOLITANA",
+    "nivel_pedido": "distrito",
+    "niveles": {
+     "gasto_ex_pan__devengado__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto": "LIMA_METROPOLITANA",
+     "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto": "LIMA_METROPOLITANA"
+    },
+    "territorio_cruce": "LIMA_METROPOLITANA"
+   },
+   "mensaje": "Mostramos esta comparación por LIMA_METROPOLITANA y no por distrito porque MEF-DA-PRESUPUESTO-EJECUCION-GASTO solo da cifras con suficiente precisión hasta ese nivel.",
+   "nivel_minimo": "LIMA_METROPOLITANA",
+   "objetivo": "cruce:CR-01"
+  },
+  {
+   "regla": "R-CRUCES-05",
+   "accion": "rotular",
+   "motivo": "poblacion_distinta",
+   "clausula": "compat_base AND compat_poblacion AND universo compatible",
+   "detalle": {
+    "motivos": [
+     {
+      "poblacion": "anidada",
+      "a": "servicios para niñas y niños menores de 5 años y sus familias (CRED, vacunas, hierro y vitamina A, atención de anemia, IRA/EDA, parasitosis, consejería, comunicación, agua para consumo humano)",
+      "b": "niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior"
+     },
+     {
+      "universo": [
+       "sector_publico",
+       "total"
+      ]
+     }
+    ]
+   },
+   "mensaje": "Ojo: Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado) se refiere a servicios para niñas y niños menores de 5 años y sus familias (CRED, vacunas, hierro y vitamina A, atención de anemia, IRA/EDA, parasitosis, consejería, comunicación, agua para consumo humano) y Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) a niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior; no son del todo el mismo grupo.",
+   "objetivo": "cruce:CR-01"
+  },
+  {
+   "regla": "R-CRUCES-08",
+   "accion": "rotular",
+   "motivo": "fuente_complementaria",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "anemia_6_35m",
+    "principal": "sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal"
+   },
+   "rotulo": "complementaria",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto"
+  },
+  {
+   "regla": "R-CRUCES-08",
+   "accion": "rotular",
+   "motivo": "divergencia_fuentes",
+   "clausula": "|valor_principal − valor_secundaria| > umbral_divergencia",
+   "detalle": {
+    "concepto": "anemia_6_35m",
+    "divergencia": 17.113,
+    "umbral": 5.0,
+    "bloque": "Por qué las cifras no coinciden"
+   },
+   "mensaje": "Hay dos cifras sobre anemia_6_35m y no coinciden porque miden cosas distintas: {explicacion_corta}. Usamos INS-CENAN-SIEN como cifra principal porque {razon}.",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+   "modificador": true
+  },
+  {
+   "regla": "R-CRUCES-08",
+   "accion": "advertir",
+   "motivo": "vintage_distinta",
+   "clausula": "una_vintage_por_respuesta",
+   "detalle": {
+    "vintages": [
+     "INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01",
+     "no_aplica"
+    ]
+   },
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-CRUCES-07",
+   "accion": "rotular",
+   "motivo": "pregunta_de_efecto",
+   "clausula": "intencion_pregunta == 'efecto'",
+   "detalle": {
+    "estructura_respuesta": [
+     "1. Cuánto se gastó (gasto, años)",
+     "2. Cómo evolucionó el resultado (con prueba de cambio)",
+     "3. Por qué esto no basta para saber si el gasto funcionó (sin grupo de comparación; otros factores)",
+     "4. Evaluaciones existentes (lista curada) o 'no encontramos una evaluación publicada'",
+     "5. Qué haría falta para saberlo"
+    ],
+    "evaluaciones_fuente": "MEF-PPR-EVALUACIONES-INDEPENDIENTES + tabla curada evaluaciones_relacionadas",
+    "disparadores": [
+     "sirvió"
+    ],
+    "gasto_descriptivo_solo": true,
+    "no_concluir": "NC-EFICIENCIA"
+   },
+   "mensaje": "Saber si un gasto “sirvió” requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió.",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-ENC-11",
+   "accion": "rotular",
+   "motivo": "prueba_cambio",
+   "clausula": "p >= alfa → significativo = false",
+   "detalle": {
+    "diferencia": 1.3524,
+    "p_valor": 0.568671,
+    "significativa": false,
+    "origen": "motor",
+    "alfa": 0.05,
+    "direccion": null,
+    "anios": [
+     2024,
+     2025
+    ]
+   },
+   "rotulo": "sin cambio estadísticamente claro",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto"
+  },
+  {
+   "regla": "R-CRUCES-10",
+   "accion": "rotular",
+   "motivo": "semaforo_respuesta",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "semaforo_respuesta": "rojo",
+    "motivos": [
+     "peor_cifra_principal:sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal",
+     "respuesta_parcial"
+    ],
+    "semaforo_cruces": {
+     "CR-01": "verde"
+    }
+   },
+   "mensaje": "Confianza de esta respuesta: Dato muy aproximado. El registro cubre solo a una parte de la población.",
+   "rotulo": "Dato muy aproximado",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "párrafo con >= 2 naturaleza_dato",
+   "detalle": {
+    "naturalezas": [
+     "encuesta_muestral",
+     "presupuestal_financiero",
+     "registro_administrativo"
+    ]
+   },
+   "mensaje": "Este párrafo combina datos de distinto tipo: encuesta_muestral, presupuestal_financiero, registro_administrativo. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "(a)–(e) del párrafo mixto",
+   "detalle": {
+    "fallas": [
+     {
+      "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
+      "oracion": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el distrito: {{c:gasto_ex_pan__devengado__distrito__150132__2025__principal}} en servicios de salud y nutrición infantil en 2025, solo de la municipalidad y de obras ubicadas en el distrito (sin lo que gastan el Ministerio de Salud y otras entidades)."
+     },
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "En 2025, de {{u:ninos}} a quienes se les midió la hemoglobina en establecimientos ubicados en el distrito, {{c:sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal}} tenía anemia en su último control del año (SIEN 2025, INS)."
+     },
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "En Lima Metropolitana se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto}} de {{u:ninos_residen}} (SIEN 2025, INS;"
+     }
+    ]
+   },
+   "modo": "corrector",
+   "objetivo": "respuesta"
+  }
+ ],
+ "corrector": [
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "párrafo con >= 2 naturaleza_dato",
+   "detalle": {
+    "naturalezas": [
+     "encuesta_muestral",
+     "presupuestal_financiero",
+     "registro_administrativo"
+    ]
+   },
+   "mensaje": "Este párrafo combina datos de distinto tipo: encuesta_muestral, presupuestal_financiero, registro_administrativo. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "(a)–(e) del párrafo mixto",
+   "detalle": {
+    "fallas": [
+     {
+      "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
+      "oracion": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el distrito: {{c:gasto_ex_pan__devengado__distrito__150132__2025__principal}} en servicios de salud y nutrición infantil en 2025, solo de la municipalidad y de obras ubicadas en el distrito (sin lo que gastan el Ministerio de Salud y otras entidades)."
+     },
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "En 2025, de {{u:ninos}} a quienes se les midió la hemoglobina en establecimientos ubicados en el distrito, {{c:sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal}} tenía anemia en su último control del año (SIEN 2025, INS)."
+     },
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "En Lima Metropolitana se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto}} de {{u:ninos_residen}} (SIEN 2025, INS;"
+     }
+    ]
+   },
+   "modo": "corrector",
+   "objetivo": "respuesta"
+  }
+ ],
+ "respuesta_parcial": true,
+ "tipo": "respuesta",
+ "consulta_minima": {
+  "intencion": "efecto",
+  "tema": "gasto_publico",
+  "territorio": {
+   "texto": "San Juan de Lurigancho"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "¿Cuánto se gastó contra la anemia en San Juan de Lurigancho y sirvió?",
+  "idioma": "es"
+ },
+ "plan": {
+  "id": "efecto__gasto_publico__150132",
+  "pregunta": "¿Cuánto se gastó contra la anemia en San Juan de Lurigancho y sirvió?",
+  "intencion": "efecto",
+  "tema": "gasto_publico",
+  "territorio": {
+   "nivel": "distrito",
+   "id": "150132",
+   "nombre_pedido": "San Juan de Lurigancho"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "cifras": [
+   {
+    "id": "gasto_ex_pan__devengado__distrito__150132__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "anio": 2025,
+    "nivel": "distrito",
+    "territorio": "150132",
+    "rol": "principal"
+   },
+   {
+    "id": "gasto_ex_pan__devengado__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+    "indicador": "gasto_ex_pan",
+    "anio": 2025,
+    "nivel": "LIMA_METROPOLITANA",
+    "territorio": "LIMA_METROPOLITANA",
+    "rol": "contexto"
+   },
+   {
+    "id": "sien_anemia_tamizados_6_35m__proporcion__distrito__150132__2025__principal",
+    "indicador": "sien_anemia_tamizados_6_35m",
+    "anio": 2025,
+    "nivel": "distrito",
+    "territorio": "150132",
+    "rol": "principal"
+   },
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2025,
+    "nivel": "LIMA_METROPOLITANA",
+    "territorio": "LIMA_METROPOLITANA",
+    "rol": "contexto",
+    "comparar_con": 2024
+   },
+   {
+    "id": "sien_cobertura_tamizaje_6_35m__cobertura__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__contexto",
+    "indicador": "sien_cobertura_tamizaje_6_35m",
+    "anio": 2025,
+    "nivel": "LIMA_METROPOLITANA",
+    "territorio": "LIMA_METROPOLITANA",
+    "rol": "contexto"
+   }
+  ],
+  "grupos": [],
+  "cruce": "CR-01",
+  "bloques": [],
+  "tema_gasto": "cpt_grupo_expan",
+  "avisos_periodo": [],
+  "formas_sin_serie": [],
+  "respuesta_parcial": true,
+  "estructura_efecto": true,
+  "lado_a_lado": true,
+  "no_se_puede": null,
+  "motivos_no_se_puede": [],
+  "omitidas": [],
+  "decisiones": [
+   "G-07",
+   "G-07 / R-03 / S-01",
+   "R-CRUCES-07 / E-06",
+   "R-CRUCES-07 / R-03",
+   "R-CRUCES-07 / T-03",
+   "S-01"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "efecto",
+   "tema": "gasto_publico",
+   "territorio": {
+    "texto": "San Juan de Lurigancho"
+   },
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "¿Cuánto se gastó contra la anemia en San Juan de Lurigancho y sirvió?",
+   "idioma": "es"
+  },
+  "desambiguados": {}
+ }
+}

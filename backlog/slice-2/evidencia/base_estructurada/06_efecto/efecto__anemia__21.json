@@ -1,0 +1,1020 @@
+{
+ "capas": {
+  "capa1": {
+   "respuesta_corta": "No se puede saber si el gasto contra la anemia sirvió en Puno: no encontramos una evaluación publicada. Lo que sí se sabe es lo gastado en el departamento:",
+   "cifra_clave": {
+    "ids": [
+     "gasto_ex_pan__devengado__departamento__21__2025__principal"
+    ],
+    "valor": "S/ 132,1 millones",
+    "texto": "en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Puno (MEF 2025).",
+    "fuente": "gasto registrado en el MEF 2025"
+   },
+   "ojo_al_leer": [
+    "No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo."
+   ],
+   "confianza": {
+    "nivel": "media",
+    "texto": "Confianza en los datos: media. La respuesta es parcial.",
+    "ficha": "Confianza en los datos: media (dato con limitaciones): la respuesta es parcial."
+   },
+   "que_hacer": {
+    "texto": "Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6 meses.",
+    "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
+    "url": "https://www.gob.pe/69889-que-es-la-anemia-prevencion",
+    "revisado_dueno": false
+   },
+   "palabras": 74
+  },
+  "capa2": {
+   "mas_contexto": [
+    {
+     "titulo": "Niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) (Puno)",
+     "texto": "En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Puno: entre 39,8 % y 50,5 % (SIEN 2025, INS).",
+     "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave."
+    },
+    {
+     "titulo": "Anemia en Puno (encuesta a hogares)",
+     "texto": "Para Puno se estima que 56,1 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Puno, la anemia se mantuvo sin cambio estadísticamente claro.",
+     "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave."
+    },
+    {
+     "titulo": "Qué haría falta para saber si sirvió",
+     "texto": "Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación publicada de estos servicios para Puno. Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron.",
+     "etiqueta": null
+    }
+   ],
+   "avisos": [
+    "Las cifras del cruce no cubren exactamente al mismo grupo: una se refiere a servicios para niñas y niños menores de 5 años y sus familias; la otra, a niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior.",
+    "Estas cifras vienen de fuentes de distinto tipo (encuesta a hogares, gasto registrado, registro de atenciones): se muestran juntas para dar contexto y cada una mide algo distinto."
+   ],
+   "limites": [
+    "Datos de: Gasto MEF 2025 (devengado) · SIEN 2025 (INS) · ENDES 2024–2025 (INEI)",
+    "Territorio: departamento de Puno",
+    "No permite concluir: que el gasto haya causado los cambios en la anemia: estos datos no comparan con lo que habría pasado sin el programa o gasto. Cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito."
+   ]
+  },
+  "capa3": {
+   "para_citar": [
+    "S/ 132,1 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Puno, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
+    "entre 39,8 % y 50,5 %: niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100), Puno, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
+    "56,1 % (intervalo del INEI: 49,4 % a 62,7 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Puno, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)."
+   ],
+   "glosario": [
+    {
+     "termino": "gastado (devengado)",
+     "definicion": "lo que la entidad ya debe pagar porque recibió el bien o el servicio. Es distinto del presupuesto, que es lo que tiene autorizado gastar en el año."
+    },
+    {
+     "termino": "servicios de salud y nutrición infantil",
+     "definicion": "los que antes eran del Programa Articulado Nutricional: controles de crecimiento, vacunas, hierro y vitamina A, atención de la anemia, de infecciones respiratorias y diarreas, consejería y agua segura, para menores de 5 años y sus familias."
+    },
+    {
+     "termino": "ENDES",
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños."
+    },
+    {
+     "termino": "cambio estadísticamente claro",
+     "definicion": "una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error."
+    }
+   ]
+  }
+ },
+ "consulta": {
+  "id": "efecto__anemia__21",
+  "pregunta": "efecto anemia Puno",
+  "intencion": "efecto",
+  "tema": "anemia",
+  "territorio": {
+   "nivel": "departamento",
+   "id": "21",
+   "nombre_pedido": "Puno"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "cifras": [
+   {
+    "id": "gasto_ex_pan__devengado__departamento__21__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "21",
+    "rol": "principal"
+   },
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "21",
+    "rol": "principal",
+    "comparar_con": 2024
+   },
+   {
+    "id": "sien_cobertura_tamizaje_6_35m__cobertura__departamento__21__2025__contexto",
+    "indicador": "sien_cobertura_tamizaje_6_35m",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "21",
+    "rol": "contexto"
+   }
+  ],
+  "grupos": [],
+  "cruce": "CR-01",
+  "bloques": [],
+  "tema_gasto": "cpt_grupo_expan",
+  "avisos_periodo": [],
+  "formas_sin_serie": [],
+  "respuesta_parcial": true,
+  "estructura_efecto": true,
+  "lado_a_lado": true,
+  "no_se_puede": null,
+  "motivos_no_se_puede": [],
+  "omitidas": [],
+  "decisiones": [
+   "G-07",
+   "G-07 / R-03",
+   "R-CRUCES-07 / E-06",
+   "R-CRUCES-07 / R-03",
+   "S-01"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "efecto",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "departamento de Puno"
+   },
+   "idioma": "es"
+  },
+  "desambiguados": {}
+ },
+ "version_biblioteca": {
+  "cubo": "sha256:68f2a609ec002f54403802c92104c64c01c70ebca4fc46ebc4df293877f58eb2",
+  "commit_cubo": "acc9861",
+  "reglas": "f26641b3a40c"
+ },
+ "cifras": {
+  "gasto_ex_pan__devengado__departamento__21__2025__principal": {
+   "indicador_id": "gasto_ex_pan",
+   "anio": 2025,
+   "nivel": "departamento",
+   "territorio_id": "21",
+   "territorio_nombre": "Puno",
+   "medida": "devengado",
+   "valor": 132056254.85,
+   "ee": null,
+   "cv": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "n_muestra": null,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "principal",
+   "nivel_pedido": "departamento",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": 0.04889311,
+   "pim": 134182682.0,
+   "devengado": 132056254.85,
+   "lineas_aparte": [],
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "21",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": null,
+   "ic_inei": null,
+   "contraste_oficial": null,
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": "gasto: último año cerrado + acumulado de cartera activa (R-GASTO-17)"
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-GASTO-12",
+     "accion": "rotular",
+     "motivo": "soles_corrientes",
+     "clausula": "un solo año → soles corrientes",
+     "detalle": {
+      "precios": "corrientes"
+     },
+     "rotulo": "soles corrientes de 2025"
+    },
+    {
+     "regla": "R-GASTO-05",
+     "accion": "rotular",
+     "motivo": "transferencias",
+     "clausula": "(3) cifra temática: solo gasto final",
+     "detalle": {
+      "bloque_consolidado": "gasto_final",
+      "tema_id": "cpt_grupo_expan",
+      "pendiente": "monto (b) no disponible en el cubo"
+     },
+     "rotulo": "sin transferencias"
+    },
+    {
+     "regla": "R-GASTO-06",
+     "accion": "rotular",
+     "motivo": "fase_gasto",
+     "clausula": "fase en el rótulo",
+     "detalle": {
+      "fase_gasto": "DEVENGADO",
+      "columna": "MONTO_DEVENGADO"
+     },
+     "mensaje": "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM).",
+     "rotulo": "gastado (devengado)"
+    },
+    {
+     "regla": "R-GASTO-07",
+     "accion": "rotular",
+     "motivo": "avance",
+     "clausula": "año cerrado: PIM final",
+     "detalle": {
+      "pim": 134182682.0,
+      "avance_pct": 98.41527452104437,
+      "anio_cerrado": true,
+      "fecha_corte": "2025-12-31",
+      "denominador": "PIM final"
+     },
+     "rotulo": "avance respecto del PIM final, datos al 2025-12-31"
+    },
+    {
+     "regla": "R-GASTO-08",
+     "accion": "rotular",
+     "motivo": "tema_gasto",
+     "clausula": "rótulo := etiqueta_ciudadana / nombre propio por año",
+     "detalle": {
+      "tema_id": "cpt_grupo_expan",
+      "cadena": "concepto",
+      "version": "1.2"
+     },
+     "rotulo": "Servicios de salud y nutrición infantil que antes eran del PAN"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
+  "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal": {
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "anio": 2025,
+   "nivel": "departamento",
+   "territorio_id": "21",
+   "territorio_nombre": "Puno",
+   "medida": "proporcion",
+   "valor": 56.06922395,
+   "ee": 3.39174851,
+   "cv": 6.04921608,
+   "ic_inf": 49.06683732,
+   "ic_sup": 62.8975041,
+   "n_muestra": 223,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "principal",
+   "nivel_pedido": "departamento",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": {
+    "indicador_id": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "departamento",
+    "territorio_id": "21",
+    "territorio_nombre": "Puno",
+    "medida": "proporcion",
+    "linea": "cifra",
+    "criterio": "RM251-2024/OMS2024",
+    "valor": 53.11945496,
+    "ee": 3.18026249,
+    "cv": 5.98700135,
+    "ic_inf": 46.61642395,
+    "ic_sup": 59.54504597,
+    "metodo_ic": "korn-graubard",
+    "gl": 88,
+    "n_muestra": 266,
+    "n_efectivo": 246.21830058,
+    "deff": 1.07628068,
+    "numerador": null,
+    "denominador": null,
+    "cota_inf": null,
+    "cota_sup": null,
+    "grupo_robusto_nacional": null,
+    "grupo_robusto_regional": null,
+    "metodo_territorio": "departamento_hv024",
+    "avisos": "[]",
+    "estado_calculo": "calculada",
+    "motivo_calculo": null,
+    "validada_dorada": "DOR-OMS-2024-21",
+    "indicador_validado": true,
+    "poblacion": 1208802.0,
+    "ubigeo_inei": "210000",
+    "fecha_corte": null,
+    "fecha_descarga": null,
+    "anio_cerrado": true,
+    "pct_gasto_atribuible": null,
+    "version_tabla": "1.2.0",
+    "anio_base_deflactor": null,
+    "factor_deflactor": null,
+    "prueba_cambio": {
+     "diferencia": 2.9498,
+     "ee_diferencia": 4.6495,
+     "z": 0.6344,
+     "p_valor": 0.525804,
+     "significativa": false,
+     "anios": [
+      2024,
+      2025
+     ]
+    }
+   },
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "21",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": {
+    "ic_inf": 49.4,
+    "ic_sup": 62.7,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "id_cifra": "DOR-OMS-2025-21"
+   },
+   "contraste_oficial": {
+    "valor": 56.1,
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "criterio": "RM251-2024/OMS2024",
+    "id_cifra": "DOR-OMS-2025-21",
+    "entidad": "INEI"
+   },
+   "resultados": [
+    {
+     "regla": "R-ENC-05",
+     "accion": "rotular",
+     "motivo": "formato",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "56,1 % (entre 49,1 % y 62,9 %), ENDES 2025, Puno; basado en 223 niñas y niños encuestados.",
+     "rotulo": "56,1 % (entre 49,1 % y 62,9 %), ENDES 2025, Puno; basado en 223 niñas y niños encuestados."
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar",
+      "semaforo_comparacion": {
+       "semaforo": "verde",
+       "puntajes": {
+        "precision_cifra": 0,
+        "quiebre": 0
+       },
+       "motivos": []
+      }
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
+  "sien_cobertura_tamizaje_6_35m__cobertura__departamento__21__2025__contexto": {
+   "indicador_id": "sien_cobertura_tamizaje_6_35m",
+   "anio": 2025,
+   "nivel": "departamento",
+   "territorio_id": "21",
+   "territorio_nombre": "Puno",
+   "medida": "cobertura",
+   "valor": 50.49811955,
+   "ee": null,
+   "cv": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "n_muestra": 25243,
+   "numerador": 19907.0,
+   "denominador": 49988.0,
+   "cota_inf": 39.82355765,
+   "cota_sup": 50.49811955,
+   "rol": "contexto",
+   "nivel_pedido": "departamento",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "21",
+     "anio": 2025,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": null,
+   "ic_inei": null,
+   "contraste_oficial": null,
+   "resultados": [
+    {
+     "regla": "R-MOTOR-03",
+     "accion": "rotular",
+     "motivo": "periodo_por_defecto",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "ultimo_anio_cerrado": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025."
+    },
+    {
+     "regla": "R-DEP-01",
+     "accion": "rotular",
+     "motivo": "contraste_no_aprobado",
+     "clausula": "contraste no aprobado: se omite",
+     "detalle": {
+      "contraste_omitido": [
+       {
+        "id": "MINSA-POBLACION-ESTIMADA",
+        "compuerta": "enlace_confirmado"
+       }
+      ],
+      "destino": "ficha_larga"
+     },
+     "modificador": true
+    },
+    {
+     "regla": "R-DENOMINADORES-01",
+     "accion": "rotular",
+     "motivo": "denominador",
+     "clausula": "denominador de la matriz",
+     "detalle": {
+      "tipo_denominador": "cobertura_salud_por_edad",
+      "denominador_principal": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD|6-35m|T",
+      "efectivo": {
+       "fuente_id": "INEI-PROYECCIONES-DEPARTAMENTAL-EDAD",
+       "metodo": "oficial",
+       "geografia_base": "vigente_2025",
+       "rotulo": null,
+       "vintage": "INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01"
+      }
+     },
+     "mensaje": "Calculado sobre la población de niñas y niños de 6 a 35 meses residentes en el departamento o ámbito (LM, LR, Callao) (INEI-PROYECCIONES-DEPARTAMENTAL-EDAD, 2025)."
+    },
+    {
+     "regla": "R-REG-01",
+     "accion": "rotular",
+     "motivo": "tipo_medida",
+     "clausula": "registro: rótulo de tipo_medida obligatorio",
+     "detalle": {
+      "tipo_medida": "cobertura_programa",
+      "lista_prohibida": [
+       "prevalencia",
+       "incidencia",
+       "tasa de anemia del distrito",
+       "% de los niños del distrito",
+       "% de la población",
+       "tiene anemia el X % de"
+      ],
+      "marcadores_pendientes": [
+       "quien",
+       "accion_registro",
+       "sistema"
+      ]
+     },
+     "mensaje": "Este dato cuenta solo a {quien} que {accion_registro} {sistema}; no mide a toda la población. Quien no quedó registrado ahí no aparece en la cifra.",
+     "rotulo": "niños con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional, de cada 100 niños de 6 a 35 meses del departamento (no equivale a toda la población atendida)"
+    },
+    {
+     "regla": "R-REG-07",
+     "accion": "rotular",
+     "motivo": "cobertura_registro",
+     "clausula": "SIEN: dos cotas",
+     "detalle": {
+      "cota_inf": 39.82355765,
+      "cota_sup": 50.49811955,
+      "umbral_pct": 50,
+      "semaforo_usa": "cota_sup"
+     },
+     "rotulo": "entre 40 y 50 de cada 100 niños",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-07",
+     "accion": "advertir",
+     "motivo": "cobertura_registro",
+     "clausula": "SIEN: el intervalo cruza el umbral",
+     "detalle": {
+      "cota_inf": 39.82355765,
+      "cota_sup": 50.49811955,
+      "umbral_pct": 50,
+      "semaforo_usa": "cota_sup"
+     },
+     "mensaje": "Con los datos disponibles no podemos decir si la cobertura supera o no la mitad de los niños",
+     "aviso": "cruza_mitad"
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "advertir",
+     "motivo": "fecha_corte",
+     "clausula": "caso borde: sin fecha de corte declarada",
+     "detalle": {
+      "fecha_descarga": "2026-10-06"
+     },
+     "aviso": "sin_fecha_corte",
+     "modificador": true
+    },
+    {
+     "regla": "R-REG-09",
+     "accion": "rotular",
+     "motivo": "fecha_corte",
+     "clausula": "fecha de corte",
+     "detalle": {
+      "fecha_corte": "2026-10-06",
+      "cierre": "2026-06-30",
+      "es_preliminar": false
+     },
+     "rotulo": "datos al 2026-10-06"
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "vigencia": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0,
+       "cobertura_registro": 0,
+       "denominador": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  }
+ },
+ "cruces": [
+  {
+   "id_cruce": "CR-01",
+   "a": "gasto_ex_pan__devengado__departamento__21__2025__principal",
+   "b": "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal",
+   "presentacion": "lado_a_lado",
+   "operacion": "lado_a_lado",
+   "nivel": "departamento",
+   "anios": [
+    2025
+   ]
+  }
+ ],
+ "semaforo_respuesta": "ambar",
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:gasto_ex_pan__devengado__departamento__21__2025__principal",
+  "peor_cifra_principal:endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal",
+  "respuesta_parcial"
+ ],
+ "texto": "No se puede saber si el gasto contra la anemia sirvió en Puno: no encontramos una evaluación publicada. Lo que sí se sabe es lo gastado en el departamento: S/ 132,1 millones en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Puno (MEF 2025). No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo. En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Puno: entre 39,8 % y 50,5 % (SIEN 2025, INS). Para Puno se estima que 56,1 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Puno, la anemia se mantuvo sin cambio estadísticamente claro. Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación publicada de estos servicios para Puno. Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron.",
+ "texto_con_marcadores": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__21__2025__principal}} en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Puno (MEF 2025). {{p:no_concluir_gasto}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Puno: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__21__2025__contexto}} (SIEN 2025, INS). Para Puno se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Puno, la anemia {{v:endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal}}. {{p:efecto}} {{p:evaluaciones}}",
+ "ficha": {
+  "corta": "Confianza en los datos: media (dato con limitaciones): la respuesta es parcial.\nDatos de: Gasto MEF 2025 (devengado) · SIEN 2025 (INS) · ENDES 2024–2025 (INEI)\nTerritorio: departamento de Puno\nNo permite concluir: que el gasto haya causado los cambios en la anemia: estos datos no comparan con lo que habría pasado sin el programa o gasto. Cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito.",
+  "larga": {
+   "cifras": {
+    "gasto_ex_pan__devengado__departamento__21__2025__principal": {
+     "1_origen": "Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado). Gasto MEF (MEF), 2025. Es el gasto registrado por las entidades públicas.",
+     "2_territorio": "La cifra se presenta por departamento (Puno).",
+     "3_que_mide": "Mide servicios de salud y nutrición infantil que antes eran del PAN (devengado, sin transferencias).",
+     "4_precision": "Monto registrado (devengado), en soles corrientes. El 5 % del gasto del departamento se puede ubicar en municipalidades y obras.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "estado": "publicable",
+     "semaforo": "verde",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM)."
+     ]
+    },
+    "sien_cobertura_tamizaje_6_35m__cobertura__departamento__21__2025__contexto": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100). SIEN (INS), 2025. Es un registro de los niños atendidos en establecimientos de salud. Datos descargados el 2026-10-06.",
+     "2_territorio": "La cifra se presenta por departamento (Puno).",
+     "3_que_mide": "Mide niños con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional, de cada 100 niños de 6 a 35 meses del departamento (no equivale a toda la población atendida).",
+     "4_precision": "Dos cotas: 39,8 % contando a los niños por su procedencia y 50,5 % sumando a los atendidos sin procedencia registrada.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "estado": "publicable",
+     "semaforo": "verde",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "Calculado sobre la población de niñas y niños de 6 a 35 meses residentes en el departamento (la proyección de población del INEI, 2025).",
+      "Con los datos disponibles no podemos decir si la cobertura supera o no la mitad de los niños"
+     ]
+    },
+    "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024). ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Puno).",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir vigente desde 2024 (RM 251-2024-MINSA).",
+     "4_precision": "El valor real está probablemente entre 49,1 % y 62,9 % (coeficiente de variación 6,0 %, 223 casos en la muestra). El INEI publica para esta cifra un intervalo entre 49,4 % y 62,7 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "Entre 2024 y 2025: sin cambio estadísticamente claro (prueba de diferencia con el diseño de la encuesta, al 95 % de confianza).",
+     "6_contraste_oficial": "El INEI publica 56,1 % con la forma de medir vigente desde 2024 (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Nuestra cifra coincide.",
+     "estado": "publicable",
+     "semaforo": "verde",
+     "avisos": [
+      "56,1 % (entre 49,1 % y 62,9 %), ENDES 2025, Puno; basado en 223 niñas y niños encuestados."
+     ]
+    }
+   },
+   "cruces": {
+    "CR-01": "Se muestran lado a lado gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado) y niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) para departamento en 2025. Esto compara territorios, no personas: no dice que una cosa cause la otra."
+   },
+   "no_concluir": [
+    "Que el gasto haya causado los cambios en la anemia: estos datos no comparan con lo que habría pasado sin el programa o gasto.",
+    "Cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito.",
+    "Si el gasto fue eficiente o 'cuánto costó' reducir el problema."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:68f2a609ec00… (commit acc9861) y reglas f26641b3a40c. Indicadores: endes_anemia_6_35m_oms2024, gasto_ex_pan, sien_cobertura_tamizaje_6_35m."
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "avisos_al_usuario": [
+  {
+   "regla": "R-CRUCES-05",
+   "objetivo": "cruce:CR-01",
+   "texto": "Ojo: Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado) se refiere a servicios para niñas y niños menores de 5 años y sus familias (CRED, vacunas, hierro y vitamina A, atención de anemia, IRA/EDA, parasitosis, consejería, comunicación, agua para consumo humano) y Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) a niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior; no son del todo el mismo grupo."
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "objetivo": "respuesta",
+   "texto": "Este párrafo combina datos de distinto tipo: encuesta a hogares, gasto registrado, registro de atenciones. Se presentan juntos para dar contexto, no porque uno explique al otro."
+  }
+ ],
+ "resultados_respuesta": [
+  {
+   "regla": "R-CRUCES-05",
+   "accion": "rotular",
+   "motivo": "poblacion_distinta",
+   "clausula": "compat_base AND compat_poblacion AND universo compatible",
+   "detalle": {
+    "motivos": [
+     {
+      "poblacion": "anidada",
+      "a": "servicios para niñas y niños menores de 5 años y sus familias (CRED, vacunas, hierro y vitamina A, atención de anemia, IRA/EDA, parasitosis, consejería, comunicación, agua para consumo humano)",
+      "b": "niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior"
+     },
+     {
+      "universo": [
+       "sector_publico",
+       "total"
+      ]
+     }
+    ]
+   },
+   "mensaje": "Ojo: Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado) se refiere a servicios para niñas y niños menores de 5 años y sus familias (CRED, vacunas, hierro y vitamina A, atención de anemia, IRA/EDA, parasitosis, consejería, comunicación, agua para consumo humano) y Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) a niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior; no son del todo el mismo grupo.",
+   "objetivo": "cruce:CR-01"
+  },
+  {
+   "regla": "R-CRUCES-08",
+   "accion": "advertir",
+   "motivo": "vintage_distinta",
+   "clausula": "una_vintage_por_respuesta",
+   "detalle": {
+    "vintages": [
+     "INEI-PROY-DEP-EDAD|base=CPV2017|ed=2020-01",
+     "no_aplica"
+    ]
+   },
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-CRUCES-07",
+   "accion": "rotular",
+   "motivo": "pregunta_de_efecto",
+   "clausula": "intencion_pregunta == 'efecto'",
+   "detalle": {
+    "estructura_respuesta": [
+     "1. Cuánto se gastó (gasto, años)",
+     "2. Cómo evolucionó el resultado (con prueba de cambio)",
+     "3. Por qué esto no basta para saber si el gasto funcionó (sin grupo de comparación; otros factores)",
+     "4. Evaluaciones existentes (lista curada) o 'no encontramos una evaluación publicada'",
+     "5. Qué haría falta para saberlo"
+    ],
+    "evaluaciones_fuente": "MEF-PPR-EVALUACIONES-INDEPENDIENTES + tabla curada evaluaciones_relacionadas",
+    "disparadores": [
+     "efecto"
+    ],
+    "gasto_descriptivo_solo": true,
+    "no_concluir": "NC-EFICIENCIA"
+   },
+   "mensaje": "Saber si un gasto “sirvió” requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió.",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-ENC-11",
+   "accion": "rotular",
+   "motivo": "prueba_cambio",
+   "clausula": "p >= alfa → significativo = false",
+   "detalle": {
+    "diferencia": 2.9498,
+    "p_valor": 0.525804,
+    "significativa": false,
+    "origen": "motor",
+    "alfa": 0.05,
+    "direccion": null,
+    "anios": [
+     2024,
+     2025
+    ]
+   },
+   "rotulo": "sin cambio estadísticamente claro",
+   "objetivo": "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal"
+  },
+  {
+   "regla": "R-CRUCES-10",
+   "accion": "rotular",
+   "motivo": "semaforo_respuesta",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "semaforo_respuesta": "ambar",
+    "motivos": [
+     "peor_cifra_principal:gasto_ex_pan__devengado__departamento__21__2025__principal",
+     "peor_cifra_principal:endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal",
+     "respuesta_parcial"
+    ],
+    "semaforo_cruces": {
+     "CR-01": "verde"
+    }
+   },
+   "mensaje": "Confianza de esta respuesta: Dato con limitaciones. La respuesta es parcial.",
+   "rotulo": "Dato con limitaciones",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-03",
+   "accion": "rotular",
+   "motivo": "numero_fuera_de_marcador",
+   "clausula": "dígitos fuera de marcadores (salvo años y programas listados)",
+   "detalle": {
+    "numeros": [
+     "100"
+    ]
+   },
+   "modo": "corrector",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "párrafo con >= 2 naturaleza_dato",
+   "detalle": {
+    "naturalezas": [
+     "encuesta_muestral",
+     "presupuestal_financiero",
+     "registro_administrativo"
+    ]
+   },
+   "mensaje": "Este párrafo combina datos de distinto tipo: encuesta_muestral, presupuestal_financiero, registro_administrativo. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "(a)–(e) del párrafo mixto",
+   "detalle": {
+    "fallas": [
+     {
+      "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
+      "oracion": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__21__2025__principal}} en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Puno (MEF 2025)."
+     },
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "{{p:no_concluir_gasto}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Puno: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__21__2025__contexto}} (SIEN 2025, INS)."
+     }
+    ]
+   },
+   "modo": "corrector",
+   "objetivo": "respuesta"
+  }
+ ],
+ "corrector": [
+  {
+   "regla": "R-LENGUAJE-03",
+   "accion": "rotular",
+   "motivo": "numero_fuera_de_marcador",
+   "clausula": "dígitos fuera de marcadores (salvo años y programas listados)",
+   "detalle": {
+    "numeros": [
+     "100"
+    ]
+   },
+   "modo": "corrector",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "párrafo con >= 2 naturaleza_dato",
+   "detalle": {
+    "naturalezas": [
+     "encuesta_muestral",
+     "presupuestal_financiero",
+     "registro_administrativo"
+    ]
+   },
+   "mensaje": "Este párrafo combina datos de distinto tipo: encuesta_muestral, presupuestal_financiero, registro_administrativo. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "objetivo": "respuesta"
+  },
+  {
+   "regla": "R-LENGUAJE-06",
+   "accion": "rotular",
+   "motivo": "naturalezas_mezcladas",
+   "clausula": "(a)–(e) del párrafo mixto",
+   "detalle": {
+    "fallas": [
+     {
+      "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
+      "oracion": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__21__2025__principal}} en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Puno (MEF 2025)."
+     },
+     {
+      "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
+      "oracion": "{{p:no_concluir_gasto}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Puno: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__21__2025__contexto}} (SIEN 2025, INS)."
+     }
+    ]
+   },
+   "modo": "corrector",
+   "objetivo": "respuesta"
+  }
+ ],
+ "respuesta_parcial": true,
+ "tipo": "respuesta",
+ "consulta_minima": {
+  "intencion": "efecto",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "departamento de Puno"
+  },
+  "idioma": "es"
+ },
+ "plan": {
+  "id": "efecto__anemia__21",
+  "pregunta": "efecto anemia Puno",
+  "intencion": "efecto",
+  "tema": "anemia",
+  "territorio": {
+   "nivel": "departamento",
+   "id": "21",
+   "nombre_pedido": "Puno"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "cifras": [
+   {
+    "id": "gasto_ex_pan__devengado__departamento__21__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "21",
+    "rol": "principal"
+   },
+   {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "21",
+    "rol": "principal",
+    "comparar_con": 2024
+   },
+   {
+    "id": "sien_cobertura_tamizaje_6_35m__cobertura__departamento__21__2025__contexto",
+    "indicador": "sien_cobertura_tamizaje_6_35m",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "21",
+    "rol": "contexto"
+   }
+  ],
+  "grupos": [],
+  "cruce": "CR-01",
+  "bloques": [],
+  "tema_gasto": "cpt_grupo_expan",
+  "avisos_periodo": [],
+  "formas_sin_serie": [],
+  "respuesta_parcial": true,
+  "estructura_efecto": true,
+  "lado_a_lado": true,
+  "no_se_puede": null,
+  "motivos_no_se_puede": [],
+  "omitidas": [],
+  "decisiones": [
+   "G-07",
+   "G-07 / R-03",
+   "R-CRUCES-07 / E-06",
+   "R-CRUCES-07 / R-03",
+   "S-01"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "efecto",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "departamento de Puno"
+   },
+   "idioma": "es"
+  },
+  "desambiguados": {}
+ }
+}

@@ -1,0 +1,6 @@
+# S2-00 — base del slice 2 (2026-11-04)
+cubo fact_indicador: sha256:68f2a609ec002f54403802c92104c64c01c70ebca4fc46ebc4df293877f58eb2
+manifiesto: sha256:68f2a609ec002f54403802c92104c64c01c70ebca4fc46ebc4df293877f58eb2 · commit acc9861
+release de la biblioteca: biblioteca-ba1fbc55 (dimensiones y estandarizada) + cubo recalculado con pap calcular en S1-12
+pytest: 742 passed, 34 deselected in 273.73s (0:04:33)
+rama: slice-2 desde la punta de slice-1-adenda (5053752)
