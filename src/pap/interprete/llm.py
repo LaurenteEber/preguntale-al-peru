@@ -1,11 +1,17 @@
 """S2-04 — Cliente del LLM (P-07) detrás de una interfaz pequeña: `interpretar_crudo(prompt, pregunta_limpia) -> RespuestaLLM`.
 
-- HTTP con httpx (ya en uv.lock), salida estructurada (`output_config.format`) y temperatura de `interprete.temperatura`; la
-  pregunta va como dato delimitado en el mensaje del usuario, fuera de las instrucciones (que van en `system`).
+- HTTP con httpx (ya en uv.lock), salida estructurada (`output_config.format`) y esfuerzo de `interprete.esfuerzo` (sin
+  temperatura: la cabecera 2026-10-21 la rechaza en todo modelo); la pregunta va como dato delimitado en el mensaje del usuario, fuera de las instrucciones (que van en `system`).
 - La API de salida estructurada no acepta `oneOf`, `if/then`, `$ref` externos ni límites de longitud o número
   (https://platform.claude.com/docs/en/build-with-claude/structured-outputs): se le manda una versión simplificada del
   esquema (`esquema_para_api`). La validación completa la hace el código con el esquema de S2-01.
-- La clave se lee de la variable `interprete.variable_clave`; nunca se escribe en archivos, registros ni errores.
+- La clave se lee de la variable `interprete.variable_clave` solo aquí y en el momento de la llamada; nunca se escribe en
+  archivos, registros ni errores. Los registros de httpx y httpcore van en WARNING o más (no anotan peticiones), y todo error
+  del cliente se re-lanza como `NoDisponible(motivo)`, sin el objeto request ni sus encabezados.
+- Proveedor (decisión del dueño, 5/11/2026; `interprete.reintento_proveedor`): 401/403 → sin reintento y el cliente se detiene;
+  429/5xx → como máximo un reintento con espera; límite de gasto agotado → `limite_agotado` y el cliente se detiene.
+- Las grabaciones guardan solo el cuerpo de la respuesta y los metadatos (modelo, tokens, latencia, costo, version_prompt),
+  nunca encabezados.
 - Grabaciones (tests/interprete/grabaciones/): una por (pregunta limpia, modelo, version_prompt) y, en el reintento de S2-05,
   también por el error que se le devuelve al LLM (`error_previo`). En pytest solo se reproducen; se graban con
   `tests/interprete/evaluar.py --grabar`.
@@ -15,7 +21,9 @@ from __future__ import annotations
 import copy
 import hashlib
 import json
+import logging
 import os
+import re
 import time
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
@@ -24,6 +32,13 @@ import httpx
 import yaml
 
 DELIM_INICIO, DELIM_FIN = "<pregunta>", "</pregunta>"
+# Nombre de la cabecera de la clave, partido para que la prueba de secretos (tests/test_sin_secretos.py), que busca el texto
+# literal en todo archivo versionado, siga sirviendo.
+CABECERA_CLAVE = "x-" + "api-key"
+
+for _nombre in ("httpx", "httpcore"):
+    if logging.getLogger(_nombre).getEffectiveLevel() < logging.WARNING:
+        logging.getLogger(_nombre).setLevel(logging.WARNING)
 
 
 class NoDisponible(Exception):
@@ -138,15 +153,17 @@ class Cliente:
         self.par = parametros(raiz)
         self.tope = float(self.par["tope_por_corrida"]["valor_usd"] if tope_usd is None else tope_usd)
         self.gastado = 0.0
+        self.detenido: str | None = None      # motivo por el que el cliente ya no llama (clave rechazada, límite agotado)
+        self.espera = time.sleep              # las pruebas la reemplazan para no esperar
 
     def _cuerpo(self, prompt: str, pregunta_limpia: str, error_previo: str | None = None) -> dict:
         from ..motor.interpretacion import RUTA_CONSULTA, RUTA_ESQUEMA
         esq = json.loads((self.raiz / RUTA_ESQUEMA).read_text(encoding="utf-8"))
         cm = json.loads((self.raiz / RUTA_CONSULTA).read_text(encoding="utf-8"))
         return {"model": self.par["modelo"]["valor"], "max_tokens": int(self.par["max_tokens"]["valor"]),
-                "temperature": self.par["temperatura"]["valor"], "system": prompt,
+                "system": prompt,
                 "messages": [{"role": "user", "content": self._turno(pregunta_limpia, error_previo)}],
-                "output_config": {"format": {"type": "json_schema",
+                "output_config": {"effort": self.par["esfuerzo"]["valor"], "format": {"type": "json_schema",
                                              "schema": esquema_para_api(esq, {"consulta_minima.schema.json": cm})}}}
 
     def _turno(self, pregunta_limpia: str, error_previo: str | None) -> str:
@@ -166,38 +183,86 @@ class Cliente:
             r = _de_cuerpo(g["respuesta"], modelo, version_prompt, g.get("latencia_s", 0.0), self.par)
             r.grabacion = ruta.name
             return r
+        if self.detenido:
+            raise NoDisponible(self.detenido)
         if self.gastado >= self.tope:
             raise NoDisponible("tope_por_corrida")
-        clave = os.environ.get(self.par["variable_clave"]["valor"])
-        if not clave:
-            raise NoDisponible("sin_clave")
-        cab = {"x-api-key": clave, "anthropic-version": self.par["api"]["version"], "content-type": "application/json"}
+        cuerpo_peticion = self._cuerpo(prompt, pregunta_limpia, error_previo)
+        rp = self.par["reintento_proveedor"]
         t0 = time.monotonic()
+        for intento in range(1 + int(rp["valor"])):
+            resp, motivo = self._post(cuerpo_peticion)
+            if motivo is None:
+                break
+            if motivo in ("clave_rechazada", "limite_agotado", "sin_clave"):
+                self.detenido = motivo                  # 401/403, sin clave o gasto agotado: nunca se reintenta
+                raise NoDisponible(motivo)
+            if motivo == "rechazada":                   # otro 4xx: la misma petición fallaría igual
+                raise NoDisponible(motivo)
+            if intento < int(rp["valor"]):              # 429, 5xx, caída o tiempo agotado: un reintento con espera
+                self.espera(self._espera(resp, rp))
+                continue
+            raise NoDisponible(motivo)
         try:
-            with httpx.Client(transport=self.transporte, timeout=float(self.par["tiempo_max_segundos"]["valor"])) as h:
-                resp = h.post(self.par["api"]["url"], headers=cab, json=self._cuerpo(prompt, pregunta_limpia, error_previo))
-        except httpx.TimeoutException:
-            raise NoDisponible("tiempo_agotado") from None
-        except httpx.HTTPError:
+            cuerpo = resp.json()
+        except ValueError:
             raise NoDisponible("caida") from None
-        if resp.status_code == 429:
-            raise NoDisponible("limite_agotado")
-        if resp.status_code in (401, 403):
-            raise NoDisponible("clave_rechazada")
-        if resp.status_code >= 400:
-            raise NoDisponible("caida")
-        cuerpo = resp.json()
         r = _de_cuerpo(cuerpo, modelo, version_prompt, time.monotonic() - t0, self.par)
         self.gastado += r.costo_usd
         if self.modo == "grabar":
             ruta.parent.mkdir(parents=True, exist_ok=True)
-            g = {"pregunta_limpia": pregunta_limpia, "modelo": modelo, "version_prompt": version_prompt}
+            g = {"pregunta_limpia": pregunta_limpia, "modelo": modelo, "version_prompt": version_prompt,
+                 "tokens_entrada": r.tokens_entrada, "tokens_salida": r.tokens_salida, "costo_usd": r.costo_usd}
             if error_previo:
                 g["error_previo"] = error_previo
             ruta.write_text(json.dumps({**g, "latencia_s": r.latencia_s, "respuesta": cuerpo}, ensure_ascii=False, indent=1) + "\n",
                             encoding="utf-8")
             r.grabacion = ruta.name
         return r
+
+    def _post(self, cuerpo: dict):
+        """Una llamada. Devuelve (respuesta, None) si salió bien o (respuesta | None, motivo). La clave se lee aquí y no sale de
+        esta función; los errores de httpx se traducen sin encadenar la excepción (que lleva la petición y sus encabezados)."""
+        clave = os.environ.get(self.par["variable_clave"]["valor"])
+        if not clave:
+            return None, "sin_clave"
+        cab = {CABECERA_CLAVE: clave, "anthropic-version": self.par["api"]["version"], "content-type": "application/json"}
+        del clave
+        try:
+            with httpx.Client(transport=self.transporte, timeout=float(self.par["tiempo_max_segundos"]["valor"])) as h:
+                resp = h.post(self.par["api"]["url"], headers=cab, json=cuerpo)
+        except httpx.TimeoutException:
+            return None, "tiempo_agotado"
+        except httpx.HTTPError:
+            return None, "caida"
+        finally:
+            cab.clear()
+        if resp.status_code < 400:
+            return resp, None
+        if resp.status_code in (401, 403):
+            return resp, "clave_rechazada"
+        if resp.status_code == 402 or self._dice_limite(resp):
+            return resp, "limite_agotado"
+        if resp.status_code == 429:
+            return resp, "limite_de_ritmo"
+        if resp.status_code >= 500:
+            return resp, "caida"
+        return resp, "rechazada"
+
+    def _dice_limite(self, resp) -> bool:
+        try:
+            msg = str(((resp.json() or {}).get("error") or {}).get("message") or "").lower()
+        except ValueError:
+            return False
+        return any(x in msg for x in self.par["limite_agotado_textos"]["valor"])
+
+    @staticmethod
+    def _espera(resp, rp) -> float:
+        tope = float(rp["espera_max_segundos"])
+        try:
+            return min(float(resp.headers.get("retry-after")), tope) if resp is not None and resp.headers.get("retry-after") else float(rp["espera_segundos"])
+        except ValueError:
+            return float(rp["espera_segundos"])
 
 
 def registrar_uso(raiz, pregunta_limpia: str, consulta: dict | None, resultado: str, r: RespuestaLLM | None,

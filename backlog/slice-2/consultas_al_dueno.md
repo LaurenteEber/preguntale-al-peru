@@ -8,7 +8,8 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 - **Qué pasó:** hasta el 5/11/2026 todo `git push` desde la nube respondía 403. El dueño reconectó GitHub.
 - **Qué se hizo:** por error, este chat también implementó la adenda del slice 1. Se comparó con la del otro chat (mismo cubo y mismas cifras; 16 de 24 respuestas idénticas, incluidas Q1–Q4; la del otro chat resuelve además la evolución del gasto sin año comparable, B-1) y quedó la del otro chat, que ya estaba fusionada en `main` (`1bf8682`). Los commits del slice 2 se portaron sobre ese `main` sin conflictos, y la evidencia de S2-00 (`pytest_base.txt`, `s2-00_base.txt`, `base_estructurada/`) se rehízo sobre esa base.
 
-### E-02 — No hay clave de la API del LLM en el entorno (S2-00) · abierta
+### E-02 — No hay clave de la API del LLM en el entorno (S2-00) · cerrada el 5/11/2026
+- **Respuesta del dueño:** registró la clave como `PAP_ANTHROPIC_API_KEY` (no `ANTHROPIC_API_KEY`, que usaría Claude Code) y pidió Sonnet 5.5 con esfuerzo bajo (P-07 editada). `interprete.variable_clave`, `modelo`, `esfuerzo` y los precios se ajustaron; reglas del dueño sobre la clave, los reintentos y el gasto en `src/pap/interprete/llm.py`, `tests/conftest.py` y `tests/test_sin_secretos.py`.
 - **Qué pasa:** el entorno no tiene `ANTHROPIC_API_KEY` (comprobado sin imprimirla) ni el paquete del cliente.
 - **Por qué importa:** S2-04 (grabar), S2-07, S2-08 (grabar), S2-09 y la corrida de S2-10 necesitan el LLM real.
 - **Qué se hace:** según el README del slice, se sigue hasta S2-03 y con lo que no necesita el LLM real.
@@ -29,7 +30,8 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 - **Propuesta:** que S2-09 grabe a través de `interpretar()`, así quedan grabados también los reintentos.
 - **Para confirmar:** el ancla de «todo el país» se acepta si *contiene* un texto nacional («del país» = «de el país»), como en el ejemplo del prompt (supuesto S2-05-d); «¿dónde es más alto?» sin nivel válido termina en «no entendida» y no pregunta el nivel (S2-05-c).
 
-### E-06 — Un celular escrito con espacios o guiones no se quita (S2-08) · abierta (no bloquea)
+### E-06 — Un celular escrito con espacios o guiones no se quita (S2-08) · cerrada el 5/11/2026
+- **Respuesta del dueño (P-03, sin decisión nueva):** celular de 9 cifras que empieza con 9, junto o en grupos 3-3-3 con espacio, guion o punto, siempre; DNI con separadores solo tras «DNI», «D.N.I.» o «documento». Aplicado en `interprete.datos_personales`; las dos pruebas de S2-08 pasan y `test_limpieza_no_borra_montos_ni_poblaciones_ni_anios` comprueba «S/ 45.871.236» y «2 263,9 millones».
 - **Qué pasa:** «987 654 321» y «987-654-321» llegan tal cual al LLM, a `respuesta.json` y al `.md`. Los patrones de `interprete.datos_personales` (`decision: P-03`) solo reconocen las 9 cifras seguidas. Pasa lo mismo con un DNI con puntos («45.871.236») o un teléfono fijo («01 4567890»).
 - **Por qué importa:** P-03 pide quitar «los números con forma de celular», y en el Perú el celular se escribe a menudo en grupos de tres.
 - **Qué se hizo:** no se cambió el patrón (es decisión P-03). `tests/interprete/test_robustez.py::test_celular_con_separadores_tampoco_se_guarda` lo muestra y falla hasta que se decida.
@@ -54,6 +56,8 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 | S2-01-a | S2-01 | Defaults del intérprete del README (`sin_lugar`, `sin_intencion`, `anios_relativos`, `reintentos_si_no_valida`, `aclaracion_max_opciones`); `cache_horas` es decisión P-03 | `parametros_motor.yaml` → `interprete` |
 | S2-01-b | S2-01 | Textos de los errores nuevos del contrato y de «no es pregunta» / «fuera de alcance» | `errores_consulta.yaml`, `textos/interprete.yaml` |
 | S2-04-a | S2-04 | Modelo `claude-opus-5-5`, precios US$ 4 / 20 por millón, cabecera `2026-10-21` (copiados de la documentación oficial del 4/11/2026); tiempo máximo 60 s; `max_tokens` 2 000; tope por corrida US$ 5; temperatura 0 | `parametros_motor.yaml` → `interprete` |
+| S2-04-b | S2-04 | Sin `temperature`: la cabecera `2026-10-21` responde 400 a `temperature`, `top_p` y `top_k` en todo modelo (guía de versiones del proveedor). Reintento ante 429/5xx: espera `retry-after` con tope de 30 s, o 5 s; textos que indican límite de gasto agotado (`usage limit`, `spend limit`, `credit balance`, `billing`) o código 402 | `interprete.reintento_proveedor`, `interprete.limite_agotado_textos` |
+| S2-04-c | S2-04 | Pruebas sin clave ni red al LLM en toda la suite: `tests/conftest.py` quita la variable de la clave y corta los pedidos reales a `anthropic.com` | `tests/conftest.py` |
 | S2-05-a | S2-05 | Un año sin ancla válida (relativo, como «el año pasado», o que no está en la pregunta) se aclara igual: «El último año con datos» o «Escribe el año». En una serie, «el último año con datos» deja la serie sin el extremo descartado | `parametros_motor.yaml` → `interprete.anios_descartados` |
 | S2-05-b | S2-05 | Un lugar sin ancla válida (territorio, `comparar_con` o `dentro_de`) se aclara como `sin_lugar` («Todo el Perú» / «Escribe el lugar»), con una pregunta para cada caso. Sin `dentro_de` en «¿dónde es más alto?», es todo el país, como en la vía estructurada | `interprete.lugar_descartado`; textos en `textos/interprete.yaml` → `aclaraciones` |
 | S2-05-c | S2-05 | «¿Dónde es más alto?» sin un nivel con ancla válida termina en el mensaje «no entendimos» (no se adivina el nivel) | `interprete.extremo_sin_nivel` |

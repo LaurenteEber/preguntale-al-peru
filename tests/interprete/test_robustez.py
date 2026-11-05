@@ -173,9 +173,8 @@ def test_datos_personales_en_ningun_archivo_generado(capsys, monkeypatch, tmp_pa
 
 @pytest.mark.parametrize("celular", ["987 654 321", "987-654-321"], ids=["espacios", "guiones"])
 def test_celular_con_separadores_tampoco_se_guarda(capsys, monkeypatch, tmp_path, celular):
-    """El celular escrito como se suele escribir en el Perú («987 654 321») también tiene forma de celular (P-03). HOY FALLA:
-    los patrones de `interprete.datos_personales` solo reconocen las 9 cifras seguidas (consulta E-06 en
-    backlog/slice-2/consultas_al_dueno.md). No se corrige aquí: el patrón es una decisión del dueño (P-03)."""
+    """El celular escrito como se suele escribir en el Perú («987 654 321») también tiene forma de celular (P-03; patrón
+    ajustado por el dueño el 5/11/2026, consulta E-06)."""
     falso = con_llm(monkeypatch, Falso(NIVEL_APURIMAC))
     codigo, out, _ = correr(capsys, "--texto", f"Mi celular es {celular}. {APURIMAC}", "--salida", str(tmp_path / "salidas"))
     assert codigo == COD["respondida"]

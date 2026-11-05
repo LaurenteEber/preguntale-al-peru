@@ -29,8 +29,8 @@ def limpiar(pregunta: str, raiz) -> Limpia:
     t = " ".join(t.split())
     dp = par["datos_personales"]
     n = 0
-    for patron in dp["valor"].values():
-        t, k = re.subn(patron, dp["reemplazo"], t)
+    for patron in dp["valor"].values():           # un grupo «previo» (p. ej. «DNI ») se conserva delante del reemplazo
+        t, k = re.subn(patron, lambda m: (m.group("previo") if "previo" in m.re.groupindex else "") + dp["reemplazo"], t)
         n += k
     avisos = []
     tope = int(par["pregunta_max_caracteres"]["valor"])
