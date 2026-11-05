@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Cuánta anemia y cuánta delincuencia hay en Piura?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9251,
+ "tokens_salida": 294,
+ "costo_usd": 0.003954,
+ "latencia_s": 2.739,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiyzySsjMNPNUEfG5qUK",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"aclaracion\", \"motivo\": \"varias_preguntas\", \"opciones\": [{\"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"anemia\", \"territorio\": {\"texto\": \"Piura\"}}, \"anclas\": {\"intencion\": \"Cuánta\", \"tema\": \"anemia\", \"territorio\": \"Piura\"}}, {\"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"gasto_publico\", \"territorio\": {\"texto\": \"Piura\"}}, \"anclas\": {\"intencion\": \"cuánta\", \"tema\": \"delincuencia\", \"territorio\": \"Piura\"}}]}\n\nEspera: la segunda opción no es válida, porque la delincuencia no es un tema de la lista. Corrijo:\n\n{\"resultado\": \"fuera_de_alcance\", \"tipo\": \"tema\", \"pedido\": \"delincuencia\"}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 47,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 294,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

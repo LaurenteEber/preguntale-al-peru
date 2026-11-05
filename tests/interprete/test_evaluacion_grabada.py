@@ -6,7 +6,8 @@ hecho 2). Las demás métricas se informan, sin umbral hasta S2-09.
    justifique. Se comprueba con una implementación propia de esta prueba, no con la del intérprete.
 2. **Números que no salen de un marcador del cubo:** en el texto de la respuesta (`texto_con_marcadores` sin marcadores, la
    misma comprobación de R-LENGUAJE-03 que tests/test_respuesta_p3.py), en la pregunta y las etiquetas de una aclaración, en un
-   mensaje fijo y en `entendimos`, sin contar los años ni el eco literal de pregunta_original.
+   mensaje fijo y en `entendimos`, sin contar los años, el eco literal de pregunta_original ni los textos fijos que la vía
+   estructurada también muestra para la misma consulta («6 a 35 meses»; comparación diferencial de E-08).
 
 Si falta el conjunto, el cubo o una grabación, la prueba FALLA y dice cómo grabarla (agents.md §8; README del slice)."""
 import json
@@ -94,6 +95,14 @@ def numeros_sueltos(r: dict, pregunta: str) -> list[str]:
     return [d for d in re.findall(r"\d+", t) if not re.fullmatch(r"(19|20)\d\d", d)]
 
 
+def numeros_nuevos(motor, r, pregunta):
+    """La métrica 2 con la comparación diferencial de E-08 (la misma de tests/interprete/evaluar.py)."""
+    import sys
+    sys.path.insert(0, str(RAIZ / "tests" / "interprete"))
+    import evaluar
+    return evaluar.numeros_nuevos(motor, r, pregunta)
+
+
 def test_evaluacion_con_grabaciones(tmp_path):
     assert EVALUACION.exists(), f"falta {EVALUACION} (S2-02); no se salta"
     assert (RAIZ / "biblioteca" / "indicadores" / "fact_indicador.parquet").exists(), "falta el cubo: `pap calcular`"
@@ -116,7 +125,7 @@ def test_evaluacion_con_grabaciones(tmp_path):
             malos = sin_ancla(e["pregunta"], i["consulta"], i.get("anclas") or {})
             if malos:
                 sin_ancla_aceptados.append((e["id"], malos))
-        n = numeros_sueltos(r, (r.get("plan") or {}).get("pregunta") or e["pregunta"])
+        n = numeros_nuevos(motor, r, e["pregunta"])                  # E-08: sin los textos fijos que da la vía estructurada
         if n:
             numeros.append((e["id"], n))
     corridas = len(entradas) - len(faltan)

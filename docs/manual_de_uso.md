@@ -110,6 +110,31 @@ uv run pap preguntar curados/motor/consultas_minimas/
 uv run pap preguntar tests/fixtures/consultas_piloto/q1.yaml
 ```
 
+#### ✅ Escribir la pregunta con mis palabras: `--texto`
+
+```bash
+uv run pap preguntar --texto "¿Cuánta anemia hay en Puno?"
+uv run pap preguntar --texto "¿Cómo cambió la anemia en Huancavelica?" --elegir 1   # elige la opción 1 de la aclaración
+```
+
+Un LLM (Claude Sonnet 5.5, decisión P-07) traduce la frase a la consulta mínima. **No ve cifras ni redacta la respuesta**: cada
+valor que propone lleva su «ancla», el pedazo literal de tu pregunta que lo justifica, y el código descarta lo que no la
+tenga. Después responde el mismo motor que con las opciones. Así se ve:
+
+- **«Entendimos: …»** va primero: cómo se leyó tu pregunta («Entendimos: cuánto hay de anemia en el departamento de Puno»).
+  Si no es lo que preguntaste, escríbela de otra forma o usa las opciones.
+- **Aclaraciones:** si falta el lugar, el año es relativo («el año pasado»), la pregunta se lee de dos formas o hay un lugar
+  con el mismo nombre, imprime las opciones y sale con 2; repite el comando con `--elegir N` (con dos aclaraciones seguidas,
+  `--elegir 2,1`).
+- **Mensajes fijos:** si el texto no es una pregunta, está en otro idioma o el servicio del LLM no está disponible (sin clave,
+  caído, tope de gasto), lo dice y ofrece la vía con opciones. Nunca adivina una respuesta.
+- **Privacidad (P-03):** antes de salir del equipo se quitan los números con forma de DNI, RUC o celular y los correos. El
+  registro de uso (`salidas/interprete/uso.jsonl`) guarda la huella de la pregunta, no su texto.
+
+**Configurar la clave:** el intérprete lee la clave de la API de Anthropic de la variable de entorno `PAP_ANTHROPIC_API_KEY`
+(`interprete.variable_clave`). Se usa un nombre propio para no mezclarla con otras herramientas. Sin ella, `--texto`
+responde con el mensaje fijo y las opciones siguen funcionando.
+
 Formato del JSON: `curados/motor/esquemas/consulta_minima.schema.json`; ejemplo (`q2.json`):
 
 ```json
@@ -239,14 +264,15 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 | 20 ✅ | Citar la fuente de los datos de ENDES | `uv run pap citar INEI-ENDES --corta` | «INEI, Encuesta Demográfica y de Salud Familiar, ENDES 2025 (código 1038) … Consultado el 07-oct-2026.» |
 | 21 ✅ | Saber qué fuentes tengo y cuáles están al día | `uv run pap revisar` | Una tabla: fuente, estrategia, compuerta, capturas, días sin revisar |
 
+| 22 ✅ | Escribir la pregunta con mis palabras | `uv run pap preguntar --texto "¿Cuánta anemia hay en Puno?"` | «Entendimos…» y la respuesta por capas; o una aclaración con opciones |
+| 23 ✅ | Que me repregunte cuando mi texto es confuso | `--texto` y luego `--elegir N` | Las opciones armadas por el código o por el intérprete, cada una con su «Entendimos» |
+
 **Una pregunta ambigua se resuelve así:** el comando imprime las opciones y sale con 2; repites **el mismo comando** agregando `--elegir N`.
 
 ### 4.2 Pendientes (comando o interfaz por definir)
 
 | # | Quiero… | Qué vas a poder hacer | Slice |
 |---|---|---|---|
-| P1 ⏳ | Escribir la pregunta con mis palabras («¿Cuánta anemia hay en Puno?») | Un LLM la traduce a la consulta estructurada; nunca calcula ni ve cifras (P-01). Lo que no entiende o está fuera de alcance se responde con una aclaración o con «todavía no tenemos datos de eso». Comando o interfaz por definir | 2 |
-| P2 ⏳ | Que me repregunte cuando mi texto es confuso | Aclaración en lenguaje libre, con reintento si la consulta no valida. Comando o interfaz por definir | 2 |
 | P3 ⏳ | Preguntar desde el celular | Una caja de pregunta y la respuesta por capas como desplegables (visible, «Más contexto», «Para citar»), con la versión de la biblioteca y enlaces a las fuentes oficiales. Interfaz por definir | 3 |
 | P4 ⏳ | Usar el servicio desde otro programa | Una API sobre el cubo precalculado, con respuesta en < 2 s. Interfaz por definir (el plan menciona FastAPI + DuckDB en solo lectura) | 3 |
 | P5 ⏳ | Que la web sea accesible | Accesibilidad WCAG AA, confianza sin colores | 3 |
@@ -257,7 +283,6 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 
 | Límite | Detalle |
 |---|---|
-| ⏳ **Sin lenguaje libre** | No hay LLM en el motor (slice 2). La pregunta se arma con opciones o con un JSON |
 | ⏳ **Sin web ni API** | Todo es por Terminal (slice 3) |
 | **Solo 9 indicadores** | Los de §3.1: anemia (4), desnutrición crónica (1), pobreza (2) y gasto (2). Otro tema, un «no se puede» |
 | **Niveles y años con datos limitados** | Desnutrición y pobreza ENAHO: no hay provincia ni distrito (pobreza distrital: solo el Mapa de 2018, con rango). Anemia ENDES: sin provincia ni distrito; por distrito solo el SIEN 2025. Gasto: provincia y distrito solo con gasto municipal y obras ubicadas |

@@ -1,6 +1,6 @@
 # Pregúntale al Perú — Guía de operación
 
-Versión al 13/10/2026. Cubre lo que hoy funciona: la biblioteca de datos, el cubo y el motor del piloto, todo desde la Terminal. La web y las preguntas en lenguaje libre son de la fase 5. Arquitectura: `arquitectura_y_funcionamiento.md`.
+Versión al 13/10/2026. Cubre lo que hoy funciona: la biblioteca de datos, el cubo y el motor del piloto, todo desde la Terminal. Desde el slice 2 también responde preguntas en texto libre (`pap preguntar --texto`, §4.5); la web es del slice 3. Arquitectura: `arquitectura_y_funcionamiento.md`.
 
 ## 1. Preparar el entorno (una vez)
 
@@ -215,7 +215,7 @@ grupos: []                      # opcional: mapa_grupo_robusto | ranking_departa
 ### 4.3 Qué se puede cambiar hoy y qué no
 - **Sí, sin escribir código:** cualquier intención, tema, territorio y año de los 9 indicadores del piloto: el planificador arma las cifras (`curados/motor/intenciones.yaml`) y las plantillas genéricas redactan. Los textos están en `curados/motor/textos/` y los valores por defecto en `curados/motor/parametros_motor.yaml`.
 - **Con trabajo:** un indicador o tema nuevo (tablas curadas, doradas y una fila en `intenciones.yaml`) o una intención nueva (una plantilla genérica y su texto, siguiendo el contrato por capas, `docs/especificaciones/contrato_respuesta.md`).
-- **No, todavía:** preguntas en lenguaje libre (slice 2, con LLM) y la web.
+- **No, todavía:** la web (slice 3).
 
 ### 4.4 Cómo leer una respuesta
 - **Capa visible:**
@@ -235,6 +235,25 @@ grupos: []                      # opcional: mapa_grupo_robusto | ranking_departa
 - **Ficha corta:** confianza, fuentes y años, territorio, y qué **no** permite concluir.
 - **Ficha larga, por cifra:** origen, territorio, qué mide, precisión (**nuestro intervalo y el del INEI**, con la nota de por qué difieren), método y **contraste con la cifra oficial del mismo criterio**.
 - **Resultados de las reglas** (`resultados_respuesta`): cada regla aplicada, con su acción y su motivo.
+
+### 4.5 El intérprete de texto libre (slice 2)
+
+- **Clave:** variable de entorno `PAP_ANTHROPIC_API_KEY` (nunca en archivos). Comprobar que existe sin mostrarla:
+  `uv run python -c "import os; print(bool(os.environ.get('PAP_ANTHROPIC_API_KEY')))"`.
+- **Apagar el intérprete:** quitar la variable. `--texto` responde entonces con el mensaje fijo y las opciones siguen igual.
+- **Modelo, esfuerzo, precios y topes:** `curados/motor/parametros_motor.yaml` → `interprete` (`modelo`, `esfuerzo`,
+  `precios_usd_por_millon`, `tope_por_corrida`, `reintento_proveedor`). El tope mensual real está en la consola del proveedor.
+- **Ver el uso y el costo:** `salidas/interprete/uso.jsonl` (una línea por llamada: huella de la pregunta, consulta sin
+  lugares, resultado, modelo, tokens y costo; nunca el texto). Sumar el costo:
+  `uv run python -c "import json; print(sum(json.loads(l)['costo_usd'] for l in open('salidas/interprete/uso.jsonl')))"`.
+- **Grabar** (solo preguntas del conjunto, de las pruebas o de las revisiones; nunca de personas reales, P-03):
+  `uv run python tests/interprete/evaluar.py --grabar --solo <id>` o `--grabar --faltantes`.
+- **Evaluar en vivo:** `uv run python tests/interprete/evaluar.py --evaluar --reporte <archivo.md> [--tope-costo 2]`. Usa
+  las grabaciones que existen y solo llama por las que faltan (modo «completar»); corta en el tope.
+- **Si cambia el prompt o el modelo:** cambia `version_prompt` y hay que volver a grabar (`--evaluar` lo hace) y borrar las
+  grabaciones huérfanas. Cada cambio del prompt va en `backlog/slice-2/evidencia/cambios_prompt.md`.
+- **Antes de cada commit:** `git diff --cached | grep -nE '^\+.*(<prefijo de clave>|<cabecera de clave>)'` debe salir vacío;
+  `tests/test_sin_secretos.py` lo comprueba en todo el repositorio.
 
 ## 5. Problemas frecuentes
 

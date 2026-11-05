@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Qué tanta pobreza hay en Ayaviri (Melgar, Puno)?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9256,
+ "tokens_salida": 132,
+ "costo_usd": 0.002344,
+ "latencia_s": 1.686,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiyYDKoTmgkrrSNiWnjc",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"pobreza_monetaria\", \"territorio\": {\"texto\": \"Ayaviri (Melgar, Puno)\"}}, \"anclas\": {\"intencion\": \"Qué tanta\", \"tema\": \"pobreza\", \"territorio\": \"Ayaviri (Melgar, Puno)\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 52,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 132,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

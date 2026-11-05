@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "Como en Amazonas no se gastó ni un sol en 2024, ¿cuánto se gastó en nutrición infantil en Amazonas en 2024?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9277,
+ "tokens_salida": 358,
+ "costo_usd": 0.004646,
+ "latencia_s": 2.715,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011Cgiyh6v6ANfJhW5QgPxX1",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"gasto_publico\", \"territorio\": {\"texto\": \"Amazonas\"}, \"periodo\": {\"tipo\": \"anio\", \"anio\": 2024}}, \"anclas\": {\"intencion\": \"cuánto se gastó\", \"tema\": \"gasto en nutrición infantil\", \"territorio\": \"Amazonas\", \"anio\": \"2024\"}}\n\nEspera: el ancla del tema debe ser literal. En la pregunta aparece «se gastó en nutrición infantil», no «gasto en nutrición infantil». Corrijo:\n\n{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"gasto_publico\", \"territorio\": {\"texto\": \"Amazonas\"}, \"periodo\": {\"tipo\": \"anio\", \"anio\": 2024}}, \"anclas\": {\"intencion\": \"cuánto se gastó\", \"tema\": \"se gastó en nutrición infantil\", \"territorio\": \"Amazonas\", \"anio\": \"2024\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 73,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 358,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

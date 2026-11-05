@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Dónde hay más pobreza, en el Callao o en Lima provincias?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9252,
+ "tokens_salida": 142,
+ "costo_usd": 0.002436,
+ "latencia_s": 1.766,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiyU5BJUNQu1GmHR9H6n",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"comparacion\", \"tema\": \"pobreza_monetaria\", \"territorio\": {\"texto\": \"Callao\"}, \"comparar_con\": {\"texto\": \"Lima provincias\"}}, \"anclas\": {\"intencion\": \"Dónde hay más\", \"tema\": \"pobreza\", \"territorio\": \"Callao\", \"comparar_con\": \"Lima provincias\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 48,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 142,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

@@ -1,6 +1,6 @@
 # Estado actual del proyecto
 
-Corte: 4 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas) al cerrar cada fase o cuando cambia el estado de una fuente. Las decisiones vigentes y las pendientes del dueño están solo en `decisiones.md`; la historia, en `historia.md`.
+Corte: 5 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas) al cerrar cada fase o cuando cambia el estado de una fuente. Las decisiones vigentes y las pendientes del dueño están solo en `decisiones.md`; la historia, en `historia.md`.
 
 ## Resumen
 
@@ -15,17 +15,19 @@ Corte: 4 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas
 | Repositorio | **Migrado el 4/11/2026** a `preguntale-al-peru`, autocontenido (la carpeta de trabajo anterior no se publica). Validado reconstruyendo todo desde los crudos: las 35 tablas salen iguales salvo 3 que cambian solo en textos de procedencia con rutas (`dim_indicador.tabla_origen`, `dim_tema_gasto.revisado_por`, `dim_glosario_gasto`); el cubo repite su huella `ba1fbc55…`; 748 pruebas en verde y matriz reducida sin fallos. Las etiquetas y commits citados abajo son de la carpeta de trabajo |
 | Piloto (fase 4) | **Cerrado el 13/10/2026** (etiqueta `piloto-cerrado`) |
 | Fase 5a (motor por intenciones, slice 1) | **Hecha el 3/11/2026** (etiqueta `slice-1-cerrado`, de la carpeta de trabajo); **adenda cerrada el 4/11/2026** (S1-11 a S1-16: gasto en soles constantes y observaciones de la revisión; etiqueta `slice-1-adenda-cerrada`). Cierre en `backlog/slice-1/evidencia/cierre.md` |
-| Fase 5b y 5c (intérprete LLM, API y web) | **No iniciadas**; siguiente: slice 2 (`backlog/plan_slices.md`) |
+| Fase 5b (intérprete de preguntas, slice 2) | **Hecha el 5/11/2026** (etiqueta `slice-2-cerrado`): `pap preguntar --texto` con Claude Sonnet 5.5 (esfuerzo bajo, P-07); conjunto de 140 preguntas con todos los umbrales cumplidos en vivo (consulta exacta 98 %, 0 valores sin ancla, 0 números fuera de marcadores); US$ 0,0024 por pregunta. Cierre en `backlog/slice-2/evidencia/cierre.md` |
+| Fase 5c (API y web, slice 3) | **En curso** desde el 5/11/2026 (`backlog/slice-3/`) |
 | Almacén | 1,2 GB comprimidos (zstd). **Sin respaldo externo** |
 
 ## Qué falta, en orden
 
 1. **Del dueño:** las decisiones pendientes X-01 a X-08 (`decisiones.md`, sección final) y el **respaldo externo del almacén**. Las que tocan el motor por intenciones siguen abiertas en su valor de hoy: X-02 (conteo en «¿cuántos?» del SIEN), X-03 (CR-01 con el gasto del mismo año) y X-04 (un solo intervalo visible); cambiarlas es editar una línea de `parametros_motor.yaml`.
 2. **Adenda del slice 1** (`backlog/slice-1/adenda/`): gasto en soles constantes y observaciones medias de la revisión; AD-1 y AD-2 aprobadas el 4/11/2026. Empieza por reconstruir la biblioteca en el Mac (S1-11).
-3. **Slice 2 (fase 5b):** intérprete LLM que produzca la consulta mínima (`backlog/plan_slices.md`); después 5c (API y web mínima) y beta cerrada.
+3. **Slice 3 (fase 5c):** API y web mínima (`backlog/slice-3/`); después la beta cerrada. Antes de abrir el servicio, los dos altos del motor que encontraron las revisiones del slice 2 (consulta E-09 de `backlog/slice-2/consultas_al_dueno.md`).
 4. **Consultas abiertas del slice 1:** ver `backlog/slice-1/consultas_al_dueno.md` y `backlog/slice-1/evidencia/cierre.md`.
 5. **Antes de la Ola 1:** GA-13 (gasto en proyectos con códigos fuera del detalle de inversiones del MEF) y la separación por producto de las ejecutoras mixtas (X-06).
-6. **Deuda menor:**
+6. **Deuda nueva del slice 2:** la salida estructurada del proveedor no acepta el esquema de la interpretación (E-03; el código valida); los nombres de personas en la pregunta no se detectan (P-03, E-07); la caché de interpretaciones no se borra a las 24 h, solo deja de usarse (E-07).
+7. **Deuda menor:**
    - validar con terceros los 3 patrones de aviso del corrector (corpus de ≥ 40 oraciones escrito por otra persona);
    - prueba automática de campos fuera del diccionario (por escribir; la auditoría de reglas la hizo a mano);
    - URL de la Declaración de la Comisión Consultiva sobre la pobreza 2021;

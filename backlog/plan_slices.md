@@ -18,7 +18,7 @@
 - **Hecho cuando:** Q1–Q4 salen por el motor por intenciones sin cambiar cifras ni semáforos; una matriz de cobertura automática (indicadores × intenciones × territorios) no tiene caídas, marcadores sin rellenar ni códigos internos; una revisión independiente de usuario da «apto».
 - Backlog: `slice-1/`.
 
-## Slice 2 — Intérprete de preguntas (esbozo)
+## Slice 2 — Intérprete de preguntas (hecho el 5/11/2026: `slice-2/evidencia/cierre.md`)
 
 - Traducción pregunta → consulta mínima con salida estructurada y validación por esquema; reintento o aclaración si no valida.
 - Conjunto de evaluación de ≥ 100 preguntas reales y reformuladas (incluye fuera de alcance, ambiguas y engañosas), con la consulta esperada; métrica: % de consultas exactas y 0 % de cifras inventadas.
@@ -27,7 +27,9 @@
 
 ## Slice 3 — API y web mínima (esbozo)
 
-- FastAPI + DuckDB en solo lectura sobre el cubo precalculado (`stack_tecnologico.md`); respuesta en < 2 s.
+- FastAPI + DuckDB en solo lectura sobre el cubo precalculado (`stack_tecnologico.md`); respuesta en < 2 s **sin LLM**. Con texto libre, el LLM midió p95 2,7 s en el slice 2: S3-08 fija su objetivo, la página muestra «Buscando…» y el formulario guiado (sin LLM) es la vía rápida.
+- Lo medido en el slice 2: US$ 0,0024 por pregunta con el caché del proveedor (US$ 0,018 sin caché); el tope diario de llamadas del slice 3 se calcula con eso.
+- Nombres de personas en la pregunta (P-03, E-07 del slice 2): no se detectan; con la web en la red de la casa sigue aceptado; se revisa en el slice 4.
 - Web móvil primero: capas como desplegables, confianza sin colores (R-05), cita y versión de la biblioteca; accesibilidad WCAG AA.
 - Decisión previa: X-04 (qué intervalo se ve).
 

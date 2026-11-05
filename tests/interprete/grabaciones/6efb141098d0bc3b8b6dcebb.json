@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Cuál es el departamento más pobre del Perú?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9244,
+ "tokens_salida": 133,
+ "costo_usd": 0.00233,
+ "latencia_s": 1.729,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiyQjPpn6YwJ3TeDp1bu",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"identificar_extremo\", \"tema\": \"pobreza_monetaria\", \"territorio\": {\"nivel\": \"departamento\", \"dentro_de\": {\"nacional\": true}}}, \"anclas\": {\"intencion\": \"más pobre\", \"tema\": \"pobre\", \"nivel\": \"departamento\", \"dentro_de\": \"del Perú\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 40,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 133,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

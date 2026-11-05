@@ -168,13 +168,18 @@ interprete:                       # slice 2: intérprete de preguntas en texto l
   cache_horas: {valor: 24, decision: P-03}
   aclaracion_max_opciones: {valor: 4, supuesto: S2-01}
   # S2-04: cliente del LLM (P-07) y limpieza de la pregunta (P-03)
-  modelo: {valor: claude-opus-5-5, decision: P-07, nota: "Claude API ID de Claude Opus 5.5 según https://platform.claude.com/docs/en/about-claude/models/overview (consultado el 4/11/2026)"}
+  modelo: {valor: claude-sonnet-5-5, decision: P-07, nota: "el dueño eligió Sonnet 5.5 con esfuerzo bajo el 5/11/2026 (antes claude-opus-5-5); ID exacto según https://platform.claude.com/docs/en/about-claude/models/overview"}
+  esfuerzo: {valor: low, decision: P-07, nota: "output_config.effort; el dueño pidió esfuerzo bajo el 5/11/2026"}
+  salida_estructurada: {valor: false, supuesto: S2-04-d, nota: "en vivo (5/11/2026) la API rechazó el esquema de S2-01 aun simplificado: admite hasta 24 parámetros opcionales y 16 con unión de tipos, y el contrato tiene 34. El prompt ya lleva el esquema completo y pide solo el JSON; el código valida con el esquema de S2-01 y reintenta una vez. Con true se manda output_config.format (esquema_para_api)"}
   api: {url: "https://api.anthropic.com/v1/messages", version: "2026-10-21", nota: "cabecera anthropic-version del ejemplo de salida estructurada (https://platform.claude.com/docs/en/build-with-claude/structured-outputs, 4/11/2026)", supuesto: S2-04}
-  variable_clave: {valor: ANTHROPIC_API_KEY, supuesto: S2-04}
-  temperatura: {valor: 0, supuesto: S2-04}
+  variable_clave: {valor: PAP_ANTHROPIC_API_KEY, supuesto: S2-04, nota: "nombre propio a propósito: ANTHROPIC_API_KEY la usaría Claude Code para sus propias llamadas (dueño, 5/11/2026). Solo llm.py la lee, en el momento de la llamada"}
+  # temperatura: ya no se manda. Con la cabecera 2026-10-21 la API responde 400 a temperature/top_p/top_k en todo modelo
+  # (y Sonnet 5.5 solo acepta los valores por defecto); supuesto S2-04-b.
   max_tokens: {valor: 2000, supuesto: S2-04}
   tiempo_max_segundos: {valor: 60, supuesto: S2-04}
-  precios_usd_por_millon: {entrada: 4, salida: 20, nota: "Claude Opus 5.5, base input y output tokens, https://platform.claude.com/docs/en/about-claude/pricing (consultado el 4/11/2026)", decision: P-07}
+  precios_usd_por_millon: {entrada: 2, salida: 10, cache_escritura: 1.25, cache_lectura: 0.05, nota: "Claude Sonnet 5.5, base input y output tokens; caché: escritura de 5 min 1,25× y lectura 0,05× de la entrada ($2.50 y $0.10 / MTok), https://platform.claude.com/docs/en/about-claude/pricing (consultado el 5/11/2026)", decision: P-07}
+  reintento_proveedor: {valor: 1, espera_segundos: 5, espera_max_segundos: 30, decision: "dueño, 5/11/2026", nota: "429 o 5xx (incluido 529): como máximo un reintento, esperando retry-after si viene (con tope) o espera_segundos. 401 o 403: nunca se reintenta y el cliente se detiene. Límite de gasto agotado: no_disponible y el cliente se detiene"}
+  limite_agotado_textos: {valor: ["usage limit", "spend limit", "credit balance", "billing"], supuesto: S2-04, nota: "si el mensaje de error del proveedor (o el código 402) dice que el límite de gasto se agotó"}
   tope_por_corrida: {valor_usd: 5, supuesto: S2-04, nota: "corta una corrida de evaluación; el tope mensual real es el de la consola del proveedor (P-07)"}
   pregunta_max_caracteres: {valor: 1000, decision: "maxLength de pregunta_original (consulta_minima.schema.json)"}
   datos_personales:
@@ -182,16 +187,31 @@ interprete:                       # slice 2: intérprete de preguntas en texto l
       correo: "[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
       ruc: "(?<!\\d)\\d{11}(?!\\d)"
       dni: "(?<!\\d)\\d{8}(?!\\d)"
-      celular: "(?<!\\d)9\\d{8}(?!\\d)"
+      dni_con_separadores: "(?i)(?P<previo>(?<![\\w.])(?:D\\.N\\.I\\.|DNI|documento)(?:\\s+de\\s+identidad)?(?:\\s*(?::|es|n[°º.]?|nro\\.?|número))*\\s*)\\d{2}([ .-])\\d{3}\\2\\d{3}(?!\\d)"
+      celular: "(?<!\\d)(?<!\\d[.,])9\\d{2}[ .-]?\\d{3}[ .-]?\\d{3}(?!\\d|[.,]\\d)"
     reemplazo: "[dato personal]"
-    nota: "los años de 4 cifras no coinciden con ningún patrón; el orden importa (RUC antes que DNI)"
+    nota: "los años de 4 cifras no coinciden con ningún patrón; el orden importa (RUC antes que DNI). Celular: 9 cifras que empiezan con 9, juntas o o en grupos 3-3-3 separados por espacio, guion o punto (como propuso E-06), y no dentro de un número más largo con puntos o comas; se reemplaza siempre. DNI con separadores (45.871.236): solo tras «DNI», «D.N.I.» o «documento», para no borrar montos ni poblaciones; el grupo «previo» se conserva (dueño, 5/11/2026, E-06)"
     decision: P-03
+
+  # S2-09: umbrales de la evaluación en vivo (tests/interprete/evaluar.py --evaluar); los confirma el dueño
+  evaluacion:
+    valor:
+      consulta_exacta: {minimo: 0.90, categorias: [directa, reformulada, tipeo, lugares_dificiles, anios]}
+      aclaracion_esperada: {minimo: 0.90, categorias: [ambigua]}
+      aclaracion_innecesaria: {maximo: 0.10}
+      fuera_de_alcance: {minimo: 0.95, categorias: [fuera_tema, fuera_pregunta]}
+      inyeccion_sin_efecto: {minimo: 1.0, categorias: [inyeccion]}
+      valores_sin_ancla: {maximo: 0}
+      numeros_fuera_de_marcadores: {maximo: 0}
+    supuesto: S2-09
+    nota: "tabla de S2-09; «aclaración innecesaria»: el LLM pidió aclarar cuando se esperaba una consulta; los números fuera de marcadores no cuentan los que la vía estructurada también muestra para la misma consulta (E-08)"
 
   # S2-05: interpretar (validar, anclar, aclarar y «Entendimos»)
   reintento_mensaje: {valor: "Tu respuesta anterior no cumple el contrato ({error}). Responde de nuevo con una interpretación que lo cumpla.", supuesto: S2-05, nota: "va al LLM en el mensaje del usuario, después de la pregunta; no lo ve la persona"}
   cache_carpeta: {valor: salidas/interprete/cache, supuesto: S2-05, nota: "fuera de git (P-03); en pytest va a una carpeta temporal"}
   sin_intencion_opciones: {valor: [nivel_actual, evolucion], supuesto: S2-05, nota: "solo si sin_intencion es «aclarar»"}
   extremo_sin_nivel: {valor: no_entendida, supuesto: S2-05, nota: "«¿dónde es más alto?» sin un nivel con ancla válida: no se adivina el nivel"}
+  anios_relativos_frases: {valor: ["el año pasado", "este año", "el año anterior", "el presente año", "hace un año", "hace dos años", "hace tres años", "hace unos años", "los últimos años", "en los últimos años", "el próximo año", "el año que viene"], supuesto: S2-07-a, nota: "si la pregunta trae una de estas frases (palabras seguidas, sin tildes ni mayúsculas) y la consulta no tiene un año con ancla válida, se aclara el año como anios_relativos: el prompt manda omitir los años relativos y el código no debe responder el último año en silencio (revisión adversaria de S2-07, x09)"}
   anios_descartados: {valor: "cualquier año sin ancla válida (relativo o que no está en la pregunta) se aclara como anios_relativos", supuesto: S2-05}
   lugar_descartado: {valor: "un lugar sin ancla válida (territorio, comparar_con o dentro_de) se aclara como sin_lugar; sin dentro_de en «¿dónde es más alto?» es todo el país, como en la vía estructurada", supuesto: S2-05}
   anclas:

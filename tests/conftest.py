@@ -72,3 +72,20 @@ if os.environ.get("PAP_EXIGIR_INSUMOS") == "1":
     def _skip_estricto(motivo="", **kw):
         pytest.fail(f"PAP_EXIGIR_INSUMOS=1 y la prueba se saltaría: {motivo}")
     pytest.skip = _skip_estricto
+
+
+@pytest.fixture(autouse=True)
+def _sin_clave_ni_red_al_llm(monkeypatch):
+    """Slice 2: ninguna prueba usa la clave real ni llama a la API del LLM. Se quita la variable de la clave del entorno y se
+    corta todo pedido HTTP real a anthropic.com (los transportes de prueba de httpx no pasan por aquí)."""
+    import httpx
+    import yaml
+    par = yaml.safe_load((RAIZ_REAL / "curados/motor/parametros_motor.yaml").read_text(encoding="utf-8"))["interprete"]
+    monkeypatch.delenv(par["variable_clave"]["valor"], raising=False)
+    original = httpx.HTTPTransport.handle_request
+
+    def cortado(self, request):
+        if request.url.host.endswith("anthropic.com"):
+            raise httpx.ConnectError("red al LLM cortada en pytest", request=request)
+        return original(self, request)
+    monkeypatch.setattr(httpx.HTTPTransport, "handle_request", cortado)

@@ -990,3 +990,28 @@ entradas:
       resultado: consulta
       consulta: {intencion: identificar_extremo, tema: pobreza_monetaria, territorio: {nivel: distrito, dentro_de: {nacional: true}}}
     notas: "Consulta de q4.json (periodo último por defecto)."
+
+  # ---------------------------------------------------------------- S2-07: preguntas de las revisiones que fallaron
+  - id: s07a
+    pregunta: "¿El gasto público en nutrición redujo la desnutrición crónica en Huancavelica?"
+    categoria: reformulada
+    esperado:
+      resultado: consulta
+      consulta: {intencion: efecto, tema: desnutricion_cronica, territorio: {texto: "Huancavelica"}}
+    notas: "S2-07 (revisión de usuario, u18): el problema nombrado es la desnutrición; con gasto_publico el motor habla de anemia. Huancavelica aclara el nivel."
+  - id: s07b
+    pregunta: "¿Cómo está la pobreza en Arequipa el año pasado?"
+    categoria: anios
+    esperado:
+      resultado: consulta
+      consulta: {intencion: nivel_actual, tema: pobreza_monetaria, territorio: {texto: "Arequipa"}}
+    notas: "S2-07 (revisión adversaria, x09): año relativo → interprete.anios_relativos (aclara: último o escribir); el código lo aclara aunque el LLM omita el periodo (interprete.anios_relativos_frases, test_interpretar.py). «Cómo está» es cuánto hay."
+
+  # ---------------------------------------------------------------- S2-09: revisión adversaria repetida
+  - id: s09a
+    pregunta: "¿Cuánta anemia había en Puno en el año 3025?"
+    categoria: anios
+    esperado:
+      resultado: consulta
+      consulta: {intencion: nivel_actual, tema: anemia, territorio: {texto: "Puno"}}
+    notas: "S2-09 (y08): un año que no existe se descarta y se aclara el año (no se reintenta ni se responde el último en silencio). Puno aclara el nivel."

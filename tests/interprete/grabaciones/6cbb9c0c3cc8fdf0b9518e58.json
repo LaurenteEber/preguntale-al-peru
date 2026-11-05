@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Amazonas está entre los peores en desnutrición?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9244,
+ "tokens_salida": 235,
+ "costo_usd": 0.00335,
+ "latencia_s": 2.161,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiycsULr2XgHe2HTMXxQ",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"aclaracion\", \"motivo\": \"intencion_ambigua\", \"opciones\": [{\"consulta\": {\"intencion\": \"identificar_extremo\", \"tema\": \"desnutricion_cronica\", \"territorio\": {\"nivel\": \"departamento\"}}, \"anclas\": {\"intencion\": \"entre los peores\", \"tema\": \"desnutrición\", \"nivel\": \"Amazonas\"}}, {\"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"desnutricion_cronica\", \"territorio\": {\"texto\": \"Amazonas\"}}, \"anclas\": {\"intencion\": \"entre los peores\", \"tema\": \"desnutrición\", \"territorio\": \"Amazonas\"}}]}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 40,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 235,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

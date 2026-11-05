@@ -360,6 +360,10 @@ def _llamar(raiz, limpia: str, llm, registro) -> tuple[dict | None, dict, str | 
         try:
             dato = validar(r.json, raiz)
         except InterpretacionInvalida as e:
+            dato = _sin_anio_invalido(r.json, e, raiz)
+            if dato is not None:                    # S2-09: solo el año era inválido (p. ej. 3025): se aclara, no se reintenta
+                _uso(raiz, limpia, dato.get("consulta"), dato["resultado"], r, registro)
+                return dato, meta, None
             _uso(raiz, limpia, None, "invalida", r, registro)
             error = f"{', '.join(e.codigos)}: {' '.join(e.mensajes)}"
             continue
@@ -368,12 +372,50 @@ def _llamar(raiz, limpia: str, llm, registro) -> tuple[dict | None, dict, str | 
     return None, meta, "no_entendida"
 
 
+def _sin_anio_invalido(dato, e, raiz) -> dict | None:
+    """Si lo único que no valida es el periodo (un año que no existe, como 3025), la misma interpretación sin el periodo,
+    marcada para aclarar el año (`_anio_invalido`). Al reintentar, el LLM quitaba el año y se respondía el último en silencio
+    (revisión adversaria repetida en S2-09, y08). None si no es ese caso."""
+    if set(e.codigos) != {"periodo_invalido"} or not isinstance(dato, dict):
+        return None
+    periodos = [((c or {}).get("periodo") or {}) for c in [dato.get("consulta")] +
+                [o.get("consulta") for o in dato.get("opciones") or [] if isinstance(o, dict)]]
+    anios = [v for per in periodos if isinstance(per, dict) for k, v in per.items() if k in ("anio", "desde", "hasta")]
+    if not anios or not all(isinstance(v, int) and 1000 <= v <= 9999 for v in anios):
+        return None                                 # solo años con forma de año (3025); un «90» colado de una cifra, no
+    sin = copy.deepcopy(dato)
+    for c in [sin.get("consulta")] + [o.get("consulta") for o in sin.get("opciones") or [] if isinstance(o, dict)]:
+        if isinstance(c, dict):
+            c.pop("periodo", None)
+    for a in [sin.get("anclas")] + [o.get("anclas") for o in sin.get("opciones") or [] if isinstance(o, dict)]:
+        if isinstance(a, dict):
+            for k in ("anio", "desde", "hasta"):
+                a.pop(k, None)
+    try:
+        valido = validar(sin, raiz)
+    except InterpretacionInvalida:
+        return None
+    return {**valido, "_anio_invalido": True}
+
+
 def _uso(raiz, limpia, consulta, resultado, r, registro) -> None:
     if registro is not None:
         L.registrar_uso(raiz, limpia, consulta, resultado, r, ruta=registro)
 
 
 # ======================================================================= interpretar
+
+def _anio_relativo(raiz, chk) -> bool:
+    """¿La pregunta trae una frase de año relativo («el año pasado»…)? (`interprete.anios_relativos_frases`)"""
+    return any(chk.en_pregunta(f) for f in _par(raiz)["interprete"]["anios_relativos_frases"]["valor"])
+
+
+def _cliente(raiz):
+    """El cliente en vivo. `PAP_INTERPRETE_MODO=completar` lo usa solo el dueño o el agente al grabar preguntas del conjunto,
+    de las pruebas o de las revisiones (S2-07) por la CLI; nunca preguntas de personas reales (P-03)."""
+    modo = os.environ.get("PAP_INTERPRETE_MODO", "vivo")
+    return L.Cliente(raiz, modo=modo if modo in ("vivo", "completar") else "vivo")
+
 
 def interpretar(texto: str, motor, *, elegir=None, llm=None, cache_dir=None, registro=DEFECTO) -> dict:
     """Responde una pregunta en texto libre. Devuelve la respuesta del motor (`tipo`: respuesta | no_se_puede | aclaracion)
@@ -396,7 +438,7 @@ def interpretar(texto: str, motor, *, elegir=None, llm=None, cache_dir=None, reg
     elif numeros:
         raise EleccionInvalida(_tx(raiz)["elegir_vencida"])          # nunca se reinterpreta para elegir
     else:
-        dato, meta, falla = _llamar(raiz, limpia.texto, llm if llm is not None else L.Cliente(raiz, modo="vivo"), registro)
+        dato, meta, falla = _llamar(raiz, limpia.texto, llm if llm is not None else _cliente(raiz), registro)
         if dato is not None:
             ruta.parent.mkdir(parents=True, exist_ok=True)
             ruta.write_text(json.dumps({"creada": time.time(), "interpretacion": dato, "meta": meta}, ensure_ascii=False),
@@ -451,6 +493,11 @@ def interpretar(texto: str, motor, *, elegir=None, llm=None, cache_dir=None, reg
         c, fuera = anclar(dato["consulta"], dato["anclas"], chk)
         anclas = dato["anclas"]
 
+    per = c.get("periodo") or {}
+    if dato.get("_anio_invalido") and "anio" not in fuera:
+        fuera.append("anio")                       # S2-09: el año que pidió no existe (3025): se aclara
+    elif not any(k in per for k in ("anio", "desde", "hasta")) and "anio_aclarado" not in fuera and _anio_relativo(raiz, chk):
+        fuera.append("anio")                       # S2-07-a: el LLM omitió un año relativo; se aclara, no se adivina el último
     while True:                                                         # paso 5: cada aclaración del código usa un número
         pend = _pendiente(motor, c, fuera)
         info.update(consulta=copy.deepcopy(c), descartados=list(fuera),

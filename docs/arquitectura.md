@@ -208,7 +208,32 @@ Desde el slice 1 (3/11/2026) la persona ya no escribe las cifras ni la plantilla
 
 **Matriz de cobertura.** `tests/matriz/` genera consultas mínimas para los 4 temas × intenciones × territorios (una muestra reproducible, semilla en `parametros_motor.yaml`) y comprueba que ninguna cae, que no queden marcadores ni códigos internos, que la capa 1 no pase del máximo de palabras y que toda combinación sin datos dé «no se puede» con su motivo. La corrida completa (5 086 casos, 0 fallos) está en `backlog/slice-1/evidencia/matriz.md`; en pytest corre una versión reducida (`matriz_cobertura.casos_pytest`).
 
-**Sin LLM** (decisión del 10/10/2026): las preguntas entran ya estructuradas. El intérprete que convierta una frase libre en consulta mínima es el slice 2.
+**Preguntas en texto libre** (slice 2): las responde el intérprete (abajo), que solo produce la consulta mínima; el motor no cambia.
+
+#### Intérprete de preguntas (`src/pap/interprete/`, slice 2)
+
+`pap preguntar --texto "…"` → `interpretar()`:
+
+1. **Limpieza** (`limpiar.py`, P-03): recorte a 1 000 caracteres, sin caracteres de control y sin números con forma de DNI,
+   RUC o celular ni correos (`interprete.datos_personales`). Pasa antes del LLM, de la caché, del registro y de
+   `pregunta_original`.
+2. **LLM** (`llm.py`, P-07): Claude Sonnet 5.5 con esfuerzo bajo, por HTTP (httpx), con las instrucciones armadas desde datos
+   curados (`prompt.py`: `curados/interprete/prompt.md`, `ejemplos.yaml`, el vocabulario y el esquema). La pregunta va como
+   dato delimitado, fuera de las instrucciones. El LLM **no ve cifras** y solo devuelve una interpretación: consulta,
+   aclaración, fuera de alcance, no es pregunta u otro idioma (`curados/motor/esquemas/interpretacion.schema.json`).
+   - **Frontera:** la clave sale de `PAP_ANTHROPIC_API_KEY` solo en el momento de la llamada; 401/403 detienen el cliente,
+     429/5xx tienen un reintento y el límite de gasto agotado da «no disponible». Toda falla termina en un mensaje fijo que
+     ofrece las opciones. La API no acepta el esquema como salida estructurada (E-03): el código valida y reintenta una vez.
+3. **Validación y anclas** (`interpretar.py`): esquema completo de S2-01 y, por cada valor, su ancla literal en la pregunta.
+   Lo que no tiene ancla se descarta; lo que falta (lugar, intención, año, también un año relativo que el LLM omitió) lo
+   completa un default o una aclaración **armada por el código**.
+4. **Motor:** `preguntar_minima(consulta + pregunta_original)` del slice 1, sin cambios. «Entendimos…» es un texto fijo
+   armado desde la consulta resuelta (`textos/interprete.yaml`).
+
+**Grabaciones** (`tests/interprete/grabaciones/`): una por (pregunta limpia, modelo, `version_prompt`, error del reintento),
+solo con el cuerpo de la respuesta y sus metadatos. pytest solo las reproduce (nunca llama a la red ni lee la clave);
+`tests/interprete/evaluar.py` las graba (`--grabar`) y corre el conjunto de evaluación (`--evaluar`). Caché de 24 h en
+`salidas/interprete/cache/` y registro de uso sin texto en `salidas/interprete/uso.jsonl` (fuera de git).
 
 ### 4.9 Contrato de respuesta por capas (12/10/2026)
 Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipos `no_se_puede` y `aclaracion`).
