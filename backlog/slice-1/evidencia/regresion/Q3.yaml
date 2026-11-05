@@ -27,3 +27,82 @@
     referirse al monto de Lima Metropolitana de la tarjeta. Misma cifra (5 %) y sin afirmación nueva: solo hace explícito
     lo que ya se afirmaba (agents.md §5.1); corrector sin infracciones; la capa 1 no cambia.'
   aprobado_por: agente
+- capa: capa2.limites[0]
+  antes: 'Datos de: Gasto MEF 2025 (devengado) · SIEN 2025 (INS) · ENDES 2024–2025 (INEI)'
+  despues: 'Datos de: Gasto MEF 2024–2025 (devengado) · SIEN 2025 (INS) · ENDES 2024–2025 (INEI)'
+  motivo: 'X-03 (dueño, fila R-03 de decisiones.md; S3-01): CR-01 muestra además el gasto del mismo año que la anemia comparada (`cr01_mismo_anio`
+    = true): tarjeta nueva de «Más contexto» con la cifra exceptuada `gasto_ex_pan` 2024 de Lima Metropolitana (rol contexto), y el
+    rango de años de la línea «Datos de:» pasa a incluir 2024.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[4].etiqueta
+  antes: ''
+  despues: 'Otro año: no se suma ni se compara con la cifra clave.'
+  motivo: 'X-03 (dueño, fila R-03 de decisiones.md; S3-01): CR-01 muestra además el gasto del mismo año que la anemia comparada (`cr01_mismo_anio`
+    = true): tarjeta nueva de «Más contexto» con la cifra exceptuada `gasto_ex_pan` 2024 de Lima Metropolitana (rol contexto), y el
+    rango de años de la línea «Datos de:» pasa a incluir 2024.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[4].texto
+  antes: ''
+  despues: 'En 2024, el gasto fue S/ 260,7 millones, registrado por unidades ejecutoras con sede en Lima Metropolitana (MEF 2024): el
+    mismo año con el que se compara la anemia.'
+  motivo: 'X-03 (dueño, fila R-03 de decisiones.md; S3-01): CR-01 muestra además el gasto del mismo año que la anemia comparada (`cr01_mismo_anio`
+    = true): tarjeta nueva de «Más contexto» con la cifra exceptuada `gasto_ex_pan` 2024 de Lima Metropolitana (rol contexto), y el
+    rango de años de la línea «Datos de:» pasa a incluir 2024.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[4].titulo
+  antes: ''
+  despues: Gasto en Lima Metropolitana en 2024
+  motivo: 'X-03 (dueño, fila R-03 de decisiones.md; S3-01): CR-01 muestra además el gasto del mismo año que la anemia comparada (`cr01_mismo_anio`
+    = true): tarjeta nueva de «Más contexto» con la cifra exceptuada `gasto_ex_pan` 2024 de Lima Metropolitana (rol contexto), y el
+    rango de años de la línea «Datos de:» pasa a incluir 2024.'
+  aprobado_por: dueño
+- capa: capa3.citas[0].url
+  antes: ''
+  despues: https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[1].url
+  antes: ''
+  despues: https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[2].url
+  antes: ''
+  despues: https://cdn.www.gob.pe/uploads/document/file/9599740/7857855-indicadores-ninos-diciembre-2025-base-de-datos-hisminsa.xlsx
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[3].url
+  antes: ''
+  despues: https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[4].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[5].url
+  antes: ''
+  despues: https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.para_citar[5]
+  antes: ''
+  despues: 'S/ 260,7 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Lima Metropolitana
+    (provincia de Lima), 2024. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2024.'
+  motivo: 'X-03 (dueño, fila R-03 de decisiones.md; S3-01): CR-01 muestra además el gasto del mismo año que la anemia comparada (`cr01_mismo_anio`
+    = true): tarjeta nueva de «Más contexto» con la cifra exceptuada `gasto_ex_pan` 2024 de Lima Metropolitana (rol contexto), y el
+    rango de años de la línea «Datos de:» pasa a incluir 2024.'
+  aprobado_por: dueño

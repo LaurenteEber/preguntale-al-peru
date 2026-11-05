@@ -197,7 +197,7 @@ Desde el slice 1 (3/11/2026) la persona ya no escribe las cifras ni la plantilla
 | Archivo | Qué contiene |
 |---|---|
 | `curados/motor/intenciones.yaml` | Qué cifras pide cada intención sobre cada tema, con la decisión que lo exige |
-| `curados/motor/parametros_motor.yaml` | Valores por defecto del motor; cada entrada dice si es `decision:`, `pendiente:` o `supuesto:`. El bloque `pendientes_dueno` guarda X-02, X-03 y X-04 en su valor de hoy |
+| `curados/motor/parametros_motor.yaml` | Valores por defecto del motor; cada entrada dice si es `decision:`, `pendiente:` o `supuesto:`. El bloque `pendientes_dueno` guarda X-02, X-03 y X-04, decididas y aplicadas en el slice 3 (S3-01): conteo del SIEN, gasto del mismo año en CR-01 y un solo intervalo visible |
 | `curados/motor/textos/` | Todo lo que la persona lee: `plantillas/<intención>.yaml`, `bloques.yaml`, `capas.yaml`, `no_se_puede.yaml`, `territorio.yaml`, `errores_consulta.yaml`, `cli.yaml`, `glosario.yaml`, `que_hacer.yaml` |
 | `curados/motor/consultas_minimas/` | Q1–Q4 como consultas mínimas (JSON): la regresión del slice |
 | `tests/fixtures/consultas_piloto/` | Las consultas q1–q4 del piloto (YAML), archivadas; siguen funcionando con `pap preguntar` |

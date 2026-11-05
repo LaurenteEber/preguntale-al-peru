@@ -3,3 +3,16 @@ version: 1.0.0
 publicado_oficial: "; el {entidad} publicó {valor}"      # S1-09 (A-H3): la cita es de nuestro cálculo y el documento oficial publica otro valor
 # S1-12 (G-01, R-GASTO-12): cita de un monto en soles constantes, con el monto registrado de su año y el factor del IPC
 cita_constantes: "{valor} en soles de {anio_base} (monto registrado en {anio}: {nominal}; factor de inflación: {factor})"
+# S3-01 (tarea 3): rótulos de sección. Los leen el .md de la CLI (ficha.markdown) y la web; antes estaban fijos en ficha.py.
+# Aquí va solo el texto; el formato (negrita, «▸», paréntesis de «texto pendiente») lo pone quien los muestra.
+rotulos:
+  ojo_al_leer: "Ojo al leer"
+  avisos: "Avisos"
+  limites: "Límites de esta respuesta"
+  para_citar: "Para citar y verificar"
+  como_citar: "Cómo citar"
+  glosario: "Glosario"
+  que_hacer: "¿Qué puedo hacer?"
+  texto_pendiente: "(texto pendiente de revisión)"
+  mas_contexto: "Más contexto"
+  enlace_oficial: "Documento oficial"       # S3-01 (P-02): texto del enlace de cada cita que lo tiene

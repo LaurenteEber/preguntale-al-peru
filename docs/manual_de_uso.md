@@ -298,9 +298,9 @@ Se resuelven editando una línea de `curados/motor/parametros_motor.yaml` (secci
 
 | ID | Qué hay que decidir | Valor de hoy | Recomendado |
 |---|---|---|---|
-| X-02 | ¿«¿Cuántos?» del SIEN da también el conteo (52 de 547 niños medidos)? | **No** (`mostrar_conteo_sien: false`) | Sí, como tarjeta de la capa 2 |
-| X-03 | ¿CR-01 muestra también el gasto del mismo año que la anemia comparada? | **No** (`cr01_mismo_anio: false`) | Sí |
-| X-04 | ¿Se muestran los dos intervalos o solo uno? | Los dos (el propio y el del INEI) en la ficha | Uno visible; los dos en la ficha técnica. Pesa en el slice 3 |
+| X-02 ✅ | ¿«¿Cuántos?» del SIEN da también el conteo (52 de 547 niños medidos)? | **Sí**, decidido y aplicado en el slice 3 (`mostrar_conteo_sien: true`), como tarjeta de «Más contexto» | — |
+| X-03 ✅ | ¿CR-01 muestra también el gasto del mismo año que la anemia comparada? | **Sí**, decidido y aplicado en el slice 3 (`cr01_mismo_anio: true`) | — |
+| X-04 ✅ | ¿Se muestran los dos intervalos o solo uno? | **Uno**, decidido y aplicado en el slice 3 (`intervalo_visible: uno`): el del INEI si existe, si no el propio; los dos en la ficha técnica | — |
 | X-01 | Aprobar el texto de «¿Qué puedo hacer?» | Se muestra «pendiente de revisión» | Revisarlo y poner `revisado_dueno: true` |
 
 Siguen abiertas, sin parámetro asociado en el slice 1: X-05 (revisar lo provisional antes de la beta), X-06 (separar ejecutoras mixtas antes de la Ola 1), X-07 (listas curadas sin revisar) y X-08 (solicitudes por la Ley 27806).

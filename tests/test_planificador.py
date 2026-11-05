@@ -240,7 +240,7 @@ def test_efecto_q3_estructura_y_cifras(plan, motor):
     assert got == {(GASTO, "distrito", "150132", "principal", None), (GASTO, LM, LM, "contexto", None),
                    (SIEN, "distrito", "150132", "principal", None), (ENDES_V, LM, LM, "contexto", 2024),
                    (COBERTURA, LM, LM, "contexto", None)}
-    assert {c["anio"] for c in p["cifras"]} == {a}
+    assert {c["anio"] for c in p["cifras"]} == {a, 2024}             # X-03 (S3-01): además, el gasto de 2024 (mismo año que la anemia)
     assert p["respuesta_parcial"] is True and p["estructura_efecto"] is True
     assert p["plantilla"] == "cruce_efecto" and p["cruce"] == "CR-01" and p["lado_a_lado"] is True
 
@@ -279,7 +279,10 @@ def test_g07_el_tema_de_gasto_sale_de_map_intencion_tema(plan, motor):
 
 
 def test_x03_cr01_mismo_anio_detras_de_parametro(plan, raiz, motor):
-    hoy = plan("efecto", "gasto_publico", "San Juan de Lurigancho")
+    """X-03 está decidida (S3-01: `cr01_mismo_anio` = true en el YAML); el parámetro sigue siendo editable: en false, el plan de antes."""
+    par = copy.deepcopy(PL.cargar_parametros(raiz))
+    par["pendientes_dueno"]["cr01_mismo_anio"]["valor"] = False
+    hoy = plan("efecto", "gasto_publico", "San Juan de Lurigancho", parametros=par)
     assert not [c for c in hoy["cifras"] if c["indicador"] == GASTO and c["anio"] == 2024]
     par = copy.deepcopy(PL.cargar_parametros(raiz))
     par["pendientes_dueno"]["cr01_mismo_anio"]["valor"] = True

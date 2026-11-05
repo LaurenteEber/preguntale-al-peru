@@ -238,18 +238,52 @@ def test_elegir_invalido_y_sin_nada_que_preguntar(capsys, tmp_path):
 BASE_ESTRUCTURADA = RAIZ / "backlog" / "slice-2" / "evidencia" / "base_estructurada"
 
 
+def _raiz_con_decisiones_de_antes(destino):
+    """Una raíz de trabajo que enlaza todo el proyecto salvo `parametros_motor.yaml`, que vuelve al valor de antes del slice 3
+    para X-02, X-03 y X-04 (`mostrar_conteo_sien` y `cr01_mismo_anio` en false, `intervalo_visible` en `ambos`). La base de S2-00
+    es evidencia histórica y no se regenera: las decisiones aprobadas en S3-01 se exceptúan así, y solo ellas."""
+    def espejo(origen, dest, real):
+        dest.mkdir(parents=True)
+        for x in origen.iterdir():
+            if x.name == real[0] and len(real) > 1:
+                espejo(x, dest / x.name, real[1:])
+            elif x.name == real[0]:
+                continue
+            else:
+                (dest / x.name).symlink_to(x)
+    espejo(RAIZ, destino, ["curados", "motor", "parametros_motor.yaml"])
+    p = yaml.safe_load((RAIZ / "curados" / "motor" / "parametros_motor.yaml").read_text(encoding="utf-8"))
+    pend = p["pendientes_dueno"]
+    pend["mostrar_conteo_sien"]["valor"], pend["cr01_mismo_anio"]["valor"], pend["intervalo_visible"]["valor"] = False, False, "ambos"
+    (destino / "curados" / "motor" / "parametros_motor.yaml").write_text(yaml.safe_dump(p, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    return destino
+
+
+def _sin_enlaces_de_citas(x):
+    """S3-01 (P-02, plan_slices.md slice 3): el campo nuevo `capa3.citas` (texto + enlace oficial) no existía en S2-00."""
+    if isinstance(x, dict):
+        return {k: _sin_enlaces_de_citas(v) for k, v in x.items() if k != "citas" or not isinstance(v, list)}
+    if isinstance(x, list):
+        return [_sin_enlaces_de_citas(v) for v in x]
+    return x
+
+
 def test_via_estructurada_igual_a_la_base_de_s2_00(tmp_path):
     """Los `respuesta.json` de la vía estructurada, generados con los comandos exactos de `generar.sh`, son iguales a los
-    guardados en S2-00, salvo las rutas (la carpeta de salida se reemplaza antes de comparar)."""
+    guardados en S2-00, salvo las rutas (la carpeta de salida se reemplaza antes de comparar) y salvo lo aprobado en S3-01:
+    X-02, X-03 y X-04 (con sus parámetros en el valor de antes, ver `_raiz_con_decisiones_de_antes`) y el campo `capa3.citas`
+    con el enlace de cada cita (P-02)."""
     salida = tmp_path / "base"
+    raiz_antes = _raiz_con_decisiones_de_antes(tmp_path / "raiz_antes")
     p = subprocess.run(["bash", str(BASE_ESTRUCTURADA / "generar.sh"), str(salida)], cwd=RAIZ, capture_output=True, text=True,
-                       env={**__import__("os").environ, "PAP_RAIZ": str(RAIZ)})
+                       env={**__import__("os").environ, "PAP_RAIZ": str(raiz_antes)})
     assert p.returncode == 0, p.stderr[-2000:]
     esperados = sorted(x.relative_to(BASE_ESTRUCTURADA) for x in BASE_ESTRUCTURADA.rglob("*.json"))
     assert esperados and sorted(x.relative_to(salida) for x in salida.rglob("*.json")) == esperados
     for rel in esperados:
-        nuevo = json.loads((salida / rel).read_text(encoding="utf-8").replace(str(salida), "<salida>"))
-        assert nuevo == json.loads((BASE_ESTRUCTURADA / rel).read_text(encoding="utf-8")), rel
+        texto = (salida / rel).read_text(encoding="utf-8").replace(str(salida), "<salida>")
+        nuevo = json.loads(texto)
+        assert _sin_enlaces_de_citas(nuevo) == json.loads((BASE_ESTRUCTURADA / rel).read_text(encoding="utf-8")), rel
         assert "entendimos" not in nuevo and "interpretacion" not in nuevo, rel
 
 

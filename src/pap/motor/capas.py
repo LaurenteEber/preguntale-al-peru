@@ -14,7 +14,9 @@ INEI cuando existe en los dos modos; la ficha larga muestra siempre los dos.
 """
 from __future__ import annotations
 
+import csv
 import re
+from functools import lru_cache
 from pathlib import Path
 
 import yaml
@@ -93,6 +95,27 @@ def _cita(c, alcance: str | None = None, nombre: str | None = None, tx: dict | N
     return f"{valor}: {nom}{al}, {nombre or c.territorio_nombre}, {c.anio}. Fuente: {src}{publicado}."
 
 
+@lru_cache(maxsize=None)
+def _catalogo_urls(raiz: str) -> dict:
+    """{id de fuente: enlace oficial} del catálogo de fuentes (`url_portal`, si no `url_datos`). Vacío si no hay."""
+    ruta = Path(raiz) / "catalogo" / "catalogo_fuentes.csv"
+    if not ruta.exists():
+        return {}
+    with open(ruta, encoding="utf-8", newline="") as f:
+        return {r["id"]: (r.get("url_portal") or r.get("url_datos") or "").strip() for r in csv.DictReader(f)}
+
+
+def _url(motor, c) -> str:
+    """S3-01 (plan_slices.md, slice 3; P-02): enlace al documento oficial de la cita. Con cifra dorada, la `url` de
+    cifras_doradas.csv; si no, el portal de la fuente en el catálogo. Sin enlace oficial, vacío: nunca se inventa uno."""
+    o = c.get("contraste_oficial")
+    if o:
+        d = next((d for d in motor.ctx.doradas if d["id_cifra"] == o.get("id_cifra")), None)
+        if d and (d.get("url") or "").strip():
+            return d["url"].strip()
+    return _catalogo_urls(str(motor.ctx.raiz)).get(c.fuente_principal, "")
+
+
 def _sin_parentesis(t: str) -> str:
     return re.sub(r"\s*\([^)]*\)", "", t).strip()
 
@@ -156,6 +179,7 @@ def construir(motor, consulta: dict, borrador: dict, cifras: dict, ficha: dict, 
     tx = _textos(raiz, "capas.yaml")
     largos = consulta.get("desambiguados") or {}          # S1-09 (H4): el homónimo aclarado se cita con provincia y departamento
     citar = [_cita(cifras[i], (b.get("alcance") or {}).get(i), largos.get(f"{cifras[i].nivel}:{cifras[i].territorio_id}"), tx) for i in usados]
+    citas = [{"texto": t, "url": _url(motor, cifras[i]), "id_cifra": i} for t, i in zip(citar, usados)]    # S3-01: cada cita con su enlace
     glos = (_textos(raiz, "glosario.yaml").get("terminos") or {})
     glosario = [glos[k] for k in b.get("glosario") or [] if k in glos]
     qh = None
@@ -170,4 +194,4 @@ def construir(motor, consulta: dict, borrador: dict, cifras: dict, ficha: dict, 
                       "que_hacer": qh, "palabras": palabras(*visible)},
             "capa2": {"mas_contexto": contexto, "avisos": av,
                       "limites": [x.replace("se tamizaron", "se les midió la hemoglobina") for x in lineas[1:]]},
-            "capa3": {"para_citar": citar, "glosario": glosario}}
+            "capa3": {"para_citar": citar, "citas": citas, "glosario": glosario}}

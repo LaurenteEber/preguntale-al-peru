@@ -377,6 +377,7 @@ def respuesta_no_se_puede(motor, plan: dict, motivo: dict | str, *, cifras: dict
     capas = K.construir(motor, consulta, borrador, {}, {"corta": r.ficha["corta_texto"]}, sem_r.get("semaforo_respuesta"), avisos)
     if not capas["capa3"]["para_citar"]:
         capas["capa3"]["para_citar"] = [tx["sin_citas"]]                 # S1-09 (H16): sin cifras no hay qué citar, y se dice
+        capas["capa3"]["citas"] = [{"texto": tx["sin_citas"], "url": "", "id_cifra": None}]
     capas["capa1"]["lo_mas_cercano"] = {"titulo": tx["titulos"]["lo_mas_cercano"], "texto": cercano}
     capas["capa1"]["palabras"] += K.palabras(cercano)
     no_pub = [{"id": c.id_cifra if c.get("id_cifra") else k, "indicador": c.indicador_id, "anio": int(c.anio), "nivel": c.nivel,

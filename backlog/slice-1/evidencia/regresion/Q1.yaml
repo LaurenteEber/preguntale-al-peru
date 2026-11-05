@@ -48,3 +48,31 @@
     con el que se compara. Se agrega la tarjeta con la anemia de 2024 con la forma vigente junto a la de 2025, con su marcador
     y su cita (S1-13). Va al final para no mover las tarjetas que ya estaban.'
   aprobado_por: dueño
+- capa: capa3.citas[0].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[1].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[2].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/microdatos/
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[3].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes09/pdf/Cap09.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño

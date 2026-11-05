@@ -6,3 +6,37 @@
   motivo: 'Nombre largo del distrito («Melgar, Puno») la primera vez que se nombra, solo en la capa 2 (T-02: provincia y departamento).
     Misma información de lugar que antes, sin ninguna afirmación nueva; la capa 1 queda igual (Q2 está en 124 de 125 palabras).'
   aprobado_por: agente
+- capa: capa2.mas_contexto[3].texto
+  antes: ''
+  despues: En 2025, a 547 niñas y niños de 6 a 35 meses se les midió la hemoglobina en establecimientos públicos de Ayaviri; 52 de ellos
+    tenía anemia en su último control.
+  motivo: 'X-02 (dueño, fila S-01 de decisiones.md; S3-01): en «¿cuántos?» del SIEN se da también el conteo, como tarjeta de «Más contexto»
+    (`mostrar_conteo_sien` = true). Es una tarjeta nueva: las demás se identifican por título y no cambian.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[3].titulo
+  antes: ''
+  despues: Cuántos niños se midieron
+  motivo: 'X-02 (dueño, fila S-01 de decisiones.md; S3-01): en «¿cuántos?» del SIEN se da también el conteo, como tarjeta de «Más contexto»
+    (`mostrar_conteo_sien` = true). Es una tarjeta nueva: las demás se identifican por título y no cambian.'
+  aprobado_por: dueño
+- capa: capa3.citas[0].url
+  antes: ''
+  despues: https://cdn.www.gob.pe/uploads/document/file/9599740/7857855-indicadores-ninos-diciembre-2025-base-de-datos-hisminsa.xlsx
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[1].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[2].url
+  antes: ''
+  despues: https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño

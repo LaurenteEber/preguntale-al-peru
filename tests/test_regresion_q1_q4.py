@@ -29,6 +29,8 @@ QS = ["q1", "q2", "q3", "q4"]
 CLAVE_2022_Q1 = ("endes_anemia_6_35m", 2022, "departamento", "09", "proporcion", "contexto")   # anemia_hvca_2022_ant
 # AD-1 (dueño, 4/11/2026, fila R-04): la evolución da también la cifra vigente del año con el que se compara (S1-13)
 CLAVE_2024_Q1 = ("endes_anemia_6_35m_oms2024", 2024, "departamento", "09", "proporcion", "contexto")
+# X-03 (dueño, 4/11/2026, fila R-03; S3-01): CR-01 suma el gasto del mismo año que la anemia comparada (Lima Metropolitana 2024)
+CLAVE_2024_Q3 = ("gasto_ex_pan", 2024, "LIMA_METROPOLITANA", "LIMA_METROPOLITANA", "devengado", "contexto")
 
 
 @pytest.fixture(scope="module")
@@ -73,6 +75,8 @@ def test_planes(raiz, motor, q):
     if q == "q1":
         assert esperado.pop(CLAVE_2022_Q1, "falta") is None      # la diferencia aprobada (C-01) se retira solo de q1.yaml
         esperado[CLAVE_2024_Q1] = None                            # la diferencia aprobada (AD-1) se agrega al plan
+    if q == "q3":
+        esperado[CLAVE_2024_Q3] = None                            # la diferencia aprobada (X-03) se agrega al plan
     plan = generado(raiz, motor, q)
     assert por_clave(motor, plan["cifras"]) == esperado
     assert (plan.get("grupos") or []) == (manual(raiz, q).get("grupos") or [])
@@ -141,7 +145,24 @@ def reglas_por_clave(r, ids):
     return out
 
 
-def textos_capas(r):
+def indices_por_titulo(titulos_ref, titulos):
+    """S3-01 (tarea 3 de la regla de regresión): los índices de `mas_contexto` de una respuesta, alineados con los de la
+    referencia por TÍTULO. Una tarjeta con el título de una de la referencia toma su índice; las tarjetas nuevas toman los
+    siguientes índices libres (después de la última de la referencia), en su orden. Así una tarjeta nueva en medio no corre las
+    demás ni dispara diferencias falsas."""
+    libres, usados, out = iter(range(len(titulos_ref), len(titulos_ref) + len(titulos))), set(), []
+    for t in titulos:
+        i = next((j for j, x in enumerate(titulos_ref) if x == t and j not in usados), None)
+        if i is None:
+            i = next(libres)
+        usados.add(i)
+        out.append(i)
+    return out
+
+
+def textos_capas(r, titulos_ref=None):
+    """Textos visibles por ruta. Con `titulos_ref` (los títulos de las tarjetas de la referencia), las tarjetas de la capa 2 se
+    identifican por título y no por posición (`indices_por_titulo`)."""
     c = r["capas"]
     out = {"capa1.respuesta_corta": c["capa1"]["respuesta_corta"], "capa1.confianza.texto": c["capa1"]["confianza"]["texto"],
            "capa1.confianza.ficha": c["capa1"]["confianza"]["ficha"]}
@@ -153,7 +174,9 @@ def textos_capas(r):
         out[f"capa1.ojo_al_leer[{i}]"] = t
     q = c["capa1"]["que_hacer"]
     out["capa1.que_hacer.texto"] = q["texto"] if q else ""
-    for i, t in enumerate(c["capa2"]["mas_contexto"]):
+    tarjetas = c["capa2"]["mas_contexto"]
+    pos = indices_por_titulo(titulos_ref, [t["titulo"] for t in tarjetas]) if titulos_ref is not None else range(len(tarjetas))
+    for i, t in zip(pos, tarjetas):
         out.update({f"capa2.mas_contexto[{i}].titulo": t["titulo"], f"capa2.mas_contexto[{i}].texto": t["texto"],
                     f"capa2.mas_contexto[{i}].etiqueta": t["etiqueta"] or ""})
     for i, t in enumerate(c["capa2"]["avisos"]):
@@ -162,6 +185,8 @@ def textos_capas(r):
         out[f"capa2.limites[{i}]"] = t
     for i, t in enumerate(c["capa3"]["para_citar"]):
         out[f"capa3.para_citar[{i}]"] = t
+    for i, x in enumerate(c["capa3"].get("citas") or []):          # S3-01 (P-02): el enlace oficial de cada cita
+        out[f"capa3.citas[{i}].url"] = x["url"]
     for i, t in enumerate(c["capa3"]["glosario"]):
         out[f"capa3.glosario[{i}].termino"] = t["termino"]
         out[f"capa3.glosario[{i}].definicion"] = t["definicion"]
@@ -187,6 +212,11 @@ def test_respuestas(raiz, motor, nuevas, q):
         nuevas_ids = {i for i, c in nuevas[q]["cifras"].items() if clave_dict(c) == CLAVE_2024_Q1}
         assert len(nuevas_ids) == 1, "AD-1: Q1 debe traer la cifra vigente de 2024 como contexto"
         new["resultados_respuesta"] = [x for x in new["resultados_respuesta"] if x["objetivo"] not in nuevas_ids]
+    if q == "q3":                                   # X-03 (dueño, 4/11/2026; S3-01): el gasto del mismo año, como contexto
+        nuevas_ids = {i for i, c in nuevas[q]["cifras"].items() if clave_dict(c) == CLAVE_2024_Q3}
+        assert len(nuevas_ids) == 1, "X-03: Q3 debe traer el gasto de 2024 de Lima Metropolitana como contexto"
+        new = dict(new, cifras={i: c for i, c in new["cifras"].items() if i not in nuevas_ids})
+        new["resultados_respuesta"] = [x for x in new["resultados_respuesta"] if x["objetivo"] not in nuevas_ids]
     rc, nc = cifras_por_clave(ref), cifras_por_clave(new)
     # --- iguales exactos
     assert set(nc) == set(rc), (set(nc) ^ set(rc))
@@ -208,7 +238,8 @@ def test_respuestas(raiz, motor, nuevas, q):
     assert new["capas"]["capa1"]["palabras"] <= p["capa1_palabras_max"]["valor"]
     infr = [x for x in new["resultados_respuesta"] if x["regla"] in p["infracciones_corrector"]["valor"] and x["accion"] != "rotular"]
     assert not infr, infr
-    visible = textos_capas(new)
+    tit_ref = [t["titulo"] for t in ref["capas"]["capa2"]["mas_contexto"]]
+    visible = textos_capas(new, tit_ref)
     for ruta, t in visible.items():
         for cod in CODIGOS_INTERNOS:
             assert not re.search(cod, t), (ruta, cod, t)
