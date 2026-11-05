@@ -33,8 +33,8 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-2/S2-nn-*
 | T12 privacy patterns | S10 | inline | done | (this commit) |
 | T13 S2-04 Q2 live recording | S11 | inline | done: 8 434 + 124 tokens, US$ 0.0181 | (this commit) |
 | T7 S2-07 | S2-07, S12 | reviewers: 2 fresh subagents (story requires independence), model sonnet low effort (L7) | done, apto con observaciones; motor altos → E-09 | (this commit) |
-| T9 S2-09 | S2-09, S12 | inline | pending | |
-| T10 S2-10 | S2-10, S13 | inline | pending | |
+| T9 S2-09 | S2-09, S12 | inline; repeated adversary review = fresh subagent (sonnet, low) | done: round 3 meets all thresholds | 1018933, 0df99e5, 8ab87f3, 15a890f |
+| T10 S2-10 | S2-10, S13 | inline | done: 944 passed offline without key; merge to main next | 0474b1b, 935ac26, 6c7c004, (this commit) |
 | T14 slice 3 start | S14 | inline | pending | |
 
 ## Log
@@ -51,3 +51,4 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-2/S2-nn-*
 - L10 (2026-11-05, user, verbatim): «Procedamos con el comité hasta terminar, validamos al final de tu implementación del pendiente de slice 2». From here the pre-commit check is `git diff --cached | grep -nE '^\+.*(<prefijo>|<cabecera>)'` (added lines only); the full grep over the repo is reported at the end.
 - L11: live API rejected temperature (2026-10-21), then the structured-output schema (limits 24 optional / 16 union params; contract has 34) → `salida_estructurada: false` (S2-04-d), prompt cache on system. Q2 recorded: 8 434 + 124 tokens, US$ 0.0181, 1.8 s; Q2 by `--texto` passes the regression criteria.
 - L12: S2-07 reviewers (sonnet, low): both «apto con observaciones». Interpreter defects fixed: relative year omitted by LLM was answered as latest silently → `anios_relativos_frases` (S2-07-a, RED/GREEN in test_interpretar); efecto on another problem mapped to gasto (anemia) → prompt v3 rule. Adversary H1 (default intention without anchor) is by design. Motor (slice 1) altos u13/u14 + medios → E-09. 35 v2 recordings (untracked) removed; S2-09 re-records with v3. Reviewer questions in tests/interprete/preguntas_revision.yaml; failures in the conjunto as s07a, s07b.
+- L13: S2-09 rounds: r1 (v3) 89/83/4/100/50/0/1, r2 (v4) 98/83/0/100/88/0/0, r3 (v5) all thresholds met; US$ 0.31/0.33/0.33. Repeated adversary review: alto y08 (year 3025 dropped on retry → latest year silently) fixed in code (`_sin_anio_invalido`, 4-digit years only). Final eval 140/140 meets all thresholds. pytest: 944 passed offline without the key variable. Repo-wide grep for the key prefix and header: empty (history still holds the removed header line of llm.py and the L10 log line, both pattern text, no key). Total live cost of the slice: US$ 1.68 in 693 calls.
