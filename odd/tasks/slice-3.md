@@ -15,7 +15,7 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 
 | ID | Specs | Route | Status | Commit |
 |---|---|---|---|---|
-| T0 S3-00 | S3-00 | inline | in progress | |
+| T0 S3-00 | S3-00 | inline | done (944 passed base) | b18e473 + this commit |
 | T1 S3-01 | S3-01 | inline | pending | |
 | T2–T11 | S3-02 … S3-11 | — | pending | |
 
