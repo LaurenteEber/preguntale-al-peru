@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "nivel_actual",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "210801"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|nivel_actual|Ayaviri (distrito, Melgar)|sin_datos"
+}

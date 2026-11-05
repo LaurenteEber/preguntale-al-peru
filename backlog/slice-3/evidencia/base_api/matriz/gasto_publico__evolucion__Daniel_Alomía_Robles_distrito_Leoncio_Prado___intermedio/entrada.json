@@ -1,0 +1,17 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "evolucion",
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "100602"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|evolucion|Daniel Alomía Robles (distrito, Leoncio Prado)|intermedio"
+}

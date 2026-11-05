@@ -1,0 +1,294 @@
+{
+ "alternativas": [
+  {
+   "anio": 2018,
+   "lugar": {
+    "ubigeo": "040302"
+   },
+   "nivel": "distrito",
+   "nombre": "Acarí",
+   "territorio_id": "040302",
+   "texto": "2018",
+   "tipo": "anio"
+  }
+ ],
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": null,
+   "confianza": {
+    "ficha": "Confianza: Sin cifra disponible.",
+    "nivel": "sin cifra",
+    "texto": "Confianza en los datos: sin cifra."
+   },
+   "lo_mas_cercano": {
+    "texto": "Sí tenemos la cifra de 2018 para Acarí. Puedes preguntar por ese año.",
+    "titulo": "Lo más cercano que sí tenemos"
+   },
+   "ojo_al_leer": [],
+   "palabras": 26,
+   "que_hacer": null,
+   "respuesta_corta": "No tenemos datos de pobreza de 2024."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ninguna cifra publicada en esta respuesta",
+    "Territorio: Acarí",
+    "No permite concluir: nada sobre pobreza. No mostrar una cifra no quiere decir que el problema no exista."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Tenemos datos de pobreza: de 2018. De otros años no hay datos incorporados.",
+     "titulo": "Por qué no se puede"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": null,
+     "texto": "Esta respuesta no publica cifras.",
+     "url": ""
+    }
+   ],
+   "glosario": [],
+   "para_citar": [
+    "Esta respuesta no publica cifras."
+   ]
+  }
+ },
+ "cifras": {},
+ "cifras_no_publicadas": [],
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2024,
+    "comparar_con": 2018,
+    "id": "mapa_pobreza_2018__intervalo__distrito__040302__2024__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "principal",
+    "territorio": "040302"
+   },
+   {
+    "anio": 2018,
+    "id": "mapa_pobreza_2018__intervalo__distrito__040302__2018__contexto",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "contexto",
+    "territorio": "040302"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "periodo": {
+    "anio": 2024,
+    "tipo": "anio"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "ubigeo": "040302"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__pobreza_monetaria__040302",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "anio_pedido": 2024,
+    "anios_disponibles": [
+     2018
+    ],
+    "indicador": "mapa_pobreza_2018",
+    "motivo": "anio_sin_datos"
+   }
+  ],
+  "no_se_puede": {
+   "anio_pedido": 2024,
+   "anios_disponibles": [
+    2018
+   ],
+   "indicador": "mapa_pobreza_2018",
+   "motivo": "anio_sin_datos"
+  },
+  "omitidas": [],
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "040302",
+   "nivel": "distrito",
+   "nombre_pedido": "Acarí"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "evolucion",
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "040302"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "ficha": {
+  "corta": "Confianza: Sin cifra disponible.\nDatos de: ninguna cifra publicada en esta respuesta\nTerritorio: Acarí\nNo permite concluir: nada sobre pobreza. No mostrar una cifra no quiere decir que el problema no exista.",
+  "larga": {
+   "cifras": {},
+   "cruces": {},
+   "no_concluir": [],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: ."
+  }
+ },
+ "motivo": {
+  "codigo": "anio_sin_datos",
+  "detalle": {
+   "anio_pedido": 2024,
+   "anios_disponibles": [
+    2018
+   ],
+   "indicador": "mapa_pobreza_2018",
+   "motivo": "anio_sin_datos"
+  },
+  "otros": [],
+  "regla_lenguaje_05": "anio_no_disponible"
+ },
+ "motivos_semaforo_respuesta": [
+  "sin_cifra_principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2024,
+    "comparar_con": 2018,
+    "id": "mapa_pobreza_2018__intervalo__distrito__040302__2024__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "principal",
+    "territorio": "040302"
+   },
+   {
+    "anio": 2018,
+    "id": "mapa_pobreza_2018__intervalo__distrito__040302__2018__contexto",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "contexto",
+    "territorio": "040302"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "periodo": {
+    "anio": 2024,
+    "tipo": "anio"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "ubigeo": "040302"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__pobreza_monetaria__040302",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "anio_pedido": 2024,
+    "anios_disponibles": [
+     2018
+    ],
+    "indicador": "mapa_pobreza_2018",
+    "motivo": "anio_sin_datos"
+   }
+  ],
+  "no_se_puede": {
+   "anio_pedido": 2024,
+   "anios_disponibles": [
+    2018
+   ],
+   "indicador": "mapa_pobreza_2018",
+   "motivo": "anio_sin_datos"
+  },
+  "omitidas": [],
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "040302",
+   "nivel": "distrito",
+   "nombre_pedido": "Acarí"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sin cifra principal publicable",
+   "detalle": {
+    "motivos": [
+     "sin_cifra_principal"
+    ],
+    "semaforo_respuesta": "sin_cifra"
+   },
+   "motivo": "sin_cifra_principal",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Sin cifra disponible"
+  }
+ ],
+ "semaforo_respuesta": "sin_cifra",
+ "temas_disponibles": [],
+ "texto": "No tenemos datos de pobreza de 2024. Sí tenemos la cifra de 2018 para Acarí. Puedes preguntar por ese año. Tenemos datos de pobreza: de 2018. De otros años no hay datos incorporados.",
+ "texto_con_marcadores": "No tenemos datos de pobreza de 2024. Sí tenemos la cifra de 2018 para Acarí. Puedes preguntar por ese año. Tenemos datos de pobreza: de 2018. De otros años no hay datos incorporados.",
+ "tipo": "no_se_puede",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

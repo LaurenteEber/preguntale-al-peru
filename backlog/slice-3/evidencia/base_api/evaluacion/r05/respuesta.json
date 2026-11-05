@@ -1,0 +1,1249 @@
+{
+ "avisos_al_usuario": [
+  {
+   "objetivo": "respuesta",
+   "regla": "R-ENC-12",
+   "texto": "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno."
+  }
+ ],
+ "capas": {
+  "capa1": {
+   "cifra_clave": null,
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No los ordenes uno por uno: dentro del grupo, las diferencias pueden deberse al azar de la encuesta."
+   ],
+   "palabras": 57,
+   "que_hacer": null,
+   "respuesta_corta": "El grupo con la desnutrición crónica en niñas y niños menores de 5 años más alta en 2025 son ocho departamentos, sin diferencias estadísticamente claras entre ellos."
+  },
+  "capa2": {
+   "avisos": [
+    "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno."
+   ],
+   "limites": [
+    "Datos de: ENDES 2025 (INEI)",
+    "Territorio: todos los departamentos del país",
+    "No permite concluir: un orden exacto entre territorios: las diferencias entre muchos de ellos no son estadísticamente claras."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave.",
+     "texto": "En 2025 se estima que la desnutrición crónica en niñas y niños menores de 5 años era más alta, sin diferencias estadísticamente claras entre ellos, en Amazonas (17,7 %), Apurímac (17,0 %), Cajamarca (17,4 %), Huancavelica (20,3 %), La Libertad (16,9 %), Loreto (20,8 %), Pasco (15,7 %) y Ucayali (18,1 %) (ENDES 2025, INEI).",
+     "titulo": "Los departamentos con la desnutrición crónica en niñas y niños menores de 5 años más alta (2025)"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "dci_01",
+     "texto": "17,7 % (intervalo: 14,0 % a 21,9 %): niñas y niños menores de 5 años con desnutrición crónica, Amazonas, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "url": "https://proyectos.inei.gob.pe/microdatos/"
+    },
+    {
+     "id_cifra": "dci_03",
+     "texto": "17,0 % (intervalo: 13,8 % a 20,6 %): niñas y niños menores de 5 años con desnutrición crónica, Apurímac, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "url": "https://proyectos.inei.gob.pe/microdatos/"
+    },
+    {
+     "id_cifra": "dci_06",
+     "texto": "17,4 % (intervalo: 13,9 % a 21,4 %): niñas y niños menores de 5 años con desnutrición crónica, Cajamarca, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "url": "https://proyectos.inei.gob.pe/microdatos/"
+    },
+    {
+     "id_cifra": "dci_09",
+     "texto": "20,3 % (intervalo del INEI: 15,9 % a 24,7 %): niñas y niños menores de 5 años con desnutrición crónica, Huancavelica, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52).",
+     "url": "https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf"
+    },
+    {
+     "id_cifra": "dci_13",
+     "texto": "16,9 % (intervalo: 13,3 % a 21,1 %): niñas y niños menores de 5 años con desnutrición crónica, La Libertad, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "url": "https://proyectos.inei.gob.pe/microdatos/"
+    },
+    {
+     "id_cifra": "dci_16",
+     "texto": "20,8 % (intervalo del INEI: 17,0 % a 24,5 %): niñas y niños menores de 5 años con desnutrición crónica, Loreto, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52).",
+     "url": "https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf"
+    },
+    {
+     "id_cifra": "dci_19",
+     "texto": "15,7 % (intervalo: 11,4 % a 20,8 %): niñas y niños menores de 5 años con desnutrición crónica, Pasco, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "url": "https://proyectos.inei.gob.pe/microdatos/"
+    },
+    {
+     "id_cifra": "dci_25",
+     "texto": "18,1 % (intervalo del INEI: 14,4 % a 21,7 %): niñas y niños menores de 5 años con desnutrición crónica, Ucayali, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52).",
+     "url": "https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños.",
+     "termino": "ENDES"
+    }
+   ],
+   "para_citar": [
+    "17,7 % (intervalo: 14,0 % a 21,9 %): niñas y niños menores de 5 años con desnutrición crónica, Amazonas, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "17,0 % (intervalo: 13,8 % a 20,6 %): niñas y niños menores de 5 años con desnutrición crónica, Apurímac, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "17,4 % (intervalo: 13,9 % a 21,4 %): niñas y niños menores de 5 años con desnutrición crónica, Cajamarca, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "20,3 % (intervalo del INEI: 15,9 % a 24,7 %): niñas y niños menores de 5 años con desnutrición crónica, Huancavelica, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52).",
+    "16,9 % (intervalo: 13,3 % a 21,1 %): niñas y niños menores de 5 años con desnutrición crónica, La Libertad, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "20,8 % (intervalo del INEI: 17,0 % a 24,5 %): niñas y niños menores de 5 años con desnutrición crónica, Loreto, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52).",
+    "15,7 % (intervalo: 11,4 % a 20,8 %): niñas y niños menores de 5 años con desnutrición crónica, Pasco, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "18,1 % (intervalo del INEI: 14,4 % a 21,7 %): niñas y niños menores de 5 años con desnutrición crónica, Ucayali, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)."
+   ]
+  }
+ },
+ "cifras": {
+  "dci_01": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 10.87764776,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.92267326,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 14.00129701,
+   "ic_sup": 21.8537918,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 821,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "17,7 % (entre 14,0 % y 21,9 %), ENDES 2025, Amazonas; basado en 821 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "17,7 % (entre 14,0 % y 21,9 %), ENDES 2025, Amazonas; basado en 821 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "01",
+   "territorio_nombre": "Amazonas",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "01"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 17.67545067
+  },
+  "dci_03": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 9.76395022,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.66120057,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 13.82572628,
+   "ic_sup": 20.59669335,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 609,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "17,0 % (entre 13,8 % y 20,6 %), ENDES 2025, Apurímac; basado en 609 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "17,0 % (entre 13,8 % y 20,6 %), ENDES 2025, Apurímac; basado en 609 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "03",
+   "territorio_nombre": "Apurímac",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "03"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 17.01361161
+  },
+  "dci_06": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 10.53817902,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.83287679,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 13.88314874,
+   "ic_sup": 21.3710057,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 544,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "17,4 % (entre 13,9 % y 21,4 %), ENDES 2025, Cajamarca; basado en 544 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "17,4 % (entre 13,9 % y 21,4 %), ENDES 2025, Cajamarca; basado en 544 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "06",
+   "territorio_nombre": "Cajamarca",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "06"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 17.39272776
+  },
+  "dci_09": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "patron_OMS2006_talla_edad_-2DE",
+    "cuadro_pagina": "Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "entidad": "INEI",
+    "id_cifra": "DOR-DCI-2025-09",
+    "valor": 20.3
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 11.03050407,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.23745479,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "ic_inf": 15.9,
+    "ic_sup": 24.7,
+    "id_cifra": "DOR-DCI-2025-09"
+   },
+   "ic_inf": 15.98912343,
+   "ic_sup": 25.14638034,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 542,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "20,3 % (entre 16,0 % y 25,1 %), ENDES 2025, Huancavelica; basado en 542 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "20,3 % (entre 16,0 % y 25,1 %), ENDES 2025, Huancavelica; basado en 542 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "09"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 20.28424785
+  },
+  "dci_13": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 11.27671831,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.90987714,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 13.2944557,
+   "ic_sup": 21.10587605,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 729,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "16,9 % (entre 13,3 % y 21,1 %), ENDES 2025, La Libertad; basado en 729 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "16,9 % (entre 13,3 % y 21,1 %), ENDES 2025, La Libertad; basado en 729 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "13",
+   "territorio_nombre": "La Libertad",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "13"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 16.93646229
+  },
+  "dci_16": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "patron_OMS2006_talla_edad_-2DE",
+    "cuadro_pagina": "Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "entidad": "INEI",
+    "id_cifra": "DOR-DCI-2025-16",
+    "valor": 20.8
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 9.25222008,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.92247117,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "ic_inf": 17.0,
+    "ic_sup": 24.5,
+    "id_cifra": "DOR-DCI-2025-16"
+   },
+   "ic_inf": 17.06600342,
+   "ic_sup": 24.89254125,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 874,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "20,8 % (entre 17,1 % y 24,9 %), ENDES 2025, Loreto; basado en 874 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "20,8 % (entre 17,1 % y 24,9 %), ENDES 2025, Loreto; basado en 874 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "16",
+   "territorio_nombre": "Loreto",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "16"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 20.7784851
+  },
+  "dci_19": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 14.49235105,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.27069904,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 11.40288853,
+   "ic_sup": 20.765324,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 557,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "15,7 % (entre 11,4 % y 20,8 %), ENDES 2025, Pasco; basado en 557 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "15,7 % (entre 11,4 % y 20,8 %), ENDES 2025, Pasco; basado en 557 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "19",
+   "territorio_nombre": "Pasco",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "19"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 15.6682586
+  },
+  "dci_25": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "patron_OMS2006_talla_edad_-2DE",
+    "cuadro_pagina": "Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "entidad": "INEI",
+    "id_cifra": "DOR-DCI-2025-25",
+    "valor": 18.1
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 10.34370964,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.86921262,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "ic_inf": 14.4,
+    "ic_sup": 21.7,
+    "id_cifra": "DOR-DCI-2025-25"
+   },
+   "ic_inf": 14.48985232,
+   "ic_sup": 22.11411513,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 918,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "18,1 % (entre 14,5 % y 22,1 %), ENDES 2025, Ucayali; basado en 918 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "18,1 % (entre 14,5 % y 22,1 %), ENDES 2025, Ucayali; basado en 918 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "25",
+   "territorio_nombre": "Ucayali",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "25"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 18.07100827
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "identificar_extremo",
+   "pregunta_original": "¿En qué región hay más chibolos desnutridos?",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "nivel": "departamento"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-ENC-12"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [
+   {
+    "anio": "ultimo",
+    "indicador": "endes_dci_menores_5",
+    "prefijo": "dci",
+    "rol": "principal",
+    "tipo": "ranking_departamental"
+   }
+  ],
+  "grupos_estadisticos": null,
+  "id": "identificar_extremo__desnutricion_cronica__departamento",
+  "intencion": "identificar_extremo",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "identificar_extremo",
+  "pregunta": "¿En qué región hay más chibolos desnutridos?",
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": null,
+   "nivel": "departamento",
+   "nombre_pedido": null
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "identificar_extremo",
+  "pregunta_original": "¿En qué región hay más chibolos desnutridos?",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "nivel": "departamento"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: qué departamento tiene más desnutrición crónica en todo el Perú",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENDES 2025 (INEI)\nTerritorio: todos los departamentos del país\nNo permite concluir: un orden exacto entre territorios: las diferencias entre muchos de ellos no son estadísticamente claras.",
+  "larga": {
+   "cifras": {
+    "dci_01": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Amazonas).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 14,0 % y 21,9 % (coeficiente de variación 10,9 %, 821 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "17,7 % (entre 14,0 % y 21,9 %), ENDES 2025, Amazonas; basado en 821 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "dci_03": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Apurímac).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 13,8 % y 20,6 % (coeficiente de variación 9,8 %, 609 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "17,0 % (entre 13,8 % y 20,6 %), ENDES 2025, Apurímac; basado en 609 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "dci_06": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Cajamarca).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 13,9 % y 21,4 % (coeficiente de variación 10,5 %, 544 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "17,4 % (entre 13,9 % y 21,4 %), ENDES 2025, Cajamarca; basado en 544 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "dci_09": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 16,0 % y 25,1 % (coeficiente de variación 11,0 %, 542 casos en la muestra). El INEI publica para esta cifra un intervalo entre 15,9 % y 24,7 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 20,3 % con la misma definición (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "20,3 % (entre 16,0 % y 25,1 %), ENDES 2025, Huancavelica; basado en 542 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "dci_13": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (La Libertad).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 13,3 % y 21,1 % (coeficiente de variación 11,3 %, 729 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "16,9 % (entre 13,3 % y 21,1 %), ENDES 2025, La Libertad; basado en 729 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "dci_16": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Loreto).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 17,1 % y 24,9 % (coeficiente de variación 9,3 %, 874 casos en la muestra). El INEI publica para esta cifra un intervalo entre 17,0 % y 24,5 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 20,8 % con la misma definición (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "20,8 % (entre 17,1 % y 24,9 %), ENDES 2025, Loreto; basado en 874 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "dci_19": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Pasco).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 11,4 % y 20,8 % (coeficiente de variación 14,5 %, 557 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "15,7 % (entre 11,4 % y 20,8 %), ENDES 2025, Pasco; basado en 557 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "dci_25": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Ucayali).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 14,5 % y 22,1 % (coeficiente de variación 10,3 %, 918 casos en la muestra). El INEI publica para esta cifra un intervalo entre 14,4 % y 21,7 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 18,1 % con la misma definición (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "18,1 % (entre 14,5 % y 22,1 %), ENDES 2025, Ucayali; basado en 918 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Un orden exacto entre territorios: las diferencias entre muchos de ellos no son estadísticamente claras."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_dci_menores_5."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "intencion": "hay más",
+   "nivel": "región",
+   "tema": "desnutridos"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "identificar_extremo",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "nivel": "departamento"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:dci_01",
+  "peor_cifra_principal:dci_03",
+  "peor_cifra_principal:dci_06",
+  "peor_cifra_principal:dci_09",
+  "peor_cifra_principal:dci_13",
+  "peor_cifra_principal:dci_16",
+  "peor_cifra_principal:dci_19",
+  "peor_cifra_principal:dci_25"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "identificar_extremo",
+   "pregunta_original": "¿En qué región hay más chibolos desnutridos?",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "nivel": "departamento"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-ENC-12"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [
+   {
+    "anio": "ultimo",
+    "indicador": "endes_dci_menores_5",
+    "prefijo": "dci",
+    "rol": "principal",
+    "tipo": "ranking_departamental"
+   }
+  ],
+  "grupos_estadisticos": null,
+  "id": "identificar_extremo__desnutricion_cronica__departamento",
+  "intencion": "identificar_extremo",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "identificar_extremo",
+  "pregunta": "¿En qué región hay más chibolos desnutridos?",
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": null,
+   "nivel": "departamento",
+   "nombre_pedido": null
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "pregunta de ranking u orden de >= 3 territorios con cifras de encuesta",
+   "detalle": {
+    "excede_max_grupos": false,
+    "excluidas": [],
+    "grupos": [
+     [
+      {
+       "id": "dci_16",
+       "referencial": false,
+       "territorio": "16"
+      },
+      {
+       "id": "dci_09",
+       "referencial": false,
+       "territorio": "09"
+      },
+      {
+       "id": "dci_25",
+       "referencial": false,
+       "territorio": "25"
+      },
+      {
+       "id": "dci_01",
+       "referencial": false,
+       "territorio": "01"
+      },
+      {
+       "id": "dci_06",
+       "referencial": false,
+       "territorio": "06"
+      },
+      {
+       "id": "dci_03",
+       "referencial": false,
+       "territorio": "03"
+      },
+      {
+       "id": "dci_13",
+       "referencial": false,
+       "territorio": "13"
+      },
+      {
+       "id": "dci_19",
+       "referencial": false,
+       "territorio": "19"
+      }
+     ]
+    ],
+    "max_grupos": 6,
+    "puede_decir_el_mas_alto": false,
+    "todas_en_un_grupo": true,
+    "unidades_fuera_de_lista": []
+   },
+   "mensaje": "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno.",
+   "motivo": "ranking_por_grupos",
+   "objetivo": "respuesta",
+   "regla": "R-ENC-12"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:dci_01",
+     "peor_cifra_principal:dci_03",
+     "peor_cifra_principal:dci_06",
+     "peor_cifra_principal:dci_09",
+     "peor_cifra_principal:dci_13",
+     "peor_cifra_principal:dci_16",
+     "peor_cifra_principal:dci_19",
+     "peor_cifra_principal:dci_25"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "El grupo con la desnutrición crónica en niñas y niños menores de 5 años más alta en 2025 son ocho departamentos, sin diferencias estadísticamente claras entre ellos. No los ordenes uno por uno: dentro del grupo, las diferencias pueden deberse al azar de la encuesta. En 2025 se estima que la desnutrición crónica en niñas y niños menores de 5 años era más alta, sin diferencias estadísticamente claras entre ellos, en Amazonas (17,7 %), Apurímac (17,0 %), Cajamarca (17,4 %), Huancavelica (20,3 %), La Libertad (16,9 %), Loreto (20,8 %), Pasco (15,7 %) y Ucayali (18,1 %) (ENDES 2025, INEI).",
+ "texto_con_marcadores": "El grupo con la desnutrición crónica en niñas y niños menores de 5 años más alta en 2025 son ocho departamentos, sin diferencias estadísticamente claras entre ellos. No los ordenes uno por uno: dentro del grupo, las diferencias pueden deberse al azar de la encuesta. En 2025 se estima que la desnutrición crónica en niñas y niños menores de 5 años era más alta, sin diferencias estadísticamente claras entre ellos, en Amazonas ({{c:dci_01}}), Apurímac ({{c:dci_03}}), Cajamarca ({{c:dci_06}}), Huancavelica ({{c:dci_09}}), La Libertad ({{c:dci_13}}), Loreto ({{c:dci_16}}), Pasco ({{c:dci_19}}) y Ucayali ({{c:dci_25}}) (ENDES 2025, INEI).",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "evolucion",
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "040302"
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|evolucion|Acarí (distrito, Caravelí)|intermedio"
+}

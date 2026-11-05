@@ -28,6 +28,15 @@ navegador (HTML servido, casi sin JavaScript)
 - Con texto libre domina el LLM; se mide en S2-09.
 - El `Motor` se puede reutilizar entre consultas: la matriz ya lo hace. No tiene conexión DuckDB propia: el cubo es un DataFrame en memoria. El riesgo con hilos son sus cachés perezosas (`ctx._rel_origen`, `ctx._territorio_filas`, `Motor._grupos`, `_TEMAS_CACHE`, los `lru_cache`). Por eso se usa un candado.
 
+## Lo aprendido en el slice 2 (S3-00, 5/11/2026)
+
+Del cierre (`../slice-2/evidencia/cierre.md`):
+- **Latencia del LLM** (Claude Sonnet 5.5, esfuerzo bajo; 204 grabaciones del prompt final): p50 1,6 s y p95 2,5 s, con máximo de 3,8 s. En la evaluación, el p95 por pregunta fue de 2,7 s. Con texto libre no se llega a los 2 s: S3-08 fija su objetivo (`supuesto: S3-08`).
+- **Costo:** US$ 0,0024 por pregunta con el caché del proveedor caliente, y US$ 0,018 sin caché (5 minutos). El tope diario de llamadas de S3-07 se calcula con eso.
+- **Riesgos de P-03 que quedaron:** los nombres de personas no se detectan; la caché de 24 h no se borra, solo deja de usarse; la pregunta se repite como título del `.md` (E-07 del slice 2).
+- **Para el dueño, antes de abrir el servicio:** dos lecturas falsas del motor del slice 1 (E-09 del slice 2).
+- **Interfaces:** `evidencia/s3-00_interfaces.md`. El tipo `mensaje` ya trae su código en `motivo`.
+
 ## Antes de empezar
 
 1. El slice 2 está cerrado; S3-00 lee su `cierre.md`.
@@ -38,9 +47,9 @@ navegador (HTML servido, casi sin JavaScript)
 
 | ID | Historia | Estado |
 |---|---|---|
-| S3-00 | [Preparación](S3-00-preparacion.md) | pendiente |
-| S3-01 | [Cambios del motor decididos (X-01 a X-04, enlaces de las citas, rótulos)](S3-01-decisiones-motor.md) | pendiente |
-| S3-02 | [Observaciones bajas aprobadas y base de la web](S3-02-observaciones-y-base.md) | pendiente |
+| S3-00 | [Preparación](S3-00-preparacion.md) | hecha ([interfaces](evidencia/s3-00_interfaces.md), [base](evidencia/pytest_base.txt): 944 pasan) |
+| S3-01 | [Cambios del motor decididos (X-01 a X-04, enlaces de las citas, rótulos)](S3-01-decisiones-motor.md) | hecha ([evidencia](evidencia/s3-01_regresion.md)); X-01 sin aplicar: el dueño no la aprobó |
+| S3-02 | [Observaciones bajas aprobadas y base de la web](S3-02-observaciones-y-base.md) | hecha ([evidencia](evidencia/s3-02_observaciones.md)); H14 y H15 aplicadas, H21 pasó a la consulta W-02, H17 y H18 sin marca del dueño (W-03) |
 | S3-03 | [Servicio: FastAPI sobre el mismo motor](S3-03-servicio.md) | pendiente |
 | S3-04 | [Páginas: pregunta, respuesta y aclaración](S3-04-paginas.md) | pendiente |
 | S3-05 | [Formulario guiado, sin LLM](S3-05-formulario-guiado.md) | pendiente |

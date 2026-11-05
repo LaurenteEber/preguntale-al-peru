@@ -1,0 +1,244 @@
+{
+ "alternativas": [
+  {
+   "anio": 2025,
+   "lugar": {
+    "ubigeo": "16"
+   },
+   "nivel": "departamento",
+   "nombre": "Loreto",
+   "territorio_id": "16",
+   "texto": "el departamento de Loreto",
+   "tipo": "nivel"
+  }
+ ],
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": null,
+   "confianza": {
+    "ficha": "Confianza: Sin cifra disponible.",
+    "nivel": "sin cifra",
+    "texto": "Confianza en los datos: sin cifra."
+   },
+   "lo_mas_cercano": {
+    "texto": "Sí tenemos la cifra para el departamento de Loreto, donde se reúnen más casos. Puedes preguntar por ese lugar.",
+    "titulo": "Lo más cercano que sí tenemos"
+   },
+   "ojo_al_leer": [],
+   "palabras": 47,
+   "que_hacer": null,
+   "respuesta_corta": "No podemos mostrar cuánto hay de gasto público en salud y nutrición infantil en Putumayo: la cifra no es lo bastante precisa."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ninguna cifra publicada en esta respuesta",
+    "Territorio: Putumayo",
+    "No permite concluir: nada sobre gasto público en salud y nutrición infantil. No mostrar una cifra no quiere decir que el problema no exista."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "La cifra sale de muy pocos casos o varía demasiado, y publicarla podría llevar a conclusiones equivocadas.",
+     "titulo": "Por qué no se puede"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": null,
+     "texto": "Esta respuesta no publica cifras.",
+     "url": ""
+    }
+   ],
+   "glosario": [],
+   "para_citar": [
+    "Esta respuesta no publica cifras."
+   ]
+  }
+ },
+ "cifras": {},
+ "cifras_no_publicadas": [
+  {
+   "anio": 2025,
+   "estado": "suprimida",
+   "id": "gasto_ex_pan__devengado__provincia__160800__2025__principal",
+   "indicador": "gasto_ex_pan",
+   "motivo": "precision",
+   "nivel": "provincia",
+   "territorio": "160800"
+  }
+ ],
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "gasto_ex_pan__devengado__provincia__160800__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "nivel": "provincia",
+    "rol": "principal",
+    "territorio": "160800"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "gasto_publico",
+   "territorio": {
+    "ubigeo": "1608"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__gasto_publico__160800",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "gasto_publico",
+  "tema_gasto": "cpt_grupo_expan",
+  "territorio": {
+   "id": "160800",
+   "nivel": "provincia",
+   "nombre_pedido": "Putumayo"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "1608"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "ficha": {
+  "corta": "Confianza: Sin cifra disponible.\nDatos de: ninguna cifra publicada en esta respuesta\nTerritorio: Putumayo\nNo permite concluir: nada sobre gasto público en salud y nutrición infantil. No mostrar una cifra no quiere decir que el problema no exista.",
+  "larga": {
+   "cifras": {},
+   "cruces": {},
+   "no_concluir": [],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: ."
+  }
+ },
+ "motivo": {
+  "codigo": "precision",
+  "detalle": {
+   "anio": 2025,
+   "indicador": "gasto_ex_pan",
+   "motivo": "precision"
+  },
+  "otros": [],
+  "regla_lenguaje_05": "pocos_casos"
+ },
+ "motivos_semaforo_respuesta": [
+  "sin_cifra_principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "gasto_ex_pan__devengado__provincia__160800__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "nivel": "provincia",
+    "rol": "principal",
+    "territorio": "160800"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "gasto_publico",
+   "territorio": {
+    "ubigeo": "1608"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__gasto_publico__160800",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "gasto_publico",
+  "tema_gasto": "cpt_grupo_expan",
+  "territorio": {
+   "id": "160800",
+   "nivel": "provincia",
+   "nombre_pedido": "Putumayo"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sin cifra principal publicable",
+   "detalle": {
+    "motivos": [
+     "sin_cifra_principal"
+    ],
+    "semaforo_respuesta": "sin_cifra"
+   },
+   "motivo": "sin_cifra_principal",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Sin cifra disponible"
+  }
+ ],
+ "semaforo_respuesta": "sin_cifra",
+ "temas_disponibles": [],
+ "texto": "No podemos mostrar cuánto hay de gasto público en salud y nutrición infantil en Putumayo: la cifra no es lo bastante precisa. Sí tenemos la cifra para el departamento de Loreto, donde se reúnen más casos. Puedes preguntar por ese lugar. La cifra sale de muy pocos casos o varía demasiado, y publicarla podría llevar a conclusiones equivocadas.",
+ "texto_con_marcadores": "No podemos mostrar cuánto hay de gasto público en salud y nutrición infantil en Putumayo: la cifra no es lo bastante precisa. Sí tenemos la cifra para el departamento de Loreto, donde se reúnen más casos. Puedes preguntar por ese lugar. La cifra sale de muy pocos casos o varía demasiado, y publicarla podría llevar a conclusiones equivocadas.",
+ "tipo": "no_se_puede",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

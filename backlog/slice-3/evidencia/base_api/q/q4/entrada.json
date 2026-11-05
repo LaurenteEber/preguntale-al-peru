@@ -1,0 +1,18 @@
+{
+ "consulta": {
+  "idioma": "es",
+  "intencion": "identificar_extremo",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "¿Cuál es el distrito más pobre del Perú?",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "dentro_de": {
+    "nacional": true
+   },
+   "nivel": "distrito"
+  }
+ },
+ "elegir": null
+}

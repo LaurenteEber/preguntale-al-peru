@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ambito": "CALLAO"
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|cruce|CALLAO|sin_datos"
+}

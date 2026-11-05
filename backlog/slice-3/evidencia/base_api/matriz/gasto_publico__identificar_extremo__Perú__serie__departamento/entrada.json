@@ -1,0 +1,19 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "identificar_extremo",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "dentro_de": {
+    "nacional": true
+   },
+   "nivel": "departamento"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|identificar_extremo|Perú|serie|departamento"
+}

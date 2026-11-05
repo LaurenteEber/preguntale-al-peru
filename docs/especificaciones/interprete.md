@@ -33,7 +33,7 @@ entendimos». Sin clave, caída, tiempo agotado, límite de gasto o tope → men
 - Salida: «Entendimos: …» primero (en `respuesta.json`, la primera clave; en el `.md`, el primer párrafo) y luego la
   respuesta por capas. Una aclaración imprime la pregunta, las opciones y la pista de `--elegir`. Un recorte de la pregunta
   imprime el aviso como primera línea.
-- Códigos de salida: los de `cli.codigo_salida` (respondida 0, no se puede 1, aclaración y mensaje 2, error de uso 64).
+- Códigos de salida: los de `cli.codigo_salida` (respondida y «no se puede» 0, error 1, aclaración y mensaje 2, «no disponible» 3).
 - `respuesta.json` lleva `interpretacion` (resultado, modelo, `version_prompt`, reintentos, caché, consulta, anclas,
   descartados, avisos, datos personales quitados) y `entendimos`.
 

@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "120603"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|cruce|Llaylla (distrito, Satipo)|ultimo"
+}

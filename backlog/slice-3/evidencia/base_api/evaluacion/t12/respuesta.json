@@ -1,0 +1,433 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "gasto registrado en el MEF 2025",
+    "ids": [
+     "gasto_ex_pan__devengado__nacional__PE__2025__principal"
+    ],
+    "texto": "es lo que se gastó en 2025 en servicios de salud y nutrición infantil en todo el país, registrado por las entidades públicas.",
+    "valor": "S/ 2 455,9 millones"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No es el gasto de cada lugar: es la suma de lo que registran las entidades públicas.",
+    "No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó."
+   ],
+   "palabras": 85,
+   "que_hacer": null,
+   "respuesta_corta": "En 2025, en Perú, el gasto en servicios de salud y nutrición infantil fue:"
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: Gasto MEF 2025 (devengado)",
+    "Territorio: todo el país",
+    "No permite concluir: cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito."
+   ],
+   "mas_contexto": []
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "gasto_ex_pan__devengado__nacional__PE__2025__principal",
+     "texto": "S/ 2 455,9 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Perú, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
+     "url": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "lo que la entidad ya debe pagar porque recibió el bien o el servicio. Es distinto del presupuesto, que es lo que tiene autorizado gastar en el año.",
+     "termino": "gastado (devengado)"
+    },
+    {
+     "definicion": "los que antes eran del Programa Articulado Nutricional: controles de crecimiento, vacunas, hierro y vitamina A, atención de la anemia, de infecciones respiratorias y diarreas, consejería y agua segura, para menores de 5 años y sus familias.",
+     "termino": "servicios de salud y nutrición infantil"
+    }
+   ],
+   "para_citar": [
+    "S/ 2 455,9 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Perú, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025."
+   ]
+  }
+ },
+ "cifras": {
+  "gasto_ex_pan__devengado__nacional__PE__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": null,
+   "denominador": null,
+   "devengado": 2455856886.1,
+   "ee": null,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "indicador_id": "gasto_ex_pan",
+   "lineas_aparte": [],
+   "medida": "devengado",
+   "metodo_ic": null,
+   "motivos_semaforo": [],
+   "n_muestra": null,
+   "nivel": "nacional",
+   "nivel_pedido": "nacional",
+   "numerador": null,
+   "pct_gasto_atribuible": 0.06372307,
+   "pim": 2498487173.0,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": "gasto: último año cerrado + acumulado de cartera activa (R-GASTO-17)",
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "un solo año → soles corrientes",
+     "detalle": {
+      "precios": "corrientes"
+     },
+     "motivo": "soles_corrientes",
+     "regla": "R-GASTO-12",
+     "rotulo": "soles corrientes de 2025"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "(3) cifra temática: solo gasto final",
+     "detalle": {
+      "bloque_consolidado": "gasto_final",
+      "pendiente": "monto (b) no disponible en el cubo",
+      "tema_id": "cpt_grupo_expan"
+     },
+     "motivo": "transferencias",
+     "regla": "R-GASTO-05",
+     "rotulo": "sin transferencias"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "fase en el rótulo",
+     "detalle": {
+      "columna": "MONTO_DEVENGADO",
+      "fase_gasto": "DEVENGADO"
+     },
+     "mensaje": "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM).",
+     "motivo": "fase_gasto",
+     "regla": "R-GASTO-06",
+     "rotulo": "gastado (devengado)"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "año cerrado: PIM final",
+     "detalle": {
+      "anio_cerrado": true,
+      "avance_pct": 98.29375602321733,
+      "denominador": "PIM final",
+      "fecha_corte": "2025-12-31",
+      "pim": 2498487173.0
+     },
+     "motivo": "avance",
+     "regla": "R-GASTO-07",
+     "rotulo": "avance respecto del PIM final, datos al 2025-12-31"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "rótulo := etiqueta_ciudadana / nombre propio por año",
+     "detalle": {
+      "cadena": "concepto",
+      "tema_id": "cpt_grupo_expan",
+      "version": "1.2"
+     },
+     "motivo": "tema_gasto",
+     "regla": "R-GASTO-08",
+     "rotulo": "Servicios de salud y nutrición infantil que antes eran del PAN"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "PE",
+   "territorio_nombre": "Perú",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "nacional",
+     "periodo_agrupado": null,
+     "territorio_id": "PE"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 2455856886.1
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "gasto_ex_pan__devengado__nacional__PE__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "nivel": "nacional",
+    "rol": "principal",
+    "territorio": "PE"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "kuanto presupuesto ubo para la anemia en el peru",
+   "tema": "gasto_publico",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__gasto_publico__PE",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "kuanto presupuesto ubo para la anemia en el peru",
+  "respuesta_parcial": false,
+  "tema": "gasto_publico",
+  "tema_gasto": "cpt_grupo_expan",
+  "territorio": {
+   "id": "PE",
+   "nivel": "nacional",
+   "nombre_pedido": "Perú"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "kuanto presupuesto ubo para la anemia en el peru",
+  "tema": "gasto_publico",
+  "territorio": {
+   "nacional": true
+  }
+ },
+ "corrector": [
+  {
+   "accion": "rotular",
+   "clausula": "match(lenguaje.prohibidas) o regla estructural → regenerar",
+   "detalle": {
+    "estructurales": [
+     {
+      "cifra": "gasto_ex_pan__devengado__nacional__PE__2025__principal",
+      "oracion": "En 2025, en Perú, el gasto en servicios de salud y nutrición infantil fue: {{c:gasto_ex_pan__devengado__nacional__PE__2025__principal}} es lo que se gastó en 2025 en servicios de salud y nutrición infantil en todo el país, registrado por las entidades públicas.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     }
+    ],
+    "infracciones": [],
+    "intentos": 0
+   },
+   "modo": "corrector",
+   "motivo": "lenguaje_prohibido",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-02"
+  }
+ ],
+ "cruces": [],
+ "entendimos": "Entendimos: cuánto hay de gasto público en salud y nutrición infantil en todo el Perú",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: Gasto MEF 2025 (devengado)\nTerritorio: todo el país\nNo permite concluir: cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito.",
+  "larga": {
+   "cifras": {
+    "gasto_ex_pan__devengado__nacional__PE__2025__principal": {
+     "1_origen": "Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado). Gasto MEF (MEF), 2025. Es el gasto registrado por las entidades públicas.",
+     "2_territorio": "La cifra se presenta por país (Perú).",
+     "3_que_mide": "Mide servicios de salud y nutrición infantil que antes eran del PAN (devengado, sin transferencias).",
+     "4_precision": "Monto registrado (devengado), en soles corrientes. El 6 % del gasto del departamento se puede ubicar en municipalidades y obras.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM)."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: gasto_ex_pan."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "intencion": "kuanto",
+   "tema": "presupuesto ubo para la anemia",
+   "territorio": "el peru"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "gasto_publico",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 1,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:gasto_ex_pan__devengado__nacional__PE__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "gasto_ex_pan__devengado__nacional__PE__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "nivel": "nacional",
+    "rol": "principal",
+    "territorio": "PE"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "kuanto presupuesto ubo para la anemia en el peru",
+   "tema": "gasto_publico",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__gasto_publico__PE",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "kuanto presupuesto ubo para la anemia en el peru",
+  "respuesta_parcial": false,
+  "tema": "gasto_publico",
+  "tema_gasto": "cpt_grupo_expan",
+  "territorio": {
+   "id": "PE",
+   "nivel": "nacional",
+   "nombre_pedido": "Perú"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:gasto_ex_pan__devengado__nacional__PE__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "match(lenguaje.prohibidas) o regla estructural → regenerar",
+   "detalle": {
+    "estructurales": [
+     {
+      "cifra": "gasto_ex_pan__devengado__nacional__PE__2025__principal",
+      "oracion": "En 2025, en Perú, el gasto en servicios de salud y nutrición infantil fue: {{c:gasto_ex_pan__devengado__nacional__PE__2025__principal}} es lo que se gastó en 2025 en servicios de salud y nutrición infantil en todo el país, registrado por las entidades públicas.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     }
+    ],
+    "infracciones": [],
+    "intentos": 0
+   },
+   "modo": "corrector",
+   "motivo": "lenguaje_prohibido",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-02"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2025, en Perú, el gasto en servicios de salud y nutrición infantil fue: S/ 2 455,9 millones es lo que se gastó en 2025 en servicios de salud y nutrición infantil en todo el país, registrado por las entidades públicas. No es el gasto de cada lugar: es la suma de lo que registran las entidades públicas. No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó.",
+ "texto_con_marcadores": "En 2025, en Perú, el gasto en servicios de salud y nutrición infantil fue: {{c:gasto_ex_pan__devengado__nacional__PE__2025__principal}} es lo que se gastó en 2025 en servicios de salud y nutrición infantil en todo el país, registrado por las entidades públicas. No es el gasto de cada lugar: es la suma de lo que registran las entidades públicas. No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

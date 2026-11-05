@@ -1,0 +1,97 @@
+{
+ "aclaracion": {
+  "motivo": "sin_coincidencia",
+  "opciones": [],
+  "por_defecto": null,
+  "pregunta": "No encontramos ese lugar. Revisa cómo está escrito o dinos el departamento, la provincia o el distrito."
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [],
+   "por_defecto": null,
+   "pregunta": "No encontramos ese lugar. Revisa cómo está escrito o dinos el departamento, la provincia o el distrito."
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "pobreza en SJL",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "SJL"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "pobreza en SJL",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "pobreza en SJL",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "SJL"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de pobreza en «SJL»",
+ "interpretacion": {
+  "anclas": {
+   "tema": "pobreza",
+   "territorio": "SJL"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "SJL"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [],
+   "por_defecto": null,
+   "pregunta": "No encontramos ese lugar. Revisa cómo está escrito o dinos el departamento, la provincia o el distrito."
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "pobreza en SJL",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "SJL"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "pobreza en SJL",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "No encontramos ese lugar. Revisa cómo está escrito o dinos el departamento, la provincia o el distrito.\nEscribe el lugar de nuevo.",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

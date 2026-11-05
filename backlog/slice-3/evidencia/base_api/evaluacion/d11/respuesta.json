@@ -1,0 +1,536 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENAHO 2025 (INEI); el INEI publica la misma cifra (33,7 %) · ENAHO 2025 (INEI); el INEI publica la misma cifra (34,3 %)",
+    "ids": [
+     "enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal",
+     "enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal"
+    ],
+    "texto": "de personas en situación de pobreza monetaria en Ayacucho en 2025, frente a 34,3 % en Huancavelica.",
+    "valor": "33,7 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+    "«Sin diferencia clara» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
+   ],
+   "palabras": 79,
+   "que_hacer": null,
+   "respuesta_corta": "En 2025, la pobreza monetaria en Ayacucho y en Huancavelica: sin diferencia estadísticamente clara."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENAHO 2025 (INEI)",
+    "Territorio: departamento de Ayacucho y departamento de Huancavelica",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+     "titulo": "Cómo se comparó"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal",
+     "texto": "33,7 % (intervalo del INEI: 29,2 % a 38,2 %): personas en situación de pobreza monetaria, Ayacucho, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal",
+     "texto": "34,3 % (intervalo del INEI: 29,2 % a 39,4 %): personas en situación de pobreza monetaria, Huancavelica, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    },
+    {
+     "definicion": "una diferencia entre dos lugares que no se explica por el azar de la encuesta: la prueba estadística que usamos tiene en cuenta el margen de error de cada cifra. «Sin diferencia clara» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.",
+     "termino": "diferencia estadísticamente clara"
+    }
+   ],
+   "para_citar": [
+    "33,7 % (intervalo del INEI: 29,2 % a 38,2 %): personas en situación de pobreza monetaria, Ayacucho, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "34,3 % (intervalo del INEI: 29,2 % a 39,4 %): personas en situación de pobreza monetaria, Huancavelica, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-05",
+    "valor": 33.7
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 6.73211109,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.26722186,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 29.2,
+    "ic_sup": 38.2,
+    "id_cifra": "DOR-POB-2025-05"
+   },
+   "ic_inf": 29.21577596,
+   "ic_sup": 38.36657228,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1165,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "33,7 % (entre 29,2 % y 38,4 %), ENAHO 2025, Ayacucho; basado en 1165 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "33,7 % (entre 29,2 % y 38,4 %), ENAHO 2025, Ayacucho; basado en 1165 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "05",
+   "territorio_nombre": "Ayacucho",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "05"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 33.67772506
+  },
+  "enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-09",
+    "valor": 34.3
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 7.3082843,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.50535803,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 29.2,
+    "ic_sup": 39.4,
+    "id_cifra": "DOR-POB-2025-09"
+   },
+   "ic_inf": 29.34191751,
+   "ic_sup": 39.48610333,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1033,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "34,3 % (entre 29,3 % y 39,5 %), ENAHO 2025, Huancavelica; basado en 1033 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "34,3 % (entre 29,3 % y 39,5 %), ENAHO 2025, Huancavelica; basado en 1033 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "09"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-09",
+   "valor": 34.28106965
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "05"
+   },
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "09"
+   }
+  ],
+  "consulta_minima": {
+   "comparar_con": {
+    "texto": "región Huancavelica"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "pregunta_original": "¿Quién tiene más pobreza, la región Ayacucho o la región Huancavelica?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "región Ayacucho"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "comparacion__pobreza_monetaria__05__09",
+  "intencion": "comparacion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "comparacion",
+  "pregunta": "¿Quién tiene más pobreza, la región Ayacucho o la región Huancavelica?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "05",
+   "nivel": "departamento",
+   "nombre_pedido": "Ayacucho"
+  },
+  "territorio_comparado": {
+   "id": "09",
+   "nivel": "departamento",
+   "nombre_pedido": "Huancavelica"
+  }
+ },
+ "consulta_minima": {
+  "comparar_con": {
+   "texto": "región Huancavelica"
+  },
+  "idioma": "es",
+  "intencion": "comparacion",
+  "pregunta_original": "¿Quién tiene más pobreza, la región Ayacucho o la región Huancavelica?",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "región Ayacucho"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cómo se compara la pobreza en el departamento de Ayacucho con el departamento de Huancavelica",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENAHO 2025 (INEI)\nTerritorio: departamento de Ayacucho y departamento de Huancavelica\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento.",
+  "larga": {
+   "cifras": {
+    "enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Ayacucho).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 29,2 % y 38,4 % (coeficiente de variación 6,7 %, 1165 casos en la muestra). El INEI publica para esta cifra un intervalo entre 29,2 % y 38,2 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 33,7 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "33,7 % (entre 29,2 % y 38,4 %), ENAHO 2025, Ayacucho; basado en 1165 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 29,3 % y 39,5 % (coeficiente de variación 7,3 %, 1033 casos en la muestra). El INEI publica para esta cifra un intervalo entre 29,2 % y 39,4 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 34,3 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "34,3 % (entre 29,3 % y 39,5 %), ENAHO 2025, Huancavelica; basado en 1033 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "comparar_con": "región Huancavelica",
+   "intencion": "tiene más",
+   "tema": "pobreza",
+   "territorio": "región Ayacucho"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "comparar_con": {
+    "texto": "región Huancavelica"
+   },
+   "intencion": "comparacion",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "región Ayacucho"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal",
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "05"
+   },
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "09"
+   }
+  ],
+  "consulta_minima": {
+   "comparar_con": {
+    "texto": "región Huancavelica"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "pregunta_original": "¿Quién tiene más pobreza, la región Ayacucho o la región Huancavelica?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "región Ayacucho"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "comparacion__pobreza_monetaria__05__09",
+  "intencion": "comparacion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "comparacion",
+  "pregunta": "¿Quién tiene más pobreza, la región Ayacucho o la región Huancavelica?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "05",
+   "nivel": "departamento",
+   "nombre_pedido": "Ayacucho"
+  },
+  "territorio_comparado": {
+   "id": "09",
+   "nivel": "departamento",
+   "nombre_pedido": "Huancavelica"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal",
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2025, la pobreza monetaria en Ayacucho y en Huancavelica: sin diferencia estadísticamente clara. 33,7 % de personas en situación de pobreza monetaria en Ayacucho en 2025, frente a 34,3 % en Huancavelica. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. «Sin diferencia clara» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+ "texto_con_marcadores": "En 2025, la pobreza monetaria en Ayacucho y en Huancavelica: sin diferencia estadísticamente clara. {{c:enaho_pobreza_monetaria__proporcion__departamento__05__2025__principal}} de personas en situación de pobreza monetaria en Ayacucho en 2025, frente a {{c:enaho_pobreza_monetaria__proporcion__departamento__09__2025__principal}} en Huancavelica. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. «Sin diferencia clara» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

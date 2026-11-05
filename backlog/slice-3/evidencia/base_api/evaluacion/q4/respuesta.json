@@ -1,0 +1,2080 @@
+{
+ "avisos_al_usuario": [
+  {
+   "objetivo": "respuesta",
+   "regla": "R-ENC-12",
+   "texto": "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno."
+  },
+  {
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-06",
+   "texto": "Este párrafo combina datos de distinto tipo: encuesta a hogares, estimación con modelo. Se presentan juntos para dar contexto, no porque uno explique al otro."
+  }
+ ],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "Mapa de Pobreza 2018 (INEI); rango publicado por el INEI",
+    "ids": [
+     "mapa_060402",
+     "mapa_060308",
+     "mapa_050410"
+    ],
+    "texto": "Anguía (Chota, Cajamarca): entre 72 % y 86 % en 2018. Oxamarca (Celendín, Cajamarca): entre 75 % y 87 % en 2018. Uchuraccay (Huanta, Ayacucho): entre 73 % y 89 % en 2018.",
+    "valor": ""
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: baja (dato muy aproximado): es una estimación con modelo, de 2018.",
+    "nivel": "baja",
+    "texto": "Confianza en los datos: baja. Es una estimación con modelo, de 2018."
+   },
+   "ojo_al_leer": [
+    "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta.",
+    "No los compares con las cifras de departamentos de 2025: otro año y método."
+   ],
+   "palabras": 124,
+   "que_hacer": null,
+   "respuesta_corta": "No se puede nombrar un solo distrito como el más pobre: el único dato oficial por distrito es el Mapa de Pobreza 2018 del INEI, y su margen de error no permite ordenarlos. En ese mapa, el grupo con la pobreza más alta son tres distritos, sin orden entre ellos (aquí, alfabético):"
+  },
+  "capa2": {
+   "avisos": [
+    "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno.",
+    "Estas cifras vienen de fuentes de distinto tipo (encuesta a hogares, estimación con modelo): se muestran juntas para dar contexto y cada una mide algo distinto."
+   ],
+   "limites": [
+    "Datos de: Mapa de Pobreza 2018 (INEI) · ENAHO 2025 (INEI)",
+    "Territorio: distritos (estimación de 2018) y departamentos (2025)",
+    "No permite concluir: cuál es la situación hoy: el dato es de 2018, antes de la pandemia. Un orden exacto entre territorios: las diferencias entre muchos de ellos no son estadísticamente claras."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": "Otro año, otro territorio y otro método: no se compara con la cifra clave.",
+     "texto": "En 2025, según el INEI, siete departamentos forman el grupo con la pobreza monetaria más alta, sin diferencias estadísticamente claras entre ellos. En orden alfabético: Ayacucho (33,7 %), Cajamarca (41,0 %), Huancavelica (34,3 %), Huánuco (35,7 %), Loreto (40,1 %), Pasco (36,4 %) y Puno (37,5 %). Para el grupo en conjunto, el INEI estima entre 35,7 % y 39,8 %; cada departamento puede quedar un poco por encima o por debajo de ese rango.",
+     "titulo": "Con datos recientes (2025), solo por departamento"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "mapa_060402",
+     "texto": "entre 71,7 % y 85,7 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Anguía, 2018. Fuente: INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718), Anexo N.º 1, p. 55.",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf"
+    },
+    {
+     "id_cifra": "mapa_060308",
+     "texto": "entre 74,6 % y 87,4 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Oxamarca, 2018. Fuente: INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718), Anexo N.º 1, p. 55.",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf"
+    },
+    {
+     "id_cifra": "mapa_050410",
+     "texto": "entre 73,3 % y 89,3 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Uchuraccay, 2018. Fuente: INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718), Anexo N.º 1, p. 55.",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf"
+    },
+    {
+     "id_cifra": "enaho_05",
+     "texto": "33,7 % (intervalo del INEI: 29,2 % a 38,2 %): personas en situación de pobreza monetaria, Ayacucho, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_06",
+     "texto": "41,0 % (intervalo del INEI: 36,5 % a 45,6 %): personas en situación de pobreza monetaria, Cajamarca, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_09",
+     "texto": "34,3 % (intervalo del INEI: 29,2 % a 39,4 %): personas en situación de pobreza monetaria, Huancavelica, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_10",
+     "texto": "35,7 % (intervalo del INEI: 30,3 % a 41,1 %): personas en situación de pobreza monetaria, Huánuco, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_16",
+     "texto": "40,1 % (intervalo del INEI: 35,7 % a 44,5 %): personas en situación de pobreza monetaria, Loreto, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_19",
+     "texto": "36,4 % (intervalo del INEI: 31,9 % a 40,9 %): personas en situación de pobreza monetaria, Pasco, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_21",
+     "texto": "37,5 % (intervalo del INEI: 32,1 % a 42,8 %): personas en situación de pobreza monetaria, Puno, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "estimación estadística del INEI de la pobreza de cada distrito en 2018. No es un conteo casa por casa, por eso cada distrito tiene un rango y no una cifra exacta.",
+     "termino": "Mapa de Pobreza"
+    },
+    {
+     "definicion": "los valores entre los que está probablemente la cifra real, según el margen de error de la encuesta o del modelo.",
+     "termino": "rango probable (intervalo)"
+    },
+    {
+     "definicion": "territorios cuyas cifras no se pueden ordenar entre sí porque sus diferencias pueden deberse al azar de la encuesta o del modelo.",
+     "termino": "grupo sin diferencias claras"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    }
+   ],
+   "para_citar": [
+    "entre 71,7 % y 85,7 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Anguía, 2018. Fuente: INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718), Anexo N.º 1, p. 55.",
+    "entre 74,6 % y 87,4 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Oxamarca, 2018. Fuente: INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718), Anexo N.º 1, p. 55.",
+    "entre 73,3 % y 89,3 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Uchuraccay, 2018. Fuente: INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718), Anexo N.º 1, p. 55.",
+    "33,7 % (intervalo del INEI: 29,2 % a 38,2 %): personas en situación de pobreza monetaria, Ayacucho, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "41,0 % (intervalo del INEI: 36,5 % a 45,6 %): personas en situación de pobreza monetaria, Cajamarca, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "34,3 % (intervalo del INEI: 29,2 % a 39,4 %): personas en situación de pobreza monetaria, Huancavelica, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "35,7 % (intervalo del INEI: 30,3 % a 41,1 %): personas en situación de pobreza monetaria, Huánuco, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "40,1 % (intervalo del INEI: 35,7 % a 44,5 %): personas en situación de pobreza monetaria, Loreto, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "36,4 % (intervalo del INEI: 31,9 % a 40,9 %): personas en situación de pobreza monetaria, Pasco, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "37,5 % (intervalo del INEI: 32,1 % a 42,8 %): personas en situación de pobreza monetaria, Puno, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_05": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-05",
+    "valor": 33.7
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 6.73211109,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.26722186,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 29.2,
+    "ic_sup": 38.2,
+    "id_cifra": "DOR-POB-2025-05"
+   },
+   "ic_inf": 29.21577596,
+   "ic_sup": 38.36657228,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1165,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "33,7 % (entre 29,2 % y 38,4 %), ENAHO 2025, Ayacucho; basado en 1165 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "33,7 % (entre 29,2 % y 38,4 %), ENAHO 2025, Ayacucho; basado en 1165 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "05",
+   "territorio_nombre": "Ayacucho",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "05"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 33.67772506
+  },
+  "enaho_06": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-06",
+    "valor": 41.0
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 5.47626677,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.24725502,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 36.5,
+    "ic_sup": 45.6,
+    "id_cifra": "DOR-POB-2025-06"
+   },
+   "ic_inf": 36.57188917,
+   "ic_sup": 45.61309444,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1464,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "41,0 % (entre 36,6 % y 45,6 %), ENAHO 2025, Cajamarca; basado en 1464 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "41,0 % (entre 36,6 % y 45,6 %), ENAHO 2025, Cajamarca; basado en 1464 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "06",
+   "territorio_nombre": "Cajamarca",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "06"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-06",
+   "valor": 41.03625918
+  },
+  "enaho_09": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-09",
+    "valor": 34.3
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 7.3082843,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.50535803,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 29.2,
+    "ic_sup": 39.4,
+    "id_cifra": "DOR-POB-2025-09"
+   },
+   "ic_inf": 29.34191751,
+   "ic_sup": 39.48610333,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1033,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "34,3 % (entre 29,3 % y 39,5 %), ENAHO 2025, Huancavelica; basado en 1033 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "34,3 % (entre 29,3 % y 39,5 %), ENAHO 2025, Huancavelica; basado en 1033 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "09"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-09",
+   "valor": 34.28106965
+  },
+  "enaho_10": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-10",
+    "valor": 35.7
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 7.48372371,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.66891831,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 30.3,
+    "ic_sup": 41.1,
+    "id_cifra": "DOR-POB-2025-10"
+   },
+   "ic_inf": 30.39933354,
+   "ic_sup": 41.19621527,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1229,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "35,7 % (entre 30,4 % y 41,2 %), ENAHO 2025, Huánuco; basado en 1229 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "35,7 % (entre 30,4 % y 41,2 %), ENAHO 2025, Huánuco; basado en 1229 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "10",
+   "territorio_nombre": "Huánuco",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "10"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 35.66297221
+  },
+  "enaho_16": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-16",
+    "valor": 40.1
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 5.43846324,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.18149381,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 35.7,
+    "ic_sup": 44.5,
+    "id_cifra": "DOR-POB-2025-16"
+   },
+   "ic_inf": 35.78520276,
+   "ic_sup": 44.55709086,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1379,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "40,1 % (entre 35,8 % y 44,6 %), ENAHO 2025, Loreto; basado en 1379 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "40,1 % (entre 35,8 % y 44,6 %), ENAHO 2025, Loreto; basado en 1379 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "16",
+   "territorio_nombre": "Loreto",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "16"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 40.11232064
+  },
+  "enaho_19": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-19",
+    "valor": 36.4
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 6.22735808,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.2670569,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 31.9,
+    "ic_sup": 40.9,
+    "id_cifra": "DOR-POB-2025-19"
+   },
+   "ic_inf": 31.91611042,
+   "ic_sup": 41.0763015,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 850,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "36,4 % (entre 31,9 % y 41,1 %), ENAHO 2025, Pasco; basado en 850 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "36,4 % (entre 31,9 % y 41,1 %), ENAHO 2025, Pasco; basado en 850 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "19",
+   "territorio_nombre": "Pasco",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "19"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 36.40479429
+  },
+  "enaho_21": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-21",
+    "valor": 37.5
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 7.29690753,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.73376024,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 32.1,
+    "ic_sup": 42.8,
+    "id_cifra": "DOR-POB-2025-21"
+   },
+   "ic_inf": 32.05763042,
+   "ic_sup": 43.11375139,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1079,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "37,5 % (entre 32,1 % y 43,1 %), ENAHO 2025, Puno; basado en 1079 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "37,5 % (entre 32,1 % y 43,1 %), ENAHO 2025, Puno; basado en 1079 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "21",
+   "territorio_nombre": "Puno",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "21"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-21",
+   "valor": 37.46464135
+  },
+  "mapa_050410": {
+   "accion_final": "publicar_referencial",
+   "anio": 2018,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "mapa_pobreza_INEI_2018_areas_pequenas",
+    "cuadro_pagina": "Anexo N.º 1, p. 55",
+    "documento": "INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718)",
+    "entidad": "INEI",
+    "id_cifra": "DOR-MAPA-2018-050410",
+    "valor": null
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": null,
+   "denominador": null,
+   "devengado": null,
+   "ee": null,
+   "estado_cifra": "referencial",
+   "grupo_robusto_nacional": 1,
+   "ic_inei": null,
+   "ic_inf": 73.254961,
+   "ic_sup": 89.268381,
+   "indicador_id": "mapa_pobreza_2018",
+   "lineas_aparte": null,
+   "medida": "intervalo",
+   "metodo_ic": "publicado_inei",
+   "motivos_semaforo": [
+    {
+     "criterio": "vigencia",
+     "puntaje": 2
+    },
+    {
+     "criterio": "precision",
+     "puntaje": 1
+    },
+    {
+     "criterio": "ancho_ic_modelada",
+     "puntaje": 1
+    }
+   ],
+   "n_muestra": null,
+   "nivel": "distrito",
+   "nivel_pedido": "distrito",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2018,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2018
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2018.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "publicar_referencial",
+     "clausula": "única fuente distrital modelada > 5 años",
+     "detalle": {
+      "contexto": {
+       "nivel": "departamento",
+       "territorio_id": "05"
+      },
+      "contexto_obligatorio": "cifra departamental ENAHO del último año",
+      "edad_dato": 8,
+      "es_principal": true,
+      "ranking": "solo grupo_robusto (lista del grupo extremo, sin orden interno)",
+      "semaforo_cifra": "rojo"
+     },
+     "mensaje": "Es la única estimación oficial por distrito y corresponde a 2018, antes de la pandemia; la situación actual probablemente es distinta.",
+     "motivo": "modelada_antigua",
+     "regla": "R-EST-05"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "ranking solo por grupo_robusto",
+     "detalle": {
+      "grupo_robusto_nacional": 1,
+      "grupo_robusto_regional": 1,
+      "ordenar_por": "grupo_robusto"
+     },
+     "modificador": true,
+     "motivo": "ranking",
+     "regla": "R-EST-01"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "antiguedad",
+     "clausula": "anio_actual − anio_referencia > 3",
+     "detalle": {
+      "edad_dato": 8
+     },
+     "mensaje": "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 73,3 % y 89,3 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "vigencia",
+     "regla": "R-EST-01"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "edad_dato > vigencia_max_presente_anios",
+     "detalle": {
+      "anio_dato": 2018,
+      "edad_dato": 8,
+      "plantilla": "en 2018 se estimaba"
+     },
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04",
+     "rotulo": "tiempo_pasado_con_anio"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "dato_anterior_a_choque",
+     "clausula": "anio_choque entre el dato y el presente, socioeconómico",
+     "detalle": {
+      "anios_choque": [
+       2020,
+       2021
+      ]
+     },
+     "mensaje": "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 2",
+     "detalle": {
+      "accion_vigente": "publicar_referencial",
+      "escalado": false,
+      "motivos": [
+       {
+        "criterio": "vigencia",
+        "puntaje": 2
+       },
+       {
+        "criterio": "precision",
+        "puntaje": 1
+       },
+       {
+        "criterio": "ancho_ic_modelada",
+        "puntaje": 1
+       }
+      ],
+      "puntajes": {
+       "ancho_ic_modelada": 1,
+       "base_geografica": 0,
+       "precision": 1,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 2
+      },
+      "semaforo": "rojo"
+     },
+     "mensaje": "Dato muy aproximado: es una estimación con modelo, de 2018",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato muy aproximado"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "rojo",
+   "territorio_id": "050410",
+   "territorio_nombre": "Uchuraccay",
+   "traza": [
+    {
+     "accion": "publicar_referencial",
+     "anio": 2018,
+     "estado": "referencial",
+     "motivos": [
+      "modelada_antigua"
+     ],
+     "nivel": "distrito",
+     "periodo_agrupado": null,
+     "territorio_id": "050410"
+    }
+   ],
+   "validada_dorada": "DOR-MAPA-2018-050410",
+   "valor": null
+  },
+  "mapa_060308": {
+   "accion_final": "publicar_referencial",
+   "anio": 2018,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "mapa_pobreza_INEI_2018_areas_pequenas",
+    "cuadro_pagina": "Anexo N.º 1, p. 55",
+    "documento": "INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718)",
+    "entidad": "INEI",
+    "id_cifra": "DOR-MAPA-2018-060308",
+    "valor": null
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": null,
+   "denominador": null,
+   "devengado": null,
+   "ee": null,
+   "estado_cifra": "referencial",
+   "grupo_robusto_nacional": 1,
+   "ic_inei": null,
+   "ic_inf": 74.592076,
+   "ic_sup": 87.404338,
+   "indicador_id": "mapa_pobreza_2018",
+   "lineas_aparte": null,
+   "medida": "intervalo",
+   "metodo_ic": "publicado_inei",
+   "motivos_semaforo": [
+    {
+     "criterio": "vigencia",
+     "puntaje": 2
+    },
+    {
+     "criterio": "precision",
+     "puntaje": 1
+    },
+    {
+     "criterio": "ancho_ic_modelada",
+     "puntaje": 1
+    }
+   ],
+   "n_muestra": null,
+   "nivel": "distrito",
+   "nivel_pedido": "distrito",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2018,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2018
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2018.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "publicar_referencial",
+     "clausula": "única fuente distrital modelada > 5 años",
+     "detalle": {
+      "contexto": {
+       "nivel": "departamento",
+       "territorio_id": "06"
+      },
+      "contexto_obligatorio": "cifra departamental ENAHO del último año",
+      "edad_dato": 8,
+      "es_principal": true,
+      "ranking": "solo grupo_robusto (lista del grupo extremo, sin orden interno)",
+      "semaforo_cifra": "rojo"
+     },
+     "mensaje": "Es la única estimación oficial por distrito y corresponde a 2018, antes de la pandemia; la situación actual probablemente es distinta.",
+     "motivo": "modelada_antigua",
+     "regla": "R-EST-05"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "ranking solo por grupo_robusto",
+     "detalle": {
+      "grupo_robusto_nacional": 1,
+      "grupo_robusto_regional": 1,
+      "ordenar_por": "grupo_robusto"
+     },
+     "modificador": true,
+     "motivo": "ranking",
+     "regla": "R-EST-01"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "antiguedad",
+     "clausula": "anio_actual − anio_referencia > 3",
+     "detalle": {
+      "edad_dato": 8
+     },
+     "mensaje": "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 74,6 % y 87,4 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "vigencia",
+     "regla": "R-EST-01"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "edad_dato > vigencia_max_presente_anios",
+     "detalle": {
+      "anio_dato": 2018,
+      "edad_dato": 8,
+      "plantilla": "en 2018 se estimaba"
+     },
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04",
+     "rotulo": "tiempo_pasado_con_anio"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "dato_anterior_a_choque",
+     "clausula": "anio_choque entre el dato y el presente, socioeconómico",
+     "detalle": {
+      "anios_choque": [
+       2020,
+       2021
+      ]
+     },
+     "mensaje": "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 2",
+     "detalle": {
+      "accion_vigente": "publicar_referencial",
+      "escalado": false,
+      "motivos": [
+       {
+        "criterio": "vigencia",
+        "puntaje": 2
+       },
+       {
+        "criterio": "precision",
+        "puntaje": 1
+       },
+       {
+        "criterio": "ancho_ic_modelada",
+        "puntaje": 1
+       }
+      ],
+      "puntajes": {
+       "ancho_ic_modelada": 1,
+       "base_geografica": 0,
+       "precision": 1,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 2
+      },
+      "semaforo": "rojo"
+     },
+     "mensaje": "Dato muy aproximado: es una estimación con modelo, de 2018",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato muy aproximado"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "rojo",
+   "territorio_id": "060308",
+   "territorio_nombre": "Oxamarca",
+   "traza": [
+    {
+     "accion": "publicar_referencial",
+     "anio": 2018,
+     "estado": "referencial",
+     "motivos": [
+      "modelada_antigua"
+     ],
+     "nivel": "distrito",
+     "periodo_agrupado": null,
+     "territorio_id": "060308"
+    }
+   ],
+   "validada_dorada": "DOR-MAPA-2018-060308",
+   "valor": null
+  },
+  "mapa_060402": {
+   "accion_final": "publicar_referencial",
+   "anio": 2018,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "mapa_pobreza_INEI_2018_areas_pequenas",
+    "cuadro_pagina": "Anexo N.º 1, p. 55",
+    "documento": "INEI, Mapa de Pobreza Monetaria Provincial y Distrital 2018 (Libro, Lib1718)",
+    "entidad": "INEI",
+    "id_cifra": "DOR-MAPA-2018-060402",
+    "valor": null
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": null,
+   "denominador": null,
+   "devengado": null,
+   "ee": null,
+   "estado_cifra": "referencial",
+   "grupo_robusto_nacional": 1,
+   "ic_inei": null,
+   "ic_inf": 71.738599,
+   "ic_sup": 85.685853,
+   "indicador_id": "mapa_pobreza_2018",
+   "lineas_aparte": null,
+   "medida": "intervalo",
+   "metodo_ic": "publicado_inei",
+   "motivos_semaforo": [
+    {
+     "criterio": "vigencia",
+     "puntaje": 2
+    },
+    {
+     "criterio": "precision",
+     "puntaje": 1
+    },
+    {
+     "criterio": "ancho_ic_modelada",
+     "puntaje": 1
+    }
+   ],
+   "n_muestra": null,
+   "nivel": "distrito",
+   "nivel_pedido": "distrito",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2018,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2018
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2018.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "publicar_referencial",
+     "clausula": "única fuente distrital modelada > 5 años",
+     "detalle": {
+      "contexto": {
+       "nivel": "departamento",
+       "territorio_id": "06"
+      },
+      "contexto_obligatorio": "cifra departamental ENAHO del último año",
+      "edad_dato": 8,
+      "es_principal": true,
+      "ranking": "solo grupo_robusto (lista del grupo extremo, sin orden interno)",
+      "semaforo_cifra": "rojo"
+     },
+     "mensaje": "Es la única estimación oficial por distrito y corresponde a 2018, antes de la pandemia; la situación actual probablemente es distinta.",
+     "motivo": "modelada_antigua",
+     "regla": "R-EST-05"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "ranking solo por grupo_robusto",
+     "detalle": {
+      "grupo_robusto_nacional": 1,
+      "grupo_robusto_regional": 1,
+      "ordenar_por": "grupo_robusto"
+     },
+     "modificador": true,
+     "motivo": "ranking",
+     "regla": "R-EST-01"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "antiguedad",
+     "clausula": "anio_actual − anio_referencia > 3",
+     "detalle": {
+      "edad_dato": 8
+     },
+     "mensaje": "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 71,7 % y 85,7 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "vigencia",
+     "regla": "R-EST-01"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "edad_dato > vigencia_max_presente_anios",
+     "detalle": {
+      "anio_dato": 2018,
+      "edad_dato": 8,
+      "plantilla": "en 2018 se estimaba"
+     },
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04",
+     "rotulo": "tiempo_pasado_con_anio"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "dato_anterior_a_choque",
+     "clausula": "anio_choque entre el dato y el presente, socioeconómico",
+     "detalle": {
+      "anios_choque": [
+       2020,
+       2021
+      ]
+     },
+     "mensaje": "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 2",
+     "detalle": {
+      "accion_vigente": "publicar_referencial",
+      "escalado": false,
+      "motivos": [
+       {
+        "criterio": "vigencia",
+        "puntaje": 2
+       },
+       {
+        "criterio": "precision",
+        "puntaje": 1
+       },
+       {
+        "criterio": "ancho_ic_modelada",
+        "puntaje": 1
+       }
+      ],
+      "puntajes": {
+       "ancho_ic_modelada": 1,
+       "base_geografica": 0,
+       "precision": 1,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 2
+      },
+      "semaforo": "rojo"
+     },
+     "mensaje": "Dato muy aproximado: es una estimación con modelo, de 2018",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato muy aproximado"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "rojo",
+   "territorio_id": "060402",
+   "territorio_nombre": "Anguía",
+   "traza": [
+    {
+     "accion": "publicar_referencial",
+     "anio": 2018,
+     "estado": "referencial",
+     "motivos": [
+      "modelada_antigua"
+     ],
+     "nivel": "distrito",
+     "periodo_agrupado": null,
+     "territorio_id": "060402"
+    }
+   ],
+   "validada_dorada": "DOR-MAPA-2018-060402",
+   "valor": null
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "identificar_extremo",
+   "pregunta_original": "¿Cuál es el distrito más pobre del Perú?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "dentro_de": {
+     "nacional": true
+    },
+    "nivel": "distrito"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-08"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [
+   {
+    "grupo": 1,
+    "rol": "principal",
+    "tipo": "mapa_grupo_robusto"
+   },
+   {
+    "anio": "ultimo",
+    "indicador": "enaho_pobreza_monetaria",
+    "prefijo": "enaho",
+    "rol": "contexto",
+    "tipo": "ranking_departamental"
+   }
+  ],
+  "grupos_estadisticos": "robustos_mapa",
+  "id": "identificar_extremo__pobreza_monetaria__distrito",
+  "intencion": "identificar_extremo",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "identificar_extremo",
+  "pregunta": "¿Cuál es el distrito más pobre del Perú?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": null,
+   "nivel": "distrito",
+   "nombre_pedido": null
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "identificar_extremo",
+  "pregunta_original": "¿Cuál es el distrito más pobre del Perú?",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "dentro_de": {
+    "nacional": true
+   },
+   "nivel": "distrito"
+  }
+ },
+ "corrector": [
+  {
+   "accion": "rotular",
+   "clausula": "párrafo con >= 2 naturaleza_dato",
+   "detalle": {
+    "naturalezas": [
+     "encuesta_muestral",
+     "estimacion_modelada"
+    ]
+   },
+   "mensaje": "Este párrafo combina datos de distinto tipo: encuesta_muestral, estimacion_modelada. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "motivo": "naturalezas_mezcladas",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-06"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "(a)–(e) del párrafo mixto",
+   "detalle": {
+    "fallas": [
+     {
+      "b": "verbo de estimacion_modelada ∉ ['el inei estimo con un modelo', 'proyecta']",
+      "oracion": "{{p:sin_ranking}} En ese mapa, el grupo con la pobreza más alta son tres distritos, sin orden entre ellos (aquí, alfabético): {{e:lugar_mapa_060402}}: {{c:mapa_060402}} en 2018."
+     },
+     {
+      "b": "verbo de estimacion_modelada ∉ ['el inei estimo con un modelo', 'proyecta']",
+      "oracion": "{{e:lugar_mapa_060308}}: {{c:mapa_060308}} en 2018."
+     },
+     {
+      "b": "verbo de estimacion_modelada ∉ ['el inei estimo con un modelo', 'proyecta']",
+      "oracion": "{{e:lugar_mapa_050410}}: {{c:mapa_050410}} en 2018."
+     },
+     {
+      "b": "verbo de encuesta_muestral ∉ ['se estima que', 'alrededor de']",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     }
+    ]
+   },
+   "modo": "corrector",
+   "motivo": "naturalezas_mezcladas",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-06"
+  }
+ ],
+ "cruces": [],
+ "entendimos": "Entendimos: qué distrito tiene más pobreza en todo el Perú",
+ "ficha": {
+  "corta": "Confianza en los datos: baja (dato muy aproximado): es una estimación con modelo, de 2018.\nDatos de: Mapa de Pobreza 2018 (INEI) · ENAHO 2025 (INEI)\nTerritorio: distritos (estimación de 2018) y departamentos (2025)\nNo permite concluir: cuál es la situación hoy: el dato es de 2018, antes de la pandemia. Un orden exacto entre territorios: las diferencias entre muchos de ellos no son estadísticamente claras.",
+  "larga": {
+   "cifras": {
+    "enaho_05": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Ayacucho).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 29,2 % y 38,4 % (coeficiente de variación 6,7 %, 1165 casos en la muestra). El INEI publica para esta cifra un intervalo entre 29,2 % y 38,2 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 33,7 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "33,7 % (entre 29,2 % y 38,4 %), ENAHO 2025, Ayacucho; basado en 1165 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_06": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Cajamarca).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 36,6 % y 45,6 % (coeficiente de variación 5,5 %, 1464 casos en la muestra). El INEI publica para esta cifra un intervalo entre 36,5 % y 45,6 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 41,0 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "41,0 % (entre 36,6 % y 45,6 %), ENAHO 2025, Cajamarca; basado en 1464 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_09": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 29,3 % y 39,5 % (coeficiente de variación 7,3 %, 1033 casos en la muestra). El INEI publica para esta cifra un intervalo entre 29,2 % y 39,4 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 34,3 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "34,3 % (entre 29,3 % y 39,5 %), ENAHO 2025, Huancavelica; basado en 1033 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_10": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huánuco).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 30,4 % y 41,2 % (coeficiente de variación 7,5 %, 1229 casos en la muestra). El INEI publica para esta cifra un intervalo entre 30,3 % y 41,1 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 35,7 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "35,7 % (entre 30,4 % y 41,2 %), ENAHO 2025, Huánuco; basado en 1229 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_16": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Loreto).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 35,8 % y 44,6 % (coeficiente de variación 5,4 %, 1379 casos en la muestra). El INEI publica para esta cifra un intervalo entre 35,7 % y 44,5 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 40,1 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "40,1 % (entre 35,8 % y 44,6 %), ENAHO 2025, Loreto; basado en 1379 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_19": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Pasco).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 31,9 % y 41,1 % (coeficiente de variación 6,2 %, 850 casos en la muestra). El INEI publica para esta cifra un intervalo entre 31,9 % y 40,9 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 36,4 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "36,4 % (entre 31,9 % y 41,1 %), ENAHO 2025, Pasco; basado en 850 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_21": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Puno).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 32,1 % y 43,1 % (coeficiente de variación 7,3 %, 1079 casos en la muestra). El INEI publica para esta cifra un intervalo entre 32,1 % y 42,8 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 37,5 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "37,5 % (entre 32,1 % y 43,1 %), ENAHO 2025, Puno; basado en 1079 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "mapa_050410": {
+     "1_origen": "Pobreza monetaria por distrito en 2018 (estimación del INEI). Mapa de Pobreza (INEI), 2018. Es una estimación del INEI con un modelo.",
+     "2_territorio": "La cifra se presenta por distrito (Uchuraccay).",
+     "3_que_mide": "Mide pobreza monetaria estimada por el INEI con un modelo para 2018 (intervalo de confianza al 95 %).",
+     "4_precision": "Estimación con modelo: la pobreza está probablemente entre 73 % y 89 %.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2018.",
+      "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 73,3 % y 89,3 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+      "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta."
+     ],
+     "estado": "referencial",
+     "semaforo": "rojo"
+    },
+    "mapa_060308": {
+     "1_origen": "Pobreza monetaria por distrito en 2018 (estimación del INEI). Mapa de Pobreza (INEI), 2018. Es una estimación del INEI con un modelo.",
+     "2_territorio": "La cifra se presenta por distrito (Oxamarca).",
+     "3_que_mide": "Mide pobreza monetaria estimada por el INEI con un modelo para 2018 (intervalo de confianza al 95 %).",
+     "4_precision": "Estimación con modelo: la pobreza está probablemente entre 75 % y 87 %.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2018.",
+      "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 74,6 % y 87,4 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+      "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta."
+     ],
+     "estado": "referencial",
+     "semaforo": "rojo"
+    },
+    "mapa_060402": {
+     "1_origen": "Pobreza monetaria por distrito en 2018 (estimación del INEI). Mapa de Pobreza (INEI), 2018. Es una estimación del INEI con un modelo.",
+     "2_territorio": "La cifra se presenta por distrito (Anguía).",
+     "3_que_mide": "Mide pobreza monetaria estimada por el INEI con un modelo para 2018 (intervalo de confianza al 95 %).",
+     "4_precision": "Estimación con modelo: la pobreza está probablemente entre 72 % y 86 %.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2018.",
+      "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 71,7 % y 85,7 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+      "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta."
+     ],
+     "estado": "referencial",
+     "semaforo": "rojo"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Cuál es la situación hoy: el dato es de 2018, antes de la pandemia.",
+    "Un orden exacto entre territorios: las diferencias entre muchos de ellos no son estadísticamente claras."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria, mapa_pobreza_2018."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "dentro_de": "del Perú",
+   "intencion": "más pobre",
+   "nivel": "distrito",
+   "tema": "pobre"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "identificar_extremo",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "dentro_de": {
+     "nacional": true
+    },
+    "nivel": "distrito"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:mapa_060402",
+  "peor_cifra_principal:mapa_060308",
+  "peor_cifra_principal:mapa_050410"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "identificar_extremo",
+   "pregunta_original": "¿Cuál es el distrito más pobre del Perú?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "dentro_de": {
+     "nacional": true
+    },
+    "nivel": "distrito"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-08"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [
+   {
+    "grupo": 1,
+    "rol": "principal",
+    "tipo": "mapa_grupo_robusto"
+   },
+   {
+    "anio": "ultimo",
+    "indicador": "enaho_pobreza_monetaria",
+    "prefijo": "enaho",
+    "rol": "contexto",
+    "tipo": "ranking_departamental"
+   }
+  ],
+  "grupos_estadisticos": "robustos_mapa",
+  "id": "identificar_extremo__pobreza_monetaria__distrito",
+  "intencion": "identificar_extremo",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "identificar_extremo",
+  "pregunta": "¿Cuál es el distrito más pobre del Perú?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": null,
+   "nivel": "distrito",
+   "nombre_pedido": null
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "pobreza_monetaria",
+    "principal": "mapa_060402"
+   },
+   "motivo": "fuente_complementaria",
+   "objetivo": "enaho_05",
+   "regla": "R-CRUCES-08",
+   "rotulo": "complementaria"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "pobreza_monetaria",
+    "principal": "mapa_060402"
+   },
+   "motivo": "fuente_complementaria",
+   "objetivo": "enaho_06",
+   "regla": "R-CRUCES-08",
+   "rotulo": "complementaria"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "pobreza_monetaria",
+    "principal": "mapa_060402"
+   },
+   "motivo": "fuente_complementaria",
+   "objetivo": "enaho_09",
+   "regla": "R-CRUCES-08",
+   "rotulo": "complementaria"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "pobreza_monetaria",
+    "principal": "mapa_060402"
+   },
+   "motivo": "fuente_complementaria",
+   "objetivo": "enaho_10",
+   "regla": "R-CRUCES-08",
+   "rotulo": "complementaria"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "pobreza_monetaria",
+    "principal": "mapa_060402"
+   },
+   "motivo": "fuente_complementaria",
+   "objetivo": "enaho_16",
+   "regla": "R-CRUCES-08",
+   "rotulo": "complementaria"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "pobreza_monetaria",
+    "principal": "mapa_060402"
+   },
+   "motivo": "fuente_complementaria",
+   "objetivo": "enaho_19",
+   "regla": "R-CRUCES-08",
+   "rotulo": "complementaria"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "las demás como complementarias",
+   "detalle": {
+    "concepto": "pobreza_monetaria",
+    "principal": "mapa_060402"
+   },
+   "motivo": "fuente_complementaria",
+   "objetivo": "enaho_21",
+   "regla": "R-CRUCES-08",
+   "rotulo": "complementaria"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "pregunta de ranking u orden de >= 3 territorios con cifras de encuesta",
+   "detalle": {
+    "excede_max_grupos": false,
+    "excluidas": [],
+    "grupos": [
+     [
+      {
+       "id": "enaho_06",
+       "referencial": false,
+       "territorio": "06"
+      },
+      {
+       "id": "enaho_16",
+       "referencial": false,
+       "territorio": "16"
+      },
+      {
+       "id": "enaho_21",
+       "referencial": false,
+       "territorio": "21"
+      },
+      {
+       "id": "enaho_19",
+       "referencial": false,
+       "territorio": "19"
+      },
+      {
+       "id": "enaho_10",
+       "referencial": false,
+       "territorio": "10"
+      }
+     ],
+     [
+      {
+       "id": "enaho_09",
+       "referencial": false,
+       "territorio": "09"
+      },
+      {
+       "id": "enaho_05",
+       "referencial": false,
+       "territorio": "05"
+      }
+     ]
+    ],
+    "max_grupos": 6,
+    "puede_decir_el_mas_alto": false,
+    "todas_en_un_grupo": false,
+    "unidades_fuera_de_lista": []
+   },
+   "mensaje": "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno.",
+   "motivo": "ranking_por_grupos",
+   "objetivo": "respuesta",
+   "regla": "R-ENC-12"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:mapa_060402",
+     "peor_cifra_principal:mapa_060308",
+     "peor_cifra_principal:mapa_050410"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "rojo"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato muy aproximado. Es una estimación con modelo, de 2018.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato muy aproximado"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "párrafo con >= 2 naturaleza_dato",
+   "detalle": {
+    "naturalezas": [
+     "encuesta_muestral",
+     "estimacion_modelada"
+    ]
+   },
+   "mensaje": "Este párrafo combina datos de distinto tipo: encuesta_muestral, estimacion_modelada. Se presentan juntos para dar contexto, no porque uno explique al otro.",
+   "motivo": "naturalezas_mezcladas",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-06"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "(a)–(e) del párrafo mixto",
+   "detalle": {
+    "fallas": [
+     {
+      "b": "verbo de estimacion_modelada ∉ ['el inei estimo con un modelo', 'proyecta']",
+      "oracion": "{{p:sin_ranking}} En ese mapa, el grupo con la pobreza más alta son tres distritos, sin orden entre ellos (aquí, alfabético): {{e:lugar_mapa_060402}}: {{c:mapa_060402}} en 2018."
+     },
+     {
+      "b": "verbo de estimacion_modelada ∉ ['el inei estimo con un modelo', 'proyecta']",
+      "oracion": "{{e:lugar_mapa_060308}}: {{c:mapa_060308}} en 2018."
+     },
+     {
+      "b": "verbo de estimacion_modelada ∉ ['el inei estimo con un modelo', 'proyecta']",
+      "oracion": "{{e:lugar_mapa_050410}}: {{c:mapa_050410}} en 2018."
+     },
+     {
+      "b": "verbo de encuesta_muestral ∉ ['se estima que', 'alrededor de']",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     },
+     {
+      "e": "falta el año 2025 en la oración",
+      "oracion": "En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}})."
+     }
+    ]
+   },
+   "modo": "corrector",
+   "motivo": "naturalezas_mezcladas",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-06"
+  }
+ ],
+ "semaforo_respuesta": "rojo",
+ "texto": "No se puede nombrar un solo distrito como el más pobre: el único dato oficial por distrito es el Mapa de Pobreza 2018 del INEI, y su margen de error no permite ordenarlos. En ese mapa, el grupo con la pobreza más alta son tres distritos, sin orden entre ellos (aquí, alfabético): Anguía (Chota, Cajamarca): entre 72 % y 86 % en 2018. Oxamarca (Celendín, Cajamarca): entre 75 % y 87 % en 2018. Uchuraccay (Huanta, Ayacucho): entre 73 % y 89 % en 2018. Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta. No los compares con las cifras de departamentos de 2025: otro año y método. En 2025, según el INEI, siete departamentos forman el grupo con la pobreza monetaria más alta, sin diferencias estadísticamente claras entre ellos. En orden alfabético: Ayacucho (33,7 %), Cajamarca (41,0 %), Huancavelica (34,3 %), Huánuco (35,7 %), Loreto (40,1 %), Pasco (36,4 %) y Puno (37,5 %). Para el grupo en conjunto, el INEI estima entre 35,7 % y 39,8 %; cada departamento puede quedar un poco por encima o por debajo de ese rango.",
+ "texto_con_marcadores": "{{p:sin_ranking}} En ese mapa, el grupo con la pobreza más alta son tres distritos, sin orden entre ellos (aquí, alfabético): {{e:lugar_mapa_060402}}: {{c:mapa_060402}} en 2018. {{e:lugar_mapa_060308}}: {{c:mapa_060308}} en 2018. {{e:lugar_mapa_050410}}: {{c:mapa_050410}} en 2018. {{p:dato_antiguo}} No los compares con las cifras de departamentos de 2025: otro año y método. En 2025, según el INEI, siete departamentos forman el grupo con la pobreza monetaria más alta, sin diferencias estadísticamente claras entre ellos. En orden alfabético: Ayacucho ({{c:enaho_05}}), Cajamarca ({{c:enaho_06}}), Huancavelica ({{c:enaho_09}}), Huánuco ({{c:enaho_10}}), Loreto ({{c:enaho_16}}), Pasco ({{c:enaho_19}}) y Puno ({{c:enaho_21}}). Para el grupo en conjunto, el INEI estima {{e:rango_grupo}}; cada departamento puede quedar un poco por encima o por debajo de ese rango.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

@@ -210,6 +210,7 @@ def con_parametros(monkeypatch, raiz, **pendientes):
 
 def test_conteo_sien_x02(raiz, motor, monkeypatch):
     q2 = lambda: motor.responder(plan_de(raiz, motor, "nivel_actual", "anemia", "Ayaviri, Melgar"))   # noqa: E731
+    con_parametros(monkeypatch, raiz, mostrar_conteo_sien=False)       # X-02 está decidida en el YAML (S3-01); el parámetro sigue editable
     base = q2()
     assert not any("Cuántos niños se midieron" == t["titulo"] for t in base["capas"]["capa2"]["mas_contexto"])
     con_parametros(monkeypatch, raiz, mostrar_conteo_sien=True)
@@ -221,7 +222,8 @@ def test_conteo_sien_x02(raiz, motor, monkeypatch):
 
 
 def test_cr01_mismo_anio_x03(raiz, motor, monkeypatch):
-    base = motor.responder(plan_de(raiz, motor, "efecto", "gasto_publico", "San Juan de Lurigancho"))
+    p0 = con_parametros(monkeypatch, raiz, cr01_mismo_anio=False)      # X-03 está decidida en el YAML (S3-01); el parámetro sigue editable
+    base = motor.responder(plan_de(raiz, motor, "efecto", "gasto_publico", "San Juan de Lurigancho", parametros=p0))
     assert not any(t["titulo"].startswith("Gasto en Lima Metropolitana en") for t in base["capas"]["capa2"]["mas_contexto"])
     p = con_parametros(monkeypatch, raiz, cr01_mismo_anio=True)
     plan = plan_de(raiz, motor, "efecto", "gasto_publico", "San Juan de Lurigancho", parametros=p)
@@ -269,8 +271,8 @@ def test_umbral_de_tamizaje_sale_de_r_reg_07(raiz, motor):
 
 def test_intervalo_visible_y_conteo_estan_en_parametros(raiz):
     p = PLT.parametros(raiz)["pendientes_dueno"]
-    assert p["mostrar_conteo_sien"]["valor"] is False and p["cr01_mismo_anio"]["valor"] is False
-    assert p["intervalo_visible"]["valor"] == "ambos" and p["intervalo_visible"]["permitidos"] == ["ambos", "uno"]
+    assert p["mostrar_conteo_sien"]["valor"] is True and p["cr01_mismo_anio"]["valor"] is True       # decididas en S3-01 (X-02, X-03)
+    assert p["intervalo_visible"]["valor"] == "uno" and p["intervalo_visible"]["permitidos"] == ["ambos", "uno"]   # X-04
 
 
 # ------------------------------------------------------------------------- 4. nombres antiguos
@@ -295,6 +297,15 @@ def test_nombres_antiguos_dan_las_mismas_capas(raiz, motor, q):
         citas = nuevo["capas"]["capa3"]["para_citar"]
         assert "(forma de medir vigente desde 2024), Huancavelica, 2024." in citas[-1]
         nuevo["capas"]["capa3"] = {**nuevo["capas"]["capa3"], "para_citar": citas[:-1]}
+    if q == "q3":          # X-03 (S3-01): el q3.yaml archivado no trae el gasto de 2024 (mismo año) que el plan nuevo suma como contexto
+        mc = nuevo["capas"]["capa2"]["mas_contexto"]
+        assert sum(t["titulo"].startswith("Gasto en Lima Metropolitana en 2024") for t in mc) == 1
+        lim = [x.replace("Gasto MEF 2024–2025", "Gasto MEF 2025") for x in nuevo["capas"]["capa2"]["limites"]]
+        nuevo["capas"]["capa2"] = {**nuevo["capas"]["capa2"], "limites": lim,
+                                   "mas_contexto": [t for t in mc if not t["titulo"].startswith("Gasto en Lima Metropolitana en 2024")]}
+        citas = nuevo["capas"]["capa3"]["para_citar"]
+        assert sum("Lima Metropolitana (provincia de Lima), 2024." in x for x in citas) == 1
+        nuevo["capas"]["capa3"] = {**nuevo["capas"]["capa3"], "para_citar": [x for x in citas if "Lima Metropolitana (provincia de Lima), 2024." not in x]}
     assert viejo["capas"]["capa2"] == nuevo["capas"]["capa2"]
     assert viejo["capas"]["capa3"]["glosario"] == nuevo["capas"]["capa3"]["glosario"]
     assert viejo["capas"]["capa3"]["para_citar"] == nuevo["capas"]["capa3"]["para_citar"]

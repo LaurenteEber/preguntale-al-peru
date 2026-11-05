@@ -1,0 +1,168 @@
+{
+ "alternativas": [],
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": null,
+   "confianza": {
+    "ficha": "Confianza: Sin cifra disponible.",
+    "nivel": "sin cifra",
+    "texto": "Confianza en los datos: sin cifra."
+   },
+   "lo_mas_cercano": {
+    "texto": "Sí podemos decirte cuánto hay hoy, cómo cambió, cómo se compara con otro lugar, dónde es más alto o qué se gastó, para anemia, desnutrición crónica, pobreza y gasto público en salud y nutrición infantil.",
+    "titulo": "Lo más cercano que sí tenemos"
+   },
+   "ojo_al_leer": [],
+   "palabras": 48,
+   "que_hacer": null,
+   "respuesta_corta": "Todavía no respondemos ese tipo de pregunta."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ninguna cifra publicada en esta respuesta",
+    "Territorio: sin lugar identificado",
+    "No permite concluir: nada sobre ese tema. No mostrar una cifra no quiere decir que el problema no exista."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Respondemos con cifras de fuentes públicas oficiales: no explicamos por qué pasa algo, no hacemos proyecciones ni damos opiniones.",
+     "titulo": "Por qué no se puede"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": null,
+     "texto": "Esta respuesta no publica cifras.",
+     "url": ""
+    }
+   ],
+   "glosario": [],
+   "para_citar": [
+    "Esta respuesta no publica cifras."
+   ]
+  }
+ },
+ "cifras": {},
+ "cifras_no_publicadas": [],
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "pregunta_original": "¿Por qué la anemia en Áncash subió a 80 % en 2024?"
+  },
+  "grupos": [],
+  "id": "no_se_puede__interprete_fuera_de_alcance",
+  "intencion": null,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "interprete_fuera_de_alcance",
+    "pedido": "Por qué la anemia en Áncash subió"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "interprete_fuera_de_alcance",
+   "pedido": "Por qué la anemia en Áncash subió"
+  },
+  "periodo": null,
+  "pregunta": "¿Por qué la anemia en Áncash subió a 80 % en 2024?",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "pregunta_original": "¿Por qué la anemia en Áncash subió a 80 % en 2024?"
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": null,
+ "ficha": {
+  "corta": "Confianza: Sin cifra disponible.\nDatos de: ninguna cifra publicada en esta respuesta\nTerritorio: sin lugar identificado\nNo permite concluir: nada sobre ese tema. No mostrar una cifra no quiere decir que el problema no exista.",
+  "larga": {
+   "cifras": {},
+   "cruces": {},
+   "no_concluir": [],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: ."
+  }
+ },
+ "interpretacion": {
+  "anclas": null,
+  "avisos": [],
+  "cache": false,
+  "consulta": null,
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "fuera_de_alcance",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivo": {
+  "codigo": "interprete_fuera_de_alcance",
+  "detalle": {
+   "motivo": "interprete_fuera_de_alcance",
+   "pedido": "Por qué la anemia en Áncash subió"
+  },
+  "otros": [],
+  "regla_lenguaje_05": null
+ },
+ "motivos_semaforo_respuesta": [
+  "sin_cifra_principal"
+ ],
+ "plan": {
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "pregunta_original": "¿Por qué la anemia en Áncash subió a 80 % en 2024?"
+  },
+  "grupos": [],
+  "id": "no_se_puede__interprete_fuera_de_alcance",
+  "intencion": null,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "interprete_fuera_de_alcance",
+    "pedido": "Por qué la anemia en Áncash subió"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "interprete_fuera_de_alcance",
+   "pedido": "Por qué la anemia en Áncash subió"
+  },
+  "periodo": null,
+  "pregunta": "¿Por qué la anemia en Áncash subió a 80 % en 2024?",
+  "tema": null,
+  "territorio": null
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sin cifra principal publicable",
+   "detalle": {
+    "motivos": [
+     "sin_cifra_principal"
+    ],
+    "semaforo_respuesta": "sin_cifra"
+   },
+   "motivo": "sin_cifra_principal",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Sin cifra disponible"
+  }
+ ],
+ "semaforo_respuesta": "sin_cifra",
+ "temas_disponibles": [],
+ "texto": "Todavía no respondemos ese tipo de pregunta. Sí podemos decirte cuánto hay hoy, cómo cambió, cómo se compara con otro lugar, dónde es más alto o qué se gastó, para anemia, desnutrición crónica, pobreza y gasto público en salud y nutrición infantil. Respondemos con cifras de fuentes públicas oficiales: no explicamos por qué pasa algo, no hacemos proyecciones ni damos opiniones.",
+ "texto_con_marcadores": "Todavía no respondemos ese tipo de pregunta. Sí podemos decirte cuánto hay hoy, cómo cambió, cómo se compara con otro lugar, dónde es más alto o qué se gastó, para anemia, desnutrición crónica, pobreza y gasto público en salud y nutrición infantil. Respondemos con cifras de fuentes públicas oficiales: no explicamos por qué pasa algo, no hacemos proyecciones ni damos opiniones.",
+ "tipo": "no_se_puede",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

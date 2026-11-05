@@ -8,7 +8,7 @@ Decidido por el dueño el 12/10/2026, tras la revisión desde la perspectiva del
 |---|---|---|
 | **1. Visible** | respuesta corta · cifra clave · «Ojo al leer» · confianza | Objetivo ≈ 100 palabras, máximo 125 (prueba) |
 | **2. Más contexto** (desplegable) | tarjetas de cifras secundarias · avisos de las reglas · límites (ficha corta) | Cada tarjeta lleva su etiqueta «no se compara» cuando aplica |
-| **3. Para citar y verificar** (desplegable) | una cita por cifra · glosario · «¿Qué puedo hacer?» | La cita usa el documento oficial si hay dorada; si no, «cálculo propio con …» |
+| **3. Para citar y verificar** (desplegable) | una cita por cifra · glosario · «¿Qué puedo hacer?» | La cita usa el documento oficial si hay dorada; si no, «cálculo propio con …». Cada cita lleva su enlace al documento oficial (`capa3.citas[].url`: la `url` de `cifras_doradas.csv` o, si no hay dorada, el portal de la fuente en `catalogo_fuentes.csv`; vacío si no hay enlace oficial, P-02). Los rótulos de las secciones salen de `curados/motor/textos/capas.yaml` (clave `rotulos`) |
 | Detalle técnico | tabla de cifras, semáforo interno, ficha larga, reglas, texto con marcadores | Solo para auditoría |
 
 ## Reglas de redacción

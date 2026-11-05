@@ -1,0 +1,148 @@
+{
+ "aclaracion": {
+  "motivo": "sin_coincidencia",
+  "opciones": [
+   {
+    "etiqueta": "Amazonas (departamento)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 1995,
+     "departamento": "Amazonas",
+     "id": "01",
+     "nivel": "departamento",
+     "nombre_completo": "Amazonas",
+     "nombre_mostrado": "Amazonas",
+     "provincia": null,
+     "provisional": false,
+     "ubigeo": "010000"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "No encontramos «amasonas». ¿Quisiste decir alguno de estos?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "Amazonas (departamento)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 1995,
+      "departamento": "Amazonas",
+      "id": "01",
+      "nivel": "departamento",
+      "nombre_completo": "Amazonas",
+      "nombre_mostrado": "Amazonas",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": "010000"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «amasonas». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "desnutricon cronica en amasonas",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "amasonas"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "desnutricon cronica en amasonas",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "desnutricon cronica en amasonas",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "texto": "amasonas"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de desnutrición crónica en «amasonas»",
+ "interpretacion": {
+  "anclas": {
+   "tema": "desnutricon cronica",
+   "territorio": "amasonas"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "amasonas"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "Amazonas (departamento)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 1995,
+      "departamento": "Amazonas",
+      "id": "01",
+      "nivel": "departamento",
+      "nombre_completo": "Amazonas",
+      "nombre_mostrado": "Amazonas",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": "010000"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «amasonas». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "desnutricon cronica en amasonas",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "amasonas"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "desnutricon cronica en amasonas",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "No encontramos «amasonas». ¿Quisiste decir alguno de estos?\n1) Amazonas (departamento)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

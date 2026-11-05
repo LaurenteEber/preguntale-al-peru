@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "efecto",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "220803"
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|efecto|Elías Soplín Vargas (distrito, Rioja)|ultimo"
+}

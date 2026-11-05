@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "efecto",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "ubigeo": "05"
+  }
+ },
+ "elegir": null,
+ "id": "desnutricion_cronica|efecto|Ayacucho|ultimo"
+}

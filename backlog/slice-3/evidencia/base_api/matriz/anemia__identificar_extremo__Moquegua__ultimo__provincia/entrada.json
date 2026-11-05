@@ -1,0 +1,19 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "identificar_extremo",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "dentro_de": {
+    "ubigeo": "18"
+   },
+   "nivel": "provincia"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|identificar_extremo|Moquegua|ultimo|provincia"
+}

@@ -1,0 +1,258 @@
+{
+ "aclaracion": {
+  "motivo": "homonimo_niveles",
+  "opciones": [
+   {
+    "etiqueta": "Puno (departamento)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 1995,
+     "departamento": "Puno",
+     "id": "21",
+     "nivel": "departamento",
+     "nombre_completo": "Puno",
+     "nombre_mostrado": "Puno",
+     "provincia": null,
+     "provisional": false,
+     "ubigeo": "210000"
+    }
+   },
+   {
+    "etiqueta": "Puno (provincia, departamento de Puno)",
+    "n": 2,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Puno",
+     "id": "210100",
+     "nivel": "provincia",
+     "nombre_completo": "Puno (Puno)",
+     "nombre_mostrado": "Puno",
+     "provincia": "Puno",
+     "provisional": false,
+     "ubigeo": "210100"
+    }
+   },
+   {
+    "etiqueta": "Puno (distrito, provincia de Puno, departamento de Puno)",
+    "n": 3,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Puno",
+     "id": "210101",
+     "nivel": "distrito",
+     "nombre_completo": "Puno (Puno, Puno)",
+     "nombre_mostrado": "Puno",
+     "provincia": "Puno",
+     "provisional": false,
+     "ubigeo": "210101"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "Hay varios lugares llamados «Puno». ¿Cuál quieres?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "homonimo_niveles",
+   "opciones": [
+    {
+     "etiqueta": "Puno (departamento)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 1995,
+      "departamento": "Puno",
+      "id": "21",
+      "nivel": "departamento",
+      "nombre_completo": "Puno",
+      "nombre_mostrado": "Puno",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": "210000"
+     }
+    },
+    {
+     "etiqueta": "Puno (provincia, departamento de Puno)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Puno",
+      "id": "210100",
+      "nivel": "provincia",
+      "nombre_completo": "Puno (Puno)",
+      "nombre_mostrado": "Puno",
+      "provincia": "Puno",
+      "provisional": false,
+      "ubigeo": "210100"
+     }
+    },
+    {
+     "etiqueta": "Puno (distrito, provincia de Puno, departamento de Puno)",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Puno",
+      "id": "210101",
+      "nivel": "distrito",
+      "nombre_completo": "Puno (Puno, Puno)",
+      "nombre_mostrado": "Puno",
+      "provincia": "Puno",
+      "provisional": false,
+      "ubigeo": "210101"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Hay varios lugares llamados «Puno». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "comparar_con": {
+    "texto": "Cusco"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "pregunta_original": "¿Hay más anemia en Puno que en Cusco?",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "Puno"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__homonimo_niveles",
+  "intencion": "comparacion",
+  "periodo": null,
+  "pregunta": "¿Hay más anemia en Puno que en Cusco?",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "comparar_con": {
+   "texto": "Cusco"
+  },
+  "idioma": "es",
+  "intencion": "comparacion",
+  "pregunta_original": "¿Hay más anemia en Puno que en Cusco?",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "Puno"
+  }
+ },
+ "entendimos": "Entendimos: cómo se compara la anemia en «Puno» con «Cusco»",
+ "interpretacion": {
+  "anclas": {
+   "comparar_con": "Cusco",
+   "intencion": "Hay más",
+   "tema": "anemia",
+   "territorio": "Puno"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "comparar_con": {
+    "texto": "Cusco"
+   },
+   "intencion": "comparacion",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "Puno"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "homonimo_niveles",
+   "opciones": [
+    {
+     "etiqueta": "Puno (departamento)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 1995,
+      "departamento": "Puno",
+      "id": "21",
+      "nivel": "departamento",
+      "nombre_completo": "Puno",
+      "nombre_mostrado": "Puno",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": "210000"
+     }
+    },
+    {
+     "etiqueta": "Puno (provincia, departamento de Puno)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Puno",
+      "id": "210100",
+      "nivel": "provincia",
+      "nombre_completo": "Puno (Puno)",
+      "nombre_mostrado": "Puno",
+      "provincia": "Puno",
+      "provisional": false,
+      "ubigeo": "210100"
+     }
+    },
+    {
+     "etiqueta": "Puno (distrito, provincia de Puno, departamento de Puno)",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Puno",
+      "id": "210101",
+      "nivel": "distrito",
+      "nombre_completo": "Puno (Puno, Puno)",
+      "nombre_mostrado": "Puno",
+      "provincia": "Puno",
+      "provisional": false,
+      "ubigeo": "210101"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Hay varios lugares llamados «Puno». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "comparar_con": {
+    "texto": "Cusco"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "pregunta_original": "¿Hay más anemia en Puno que en Cusco?",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "Puno"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__homonimo_niveles",
+  "intencion": "comparacion",
+  "periodo": null,
+  "pregunta": "¿Hay más anemia en Puno que en Cusco?",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "Hay varios lugares llamados «Puno». ¿Cuál quieres?\n1) Puno (departamento)\n2) Puno (provincia, departamento de Puno)\n3) Puno (distrito, provincia de Puno, departamento de Puno)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

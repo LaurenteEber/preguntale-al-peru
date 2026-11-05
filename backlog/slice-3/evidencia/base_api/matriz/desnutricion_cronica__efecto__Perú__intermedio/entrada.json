@@ -1,0 +1,17 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "efecto",
+  "periodo": {
+   "anio": 2020,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "nacional": true
+  }
+ },
+ "elegir": null,
+ "id": "desnutricion_cronica|efecto|Perú|intermedio"
+}

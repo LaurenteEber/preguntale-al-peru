@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import json
 import re
+from pathlib import Path
 
+from ..config import encontrar_raiz
 from . import formato as fmt
 from . import plantillas
 
@@ -237,8 +239,14 @@ def _n(x, d=1) -> str:
     return fmt._num(float(x), d) if x is not None else "—"
 
 
-def markdown(res: dict) -> str:
-    """Respuesta por capas (contrato de respuesta, 12/10/2026) y, al final, el detalle técnico."""
+def rotulos(raiz: Path | None = None) -> dict:
+    """Rótulos de sección de la respuesta (S3-01, tarea 3): `curados/motor/textos/capas.yaml`, clave `rotulos`. Los leen el .md y la web."""
+    return plantillas.textos(raiz or encontrar_raiz(), "capas.yaml")["rotulos"]
+
+
+def markdown(res: dict, rot: dict | None = None) -> str:
+    """Respuesta por capas (contrato de respuesta, 12/10/2026) y, al final, el detalle técnico. Los rótulos salen del YAML."""
+    R = rot or rotulos()
     q, k = res["consulta"], res["capas"]
     c1, c2, c3 = k["capa1"], k["capa2"], k["capa3"]
     out = [f"# {q['id']} — {q['pregunta']}", "", c1["respuesta_corta"], ""]
@@ -248,24 +256,25 @@ def markdown(res: dict) -> str:
     if cl:
         out += ([f"> **{cl['valor']}** {cl['texto']}  "] if cl["valor"] else [f"> **{cl['texto']}**  "]) + [f"> Fuente: {cl['fuente']}.", ""]
     if c1["ojo_al_leer"]:
-        out += ["**Ojo al leer**", ""] + [f"- {t}" for t in c1["ojo_al_leer"]] + [""]
+        out += [f"**{R['ojo_al_leer']}**", ""] + [f"- {t}" for t in c1["ojo_al_leer"]] + [""]
     if c1.get("lo_mas_cercano"):  # S1-05: respuesta de «no se puede»
         out += [f"**{c1['lo_mas_cercano']['titulo']}**", "", c1["lo_mas_cercano"]["texto"], ""]
     out += [f"**{c1['confianza']['texto']}**", ""]
     qh = k["capa1"].get("que_hacer")
     if qh:  # verificación de usuario (13/10/2026): bloque propio bajo la confianza, no dentro de «Para citar»
-        nota = "" if qh["revisado_dueno"] else " *(texto pendiente de revisión)*"
-        out += ["**▸ ¿Qué puedo hacer?**" + nota, "", f"{qh['texto']} Fuente: [{qh['fuente']}]({qh['url']}).", ""]
-    out += ["---", "", "## ▸ Más contexto", ""]
+        nota = "" if qh["revisado_dueno"] else f" *{R['texto_pendiente']}*"
+        out += [f"**▸ {R['que_hacer']}**" + nota, "", f"{qh['texto']} Fuente: [{qh['fuente']}]({qh['url']}).", ""]
+    out += ["---", "", f"## ▸ {R['mas_contexto']}", ""]
     for t in c2["mas_contexto"]:
         out += [f"**{t['titulo']}**", "", t["texto"]] + ([f"*{t['etiqueta']}*"] if t.get("etiqueta") else []) + [""]
     if c2["avisos"]:
-        out += ["**Avisos**", ""] + [f"- {a}" for a in c2["avisos"]] + [""]
-    out += ["**Límites de esta respuesta**", ""] + [f"- {x}" for x in c2["limites"]] + ["", "## ▸ Para citar y verificar", "",
-                                                                                         "**Cómo citar**", ""]
-    out += [f"- {x}" for x in c3["para_citar"]] + [""]
+        out += [f"**{R['avisos']}**", ""] + [f"- {a}" for a in c2["avisos"]] + [""]
+    out += [f"**{R['limites']}**", ""] + [f"- {x}" for x in c2["limites"]] + ["", f"## ▸ {R['para_citar']}", "",
+                                                                              f"**{R['como_citar']}**", ""]
+    # S3-01 (plan_slices.md, slice 3; P-02): cada cita con su enlace al documento oficial, cuando existe
+    out += [f"- {x['texto']}" + (f" [{R['enlace_oficial']}]({x['url']})" if x["url"] else "") for x in c3["citas"]] + [""]
     if c3["glosario"]:
-        out += ["**Glosario**", ""] + [f"- **{g['termino']}**: {g['definicion']}" for g in c3["glosario"]] + [""]
+        out += [f"**{R['glosario']}**", ""] + [f"- **{g['termino']}**: {g['definicion']}" for g in c3["glosario"]] + [""]
     sem = res["semaforo_respuesta"]
     out += ["---", "", "## Detalle técnico", "", f"Semáforo interno de la respuesta (R-CRUCES-10): {sem} "
             f"({', '.join(res.get('motivos_semaforo_respuesta') or [])}). Capa visible: {c1['palabras']} palabras.", "",

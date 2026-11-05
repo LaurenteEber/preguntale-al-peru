@@ -1,0 +1,16 @@
+{
+ "clase": "aclaracion",
+ "consulta": {
+  "intencion": "nivel_actual",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "Lima"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|nivel_actual|Lima (a secas)|ultimo"
+}

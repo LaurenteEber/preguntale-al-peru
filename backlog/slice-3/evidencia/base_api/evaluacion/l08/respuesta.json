@@ -1,0 +1,380 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENAHO 2025 (INEI); el INEI publica la misma cifra (27,3 %)",
+    "ids": [
+     "enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal"
+    ],
+    "texto": "de personas en situación de pobreza monetaria en Lima Metropolitana y Callao en 2025.",
+    "valor": "27,3 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+   ],
+   "palabras": 56,
+   "que_hacer": null,
+   "respuesta_corta": "En 2025, en Lima Metropolitana y Callao, la pobreza monetaria fue:"
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENAHO 2025 (INEI)",
+    "Territorio: AREA_METROPOLITANA_LIMA_CALLAO de Lima Metropolitana y Callao",
+    "No permite concluir: "
+   ],
+   "mas_contexto": []
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal",
+     "texto": "27,3 % (intervalo del INEI: 24,9 % a 29,7 %): personas en situación de pobreza monetaria, Lima Metropolitana y Callao, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1, p. 231.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    }
+   ],
+   "para_citar": [
+    "27,3 % (intervalo del INEI: 24,9 % a 29,7 %): personas en situación de pobreza monetaria, Lima Metropolitana y Callao, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1, p. 231."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1, p. 231",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-LMDOM8",
+    "valor": 27.3
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 4.4298225,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.21022684,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1, p. 231",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 24.9,
+    "ic_sup": 29.7,
+    "id_cifra": "DOR-POB-2025-LMDOM8"
+   },
+   "ic_inf": 24.95900744,
+   "ic_sup": 29.77996431,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 4129,
+   "nivel": "AREA_METROPOLITANA_LIMA_CALLAO",
+   "nivel_pedido": "AREA_METROPOLITANA_LIMA_CALLAO",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "departamento 15/07",
+     "detalle": {
+      "area": "total",
+      "nivel": "AREA_METROPOLITANA_LIMA_CALLAO",
+      "territorio_id": "AREA_METROPOLITANA_LIMA_CALLAO"
+     },
+     "mensaje": "Esta cifra corresponde a Lima Metropolitana y Callao, no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+     "motivo": "dominio_lima",
+     "regla": "R-ENC-07",
+     "rotulo": "Lima Metropolitana y Callao"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "27,3 % (entre 25,0 % y 29,8 %), ENAHO 2025, Lima Metropolitana y Callao; basado en 4129 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "27,3 % (entre 25,0 % y 29,8 %), ENAHO 2025, Lima Metropolitana y Callao; basado en 4129 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "AREA_METROPOLITANA_LIMA_CALLAO",
+   "territorio_nombre": "Lima Metropolitana y Callao",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "AREA_METROPOLITANA_LIMA_CALLAO",
+     "periodo_agrupado": null,
+     "territorio_id": "AREA_METROPOLITANA_LIMA_CALLAO"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-LMDOM8",
+   "valor": 27.31998504
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "AREA_METROPOLITANA_LIMA_CALLAO",
+    "rol": "principal",
+    "territorio": "AREA_METROPOLITANA_LIMA_CALLAO"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "pobreza en Lima Metropolitana y Callao",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Lima Metropolitana y Callao"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__pobreza_monetaria__AREA_METROPOLITANA_LIMA_CALLAO",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "pobreza en Lima Metropolitana y Callao",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "AREA_METROPOLITANA_LIMA_CALLAO",
+   "nivel": "AREA_METROPOLITANA_LIMA_CALLAO",
+   "nombre_pedido": "Lima Metropolitana y Callao"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "pobreza en Lima Metropolitana y Callao",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "Lima Metropolitana y Callao"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cuánto hay de pobreza en Lima Metropolitana y Callao",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENAHO 2025 (INEI)\nTerritorio: AREA_METROPOLITANA_LIMA_CALLAO de Lima Metropolitana y Callao\nNo permite concluir: ",
+  "larga": {
+   "cifras": {
+    "enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por Lima Metropolitana y Callao (Lima Metropolitana y Callao).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 25,0 % y 29,8 % (coeficiente de variación 4,4 %, 4129 casos en la muestra). El INEI publica para esta cifra un intervalo entre 24,9 % y 29,7 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1, p. 231). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 27,3 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1, p. 231). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "Esta cifra corresponde a Lima Metropolitana y Callao, no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+      "27,3 % (entre 25,0 % y 29,8 %), ENAHO 2025, Lima Metropolitana y Callao; basado en 4129 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "tema": "pobreza",
+   "territorio": "Lima Metropolitana y Callao"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Lima Metropolitana y Callao"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "AREA_METROPOLITANA_LIMA_CALLAO",
+    "rol": "principal",
+    "territorio": "AREA_METROPOLITANA_LIMA_CALLAO"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "pobreza en Lima Metropolitana y Callao",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Lima Metropolitana y Callao"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__pobreza_monetaria__AREA_METROPOLITANA_LIMA_CALLAO",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "pobreza en Lima Metropolitana y Callao",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "AREA_METROPOLITANA_LIMA_CALLAO",
+   "nivel": "AREA_METROPOLITANA_LIMA_CALLAO",
+   "nombre_pedido": "Lima Metropolitana y Callao"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  },
+  {
+   "accion": "suprimir",
+   "clausula": "ficha corta y larga no nulas con todos los campos obligatorios",
+   "detalle": {
+    "faltan": [
+     "corta.no_concluir_principal"
+    ]
+   },
+   "motivo": "ficha_incompleta",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-01"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2025, en Lima Metropolitana y Callao, la pobreza monetaria fue: 27,3 % de personas en situación de pobreza monetaria en Lima Metropolitana y Callao en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+ "texto_con_marcadores": "En 2025, en Lima Metropolitana y Callao, la pobreza monetaria fue: {{c:enaho_pobreza_monetaria__proporcion__AREA_METROPOLITANA_LIMA_CALLAO__AREA_METROPOLITANA_LIMA_CALLAO__2025__principal}} de personas en situación de pobreza monetaria en Lima Metropolitana y Callao en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

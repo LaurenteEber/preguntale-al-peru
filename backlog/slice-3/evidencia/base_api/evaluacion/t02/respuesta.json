@@ -1,0 +1,196 @@
+{
+ "aclaracion": {
+  "motivo": "sin_coincidencia",
+  "opciones": [
+   {
+    "etiqueta": "Ayacucho (departamento)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 1995,
+     "departamento": "Ayacucho",
+     "id": "05",
+     "nivel": "departamento",
+     "nombre_completo": "Ayacucho",
+     "nombre_mostrado": "Ayacucho",
+     "provincia": null,
+     "provisional": false,
+     "ubigeo": "050000"
+    }
+   },
+   {
+    "etiqueta": "Ayacucho (distrito, provincia de Huamanga, departamento de Ayacucho)",
+    "n": 2,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Ayacucho",
+     "id": "050101",
+     "nivel": "distrito",
+     "nombre_completo": "Ayacucho (Huamanga, Ayacucho)",
+     "nombre_mostrado": "Ayacucho",
+     "provincia": "Huamanga",
+     "provisional": false,
+     "ubigeo": "050101"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "No encontramos «ayacuho». ¿Quisiste decir alguno de estos?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "Ayacucho (departamento)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 1995,
+      "departamento": "Ayacucho",
+      "id": "05",
+      "nivel": "departamento",
+      "nombre_completo": "Ayacucho",
+      "nombre_mostrado": "Ayacucho",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": "050000"
+     }
+    },
+    {
+     "etiqueta": "Ayacucho (distrito, provincia de Huamanga, departamento de Ayacucho)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Ayacucho",
+      "id": "050101",
+      "nivel": "distrito",
+      "nombre_completo": "Ayacucho (Huamanga, Ayacucho)",
+      "nombre_mostrado": "Ayacucho",
+      "provincia": "Huamanga",
+      "provisional": false,
+      "ubigeo": "050101"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «ayacuho». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "pobresa en ayacuho",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "ayacuho"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "pobresa en ayacuho",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "pobresa en ayacuho",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "ayacuho"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de pobreza en «ayacuho»",
+ "interpretacion": {
+  "anclas": {
+   "tema": "pobresa",
+   "territorio": "ayacuho"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "ayacuho"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "Ayacucho (departamento)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 1995,
+      "departamento": "Ayacucho",
+      "id": "05",
+      "nivel": "departamento",
+      "nombre_completo": "Ayacucho",
+      "nombre_mostrado": "Ayacucho",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": "050000"
+     }
+    },
+    {
+     "etiqueta": "Ayacucho (distrito, provincia de Huamanga, departamento de Ayacucho)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Ayacucho",
+      "id": "050101",
+      "nivel": "distrito",
+      "nombre_completo": "Ayacucho (Huamanga, Ayacucho)",
+      "nombre_mostrado": "Ayacucho",
+      "provincia": "Huamanga",
+      "provisional": false,
+      "ubigeo": "050101"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «ayacuho». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "pobresa en ayacuho",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "ayacuho"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "pobresa en ayacuho",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "No encontramos «ayacuho». ¿Quisiste decir alguno de estos?\n1) Ayacucho (departamento)\n2) Ayacucho (distrito, provincia de Huamanga, departamento de Ayacucho)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

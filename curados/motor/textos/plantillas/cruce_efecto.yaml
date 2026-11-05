@@ -32,6 +32,6 @@ tarjetas:
     sin_nivel_fino: " La encuesta no da cifras por {nivel_palabra}."
   mismo_anio:                     # X-03: el gasto del mismo año que la cifra comparada
     titulo: "Gasto en {lugar} en {anio}"
-    texto: "En {anio}, el gasto en {lugar} fue {c} ({fuente}): el mismo año con el que se compara la anemia."
+    texto: "En {anio}, el gasto fue {c}, registrado por unidades ejecutoras con sede en {lugar} ({fuente}): el mismo año con el que se compara la anemia."   # S3-01-a: lleva la base ejecutora que exige R-LENGUAJE-02 (estructural)
     etiqueta: "Otro año: no se suma ni se compara con la cifra clave."
 etiqueta_otro_territorio: "Otro territorio: no se suma ni se compara con la cifra clave."

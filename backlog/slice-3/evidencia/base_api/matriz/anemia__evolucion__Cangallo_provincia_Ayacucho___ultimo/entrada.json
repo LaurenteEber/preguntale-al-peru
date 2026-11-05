@@ -1,0 +1,16 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "evolucion",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "ubigeo": "0502"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|evolucion|Cangallo (provincia, Ayacucho)|ultimo"
+}
