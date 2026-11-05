@@ -18,7 +18,8 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T0 S3-00 | S3-00 | inline | done (944 passed base) | b18e473 + this commit |
 | T1 S3-01 | S3-01 | delegated writer (context backstop: long parent session), sonnet low | done (writer: 960 passed; parent spot check 46 passed) | (this commit) |
 | T2 S3-02 | S3-02 | delegated writer (context backstop), sonnet low | done in part: H14, H15, base_api; H21 → W-02 (type C); H17/H18 → W-03 (owner) | (this commit) |
-| T3–T11 | S3-03 … S3-11 | parallel waves (L5) | pending | |
+| T3 S3-03 | S3-03 | delegated writer in an isolated worktree (deadline), sonnet low | done: equivalence 205/205 without exclusions; tests/web 13 passed | 764e785, d454bae, e35991a, e015734 |
+| T4–T11 | S3-04 … S3-11 | parallel waves (L5): S3-04+S3-05 ‖ S3-07 ‖ S3-09, then S3-06 ‖ S3-08, then S3-10 → S3-11 | pending (after the owner's cut) | |
 
 ## Log
 
@@ -28,3 +29,4 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 - L4: S3-01 writer done: X-02/X-03/X-04 applied, citas with official url (capa3.citas), rótulos in capas.yaml (.md byte-identical ignoring the new link suffix), X-01 not applied. Writer touched 3 files outside the surface (plantillas/cruce_efecto.yaml S3-01-a, test_planificador.py, test_plantillas_intencion.py), all citing the decision; accepted after diff review. Parent fixed stale docs (arquitectura.md, manual_de_uso.md).
 - L5 (2026-11-05, user, verbatim): «todo con ODD, simpre que se pueda implementar en paralelo con subagentes lo haces». → independent stories with disjoint edit surfaces run as parallel writers (sonnet, low).
 - L6: S3-02 writer done: H14, H15 applied (§5.1, aprobado_por: agente); H21 removes a R-LENGUAJE-06 warning → type C W-02; H17/H18 not marked by owner → W-03. base_api/ 411 files, deterministic. Parent fixed test_via_estructurada (pre-S3-02 texts as fixtures in tests/fixtures/textos_antes_s3_02/). Deadline from owner: push by 23:59 Lima (America/Lima) on 2026-11-04; reminder at 23:35.
+- L7: S3-02 verified: full suite 963 passed. S3-03 writer (worktree) done and fast-forward merged: only the 13 intended files; writer's suite showed 42 skipped because its worktree lacked parts of the untracked library; re-run in the main tree. Owner cut at 23:59 Lima; stories S3-04 onward stay pending.
