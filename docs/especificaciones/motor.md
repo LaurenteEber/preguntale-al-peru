@@ -11,7 +11,7 @@ Este documento fija los contratos entre las piezas del piloto. Las reglas no se 
   - Q2: anemia en los establecimientos de Ayaviri (SIEN);
   - Q3: gasto de San Juan de Lurigancho junto a la anemia (gasto MEF y CR-01);
   - Q4: distrito más pobre (Mapa de Pobreza 2018 y ENAHO).
-- **Sin LLM** (decisión del 10/10/2026). Cada pregunta entra como una **consulta estructurada** (§4). El texto sale de plantillas.
+- **El motor no usa LLM** (decisión del 10/10/2026). Cada pregunta le llega como una **consulta estructurada** (§4), escrita con opciones o producida por el intérprete de texto libre del slice 2 (`docs/especificaciones/interprete.md`), que no ve cifras ni redacta. El texto sale de plantillas.
 - **Indicadores:** los 9 de `dim_indicador`. **Cruces:** solo CR-01, que ya tiene el visto del dueño.
 - **Se acepta cuando** Q1–Q4 producen cifras, semáforo, ficha y texto correctos. Se comparan con `resultado_prueba.json`, ajustado a las decisiones posteriores a la prueba (gasto rondas 1–2, Lima L1–L9 y P0). El juez es un auditor independiente (P4).
 - **Fuera:**
