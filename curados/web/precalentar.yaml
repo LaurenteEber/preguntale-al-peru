@@ -1,0 +1,8 @@
+# Consultas que responde el hilo de precalentamiento al arrancar (S3-03): Q1–Q4 y una por intención (sacadas de la matriz de cobertura).
+consultas_minimas: [q1, q2, q3, q4]      # curados/motor/consultas_minimas/<nombre>.json
+por_intencion:
+  - {intencion: cruce, periodo: {tipo: ultimo}, pregunta_original: "pregunta de la matriz de cobertura", tema: anemia, territorio: {ubigeo: "21"}}
+  - {intencion: efecto, periodo: {tipo: ultimo}, pregunta_original: "pregunta de la matriz de cobertura", tema: anemia, territorio: {ubigeo: "010206"}}
+  - {intencion: comparacion, comparar_con: {ambito: LIMA_REGION}, periodo: {tipo: ultimo}, pregunta_original: "pregunta de la matriz de cobertura", tema: gasto_publico, territorio: {ambito: LIMA_METROPOLITANA}}
+  - {intencion: evolucion, periodo: {anio: 2024, tipo: anio}, pregunta_original: "pregunta de la matriz de cobertura", tema: gasto_publico, territorio: {ubigeo: "100602"}}
+  - {intencion: nivel_actual, periodo: {tipo: ultimo}, pregunta_original: "pregunta de la matriz de cobertura", tema: pobreza_monetaria, territorio: {ubigeo: "090613"}}

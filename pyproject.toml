@@ -6,17 +6,21 @@ readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "duckdb>=1.5,<1.6",
+    "fastapi>=0.162.0",
     "frictionless>=5.18",
     "httpx>=0.28",
+    "jinja2>=3.1.6",
     "jsonschema>=4.23",
     "openpyxl>=3.1",
     "pandas>=3.0.6",
     "pdfplumber>=0.11.10",
     "polars>=1.30",
     "pyreadstat>=1.2",
+    "python-multipart>=0.0.33",
     "pyyaml>=6.0",
     "svy==0.32.1",
     "tzdata>=2026.5",
+    "uvicorn>=0.54.0",
     "xlrd>=2.0.2",
     "zstandard>=0.25",
 ]

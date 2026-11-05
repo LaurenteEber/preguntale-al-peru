@@ -1,0 +1,34 @@
+# Textos de la web (S3-03). Ninguno habla de la terminal: la web no muestra los textos de las excepciones.
+version: 1.0.0
+preparando: "Estamos preparando el servicio… Intenta de nuevo en unos segundos."
+version_rotulo: "Biblioteca {huella}, construida el {fecha}"
+errores:                              # por tipo de excepción o código de ConsultaInvalida
+  solicitud_invalida: "No pudimos leer tu pregunta. Escríbela de nuevo."
+  texto_muy_largo: "Tu pregunta es demasiado larga. Hazla más corta."
+  consulta_invalida: "No pudimos entender esa consulta. Revisa los datos que elegiste e inténtalo de nuevo."
+  eleccion_invalida: "Esa opción ya no es válida. Haz la pregunta de nuevo y elige una de las opciones que te mostramos."
+  error_interno: "Algo salió mal de nuestro lado. Inténtalo de nuevo en un momento."
+  metodo_no_permitido: "Esta dirección solo acepta preguntas enviadas desde el formulario."
+  no_encontrado: "No encontramos esa dirección."
+codigos_consulta: {}                  # texto propio por código de ConsultaInvalida (opcional; sin él, `consulta_invalida`)
+rotulos_intenciones:
+  nivel_actual: "¿Cuánto hay hoy?"
+  evolucion: "¿Cómo ha cambiado?"
+  comparacion: "Comparar dos lugares"
+  identificar_extremo: "¿Dónde es más alto o más bajo?"
+  efecto: "¿Cuánto influye?"
+  cruce: "Cruzar con otra característica"
+rotulos_temas:
+  anemia: "Anemia infantil"
+  desnutricion_cronica: "Desnutrición crónica infantil"
+  pobreza_monetaria: "Pobreza monetaria"
+  gasto_publico: "Gasto público"
+rotulos_niveles:
+  distrito: "Distrito"
+  provincia: "Provincia"
+  departamento: "Departamento"
+  nacional: "Todo el Perú"
+ejemplos:
+  - "¿Qué tanta anemia tienen los niños de Moquegua?"
+  - "¿Cómo ha cambiado la pobreza en Puno?"
+  - "¿Cuánto gasta el Estado en Ucayali?"

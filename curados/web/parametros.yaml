@@ -1,0 +1,16 @@
+# Parámetros de la web (S3-03). Cada uno con `decision:` o `supuesto: S3-xx`; el dueño los cambia editando una línea.
+version: 1.0.0
+servicio:
+  puerto: {valor: 8000, supuesto: S3-03-a, nota: "puerto de desarrollo local (P-05); el de producción lo fija S3-09"}
+  host: {valor: "127.0.0.1", supuesto: S3-03-a}
+pregunta:
+  texto_max_caracteres: {valor: 2000, supuesto: S3-03-b, nota: "tope del cuerpo `texto`; el intérprete recorta por su cuenta y avisa"}
+  elegir_max_numeros: {valor: 4, supuesto: S3-03-b, nota: "cuántos números caben en `elegir` (a lo más dos aclaraciones del intérprete y dos de territorio)"}
+  elegir_max_valor: {valor: 50, supuesto: S3-03-b}
+precalentamiento:
+  espera_maxima_segundos: {valor: 120, supuesto: S3-03-c, nota: "las pruebas esperan hasta este tiempo a que termine el hilo de precalentamiento"}
+http:
+  estado_por_motivo:                 # tabla de docs/especificaciones/api.md, derivada de cli.codigo_salida (parametros_motor.yaml)
+    valor: {no_disponible: 503}
+    por_defecto: 200
+    supuesto: S3-03-d
