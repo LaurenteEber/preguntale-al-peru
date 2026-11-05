@@ -375,6 +375,18 @@ def _uso(raiz, limpia, consulta, resultado, r, registro) -> None:
 
 # ======================================================================= interpretar
 
+def _anio_relativo(raiz, chk) -> bool:
+    """¿La pregunta trae una frase de año relativo («el año pasado»…)? (`interprete.anios_relativos_frases`)"""
+    return any(chk.en_pregunta(f) for f in _par(raiz)["interprete"]["anios_relativos_frases"]["valor"])
+
+
+def _cliente(raiz):
+    """El cliente en vivo. `PAP_INTERPRETE_MODO=completar` lo usa solo el dueño o el agente al grabar preguntas del conjunto,
+    de las pruebas o de las revisiones (S2-07) por la CLI; nunca preguntas de personas reales (P-03)."""
+    modo = os.environ.get("PAP_INTERPRETE_MODO", "vivo")
+    return L.Cliente(raiz, modo=modo if modo in ("vivo", "completar") else "vivo")
+
+
 def interpretar(texto: str, motor, *, elegir=None, llm=None, cache_dir=None, registro=DEFECTO) -> dict:
     """Responde una pregunta en texto libre. Devuelve la respuesta del motor (`tipo`: respuesta | no_se_puede | aclaracion)
     o un mensaje fijo (`tipo`: mensaje), con `interpretacion` y `entendimos`. `elegir`: un número o varios (las aclaraciones
@@ -396,7 +408,7 @@ def interpretar(texto: str, motor, *, elegir=None, llm=None, cache_dir=None, reg
     elif numeros:
         raise EleccionInvalida(_tx(raiz)["elegir_vencida"])          # nunca se reinterpreta para elegir
     else:
-        dato, meta, falla = _llamar(raiz, limpia.texto, llm if llm is not None else L.Cliente(raiz, modo="vivo"), registro)
+        dato, meta, falla = _llamar(raiz, limpia.texto, llm if llm is not None else _cliente(raiz), registro)
         if dato is not None:
             ruta.parent.mkdir(parents=True, exist_ok=True)
             ruta.write_text(json.dumps({"creada": time.time(), "interpretacion": dato, "meta": meta}, ensure_ascii=False),
@@ -451,6 +463,9 @@ def interpretar(texto: str, motor, *, elegir=None, llm=None, cache_dir=None, reg
         c, fuera = anclar(dato["consulta"], dato["anclas"], chk)
         anclas = dato["anclas"]
 
+    per = c.get("periodo") or {}
+    if not any(k in per for k in ("anio", "desde", "hasta")) and "anio_aclarado" not in fuera and _anio_relativo(raiz, chk):
+        fuera.append("anio")                       # S2-07-a: el LLM omitió un año relativo; se aclara, no se adivina el último
     while True:                                                         # paso 5: cada aclaración del código usa un número
         pend = _pendiente(motor, c, fuera)
         info.update(consulta=copy.deepcopy(c), descartados=list(fuera),

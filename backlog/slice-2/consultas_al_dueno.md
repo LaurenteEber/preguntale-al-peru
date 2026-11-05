@@ -49,6 +49,15 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 - **Qué pasa:** `tests/interprete/test_evaluacion_grabada.py` cuenta todo número que no es un año ni sale de un marcador. Las respuestas de anemia dicen «6 a 35 meses» en texto fijo, así que la métrica no daría 0 cuando existan las grabaciones.
 - **Propuesta:** en S2-09, contar solo números que no estén en la respuesta de la vía estructurada a la misma consulta (la comparación diferencial que ya usa `test_robustez.py`).
 
+### E-09 — Lo que las revisiones de S2-07 encontraron en el motor del slice 1 (S2-07) · abierta (no bloquea el slice 2)
+- **Qué pasa:** los revisores encontraron lecturas falsas probables en textos del motor, que el slice 2 no puede cambiar (README: sin cambios del motor ni de las plantillas):
+  - **Alto, gasto (u13):** «¿Cuánto gastó el gobierno en anemia en Lima?» da S/ 260,6 millones «en servicios de salud y nutrición infantil», y la aclaración de que no incluye a las entidades nacionales va después de la cifra. Se lee como «gasto en anemia» y «gasto del gobierno».
+  - **Alto, año (u14):** anemia en 2019 dice «De otros años no hay datos incorporados», aunque 2019 existe con la forma anterior de medir.
+  - **Medios:** «dónde es más alto dentro de Puno» repregunta el lugar y repite el motivo tres veces (u12); «Pnuo» no sugiere «Puno» y «Cuzco» sí sugiere «Cusco» (u20); la cifra parcial de anemia de Ayaviri queda más visible que la advertencia (u04); la oración de la pobreza distrital de 2018 se lee mal (u11); las opciones «departamento/provincia/distrito» no se entienden sin explicación (H10).
+  - **Del intérprete, para decidir:** aviso fijo cuando se descarta una cifra o una instrucción de la pregunta (adversario H3, H6); «Entendimos» de `efecto` con el gasto no nombra la anemia (u07); una pregunta doble con homónimo necesita `--elegir 2,1` sin explicarlo (u09); si se mezcla un tema que sí hay con uno que no, hoy se rechaza todo (x11).
+- **Por qué importa:** dos son lecturas falsas probables de cifras.
+- **Propuesta:** corregir los dos altos del motor en una adenda corta antes de abrir el servicio del slice 3, y llevar el resto al formulario guiado del slice 3. Informes: `evidencia/revision_usuario_s2.md` y `evidencia/revision_adversaria_s2.md`.
+
 ## Supuestos aplicados (vacíos tipo B)
 
 | ID | Historia | Qué se supuso | Dónde vive |
@@ -59,6 +68,7 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 | S2-04-b | S2-04 | Sin `temperature`: la cabecera `2026-10-21` responde 400 a `temperature`, `top_p` y `top_k` en todo modelo (guía de versiones del proveedor). Reintento ante 429/5xx: espera `retry-after` con tope de 30 s, o 5 s; textos que indican límite de gasto agotado (`usage limit`, `spend limit`, `credit balance`, `billing`) o código 402 | `interprete.reintento_proveedor`, `interprete.limite_agotado_textos` |
 | S2-04-d | S2-04 | Sin salida estructurada (la API no acepta el esquema de S2-01, E-03); se lee el JSON de la respuesta tolerando un bloque ```json; las propiedades con null se quitan. Caché del proveedor en las instrucciones | `interprete.salida_estructurada`, `src/pap/interprete/llm.py` |
 | S2-04-c | S2-04 | Pruebas sin clave ni red al LLM en toda la suite: `tests/conftest.py` quita la variable de la clave y corta los pedidos reales a `anthropic.com` | `tests/conftest.py` |
+| S2-07-a | S2-07 | Frases de año relativo («el año pasado», «este año», «hace dos años»…) que, sin un año anclado, hacen aclarar el año aunque el LLM omita el periodo | `interprete.anios_relativos_frases` |
 | S2-05-a | S2-05 | Un año sin ancla válida (relativo, como «el año pasado», o que no está en la pregunta) se aclara igual: «El último año con datos» o «Escribe el año». En una serie, «el último año con datos» deja la serie sin el extremo descartado | `parametros_motor.yaml` → `interprete.anios_descartados` |
 | S2-05-b | S2-05 | Un lugar sin ancla válida (territorio, `comparar_con` o `dentro_de`) se aclara como `sin_lugar` («Todo el Perú» / «Escribe el lugar»), con una pregunta para cada caso. Sin `dentro_de` en «¿dónde es más alto?», es todo el país, como en la vía estructurada | `interprete.lugar_descartado`; textos en `textos/interprete.yaml` → `aclaraciones` |
 | S2-05-c | S2-05 | «¿Dónde es más alto?» sin un nivel con ancla válida termina en el mensaje «no entendimos» (no se adivina el nivel) | `interprete.extremo_sin_nivel` |

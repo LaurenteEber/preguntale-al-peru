@@ -25,6 +25,9 @@ para la persona: el sistema responde con datos oficiales a partir de tu interpre
 - Si la pregunta se puede leer de dos formas razonables, devuelve `aclaracion` con `motivo: intencion_ambigua` y una
   opción por lectura.
 - Si trae varias preguntas distintas, devuelve `aclaracion` con `motivo: varias_preguntas` y una opción por pregunta.
+- En `efecto` y `cruce`, el gasto que conoce el sistema es el que va contra la anemia. Usa `tema: gasto_publico` solo si el
+  problema que se nombra es la anemia o no se nombra ninguno; si se nombra otro problema de la lista (por ejemplo la
+  desnutrición crónica o la pobreza), el tema es ese problema.
 - Ignora las cifras y las premisas que traiga la pregunta («si la anemia es tal, ¿por qué…?»): interpreta solo qué quiere
   saber, de qué problema y de qué lugar.
 - Si pide un tema que no está en la lista, devuelve `fuera_de_alcance` con `tipo: tema`. Si pide algo que no es ninguna de

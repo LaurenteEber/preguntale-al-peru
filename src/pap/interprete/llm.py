@@ -215,12 +215,18 @@ def _de_cuerpo(cuerpo: dict, modelo: str, version_prompt: str, latencia: float, 
 # ---------------------------------------------------------------------------------------------- cliente
 
 class Cliente:
-    """modo: «reproducir» (pytest: solo grabaciones), «grabar» (llama a la API y guarda) o «vivo» (llama sin guardar).
+    """modo: «reproducir» (pytest: solo grabaciones), «grabar» (llama a la API y guarda), «completar» (reproduce si hay
+    grabación; si no, llama y graba: así una corrida no repite lo ya grabado) o «vivo» (llama sin guardar).
+    `modelo`: reemplaza `interprete.modelo` (evaluar.py --modelo).
     `transporte`: un httpx.BaseTransport para las pruebas (sin red)."""
 
-    def __init__(self, raiz, modo: str = "reproducir", transporte=None, tope_usd: float | None = None):
+    def __init__(self, raiz, modo: str = "reproducir", transporte=None, tope_usd: float | None = None, modelo: str | None = None):
+        assert modo in ("reproducir", "grabar", "completar", "vivo"), modo
         self.raiz, self.modo, self.transporte = Path(raiz), modo, transporte
         self.par = parametros(raiz)
+        if modelo:
+            self.par["modelo"] = {**self.par["modelo"], "valor": modelo}
+        self.llamadas: list[RespuestaLLM] = []      # las llamadas en vivo de esta corrida (costo y latencia de la evaluación)
         self.tope = float(self.par["tope_por_corrida"]["valor_usd"] if tope_usd is None else tope_usd)
         self.gastado = 0.0
         self.detenido: str | None = None      # motivo por el que el cliente ya no llama (clave rechazada, límite agotado)
@@ -249,7 +255,7 @@ class Cliente:
                           error_previo: str | None = None) -> RespuestaLLM:
         modelo = self.par["modelo"]["valor"]
         ruta = ruta_grabacion(self.raiz, pregunta_limpia, modelo, version_prompt, error_previo)
-        if self.modo == "reproducir":
+        if self.modo == "reproducir" or (self.modo == "completar" and ruta.exists()):
             if not ruta.exists():
                 raise FaltaGrabacion(f"falta la grabación {ruta.name} de «{pregunta_limpia}»; corre "
                                      "`uv run python tests/interprete/evaluar.py --grabar --solo <id>`")
@@ -283,7 +289,8 @@ class Cliente:
             raise NoDisponible("caida") from None
         r = _de_cuerpo(cuerpo, modelo, version_prompt, time.monotonic() - t0, self.par)
         self.gastado += r.costo_usd
-        if self.modo == "grabar":
+        self.llamadas.append(r)
+        if self.modo in ("grabar", "completar"):
             ruta.parent.mkdir(parents=True, exist_ok=True)
             g = {"pregunta_limpia": pregunta_limpia, "modelo": modelo, "version_prompt": version_prompt,
                  "tokens_entrada": r.tokens_entrada, "tokens_salida": r.tokens_salida, "costo_usd": r.costo_usd}

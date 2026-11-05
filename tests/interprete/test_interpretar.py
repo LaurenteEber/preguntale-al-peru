@@ -334,6 +334,25 @@ def test_sin_lugar_aclaracion_armada_por_el_codigo(motor, preguntar):
     assert r2 == {**r2, "tipo": "mensaje", "motivo": "volver_a_preguntar", "texto": TX["volver_a_preguntar"]}
 
 
+def test_anio_relativo_omitido_por_el_llm_igual_se_aclara(motor, preguntar):
+    """S2-07 (revisión adversaria, x09): el prompt manda omitir los años relativos; si el LLM los omite (también dentro de una
+    aclaración de intención), el código ve la frase relativa en la pregunta y aclara el año, sin responder el último en
+    silencio (`interprete.anios_relativos`)."""
+    q = "¿Cómo está la pobreza en Arequipa el año pasado?"
+    x = consulta({"intencion": "nivel_actual", "tema": "pobreza_monetaria", "territorio": {"texto": "región Arequipa"}},
+                 intencion="Cómo está", tema="pobreza", territorio="Arequipa")
+    x["consulta"]["territorio"]["texto"] = "Arequipa"
+    r = preguntar(q, Falso(x))
+    assert r["tipo"] == "aclaracion" and r["aclaracion"]["motivo"] == "interprete_anio_relativo"
+    assert [o["etiqueta"] for o in r["aclaracion"]["opciones"]] == ["El último año con datos", "Escribe el año"]
+    sin = preguntar("¿Cómo está la pobreza en Arequipa?", Falso(x))                 # sin frase relativa: no se aclara el año
+    assert not (sin["tipo"] == "aclaracion" and sin["aclaracion"]["motivo"] == "interprete_anio_relativo")
+    con_anio = preguntar("¿Cómo estaba la pobreza en Arequipa en 2024, el año pasado?", Falso(consulta(
+        {"intencion": "nivel_actual", "tema": "pobreza_monetaria", "territorio": {"texto": "Arequipa"}, "periodo": {"tipo": "anio", "anio": 2024}},
+        intencion="Cómo estaba", tema="pobreza", territorio="Arequipa", anio="2024")))
+    assert not (con_anio["tipo"] == "aclaracion" and con_anio["aclaracion"]["motivo"] == "interprete_anio_relativo")
+
+
 def test_anio_relativo_descartado(motor, preguntar):
     q = "¿Cuánta anemia hubo el año pasado en Apurímac?"
     x = consulta({"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Apurímac"}, "periodo": {"tipo": "anio", "anio": 2025}},
