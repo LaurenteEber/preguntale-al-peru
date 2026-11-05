@@ -1,0 +1,43 @@
+{
+ "pregunta_limpia": "¿Cuánta anemia y cuánta delincuencia hay en Piura?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9330,
+ "tokens_salida": 191,
+ "costo_usd": 0.003082,
+ "error_previo": "no_es_objeto: No entendimos la pregunta. ¿Puedes escribirla de otra forma?",
+ "latencia_s": 1.765,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011Cgiz1B485zwuGw7gW3pay",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"aclaracion\", \"motivo\": \"varias_preguntas\", \"opciones\": [{\"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"anemia\", \"territorio\": {\"texto\": \"Piura\"}}, \"anclas\": {\"intencion\": \"Cuánta\", \"tema\": \"anemia\", \"territorio\": \"Piura\"}}, {\"consulta\": {\"intencion\": \"nivel_actual\", \"territorio\": {\"texto\": \"Piura\"}}, \"anclas\": {\"intencion\": \"cuánta\", \"territorio\": \"Piura\"}}]}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 126,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 191,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

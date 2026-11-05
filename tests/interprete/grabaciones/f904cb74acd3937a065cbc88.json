@@ -1,0 +1,43 @@
+{
+ "pregunta_limpia": "¿Cuánta anemia había en Puno en el año 3025?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9341,
+ "tokens_salida": 98,
+ "costo_usd": 0.002174,
+ "error_previo": "periodo_invalido: No entendimos el año. Puedes pedir el último dato, un año (por ejemplo, 2024) o de qué año a qué año.",
+ "latencia_s": 1.614,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiyzNoXjbBKvWXYubrd2",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"anemia\", \"territorio\": {\"texto\": \"Puno\"}}, \"anclas\": {\"intencion\": \"Cuánta\", \"tema\": \"anemia\", \"territorio\": \"Puno\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 137,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 98,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

@@ -353,6 +353,22 @@ def test_anio_relativo_omitido_por_el_llm_igual_se_aclara(motor, preguntar):
     assert not (con_anio["tipo"] == "aclaracion" and con_anio["aclaracion"]["motivo"] == "interprete_anio_relativo")
 
 
+def test_anio_fuera_de_rango_se_aclara_sin_reintento(motor, preguntar):
+    """S2-09 (revisión adversaria repetida, y08): un año que el esquema rechaza («3025») no se reintenta (el LLM lo quitaba y
+    se respondía el último año en silencio): se descarta y se aclara el año, como un año sin ancla (S2-05-a)."""
+    q = "¿Cuánta anemia había en Puno en el año 3025?"
+    con = consulta({"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Puno"}, "periodo": {"tipo": "anio", "anio": 3025}},
+                   intencion="Cuánta", tema="anemia", territorio="Puno", anio="3025")
+    sin = consulta({"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Puno"}},
+                   intencion="Cuánta", tema="anemia", territorio="Puno")
+    llm = Falso(con, sin)
+    r = preguntar(q, llm)
+    assert len(llm.llamadas) == 1
+    assert r["tipo"] == "aclaracion" and r["aclaracion"]["motivo"] == "interprete_anio_relativo"
+    assert r["interpretacion"]["descartados"] == ["anio"]
+    assert "2025" not in json.dumps(r, ensure_ascii=False)
+
+
 def test_anio_relativo_descartado(motor, preguntar):
     q = "¿Cuánta anemia hubo el año pasado en Apurímac?"
     x = consulta({"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Apurímac"}, "periodo": {"tipo": "anio", "anio": 2025}},

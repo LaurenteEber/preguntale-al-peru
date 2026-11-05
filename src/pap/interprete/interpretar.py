@@ -360,12 +360,37 @@ def _llamar(raiz, limpia: str, llm, registro) -> tuple[dict | None, dict, str | 
         try:
             dato = validar(r.json, raiz)
         except InterpretacionInvalida as e:
+            dato = _sin_anio_invalido(r.json, e, raiz)
+            if dato is not None:                    # S2-09: solo el año era inválido (p. ej. 3025): se aclara, no se reintenta
+                _uso(raiz, limpia, dato.get("consulta"), dato["resultado"], r, registro)
+                return dato, meta, None
             _uso(raiz, limpia, None, "invalida", r, registro)
             error = f"{', '.join(e.codigos)}: {' '.join(e.mensajes)}"
             continue
         _uso(raiz, limpia, dato.get("consulta"), dato["resultado"], r, registro)
         return dato, meta, None
     return None, meta, "no_entendida"
+
+
+def _sin_anio_invalido(dato, e, raiz) -> dict | None:
+    """Si lo único que no valida es el periodo (un año que no existe, como 3025), la misma interpretación sin el periodo,
+    marcada para aclarar el año (`_anio_invalido`). Al reintentar, el LLM quitaba el año y se respondía el último en silencio
+    (revisión adversaria repetida en S2-09, y08). None si no es ese caso."""
+    if set(e.codigos) != {"periodo_invalido"} or not isinstance(dato, dict):
+        return None
+    sin = copy.deepcopy(dato)
+    for c in [sin.get("consulta")] + [o.get("consulta") for o in sin.get("opciones") or [] if isinstance(o, dict)]:
+        if isinstance(c, dict):
+            c.pop("periodo", None)
+    for a in [sin.get("anclas")] + [o.get("anclas") for o in sin.get("opciones") or [] if isinstance(o, dict)]:
+        if isinstance(a, dict):
+            for k in ("anio", "desde", "hasta"):
+                a.pop(k, None)
+    try:
+        valido = validar(sin, raiz)
+    except InterpretacionInvalida:
+        return None
+    return {**valido, "_anio_invalido": True}
 
 
 def _uso(raiz, limpia, consulta, resultado, r, registro) -> None:
@@ -464,7 +489,9 @@ def interpretar(texto: str, motor, *, elegir=None, llm=None, cache_dir=None, reg
         anclas = dato["anclas"]
 
     per = c.get("periodo") or {}
-    if not any(k in per for k in ("anio", "desde", "hasta")) and "anio_aclarado" not in fuera and _anio_relativo(raiz, chk):
+    if dato.get("_anio_invalido") and "anio" not in fuera:
+        fuera.append("anio")                       # S2-09: el año que pidió no existe (3025): se aclara
+    elif not any(k in per for k in ("anio", "desde", "hasta")) and "anio_aclarado" not in fuera and _anio_relativo(raiz, chk):
         fuera.append("anio")                       # S2-07-a: el LLM omitió un año relativo; se aclara, no se adivina el último
     while True:                                                         # paso 5: cada aclaración del código usa un número
         pend = _pendiente(motor, c, fuera)
