@@ -26,3 +26,7 @@
 - La rama de S3-03 se fusionó con la de S3-01/S3-02 (`965280f`) porque la base de la web sale del motor con las decisiones de S3-01.
 - El intérprete usa su registro de uso por defecto (`salidas/interprete/uso.jsonl`, desactivado en pytest); S3-07 decide cómo se registra en la web.
 - Supuestos nuevos: S3-03-a a S3-03-d en `consultas_al_dueno.md`.
+
+## Suite completa
+
+`uv run pytest -q -m "not solo_mac" -p no:cacheprovider`: 934 pasan, 42 saltadas, 34 fuera por la marca (sin fallos nuevos).
