@@ -97,11 +97,10 @@ def test_grabar_y_reproducir_byte_a_byte(raiz_tmp, monkeypatch):
     cuerpo = json.loads(pedidos[0].content)
     assert cuerpo["model"] == "claude-sonnet-5-5" and "temperature" not in cuerpo           # P-07; 2026-10-21 rechaza temperature
     assert cuerpo["output_config"]["effort"] == "low"
-    assert cuerpo["output_config"]["format"]["type"] == "json_schema"
+    assert "format" not in cuerpo["output_config"]                                             # S2-04-d: la API no acepta el esquema
     assert "<pregunta>\n¿Cuánta anemia hay en Puno?\n</pregunta>" == cuerpo["messages"][0]["content"]
-    assert "¿Cuánta anemia hay en Puno?" not in cuerpo["system"]                               # la pregunta, fuera de las instrucciones
-    esq = json.dumps(cuerpo["output_config"]["format"]["schema"])
-    assert '"oneOf"' not in esq and '"$ref"' not in esq and '"minLength"' not in esq
+    assert "¿Cuánta anemia hay en Puno?" not in json.dumps(cuerpo["system"], ensure_ascii=False)                               # la pregunta, fuera de las instrucciones
+
 
 
 def test_falta_la_grabacion_dice_como_grabarla(raiz_tmp):
@@ -172,7 +171,7 @@ def test_el_reintento_lleva_el_error_y_tiene_su_propia_grabacion(raiz_tmp, monke
     assert a.grabacion != b.grabacion
     assert pedidos[0]["messages"][0]["content"] == "<pregunta>\nanemia en Puno\n</pregunta>"
     assert pedidos[1]["messages"][0]["content"].startswith("<pregunta>\nanemia en Puno\n</pregunta>\n\n")
-    assert "falta_ancla: falta un ancla" in pedidos[1]["messages"][0]["content"] and "falta un ancla" not in pedidos[1]["system"]
+    assert "falta_ancla: falta un ancla" in pedidos[1]["messages"][0]["content"] and "falta un ancla" not in json.dumps(pedidos[1]["system"], ensure_ascii=False)
     r = L.Cliente(raiz_tmp, modo="reproducir").interpretar_crudo(prompt, "anemia en Puno", version, error_previo="falta_ancla: falta un ancla")
     assert r.grabacion == b.grabacion
     assert L.huella_grabacion("x", "m", "v") == L.huella_grabacion("x", "m", "v", None)        # sin error, la huella de S2-04
@@ -260,3 +259,39 @@ def test_la_grabacion_no_guarda_encabezados_y_si_los_metadatos(raiz_tmp, monkeyp
 def test_httpx_y_httpcore_no_registran_peticiones():
     import logging
     assert all(logging.getLogger(n).getEffectiveLevel() >= logging.WARNING for n in ("httpx", "httpcore"))
+
+
+def test_esquema_para_api_sin_lo_que_la_api_rechaza():
+    """Si `interprete.salida_estructurada` vuelve a true: lo que la API rechazó en vivo el 5/11/2026 no está."""
+    from pap.motor.interpretacion import RUTA_CONSULTA, RUTA_ESQUEMA
+    esq = json.loads((RAIZ / RUTA_ESQUEMA).read_text(encoding="utf-8"))
+    cm = json.loads((RAIZ / RUTA_CONSULTA).read_text(encoding="utf-8"))
+    s = L.esquema_para_api(esq, {"consulta_minima.schema.json": cm})
+    texto = json.dumps(s)
+    assert '"oneOf"' not in texto and '"$ref"' not in texto and '"minLength"' not in texto and "{}" not in texto
+    assert list(s) == ["anyOf"]
+
+    def nodos(n):
+        if isinstance(n, dict):
+            yield n
+            for v in n.values():
+                yield from nodos(v)
+        elif isinstance(n, list):
+            for v in n:
+                yield from nodos(v)
+    assert not [n for n in nodos(s) if "anyOf" in n and set(n) - {"anyOf"}]
+
+
+@pytest.mark.parametrize("texto,esperado", [('{"resultado": "no_es_pregunta"}', {"resultado": "no_es_pregunta"}),
+                                            ('```json\n{"resultado": "otro_idioma", "x": null}\n```', {"resultado": "otro_idioma"}),
+                                            ("no sé", None), ("[1, 2]", None)])
+def test_leer_json_sin_salida_estructurada(texto, esperado):
+    assert L.leer_json(texto) == esperado
+
+
+def test_costo_cuenta_el_cache_del_proveedor():
+    cuerpo = respuesta_api(entrada=100, salida=100)
+    cuerpo["usage"].update(cache_creation_input_tokens=1000, cache_read_input_tokens=10_000)
+    r = L._de_cuerpo(cuerpo, "m", "v", 0.0, L.parametros(RAIZ))
+    # 100 × 2 + 1000 × 2 × 1,25 + 10 000 × 2 × 0,05 + 100 × 10, por millón
+    assert r.tokens_entrada == 11_100 and r.costo_usd == round((200 + 2500 + 1000 + 1000) / 1e6, 6)

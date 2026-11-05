@@ -105,6 +105,19 @@ def esquema_para_api(esquema: dict, externos: dict) -> dict:
             if k == "minItems":
                 v = min(int(v), 1)
             out["anyOf" if k == "oneOf" else k] = conv(v, base)
+        # Una propiedad que solo se define dentro de un if/then/else de `allOf` (p. ej. `territorio`: lugar o extremo según la
+        # intención) quedaría vacía ({}), y la API no acepta un esquema vacío: pasa a ser el anyOf de sus definiciones.
+        for item in n.get("allOf") or []:
+            for parte in (item.get("then"), item.get("else")) if isinstance(item, dict) else ():
+                for prop, d in ((parte or {}).get("properties") or {}).items():
+                    actual = (out.get("properties") or {}).get(prop)
+                    if isinstance(actual, dict) and not set(actual) & {"type", "enum", "const", "anyOf"}:
+                        out["properties"][prop] = {"anyOf": []}
+                        actual = out["properties"][prop]
+                    if isinstance(actual, dict) and list(actual) == ["anyOf"] and "$ref" in d:
+                        nueva = conv({"$ref": d["$ref"]}, base)
+                        if nueva not in actual["anyOf"]:
+                            actual["anyOf"].append(nueva)
         if out.get("type") == "object" or "properties" in out:
             out["additionalProperties"] = False
         return out
@@ -115,7 +128,64 @@ def esquema_para_api(esquema: dict, externos: dict) -> dict:
             nodo = nodo[k]
         return nodo, base
 
-    return conv(esquema)
+    out = conv(esquema)
+    # En vivo (5/11/2026) la API respondió 400: «For 'anyOf', 'additionalProperties, properties, required, type' is not
+    # supported». En la raíz queda solo el anyOf de las ramas (cada rama ya es un objeto completo: consulta, aclaración…);
+    # más abajo, lo que acompaña a un anyOf se copia dentro de cada rama.
+    if "anyOf" in out:
+        out = {"anyOf": out["anyOf"]}
+    # La API admite hasta 24 parámetros opcionales (en vivo: «too many optional parameters (34)»). Toda propiedad opcional
+    # pasa a obligatoria y nulable; `sin_nulos` quita esos null antes de validar (el contrato no usa null en ningún campo).
+    return _opcionales_nulables(_anyof_solo(out))
+
+
+def _opcionales_nulables(n):
+    if isinstance(n, list):
+        return [_opcionales_nulables(x) for x in n]
+    if not isinstance(n, dict):
+        return n
+    n = {k: _opcionales_nulables(v) for k, v in n.items()}
+    if isinstance(n.get("properties"), dict):
+        req = set(n.get("required") or [])
+        for k, v in n["properties"].items():
+            if k not in req:
+                n["properties"][k] = {"anyOf": v["anyOf"] + [{"type": "null"}]} if list(v) == ["anyOf"] else \
+                    {"anyOf": [v, {"type": "null"}]}
+        n["required"] = list(n["properties"])
+    return n
+
+
+def leer_json(texto: str):
+    """El JSON de la respuesta; sin salida estructurada, tolera un bloque ```json o texto alrededor del objeto. Lo que no es
+    un objeto JSON da None (el código lo trata como interpretación inválida y reintenta)."""
+    for intento in (texto, texto[texto.find("{"): texto.rfind("}") + 1] if "{" in texto else ""):
+        try:
+            dato = json.loads(intento)
+        except (ValueError, TypeError):
+            continue
+        return sin_nulos(dato) if isinstance(dato, dict) else None
+    return None
+
+
+def sin_nulos(x):
+    """Quita las claves con null que pide el esquema de la API (ver `_opcionales_nulables`)."""
+    if isinstance(x, dict):
+        return {k: sin_nulos(v) for k, v in x.items() if v is not None}
+    if isinstance(x, list):
+        return [sin_nulos(v) for v in x]
+    return x
+
+
+def _anyof_solo(n):
+    if isinstance(n, list):
+        return [_anyof_solo(x) for x in n]
+    if not isinstance(n, dict):
+        return n
+    n = {k: _anyof_solo(v) for k, v in n.items()}
+    if "anyOf" in n and set(n) - {"anyOf"}:
+        resto = {k: v for k, v in n.items() if k != "anyOf"}
+        n = {"anyOf": [{**resto, **rama} if isinstance(rama, dict) else rama for rama in n["anyOf"]]}
+    return n
 
 
 # ---------------------------------------------------------------------------------------------- grabaciones
@@ -131,14 +201,14 @@ def ruta_grabacion(raiz, pregunta_limpia: str, modelo: str, version_prompt: str,
 
 def _de_cuerpo(cuerpo: dict, modelo: str, version_prompt: str, latencia: float, par: dict) -> RespuestaLLM:
     texto = "".join(b.get("text", "") for b in cuerpo.get("content") or [] if b.get("type") == "text")
-    try:
-        dato = json.loads(texto)
-    except (ValueError, TypeError):
-        dato = None
+    dato = leer_json(texto)
     u = cuerpo.get("usage") or {}
-    te, ts = int(u.get("input_tokens") or 0), int(u.get("output_tokens") or 0)
+    escritura, lectura = int(u.get("cache_creation_input_tokens") or 0), int(u.get("cache_read_input_tokens") or 0)
+    te, ts = int(u.get("input_tokens") or 0) + escritura + lectura, int(u.get("output_tokens") or 0)
     pr = par["precios_usd_por_millon"]
-    costo = round(te * float(pr["entrada"]) / 1e6 + ts * float(pr["salida"]) / 1e6, 6)
+    entrada = float(pr["entrada"]) * (int(u.get("input_tokens") or 0) + escritura * float(pr.get("cache_escritura", 1))
+                                      + lectura * float(pr.get("cache_lectura", 1)))
+    costo = round(entrada / 1e6 + ts * float(pr["salida"]) / 1e6, 6)
     return RespuestaLLM(dato, texto, cuerpo.get("model") or modelo, te, ts, round(latencia, 3), costo, version_prompt)
 
 
@@ -160,11 +230,15 @@ class Cliente:
         from ..motor.interpretacion import RUTA_CONSULTA, RUTA_ESQUEMA
         esq = json.loads((self.raiz / RUTA_ESQUEMA).read_text(encoding="utf-8"))
         cm = json.loads((self.raiz / RUTA_CONSULTA).read_text(encoding="utf-8"))
+        salida = {"effort": self.par["esfuerzo"]["valor"]}
+        if self.par["salida_estructurada"]["valor"]:
+            salida["format"] = {"type": "json_schema", "schema": esquema_para_api(esq, {"consulta_minima.schema.json": cm})}
         return {"model": self.par["modelo"]["valor"], "max_tokens": int(self.par["max_tokens"]["valor"]),
-                "system": prompt,
+                # Las instrucciones son las mismas en cada pregunta: se guardan en el caché del proveedor (las lecturas
+                # cuestan 0,05 de la entrada; P-07, gasto).
+                "system": [{"type": "text", "text": prompt, "cache_control": {"type": "ephemeral"}}],
                 "messages": [{"role": "user", "content": self._turno(pregunta_limpia, error_previo)}],
-                "output_config": {"effort": self.par["esfuerzo"]["valor"], "format": {"type": "json_schema",
-                                             "schema": esquema_para_api(esq, {"consulta_minima.schema.json": cm})}}}
+                "output_config": salida}
 
     def _turno(self, pregunta_limpia: str, error_previo: str | None) -> str:
         """La pregunta como dato delimitado y, en el reintento (S2-05), el error de la respuesta anterior."""

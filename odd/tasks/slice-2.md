@@ -31,7 +31,7 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-2/S2-nn-*
 | T8 S2-08 | S2-08 | delegated writer | partial; E-06 defect test red | 79e05a1 |
 | T11 key+client | S6-S9 | inline | done | (this commit) |
 | T12 privacy patterns | S10 | inline | done | (this commit) |
-| T13 S2-04 Q2 live recording | S11 | inline | pending | |
+| T13 S2-04 Q2 live recording | S11 | inline | done: 8 434 + 124 tokens, US$ 0.0181 | (this commit) |
 | T7 S2-07 | S2-07, S12 | reviewers: 2 fresh subagents (story requires independence), model sonnet low effort (L7) | pending | |
 | T9 S2-09 | S2-09, S12 | inline | pending | |
 | T10 S2-10 | S2-10, S13 | inline | pending | |
@@ -49,3 +49,4 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-2/S2-nn-*
 - L8: new container: key variable present (checked as bool only). Library downloaded (release ba1fbc55) and `pap calcular` reproduced cube 010ea965. Base: 25 failed / 880 passed. Known: recordings missing (E-02), E-06 (2), `test_via_estructurada_igual_a_la_base_de_s2_00` differs only in `commit_cubo` (manifest regenerated here from aee3edd; base had 779357d) → environmental. API version 2026-10-21 rejects `temperature` (claude-api skill, api-version-migration) → removed.
 - L9: T11 (client: no temperature, effort low, Sonnet 5.5, prices $2/$10 verified on the official page 5/11/2026, retries per owner rules, stop on 401/403/spend limit, httpx logs ≥ WARNING, errors without request, recordings without headers + metadata, conftest cuts key and network, permanent secret scan) and T12 (P-03 patterns) implemented and green with fake LLM; only missing-recording tests fail. Commit NOT made: the pre-commit grep matches one line — the REMOVAL of the old header literal from `llm.py` (now built by concatenation so the permanent scan can pass). Owner asked to stop and report in that case → asked.
 - L10 (2026-11-05, user, verbatim): «Procedamos con el comité hasta terminar, validamos al final de tu implementación del pendiente de slice 2». From here the pre-commit check is `git diff --cached | grep -nE '^\+.*(<prefijo>|<cabecera>)'` (added lines only); the full grep over the repo is reported at the end.
+- L11: live API rejected temperature (2026-10-21), then the structured-output schema (limits 24 optional / 16 union params; contract has 34) → `salida_estructurada: false` (S2-04-d), prompt cache on system. Q2 recorded: 8 434 + 124 tokens, US$ 0.0181, 1.8 s; Q2 by `--texto` passes the regression criteria.

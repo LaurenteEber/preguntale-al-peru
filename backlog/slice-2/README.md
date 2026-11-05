@@ -55,7 +55,7 @@ Según `../slice-1/evidencia/cierre.md` §Adenda (fusionada en `main`, `1bf8682`
 | S2-01 | [Contrato de la interpretación](S2-01-contrato-interpretacion.md) | no | hecha (`tests/interprete/test_contrato.py`) |
 | S2-02 | [Conjunto de evaluación (independiente)](S2-02-conjunto-evaluacion.md) | no | hecha, pendiente de revisión (137 entradas; dudas en E-04) |
 | S2-03 | [Vocabulario e instrucciones desde datos curados](S2-03-vocabulario-prompt.md) | no | hecha ([cambios del prompt](evidencia/cambios_prompt.md)) |
-| S2-04 | [Limpieza, cliente del LLM, grabaciones y presupuesto](S2-04-cliente-llm.md) | sí, para grabar | bloqueada en parte: código y pruebas sin red hechos; falta la grabación en vivo de Q2 (E-02) |
+| S2-04 | [Limpieza, cliente del LLM, grabaciones y presupuesto](S2-04-cliente-llm.md) | sí, para grabar | hecha ([grabación de Q2](evidencia/s2-04_grabacion_q2.md)) |
 | S2-05 | [Interpretar: validar, anclar, aclarar y «Entendimos»](S2-05-interpretar.md) | no (grabaciones) | hecha con LLM falso; bloqueada en parte: `test_evaluacion_grabada.py` falla por falta de grabaciones (E-02), como manda el slice |
 | S2-06 | [CLI `--texto`](S2-06-cli.md) | no | hecha con LLM falso; Q1–Q4 por `--texto` fallan por falta de grabaciones (E-02) |
 | S2-07 | [Revisión independiente temprana](S2-07-revision-independiente.md) | sí | bloqueada: necesita el LLM real (E-02) |
@@ -69,7 +69,7 @@ Desde S2-05, en cada historia se corren:
 - la matriz reducida;
 - la evaluación con grabaciones (`tests/interprete/`).
 
-El modelo es Opus desde S2-04 (`interprete.modelo`, `decision: P-07`). Si en S2-09 cambia la versión del modelo o el prompt, se vuelve a grabar todo.
+El modelo es Sonnet 5.5 con esfuerzo bajo desde el 5/11/2026 (`interprete.modelo`, `decision: P-07`; antes Opus). Si en S2-09 cambia la versión del modelo o el prompt, se vuelve a grabar todo.
 
 ## Definición de hecho del slice
 

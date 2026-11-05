@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Cuántos niños tienen anemia en Ayaviri (Melgar, Puno)?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:b07343d166e2915bf6330b94da4f96d0f89319a120a71cdee6640f81837160ca",
+ "tokens_entrada": 8434,
+ "tokens_salida": 124,
+ "costo_usd": 0.018108,
+ "latencia_s": 1.823,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiwDQEdAfb3DxsTfJrrb",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"anemia\", \"territorio\": {\"texto\": \"Ayaviri (Melgar, Puno)\"}}, \"anclas\": {\"intencion\": \"Cuántos\", \"tema\": \"anemia\", \"territorio\": \"Ayaviri (Melgar, Puno)\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 8434,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 0,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 124,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}
