@@ -378,6 +378,11 @@ def _sin_anio_invalido(dato, e, raiz) -> dict | None:
     (revisión adversaria repetida en S2-09, y08). None si no es ese caso."""
     if set(e.codigos) != {"periodo_invalido"} or not isinstance(dato, dict):
         return None
+    periodos = [((c or {}).get("periodo") or {}) for c in [dato.get("consulta")] +
+                [o.get("consulta") for o in dato.get("opciones") or [] if isinstance(o, dict)]]
+    anios = [v for per in periodos if isinstance(per, dict) for k, v in per.items() if k in ("anio", "desde", "hasta")]
+    if not anios or not all(isinstance(v, int) and 1000 <= v <= 9999 for v in anios):
+        return None                                 # solo años con forma de año (3025); un «90» colado de una cifra, no
     sin = copy.deepcopy(dato)
     for c in [sin.get("consulta")] + [o.get("consulta") for o in sin.get("opciones") or [] if isinstance(o, dict)]:
         if isinstance(c, dict):
