@@ -4,11 +4,9 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 
 ## Consultas que bloquean (vacíos tipo C o D)
 
-### E-01 — El entorno no puede subir a GitHub (S2-00) · abierta
-- **Qué pasa:** todo `git push` desde esta sesión de la nube responde 403 («Claude doesn't have GitHub access to LaurenteEber/preguntale-al-peru»). La adenda y el slice 2 están solo en la sesión.
-- **Por qué importa:** el entorno de la nube es efímero; si se reclama antes de subir, se pierde el trabajo. Tampoco se puede abrir el PR.
-- **Qué se hizo:** `slice-2` nace de la punta de `slice-1-adenda` (S1-16 en verde), como pide S2-00 tarea 3 cuando la adenda no está fusionada. El PR del slice 2 va después del de la adenda.
-- **Propuesta:** reconectar GitHub en claude.ai (Ajustes → Conectores) o instalar la app de Claude en el repositorio; luego subir `slice-1-adenda` y `slice-2`.
+### E-01 — El entorno no podía subir a GitHub (S2-00) · cerrada el 5/11/2026
+- **Qué pasó:** hasta el 5/11/2026 todo `git push` desde la nube respondía 403. El dueño reconectó GitHub.
+- **Qué se hizo:** por error, este chat también implementó la adenda del slice 1. Se comparó con la del otro chat (mismo cubo y mismas cifras; 16 de 24 respuestas idénticas, incluidas Q1–Q4; la del otro chat resuelve además la evolución del gasto sin año comparable, B-1) y quedó la del otro chat, que ya estaba fusionada en `main` (`1bf8682`). Los commits del slice 2 se portaron sobre ese `main` sin conflictos, y la evidencia de S2-00 (`pytest_base.txt`, `s2-00_base.txt`, `base_estructurada/`) se rehízo sobre esa base.
 
 ### E-02 — No hay clave de la API del LLM en el entorno (S2-00) · abierta
 - **Qué pasa:** el entorno no tiene `ANTHROPIC_API_KEY` (comprobado sin imprimirla) ni el paquete del cliente.

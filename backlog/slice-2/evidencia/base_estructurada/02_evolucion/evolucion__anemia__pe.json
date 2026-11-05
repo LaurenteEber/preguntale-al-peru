@@ -102,6 +102,14 @@
     "comparar_con": 2024
    },
    {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__nacional__PE__2024__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "nacional",
+    "territorio": "PE",
+    "rol": "contexto"
+   },
+   {
     "id": "endes_anemia_6_35m__proporcion__nacional__PE__2025__principal",
     "indicador": "endes_anemia_6_35m",
     "anio": 2025,
@@ -117,14 +125,6 @@
     "nivel": "nacional",
     "territorio": "PE",
     "rol": "contexto"
-   },
-   {
-    "id": "endes_anemia_6_35m_oms2024__proporcion__nacional__PE__2024__contexto",
-    "indicador": "endes_anemia_6_35m_oms2024",
-    "anio": 2024,
-    "nivel": "nacional",
-    "territorio": "PE",
-    "rol": "contexto"
    }
   ],
   "grupos": [],
@@ -134,7 +134,6 @@
   ],
   "tema_gasto": null,
   "avisos_periodo": [],
-  "formas_sin_serie": [],
   "respuesta_parcial": false,
   "estructura_efecto": false,
   "lado_a_lado": false,
@@ -144,7 +143,7 @@
   "decisiones": [
    "E-06",
    "E-06 / E-07",
-   "R-04 / AD-1"
+   "R-04 (AD-1)"
   ],
   "grupos_estadisticos": null,
   "consulta_minima": {
@@ -158,9 +157,9 @@
   "desambiguados": {}
  },
  "version_biblioteca": {
-  "cubo": "sha256:68f2a609ec002f54403802c92104c64c01c70ebca4fc46ebc4df293877f58eb2",
-  "commit_cubo": "acc9861",
-  "reglas": "f26641b3a40c"
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "commit_cubo": "779357d",
+  "reglas": "0682897f4b70"
  },
  "cifras": {
   "endes_anemia_6_35m_oms2024__proporcion__nacional__PE__2025__principal": {
@@ -230,8 +229,6 @@
     "anio_cerrado": true,
     "pct_gasto_atribuible": null,
     "version_tabla": "1.2.0",
-    "anio_base_deflactor": null,
-    "factor_deflactor": null,
     "prueba_cambio": {
      "diferencia": -0.4313,
      "ee_diferencia": 0.8638,
@@ -315,6 +312,92 @@
    "accion_final": "publicar",
    "bloqueos_cruce": []
   },
+  "endes_anemia_6_35m_oms2024__proporcion__nacional__PE__2024__contexto": {
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "anio": 2024,
+   "nivel": "nacional",
+   "territorio_id": "PE",
+   "territorio_nombre": "Perú",
+   "medida": "proporcion",
+   "valor": 35.32670927,
+   "ee": 0.58720849,
+   "cv": 1.66222243,
+   "ic_inf": 34.17457103,
+   "ic_sup": 36.4917829,
+   "n_muestra": 9959,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "contexto",
+   "nivel_pedido": "nacional",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": "DOR-OMS-2024-PE",
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "nacional",
+     "territorio_id": "PE",
+     "anio": 2024,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": null,
+   "contraste_oficial": {
+    "valor": 35.3,
+    "documento": "INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024",
+    "cuadro_pagina": "Resumen ejecutivo p. 22 (PDF 24); Cuadro N.º 6.1 p. 56 (PDF 58)",
+    "criterio": "RM251-2024/OMS2024",
+    "id_cifra": "DOR-OMS-2024-PE",
+    "entidad": "INEI"
+   },
+   "resultados": [
+    {
+     "regla": "R-ENC-05",
+     "accion": "rotular",
+     "motivo": "formato",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "35,3 % (entre 34,2 % y 36,5 %), ENDES 2024, Perú; basado en 9959 niñas y niños encuestados.",
+     "rotulo": "35,3 % (entre 34,2 % y 36,5 %), ENDES 2024, Perú; basado en 9959 niñas y niños encuestados."
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2024.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
   "endes_anemia_6_35m__proporcion__nacional__PE__2025__principal": {
    "indicador_id": "endes_anemia_6_35m",
    "anio": 2025,
@@ -382,8 +465,6 @@
     "anio_cerrado": true,
     "pct_gasto_atribuible": null,
     "version_tabla": "1.2.0",
-    "anio_base_deflactor": null,
-    "factor_deflactor": null,
     "prueba_cambio": {
      "diferencia": 0.0418,
      "ee_diferencia": 0.8831,
@@ -597,92 +678,6 @@
    ],
    "accion_final": "publicar",
    "bloqueos_cruce": []
-  },
-  "endes_anemia_6_35m_oms2024__proporcion__nacional__PE__2024__contexto": {
-   "indicador_id": "endes_anemia_6_35m_oms2024",
-   "anio": 2024,
-   "nivel": "nacional",
-   "territorio_id": "PE",
-   "territorio_nombre": "Perú",
-   "medida": "proporcion",
-   "valor": 35.32670927,
-   "ee": 0.58720849,
-   "cv": 1.66222243,
-   "ic_inf": 34.17457103,
-   "ic_sup": 36.4917829,
-   "n_muestra": 9959,
-   "numerador": null,
-   "denominador": null,
-   "cota_inf": null,
-   "cota_sup": null,
-   "rol": "contexto",
-   "nivel_pedido": "nacional",
-   "estado_cifra": "publicable",
-   "semaforo_cifra": "verde",
-   "motivos_semaforo": [],
-   "avisos": [],
-   "validada_dorada": "DOR-OMS-2024-PE",
-   "pct_gasto_atribuible": null,
-   "pim": null,
-   "devengado": null,
-   "lineas_aparte": null,
-   "grupo_robusto_nacional": null,
-   "comparacion": null,
-   "traza": [
-    {
-     "nivel": "nacional",
-     "territorio_id": "PE",
-     "anio": 2024,
-     "periodo_agrupado": null,
-     "accion": "publicar",
-     "estado": "publicable",
-     "motivos": []
-    }
-   ],
-   "metodo_ic": "korn-graubard",
-   "ic_inei": null,
-   "contraste_oficial": {
-    "valor": 35.3,
-    "documento": "INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024",
-    "cuadro_pagina": "Resumen ejecutivo p. 22 (PDF 24); Cuadro N.º 6.1 p. 56 (PDF 58)",
-    "criterio": "RM251-2024/OMS2024",
-    "id_cifra": "DOR-OMS-2024-PE",
-    "entidad": "INEI"
-   },
-   "resultados": [
-    {
-     "regla": "R-ENC-05",
-     "accion": "rotular",
-     "motivo": "formato",
-     "clausula": "estado publicable",
-     "detalle": {
-      "referencial": false
-     },
-     "mensaje": "35,3 % (entre 34,2 % y 36,5 %), ENDES 2024, Perú; basado en 9959 niñas y niños encuestados.",
-     "rotulo": "35,3 % (entre 34,2 % y 36,5 %), ENDES 2024, Perú; basado en 9959 niñas y niños encuestados."
-    },
-    {
-     "regla": "R-CRUCES-09",
-     "accion": "rotular",
-     "motivo": "semaforo",
-     "clausula": "nivel 0",
-     "detalle": {
-      "semaforo": "verde",
-      "puntajes": {
-       "precision": 0,
-       "tipo_medida_vs_concepto": 0,
-       "base_geografica": 0
-      },
-      "motivos": [],
-      "escalado": false,
-      "accion_vigente": "publicar"
-     },
-     "mensaje": "Dato sólido: Hay suficientes datos y son de 2024.",
-     "rotulo": "Dato sólido"
-    }
-   ],
-   "accion_final": "publicar",
-   "bloqueos_cruce": []
   }
  },
  "cruces": [],
@@ -755,7 +750,7 @@
    "no_concluir": [
     "Si el indicador subió o bajó entre 2015 (forma de medir anterior) y 2025 (forma de medir vigente): cambió la forma de medirlo."
    ],
-   "reproducibilidad": "Cálculo con el cubo sha256:68f2a609ec00… (commit acc9861) y reglas f26641b3a40c. Indicadores: endes_anemia_6_35m, endes_anemia_6_35m_oms2024."
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_anemia_6_35m, endes_anemia_6_35m_oms2024."
   }
  },
  "comparaciones_bloqueadas": [],
@@ -857,6 +852,14 @@
     "comparar_con": 2024
    },
    {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__nacional__PE__2024__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "nacional",
+    "territorio": "PE",
+    "rol": "contexto"
+   },
+   {
     "id": "endes_anemia_6_35m__proporcion__nacional__PE__2025__principal",
     "indicador": "endes_anemia_6_35m",
     "anio": 2025,
@@ -872,14 +875,6 @@
     "nivel": "nacional",
     "territorio": "PE",
     "rol": "contexto"
-   },
-   {
-    "id": "endes_anemia_6_35m_oms2024__proporcion__nacional__PE__2024__contexto",
-    "indicador": "endes_anemia_6_35m_oms2024",
-    "anio": 2024,
-    "nivel": "nacional",
-    "territorio": "PE",
-    "rol": "contexto"
    }
   ],
   "grupos": [],
@@ -889,7 +884,6 @@
   ],
   "tema_gasto": null,
   "avisos_periodo": [],
-  "formas_sin_serie": [],
   "respuesta_parcial": false,
   "estructura_efecto": false,
   "lado_a_lado": false,
@@ -899,7 +893,7 @@
   "decisiones": [
    "E-06",
    "E-06 / E-07",
-   "R-04 / AD-1"
+   "R-04 (AD-1)"
   ],
   "grupos_estadisticos": null,
   "consulta_minima": {

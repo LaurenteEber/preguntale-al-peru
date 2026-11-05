@@ -8,11 +8,11 @@ warning: The `UV_NATIVE_TLS` environment variable is deprecated and will be remo
 ........................................................................ [ 67%]
 ........................................................................ [ 77%]
 ........................................................................ [ 87%]
-........................................................................ [ 97%]
-......................                                                   [100%]
-742 passed, 34 deselected in 273.73s (0:04:33)
+........................................................................ [ 96%]
+.......................                                                  [100%]
+743 passed, 34 deselected in 202.97s (0:03:22)
 
-# Pruebas fuera en la nube (solo_mac, F-05): 34
+# Base: main 1bf8682 (adenda del slice 1 fusionada). Pruebas fuera en la nube (solo_mac, F-05): 34
 tests/test_gasto.py::test_sin_pruebas_bloqueantes_fallidas
 tests/test_gasto.py::test_conservacion_exacta
 tests/test_gasto.py::test_pia_igual_a_ley

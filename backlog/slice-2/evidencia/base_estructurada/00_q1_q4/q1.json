@@ -102,6 +102,14 @@
     "comparar_con": 2024
    },
    {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   },
+   {
     "id": "endes_anemia_6_35m__proporcion__departamento__09__2025__principal",
     "indicador": "endes_anemia_6_35m",
     "anio": 2025,
@@ -117,14 +125,6 @@
     "nivel": "departamento",
     "territorio": "09",
     "rol": "contexto"
-   },
-   {
-    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto",
-    "indicador": "endes_anemia_6_35m_oms2024",
-    "anio": 2024,
-    "nivel": "departamento",
-    "territorio": "09",
-    "rol": "contexto"
    }
   ],
   "grupos": [],
@@ -134,7 +134,6 @@
   ],
   "tema_gasto": null,
   "avisos_periodo": [],
-  "formas_sin_serie": [],
   "respuesta_parcial": false,
   "estructura_efecto": false,
   "lado_a_lado": false,
@@ -144,7 +143,7 @@
   "decisiones": [
    "E-06",
    "E-06 / E-07",
-   "R-04 / AD-1"
+   "R-04 (AD-1)"
   ],
   "grupos_estadisticos": null,
   "consulta_minima": {
@@ -162,9 +161,9 @@
   "desambiguados": {}
  },
  "version_biblioteca": {
-  "cubo": "sha256:68f2a609ec002f54403802c92104c64c01c70ebca4fc46ebc4df293877f58eb2",
-  "commit_cubo": "acc9861",
-  "reglas": "f26641b3a40c"
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "commit_cubo": "779357d",
+  "reglas": "0682897f4b70"
  },
  "cifras": {
   "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2025__principal": {
@@ -234,8 +233,6 @@
     "anio_cerrado": true,
     "pct_gasto_atribuible": null,
     "version_tabla": "1.2.0",
-    "anio_base_deflactor": null,
-    "factor_deflactor": null,
     "prueba_cambio": {
      "diferencia": 5.6494,
      "ee_diferencia": 4.2071,
@@ -319,6 +316,92 @@
    "accion_final": "publicar",
    "bloqueos_cruce": []
   },
+  "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto": {
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "anio": 2024,
+   "nivel": "departamento",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "medida": "proporcion",
+   "valor": 32.93858236,
+   "ee": 2.5410923,
+   "cv": 7.71463772,
+   "ic_inf": 27.67157024,
+   "ic_sup": 38.54315718,
+   "n_muestra": 303,
+   "numerador": null,
+   "denominador": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "rol": "contexto",
+   "nivel_pedido": "departamento",
+   "estado_cifra": "publicable",
+   "semaforo_cifra": "verde",
+   "motivos_semaforo": [],
+   "avisos": [],
+   "validada_dorada": "DOR-OMS-2024-09",
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "devengado": null,
+   "lineas_aparte": null,
+   "grupo_robusto_nacional": null,
+   "comparacion": null,
+   "traza": [
+    {
+     "nivel": "departamento",
+     "territorio_id": "09",
+     "anio": 2024,
+     "periodo_agrupado": null,
+     "accion": "publicar",
+     "estado": "publicable",
+     "motivos": []
+    }
+   ],
+   "metodo_ic": "korn-graubard",
+   "ic_inei": null,
+   "contraste_oficial": {
+    "valor": 32.9,
+    "documento": "INEI, ENDES 2024 Departamento de Huancavelica, cap. 9 Nutrición",
+    "cuadro_pagina": "p. 70 (texto; Gráfico 9.5)",
+    "criterio": "RM251-2024/OMS2024",
+    "id_cifra": "DOR-OMS-2024-09",
+    "entidad": "INEI"
+   },
+   "resultados": [
+    {
+     "regla": "R-ENC-05",
+     "accion": "rotular",
+     "motivo": "formato",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "32,9 % (entre 27,7 % y 38,5 %), ENDES 2024, Huancavelica; basado en 303 niñas y niños encuestados.",
+     "rotulo": "32,9 % (entre 27,7 % y 38,5 %), ENDES 2024, Huancavelica; basado en 303 niñas y niños encuestados."
+    },
+    {
+     "regla": "R-CRUCES-09",
+     "accion": "rotular",
+     "motivo": "semaforo",
+     "clausula": "nivel 0",
+     "detalle": {
+      "semaforo": "verde",
+      "puntajes": {
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "base_geografica": 0
+      },
+      "motivos": [],
+      "escalado": false,
+      "accion_vigente": "publicar"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2024.",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "accion_final": "publicar",
+   "bloqueos_cruce": []
+  },
   "endes_anemia_6_35m__proporcion__departamento__09__2025__principal": {
    "indicador_id": "endes_anemia_6_35m",
    "anio": 2025,
@@ -386,8 +469,6 @@
     "anio_cerrado": true,
     "pct_gasto_atribuible": null,
     "version_tabla": "1.2.0",
-    "anio_base_deflactor": null,
-    "factor_deflactor": null,
     "prueba_cambio": {
      "diferencia": 1.0373,
      "ee_diferencia": 4.3852,
@@ -594,92 +675,6 @@
    ],
    "accion_final": "publicar",
    "bloqueos_cruce": []
-  },
-  "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto": {
-   "indicador_id": "endes_anemia_6_35m_oms2024",
-   "anio": 2024,
-   "nivel": "departamento",
-   "territorio_id": "09",
-   "territorio_nombre": "Huancavelica",
-   "medida": "proporcion",
-   "valor": 32.93858236,
-   "ee": 2.5410923,
-   "cv": 7.71463772,
-   "ic_inf": 27.67157024,
-   "ic_sup": 38.54315718,
-   "n_muestra": 303,
-   "numerador": null,
-   "denominador": null,
-   "cota_inf": null,
-   "cota_sup": null,
-   "rol": "contexto",
-   "nivel_pedido": "departamento",
-   "estado_cifra": "publicable",
-   "semaforo_cifra": "verde",
-   "motivos_semaforo": [],
-   "avisos": [],
-   "validada_dorada": "DOR-OMS-2024-09",
-   "pct_gasto_atribuible": null,
-   "pim": null,
-   "devengado": null,
-   "lineas_aparte": null,
-   "grupo_robusto_nacional": null,
-   "comparacion": null,
-   "traza": [
-    {
-     "nivel": "departamento",
-     "territorio_id": "09",
-     "anio": 2024,
-     "periodo_agrupado": null,
-     "accion": "publicar",
-     "estado": "publicable",
-     "motivos": []
-    }
-   ],
-   "metodo_ic": "korn-graubard",
-   "ic_inei": null,
-   "contraste_oficial": {
-    "valor": 32.9,
-    "documento": "INEI, ENDES 2024 Departamento de Huancavelica, cap. 9 Nutrición",
-    "cuadro_pagina": "p. 70 (texto; Gráfico 9.5)",
-    "criterio": "RM251-2024/OMS2024",
-    "id_cifra": "DOR-OMS-2024-09",
-    "entidad": "INEI"
-   },
-   "resultados": [
-    {
-     "regla": "R-ENC-05",
-     "accion": "rotular",
-     "motivo": "formato",
-     "clausula": "estado publicable",
-     "detalle": {
-      "referencial": false
-     },
-     "mensaje": "32,9 % (entre 27,7 % y 38,5 %), ENDES 2024, Huancavelica; basado en 303 niñas y niños encuestados.",
-     "rotulo": "32,9 % (entre 27,7 % y 38,5 %), ENDES 2024, Huancavelica; basado en 303 niñas y niños encuestados."
-    },
-    {
-     "regla": "R-CRUCES-09",
-     "accion": "rotular",
-     "motivo": "semaforo",
-     "clausula": "nivel 0",
-     "detalle": {
-      "semaforo": "verde",
-      "puntajes": {
-       "precision": 0,
-       "tipo_medida_vs_concepto": 0,
-       "base_geografica": 0
-      },
-      "motivos": [],
-      "escalado": false,
-      "accion_vigente": "publicar"
-     },
-     "mensaje": "Dato sólido: Hay suficientes datos y son de 2024.",
-     "rotulo": "Dato sólido"
-    }
-   ],
-   "accion_final": "publicar",
-   "bloqueos_cruce": []
   }
  },
  "cruces": [],
@@ -752,7 +747,7 @@
    "no_concluir": [
     "Si el indicador subió o bajó entre 2015 (forma de medir anterior) y 2025 (forma de medir vigente): cambió la forma de medirlo."
    ],
-   "reproducibilidad": "Cálculo con el cubo sha256:68f2a609ec00… (commit acc9861) y reglas f26641b3a40c. Indicadores: endes_anemia_6_35m, endes_anemia_6_35m_oms2024."
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_anemia_6_35m, endes_anemia_6_35m_oms2024."
   }
  },
  "comparaciones_bloqueadas": [],
@@ -858,6 +853,14 @@
     "comparar_con": 2024
    },
    {
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "anio": 2024,
+    "nivel": "departamento",
+    "territorio": "09",
+    "rol": "contexto"
+   },
+   {
     "id": "endes_anemia_6_35m__proporcion__departamento__09__2025__principal",
     "indicador": "endes_anemia_6_35m",
     "anio": 2025,
@@ -873,14 +876,6 @@
     "nivel": "departamento",
     "territorio": "09",
     "rol": "contexto"
-   },
-   {
-    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__09__2024__contexto",
-    "indicador": "endes_anemia_6_35m_oms2024",
-    "anio": 2024,
-    "nivel": "departamento",
-    "territorio": "09",
-    "rol": "contexto"
    }
   ],
   "grupos": [],
@@ -890,7 +885,6 @@
   ],
   "tema_gasto": null,
   "avisos_periodo": [],
-  "formas_sin_serie": [],
   "respuesta_parcial": false,
   "estructura_efecto": false,
   "lado_a_lado": false,
@@ -900,7 +894,7 @@
   "decisiones": [
    "E-06",
    "E-06 / E-07",
-   "R-04 / AD-1"
+   "R-04 (AD-1)"
   ],
   "grupos_estadisticos": null,
   "consulta_minima": {

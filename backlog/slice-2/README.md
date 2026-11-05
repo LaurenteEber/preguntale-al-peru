@@ -38,9 +38,9 @@ Hay tres comparaciones y cada una tiene su criterio:
 
 **Ojo:** `pregunta_original` cambia lo que se aplica. R-CRUCES-07 busca «disparadores de efecto» en ese texto (`reglas_etapa8_10.py`). Por eso, en la segunda comparación la vía estructurada recibe la misma `pregunta_original`.
 
-## Lo que cambió con la adenda (S2-00, 4/11/2026)
+## Lo que cambió con la adenda (S2-00, rehecho el 5/11/2026)
 
-Según `../slice-1/evidencia/cierre.md` §Adenda: el gasto entre años sale en soles de 2025 (cubo `68f2a609…`, versión 1.2.0); toda evolución muestra los dos años; la evolución de anemia hasta 2018 o 2024 responde con la forma anterior; «Lima» ofrece Lima Metropolitana, Lima Región y Callao; un año de anemia que solo existe con la forma anterior ofrece la evolución. Nada de esto cambia el contrato de la consulta mínima. La rama `slice-2` nace de la punta de `slice-1-adenda` (sin fusionar en `main`: E-01 en `consultas_al_dueno.md`).
+Según `../slice-1/evidencia/cierre.md` §Adenda (fusionada en `main`, `1bf8682`): el gasto entre años sale en soles de 2025 (cubo `010ea965…`, versión 1.2.0); toda evolución muestra los dos años; la evolución de anemia hasta 2018 o 2024 responde con la forma anterior; «Lima» ofrece Lima Metropolitana, Lima Región y Callao; un año de anemia que solo existe con la forma anterior ofrece la evolución. Nada de esto cambia el contrato de la consulta mínima. La etiqueta `slice-1-adenda-cerrada` todavía no está en GitHub; `slice-2` nace de `main` en `1bf8682`.
 
 ## Antes de empezar
 
