@@ -16,10 +16,11 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | ID | Specs | Route | Status | Commit |
 |---|---|---|---|---|
 | T0 S3-00 | S3-00 | inline | done (944 passed base) | b18e473 + this commit |
-| T1 S3-01 | S3-01 | inline | pending | |
+| T1 S3-01 | S3-01 | delegated writer (context backstop: long parent session), sonnet low | in progress | |
 | T2–T11 | S3-02 … S3-11 | — | pending | |
 
 ## Log
 
 - L1 (2026-11-05, user, verbatim; from the slice 2 message §7): «* cuando termines de implementar los pendientes del slice 2 realizas el push y merge a main * Luego inicias la implementación del slice 3»; then «todo con ODD».
 - L2: slice 2 merged into main (PR #2, e1a0d0f). Tag `slice-2-cerrado` created locally; pushing tags from this environment fails («remote end hung up», branches push fine) → W-01 for the owner. Measured LLM latency (204 final recordings): p50 1.6 s, p95 2.5 s. X-02, X-03, X-04 decided for slice 3; X-01 still pending (not applied).
+- L3: S3-00 done (base 944 passed). S3-01 delegated to one bounded writer (reason: long-session context backstop), sonnet low effort per owner.
