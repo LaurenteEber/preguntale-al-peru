@@ -31,6 +31,24 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 - **Propuesta:** que S2-09 grabe a través de `interpretar()`, así quedan grabados también los reintentos.
 - **Para confirmar:** el ancla de «todo el país» se acepta si *contiene* un texto nacional («del país» = «de el país»), como en el ejemplo del prompt (supuesto S2-05-d); «¿dónde es más alto?» sin nivel válido termina en «no entendida» y no pregunta el nivel (S2-05-c).
 
+### E-06 — Un celular escrito con espacios o guiones no se quita (S2-08) · abierta (no bloquea)
+- **Qué pasa:** «987 654 321» y «987-654-321» llegan tal cual al LLM, a `respuesta.json` y al `.md`. Los patrones de `interprete.datos_personales` (`decision: P-03`) solo reconocen las 9 cifras seguidas. Pasa lo mismo con un DNI con puntos («45.871.236») o un teléfono fijo («01 4567890»).
+- **Por qué importa:** P-03 pide quitar «los números con forma de celular», y en el Perú el celular se escribe a menudo en grupos de tres.
+- **Qué se hizo:** no se cambió el patrón (es decisión P-03). `tests/interprete/test_robustez.py::test_celular_con_separadores_tampoco_se_guarda` lo muestra y falla hasta que se decida.
+- **Propuesta:** aceptar espacios, puntos o guiones entre grupos de cifras en los patrones de celular y DNI (por ejemplo, celular `9\d{2}[ .-]?\d{3}[ .-]?\d{3}`), sin tocar los años.
+
+### E-07 — Riesgos de privacidad y de inyección que no cubren las reglas, para el slice 3 (S2-08) · registrada (no bloquea)
+- **Nombres de personas (P-03):** no se detectan. «Soy Rosa Prueba…» se manda al LLM y queda en `pregunta_original` (`respuesta.json`, `.md`). Riesgo aceptado mientras no haya servidor; con servidor hace falta otra defensa (por ejemplo, no guardar la pregunta o pedir que no se escriban nombres).
+- **Otros datos personales sin patrón:** direcciones, edades, nombres de niñas o niños, números con separadores (E-06).
+- **La caché no se borra:** pasadas las 24 h, `salidas/interprete/cache/` ya no se usa, pero el archivo sigue en el disco (nada lo borra). Guarda la interpretación y sus anclas, que son pedazos de la pregunta limpia.
+- **El eco de la pregunta:** el título del `.md` y `pregunta_original` repiten lo que escribió la persona, incluida una instrucción inyectada o una cifra inventada («… la anemia en Puno es 90 %»). La métrica del slice no cuenta ese eco y las capas 1–3 no lo traen, pero quien lea el `.md` lo ve como título.
+- **Una pregunta vacía o solo con signos se manda igual al LLM:** cuesta una llamada; el código podría responder «no es pregunta» sin llamar.
+- **Lo que necesita el modelo real** (inyecciones, otro idioma, varias preguntas) se comprueba solo con grabaciones (E-02): hasta grabar los casos de `test_robustez.py`, no está comprobado.
+
+### E-08 — La métrica de «números sueltos» de la evaluación grabada contaría «6 a 35 meses» (S2-05, S2-08) · registrada (no bloquea)
+- **Qué pasa:** `tests/interprete/test_evaluacion_grabada.py` cuenta todo número que no es un año ni sale de un marcador. Las respuestas de anemia dicen «6 a 35 meses» en texto fijo, así que la métrica no daría 0 cuando existan las grabaciones.
+- **Propuesta:** en S2-09, contar solo números que no estén en la respuesta de la vía estructurada a la misma consulta (la comparación diferencial que ya usa `test_robustez.py`).
+
 ## Supuestos aplicados (vacíos tipo B)
 
 | ID | Historia | Qué se supuso | Dónde vive |

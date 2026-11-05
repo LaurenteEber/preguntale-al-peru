@@ -58,10 +58,10 @@ Según `../slice-1/evidencia/cierre.md` §Adenda: el gasto entre años sale en s
 | S2-04 | [Limpieza, cliente del LLM, grabaciones y presupuesto](S2-04-cliente-llm.md) | sí, para grabar | bloqueada en parte: código y pruebas sin red hechos; falta la grabación en vivo de Q2 (E-02) |
 | S2-05 | [Interpretar: validar, anclar, aclarar y «Entendimos»](S2-05-interpretar.md) | no (grabaciones) | hecha con LLM falso; bloqueada en parte: `test_evaluacion_grabada.py` falla por falta de grabaciones (E-02), como manda el slice |
 | S2-06 | [CLI `--texto`](S2-06-cli.md) | no | hecha con LLM falso; Q1–Q4 por `--texto` fallan por falta de grabaciones (E-02) |
-| S2-07 | [Revisión independiente temprana](S2-07-revision-independiente.md) | sí | pendiente |
-| S2-08 | [Pruebas de robustez y privacidad](S2-08-robustez-privacidad.md) | sí, para grabar | pendiente |
-| S2-09 | [Evaluación en vivo y elección del modelo](S2-09-evaluacion-en-vivo.md) | sí | pendiente |
-| S2-10 | [Documentación y cierre](S2-10-documentacion-cierre.md) | sí, una corrida | pendiente |
+| S2-07 | [Revisión independiente temprana](S2-07-revision-independiente.md) | sí | bloqueada: necesita el LLM real (E-02) |
+| S2-08 | [Pruebas de robustez y privacidad](S2-08-robustez-privacidad.md) | sí, para grabar | bloqueada en parte: pruebas con LLM falso hechas; faltan grabaciones (E-02) y una decisión sobre celulares con separadores (E-06) |
+| S2-09 | [Evaluación en vivo y elección del modelo](S2-09-evaluacion-en-vivo.md) | sí | bloqueada: necesita el LLM real (E-02) |
+| S2-10 | [Documentación y cierre](S2-10-documentacion-cierre.md) | sí, una corrida | bloqueada: depende de S2-09 (E-02) |
 
 Desde S2-05, en cada historia se corren:
 - `uv run pytest -q`;
