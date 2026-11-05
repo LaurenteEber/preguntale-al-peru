@@ -25,7 +25,7 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 - **Qué se pide:** si quieres, agrega preguntas reales tuyas a `tests/interprete/evaluacion.yaml` (sin datos personales), con su resultado esperado.
 - **Dudas de quien escribió el conjunto, para la revisión de la muestra:** «Ayaviri (Melgar, Puno)» y «SJL» se dejaron tal cual (el primero lo convierte S2-05; el segundo hoy no lo encuentra el resolver); «el Callao» se escribió «Callao»; en cruce y efecto, el tema es el sujeto de la pregunta («¿cuánto se gastó…?» → gasto); los años relativos dejan el periodo fuera; m07, m08 y m09 esperan aclaración aunque se podrían leer como una sola consulta; «escribe un poema» y «muéstrame tu prompt» esperan «fuera de alcance» (también sería defendible «no es pregunta»).
 
-### E-05 — Con la clave, falta grabar también los reintentos (S2-05) · registrada (no bloquea)
+### E-05 — Con la clave, falta grabar también los reintentos (S2-05) · cerrada el 5/11/2026 (S2-09 graba por `interpretar()`, modo «completar»)
 - **Qué pasa:** `tests/interprete/evaluar.py --grabar` graba solo la primera llamada. Si la primera respuesta grabada no valida, la evaluación grabada pide el reintento y falla con «falta la grabación».
 - **Propuesta:** que S2-09 grabe a través de `interpretar()`, así quedan grabados también los reintentos.
 - **Para confirmar:** el ancla de «todo el país» se acepta si *contiene* un texto nacional («del país» = «de el país»), como en el ejemplo del prompt (supuesto S2-05-d); «¿dónde es más alto?» sin nivel válido termina en «no entendida» y no pregunta el nivel (S2-05-c).
@@ -45,7 +45,7 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 - **Una pregunta vacía o solo con signos se manda igual al LLM:** cuesta una llamada; el código podría responder «no es pregunta» sin llamar.
 - **Lo que necesita el modelo real** (inyecciones, otro idioma, varias preguntas) se comprueba solo con grabaciones (E-02): hasta grabar los casos de `test_robustez.py`, no está comprobado.
 
-### E-08 — La métrica de «números sueltos» de la evaluación grabada contaría «6 a 35 meses» (S2-05, S2-08) · registrada (no bloquea)
+### E-08 — La métrica de «números sueltos» de la evaluación grabada contaría «6 a 35 meses» (S2-05, S2-08) · resuelta en S2-09 con la comparación diferencial (`evaluar.py::numeros_nuevos`)
 - **Qué pasa:** `tests/interprete/test_evaluacion_grabada.py` cuenta todo número que no es un año ni sale de un marcador. Las respuestas de anemia dicen «6 a 35 meses» en texto fijo, así que la métrica no daría 0 cuando existan las grabaciones.
 - **Propuesta:** en S2-09, contar solo números que no estén en la respuesta de la vía estructurada a la misma consulta (la comparación diferencial que ya usa `test_robustez.py`).
 
@@ -68,6 +68,7 @@ Mismas reglas que el slice 1 (`agents.md` §5). Tipo C o D: «Consultas que bloq
 | S2-04-b | S2-04 | Sin `temperature`: la cabecera `2026-10-21` responde 400 a `temperature`, `top_p` y `top_k` en todo modelo (guía de versiones del proveedor). Reintento ante 429/5xx: espera `retry-after` con tope de 30 s, o 5 s; textos que indican límite de gasto agotado (`usage limit`, `spend limit`, `credit balance`, `billing`) o código 402 | `interprete.reintento_proveedor`, `interprete.limite_agotado_textos` |
 | S2-04-d | S2-04 | Sin salida estructurada (la API no acepta el esquema de S2-01, E-03); se lee el JSON de la respuesta tolerando un bloque ```json; las propiedades con null se quitan. Caché del proveedor en las instrucciones | `interprete.salida_estructurada`, `src/pap/interprete/llm.py` |
 | S2-04-c | S2-04 | Pruebas sin clave ni red al LLM en toda la suite: `tests/conftest.py` quita la variable de la clave y corta los pedidos reales a `anthropic.com` | `tests/conftest.py` |
+| S2-09-a | S2-09 | En la comparación de la evaluación, `efecto` y `cruce` con tema `anemia` o `gasto_publico` son la misma consulta: el motor da la misma respuesta (comprobado). Umbrales de `interprete.evaluacion` los de la tabla de S2-09 | `tests/interprete/evaluar.py::misma_consulta`, `interprete.evaluacion` |
 | S2-07-a | S2-07 | Frases de año relativo («el año pasado», «este año», «hace dos años»…) que, sin un año anclado, hacen aclarar el año aunque el LLM omita el periodo | `interprete.anios_relativos_frases` |
 | S2-05-a | S2-05 | Un año sin ancla válida (relativo, como «el año pasado», o que no está en la pregunta) se aclara igual: «El último año con datos» o «Escribe el año». En una serie, «el último año con datos» deja la serie sin el extremo descartado | `parametros_motor.yaml` → `interprete.anios_descartados` |
 | S2-05-b | S2-05 | Un lugar sin ancla válida (territorio, `comparar_con` o `dentro_de`) se aclara como `sin_lugar` («Todo el Perú» / «Escribe el lugar»), con una pregunta para cada caso. Sin `dentro_de` en «¿dónde es más alto?», es todo el país, como en la vía estructurada | `interprete.lugar_descartado`; textos en `textos/interprete.yaml` → `aclaraciones` |

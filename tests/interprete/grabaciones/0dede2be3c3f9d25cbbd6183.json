@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "compárame la anemia de Lima Metropolitana con la del Callao",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9247,
+ "tokens_salida": 137,
+ "costo_usd": 0.002376,
+ "latencia_s": 1.674,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiyVBfW3cZefyu7vCsoV",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"comparacion\", \"tema\": \"anemia\", \"territorio\": {\"texto\": \"Lima Metropolitana\"}, \"comparar_con\": {\"texto\": \"Callao\"}}, \"anclas\": {\"intencion\": \"compárame\", \"tema\": \"anemia\", \"territorio\": \"Lima Metropolitana\", \"comparar_con\": \"Callao\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 43,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 137,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

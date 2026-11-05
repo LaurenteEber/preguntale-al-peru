@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Cómo varió el gasto en nutrición infantil del Perú de 2023 a 2025?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9258,
+ "tokens_salida": 156,
+ "costo_usd": 0.002588,
+ "latencia_s": 1.755,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiybJHY4oaZ9chUWZYsx",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"evolucion\", \"tema\": \"gasto_publico\", \"territorio\": {\"nacional\": true}, \"periodo\": {\"tipo\": \"serie\", \"desde\": 2023, \"hasta\": 2025}}, \"anclas\": {\"intencion\": \"Cómo varió\", \"tema\": \"gasto en nutrición infantil\", \"territorio\": \"del Perú\", \"desde\": \"2023\", \"hasta\": \"2025\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 54,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 156,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

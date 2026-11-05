@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Cuál es la anemia, la desnutrición y la pobreza en el Perú?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9254,
+ "tokens_salida": 381,
+ "costo_usd": 0.00483,
+ "latencia_s": 2.94,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011Cgiyddwn2mTJJUUYyQQPn",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "Tres temas distintos sobre el país, con la misma pregunta («¿Cuál es…?»), lo que equivale a tres preguntas de nivel actual. Se trata de varias preguntas distintas, una por tema.\n\n{\"resultado\": \"aclaracion\", \"motivo\": \"varias_preguntas\", \"opciones\": [{\"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"anemia\", \"territorio\": {\"nacional\": true}}, \"anclas\": {\"intencion\": \"Cuál es\", \"tema\": \"anemia\", \"territorio\": \"el Perú\"}}, {\"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"desnutricion_cronica\", \"territorio\": {\"nacional\": true}}, \"anclas\": {\"intencion\": \"Cuál es\", \"tema\": \"desnutrición\", \"territorio\": \"el Perú\"}}, {\"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"pobreza_monetaria\", \"territorio\": {\"nacional\": true}}, \"anclas\": {\"intencion\": \"Cuál es\", \"tema\": \"pobreza\", \"territorio\": \"el Perú\"}}]}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 50,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 381,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

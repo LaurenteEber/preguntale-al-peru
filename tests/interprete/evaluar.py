@@ -277,6 +277,10 @@ def main(argv=None) -> int:
     modo = a.add_mutually_exclusive_group(required=True)
     modo.add_argument("--grabar", action="store_true", help="graba la primera llamada de cada pregunta")
     modo.add_argument("--evaluar", action="store_true", help="corre el conjunto por interpretar() y mide los umbrales")
+    modo.add_argument("--completar", action="store_true",
+                      help="graba por interpretar() (con reintentos) lo que falte de las pruebas y las revisiones")
+    modo.add_argument("--huerfanas", action="store_true", help="lista (y con --borrar, borra) las grabaciones de otra versión")
+    a.add_argument("--borrar", action="store_true", help="con --huerfanas: las borra")
     a.add_argument("--solo", help="ids separados por coma")
     a.add_argument("--faltantes", action="store_true", help="con --grabar: solo las que no tienen grabación")
     a.add_argument("--modelo", help="identificador del modelo (por defecto interprete.modelo)")
@@ -284,6 +288,35 @@ def main(argv=None) -> int:
     a.add_argument("--tope-costo", type=float, help="US$ que cortan la corrida (por defecto interprete.tope_por_corrida)")
     x = a.parse_args(argv)
     ids = x.solo.split(",") if x.solo else None
+    if x.huerfanas:
+        _, version = armar(RAIZ)
+        modelo = Cliente(RAIZ, modo="reproducir").par["modelo"]["valor"]
+        malas = sorted(p for p in (RAIZ / "tests/interprete/grabaciones").glob("*.json")
+                       if (lambda g: g.get("version_prompt") != version or g.get("modelo") != modelo)(json.loads(p.read_text(encoding="utf-8"))))
+        for p in malas:
+            print(p.name)
+            if x.borrar:
+                p.unlink()
+        print(f"{len(malas)} huérfanas" + (" borradas" if x.borrar else ""))
+        return 0
+    if x.completar:
+        from pap.interprete.interpretar import interpretar
+        from pap.motor.respuesta import Motor
+        from pap.motor.validador.contexto import cargar_contexto
+        motor = Motor(cargar_contexto(RAIZ))
+        cliente = Cliente(RAIZ, modo="completar", modelo=x.modelo, tope_usd=x.tope_costo)
+        todas = entradas(RAIZ, ARCHIVOS[1:])
+        with tempfile.TemporaryDirectory() as cache:
+            for i, e in todas.items():
+                if ids and i not in ids:
+                    continue
+                if cliente.detenido or cliente.gastado >= cliente.tope:
+                    print(f"cortado: {cliente.detenido or 'tope_por_corrida'}")
+                    return 1
+                r = interpretar(e["pregunta"], motor, llm=cliente, cache_dir=Path(cache), registro=RAIZ / "salidas/interprete/uso.jsonl")
+                print(f"{i}: {r['interpretacion']['resultado']}")
+        print(f"gastado: US$ {cliente.gastado:.4f} en {len(cliente.llamadas)} llamadas")
+        return 0
     if x.grabar:
         if x.faltantes:
             ids = [i for i in (ids or list(preguntas(RAIZ))) if not grabada(RAIZ, preguntas(RAIZ)[i])]

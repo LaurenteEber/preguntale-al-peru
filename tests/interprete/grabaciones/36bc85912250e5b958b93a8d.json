@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Cómo ha cambiado la desnutrición crónica en Apurímac desde 2015?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9257,
+ "tokens_salida": 148,
+ "costo_usd": 0.002506,
+ "latencia_s": 1.763,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgiyaASDQr3xwjmxCPvdS",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"evolucion\", \"tema\": \"desnutricion_cronica\", \"territorio\": {\"texto\": \"Apurímac\"}, \"periodo\": {\"tipo\": \"serie\", \"desde\": 2015}}, \"anclas\": {\"intencion\": \"Cómo ha cambiado\", \"tema\": \"desnutrición crónica\", \"territorio\": \"Apurímac\", \"desde\": \"2015\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 53,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 148,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}
