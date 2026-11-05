@@ -110,7 +110,7 @@ S1-11-a y S1-11-b, S1-12-a a S1-12-c, S1-13-a a S1-13-c, S1-14-a y S1-14-b, S1-1
 
 ### Consultas abiertas
 
-- **C-06 (resto):** GitHub rechaza el push (error 403). La rama, la fusión a `main`, la etiqueta `slice-1-adenda-cerrada` y `adenda/pytest_main.txt` quedan pendientes hasta que vuelva el acceso.
+- **C-06:** cerrada el 5/11/2026. Volvió el acceso a GitHub: la rama se subió, se integró `main` (backlog del slice 3 y decisiones del dueño, sin conflictos), se fusionó en `main` con la etiqueta `slice-1-adenda-cerrada` y `adenda/pytest_main.txt` da 743 en verde.
 - **Observaciones bajas de la verificación:**
   - B-2: «solo hay datos desde 2024» frente a «el INEI publicó años anteriores con ella»; es la frase literal de S1-13;
   - B-3: aprobaciones mezcladas en una sola entrada de `Q1.yaml` y `Q3.yaml`;
