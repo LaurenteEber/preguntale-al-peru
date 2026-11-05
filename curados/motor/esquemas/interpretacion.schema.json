@@ -1,0 +1,129 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://preguntale-al-peru/esquemas/interpretacion.schema.json",
+  "title": "Interpretación de una pregunta en texto libre (S2-01)",
+  "description": "Lo que devuelve el LLM del slice 2: una consulta con sus anclas (el fragmento literal de la pregunta que justifica cada valor), una aclaración, un «fuera de alcance», «no es pregunta» u «otro idioma». No reemplaza a consulta_minima.schema.json: aquí intención y territorio pueden faltar, para que el código aplique interprete.sin_intencion e interprete.sin_lugar (S2-05). El LLM no pone pregunta_original ni idioma (los pone el código), ni ubigeos ni ámbitos (el lugar lo decide el resolver). Que cada ancla sea literal lo comprueba el código, no el esquema. Cada subesquema con «x-error» indica el código del mensaje (curados/motor/textos/errores_consulta.yaml).",
+  "type": "object",
+  "x-error": "interpretacion_invalida",
+  "required": ["resultado"],
+  "properties": {
+    "resultado": {"x-error": "resultado_invalido", "enum": ["consulta", "aclaracion", "fuera_de_alcance", "no_es_pregunta", "otro_idioma"]}
+  },
+  "oneOf": [
+    {
+      "type": "object", "additionalProperties": false, "x-error": "interpretacion_invalida",
+      "required": ["resultado", "consulta", "anclas"],
+      "properties": {
+        "resultado": {"const": "consulta"},
+        "consulta": {"$ref": "#/$defs/consulta"},
+        "anclas": {"$ref": "#/$defs/anclas"}
+      },
+      "allOf": [{"$ref": "#/$defs/una_ancla_por_valor"}]
+    },
+    {
+      "type": "object", "additionalProperties": false, "x-error": "aclaracion_invalida",
+      "required": ["resultado", "motivo", "opciones"],
+      "properties": {
+        "resultado": {"const": "aclaracion"},
+        "motivo": {"x-error": "aclaracion_invalida", "enum": ["intencion_ambigua", "varias_preguntas"]},
+        "opciones": {
+          "x-error": "aclaracion_invalida",
+          "description": "Consultas completas, cada una con sus anclas. El máximo se valida en el código (interprete.aclaracion_max_opciones).",
+          "type": "array", "minItems": 2,
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["consulta", "anclas"],
+            "properties": {"consulta": {"$ref": "#/$defs/consulta"}, "anclas": {"$ref": "#/$defs/anclas"}},
+            "allOf": [{"$ref": "#/$defs/una_ancla_por_valor"}]
+          }
+        }
+      }
+    },
+    {
+      "type": "object", "additionalProperties": false, "x-error": "fuera_de_alcance_invalido",
+      "required": ["resultado", "tipo", "pedido"],
+      "properties": {
+        "resultado": {"const": "fuera_de_alcance"},
+        "tipo": {"x-error": "fuera_de_alcance_invalido", "description": "tema: un tema que no tenemos; pregunta: algo que el motor no responde (un «por qué», una proyección, una opinión).", "enum": ["tema", "pregunta"]},
+        "pedido": {"x-error": "ancla_invalida", "$ref": "#/$defs/texto_sin_digitos"}
+      }
+    },
+    {
+      "type": "object", "additionalProperties": false, "x-error": "interpretacion_invalida",
+      "required": ["resultado"], "properties": {"resultado": {"const": "no_es_pregunta"}}
+    },
+    {
+      "type": "object", "additionalProperties": false, "x-error": "idioma_invalido",
+      "required": ["resultado"], "properties": {"resultado": {"const": "otro_idioma"}}
+    }
+  ],
+  "$defs": {
+    "anio": {"$ref": "consulta_minima.schema.json#/$defs/anio"},
+    "texto_sin_digitos": {"type": "string", "minLength": 1, "maxLength": 200, "pattern": "^[^0-9]*\\S[^0-9]*$"},
+    "lugar": {
+      "description": "Lo que escribió la persona (sin dígitos: un ubigeo no es un lugar escrito) o todo el país.",
+      "oneOf": [
+        {"type": "object", "additionalProperties": false, "required": ["texto"], "properties": {"texto": {"x-error": "lugar_con_digitos", "$ref": "#/$defs/texto_sin_digitos"}}},
+        {"type": "object", "additionalProperties": false, "required": ["nacional"], "properties": {"nacional": {"const": true}}}
+      ]
+    },
+    "extremo": {
+      "type": "object", "additionalProperties": false, "required": ["nivel"],
+      "properties": {
+        "nivel": {"enum": ["departamento", "provincia", "distrito"]},
+        "dentro_de": {"$ref": "#/$defs/lugar"}
+      }
+    },
+    "consulta": {
+      "description": "Como la consulta mínima, pero intención y territorio opcionales; sin indicador, pregunta_original ni idioma.",
+      "type": "object", "additionalProperties": false, "x-error": "campo_desconocido",
+      "properties": {
+        "intencion": {"x-error": "intencion_invalida", "$ref": "consulta_minima.schema.json#/properties/intencion"},
+        "tema": {"x-error": "tema_invalido", "$ref": "consulta_minima.schema.json#/properties/tema"},
+        "territorio": {"x-error": "territorio_invalido"},
+        "comparar_con": {"x-error": "comparar_con_invalido", "$ref": "#/$defs/lugar"},
+        "periodo": {"x-error": "periodo_invalido", "$ref": "consulta_minima.schema.json#/properties/periodo"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"intencion": {"const": "identificar_extremo"}}, "required": ["intencion"]},
+          "then": {"properties": {"territorio": {"x-error": "territorio_extremo_invalido", "$ref": "#/$defs/extremo"}}},
+          "else": {"properties": {"territorio": {"x-error": "territorio_invalido", "$ref": "#/$defs/lugar"}}}
+        },
+        {
+          "if": {"not": {"properties": {"intencion": {"const": "comparacion"}}, "required": ["intencion"]}},
+          "then": {"x-error": "comparar_con_sin_comparacion", "not": {"required": ["comparar_con"]}}
+        }
+      ]
+    },
+    "anclas": {
+      "description": "El fragmento literal de la pregunta que justifica cada valor. Que sea literal lo comprueba el código (S2-05).",
+      "type": "object", "additionalProperties": false, "x-error": "ancla_invalida",
+      "properties": {
+        "territorio": {"$ref": "#/$defs/ancla"}, "comparar_con": {"$ref": "#/$defs/ancla"},
+        "dentro_de": {"$ref": "#/$defs/ancla"}, "nivel": {"$ref": "#/$defs/ancla"},
+        "anio": {"$ref": "#/$defs/ancla"}, "desde": {"$ref": "#/$defs/ancla"}, "hasta": {"$ref": "#/$defs/ancla"},
+        "tema": {"$ref": "#/$defs/ancla"}, "intencion": {"$ref": "#/$defs/ancla"}
+      }
+    },
+    "ancla": {"x-error": "ancla_invalida", "type": "string", "minLength": 1, "maxLength": 200, "pattern": "\\S"},
+    "una_ancla_por_valor": {
+      "x-error": "falta_ancla",
+      "allOf": [
+        {"if": {"properties": {"consulta": {"required": ["intencion"]}}}, "then": {"properties": {"anclas": {"required": ["intencion"]}}}},
+        {"if": {"properties": {"consulta": {"required": ["tema"]}}}, "then": {"properties": {"anclas": {"required": ["tema"]}}}},
+        {"if": {"properties": {"consulta": {"required": ["comparar_con"]}}}, "then": {"properties": {"anclas": {"required": ["comparar_con"]}}}},
+        {"if": {"properties": {"consulta": {"required": ["territorio"], "properties": {"territorio": {"required": ["nivel"]}}}}},
+         "then": {"properties": {"anclas": {"required": ["nivel"]}}},
+         "else": {"if": {"properties": {"consulta": {"required": ["territorio"]}}}, "then": {"properties": {"anclas": {"required": ["territorio"]}}}}},
+        {"if": {"properties": {"consulta": {"properties": {"territorio": {"required": ["dentro_de"]}}, "required": ["territorio"]}}},
+         "then": {"properties": {"anclas": {"required": ["dentro_de"]}}}},
+        {"if": {"properties": {"consulta": {"properties": {"periodo": {"required": ["anio"]}}, "required": ["periodo"]}}},
+         "then": {"properties": {"anclas": {"required": ["anio"]}}}},
+        {"if": {"properties": {"consulta": {"properties": {"periodo": {"required": ["desde"]}}, "required": ["periodo"]}}},
+         "then": {"properties": {"anclas": {"required": ["desde"]}}}},
+        {"if": {"properties": {"consulta": {"properties": {"periodo": {"required": ["hasta"]}}, "required": ["periodo"]}}},
+         "then": {"properties": {"anclas": {"required": ["hasta"]}}}}
+      ]
+    }
+  }
+}

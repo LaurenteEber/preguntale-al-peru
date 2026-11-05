@@ -3,6 +3,7 @@
 version: 1.0.0
 mensajes:
   sin_consulta: "No hay nada que preguntar. Indica un archivo, una carpeta o las opciones --intencion, --tema (o --indicador) y --territorio."
+  texto_y_opciones: "Usa --texto solo, sin archivos de consulta ni opciones como --intencion, --tema, --territorio o --plan (con --texto solo valen --elegir y --salida)."
   archivos_y_opciones: "Usa archivos de consulta o las opciones directas (--intencion, --tema, --territorio…), no las dos cosas a la vez."
   anio_y_serie: "Usa --anio para un año o --desde y --hasta para una serie, no los dos."
   no_existe: "No encontramos «{ruta}»."

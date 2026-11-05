@@ -21,3 +21,12 @@ mensajes:
   comparar_con_sin_comparacion: "Mencionaste otro lugar, pero la pregunta no pide comparar. Si quieres comparar dos lugares, pregúntalo así: «compara A con B»."
   pregunta_invalida: "La pregunta es demasiado larga. Prueba con una más corta."
   idioma_invalido: "Por ahora solo respondemos en español."
+  # S2-01: interpretación de una pregunta en texto libre (curados/motor/esquemas/interpretacion.schema.json)
+  interpretacion_invalida: "No entendimos la pregunta. ¿Puedes escribirla de otra forma?"
+  resultado_invalido: "No entendimos la pregunta. ¿Puedes escribirla de otra forma?"
+  aclaracion_invalida: "No entendimos qué quieres saber. ¿Puedes escribir una sola pregunta?"
+  aclaracion_demasiadas_opciones: "La pregunta puede leerse de demasiadas formas. ¿Puedes escribirla con más detalle?"
+  fuera_de_alcance_invalido: "No entendimos qué quieres saber. ¿Puedes escribirla de otra forma?"
+  ancla_invalida: "No encontramos en tu pregunta lo que entendimos. ¿Puedes escribirla de otra forma?"
+  falta_ancla: "No encontramos en tu pregunta lo que entendimos. ¿Puedes escribirla de otra forma?"
+  lugar_con_digitos: "Escribe el nombre del lugar, no un código."

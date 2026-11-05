@@ -177,6 +177,13 @@ motivos:
     cercano:
       pais: "Sí podemos mostrar qué lugares tienen el valor más alto de {tema} en todo el país. Puedes preguntarlo sin indicar un lugar."
       ninguna: "Por ahora no tenemos una comparación para ofrecerte."
+  interprete_fuera_de_alcance:     # S2-05: el intérprete reconoce una pregunta que el motor no responde (un «por qué», una proyección, una opinión)
+    regla: null
+    alcance: total
+    corta: "Todavía no respondemos ese tipo de pregunta."
+    motivo: "Respondemos con cifras de fuentes públicas oficiales: no explicamos por qué pasa algo, no hacemos proyecciones ni damos opiniones."
+    cercano:
+      ninguna: "Sí podemos decirte cuánto hay hoy, cómo cambió, cómo se compara con otro lugar, dónde es más alto o qué se gastó, para {temas}."
   sin_registros:
     regla: null
     alcance: total

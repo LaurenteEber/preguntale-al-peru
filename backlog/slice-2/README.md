@@ -38,6 +38,10 @@ Hay tres comparaciones y cada una tiene su criterio:
 
 **Ojo:** `pregunta_original` cambia lo que se aplica. R-CRUCES-07 busca «disparadores de efecto» en ese texto (`reglas_etapa8_10.py`). Por eso, en la segunda comparación la vía estructurada recibe la misma `pregunta_original`.
 
+## Lo que cambió con la adenda (S2-00, rehecho el 5/11/2026)
+
+Según `../slice-1/evidencia/cierre.md` §Adenda (fusionada en `main`, `1bf8682`): el gasto entre años sale en soles de 2025 (cubo `010ea965…`, versión 1.2.0); toda evolución muestra los dos años; la evolución de anemia hasta 2018 o 2024 responde con la forma anterior; «Lima» ofrece Lima Metropolitana, Lima Región y Callao; un año de anemia que solo existe con la forma anterior ofrece la evolución. Nada de esto cambia el contrato de la consulta mínima. La etiqueta `slice-1-adenda-cerrada` todavía no está en GitHub; `slice-2` nace de `main` en `1bf8682`.
+
 ## Antes de empezar
 
 1. La adenda está cerrada (etiqueta `slice-1-adenda-cerrada`); S2-00 lee su `cierre.md` §Adenda y anota en este README lo que cambie.
@@ -47,17 +51,17 @@ Hay tres comparaciones y cada una tiene su criterio:
 
 | ID | Historia | LLM real | Estado |
 |---|---|---|---|
-| S2-00 | [Preparación](S2-00-preparacion.md) | no | pendiente |
-| S2-01 | [Contrato de la interpretación](S2-01-contrato-interpretacion.md) | no | pendiente |
-| S2-02 | [Conjunto de evaluación (independiente)](S2-02-conjunto-evaluacion.md) | no | pendiente |
-| S2-03 | [Vocabulario e instrucciones desde datos curados](S2-03-vocabulario-prompt.md) | no | pendiente |
-| S2-04 | [Limpieza, cliente del LLM, grabaciones y presupuesto](S2-04-cliente-llm.md) | sí, para grabar | pendiente |
-| S2-05 | [Interpretar: validar, anclar, aclarar y «Entendimos»](S2-05-interpretar.md) | no (grabaciones) | pendiente |
-| S2-06 | [CLI `--texto`](S2-06-cli.md) | no | pendiente |
-| S2-07 | [Revisión independiente temprana](S2-07-revision-independiente.md) | sí | pendiente |
-| S2-08 | [Pruebas de robustez y privacidad](S2-08-robustez-privacidad.md) | sí, para grabar | pendiente |
-| S2-09 | [Evaluación en vivo y elección del modelo](S2-09-evaluacion-en-vivo.md) | sí | pendiente |
-| S2-10 | [Documentación y cierre](S2-10-documentacion-cierre.md) | sí, una corrida | pendiente |
+| S2-00 | [Preparación](S2-00-preparacion.md) | no | hecha ([base](evidencia/s2-00_base.txt)) |
+| S2-01 | [Contrato de la interpretación](S2-01-contrato-interpretacion.md) | no | hecha (`tests/interprete/test_contrato.py`) |
+| S2-02 | [Conjunto de evaluación (independiente)](S2-02-conjunto-evaluacion.md) | no | hecha, pendiente de revisión (137 entradas; dudas en E-04) |
+| S2-03 | [Vocabulario e instrucciones desde datos curados](S2-03-vocabulario-prompt.md) | no | hecha ([cambios del prompt](evidencia/cambios_prompt.md)) |
+| S2-04 | [Limpieza, cliente del LLM, grabaciones y presupuesto](S2-04-cliente-llm.md) | sí, para grabar | bloqueada en parte: código y pruebas sin red hechos; falta la grabación en vivo de Q2 (E-02) |
+| S2-05 | [Interpretar: validar, anclar, aclarar y «Entendimos»](S2-05-interpretar.md) | no (grabaciones) | hecha con LLM falso; bloqueada en parte: `test_evaluacion_grabada.py` falla por falta de grabaciones (E-02), como manda el slice |
+| S2-06 | [CLI `--texto`](S2-06-cli.md) | no | hecha con LLM falso; Q1–Q4 por `--texto` fallan por falta de grabaciones (E-02) |
+| S2-07 | [Revisión independiente temprana](S2-07-revision-independiente.md) | sí | bloqueada: necesita el LLM real (E-02) |
+| S2-08 | [Pruebas de robustez y privacidad](S2-08-robustez-privacidad.md) | sí, para grabar | bloqueada en parte: pruebas con LLM falso hechas; faltan grabaciones (E-02) y una decisión sobre celulares con separadores (E-06) |
+| S2-09 | [Evaluación en vivo y elección del modelo](S2-09-evaluacion-en-vivo.md) | sí | bloqueada: necesita el LLM real (E-02) |
+| S2-10 | [Documentación y cierre](S2-10-documentacion-cierre.md) | sí, una corrida | bloqueada: depende de S2-09 (E-02) |
 
 Desde S2-05, en cada historia se corren:
 - `uv run pytest -q`;

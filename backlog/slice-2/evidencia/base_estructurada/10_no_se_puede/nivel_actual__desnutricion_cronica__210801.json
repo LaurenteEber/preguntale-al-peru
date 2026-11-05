@@ -1,0 +1,242 @@
+{
+ "tipo": "no_se_puede",
+ "capas": {
+  "capa1": {
+   "respuesta_corta": "No podemos mostrar cuánto hay de desnutrición crónica en Ayaviri por distrito.",
+   "cifra_clave": null,
+   "ojo_al_leer": [],
+   "confianza": {
+    "nivel": "sin cifra",
+    "texto": "Confianza en los datos: sin cifra.",
+    "ficha": "Confianza: Sin cifra disponible."
+   },
+   "que_hacer": null,
+   "palabras": 32,
+   "lo_mas_cercano": {
+    "titulo": "Lo más cercano que sí tenemos",
+    "texto": "Sí tenemos la cifra para el departamento de Puno. Puedes preguntar por ese lugar."
+   }
+  },
+  "capa2": {
+   "mas_contexto": [
+    {
+     "titulo": "Por qué no se puede",
+     "texto": "Los datos de desnutrición crónica que usamos no permiten cifras confiables por distrito. Mostrarlas daría una precisión que no tienen.",
+     "etiqueta": null
+    }
+   ],
+   "avisos": [],
+   "limites": [
+    "Datos de: ninguna cifra publicada en esta respuesta",
+    "Territorio: Ayaviri",
+    "No permite concluir: nada sobre desnutrición crónica. No mostrar una cifra no quiere decir que el problema no exista."
+   ]
+  },
+  "capa3": {
+   "para_citar": [
+    "Esta respuesta no publica cifras."
+   ],
+   "glosario": []
+  }
+ },
+ "temas_disponibles": [],
+ "consulta": {
+  "id": "nivel_actual__desnutricion_cronica__210801",
+  "pregunta": "nivel_actual desnutricion_cronica Ayaviri",
+  "intencion": "nivel_actual",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "nivel": "distrito",
+   "id": "210801",
+   "nombre_pedido": "Ayaviri"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "cifras": [
+   {
+    "id": "endes_dci_menores_5__proporcion__departamento__21__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "21",
+    "rol": "principal",
+    "nivel_pedido": "distrito"
+   }
+  ],
+  "grupos": [],
+  "cruce": null,
+  "bloques": [],
+  "tema_gasto": null,
+  "avisos_periodo": [],
+  "respuesta_parcial": false,
+  "estructura_efecto": false,
+  "lado_a_lado": false,
+  "no_se_puede": {
+   "motivo": "nivel_no_valido",
+   "nivel_pedido": "distrito",
+   "nivel_planificado": "departamento",
+   "indicador": "endes_dci_menores_5"
+  },
+  "motivos_no_se_puede": [
+   {
+    "motivo": "nivel_no_valido",
+    "nivel_pedido": "distrito",
+    "nivel_planificado": "departamento",
+    "indicador": "endes_dci_menores_5"
+   }
+  ],
+  "omitidas": [],
+  "decisiones": [
+   "R-04"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "nivel_actual",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "Ayaviri, Melgar"
+   },
+   "idioma": "es"
+  },
+  "desambiguados": {}
+ },
+ "version_biblioteca": {
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "commit_cubo": "779357d",
+  "reglas": "0682897f4b70"
+ },
+ "motivo": {
+  "codigo": "nivel_no_valido",
+  "regla_lenguaje_05": "nivel_no_representativo",
+  "detalle": {
+   "motivo": "nivel_no_valido",
+   "nivel_pedido": "distrito",
+   "nivel_planificado": "departamento",
+   "indicador": "endes_dci_menores_5"
+  },
+  "otros": []
+ },
+ "alternativas": [
+  {
+   "tipo": "nivel",
+   "nivel": "departamento",
+   "territorio_id": "21",
+   "nombre": "Puno",
+   "anio": 2025,
+   "texto": "el departamento de Puno",
+   "lugar": {
+    "ubigeo": "21"
+   }
+  }
+ ],
+ "cifras": {},
+ "cifras_no_publicadas": [],
+ "cruces": [],
+ "semaforo_respuesta": "sin_cifra",
+ "motivos_semaforo_respuesta": [
+  "sin_cifra_principal"
+ ],
+ "texto": "No podemos mostrar cuánto hay de desnutrición crónica en Ayaviri por distrito. Sí tenemos la cifra para el departamento de Puno. Puedes preguntar por ese lugar. Los datos de desnutrición crónica que usamos no permiten cifras confiables por distrito. Mostrarlas daría una precisión que no tienen.",
+ "texto_con_marcadores": "No podemos mostrar cuánto hay de desnutrición crónica en Ayaviri por distrito. Sí tenemos la cifra para el departamento de Puno. Puedes preguntar por ese lugar. Los datos de desnutrición crónica que usamos no permiten cifras confiables por distrito. Mostrarlas daría una precisión que no tienen.",
+ "ficha": {
+  "corta": "Confianza: Sin cifra disponible.\nDatos de: ninguna cifra publicada en esta respuesta\nTerritorio: Ayaviri\nNo permite concluir: nada sobre desnutrición crónica. No mostrar una cifra no quiere decir que el problema no exista.",
+  "larga": {
+   "cifras": {},
+   "cruces": {},
+   "no_concluir": [],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: ."
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "avisos_al_usuario": [],
+ "resultados_respuesta": [
+  {
+   "regla": "R-CRUCES-10",
+   "accion": "rotular",
+   "motivo": "sin_cifra_principal",
+   "clausula": "sin cifra principal publicable",
+   "detalle": {
+    "semaforo_respuesta": "sin_cifra",
+    "motivos": [
+     "sin_cifra_principal"
+    ]
+   },
+   "rotulo": "Sin cifra disponible",
+   "objetivo": "respuesta"
+  }
+ ],
+ "corrector": [],
+ "respuesta_parcial": false,
+ "consulta_minima": {
+  "intencion": "nivel_actual",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "texto": "Ayaviri, Melgar"
+  },
+  "idioma": "es"
+ },
+ "plan": {
+  "id": "nivel_actual__desnutricion_cronica__210801",
+  "pregunta": "nivel_actual desnutricion_cronica Ayaviri",
+  "intencion": "nivel_actual",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "nivel": "distrito",
+   "id": "210801",
+   "nombre_pedido": "Ayaviri"
+  },
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "cifras": [
+   {
+    "id": "endes_dci_menores_5__proporcion__departamento__21__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "anio": 2025,
+    "nivel": "departamento",
+    "territorio": "21",
+    "rol": "principal",
+    "nivel_pedido": "distrito"
+   }
+  ],
+  "grupos": [],
+  "cruce": null,
+  "bloques": [],
+  "tema_gasto": null,
+  "avisos_periodo": [],
+  "respuesta_parcial": false,
+  "estructura_efecto": false,
+  "lado_a_lado": false,
+  "no_se_puede": {
+   "motivo": "nivel_no_valido",
+   "nivel_pedido": "distrito",
+   "nivel_planificado": "departamento",
+   "indicador": "endes_dci_menores_5"
+  },
+  "motivos_no_se_puede": [
+   {
+    "motivo": "nivel_no_valido",
+    "nivel_pedido": "distrito",
+    "nivel_planificado": "departamento",
+    "indicador": "endes_dci_menores_5"
+   }
+  ],
+  "omitidas": [],
+  "decisiones": [
+   "R-04"
+  ],
+  "grupos_estadisticos": null,
+  "consulta_minima": {
+   "intencion": "nivel_actual",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "Ayaviri, Melgar"
+   },
+   "idioma": "es"
+  },
+  "desambiguados": {}
+ }
+}

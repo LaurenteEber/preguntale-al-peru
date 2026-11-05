@@ -303,9 +303,14 @@ def _consulta_directa(a, alias: dict, msgs: dict) -> dict:
 
 
 def _entradas(a, alias: dict, msgs: dict) -> list[tuple[str, str, object]]:
-    """[(nombre, tipo, valor)]: `yaml` (consulta del piloto, qN.yaml), `json` (consulta mínima en archivo) o `directa`."""
+    """[(nombre, tipo, valor)]: `yaml` (consulta del piloto, qN.yaml), `json` (consulta mínima en archivo), `directa` o `texto`
+    (pregunta en texto libre, S2-06: excluyente con los archivos, las opciones directas y --plan)."""
     directas = [a.intencion, a.tema, a.indicador, a.territorio, a.anio, a.desde, a.hasta, a.comparar_con, a.nivel, a.dentro_de]
     hay_directas = any(x is not None for x in directas)
+    if a.texto is not None:
+        if a.consultas or hay_directas or a.plan:
+            raise _ErrorCli(msgs["texto_y_opciones"])
+        return [("texto", "texto", a.texto)]
     if a.consultas and hay_directas:
         raise _ErrorCli(msgs["archivos_y_opciones"])
     if not a.consultas and not hay_directas:
@@ -348,6 +353,8 @@ def cmd_preguntar(a, rutas) -> int:
     salida = Path(a.salida) if a.salida else rutas.raiz / par["cli"]["salida_por_defecto"]["valor"]
     ctx = cargar_contexto(rutas.raiz)
     m = Motor(ctx)
+    if entradas[0][1] == "texto":
+        return _preguntar_texto(a, rutas, m, entradas[0][2], salida, cod, msgs)
     codigo, escribio = cod["respondida"], False
     gravedad = {cod["respondida"]: 0, cod["no_se_puede"]: 0, cod["aclaracion"]: 1, cod["error"]: 2}
     for nombre, tipo, valor in entradas:
@@ -397,6 +404,51 @@ def cmd_preguntar(a, rutas) -> int:
     if escribio:
         print(f"Respuestas en {rutas.relativa(salida)}")
     return codigo
+
+
+# Solo para las pruebas (tests/interprete/test_cli_texto.py lo reemplaza con monkeypatch por una función raiz → cliente: un
+# LLM falso o el Cliente en modo «reproducir»). Ninguna opción ni variable de entorno lo cambia: en uso normal es None y
+# `interpretar` usa el cliente en modo «vivo».
+_LLM_DE_PRUEBA = None
+
+
+def _preguntar_texto(a, rutas, m, texto: str, salida: Path, cod: dict, msgs: dict) -> int:
+    """`pap preguntar --texto` (S2-06): la pregunta en texto libre pasa por el intérprete (S2-05). Imprime el aviso de recorte
+    antes de todo; `entendimos` va primero en la respuesta, en el .md y fuera de las capas en el JSON. Solo una respuesta o un
+    «no se puede» escriben archivos. Códigos de salida: `cli.codigo_salida` (un mensaje fijo, por su motivo o `mensaje`)."""
+    from .interprete import interpretar as I
+    from .motor import ficha as F
+    from .motor.preguntar import EleccionInvalida
+    try:
+        res = I.interpretar(texto, m, elegir=a.elegir, llm=_LLM_DE_PRUEBA(rutas.raiz) if _LLM_DE_PRUEBA else None)
+    except EleccionInvalida as e:
+        print(f"✘ {e}", file=sys.stderr)
+        return cod["error"]
+    for aviso in res["interpretacion"]["avisos"]:
+        print(aviso)
+    if res["tipo"] == "mensaje":
+        print(res["texto"])
+        return cod.get(res["motivo"], cod["mensaje"])
+    if res["tipo"] == "aclaracion":
+        print(res["texto"])
+        if res["aclaracion"]["opciones"]:
+            comparando = bool((res.get("consulta_minima") or {}).get("comparar_con"))
+            print(msgs["elegir_pista_comparar" if comparando else "elegir_pista"])
+        return cod["aclaracion"]
+    res = {"entendimos": res["entendimos"], **res}                  # fuera de las capas, primero
+    base = res["consulta"]["id"].lower()
+    salida.mkdir(parents=True, exist_ok=True)
+    (salida / f"{base}.json").write_text(json.dumps(res, ensure_ascii=False, indent=1, default=str), encoding="utf-8")
+    (salida / f"{base}.md").write_text(F.markdown(res), encoding="utf-8")
+    if res["entendimos"]:
+        print(res["entendimos"])
+    sem = f" · semáforo: {res['semaforo_respuesta']}" if res["tipo"] == "respuesta" else " · no se puede"
+    print(f"===== {res['consulta']['id']}{sem}")
+    print(res["texto"])
+    print("--- ficha")
+    print(res["ficha"]["corta"])
+    print(f"Respuestas en {rutas.relativa(salida)}")
+    return cod["respondida"] if res["tipo"] == "respuesta" else cod["no_se_puede"]
 
 
 def cmd_foto_pim(a, rutas) -> int:
@@ -511,7 +563,7 @@ def construir_parser() -> argparse.ArgumentParser:
     s = sub.add_parser("preguntar", help="Responder preguntas: consultas mínimas (JSON), consultas del piloto (YAML) u opciones directas",
                        description="Responde preguntas sobre los problemas del país con cifras de fuentes oficiales. La pregunta puede venir "
                                    "de archivos (consulta mínima .json o consulta del piloto tests/fixtures/consultas_piloto/qN.yaml), de una carpeta "
-                                   "(curados/motor/consultas_minimas/) o de las opciones directas. Si el lugar es ambiguo, imprime las opciones "
+                                   "(curados/motor/consultas_minimas/), de las opciones directas o de una pregunta escrita con --texto. Si el lugar es ambiguo, imprime las opciones "
                                    "numeradas y sale con el código 2; repite con --elegir N para responderla.", add_help=False)
     s.add_argument("-h", "--help", action="help", help="Muestra esta ayuda y termina")
     s.add_argument("consultas", nargs="*", help="Archivos .json (consulta mínima) o .yaml (consulta del piloto), o carpetas con ellos")
@@ -528,6 +580,9 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--nivel", choices=["departamento", "provincia", "distrito"],
                    help="Con --intencion identificar_extremo: el nivel de los lugares que se ordenan")
     s.add_argument("--dentro-de", help="Con --intencion identificar_extremo: limitar a un lugar (hoy solo se responde para todo el país)")
+    s.add_argument("--texto", metavar="PREGUNTA",
+                   help="La pregunta escrita con tus palabras, entre comillas: «¿Cuánta anemia hay en Puno?». Se usa sola, sin "
+                        "archivos ni opciones como --intencion o --tema (solo con --elegir y --salida)")
     s.add_argument("--elegir", type=_numeros_elegir, metavar="N[,N]",
                    help="Responde una aclaración sin preguntar: el número de la opción que imprimió el comando (empieza en 1). En una "
                         "comparación con dos lugares ambiguos, un número por lugar y en orden: --elegir 1,1")
