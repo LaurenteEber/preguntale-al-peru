@@ -12,7 +12,7 @@ La validación del cierre del slice 1 (3/11/2026) dejó dos cosas:
 ## Antecedentes del repositorio nuevo (4/11/2026)
 
 - El repositorio empezó de cero. Los commits y las etiquetas que cita la evidencia del slice 1 (`slice-1`, `slice-1-cerrado`, `1603698`…) son de la carpeta de trabajo anterior y no existen aquí (`docs/historia.md`).
-- Los Parquet no están en git. Están en el release `biblioteca-ba1fbc55` de GitHub y S1-11 los baja y los comprueba (X-11: se trabaja en Claude Code en la nube). Si la nube no puede subir a `main`, S1-16 sube la rama y abre un PR; el dueño fusiona y pone la etiqueta. La reconstrucción hecha al migrar dio la huella del cubo `ba1fbc55…`, y los manifiestos en git la registran.
+- Los Parquet no están en git. Están en el release `biblioteca-ba1fbc55` de GitHub y S1-11 los baja y los comprueba (F-05: se trabaja en Claude Code en la nube). Si la nube no puede subir a `main`, S1-16 sube la rama y abre un PR; el dueño fusiona y pone la etiqueta. La reconstrucción hecha al migrar dio la huella del cubo `ba1fbc55…`, y los manifiestos en git la registran.
 - El nombre del proyecto pasó a «Pregúntale al Perú» por decisión del dueño (commit `e3c611d`). Esto cambió el rótulo de la fuente en Q1–Q4 («Fuente: Pregúntale al Perú, cálculo propio…»). Las referencias de `tests/referencias/` ya lo traen y es la base de la regresión. No hay que aprobarlo de nuevo.
 
 ## Historias (en orden)
@@ -42,7 +42,7 @@ Ya estaban decididas, sin consulta:
 
 ## Definición de hecho de la adenda
 
-1. La biblioteca del entorno de trabajo (Mac o nube, X-11) reproduce la huella del cubo `ba1fbc55…` antes de cualquier cambio (S1-11).
+1. La biblioteca del entorno de trabajo (Mac o nube, F-05) reproduce la huella del cubo `ba1fbc55…` antes de cualquier cambio (S1-11).
 2. «¿Cómo cambió el gasto?» compara 2023 con 2025 en soles constantes de 2025, con su rótulo, y R-GASTO-12 ya no la bloquea.
 3. Están resueltas H9, H11 (AD-1), H12 (AD-2), N-2, N-3, A-H6, D-01 y la observación de H7, cada una con su prueba.
 4. Regresión Q1–Q4: no cambian las cifras, los semáforos ni la confianza. Las diferencias de texto quedan aprobadas en `../evidencia/regresion/`: las de AD-1 y AD-2, por el dueño; las demás, por el agente si cumplen `agents.md` §5.1.

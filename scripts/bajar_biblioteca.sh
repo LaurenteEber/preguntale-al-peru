@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Baja los Parquet de la biblioteca desde un release de GitHub y comprueba sus huellas (decisión X-11).
+# Baja los Parquet de la biblioteca desde un release de GitHub y comprueba sus huellas (decisión F-05).
 # Uso: scripts/bajar_biblioteca.sh [etiqueta]   (por defecto, biblioteca-ba1fbc55)
 # Solo escribe dentro de biblioteca/ (archivos fuera de git). No toca los crudos, los manifiestos ni nada versionado.
 set -euo pipefail
@@ -17,10 +17,13 @@ curl -fsSL --retry 3 -o "$TMP/$ETIQUETA.tar.zst" "$BASE/$ETIQUETA.tar.zst"
 (cd "$TMP" && sha256sum -c SHA256SUMS)
 
 echo "Descomprimiendo en $RAIZ/biblioteca…"
+# El paquete se armó en macOS: GNU tar avisa de sus atributos extendidos; se silencian solo esos avisos.
+TAR_OPC=""
+tar --version 2>/dev/null | grep -q GNU && TAR_OPC="--warning=no-unknown-keyword"
 if command -v zstd >/dev/null 2>&1; then
-  zstd -dc "$TMP/$ETIQUETA.tar.zst" | tar -x -C "$RAIZ"
+  zstd -dc "$TMP/$ETIQUETA.tar.zst" | tar -x $TAR_OPC -C "$RAIZ"
 else   # zstandard ya es dependencia del proyecto (uv.lock)
-  (cd "$RAIZ" && uv run --frozen python -c "import sys,zstandard; zstandard.ZstdDecompressor().copy_stream(open(sys.argv[1],'rb'), sys.stdout.buffer)" "$TMP/$ETIQUETA.tar.zst") | tar -x -C "$RAIZ"
+  (cd "$RAIZ" && uv run --frozen python -c "import sys,zstandard; zstandard.ZstdDecompressor().copy_stream(open(sys.argv[1],'rb'), sys.stdout.buffer)" "$TMP/$ETIQUETA.tar.zst") | tar -x $TAR_OPC -C "$RAIZ"
 fi
 
 # La etiqueta nombra la huella del cubo: se comprueba aquí; el resto de tablas lo comprueba insumos.tabla() al usarlas.

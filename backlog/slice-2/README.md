@@ -2,7 +2,7 @@
 
 Rama `slice-2` desde `main`, **después de la etiqueta `slice-1-adenda-cerrada`**. Fase 5b. Plan general: `../plan_slices.md`.
 
-Borrador del 4/11/2026, revisado por un subagente que emuló al implementador (31 hallazgos corregidos). Antes de empezar se ajusta con el cierre de la adenda.
+4/11/2026. Revisado por un subagente que emuló al implementador (31 hallazgos corregidos) y por el supervisor.
 
 ## Objetivo
 
@@ -40,11 +40,8 @@ Hay tres comparaciones y cada una tiene su criterio:
 
 ## Antes de empezar
 
-1. La adenda está cerrada; leer su `cierre.md` §Adenda y ajustar este README.
-2. **Decisiones del dueño** registradas en `docs/decisiones.md` (tabla de abajo):
-   - S2-00 necesita X-11.
-   - S2-04 en adelante necesitan X-12, X-13 y X-14.
-   - S2-01 a S2-03 pueden avanzar sin ellas.
+1. La adenda está cerrada (etiqueta `slice-1-adenda-cerrada`); S2-00 lee su `cierre.md` §Adenda y anota en este README lo que cambie.
+2. Las decisiones del dueño ya están en `docs/decisiones.md` (F-05, P-03 y P-07; tabla de abajo). La clave de la API debe estar en el entorno antes de S2-04.
 
 ## Historias (en orden)
 
@@ -68,7 +65,7 @@ Desde S2-05, en cada historia se corren:
 - la matriz reducida;
 - la evaluación con grabaciones (`tests/interprete/`).
 
-Hasta S2-09 se trabaja con un **modelo provisional** (`interprete.modelo`, `supuesto: S2-04`). En S2-09 se elige el definitivo y se vuelve a grabar todo.
+El modelo es Opus desde S2-04 (`interprete.modelo`, `decision: P-07`). Si en S2-09 cambia la versión del modelo o el prompt, se vuelve a grabar todo.
 
 ## Definición de hecho del slice
 
@@ -80,21 +77,22 @@ Hasta S2-09 se trabaja con un **modelo provisional** (`interprete.modelo`, `supu
    - **números de las capas 1 a 3 y de `entendimos` que no salgan de un marcador del cubo,** sin contar los años ni el eco literal de `pregunta_original` en el encabezado y en las aclaraciones.
 3. **Toda falla del LLM termina en un mensaje fijo que ofrece la vía estructurada,** nunca en una respuesta adivinada. Fallas cubiertas: caída, tiempo agotado, tope de costo, sin clave y salida inválida dos veces.
 4. **`uv run pytest -q` en verde sin red y sin clave.**
-5. **Lo que se guarda de la pregunta es lo que decide X-14.** Los números con forma de dato personal se quitan antes de enviar y de guardar (P-03).
+5. **Lo que se guarda de la pregunta es lo que dice P-03.** Los números con forma de dato personal se quitan antes de enviar y de guardar (P-03).
 6. **Revisión independiente «apto»** (S2-07, repetida en S2-10 si cambió el modelo). Documentación al día y etiqueta `slice-2-cerrado`.
 
 ## Decisiones del dueño
 
-Leer antes: P-01, P-02, P-03, P-05, R-04, T-03, E-06, F-05 y la sección de pendientes. **X-09 y X-10 ya existen** (las cita E-06), así que las nuevas empiezan en X-11.
+Leer antes: P-01, P-02, **P-03**, P-05, **P-07**, R-04, T-03, E-06 y **F-05**, en `docs/decisiones.md`.
 
-**Nuevas, por decidir.** Son propuestas del supervisor; el agente no las decide.
+Decididas el 4/11/2026 (eran las propuestas X-11 a X-14 de este backlog):
 
-| ID | Pregunta | Propuesta | Por qué |
-|---|---|---|---|
-| X-11 | ¿Cómo llega la biblioteca al entorno en la nube? ¿Qué pasa con las pruebas que piden crudos? | Paquete de Parquet en un release de GitHub, comprobado por huella. Las pruebas que piden crudos se marcan y corren solo en el Mac. Esto cambia `agents.md` §8 (`../slice-1/adenda/supervision.md` §7) | Sin credenciales; los Parquet se verifican solos contra sus manifiestos |
-| X-12 | Proveedor y modelo del LLM | Anthropic por API, con salida estructurada. En S2-09 se comparan dos modelos y se elige **el más barato que cumpla los umbrales** | La tarea es acotada (llenar un esquema); lo decide el dato, no la marca |
-| X-13 | Tope de gasto | (a) Límite mensual configurado en la consola del proveedor: es el tope real, porque el entorno en la nube es efímero. (b) Tope por corrida en la evaluación (`--tope-costo`). (c) Registro local de uso para medir | Un registro en un entorno efímero se reinicia y no sirve como tope |
-| X-14 | ¿Qué se guarda de la pregunta? | (1) `respuesta.json` local (en `salidas/`, fuera de git) guarda la pregunta **ya limpia**, porque la necesitan R-CRUCES-07 y el encabezado. (2) `uso.jsonl` guarda la huella de la pregunta, la consulta producida **sin los textos de lugar**, el resultado, el modelo, los tokens y el costo. (3) Caché de interpretaciones con vida de 24 h. (4) Los nombres de personas no se detectan bien por reglas: se acepta como riesgo en local y se revisa en el slice 3, antes de que haya servidor | P-03 es «no se guardan DNI ni nombres»; en local y sin servidor el riesgo es bajo, y el slice 3 lo cierra |
+| Tema | Fila | Qué rige |
+|---|---|---|
+| Entorno en la nube | F-05 | Los Parquet se bajan del release de GitHub (`scripts/bajar_biblioteca.sh`); `pap construir` y las pruebas `solo_mac`, solo en el Mac |
+| Proveedor, modelo y gasto del LLM | P-07 | Anthropic, modelo Opus; las llamadas se pagan con una clave de API; el tope mensual está en la consola del proveedor y la evaluación lleva tope por corrida |
+| Qué se guarda de las preguntas | P-03 | Pregunta limpia solo en `respuesta.json` (en `salidas/`, fuera de git); registro de uso sin texto; caché de 24 h; preguntas reales nunca en git ni en grabaciones; los nombres propios se revisan en el slice 3 |
+
+**Lo que necesita el entorno desde S2-04:** la clave de la API como variable secreta del entorno en la nube (su nombre va en `interprete.variable_clave`) y salida de red a la API del proveedor. Si faltan, S2-04 a S2-10 quedan bloqueadas en lo que necesita LLM real (grabar y evaluar) y se sigue con lo demás.
 
 **Defaults que fija el backlog.** Son vacíos B; el dueño los cambia editando una línea de `parametros_motor.yaml` → `interprete`, que se crea en S2-01.
 

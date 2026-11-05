@@ -13,7 +13,7 @@ Leyenda: ✅ se acepta · ⛔ se devuelve (se detiene la adenda si lo dice `agen
 | # | Comprobación | Cómo | Resultado esperado |
 |---|---|---|---|
 | 0.1 | `1ee2e7c` (adenda actualizada) está en GitHub | `git ls-remote origin main` | El hash de `main` es `1ee2e7c` o posterior |
-| 0.2 | La nube tiene la biblioteca | Ver «Entorno en la nube» (§7) | Decisión X-11 tomada y paquete publicado |
+| 0.2 | La nube tiene la biblioteca | Ver «Entorno en la nube» (§7) | F-05 registrada y release `biblioteca-ba1fbc55` publicado (comprobado el 4/11/2026: huella y cubo correctos) |
 | 0.3 | El agente lee las reglas actualizadas | `agents.md` §8 ajustado a la nube (§7) | No dice «solo en el Mac del dueño» |
 
 ## 1. S1-11 — Repositorio y biblioteca
@@ -21,8 +21,9 @@ Leyenda: ✅ se acepta · ⛔ se devuelve (se detiene la adenda si lo dice `agen
 | # | Comprobación | Cómo | ✅ si… | ⛔ si… |
 |---|---|---|---|---|
 | 1.1 | La rama nace de `main` actual | `git merge-base origin/main origin/slice-1-adenda` | = `1ee2e7c` o posterior | Nace de otro commit |
-| 1.2 | Huellas iguales a las de la migración | `s1-11_reconstruccion.txt` + correr `comparar_manifiestos.py` yo mismo | Código 0; `fact_indicador` = `sha256:ba1fbc55…` | Cualquier huella distinta → consulta C |
-| 1.3 | Base de pruebas | `evidencia/adenda/pytest_base.txt` | 748 pasan, 0 fallos | Fallos sin anotar en `consultas_al_dueno.md`, o «arreglados» |
+| 1.2 | Biblioteca igual a la de la migración | `s1-11_biblioteca.txt`; yo bajo el mismo release y compruebo `SHA256SUMS` y el cubo | Código 0; cubo `ba1fbc55…`; Q1–Q4 responden | Cualquier huella distinta → consulta C |
+| 1.3 | Base de pruebas | `evidencia/adenda/pytest_base.txt` | 714 passed y 34 deselected; las 34 son exactamente las de S1-11 tarea 6 (ensayo del supervisor del 4/11/2026) | Fallos sin anotar, «arreglados», o `solo_mac` por otro motivo |
+| 1.3b | `agents.md` §8 | `git show` del primer commit | Texto de S1-11 tarea 3; marca `solo_mac` registrada en `pyproject.toml` | Otras reglas de `agents.md` cambiadas |
 | 1.4 | Respaldo para comparar | `ls biblioteca/_respaldo_pre_adenda/`; `git status --ignored` | Existe y aparece solo como ignorado | Está en git |
 | 1.5 | Nada intocable cambió | `git diff 1ee2e7c..origin/slice-1-adenda --stat -- curados/insumos.lock.yaml biblioteca/cruda` | Vacío | Cualquier cambio |
 | 1.6 | Commit con ID | `git log --oneline` | `S1-11: …` | — |
@@ -119,7 +120,7 @@ Leyenda: ✅ se acepta · ⛔ se devuelve (se detiene la adenda si lo dice `agen
 
 **Lo que sí sirve:** `pap calcular` y el motor leen solo Parquet, y `insumos.tabla()` comprueba que cada Parquet sea el que registra su manifiesto. Basta entonces con llevar a la nube la **biblioteca construida** (unos 360 MB), no los crudos.
 
-**Propuesta (pendiente del dueño: X-11):**
+**Decidido el 4/11/2026 (fila F-05; era la propuesta X-11): opción A.**
 
 1. **En el Mac, una sola vez** (el dueño o Claude Code local): `S1-11` completa tal como está, más un paso nuevo: empaquetar `biblioteca/{dimensiones,estandarizada,indicadores}` en `biblioteca-<huella del cubo>.tar.zst` con su `SHA256SUMS`, y publicarlo.
 2. **Dónde publicarlo** (decisión del dueño):
@@ -131,14 +132,14 @@ Leyenda: ✅ se acepta · ⛔ se devuelve (se detiene la adenda si lo dice `agen
    | C. Bucket propio (R2, GCS) | Sirve también de respaldo | Cuenta y costo nuevos; dominio en la lista de red del entorno |
 
 3. **En la nube:** el script de inicio del entorno baja el paquete, comprueba `SHA256SUMS` y lo descomprime en `biblioteca/`. Luego, `uv sync` y una prueba de humo: `uv run pap preguntar curados/motor/consultas_minimas/`.
-4. **`agents.md` §8:** cambiar «Mac del dueño» por «Mac o entorno en la nube con el paquete de la biblioteca», y dejar el `pap construir` desde crudos solo para el Mac. Lo edita el dueño antes de la adenda, o el agente como primer commit de la adenda (`S1-11: agents.md §8 según X-11`), porque `agents.md` es la regla que el agente sigue.
+4. **`agents.md` §8:** cambiar «Mac del dueño» por «Mac o entorno en la nube con el paquete de la biblioteca», y dejar el `pap construir` desde crudos solo para el Mac. Lo edita el dueño antes de la adenda, o el agente como primer commit de la adenda (`S1-11: agents.md §8 según F-05`), porque `agents.md` es la regla que el agente sigue.
 5. **Pruebas que piden crudos** (candidatas por mencionar `almacen` o `cruda`, a confirmar en la primera corrida: `test_almacen_zstd`, `test_registrar`, `test_foto_pim`, `test_transferencias` y `test_recetas_reales`): en la nube fallarán.
    - Hoy `agents.md` §8 dice que las pruebas que dependen de la biblioteca «fallan, no se saltan», y `conftest.py` vuelve error cualquier `pytest.skip`.
    - Propuesta: una marca nueva, `solo_mac`, registrada en `pyproject.toml`. En la nube se corre `pytest -m "not solo_mac"` y la evidencia lista cuántas quedaron fuera y cuáles. Nada se salta en silencio.
    - Así, la base de la nube sale como «748 menos N, con las N listadas».
-   - Cambia una regla de `agents.md`, así que lo decide el dueño (parte de X-11).
-6. **Clave del LLM y red** (slice 2, no la adenda): el entorno en la nube necesita la clave como variable secreta y salida de red a la API del proveedor. El tope de gasto real va en la consola del proveedor, porque un registro de uso en un entorno efímero se reinicia en cada sesión (X-13).
-7. **S1-11 en la nube:** las tareas 3 y 4 (reconstruir desde los crudos y comparar manifiestos) se hacen en el Mac al armar el paquete. En la nube, S1-11 es: bajar el paquete, comprobar las huellas (`comparar_manifiestos.py` y `insumos.tabla()`), guardar el respaldo y la base de pytest. Hay que reescribir la historia así cuando el dueño decida X-11.
+   - Cambia una regla de `agents.md`, así que lo decide el dueño (decidido en F-05).
+6. **Clave del LLM y red** (slice 2, no la adenda): el entorno en la nube necesita la clave como variable secreta y salida de red a la API del proveedor. El tope de gasto real va en la consola del proveedor, porque un registro de uso en un entorno efímero se reinicia en cada sesión (P-07).
+7. **S1-11 en la nube:** las tareas 3 y 4 (reconstruir desde los crudos y comparar manifiestos) se hacen en el Mac al armar el paquete. En la nube, S1-11 es: bajar el paquete, comprobar las huellas (`comparar_manifiestos.py` y `insumos.tabla()`), guardar el respaldo y la base de pytest. Hay que reescribir la historia así cuando el dueño decida F-05.
 8. **Fusión:** si la nube no puede subir a `main`, el agente sube la rama y abre un PR; el dueño fusiona y pone la etiqueta, o se lo autoriza al agente. S1-16 tarea 4 se lee así.
 
 Aparte, y sin bloquear: el **respaldo externo de los crudos** sigue pendiente. La opción C lo resolvería; con A o B, se puede subir un segundo paquete, privado, con el almacén.

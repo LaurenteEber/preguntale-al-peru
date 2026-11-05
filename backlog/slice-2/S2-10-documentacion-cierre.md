@@ -18,7 +18,7 @@
    - `docs/guia_de_operacion.md`: grabar, evaluar, ver el uso y el costo, y apagar el intérprete.
    - `docs/especificaciones/`: el contrato de la interpretación y lo de S2-06.
    - `docs/estado.md`: fase 5b hecha y la deuda nueva.
-   - `backlog/plan_slices.md`: slice 2 hecho; ajustar el esbozo del slice 3 con lo medido (latencia del LLM frente a < 2 s; nombres de personas, de X-14).
+   - `backlog/plan_slices.md`: slice 2 hecho; ajustar el esbozo del slice 3 con lo medido (latencia del LLM frente a < 2 s; nombres de personas, de P-03).
 3. **`evidencia/cierre.md`**, según `agents.md` §9:
    - costo medido por pregunta y proyección para 1 000 preguntas al mes;
    - supuestos `S2-xx`;

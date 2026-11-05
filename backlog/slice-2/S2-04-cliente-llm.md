@@ -1,6 +1,6 @@
 # S2-04 — Limpieza, cliente del LLM, grabaciones y presupuesto
 
-**Requiere X-12, X-13 y X-14.**
+**Requiere P-03 y P-07, y la clave de la API en el entorno.**
 
 ## Por qué
 
@@ -17,7 +17,7 @@ El LLM es la única parte no determinista y la única que cuesta por uso. Va det
 2. **Interfaz** (`src/pap/interprete/llm.py`): `interpretar_crudo(prompt, pregunta_limpia) -> RespuestaLLM`, con el JSON, el modelo, los tokens, la latencia y el costo estimado.
    - Implementación con **`httpx`**, que ya está en `uv.lock`. Si hiciera falta un SDK, es una consulta tipo C.
    - Salida estructurada con el esquema de S2-01, temperatura 0, y la pregunta como dato delimitado, fuera de las instrucciones.
-   - **Modelo provisional** en `interprete.modelo` (`supuesto: S2-04`; el definitivo se elige en S2-09). Tiempo máximo y precios en `interprete`. Los precios se copian de la página oficial del proveedor, con fecha y enlace en `nota:`, no de memoria.
+   - **Modelo:** Opus (`interprete.modelo`, `decision: P-07`), con el identificador exacto de la documentación del proveedor. Tiempo máximo y precios en `interprete`. Los precios se copian de la página oficial del proveedor, con fecha y enlace en `nota:`, no de memoria.
 3. **Clave:** se lee de una variable de entorno, cuyo nombre va en `interprete.variable_clave`. Nunca se escribe en archivos, registros ni errores. Sin clave → `no_disponible` (S2-05).
 4. **Grabaciones** (`tests/interprete/grabaciones/`):
    - Una por pregunta, con nombre = huella de (pregunta limpia, modelo, `version_prompt`).
@@ -25,8 +25,8 @@ El LLM es la única parte no determinista y la única que cuesta por uso. Va det
    - Modo `grabar`: un corredor mínimo, `tests/interprete/evaluar.py --grabar [--solo <ids>]`, que S2-09 amplía.
    - Si falta una grabación: «falta la grabación; corre `uv run python tests/interprete/evaluar.py --grabar --solo <id>`».
    - Solo se graban preguntas del conjunto y de las pruebas, nunca de usuarios.
-5. **Uso y tope** (X-13):
-   - Registro local en `salidas/interprete/uso.jsonl` (fuera de git), con los campos de X-14.
+5. **Uso y tope** (P-07):
+   - Registro local en `salidas/interprete/uso.jsonl` (fuera de git), con los campos de P-03.
    - `interprete.tope_por_corrida` corta una corrida de evaluación.
    - El tope mensual real es el de la consola del proveedor. Si el proveedor responde que el límite se agotó → `no_disponible`.
 6. **Pruebas** (`tests/interprete/test_llm.py`, sin red):

@@ -1,6 +1,6 @@
 # S2-09 — Evaluación en vivo y elección del modelo
 
-**Requiere X-12 y X-13.**
+**Requiere P-07 y la clave de la API.**
 
 ## Por qué
 
@@ -27,18 +27,18 @@ Las grabaciones prueban que el código trata bien lo que devolvió el LLM, pero 
    | **Números fuera de marcadores** (definición de hecho, punto 2) | Todas | **0** |
    | Costo medio y latencia p95 | Todas | Se informan |
 
-3. **Dos modelos (X-12).** Se elige el más barato que cumpla todos los umbrales.
-   - Si ninguno cumple, se ajusta el prompt **por categoría**, sin copiar preguntas del conjunto (cada cambio en `cambios_prompt.md`), y se repite.
+3. **Modelo Opus (P-07).** Se evalúa ese modelo; costo y latencia se informan.
+   - Si no cumple, se ajusta el prompt **por categoría**, sin copiar preguntas del conjunto (cada cambio en `cambios_prompt.md`), y se repite.
    - Hasta 3 rondas; después, consulta al dueño.
 4. **Volver a grabar todo** lo que hay en `tests/interprete/grabaciones/` (conjunto, pruebas y S2-07) con el modelo y la `version_prompt` finales. Se borran las grabaciones huérfanas y la lista va a la evidencia.
 5. **Reporte** `evidencia/s2-09_evaluacion.md`:
-   - tabla por modelo y por categoría;
+   - tabla por categoría;
    - costo de la evaluación;
    - fallas agrupadas;
-   - modelo elegido, ya puesto en `interprete.modelo`, pasando de `supuesto` a `decision: X-12`.
+   - el identificador exacto del modelo usado, en `interprete.modelo`.
 
 ## Criterios de aceptación
 
-- [ ] El modelo elegido cumple todos los umbrales, con las dos métricas absolutas en 0.
+- [ ] Opus cumple todos los umbrales, con las dos métricas absolutas en 0.
 - [ ] Todas las grabaciones corresponden al modelo y a la versión finales; pytest en verde sin red.
 - [ ] Si el modelo o el prompt cambiaron desde S2-07, se repite la revisión del adversario.
