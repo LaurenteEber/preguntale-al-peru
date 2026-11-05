@@ -131,7 +131,7 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
     def version() -> Response:
         v = motor.version()
         man = motor.ctx.manifiestos.get("p1_indicadores", {})
-        huella = (v.get("cubo") or "")[:12]
+        huella = (v.get("cubo") or "").removeprefix("sha256:")[:12]
         fecha = str(man.get("construido", ""))[:10]
         return _json({**v, "rotulo": tx["version_rotulo"].format(huella=huella, fecha=fecha)})
 

@@ -26,6 +26,10 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 | S3-01-b | S3-01 | El enlace de cada cita sale de `cifras_doradas.csv` (columna `url`) cuando la cifra tiene dorada y, si no, del portal de la fuente en `catalogo_fuentes.csv` (`url_portal`, si no `url_datos`). Si no hay enlace oficial, el campo va vacío. En el `.md` el enlace se muestra como «[Documento oficial](url)» al final de la cita. Las citas de ENDES sin dorada apuntan al portal de microdatos del INEI, no al informe del año | `src/pap/motor/capas.py` (`_url`); texto del enlace en `curados/motor/textos/capas.yaml` → `rotulos.enlace_oficial` |
 | S3-01-c | S3-01 | `capa3` suma `citas` = lista de `{texto, url, id_cifra}`, con las mismas líneas que `para_citar` (que no cambia). La web lee `citas`. Se eligió una lista aparte para no cambiar la forma de `para_citar`, que usan la matriz y varias pruebas | `src/pap/motor/capas.py` |
 | S3-01-d | S3-01 | Además de los 8 rótulos que pedía la historia, se movió a YAML «Cómo citar» (rótulo de la lista de citas) y se agregó «Documento oficial» (texto del enlace). El `.md` de Q1–Q4 solo cambia por los enlaces y por X-02/X-03 | `curados/motor/textos/capas.yaml` → `rotulos` |
+| S3-03-a | S3-03 | Servidor local en 127.0.0.1:8000 (el de producción lo fija S3-09) | `curados/web/parametros.yaml` → `servicio` |
+| S3-03-b | S3-03 | Topes de la entrada: `texto` hasta 2000 caracteres; `elegir` hasta 4 números, cada uno entre 1 y 50; se acepta un número o una lista | `curados/web/parametros.yaml` → `pregunta` |
+| S3-03-c | S3-03 | Las pruebas esperan hasta 120 s a que termine el precalentamiento | `curados/web/parametros.yaml` → `precalentamiento` |
+| S3-03-d | S3-03 | Estado HTTP: 200 para cualquier respuesta del motor (incluidos los mensajes fijos), 503 para `mensaje` con `motivo: no_disponible` y para «preparando», 422 para entradas inválidas. Tabla en `docs/especificaciones/api.md` | `curados/web/parametros.yaml` → `http`; `curados/web/textos.yaml` |
 
 ## Pendientes del dueño que siguen abiertos
 

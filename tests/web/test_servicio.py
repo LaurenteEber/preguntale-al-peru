@@ -85,7 +85,6 @@ def test_elegir_acumulado_dos_aclaraciones(cli):
 def test_salud_antes_y_despues_del_precalentamiento(tmp_path):
     a = crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path, precalentar=True)
     c = TestClient(a)
-    compuerta = threading.Event()
     assert a.state.listo.wait(120)
     assert c.get("/salud").status_code == 200 and c.get("/salud").json() == {"estado": "ok"}
     a.state.listo.clear()                                             # mientras corre el precalentamiento
@@ -94,7 +93,6 @@ def test_salud_antes_y_despues_del_precalentamiento(tmp_path):
     p = c.post("/api/preguntar", json={"texto": "hola"})
     assert p.status_code == 503 and p.json()["texto"].startswith("Estamos preparando el servicio…")
     a.state.listo.set()
-    compuerta.set()
     assert c.get("/salud").status_code == 200
 
 
@@ -168,7 +166,6 @@ def test_dos_peticiones_simultaneas_dan_lo_mismo_que_en_serie(app, cli):
     def pedir(i: int, ent: dict) -> None:
         resultados[i] = TestClient(app).post("/api/preguntar", json=_cuerpo(ent)).json()
 
-    hilos = [threading.Thread(target=pedir, args=(i, e)) for i, (e, _) in enumerate(casos * 2)]
     hilos = [threading.Thread(target=pedir, args=(i, e)) for i, (e, _) in enumerate(casos + casos)]
     [h.start() for h in hilos]
     [h.join() for h in hilos]

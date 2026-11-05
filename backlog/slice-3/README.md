@@ -50,7 +50,7 @@ Del cierre (`../slice-2/evidencia/cierre.md`):
 | S3-00 | [Preparación](S3-00-preparacion.md) | hecha ([interfaces](evidencia/s3-00_interfaces.md), [base](evidencia/pytest_base.txt): 944 pasan) |
 | S3-01 | [Cambios del motor decididos (X-01 a X-04, enlaces de las citas, rótulos)](S3-01-decisiones-motor.md) | hecha ([evidencia](evidencia/s3-01_regresion.md)); X-01 sin aplicar: el dueño no la aprobó |
 | S3-02 | [Observaciones bajas aprobadas y base de la web](S3-02-observaciones-y-base.md) | hecha ([evidencia](evidencia/s3-02_observaciones.md)); H14 y H15 aplicadas, H21 pasó a la consulta W-02, H17 y H18 sin marca del dueño (W-03) |
-| S3-03 | [Servicio: FastAPI sobre el mismo motor](S3-03-servicio.md) | pendiente |
+| S3-03 | [Servicio: FastAPI sobre el mismo motor](S3-03-servicio.md) | hecha ([evidencia](evidencia/s3-03_servicio.md)) |
 | S3-04 | [Páginas: pregunta, respuesta y aclaración](S3-04-paginas.md) | pendiente |
 | S3-05 | [Formulario guiado, sin LLM](S3-05-formulario-guiado.md) | pendiente |
 | S3-06 | [Accesibilidad y celular](S3-06-accesibilidad.md) | pendiente |
