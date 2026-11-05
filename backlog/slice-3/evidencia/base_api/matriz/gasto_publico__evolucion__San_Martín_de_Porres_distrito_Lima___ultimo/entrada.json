@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "evolucion",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "150135"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|evolucion|San Martín de Porres (distrito, Lima)|ultimo"
+}

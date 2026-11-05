@@ -1,0 +1,172 @@
+{
+ "aclaracion": {
+  "motivo": "interprete_varias_preguntas",
+  "opciones": [
+   {
+    "consulta": {
+     "intencion": "nivel_actual",
+     "tema": "anemia",
+     "territorio": {
+      "nacional": true
+     }
+    },
+    "etiqueta": "Cuánto hay de anemia en todo el Perú",
+    "n": 1
+   },
+   {
+    "consulta": {
+     "intencion": "nivel_actual",
+     "tema": "desnutricion_cronica",
+     "territorio": {
+      "nacional": true
+     }
+    },
+    "etiqueta": "Cuánto hay de desnutrición crónica en todo el Perú",
+    "n": 2
+   },
+   {
+    "consulta": {
+     "intencion": "nivel_actual",
+     "tema": "pobreza_monetaria",
+     "territorio": {
+      "nacional": true
+     }
+    },
+    "etiqueta": "Cuánto hay de pobreza en todo el Perú",
+    "n": 3
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "Tu mensaje tiene más de una pregunta. ¿Cuál respondemos?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "interprete_varias_preguntas",
+   "opciones": [
+    {
+     "consulta": {
+      "intencion": "nivel_actual",
+      "tema": "anemia",
+      "territorio": {
+       "nacional": true
+      }
+     },
+     "etiqueta": "Cuánto hay de anemia en todo el Perú",
+     "n": 1
+    },
+    {
+     "consulta": {
+      "intencion": "nivel_actual",
+      "tema": "desnutricion_cronica",
+      "territorio": {
+       "nacional": true
+      }
+     },
+     "etiqueta": "Cuánto hay de desnutrición crónica en todo el Perú",
+     "n": 2
+    },
+    {
+     "consulta": {
+      "intencion": "nivel_actual",
+      "tema": "pobreza_monetaria",
+      "territorio": {
+       "nacional": true
+      }
+     },
+     "etiqueta": "Cuánto hay de pobreza en todo el Perú",
+     "n": 3
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Tu mensaje tiene más de una pregunta. ¿Cuál respondemos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "pregunta_original": "¿Cuál es la anemia, la desnutrición y la pobreza en el Perú?"
+  },
+  "grupos": [],
+  "id": "aclaracion__interprete_varias_preguntas",
+  "intencion": null,
+  "periodo": null,
+  "pregunta": "¿Cuál es la anemia, la desnutrición y la pobreza en el Perú?",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": null,
+ "entendimos": null,
+ "interpretacion": {
+  "anclas": null,
+  "avisos": [],
+  "cache": false,
+  "consulta": null,
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "aclaracion",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "interprete_varias_preguntas",
+   "opciones": [
+    {
+     "consulta": {
+      "intencion": "nivel_actual",
+      "tema": "anemia",
+      "territorio": {
+       "nacional": true
+      }
+     },
+     "etiqueta": "Cuánto hay de anemia en todo el Perú",
+     "n": 1
+    },
+    {
+     "consulta": {
+      "intencion": "nivel_actual",
+      "tema": "desnutricion_cronica",
+      "territorio": {
+       "nacional": true
+      }
+     },
+     "etiqueta": "Cuánto hay de desnutrición crónica en todo el Perú",
+     "n": 2
+    },
+    {
+     "consulta": {
+      "intencion": "nivel_actual",
+      "tema": "pobreza_monetaria",
+      "territorio": {
+       "nacional": true
+      }
+     },
+     "etiqueta": "Cuánto hay de pobreza en todo el Perú",
+     "n": 3
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Tu mensaje tiene más de una pregunta. ¿Cuál respondemos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "pregunta_original": "¿Cuál es la anemia, la desnutrición y la pobreza en el Perú?"
+  },
+  "grupos": [],
+  "id": "aclaracion__interprete_varias_preguntas",
+  "intencion": null,
+  "periodo": null,
+  "pregunta": "¿Cuál es la anemia, la desnutrición y la pobreza en el Perú?",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "Tu mensaje tiene más de una pregunta. ¿Cuál respondemos?\n1) Cuánto hay de anemia en todo el Perú\n2) Cuánto hay de desnutrición crónica en todo el Perú\n3) Cuánto hay de pobreza en todo el Perú",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

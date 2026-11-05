@@ -1,0 +1,19 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "comparar_con": {
+   "ubigeo": "19"
+  },
+  "intencion": "comparacion",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "18"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|comparacion|Moquegua|ultimo"
+}

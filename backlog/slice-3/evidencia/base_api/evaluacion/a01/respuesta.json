@@ -1,0 +1,364 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENDES 2024 (INEI); el INEI publica la misma cifra (53,1 %)",
+    "ids": [
+     "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal"
+    ],
+    "texto": "de niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) en Puno en 2024.",
+    "valor": "53,1 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2024.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2024."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+   ],
+   "palabras": 68,
+   "que_hacer": {
+    "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
+    "revisado_dueno": false,
+    "texto": "Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6 meses.",
+    "url": "https://www.gob.pe/69889-que-es-la-anemia-prevencion"
+   },
+   "respuesta_corta": "En 2024, en Puno, la anemia en niñas y niños de 6 a 35 meses fue:"
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENDES 2024 (INEI)",
+    "Territorio: departamento de Puno",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "mas_contexto": []
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal",
+     "texto": "53,1 % (intervalo: 46,6 % a 59,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Puno, 2024. Fuente: INEI, ENDES 2024 Departamento de Puno, cap. 9 Nutrición, p. 69.",
+     "url": "https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes21/pdf/Cap09.pdf"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños.",
+     "termino": "ENDES"
+    },
+    {
+     "definicion": "el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior da cifras más altas.",
+     "termino": "forma de medir la anemia"
+    }
+   ],
+   "para_citar": [
+    "53,1 % (intervalo: 46,6 % a 59,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Puno, 2024. Fuente: INEI, ENDES 2024 Departamento de Puno, cap. 9 Nutrición, p. 69."
+   ]
+  }
+ },
+ "cifras": {
+  "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal": {
+   "accion_final": "publicar",
+   "anio": 2024,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "RM251-2024/OMS2024",
+    "cuadro_pagina": "p. 69",
+    "documento": "INEI, ENDES 2024 Departamento de Puno, cap. 9 Nutrición",
+    "entidad": "INEI",
+    "id_cifra": "DOR-OMS-2024-21",
+    "valor": 53.1
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 5.98700135,
+   "denominador": null,
+   "devengado": null,
+   "ee": 3.18026249,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 46.61642395,
+   "ic_sup": 59.54504597,
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 266,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "53,1 % (entre 46,6 % y 59,5 %), ENDES 2024, Puno; basado en 266 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "53,1 % (entre 46,6 % y 59,5 %), ENDES 2024, Puno; basado en 266 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2024.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "21",
+   "territorio_nombre": "Puno",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2024,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "21"
+    }
+   ],
+   "validada_dorada": "DOR-OMS-2024-21",
+   "valor": 53.11945496
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2024,
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "21"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "periodo": {
+    "anio": 2024,
+    "tipo": "anio"
+   },
+   "pregunta_original": "¿Cuánta anemia hubo en la región Puno en 2024?",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "región Puno"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "R-04",
+   "S-01 / E-06"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__anemia__21",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "¿Cuánta anemia hubo en la región Puno en 2024?",
+  "respuesta_parcial": false,
+  "tema": "anemia",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "21",
+   "nivel": "departamento",
+   "nombre_pedido": "Puno"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "pregunta_original": "¿Cuánta anemia hubo en la región Puno en 2024?",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "región Puno"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cuánto hay de anemia en el departamento de Puno en 2024",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2024.\nDatos de: ENDES 2024 (INEI)\nTerritorio: departamento de Puno\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento.",
+  "larga": {
+   "cifras": {
+    "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024). ENDES (INEI), 2024. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Puno).",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir vigente desde 2024 (RM 251-2024-MINSA).",
+     "4_precision": "El valor real está probablemente entre 46,6 % y 59,5 % (coeficiente de variación 6,0 %, 266 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 53,1 % con la forma de medir vigente desde 2024 (ENDES 2024 Departamento de Puno, cap. 9 Nutrición, p. 69). Nuestra cifra coincide.",
+     "avisos": [
+      "53,1 % (entre 46,6 % y 59,5 %), ENDES 2024, Puno; basado en 266 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_anemia_6_35m_oms2024."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "anio": "2024",
+   "intencion": "Cuánta",
+   "tema": "anemia",
+   "territorio": "región Puno"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "periodo": {
+    "anio": 2024,
+    "tipo": "anio"
+   },
+   "tema": "anemia",
+   "territorio": {
+    "texto": "región Puno"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2024,
+    "id": "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "21"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "periodo": {
+    "anio": 2024,
+    "tipo": "anio"
+   },
+   "pregunta_original": "¿Cuánta anemia hubo en la región Puno en 2024?",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "región Puno"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "R-04",
+   "S-01 / E-06"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__anemia__21",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "¿Cuánta anemia hubo en la región Puno en 2024?",
+  "respuesta_parcial": false,
+  "tema": "anemia",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "21",
+   "nivel": "departamento",
+   "nombre_pedido": "Puno"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2024.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2024, en Puno, la anemia en niñas y niños de 6 a 35 meses fue: 53,1 % de niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) en Puno en 2024. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+ "texto_con_marcadores": "En 2024, en Puno, la anemia en niñas y niños de 6 a 35 meses fue: {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__21__2024__principal}} de niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) en Puno en 2024. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

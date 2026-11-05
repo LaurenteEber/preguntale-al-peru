@@ -1,0 +1,16 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "nivel_actual",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "ubigeo": "090709"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|nivel_actual|Huaribamba (distrito, Tayacaja)|ultimo"
+}

@@ -1,0 +1,189 @@
+# Bloques de texto reutilizables (S1-04). Un bloque se activa por lo que trae el plan (`cuando`): un bloque del plan
+# (`plan_bloques`), un indicador (y su rol), un cruce, un nivel o un tipo de grupo estadístico; nunca por el nombre de la
+# pregunta. Dentro de un bloque, cada intención lee su propia sección (evolucion, nivel_actual, cruce_efecto,
+# identificar_extremo). Variables {así}: las rellena la plantilla (ver plantillas.py). Marcadores {{…}}: se dejan tal cual.
+# Los textos de las preguntas piloto (Q1–Q4) salen de aquí con los mismos hechos; el lugar, el año y las cifras son variables.
+version: 1.0.0
+
+indicadores:                      # cómo se nombra cada indicador en una frase, su glosario y su motivo de confianza
+  endes_anemia_6_35m_oms2024: {sujeto: "la anemia en niñas y niños de 6 a 35 meses", sujeto_corto: "la anemia", glosario: [endes]}
+  endes_anemia_6_35m: {sujeto: "la anemia en niñas y niños de 6 a 35 meses (forma de medir anterior a 2024)", sujeto_corto: "la anemia", glosario: [endes]}
+  endes_dci_menores_5: {sujeto: "la desnutrición crónica en niñas y niños menores de 5 años", sujeto_corto: "la desnutrición crónica", glosario: [endes]}
+  sien_anemia_tamizados_6_35m:
+    sujeto: "la anemia en niñas y niños medidos en establecimientos de salud"
+    sujeto_corto: "la anemia de los niños medidos"
+    glosario: [medir_hemoglobina, sien]
+    motivo_confianza: "La anemia {nivel_del} solo se conoce por el registro de los niños medidos, que cubre a una parte de ellos."
+  sien_cobertura_tamizaje_6_35m: {sujeto: "la medición de hemoglobina a niñas y niños de 6 a 35 meses", sujeto_corto: "la medición de hemoglobina", glosario: []}
+  gasto_ex_pan: {sujeto: "el gasto en servicios de salud y nutrición infantil", sujeto_corto: "el gasto", glosario: [gastado, servicios_ex_pan],
+                 ciudadano: "gasto en servicios de salud y nutrición infantil"}      # sin «PAN» ni «devengado» en la capa 1 (S1-09, H5): quedan en el glosario
+  gasto_ex_pan_opcion_c: {sujeto: "el gasto en servicios de salud y nutrición infantil del programa 1001", sujeto_corto: "el gasto", glosario: [gastado, servicios_ex_pan],
+                          ciudadano: "gasto en servicios de salud y nutrición infantil del programa 1001"}
+  enaho_pobreza_monetaria: {sujeto: "la pobreza monetaria", sujeto_corto: "la pobreza monetaria", glosario: [pobreza_monetaria, enaho]}
+  mapa_pobreza_2018: {sujeto: "la pobreza monetaria por distrito", sujeto_corto: "la pobreza monetaria", glosario: [pobreza_monetaria, mapa_pobreza, rango_probable],
+                      ciudadano: "pobreza monetaria por distrito (estimación del INEI)"}      # el año lo pone la plantilla (S1-09, A-H7)
+
+cruces:                           # por id_cruce de cruces_permitidos.yaml
+  CR-01:
+    gasto_contra: "el gasto contra la anemia"
+    sujeto_a: "el gasto en servicios de salud y nutrición infantil"
+    sujeto_b: "la anemia en niñas y niños de 6 a 35 meses"
+    nc: [["NC-CAUSA", {a: "el gasto", b: "los cambios en la anemia"}]]
+
+bloques:
+
+  # ---------------------------------------------------------------- las dos formas de medir la anemia (E-06)
+  dos_formas_anemia:
+    cuando: {plan_bloques: [dos_formas_anemia]}
+    glosario: [forma_de_medir, cambio_claro, endes]
+    nc: [["NC-TENDENCIA-QUIEBRE", {a: "{a2} (forma de medir anterior)", b: "{b2} (forma de medir vigente)"}]]
+    protegidos:
+      dos_formas: "Desde {anio_vigente} el Ministerio de Salud usa otro nivel de hemoglobina para definir la anemia y otro ajuste por la altitud. El INEI publica las cifras con las dos formas. Con la forma vigente solo hemos incorporado {anios_vigente}, aunque el INEI también publicó años anteriores con ella."
+      quiebres: "La cifra de {anio_quiebre} no se usa para comparar: ese año, por la pandemia, la medición se hizo solo en parte de la muestra."
+    evolucion:
+      corta_sin_cambio: "En {lugar}, la anemia en niñas y niños pequeños no muestra un cambio estadísticamente claro: ni entre {a1} y {b1} con la forma de medir actual, ni entre {a2} y {b2} con la anterior."
+      corta_general: "Así cambió la anemia en {{u:ninos}} de {lugar}, según la forma de medir."
+      corta_verbo: "Con la forma de medir que usa hoy el Ministerio de Salud, entre {a1} y {b1} la anemia {verbo1}."
+      clave: "de {{u:ninos}} de {lugar} tenía anemia en {anio}, con la forma de medir que usa hoy el Ministerio de Salud."
+      ojo:
+        - "No compares esta cifra con las de años anteriores a {anio_vigente}: se medía de otra forma, que da cifras más altas."
+        - "«Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
+      tarjeta_vigente:                       # AD-1 (dueño, 4/11/2026): la cifra del año con el que se compara
+        titulo: "{a1} y {b1}, con la forma de medir actual"
+        texto: "Con la forma de medir que usa hoy el Ministerio de Salud, la anemia fue {c_ini} en {a1} y {c_fin} en {b1}."
+      tarjeta_anterior:
+        titulo: "Desde {a2}, con la forma de medir anterior"
+        con_inicio: "Con la forma de medir anterior, que permite comparar desde {a2} con la misma regla, la anemia fue {c_ini} en {a2} y {c_fin} en {b2}"
+        sin_inicio: "Con la forma de medir anterior, que permite comparar desde {a2} con la misma regla, la anemia fue {c_fin} en {b2}"
+        con_cambio: ": entre {a2} y {b2} {verbo2}."
+        sin_cambio: "."
+        etiqueta: "Otra forma de medir: no se compara con la cifra clave."
+      tarjeta_formas:
+        titulo: "Por qué hay dos formas de medir"
+        texto: "{{p:dos_formas}} {{p:quiebres}}"
+        texto_sin_quiebre: "{{p:dos_formas}}"
+
+  forma_anterior_sola:                       # S1-13 (A-H6, E-06): el periodo pedido solo tiene la serie de la forma anterior
+    cuando: {plan_bloques: [forma_anterior_sola]}
+    glosario: [forma_de_medir, cambio_claro, endes]
+    vigente: endes_anemia_6_35m_oms2024
+    evolucion:
+      ojo_vigente: "Con la forma de medir actual solo hay datos desde {anio_vigente}. Esta serie usa la anterior, que da cifras más altas."
+      etiqueta_vigente: "Otra forma de medir: no se compara con la cifra clave."
+
+  # ---------------------------------------------------------------- SIEN: registro de niños medidos (S-01)
+  sien:
+    cuando: {indicador: [sien_anemia_tamizados_6_35m], rol: principal}
+    protegidos:
+      altitud: "La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño."
+    nivel_actual:
+      corta: ["{{p:no_se_puede}}", "Lo más cercano es lo que registran los establecimientos de salud {nivel_del}:"]
+      corta_sin_cifra: ["{{p:no_se_puede}}", "{{p:sin_cifra}}"]
+      sin_cifra_nc: [["NC-NIVEL", {nivel_publicado: "{nivel_regional}"}]]
+      clave: "de {n} {{u:ninos_n}} a quienes se les midió la hemoglobina en establecimientos públicos de {lugar} tenía anemia en su último control de {anio}."
+      ojo:
+        - "No es la cifra de todos los niños de {lugar}: solo de los que fueron a un establecimiento."
+        - "No la leas como «hay poca anemia»: el INS advierte que estos registros podrían subestimarla."
+      ojo_region: "No la compares con la cifra de todo {lugar_region}: miden cosas distintas."
+      tarjeta_region:
+        titulo: "Todo {region_art} (encuesta a hogares)"
+        texto: "Para todo {lugar_region} se estima que {c} de {{u:ninos}} tenía anemia ({fuente}). La encuesta no permite dar una cifra para {lugar_largo}."
+      tarjeta_cobertura:
+        titulo: "¿A cuántos niños se les mide la hemoglobina?"
+        texto: "En {anio}, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {c} de {{u:ninos_region}} ({fuente}). {{p:cobertura}}"
+      tarjeta_porque:
+        titulo: "Por qué esta cifra es más baja que la de la encuesta"
+        texto: "{{p:ins}} {{p:altitud}}"
+      tarjeta_conteo:                 # X-02 (pendientes_dueno.mostrar_conteo_sien)
+        titulo: "Cuántos niños se midieron"
+        texto: "En {anio}, a {n} {{u:ninos_n}} se les midió la hemoglobina en establecimientos públicos de {lugar}; {n_con} de ellos tenía anemia en su último control."
+      protegidos:
+        no_se_puede: "No se puede saber cuántos niños de {lugar} tienen anemia con los datos disponibles."
+        sin_cifra: "Con los datos públicos que usamos no se puede dar la anemia de los niños medidos en {lugar}, porque son muy pocos casos."
+        ins: "El INS advierte que sus cifras son de niños atendidos en establecimientos del MINSA, que no son estrictamente comparables con la ENDES y que, como no a todos los atendidos se les mide la hemoglobina, podrían subestimar la anemia real."
+      explicaciones:
+        explicacion_corta: "niños medidos en establecimientos frente a una muestra de todos los hogares {region_gen}"
+        razon: "es la única fuente que llega al {nivel_palabra}"
+        quien: "las niñas y los niños"
+        accion_registro: "tuvieron una medición de hemoglobina en un establecimiento de salud y quedaron registrados en"
+        sistema: "el SIEN (INS)"
+    cruce_efecto:
+      tarjeta:
+        titulo: "Anemia en los niños medidos {nivel_en} (registro)"
+        texto: "En {anio}, de {{u:ninos}} a quienes se les midió la hemoglobina en establecimientos ubicados {nivel_en}, {c} tenía anemia en su último control del año ({fuente})."
+        cobertura: " En {lugar_cob} se midió la hemoglobina a {c_cob} de {{u:ninos_residen}} ({fuente_cob}; población estimada con cálculo propio). {{p:cobertura}}"
+        cierre: " {{p:ins}} {{p:altitud}}"
+        cierre_serie_unica: " {{p:ins}} {{p:altitud}} {{p:sin_evolucion}}"
+      protegidos:
+        ins: "El INS advierte que sus registros podrían subestimar la anemia real."
+        sin_evolucion: "Solo tenemos el SIEN de {anio}: no podemos mostrar cómo cambió {nivel_en}."
+      explicaciones:
+        explicacion_corta: "niños medidos en establecimientos {nivel_del} frente a una muestra de todos los hogares {region_de}"
+        razon: "es la única fuente que llega al {nivel_palabra}"
+        quien: "las niñas y los niños"
+        accion_registro: "tuvieron una medición de hemoglobina en un establecimiento de salud y quedaron registrados en"
+        sistema: "el SIEN (INS)"
+
+  # ---------------------------------------------------------------- aviso de cobertura del SIEN (R-REG-07)
+  cobertura_sien:
+    cuando: {indicador: [sien_cobertura_tamizaje_6_35m]}
+    avisos:                       # el umbral se lee de R-REG-07 (sien_umbral_tamizaje_pct): {umbral_txt}
+      menos_del_umbral: "En {lugar}, a menos de {umbral_txt} de los niños se les midió la hemoglobina: la anemia de los niños medidos puede no representar a todos."
+      incierto: "Con los datos disponibles no podemos decir si se midió a más o a menos de {umbral_txt} de los niños."
+      apenas: "Se midió apenas a más de {umbral_txt} de los niños."
+      mas_del_umbral: "Se midió a más de {umbral_txt} de los niños."
+
+  # ---------------------------------------------------------------- gasto en servicios ex-PAN (G-07)
+  gasto:
+    cuando: {indicador: [gasto_ex_pan, gasto_ex_pan_opcion_c]}
+    nivel_actual:                 # S1-09 (H5): el mismo alcance que el cruce (G-07), en la capa 1 y sin jerga
+      gasto:
+        clave:
+          regional: "es lo que se gastó en {anio} en servicios de salud y nutrición infantil, registrado por entidades con sede en {lugar}."
+          local: "es lo que se gastó en {anio} en servicios de salud y nutrición infantil, solo de la municipalidad y de obras ubicadas {nivel_en} (sin lo que gastan el Ministerio de Salud y otras entidades)."
+          nacional: "es lo que se gastó en {anio} en servicios de salud y nutrición infantil en todo el país, registrado por las entidades públicas."
+        ojo:
+          regional: "No leas esta cifra como todo el gasto en {lugar}: solo cuenta lo que registran las entidades con sede allí."
+          local: "No es todo el gasto {nivel_en}: no incluye lo que gastan el Ministerio de Salud ni otras entidades."
+          nacional: "No es el gasto de cada lugar: es la suma de lo que registran las entidades públicas."
+    cruce_efecto:
+      clave_local: "en servicios de salud y nutrición infantil en {anio}, solo de la municipalidad y de obras ubicadas {nivel_en} (sin lo que gastan el Ministerio de Salud y otras entidades)."
+      clave_regional: "en servicios de salud y nutrición infantil en {anio}, registrado por unidades ejecutoras con sede en {lugar} ({fuente})."
+      alcance_local: "solo de la municipalidad y de obras ubicadas {nivel_en}; sin el gasto del Ministerio de Salud ni de otras entidades"
+      tarjeta_regional:
+        titulo: "Gasto en toda {lugar}"
+        texto: "En toda {lugar_completo} se gastó {c} en {anio}, registrado por unidades ejecutoras con sede en {lugar} ({fuente})."
+
+  # ---------------------------------------------------------------- sesgo de sede del gasto en Lima (T-03, R-GASTO)
+  sesgo_sede_lima:
+    cuando: {indicador: [gasto_ex_pan, gasto_ex_pan_opcion_c], nivel: [LIMA_METROPOLITANA, LIMA_REGION]}
+    nivel_actual:                 # S1-09 (H5): lo que no incluye la cifra de Lima, ya en la capa 1; la línea nacional, en la capa 2
+      gasto_lima:
+        ojo: "No incluye a las entidades nacionales con sede en Lima, que atienden a todo el país."
+        tarjeta:
+          titulo: "Lo que no incluye esta cifra"
+          texto: "{{p:sede}} {linea_ref}."
+      protegidos:
+        sede: "Aparte, sin sumar, los institutos nacionales de referencia con sede en Lima, que atienden a todo el país, gastaron"      # la capa 1 ya dijo que no se incluyen (H5)
+    cruce_efecto:
+      atribuible: " Solo alrededor del {pct_atribuible} del gasto atribuido al departamento de Lima se puede ubicar en municipalidades y obras; el resto lo registran entidades sin un distrito."   # S1-14 (H12): el denominador es todo el departamento 15
+      referencia: " {{p:sede}} {linea_ref}."
+      protegidos:
+        sede: "No incluye a las entidades nacionales con sede en Lima que atienden a todo el país: aparte, sin sumar, los institutos nacionales de referencia gastaron"
+
+  # ---------------------------------------------------------------- Mapa de Pobreza: sin cifra puntual (E-08)
+  mapa_sin_cifra_puntual:
+    cuando: {grupos_estadisticos: [robustos_mapa]}
+    glosario: [pobreza_monetaria, mapa_pobreza, rango_probable, grupo_semejante, enaho]
+    identificar_extremo:
+      corta: ["{{p:sin_ranking}}", "En ese mapa, el grupo con la pobreza más alta son {n} distritos, sin orden entre ellos (aquí, alfabético):"]
+      clave_item: "{lugar_m}: {c} en {anio}."
+      ojo: ["{{p:dato_antiguo}}"]
+      ojo_enaho: "No los compares con las cifras de departamentos de {anio_enaho}: otro año y método."
+      territorio_ficha: "distritos (estimación de {anio}) y departamentos ({anio_enaho})"
+      explicaciones:
+        explicacion_corta: "el Mapa de Pobreza estima por distrito con un modelo y datos de {anio}, y la ENAHO mide por departamento con una encuesta de {anio_enaho}"
+        razon: "es la única estimación oficial por distrito"
+      protegidos:
+        sin_ranking: "No se puede nombrar un solo distrito como el más pobre: el único dato oficial por distrito es el Mapa de Pobreza {anio} del INEI, y su margen de error no permite ordenarlos."
+        dato_antiguo: "@frase:dato_antiguo"

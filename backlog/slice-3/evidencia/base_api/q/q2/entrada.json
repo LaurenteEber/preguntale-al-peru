@@ -1,0 +1,15 @@
+{
+ "consulta": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "¿Cuántos niños tienen anemia en Ayaviri (Melgar, Puno)?",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "Ayaviri, Melgar"
+  }
+ },
+ "elegir": null
+}

@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "ubigeo": "10"
+  }
+ },
+ "elegir": null,
+ "id": "desnutricion_cronica|cruce|Huánuco|ultimo"
+}

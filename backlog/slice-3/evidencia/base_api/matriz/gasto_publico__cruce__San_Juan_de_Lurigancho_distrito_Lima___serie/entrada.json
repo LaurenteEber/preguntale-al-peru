@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "150132"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|cruce|San Juan de Lurigancho (distrito, Lima)|serie"
+}

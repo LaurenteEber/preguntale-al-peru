@@ -1,0 +1,588 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENAHO 2025 (INEI); el INEI publica la misma cifra (20,4 %)",
+    "ids": [
+     "enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal"
+    ],
+    "texto": "de personas en situación de pobreza monetaria en Amazonas en 2025.",
+    "valor": "20,4 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+    "«Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
+   ],
+   "palabras": 73,
+   "que_hacer": null,
+   "respuesta_corta": "Entre 2024 y 2025, la pobreza monetaria se mantuvo sin cambio estadísticamente claro en Amazonas."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENAHO 2024–2025 (INEI)",
+    "Territorio: departamento de Amazonas",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "En Amazonas, la pobreza monetaria fue 25,7 % en 2024 y 20,4 % en 2025.",
+     "titulo": "El punto de partida: 2024"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal",
+     "texto": "20,4 % (intervalo del INEI: 16,5 % a 24,2 %): personas en situación de pobreza monetaria, Amazonas, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__departamento__01__2024__contexto",
+     "texto": "25,7 % (intervalo del INEI: 20,9 % a 30,6 %): personas en situación de pobreza monetaria, Amazonas, 2024. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico, Cuadro N.º III.1 (cont.), p. 220 (PDF 222).",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    },
+    {
+     "definicion": "una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.",
+     "termino": "cambio estadísticamente claro"
+    }
+   ],
+   "para_citar": [
+    "20,4 % (intervalo del INEI: 16,5 % a 24,2 %): personas en situación de pobreza monetaria, Amazonas, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "25,7 % (intervalo del INEI: 20,9 % a 30,6 %): personas en situación de pobreza monetaria, Amazonas, 2024. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico, Cuadro N.º III.1 (cont.), p. 220 (PDF 222)."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_pobreza_monetaria__proporcion__departamento__01__2024__contexto": {
+   "accion_final": "publicar",
+   "anio": 2024,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2024-01",
+    "valor": 25.7
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 9.56853225,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.46378255,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico",
+    "ic_inf": 20.9,
+    "ic_sup": 30.6,
+    "id_cifra": "DOR-POB-2024-01"
+   },
+   "ic_inf": 20.98243258,
+   "ic_sup": 30.98329356,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1243,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "25,7 % (entre 21,0 % y 31,0 %), ENAHO 2024, Amazonas; basado en 1243 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "25,7 % (entre 21,0 % y 31,0 %), ENAHO 2024, Amazonas; basado en 1243 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2024.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "01",
+   "territorio_nombre": "Amazonas",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2024,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "01"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 25.74880334
+  },
+  "enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": {
+    "anio": 2024,
+    "anio_cerrado": true,
+    "avisos": "[]",
+    "cota_inf": null,
+    "cota_sup": null,
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cv": 9.56853225,
+    "deff": 3.94335466,
+    "denominador": null,
+    "ee": 2.46378255,
+    "estado_calculo": "calculada",
+    "fecha_corte": null,
+    "fecha_descarga": null,
+    "gl": 179,
+    "grupo_robusto_nacional": null,
+    "grupo_robusto_regional": null,
+    "ic_inf": 20.98243258,
+    "ic_sup": 30.98329356,
+    "indicador_id": "enaho_pobreza_monetaria",
+    "indicador_validado": true,
+    "linea": "cifra",
+    "medida": "proporcion",
+    "metodo_ic": "korn-graubard",
+    "metodo_territorio": "ubigeo",
+    "motivo_calculo": null,
+    "n_efectivo": 314.9602575,
+    "n_muestra": 1243,
+    "nivel": "departamento",
+    "numerador": null,
+    "pct_gasto_atribuible": null,
+    "poblacion": 430123.0,
+    "prueba_cambio": {
+     "anios": [
+      2024,
+      2025
+     ],
+     "diferencia": -5.3578,
+     "ee_diferencia": 3.1326,
+     "p_valor": 0.087203,
+     "significativa": false,
+     "z": -1.7103
+    },
+    "territorio_id": "01",
+    "territorio_nombre": "Amazonas",
+    "ubigeo_inei": "010000",
+    "validada_dorada": null,
+    "valor": 25.74880334,
+    "version_tabla": "1.2.0"
+   },
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-01",
+    "valor": 20.4
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 9.48774451,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.93464716,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 16.5,
+    "ic_sup": 24.2,
+    "id_cifra": "DOR-POB-2025-01"
+   },
+   "ic_inf": 16.67616108,
+   "ic_sup": 24.52016157,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1204,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "20,4 % (entre 16,7 % y 24,5 %), ENAHO 2025, Amazonas; basado en 1204 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "20,4 % (entre 16,7 % y 24,5 %), ENAHO 2025, Amazonas; basado en 1204 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde",
+      "semaforo_comparacion": {
+       "motivos": [],
+       "puntajes": {
+        "precision_cifra": 0,
+        "quiebre": 0
+       },
+       "semaforo": "verde"
+      }
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "01",
+   "territorio_nombre": "Amazonas",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "01"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 20.39101238
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "comparar_con": 2024,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "01"
+   },
+   {
+    "anio": 2024,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__01__2024__contexto",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "contexto",
+    "territorio": "01"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "periodo": {
+    "desde": 2024,
+    "hasta": 2025,
+    "tipo": "serie"
+   },
+   "pregunta_original": "evolución de la pobreza en Amazonas entre 2024 y 2025",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Amazonas"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__pobreza_monetaria__01",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "desde": 2024,
+   "hasta": 2025,
+   "tipo": "serie"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "evolución de la pobreza en Amazonas entre 2024 y 2025",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "01",
+   "nivel": "departamento",
+   "nombre_pedido": "Amazonas"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "evolucion",
+  "periodo": {
+   "desde": 2024,
+   "hasta": 2025,
+   "tipo": "serie"
+  },
+  "pregunta_original": "evolución de la pobreza en Amazonas entre 2024 y 2025",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "Amazonas"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cómo cambió la pobreza en el departamento de Amazonas entre 2024 y 2025",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENAHO 2024–2025 (INEI)\nTerritorio: departamento de Amazonas\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento.",
+  "larga": {
+   "cifras": {
+    "enaho_pobreza_monetaria__proporcion__departamento__01__2024__contexto": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2024. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Amazonas).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 21,0 % y 31,0 % (coeficiente de variación 9,6 %, 1243 casos en la muestra). El INEI publica para esta cifra un intervalo entre 20,9 % y 30,6 % (Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico, Cuadro N.º III.1 (cont.), p. 220 (PDF 222)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 25,7 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico, Cuadro N.º III.1 (cont.), p. 220 (PDF 222)). Nuestra cifra coincide.",
+     "avisos": [
+      "25,7 % (entre 21,0 % y 31,0 %), ENAHO 2024, Amazonas; basado en 1243 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Amazonas).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 16,7 % y 24,5 % (coeficiente de variación 9,5 %, 1204 casos en la muestra). El INEI publica para esta cifra un intervalo entre 16,5 % y 24,2 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "Entre 2024 y 2025: sin cambio estadísticamente claro (prueba de diferencia con el diseño de la encuesta, al 95 % de confianza).",
+     "6_contraste_oficial": "El INEI publica 20,4 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "20,4 % (entre 16,7 % y 24,5 %), ENAHO 2025, Amazonas; basado en 1204 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "desde": "2024",
+   "hasta": "2025",
+   "intencion": "evolución",
+   "tema": "pobreza",
+   "territorio": "Amazonas"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "evolucion",
+   "periodo": {
+    "desde": 2024,
+    "hasta": 2025,
+    "tipo": "serie"
+   },
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Amazonas"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "comparar_con": 2024,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "01"
+   },
+   {
+    "anio": 2024,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__01__2024__contexto",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "contexto",
+    "territorio": "01"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "periodo": {
+    "desde": 2024,
+    "hasta": 2025,
+    "tipo": "serie"
+   },
+   "pregunta_original": "evolución de la pobreza en Amazonas entre 2024 y 2025",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Amazonas"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__pobreza_monetaria__01",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "desde": 2024,
+   "hasta": 2025,
+   "tipo": "serie"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "evolución de la pobreza en Amazonas entre 2024 y 2025",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "01",
+   "nivel": "departamento",
+   "nombre_pedido": "Amazonas"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "p >= alfa → significativo = false",
+   "detalle": {
+    "alfa": 0.05,
+    "anios": [
+     2024,
+     2025
+    ],
+    "diferencia": -5.3578,
+    "direccion": null,
+    "origen": "motor",
+    "p_valor": 0.087203,
+    "significativa": false
+   },
+   "motivo": "prueba_cambio",
+   "objetivo": "enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal",
+   "regla": "R-ENC-11",
+   "rotulo": "sin cambio estadísticamente claro"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "Entre 2024 y 2025, la pobreza monetaria se mantuvo sin cambio estadísticamente claro en Amazonas. 20,4 % de personas en situación de pobreza monetaria en Amazonas en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. «Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. En Amazonas, la pobreza monetaria fue 25,7 % en 2024 y 20,4 % en 2025.",
+ "texto_con_marcadores": "Entre 2024 y 2025, la pobreza monetaria {{v:enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal}} en Amazonas. {{c:enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal}} de personas en situación de pobreza monetaria en Amazonas en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. «Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. En Amazonas, la pobreza monetaria fue {{c:enaho_pobreza_monetaria__proporcion__departamento__01__2024__contexto}} en 2024 y {{c:enaho_pobreza_monetaria__proporcion__departamento__01__2025__principal}} en 2025.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

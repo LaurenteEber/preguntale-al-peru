@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "nivel_actual",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "090613"
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|nivel_actual|Santiago de Chocorvos (distrito, Huaytará)|ultimo"
+}

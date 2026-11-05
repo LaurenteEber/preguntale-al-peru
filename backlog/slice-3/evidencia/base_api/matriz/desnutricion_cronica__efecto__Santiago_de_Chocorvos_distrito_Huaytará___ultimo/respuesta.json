@@ -1,0 +1,309 @@
+{
+ "alternativas": [
+  {
+   "anio": 2025,
+   "lugar": {
+    "ubigeo": "09"
+   },
+   "nivel": "departamento",
+   "nombre": "Huancavelica",
+   "territorio_id": "09",
+   "texto": "el departamento de Huancavelica",
+   "tipo": "nivel"
+  }
+ ],
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": null,
+   "confianza": {
+    "ficha": "Confianza: Sin cifra disponible.",
+    "nivel": "sin cifra",
+    "texto": "Confianza en los datos: sin cifra."
+   },
+   "lo_mas_cercano": {
+    "texto": "Sí tenemos la cifra para el departamento de Huancavelica. Puedes preguntar por ese lugar.",
+    "titulo": "Lo más cercano que sí tenemos"
+   },
+   "ojo_al_leer": [],
+   "palabras": 36,
+   "que_hacer": null,
+   "respuesta_corta": "No podemos mostrar si el gasto sirvió contra la anemia en Santiago de Chocorvos por distrito."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ninguna cifra publicada en esta respuesta",
+    "Territorio: Santiago de Chocorvos",
+    "No permite concluir: nada sobre desnutrición crónica. No mostrar una cifra no quiere decir que el problema no exista."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Los datos de desnutrición crónica que usamos no permiten cifras confiables por distrito. Mostrarlas daría una precisión que no tienen.",
+     "titulo": "Por qué no se puede"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": null,
+     "texto": "Esta respuesta no publica cifras.",
+     "url": ""
+    }
+   ],
+   "glosario": [],
+   "para_citar": [
+    "Esta respuesta no publica cifras."
+   ]
+  }
+ },
+ "cifras": {},
+ "cifras_no_publicadas": [],
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "endes_dci_menores_5__proporcion__departamento__09__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "departamento",
+    "nivel_pedido": "distrito",
+    "rol": "principal",
+    "territorio": "09"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "efecto",
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "ubigeo": "090613"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04",
+   "R-CRUCES-07 / R-03"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "efecto__desnutricion_cronica__090613",
+  "intencion": "efecto",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "desnutricion_cronica"
+   },
+   {
+    "indicador": "endes_dci_menores_5",
+    "motivo": "nivel_no_valido",
+    "nivel_pedido": "distrito",
+    "nivel_planificado": "departamento"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "cruce_fuera_de_lista_blanca",
+   "tema": "desnutricion_cronica"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "090613",
+   "nivel": "distrito",
+   "nombre_pedido": "Santiago de Chocorvos"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "efecto",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "ubigeo": "090613"
+  }
+ },
+ "corrector": [
+  {
+   "accion": "rotular",
+   "clausula": "match(lenguaje.prohibidas) o regla estructural → regenerar",
+   "detalle": {
+    "estructurales": [],
+    "infracciones": [
+     {
+      "categoria": "causal/evaluativa",
+      "fragmento": "sirvio"
+     }
+    ],
+    "intentos": 0
+   },
+   "modo": "corrector",
+   "motivo": "lenguaje_prohibido",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-02"
+  }
+ ],
+ "cruces": [],
+ "ficha": {
+  "corta": "Confianza: Sin cifra disponible.\nDatos de: ninguna cifra publicada en esta respuesta\nTerritorio: Santiago de Chocorvos\nNo permite concluir: nada sobre desnutrición crónica. No mostrar una cifra no quiere decir que el problema no exista.",
+  "larga": {
+   "cifras": {},
+   "cruces": {},
+   "no_concluir": [],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: ."
+  }
+ },
+ "motivo": {
+  "codigo": "nivel_no_valido",
+  "detalle": {
+   "indicador": "endes_dci_menores_5",
+   "motivo": "nivel_no_valido",
+   "nivel_pedido": "distrito",
+   "nivel_planificado": "departamento"
+  },
+  "otros": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "desnutricion_cronica"
+   }
+  ],
+  "regla_lenguaje_05": "nivel_no_representativo"
+ },
+ "motivos_semaforo_respuesta": [
+  "sin_cifra_principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "endes_dci_menores_5__proporcion__departamento__09__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "departamento",
+    "nivel_pedido": "distrito",
+    "rol": "principal",
+    "territorio": "09"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "efecto",
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "ubigeo": "090613"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04",
+   "R-CRUCES-07 / R-03"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "efecto__desnutricion_cronica__090613",
+  "intencion": "efecto",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "desnutricion_cronica"
+   },
+   {
+    "indicador": "endes_dci_menores_5",
+    "motivo": "nivel_no_valido",
+    "nivel_pedido": "distrito",
+    "nivel_planificado": "departamento"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "cruce_fuera_de_lista_blanca",
+   "tema": "desnutricion_cronica"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "090613",
+   "nivel": "distrito",
+   "nombre_pedido": "Santiago de Chocorvos"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sin cifra principal publicable",
+   "detalle": {
+    "motivos": [
+     "sin_cifra_principal"
+    ],
+    "semaforo_respuesta": "sin_cifra"
+   },
+   "motivo": "sin_cifra_principal",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Sin cifra disponible"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "match(lenguaje.prohibidas) o regla estructural → regenerar",
+   "detalle": {
+    "estructurales": [],
+    "infracciones": [
+     {
+      "categoria": "causal/evaluativa",
+      "fragmento": "sirvio"
+     }
+    ],
+    "intentos": 0
+   },
+   "modo": "corrector",
+   "motivo": "lenguaje_prohibido",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-02"
+  }
+ ],
+ "semaforo_respuesta": "sin_cifra",
+ "temas_disponibles": [],
+ "texto": "No podemos mostrar si el gasto sirvió contra la anemia en Santiago de Chocorvos por distrito. Sí tenemos la cifra para el departamento de Huancavelica. Puedes preguntar por ese lugar. Los datos de desnutrición crónica que usamos no permiten cifras confiables por distrito. Mostrarlas daría una precisión que no tienen.",
+ "texto_con_marcadores": "No podemos mostrar si el gasto sirvió contra la anemia en Santiago de Chocorvos por distrito. Sí tenemos la cifra para el departamento de Huancavelica. Puedes preguntar por ese lugar. Los datos de desnutrición crónica que usamos no permiten cifras confiables por distrito. Mostrarlas daría una precisión que no tienen.",
+ "tipo": "no_se_puede",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

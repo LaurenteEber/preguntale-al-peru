@@ -239,23 +239,30 @@ BASE_ESTRUCTURADA = RAIZ / "backlog" / "slice-2" / "evidencia" / "base_estructur
 
 
 def _raiz_con_decisiones_de_antes(destino):
-    """Una raíz de trabajo que enlaza todo el proyecto salvo `parametros_motor.yaml`, que vuelve al valor de antes del slice 3
-    para X-02, X-03 y X-04 (`mostrar_conteo_sien` y `cr01_mismo_anio` en false, `intervalo_visible` en `ambos`). La base de S2-00
-    es evidencia histórica y no se regenera: las decisiones aprobadas en S3-01 se exceptúan así, y solo ellas."""
-    def espejo(origen, dest, real):
-        dest.mkdir(parents=True)
-        for x in origen.iterdir():
-            if x.name == real[0] and len(real) > 1:
-                espejo(x, dest / x.name, real[1:])
-            elif x.name == real[0]:
-                continue
-            else:
-                (dest / x.name).symlink_to(x)
-    espejo(RAIZ, destino, ["curados", "motor", "parametros_motor.yaml"])
+    """Una raíz de trabajo que enlaza todo el proyecto salvo lo que cambiaron las decisiones aprobadas del slice 3, que vuelve
+    a su valor de antes: `parametros_motor.yaml` con X-02, X-03 y X-04 como antes de S3-01 (`mostrar_conteo_sien` y
+    `cr01_mismo_anio` en false, `intervalo_visible` en `ambos`), y los textos de H14 y H15 como antes de S3-02
+    (`tests/fixtures/textos_antes_s3_02/`). La base de S2-00 es evidencia histórica y no se regenera: los cambios aprobados se
+    exceptúan así, y solo ellos."""
     p = yaml.safe_load((RAIZ / "curados" / "motor" / "parametros_motor.yaml").read_text(encoding="utf-8"))
     pend = p["pendientes_dueno"]
     pend["mostrar_conteo_sien"]["valor"], pend["cr01_mismo_anio"]["valor"], pend["intervalo_visible"]["valor"] = False, False, "ambos"
-    (destino / "curados" / "motor" / "parametros_motor.yaml").write_text(yaml.safe_dump(p, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    antes = RAIZ / "tests" / "fixtures" / "textos_antes_s3_02"
+    reales = {("curados", "motor", "parametros_motor.yaml"): yaml.safe_dump(p, allow_unicode=True, sort_keys=False),
+              ("curados", "motor", "textos", "bloques.yaml"): (antes / "bloques.yaml").read_text(encoding="utf-8"),
+              ("curados", "motor", "textos", "plantillas", "nivel_actual.yaml"): (antes / "nivel_actual.yaml").read_text(encoding="utf-8")}
+
+    def espejo(origen, dest, prefijo=()):
+        dest.mkdir(parents=True)
+        for x in origen.iterdir():
+            ruta = prefijo + (x.name,)
+            if ruta in reales:
+                (dest / x.name).write_text(reales[ruta], encoding="utf-8")
+            elif any(r[:len(ruta)] == ruta for r in reales):
+                espejo(x, dest / x.name, ruta)
+            else:
+                (dest / x.name).symlink_to(x)
+    espejo(RAIZ, destino)
     return destino
 
 

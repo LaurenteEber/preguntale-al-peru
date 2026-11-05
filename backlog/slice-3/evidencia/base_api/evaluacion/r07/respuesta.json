@@ -1,0 +1,357 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENAHO 2025 (INEI); el INEI publica la misma cifra (25,7 %)",
+    "ids": [
+     "enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal"
+    ],
+    "texto": "de personas en situación de pobreza monetaria en Perú en 2025.",
+    "valor": "25,7 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+   ],
+   "palabras": 50,
+   "que_hacer": null,
+   "respuesta_corta": "En 2025, en Perú, la pobreza monetaria fue:"
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENAHO 2025 (INEI)",
+    "Territorio: todo el país",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para todo el país."
+   ],
+   "mas_contexto": []
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal",
+     "texto": "25,7 % (intervalo del INEI: 24,6 % a 26,7 %): personas en situación de pobreza monetaria, Perú, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1, p. 231.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    }
+   ],
+   "para_citar": [
+    "25,7 % (intervalo del INEI: 24,6 % a 26,7 %): personas en situación de pobreza monetaria, Perú, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1, p. 231."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1, p. 231",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-PE",
+    "valor": 25.7
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 1.98633076,
+   "denominador": null,
+   "devengado": null,
+   "ee": 0.5098256,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1, p. 231",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 24.6,
+    "ic_sup": 26.7,
+    "id_cifra": "DOR-POB-2025-PE"
+   },
+   "ic_inf": 24.6702751,
+   "ic_sup": 26.68249562,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 33702,
+   "nivel": "nacional",
+   "nivel_pedido": "nacional",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "25,7 % (entre 24,7 % y 26,7 %), ENAHO 2025, Perú; basado en 33702 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "25,7 % (entre 24,7 % y 26,7 %), ENAHO 2025, Perú; basado en 33702 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "PE",
+   "territorio_nombre": "Perú",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "nacional",
+     "periodo_agrupado": null,
+     "territorio_id": "PE"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-PE",
+   "valor": 25.66670217
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "nacional",
+    "rol": "principal",
+    "territorio": "PE"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "porcentaje de pobres en todo el Perú",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__pobreza_monetaria__PE",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "porcentaje de pobres en todo el Perú",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "PE",
+   "nivel": "nacional",
+   "nombre_pedido": "Perú"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "porcentaje de pobres en todo el Perú",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "nacional": true
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cuánto hay de pobreza en todo el Perú",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENAHO 2025 (INEI)\nTerritorio: todo el país\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para todo el país.",
+  "larga": {
+   "cifras": {
+    "enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por país (Perú).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 24,7 % y 26,7 % (coeficiente de variación 2,0 %, 33702 casos en la muestra). El INEI publica para esta cifra un intervalo entre 24,6 % y 26,7 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1, p. 231). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 25,7 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1, p. 231). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "25,7 % (entre 24,7 % y 26,7 %), ENAHO 2025, Perú; basado en 33702 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para todo el país."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "intencion": "porcentaje",
+   "tema": "pobres",
+   "territorio": "todo el Perú"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "nacional",
+    "rol": "principal",
+    "territorio": "PE"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "porcentaje de pobres en todo el Perú",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__pobreza_monetaria__PE",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "porcentaje de pobres en todo el Perú",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "PE",
+   "nivel": "nacional",
+   "nombre_pedido": "Perú"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2025, en Perú, la pobreza monetaria fue: 25,7 % de personas en situación de pobreza monetaria en Perú en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+ "texto_con_marcadores": "En 2025, en Perú, la pobreza monetaria fue: {{c:enaho_pobreza_monetaria__proporcion__nacional__PE__2025__principal}} de personas en situación de pobreza monetaria en Perú en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

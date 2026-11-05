@@ -1,0 +1,416 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "Mapa de Pobreza 2018 (INEI)",
+    "ids": [
+     "mapa_pobreza_2018__intervalo__distrito__150103__2018__principal"
+    ],
+    "texto": "es la cifra de pobreza monetaria por distrito (estimación del INEI) en Ate en 2018.",
+    "valor": "entre 14 % y 20 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: baja (dato muy aproximado): es una estimación con modelo, de 2018.",
+    "nivel": "baja",
+    "texto": "Confianza en los datos: baja. Es una estimación con modelo, de 2018."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación con modelo, con un rango."
+   ],
+   "palabras": 57,
+   "que_hacer": null,
+   "respuesta_corta": "En 2018, en Ate, la pobreza monetaria por distrito fue:"
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: Mapa de Pobreza 2018 (INEI)",
+    "Territorio: distrito de Ate",
+    "No permite concluir: cuál es la situación hoy: el dato es de 2018, antes de la pandemia."
+   ],
+   "mas_contexto": []
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "mapa_pobreza_2018__intervalo__distrito__150103__2018__principal",
+     "texto": "entre 14,1 % y 20,3 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Ate, 2018. Fuente: Pregúntale al Perú, cálculo propio con Mapa de Pobreza 2018 (INEI).",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "estimación estadística del INEI de la pobreza de cada distrito en 2018. No es un conteo casa por casa, por eso cada distrito tiene un rango y no una cifra exacta.",
+     "termino": "Mapa de Pobreza"
+    },
+    {
+     "definicion": "los valores entre los que está probablemente la cifra real, según el margen de error de la encuesta o del modelo.",
+     "termino": "rango probable (intervalo)"
+    }
+   ],
+   "para_citar": [
+    "entre 14,1 % y 20,3 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Ate, 2018. Fuente: Pregúntale al Perú, cálculo propio con Mapa de Pobreza 2018 (INEI)."
+   ]
+  }
+ },
+ "cifras": {
+  "mapa_pobreza_2018__intervalo__distrito__150103__2018__principal": {
+   "accion_final": "publicar_referencial",
+   "anio": 2018,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": null,
+   "denominador": null,
+   "devengado": null,
+   "ee": null,
+   "estado_cifra": "referencial",
+   "grupo_robusto_nacional": 16,
+   "ic_inei": null,
+   "ic_inf": 14.092326,
+   "ic_sup": 20.257546,
+   "indicador_id": "mapa_pobreza_2018",
+   "lineas_aparte": null,
+   "medida": "intervalo",
+   "metodo_ic": "publicado_inei",
+   "motivos_semaforo": [
+    {
+     "criterio": "vigencia",
+     "puntaje": 2
+    },
+    {
+     "criterio": "precision",
+     "puntaje": 1
+    }
+   ],
+   "n_muestra": null,
+   "nivel": "distrito",
+   "nivel_pedido": "distrito",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2018,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2018
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2018.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "publicar_referencial",
+     "clausula": "única fuente distrital modelada > 5 años",
+     "detalle": {
+      "contexto": {
+       "nivel": "LIMA_METROPOLITANA",
+       "territorio_id": "LIMA_METROPOLITANA"
+      },
+      "contexto_obligatorio": "cifra departamental ENAHO del último año",
+      "edad_dato": 8,
+      "es_principal": true,
+      "ranking": "solo grupo_robusto (lista del grupo extremo, sin orden interno)",
+      "semaforo_cifra": "rojo"
+     },
+     "mensaje": "Es la única estimación oficial por distrito y corresponde a 2018, antes de la pandemia; la situación actual probablemente es distinta.",
+     "motivo": "modelada_antigua",
+     "regla": "R-EST-05"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "antiguedad",
+     "clausula": "anio_actual − anio_referencia > 3",
+     "detalle": {
+      "edad_dato": 8
+     },
+     "mensaje": "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 14,1 % y 20,3 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "vigencia",
+     "regla": "R-EST-01"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "edad_dato > vigencia_max_presente_anios",
+     "detalle": {
+      "anio_dato": 2018,
+      "edad_dato": 8,
+      "plantilla": "en 2018 se estimaba"
+     },
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04",
+     "rotulo": "tiempo_pasado_con_anio"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "dato_anterior_a_choque",
+     "clausula": "anio_choque entre el dato y el presente, socioeconómico",
+     "detalle": {
+      "anios_choque": [
+       2020,
+       2021
+      ]
+     },
+     "mensaje": "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 2",
+     "detalle": {
+      "accion_vigente": "publicar_referencial",
+      "escalado": false,
+      "motivos": [
+       {
+        "criterio": "vigencia",
+        "puntaje": 2
+       },
+       {
+        "criterio": "precision",
+        "puntaje": 1
+       }
+      ],
+      "puntajes": {
+       "ancho_ic_modelada": 0,
+       "base_geografica": 0,
+       "precision": 1,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 2
+      },
+      "semaforo": "rojo"
+     },
+     "mensaje": "Dato muy aproximado: es una estimación con modelo, de 2018",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato muy aproximado"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "rojo",
+   "territorio_id": "150103",
+   "territorio_nombre": "Ate",
+   "traza": [
+    {
+     "accion": "publicar_referencial",
+     "anio": 2018,
+     "estado": "referencial",
+     "motivos": [
+      "modelada_antigua"
+     ],
+     "nivel": "distrito",
+     "periodo_agrupado": null,
+     "territorio_id": "150103"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": null
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2018,
+    "id": "mapa_pobreza_2018__intervalo__distrito__150103__2018__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "principal",
+    "territorio": "150103"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "¿Cuántos pobres hay en Ate?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Ate"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__pobreza_monetaria__150103",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "¿Cuántos pobres hay en Ate?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "150103",
+   "nivel": "distrito",
+   "nombre_pedido": "Ate"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "¿Cuántos pobres hay en Ate?",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "Ate"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cuánto hay de pobreza en el distrito de Ate (Lima, Lima)",
+ "ficha": {
+  "corta": "Confianza en los datos: baja (dato muy aproximado): es una estimación con modelo, de 2018.\nDatos de: Mapa de Pobreza 2018 (INEI)\nTerritorio: distrito de Ate\nNo permite concluir: cuál es la situación hoy: el dato es de 2018, antes de la pandemia.",
+  "larga": {
+   "cifras": {
+    "mapa_pobreza_2018__intervalo__distrito__150103__2018__principal": {
+     "1_origen": "Pobreza monetaria por distrito en 2018 (estimación del INEI). Mapa de Pobreza (INEI), 2018. Es una estimación del INEI con un modelo.",
+     "2_territorio": "La cifra se presenta por distrito (Ate).",
+     "3_que_mide": "Mide pobreza monetaria estimada por el INEI con un modelo para 2018 (intervalo de confianza al 95 %).",
+     "4_precision": "Estimación con modelo: la pobreza está probablemente entre 14 % y 20 %.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2018.",
+      "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 14,1 % y 20,3 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+      "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta."
+     ],
+     "estado": "referencial",
+     "semaforo": "rojo"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Cuál es la situación hoy: el dato es de 2018, antes de la pandemia."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: mapa_pobreza_2018."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "intencion": "Cuántos",
+   "tema": "pobres",
+   "territorio": "Ate"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Ate"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:mapa_pobreza_2018__intervalo__distrito__150103__2018__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2018,
+    "id": "mapa_pobreza_2018__intervalo__distrito__150103__2018__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "principal",
+    "territorio": "150103"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "¿Cuántos pobres hay en Ate?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Ate"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__pobreza_monetaria__150103",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "¿Cuántos pobres hay en Ate?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "150103",
+   "nivel": "distrito",
+   "nombre_pedido": "Ate"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:mapa_pobreza_2018__intervalo__distrito__150103__2018__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "rojo"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato muy aproximado. Es una estimación con modelo, de 2018.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato muy aproximado"
+  }
+ ],
+ "semaforo_respuesta": "rojo",
+ "texto": "En 2018, en Ate, la pobreza monetaria por distrito fue: entre 14 % y 20 % es la cifra de pobreza monetaria por distrito (estimación del INEI) en Ate en 2018. No leas esta cifra como exacta: es una estimación con modelo, con un rango.",
+ "texto_con_marcadores": "En 2018, en Ate, la pobreza monetaria por distrito fue: {{c:mapa_pobreza_2018__intervalo__distrito__150103__2018__principal}} es la cifra de pobreza monetaria por distrito (estimación del INEI) en Ate en 2018. No leas esta cifra como exacta: es una estimación con modelo, con un rango.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

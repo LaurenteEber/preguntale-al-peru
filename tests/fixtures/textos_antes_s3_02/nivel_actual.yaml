@@ -1,0 +1,10 @@
+# Plantilla nivel_actual («¿cuánto hay?»): una cifra clave del lugar y, en tarjetas, las cifras de contexto.
+version: 1.0.0
+corta: "Esto es lo que dicen los datos oficiales sobre {sujeto} en {lugar}:"
+clave:                            # texto que sigue a la cifra clave, por medida (sin bloque del tema)
+  proporcion: "de {ciudadano} en {lugar} en {anio}."
+  defecto: "es la cifra de {ciudadano} en {lugar} en {anio}."
+tarjeta:                          # una por cada cifra de contexto (sin bloque del tema)
+  titulo: "{ciudadano_cap} ({lugar})"
+  proporcion: "{c} de {ciudadano} en {lugar} en {anio} ({fuente})."
+  defecto: "En {anio}, {ciudadano} en {lugar}: {c} ({fuente})."

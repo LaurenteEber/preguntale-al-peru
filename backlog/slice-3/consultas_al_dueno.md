@@ -8,6 +8,16 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 - **Qué pasa:** el slice 2 se fusionó en `main` ([PR #2](https://github.com/LaurenteEber/preguntale-al-peru/pull/2), `e1a0d0f`). La etiqueta se creó en local, pero el push de etiquetas desde este entorno se corta («the remote end hung up»), aunque el de ramas funciona.
 - **Propuesta:** desde el Mac: `git fetch origin main && git tag -a slice-2-cerrado e1a0d0f -m "Slice 2 cerrado" && git push origin slice-2-cerrado`.
 
+### W-02 — H21: quitar los porcentajes de «Más contexto» de Q4 también quita un aviso (S3-02) · abierta (no bloquea)
+- **Qué pasa:** la historia pide que «Más contexto» de Q4 muestre solo el rango del grupo (35,7 % a 39,8 %) y no los porcentajes de los siete departamentos. Lo probé: el texto cambia como se pidió, pero **también desaparece el aviso «Estas cifras vienen de fuentes de distinto tipo (encuesta a hogares, estimación con modelo)…»** y la regla R-LENGUAJE-06 (rotular) deja de dispararse, porque esa regla se activa cuando el texto mezcla cifras de distinta naturaleza. Quitar un aviso no es «decir lo mismo de otra forma» (`agents.md` §5.1, condición 2), y ante la duda es tipo C.
+- **Por qué importa:** la respuesta sigue mostrando juntos el Mapa de Pobreza 2018 (modelo) y el grupo de ENAHO 2025 (encuesta); sin el aviso, esa diferencia queda solo en «Ojo al leer» y en «Límites».
+- **No se hizo:** el texto de `identificar_extremo.yaml` queda como estaba; Q4 no cambia.
+- **Propuesta:** (a) aprobar la pérdida del aviso (el cambio de texto ya está probado; se aplica en una línea de `curados/motor/textos/plantillas/identificar_extremo.yaml`: quitar «En orden alfabético: {items}.»), o (b) conservar el aviso: pide un cambio de código (que «Más contexto» nombre a los departamentos sin porcentaje), fuera de lo que S3-02 permite. Recomiendo (a).
+
+### W-03 — H17 y H18: el dueño no los marcó (S3-02, caso B) · pendiente del dueño (no bloquea)
+- **Qué pasa:** la tabla de S3-02 los deja en blanco (☐), así que no se hicieron y no se tocó `reglas/` ni `ajustes_dueno.py`. Siguen con el texto de hoy: H17 «solo sabemos de los que se les midió la hemoglobina»; H18 «nada sobre provincias o distritos concretos… para Lima Metropolitana».
+- **Para aplicarlos:** el dueño marca la columna con la fecha en `S3-02-observaciones-y-base.md`; entonces se cambian solo por `reglas/consolidador/ajustes_dueno.py` y `consolida_reglas.py`.
+
 ## Supuestos aplicados (vacíos tipo B)
 
 | ID | Historia | Qué se supuso | Dónde vive |

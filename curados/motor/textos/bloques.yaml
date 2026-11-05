@@ -6,8 +6,8 @@
 version: 1.0.0
 
 indicadores:                      # cómo se nombra cada indicador en una frase, su glosario y su motivo de confianza
-  endes_anemia_6_35m_oms2024: {sujeto: "la anemia en niñas y niños de 6 a 35 meses", sujeto_corto: "la anemia", glosario: [endes]}
-  endes_anemia_6_35m: {sujeto: "la anemia en niñas y niños de 6 a 35 meses (forma de medir anterior a 2024)", sujeto_corto: "la anemia", glosario: [endes]}
+  endes_anemia_6_35m_oms2024: {sujeto: "la anemia en niñas y niños de 6 a 35 meses", sujeto_corto: "la anemia", glosario: [endes, forma_de_medir]}
+  endes_anemia_6_35m: {sujeto: "la anemia en niñas y niños de 6 a 35 meses (forma de medir anterior a 2024)", sujeto_corto: "la anemia", glosario: [endes, forma_de_medir]}
   endes_dci_menores_5: {sujeto: "la desnutrición crónica en niñas y niños menores de 5 años", sujeto_corto: "la desnutrición crónica", glosario: [endes]}
   sien_anemia_tamizados_6_35m:
     sujeto: "la anemia en niñas y niños medidos en establecimientos de salud"

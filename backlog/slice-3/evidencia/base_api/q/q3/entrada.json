@@ -1,0 +1,15 @@
+{
+ "consulta": {
+  "idioma": "es",
+  "intencion": "efecto",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "¿Cuánto se gastó contra la anemia en San Juan de Lurigancho y sirvió?",
+  "tema": "gasto_publico",
+  "territorio": {
+   "texto": "San Juan de Lurigancho"
+  }
+ },
+ "elegir": null
+}

@@ -1,0 +1,20 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "identificar_extremo",
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "dentro_de": {
+    "ubigeo": "14"
+   },
+   "nivel": "departamento"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|identificar_extremo|Lambayeque|intermedio|departamento"
+}

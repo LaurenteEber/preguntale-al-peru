@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "evolucion",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "ubigeo": "130112"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|evolucion|Alto Trujillo (distrito, Trujillo)|sin_datos"
+}

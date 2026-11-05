@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "nivel_actual",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "ubigeo": "23"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|nivel_actual|Tacna|sin_datos"
+}

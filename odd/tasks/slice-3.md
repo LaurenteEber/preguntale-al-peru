@@ -17,7 +17,8 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 |---|---|---|---|---|
 | T0 S3-00 | S3-00 | inline | done (944 passed base) | b18e473 + this commit |
 | T1 S3-01 | S3-01 | delegated writer (context backstop: long parent session), sonnet low | done (writer: 960 passed; parent spot check 46 passed) | (this commit) |
-| T2–T11 | S3-02 … S3-11 | — | pending | |
+| T2 S3-02 | S3-02 | delegated writer (context backstop), sonnet low | done in part: H14, H15, base_api; H21 → W-02 (type C); H17/H18 → W-03 (owner) | (this commit) |
+| T3–T11 | S3-03 … S3-11 | parallel waves (L5) | pending | |
 
 ## Log
 
@@ -26,3 +27,4 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 - L3: S3-00 done (base 944 passed). S3-01 delegated to one bounded writer (reason: long-session context backstop), sonnet low effort per owner.
 - L4: S3-01 writer done: X-02/X-03/X-04 applied, citas with official url (capa3.citas), rótulos in capas.yaml (.md byte-identical ignoring the new link suffix), X-01 not applied. Writer touched 3 files outside the surface (plantillas/cruce_efecto.yaml S3-01-a, test_planificador.py, test_plantillas_intencion.py), all citing the decision; accepted after diff review. Parent fixed stale docs (arquitectura.md, manual_de_uso.md).
 - L5 (2026-11-05, user, verbatim): «todo con ODD, simpre que se pueda implementar en paralelo con subagentes lo haces». → independent stories with disjoint edit surfaces run as parallel writers (sonnet, low).
+- L6: S3-02 writer done: H14, H15 applied (§5.1, aprobado_por: agente); H21 removes a R-LENGUAJE-06 warning → type C W-02; H17/H18 not marked by owner → W-03. base_api/ 411 files, deterministic. Parent fixed test_via_estructurada (pre-S3-02 texts as fixtures in tests/fixtures/textos_antes_s3_02/). Deadline from owner: push by 23:59 Lima (America/Lima) on 2026-11-04; reminder at 23:35.

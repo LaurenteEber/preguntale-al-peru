@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "230111"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|cruce|La Yarada Los Palos (distrito, Tacna)|sin_datos"
+}

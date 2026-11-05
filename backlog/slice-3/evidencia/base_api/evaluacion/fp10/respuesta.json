@@ -1,0 +1,19 @@
+{
+ "cifras": {},
+ "entendimos": null,
+ "interpretacion": {
+  "anclas": null,
+  "avisos": [],
+  "cache": false,
+  "consulta": null,
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "otro_idioma",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivo": "otro_idioma",
+ "texto": "Por ahora solo respondemos en español. También puedes preguntar con las opciones: por ejemplo, `uv run pap preguntar --intencion nivel_actual --tema anemia --territorio Puno`.",
+ "tipo": "mensaje"
+}

@@ -1,0 +1,196 @@
+{
+ "aclaracion": {
+  "motivo": "homonimo_mismo_nivel",
+  "opciones": [
+   {
+    "etiqueta": "Ayaviri (distrito, provincia de Yauyos, departamento de Lima)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": "LIMA_REGION",
+     "anio_datos_desde": 2017,
+     "departamento": "Lima",
+     "id": "151004",
+     "nivel": "distrito",
+     "nombre_completo": "Ayaviri (Yauyos, Lima)",
+     "nombre_mostrado": "Ayaviri",
+     "provincia": "Yauyos",
+     "provisional": false,
+     "ubigeo": "151004"
+    }
+   },
+   {
+    "etiqueta": "Ayaviri (distrito, provincia de Melgar, departamento de Puno)",
+    "n": 2,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Puno",
+     "id": "210801",
+     "nivel": "distrito",
+     "nombre_completo": "Ayaviri (Melgar, Puno)",
+     "nombre_mostrado": "Ayaviri",
+     "provincia": "Melgar",
+     "provisional": false,
+     "ubigeo": "210801"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "Hay varios lugares llamados «Ayaviri». ¿Cuál quieres?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "homonimo_mismo_nivel",
+   "opciones": [
+    {
+     "etiqueta": "Ayaviri (distrito, provincia de Yauyos, departamento de Lima)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": "LIMA_REGION",
+      "anio_datos_desde": 2017,
+      "departamento": "Lima",
+      "id": "151004",
+      "nivel": "distrito",
+      "nombre_completo": "Ayaviri (Yauyos, Lima)",
+      "nombre_mostrado": "Ayaviri",
+      "provincia": "Yauyos",
+      "provisional": false,
+      "ubigeo": "151004"
+     }
+    },
+    {
+     "etiqueta": "Ayaviri (distrito, provincia de Melgar, departamento de Puno)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Puno",
+      "id": "210801",
+      "nivel": "distrito",
+      "nombre_completo": "Ayaviri (Melgar, Puno)",
+      "nombre_mostrado": "Ayaviri",
+      "provincia": "Melgar",
+      "provisional": false,
+      "ubigeo": "210801"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Hay varios lugares llamados «Ayaviri». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "desnutrición en Ayaviri",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "Ayaviri"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__homonimo_mismo_nivel",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "desnutrición en Ayaviri",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "desnutrición en Ayaviri",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "texto": "Ayaviri"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de desnutrición crónica en «Ayaviri»",
+ "interpretacion": {
+  "anclas": {
+   "tema": "desnutrición",
+   "territorio": "Ayaviri"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "Ayaviri"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "homonimo_mismo_nivel",
+   "opciones": [
+    {
+     "etiqueta": "Ayaviri (distrito, provincia de Yauyos, departamento de Lima)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": "LIMA_REGION",
+      "anio_datos_desde": 2017,
+      "departamento": "Lima",
+      "id": "151004",
+      "nivel": "distrito",
+      "nombre_completo": "Ayaviri (Yauyos, Lima)",
+      "nombre_mostrado": "Ayaviri",
+      "provincia": "Yauyos",
+      "provisional": false,
+      "ubigeo": "151004"
+     }
+    },
+    {
+     "etiqueta": "Ayaviri (distrito, provincia de Melgar, departamento de Puno)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Puno",
+      "id": "210801",
+      "nivel": "distrito",
+      "nombre_completo": "Ayaviri (Melgar, Puno)",
+      "nombre_mostrado": "Ayaviri",
+      "provincia": "Melgar",
+      "provisional": false,
+      "ubigeo": "210801"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Hay varios lugares llamados «Ayaviri». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "desnutrición en Ayaviri",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "Ayaviri"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__homonimo_mismo_nivel",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "desnutrición en Ayaviri",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "Hay varios lugares llamados «Ayaviri». ¿Cuál quieres?\n1) Ayaviri (distrito, provincia de Yauyos, departamento de Lima)\n2) Ayaviri (distrito, provincia de Melgar, departamento de Puno)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

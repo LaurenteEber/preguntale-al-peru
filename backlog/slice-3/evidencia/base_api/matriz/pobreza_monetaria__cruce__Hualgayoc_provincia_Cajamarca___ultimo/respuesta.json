@@ -1,0 +1,408 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "Mapa de Pobreza 2018 (INEI)",
+    "ids": [
+     "mapa_pobreza_2018__intervalo__provincia__060700__2018__principal"
+    ],
+    "texto": "es la cifra de pobreza monetaria por distrito (estimación del INEI) en Hualgayoc en 2018.",
+    "valor": "entre 44 % y 60 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: baja (dato muy aproximado): es una estimación con modelo, de 2018.",
+    "nivel": "baja",
+    "texto": "Confianza en los datos: baja. Es una estimación con modelo, de 2018."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación con modelo, con un rango."
+   ],
+   "palabras": 70,
+   "que_hacer": null,
+   "respuesta_corta": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2018, en Hualgayoc, la pobreza monetaria por distrito fue:"
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: Mapa de Pobreza 2018 (INEI)",
+    "Territorio: provincia de Hualgayoc",
+    "No permite concluir: cuál es la situación hoy: el dato es de 2018, antes de la pandemia."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+     "titulo": "Lo que no pudimos mostrar"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "mapa_pobreza_2018__intervalo__provincia__060700__2018__principal",
+     "texto": "entre 44,3 % y 59,6 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Hualgayoc, 2018. Fuente: Pregúntale al Perú, cálculo propio con Mapa de Pobreza 2018 (INEI).",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "estimación estadística del INEI de la pobreza de cada distrito en 2018. No es un conteo casa por casa, por eso cada distrito tiene un rango y no una cifra exacta.",
+     "termino": "Mapa de Pobreza"
+    },
+    {
+     "definicion": "los valores entre los que está probablemente la cifra real, según el margen de error de la encuesta o del modelo.",
+     "termino": "rango probable (intervalo)"
+    }
+   ],
+   "para_citar": [
+    "entre 44,3 % y 59,6 % (rango probable): pobreza monetaria por distrito en 2018 (estimación del INEI), Hualgayoc, 2018. Fuente: Pregúntale al Perú, cálculo propio con Mapa de Pobreza 2018 (INEI)."
+   ]
+  }
+ },
+ "cifras": {
+  "mapa_pobreza_2018__intervalo__provincia__060700__2018__principal": {
+   "accion_final": "publicar",
+   "anio": 2018,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": null,
+   "denominador": null,
+   "devengado": null,
+   "ee": null,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": 3,
+   "ic_inei": null,
+   "ic_inf": 44.290922,
+   "ic_sup": 59.588268,
+   "indicador_id": "mapa_pobreza_2018",
+   "lineas_aparte": null,
+   "medida": "intervalo",
+   "metodo_ic": "publicado_inei",
+   "motivos_semaforo": [
+    {
+     "criterio": "vigencia",
+     "puntaje": 2
+    },
+    {
+     "criterio": "ancho_ic_modelada",
+     "puntaje": 1
+    }
+   ],
+   "n_muestra": null,
+   "nivel": "provincia",
+   "nivel_pedido": "provincia",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2018,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2018
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2018.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "antiguedad",
+     "clausula": "anio_actual − anio_referencia > 3",
+     "detalle": {
+      "edad_dato": 8
+     },
+     "mensaje": "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 44,3 % y 59,6 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "vigencia",
+     "regla": "R-EST-01"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "edad_dato > vigencia_max_presente_anios",
+     "detalle": {
+      "anio_dato": 2018,
+      "edad_dato": 8,
+      "plantilla": "en 2018 se estimaba"
+     },
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04",
+     "rotulo": "tiempo_pasado_con_anio"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "dato_anterior_a_choque",
+     "clausula": "anio_choque entre el dato y el presente, socioeconómico",
+     "detalle": {
+      "anios_choque": [
+       2020,
+       2021
+      ]
+     },
+     "mensaje": "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta.",
+     "modificador": true,
+     "motivo": "dato_antiguo",
+     "regla": "R-LENGUAJE-04"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 2",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [
+       {
+        "criterio": "vigencia",
+        "puntaje": 2
+       },
+       {
+        "criterio": "ancho_ic_modelada",
+        "puntaje": 1
+       }
+      ],
+      "puntajes": {
+       "ancho_ic_modelada": 1,
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 2
+      },
+      "semaforo": "rojo"
+     },
+     "mensaje": "Dato muy aproximado: es una estimación con modelo, de 2018",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato muy aproximado"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "rojo",
+   "territorio_id": "060700",
+   "territorio_nombre": "Hualgayoc",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2018,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "provincia",
+     "periodo_agrupado": null,
+     "territorio_id": "060700"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": null
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2018,
+    "id": "mapa_pobreza_2018__intervalo__provincia__060700__2018__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "provincia",
+    "rol": "principal",
+    "territorio": "060700"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "cruce",
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "ubigeo": "0607"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-03 / R-CRUCES-07",
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "cruce__pobreza_monetaria__060700",
+  "intencion": "cruce",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "pobreza_monetaria"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "cruce_fuera_de_lista_blanca",
+   "tema": "pobreza_monetaria"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "060700",
+   "nivel": "provincia",
+   "nombre_pedido": "Hualgayoc"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "cruce",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "0607"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "ficha": {
+  "corta": "Confianza en los datos: baja (dato muy aproximado): es una estimación con modelo, de 2018.\nDatos de: Mapa de Pobreza 2018 (INEI)\nTerritorio: provincia de Hualgayoc\nNo permite concluir: cuál es la situación hoy: el dato es de 2018, antes de la pandemia.",
+  "larga": {
+   "cifras": {
+    "mapa_pobreza_2018__intervalo__provincia__060700__2018__principal": {
+     "1_origen": "Pobreza monetaria por distrito en 2018 (estimación del INEI). Mapa de Pobreza (INEI), 2018. Es una estimación del INEI con un modelo.",
+     "2_territorio": "La cifra se presenta por provincia (Hualgayoc).",
+     "3_que_mide": "Mide pobreza monetaria estimada por el INEI con un modelo para 2018 (intervalo de confianza al 95 %).",
+     "4_precision": "Estimación con modelo: la pobreza está probablemente entre 44 % y 60 %.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2018.",
+      "Es una estimación estadística del INEI para 2018 (no un conteo). Lo más probable es que el valor esté entre 44,3 % y 59,6 %. Foto de 2018, anterior a la pandemia; la situación actual probablemente es distinta.",
+      "Dato de 2018, anterior a la pandemia: la situación actual probablemente es distinta."
+     ],
+     "estado": "publicable",
+     "semaforo": "rojo"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Cuál es la situación hoy: el dato es de 2018, antes de la pandemia."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: mapa_pobreza_2018."
+  }
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:mapa_pobreza_2018__intervalo__provincia__060700__2018__principal",
+  "respuesta_parcial"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2018,
+    "id": "mapa_pobreza_2018__intervalo__provincia__060700__2018__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "provincia",
+    "rol": "principal",
+    "territorio": "060700"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "cruce",
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "ubigeo": "0607"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-03 / R-CRUCES-07",
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "cruce__pobreza_monetaria__060700",
+  "intencion": "cruce",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "pobreza_monetaria"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "cruce_fuera_de_lista_blanca",
+   "tema": "pobreza_monetaria"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "060700",
+   "nivel": "provincia",
+   "nombre_pedido": "Hualgayoc"
+  }
+ },
+ "respuesta_parcial": true,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:mapa_pobreza_2018__intervalo__provincia__060700__2018__principal",
+     "respuesta_parcial"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "rojo"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato muy aproximado. Es una estimación con modelo, de 2018.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato muy aproximado"
+  }
+ ],
+ "semaforo_respuesta": "rojo",
+ "texto": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2018, en Hualgayoc, la pobreza monetaria por distrito fue: entre 44 % y 60 % es la cifra de pobreza monetaria por distrito (estimación del INEI) en Hualgayoc en 2018. No leas esta cifra como exacta: es una estimación con modelo, con un rango. Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+ "texto_con_marcadores": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2018, en Hualgayoc, la pobreza monetaria por distrito fue: {{c:mapa_pobreza_2018__intervalo__provincia__060700__2018__principal}} es la cifra de pobreza monetaria por distrito (estimación del INEI) en Hualgayoc en 2018. No leas esta cifra como exacta: es una estimación con modelo, con un rango. Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

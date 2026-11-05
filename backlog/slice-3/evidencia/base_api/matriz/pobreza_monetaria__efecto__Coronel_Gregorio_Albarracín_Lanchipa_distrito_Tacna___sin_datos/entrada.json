@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "efecto",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "230110"
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|efecto|Coronel Gregorio Albarracín Lanchipa (distrito, Tacna)|sin_datos"
+}

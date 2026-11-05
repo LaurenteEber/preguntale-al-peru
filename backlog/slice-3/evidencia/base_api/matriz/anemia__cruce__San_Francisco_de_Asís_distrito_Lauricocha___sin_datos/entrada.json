@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "ubigeo": "101006"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|cruce|San Francisco de Asís (distrito, Lauricocha)|sin_datos"
+}

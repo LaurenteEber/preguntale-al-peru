@@ -1,0 +1,108 @@
+{
+ "aclaracion": {
+  "motivo": "interprete_sin_lugar",
+  "opciones": [
+   {
+    "etiqueta": "Todo el Perú",
+    "n": 1,
+    "opcion": "nacional"
+   },
+   {
+    "etiqueta": "Escribe el lugar",
+    "n": 2,
+    "opcion": "escribir"
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "¿De qué lugar quieres saber?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "interprete_sin_lugar",
+   "opciones": [
+    {
+     "etiqueta": "Todo el Perú",
+     "n": 1,
+     "opcion": "nacional"
+    },
+    {
+     "etiqueta": "Escribe el lugar",
+     "n": 2,
+     "opcion": "escribir"
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "¿De qué lugar quieres saber?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "pregunta_original": "pobreza"
+  },
+  "grupos": [],
+  "id": "aclaracion__interprete_sin_lugar",
+  "intencion": null,
+  "periodo": null,
+  "pregunta": "pobreza",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": null,
+ "entendimos": "Entendimos: cuánto hay de pobreza",
+ "interpretacion": {
+  "anclas": {
+   "tema": "pobreza"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "pobreza_monetaria"
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "interprete_sin_lugar",
+   "opciones": [
+    {
+     "etiqueta": "Todo el Perú",
+     "n": 1,
+     "opcion": "nacional"
+    },
+    {
+     "etiqueta": "Escribe el lugar",
+     "n": 2,
+     "opcion": "escribir"
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "¿De qué lugar quieres saber?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "pregunta_original": "pobreza"
+  },
+  "grupos": [],
+  "id": "aclaracion__interprete_sin_lugar",
+  "intencion": null,
+  "periodo": null,
+  "pregunta": "pobreza",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "¿De qué lugar quieres saber?\n1) Todo el Perú\n2) Escribe el lugar",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

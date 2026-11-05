@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "efecto",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "ubigeo": "010206"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|efecto|La Peca (distrito, Bagua)|ultimo"
+}
