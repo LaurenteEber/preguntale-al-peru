@@ -58,3 +58,15 @@ def test_el_tope_corta_la_evaluacion(motor, tmp_path):
     c = L.Cliente(RAIZ, modo="reproducir", tope_usd=0.0)
     ev = E.evaluar(RAIZ, ["q2", "q3"], cliente=c, motor=motor)
     assert ev["cortado"] == "tope_por_corrida" and ev["filas"] == [] and not E.metricas(ev)["cumple_todo"]
+
+
+def test_efecto_con_anemia_o_gasto_es_la_misma_consulta(motor):
+    """S2-09-a: con `efecto` y `cruce`, el motor responde lo mismo con tema anemia o gasto_publico."""
+    from pap.motor import preguntar as P
+    base = {"intencion": "efecto", "territorio": {"texto": "Apurímac"}, "pregunta_original": "x", "idioma": "es"}
+    a, g = (P.preguntar_minima(motor, {**base, "tema": t}) for t in ("anemia", "gasto_publico"))
+    assert a["texto_con_marcadores"] == g["texto_con_marcadores"]
+    assert E.misma_consulta(motor, {"intencion": "efecto", "tema": "anemia", "territorio": {"texto": "Apurímac"}},
+                            {"intencion": "efecto", "tema": "gasto_publico", "territorio": {"texto": "Apurímac"}}, PAR) == []
+    assert E.misma_consulta(motor, {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Apurímac"}},
+                            {"intencion": "nivel_actual", "tema": "gasto_publico", "territorio": {"texto": "Apurímac"}}, PAR) == ["tema"]

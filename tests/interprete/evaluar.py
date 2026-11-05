@@ -128,6 +128,8 @@ def misma_consulta(motor, esperada: dict, producida: dict, par: dict) -> list[st
     """S2-02 §4: intención, tema, periodo y nivel iguales; los lugares, por lo que devuelve `territorio.resolver()`.
     Devuelve los campos que difieren."""
     e, p = _sin_defaults(esperada, par), _sin_defaults(producida, par)
+    if e.get("intencion") in ("efecto", "cruce") and {e.get("tema"), p.get("tema")} <= {"anemia", "gasto_publico"}:
+        p["tema"] = e.get("tema")     # S2-09-a: en efecto y cruce el motor responde lo mismo con anemia o con gasto_publico
     malos = [k for k in ("intencion", "tema", "periodo") if e.get(k) != p.get(k)]
     for k in ("territorio", "comparar_con"):
         if _lugar(motor, e.get(k)) != _lugar(motor, p.get(k)):
@@ -162,7 +164,7 @@ def numeros_nuevos(motor, r: dict, pregunta: str) -> list[str]:
     from test_evaluacion_grabada import numeros_sueltos
     sueltos = numeros_sueltos(r, (r.get("plan") or {}).get("pregunta") or pregunta)
     cm = r.get("consulta_minima") or {}
-    if sueltos and r.get("tipo") in ("respuesta", "no_se_puede") and cm.get("tema"):
+    if sueltos and r.get("tipo") in ("respuesta", "no_se_puede", "aclaracion") and cm.get("tema"):
         try:
             base = P.preguntar_minima(motor, {**cm, "pregunta_original": "consulta de control", "idioma": "es"})
             fijos = set(numeros_sueltos(base, "consulta de control"))
