@@ -78,7 +78,7 @@ def test_limite_por_ip_mensaje_fijo_y_ventana(tmp_path):
     r = cli.post("/api/preguntar", json={"consulta": CONSULTA})
     assert r.status_code == 429
     assert r.json() == {"tipo": "mensaje", "motivo": "espera_un_momento", "texto": TX["mensajes"]["espera_un_momento"], "cifras": {}}
-    assert "Espera un momento" in r.json()["texto"]
+    assert "Espera unos segundos y vuelve a intentar" in r.json()["texto"]          # H-09
     otra = TestClient(app, client=("203.0.113.6", 1000))                 # otra IP no se ve afectada
     assert otra.post("/api/preguntar", json={"consulta": CONSULTA}).status_code == 200
     reloj.avanzar(seconds=PAR["limites"]["ventana_segundos"]["valor"] + 1)

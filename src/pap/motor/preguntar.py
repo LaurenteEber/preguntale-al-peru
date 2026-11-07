@@ -553,7 +553,7 @@ def _resolver(motor, cm: dict, elegir, ofertas: list | None = None):
 # S3-10 (supuesto, reversible): intenciones donde la oferta de X-22 va en «Avisos» (capa 2) y no en «Ojo al leer»: una comparación
 # con dos departamentos a secas lleva dos ofertas, y la evolución de anemia ya llega a 3 «Ojo al leer»; en ambas la capa 1 pasaría de
 # `respuesta.capa1_palabras_max` (125 palabras) y se perdería una advertencia de la cifra.
-_OFERTA_EN_AVISOS = ("comparacion", "evolucion")
+_OFERTA_EN_AVISOS = ("comparacion", "evolucion", "cruce", "efecto")   # cruce y efecto: S3-10 (W-10), la apertura del gasto ocupa la capa 1
 
 
 def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bool = False) -> dict:

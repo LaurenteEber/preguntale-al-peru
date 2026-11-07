@@ -36,7 +36,7 @@
    }
   ],
   "por_defecto": null,
-  "pregunta": "Hay varios lugares llamados «Huancavelica, Huancavelica». ¿Cuál quieres?"
+  "pregunta": "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?"
  },
  "cifras": {},
  "consulta": {
@@ -77,7 +77,7 @@
     }
    ],
    "por_defecto": null,
-   "pregunta": "Hay varios lugares llamados «Huancavelica, Huancavelica». ¿Cuál quieres?"
+   "pregunta": "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?"
   },
   "cifras": [],
   "consulta_minima": {
@@ -167,7 +167,7 @@
     }
    ],
    "por_defecto": null,
-   "pregunta": "Hay varios lugares llamados «Huancavelica, Huancavelica». ¿Cuál quieres?"
+   "pregunta": "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?"
   },
   "cifras": [],
   "consulta_minima": {
@@ -187,7 +187,7 @@
   "tema": null,
   "territorio": null
  },
- "texto": "Hay varios lugares llamados «Huancavelica, Huancavelica». ¿Cuál quieres?\n1) Huancavelica (provincia, departamento de Huancavelica)\n2) Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
+ "texto": "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?\n1) Huancavelica (provincia, departamento de Huancavelica)\n2) Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
  "tipo": "aclaracion",
  "version_biblioteca": {
   "commit_cubo": "779357d",

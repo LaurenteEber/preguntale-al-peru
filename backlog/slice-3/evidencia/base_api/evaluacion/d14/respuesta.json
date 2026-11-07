@@ -42,17 +42,17 @@
    "citas": [
     {
      "id_cifra": "dci_01",
-     "texto": "17,7 % (intervalo: 14,0 % a 21,9 %): niñas y niños menores de 5 años con desnutrición crónica, Amazonas, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "17,7 % (intervalo: 14,0 % a 21,9 %): niñas y niños menores de 5 años con desnutrición crónica, Amazonas, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
      "id_cifra": "dci_03",
-     "texto": "17,0 % (intervalo: 13,8 % a 20,6 %): niñas y niños menores de 5 años con desnutrición crónica, Apurímac, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "17,0 % (intervalo: 13,8 % a 20,6 %): niñas y niños menores de 5 años con desnutrición crónica, Apurímac, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
      "id_cifra": "dci_06",
-     "texto": "17,4 % (intervalo: 13,9 % a 21,4 %): niñas y niños menores de 5 años con desnutrición crónica, Cajamarca, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "17,4 % (intervalo: 13,9 % a 21,4 %): niñas y niños menores de 5 años con desnutrición crónica, Cajamarca, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -62,7 +62,7 @@
     },
     {
      "id_cifra": "dci_13",
-     "texto": "16,9 % (intervalo: 13,3 % a 21,1 %): niñas y niños menores de 5 años con desnutrición crónica, La Libertad, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "16,9 % (intervalo: 13,3 % a 21,1 %): niñas y niños menores de 5 años con desnutrición crónica, La Libertad, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -72,7 +72,7 @@
     },
     {
      "id_cifra": "dci_19",
-     "texto": "15,7 % (intervalo: 11,4 % a 20,8 %): niñas y niños menores de 5 años con desnutrición crónica, Pasco, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "15,7 % (intervalo: 11,4 % a 20,8 %): niñas y niños menores de 5 años con desnutrición crónica, Pasco, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -83,18 +83,18 @@
    ],
    "glosario": [
     {
-     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños.",
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la talla de los niños.",
      "termino": "ENDES"
     }
    ],
    "para_citar": [
-    "17,7 % (intervalo: 14,0 % a 21,9 %): niñas y niños menores de 5 años con desnutrición crónica, Amazonas, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
-    "17,0 % (intervalo: 13,8 % a 20,6 %): niñas y niños menores de 5 años con desnutrición crónica, Apurímac, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
-    "17,4 % (intervalo: 13,9 % a 21,4 %): niñas y niños menores de 5 años con desnutrición crónica, Cajamarca, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "17,7 % (intervalo: 14,0 % a 21,9 %): niñas y niños menores de 5 años con desnutrición crónica, Amazonas, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
+    "17,0 % (intervalo: 13,8 % a 20,6 %): niñas y niños menores de 5 años con desnutrición crónica, Apurímac, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
+    "17,4 % (intervalo: 13,9 % a 21,4 %): niñas y niños menores de 5 años con desnutrición crónica, Cajamarca, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "20,3 % (intervalo del INEI: 15,9 % a 24,7 %): niñas y niños menores de 5 años con desnutrición crónica, Huancavelica, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52).",
-    "16,9 % (intervalo: 13,3 % a 21,1 %): niñas y niños menores de 5 años con desnutrición crónica, La Libertad, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "16,9 % (intervalo: 13,3 % a 21,1 %): niñas y niños menores de 5 años con desnutrición crónica, La Libertad, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "20,8 % (intervalo del INEI: 17,0 % a 24,5 %): niñas y niños menores de 5 años con desnutrición crónica, Loreto, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52).",
-    "15,7 % (intervalo: 11,4 % a 20,8 %): niñas y niños menores de 5 años con desnutrición crónica, Pasco, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "15,7 % (intervalo: 11,4 % a 20,8 %): niñas y niños menores de 5 años con desnutrición crónica, Pasco, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "18,1 % (intervalo del INEI: 14,4 % a 21,7 %): niñas y niños menores de 5 años con desnutrición crónica, Ucayali, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)."
    ]
   }

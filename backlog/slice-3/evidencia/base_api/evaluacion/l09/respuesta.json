@@ -82,7 +82,7 @@
     },
     {
      "id_cifra": "endes_anemia_6_35m_oms2024__proporcion__CALLAO__CALLAO__2025__contexto",
-     "texto": "28,4 % (intervalo: 23,3 % a 33,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "28,4 % (intervalo: 23,3 % a 33,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -111,7 +111,7 @@
    ],
    "para_citar": [
     "7,0 % (intervalo: 6,5 % a 7,6 %): niñas y niños de 6 a 35 meses tamizados con anemia en establecimientos del MINSA y de los gobiernos regionales, Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
-    "28,4 % (intervalo: 23,3 % a 33,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "28,4 % (intervalo: 23,3 % a 33,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "entre 29,7 % y 40,1 %: niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06."
    ]
   }

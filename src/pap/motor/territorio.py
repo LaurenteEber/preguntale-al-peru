@@ -289,7 +289,9 @@ def _resolver_texto(ctx, texto: str, fecha: str | None) -> Resuelto | Aclaracion
         dptos = [f for f in cand if f["nivel"] == "departamento"]
         if _cfg(ctx)["depto_a_secas"] and len(partes) == 1 and partes[0][1] is None and len(dptos) == 1:
             return _resuelto(ctx, dptos[0])                # X-22: el nombre a secas de un departamento se responde como departamento
-        return _preguntar(ctx, "homonimo_niveles" if len(niveles) > 1 else "homonimo_mismo_nivel", cand, texto.strip())
+        nombres = {f["nombre_mostrado"] for f in cand}      # S3-10 (H-10): «Ayaviri», no «distrito Ayaviri» (y con tildes, T-02)
+        nombre = nombres.pop() if len(nombres) == 1 else texto.strip()
+        return _preguntar(ctx, "homonimo_niveles" if len(niveles) > 1 else "homonimo_mismo_nivel", cand, nombre)
     parcial = _buscar(ctx, partes, fecha, "parcial")
     if parcial:
         return _preguntar(ctx, "coincidencia_parcial", parcial, texto.strip())

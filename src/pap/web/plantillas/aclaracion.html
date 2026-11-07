@@ -17,7 +17,7 @@
 <input type="hidden" name="elegir" value="{{ elegir }}">
 <ul class="opciones" aria-labelledby="pregunta">
 {% for o in a.opciones %}
-<li><button type="submit" name="n" value="{{ o.n }}" data-buscando="{{ p.buscando }}">{{ o.etiqueta }}</button></li>
+<li><button type="submit" name="n" value="{{ o.n }}" data-buscando="{{ p.buscando }} {{ o.etiqueta }}">{{ o.etiqueta }}</button></li>
 {% endfor %}
 </ul>
 </form>

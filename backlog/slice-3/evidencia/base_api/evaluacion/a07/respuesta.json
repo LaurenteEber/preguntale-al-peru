@@ -41,18 +41,18 @@
    "citas": [
     {
      "id_cifra": "endes_dci_menores_5__proporcion__departamento__05__2025__principal",
-     "texto": "14,9 % (intervalo: 12,4 % a 17,8 %): niñas y niños menores de 5 años con desnutrición crónica, Ayacucho, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "14,9 % (intervalo: 12,4 % a 17,8 %): niñas y niños menores de 5 años con desnutrición crónica, Ayacucho, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
      "id_cifra": "endes_dci_menores_5__proporcion__departamento__05__2015__contexto",
-     "texto": "21,6 % (intervalo: 18,3 % a 25,3 %): niñas y niños menores de 5 años con desnutrición crónica, Ayacucho, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI).",
+     "texto": "21,6 % (intervalo: 18,3 % a 25,3 %): niñas y niños menores de 5 años con desnutrición crónica, Ayacucho, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     }
    ],
    "glosario": [
     {
-     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños.",
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la talla de los niños.",
      "termino": "ENDES"
     },
     {
@@ -61,8 +61,8 @@
     }
    ],
    "para_citar": [
-    "14,9 % (intervalo: 12,4 % a 17,8 %): niñas y niños menores de 5 años con desnutrición crónica, Ayacucho, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
-    "21,6 % (intervalo: 18,3 % a 25,3 %): niñas y niños menores de 5 años con desnutrición crónica, Ayacucho, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI)."
+    "14,9 % (intervalo: 12,4 % a 17,8 %): niñas y niños menores de 5 años con desnutrición crónica, Ayacucho, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
+    "21,6 % (intervalo: 18,3 % a 25,3 %): niñas y niños menores de 5 años con desnutrición crónica, Ayacucho, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos."
    ]
   }
  },

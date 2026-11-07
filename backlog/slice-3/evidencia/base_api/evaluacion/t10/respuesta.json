@@ -35,18 +35,18 @@
    "citas": [
     {
      "id_cifra": "endes_dci_menores_5__proporcion__departamento__02__2024__principal",
-     "texto": "13,5 % (intervalo: 10,8 % a 16,6 %): niñas y niños menores de 5 años con desnutrición crónica, Áncash, 2024. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2024 (INEI).",
+     "texto": "13,5 % (intervalo: 10,8 % a 16,6 %): niñas y niños menores de 5 años con desnutrición crónica, Áncash, 2024. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2024 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     }
    ],
    "glosario": [
     {
-     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños.",
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la talla de los niños.",
      "termino": "ENDES"
     }
    ],
    "para_citar": [
-    "13,5 % (intervalo: 10,8 % a 16,6 %): niñas y niños menores de 5 años con desnutrición crónica, Áncash, 2024. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2024 (INEI)."
+    "13,5 % (intervalo: 10,8 % a 16,6 %): niñas y niños menores de 5 años con desnutrición crónica, Áncash, 2024. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2024 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos."
    ]
   }
  },

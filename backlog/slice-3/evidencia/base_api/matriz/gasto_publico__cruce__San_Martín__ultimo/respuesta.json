@@ -18,7 +18,7 @@
     "ids": [
      "gasto_ex_pan__devengado__departamento__22__2025__principal"
     ],
-    "texto": "en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en San Martín (MEF 2025).",
+    "texto": "en 2025, registrado por unidades ejecutoras con sede en San Martín (MEF 2025).",
     "valor": "S/ 70,7 millones"
    },
    "confianza": {
@@ -29,14 +29,14 @@
    "ojo_al_leer": [
     "No concluyas que una cifra explica la otra: se muestran juntas, no se comparan."
    ],
-   "palabras": 99,
+   "palabras": 115,
    "que_hacer": {
     "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
     "revisado_dueno": false,
     "texto": "Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6 meses.",
     "url": "https://www.gob.pe/69889-que-es-la-anemia-prevencion"
    },
-   "respuesta_corta": "La cifra clave es el gasto en servicios de salud y nutrición infantil. La de la anemia en niñas y niños de 6 a 35 meses del mismo lugar está en «Más contexto». No muestran si una causa la otra. Esto es lo que se gastó en el departamento:"
+   "respuesta_corta": "La cifra clave es el gasto. La de la anemia en niñas y niños de 6 a 35 meses del mismo lugar está en «Más contexto». No muestran si una causa la otra. Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en San Martín. Esto es lo que se gastó en el departamento:"
   },
   "capa2": {
    "avisos": [
@@ -51,8 +51,8 @@
    "mas_contexto": [
     {
      "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave.",
-     "texto": "En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en San Martín: entre 55 % y 65 % (SIEN 2025, INS).",
-     "titulo": "Niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) (San Martín)"
+     "texto": "En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a entre 55 % y 65 % de los niños de 6 a 35 meses del departamento de San Martín (SIEN 2025, INS).",
+     "titulo": "Cuántos se midieron la hemoglobina (San Martín)"
     },
     {
      "etiqueta": "Otra fuente: se muestra junto, no explica la cifra clave.",
@@ -61,7 +61,7 @@
     },
     {
      "etiqueta": "Otro año: no se suma ni se compara con la cifra clave.",
-     "texto": "En 2024, el gasto fue S/ 91,4 millones, registrado por unidades ejecutoras con sede en San Martín (MEF 2024): el mismo año con el que se compara la anemia.",
+     "texto": "Para comparar con la anemia de 2024: S/ 91,4 millones (en soles de 2025), registrado por unidades ejecutoras con sede en San Martín (MEF 2024).",
      "titulo": "Gasto en San Martín en 2024"
     }
    ]
@@ -80,7 +80,7 @@
     },
     {
      "id_cifra": "endes_anemia_6_35m_oms2024__proporcion__departamento__22__2025__principal",
-     "texto": "41,3 % (intervalo: 36,8 % a 45,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), San Martín, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "41,3 % (intervalo: 36,8 % a 45,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), San Martín, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -114,7 +114,7 @@
    "para_citar": [
     "S/ 70,7 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), San Martín, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
     "entre 54,9 % y 64,6 %: niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100), San Martín, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
-    "41,3 % (intervalo: 36,8 % a 45,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), San Martín, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "41,3 % (intervalo: 36,8 % a 45,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), San Martín, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "S/ 91,4 millones en soles de 2025 (monto registrado en 2024: S/ 90,1 millones; factor de inflación: 1,0150108): gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), San Martín, 2024. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2024."
    ]
   }
@@ -820,19 +820,6 @@
  "corrector": [
   {
    "accion": "rotular",
-   "clausula": "dígitos fuera de marcadores (salvo años y programas listados)",
-   "detalle": {
-    "numeros": [
-     "100"
-    ]
-   },
-   "modo": "corrector",
-   "motivo": "numero_fuera_de_marcador",
-   "objetivo": "respuesta",
-   "regla": "R-LENGUAJE-03"
-  },
-  {
-   "accion": "rotular",
    "clausula": "párrafo con >= 2 naturaleza_dato",
    "detalle": {
     "naturalezas": [
@@ -853,11 +840,11 @@
     "fallas": [
      {
       "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
-      "oracion": "{{p:no_concluir_cruce}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en San Martín: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__22__2025__contexto}} (SIEN 2025, INS)."
+      "oracion": "{{p:no_concluir_cruce}} En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__22__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS)."
      },
      {
       "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
-      "oracion": "En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__22__2024__contexto}}, registrado por unidades ejecutoras con sede en San Martín (MEF 2024): el mismo año con el que se compara la anemia."
+      "oracion": "Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__22__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en San Martín (MEF 2024)."
      }
     ]
    },
@@ -1136,19 +1123,6 @@
   },
   {
    "accion": "rotular",
-   "clausula": "dígitos fuera de marcadores (salvo años y programas listados)",
-   "detalle": {
-    "numeros": [
-     "100"
-    ]
-   },
-   "modo": "corrector",
-   "motivo": "numero_fuera_de_marcador",
-   "objetivo": "respuesta",
-   "regla": "R-LENGUAJE-03"
-  },
-  {
-   "accion": "rotular",
    "clausula": "párrafo con >= 2 naturaleza_dato",
    "detalle": {
     "naturalezas": [
@@ -1169,11 +1143,11 @@
     "fallas": [
      {
       "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
-      "oracion": "{{p:no_concluir_cruce}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en San Martín: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__22__2025__contexto}} (SIEN 2025, INS)."
+      "oracion": "{{p:no_concluir_cruce}} En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__22__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS)."
      },
      {
       "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
-      "oracion": "En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__22__2024__contexto}}, registrado por unidades ejecutoras con sede en San Martín (MEF 2024): el mismo año con el que se compara la anemia."
+      "oracion": "Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__22__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en San Martín (MEF 2024)."
      }
     ]
    },
@@ -1202,8 +1176,8 @@
   }
  ],
  "semaforo_respuesta": "verde",
- "texto": "La cifra clave es el gasto en servicios de salud y nutrición infantil. La de la anemia en niñas y niños de 6 a 35 meses del mismo lugar está en «Más contexto». No muestran si una causa la otra. Esto es lo que se gastó en el departamento: S/ 70,7 millones en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en San Martín (MEF 2025). No concluyas que una cifra explica la otra: se muestran juntas, no se comparan. En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en San Martín: entre 55 % y 65 % (SIEN 2025, INS). Para San Martín se estima que 41,3 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en San Martín, la anemia se mantuvo sin cambio estadísticamente claro. En 2024, el gasto fue S/ 91,4 millones, registrado por unidades ejecutoras con sede en San Martín (MEF 2024): el mismo año con el que se compara la anemia.",
- "texto_con_marcadores": "La cifra clave es el gasto en servicios de salud y nutrición infantil. La de la anemia en niñas y niños de 6 a 35 meses del mismo lugar está en «Más contexto». No muestran si una causa la otra. Esto es lo que se gastó en el departamento: {{c:gasto_ex_pan__devengado__departamento__22__2025__principal}} en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en San Martín (MEF 2025). {{p:no_concluir_cruce}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en San Martín: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__22__2025__contexto}} (SIEN 2025, INS). Para San Martín se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__22__2025__principal}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en San Martín, la anemia {{v:endes_anemia_6_35m_oms2024__proporcion__departamento__22__2025__principal}}. En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__22__2024__contexto}}, registrado por unidades ejecutoras con sede en San Martín (MEF 2024): el mismo año con el que se compara la anemia.",
+ "texto": "La cifra clave es el gasto. La de la anemia en niñas y niños de 6 a 35 meses del mismo lugar está en «Más contexto». No muestran si una causa la otra. Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en San Martín. Esto es lo que se gastó en el departamento: S/ 70,7 millones en 2025, registrado por unidades ejecutoras con sede en San Martín (MEF 2025). No concluyas que una cifra explica la otra: se muestran juntas, no se comparan. En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a entre 55 % y 65 % de los niños de 6 a 35 meses del departamento de San Martín (SIEN 2025, INS). Para San Martín se estima que 41,3 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en San Martín, la anemia se mantuvo sin cambio estadísticamente claro. Para comparar con la anemia de 2024: S/ 91,4 millones (en soles de 2025), registrado por unidades ejecutoras con sede en San Martín (MEF 2024).",
+ "texto_con_marcadores": "La cifra clave es el gasto. La de la anemia en niñas y niños de 6 a 35 meses del mismo lugar está en «Más contexto». No muestran si una causa la otra. Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en San Martín. Esto es lo que se gastó en el departamento: {{c:gasto_ex_pan__devengado__departamento__22__2025__principal}} en 2025, registrado por unidades ejecutoras con sede en San Martín (MEF 2025). {{p:no_concluir_cruce}} En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__22__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS). Para San Martín se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__22__2025__principal}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en San Martín, la anemia {{v:endes_anemia_6_35m_oms2024__proporcion__departamento__22__2025__principal}}. Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__22__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en San Martín (MEF 2024).",
  "tipo": "respuesta",
  "version_biblioteca": {
   "commit_cubo": "779357d",

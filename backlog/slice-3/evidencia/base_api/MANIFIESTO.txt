@@ -1,5 +1,5 @@
 Base de la web (S3-02, tarea 4). La genera backlog/slice-3/evidencia/s3-02_generar_base.py.
-commit: 752ddc378a153ed65b728267543a2b3c0b9a719f
-cambios sin commit en el resto del árbol: 11 archivos
+commit: f1e376996db871b17de7daa4cdf1fd7c8929bbaf
+cambios sin commit en el resto del árbol: 23 archivos
 casos: q=5 matriz=60 evaluacion=158
 archivos (sin este): 446

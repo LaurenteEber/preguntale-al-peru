@@ -39,8 +39,8 @@ def montar(app: FastAPI, raiz, tx: dict, par: dict, resolver, rotulo_version, op
                                                       maxlen=par["pregunta"]["texto_max_caracteres"]["valor"], **ctx)
         return HTMLResponse(html, status_code=estado, headers=cabeceras)
 
-    def aviso(bloque: str, texto: str, estado: int, guiado: bool = False, caja: bool = True) -> Response:
-        return pagina("aviso.html", estado, bloque=bloque, texto=texto, guiado=guiado, con_caja=caja)      # `con_caja`: `caja` es el macro de _macros.html
+    def aviso(bloque: str, texto: str, estado: int, guiado: bool = False, caja: bool = True, valor: str = "") -> Response:
+        return pagina("aviso.html", estado, bloque=bloque, texto=texto, guiado=guiado, con_caja=caja, valor=valor)      # `valor`: lo escrito, que vuelve a la caja (H-09)      # `con_caja`: `caja` es el macro de _macros.html
 
     def numeros(previo: str, n: str | None) -> list | None:
         """`elegir` acumulado: lo que ya había más el botón pulsado. None si algo no es un número chico."""
@@ -51,7 +51,9 @@ def montar(app: FastAPI, raiz, tx: dict, par: dict, resolver, rotulo_version, op
             return None
         return [int(t) for t in trozos]
 
-    def atender(datos: dict) -> Response:
+    def atender(datos: dict, al_esperar=None, al_no_encontrar=None) -> Response:
+        """`al_esperar` y `al_no_encontrar` (opcionales, del formulario guiado): devuelven la página que reemplaza al aviso de límite (H-09)
+        y a la aclaración sin opciones «no encontramos ese lugar» (H-08). Lo escrito solo se devuelve en la respuesta, nunca se guarda (P-03)."""
         texto, consulta, previo, n = datos.get("texto"), datos.get("consulta"), datos.get("elegir", ""), datos.get("n")
         invalido = [v for v in (texto, consulta, previo, n) if v is not None and not isinstance(v, str)]
         lista = None if invalido else numeros(previo, n)
@@ -74,12 +76,17 @@ def montar(app: FastAPI, raiz, tx: dict, par: dict, resolver, rotulo_version, op
         if tipo in ("respuesta", "no_se_puede"):
             return pagina("respuesta.html", estado, res=res, rotulo_version=rotulo_version())
         if tipo == "aclaracion":
+            if al_no_encontrar and not res["aclaracion"]["opciones"] and res["aclaracion"].get("motivo") == "sin_coincidencia":
+                return al_no_encontrar()
             return pagina("aclaracion.html", estado, a=res["aclaracion"], texto=texto, consulta=consulta,
                           elegir=",".join(map(str, lista)))
         if tipo == "mensaje":
             motivo = res.get("motivo")
+            if motivo == "espera_un_momento" and al_esperar:
+                return al_esperar(estado)
             return aviso("mensaje", tx["mensajes"].get(motivo) or tx["mensajes"]["otro"], estado,
-                         guiado=motivo in pg["mensajes_con_enlace_guiado"]["valor"], caja=motivo != "tope_diario")      # S3-07: el aviso ya lleva el enlace
+                         guiado=motivo in pg["mensajes_con_enlace_guiado"]["valor"], caja=motivo != "tope_diario",
+                         valor=texto if motivo == "espera_un_momento" and texto else "")      # S3-07: el aviso ya lleva el enlace
         if tipo == "error":
             return aviso("error", res["texto"], estado)
         return aviso("error", tx["errores"]["error_interno"], 500)

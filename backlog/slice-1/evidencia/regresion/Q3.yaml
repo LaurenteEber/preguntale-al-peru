@@ -100,8 +100,8 @@
   aprobado_por: agente
 - capa: capa2.mas_contexto[4].texto
   antes: ''
-  despues: 'En 2024, el gasto fue S/ 264,6 millones, registrado por unidades ejecutoras con sede en Lima Metropolitana (MEF 2024): el mismo año con el que se compara la anemia.'
-  motivo: 'S3-01b punto 2 (H-B), aprobado por el dueño el 6/11/2026 (R-GASTO-12, X-03): la tarjeta del gasto de 2024 va en soles de 2025 y la cita trae el monto nominal de 2024; antes mostraba 2024 en soles de 2024 junto a 2025.'
+  despues: 'Para comparar con la anemia de 2024: S/ 264,6 millones (en soles de 2025), registrado por unidades ejecutoras con sede en Lima Metropolitana (MEF 2024).'
+  motivo: 'S3-01b punto 2 (H-B), aprobado por el dueño el 6/11/2026 (R-GASTO-12, X-03): la tarjeta del gasto de 2024 va en soles de 2025 y la cita trae el monto nominal de 2024; antes mostraba 2024 en soles de 2024 junto a 2025. S3-10 (H-05), aprobado por el dueño el 7/11/2026: la tarjeta abre con «Para comparar con la anemia de 2024:» y dice «(en soles de 2025)»; la cifra no cambia.'
   aprobado_por: dueño
 - capa: capa3.citas[3].url
   antes: ''

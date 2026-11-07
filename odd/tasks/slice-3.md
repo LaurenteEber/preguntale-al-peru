@@ -13,6 +13,8 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 - S4 (L8): S3-01b = the 14 points of L8, verbatim in `backlog/slice-3/S3-01b-correcciones-motor.md`; type C points are asked to the owner, never applied without an answer.
 - S5 (L8): «No corras `pap construir`, no toques biblioteca/cruda/ y no borres nada fuera de salidas/.» Key: «Nunca la imprimas ni la escribas en archivos.» «Antes de cada commit: `test_sin_secretos` en verde y el grep del prefijo de las claves de Anthropic y de la cabecera de la clave vacío.» «Al terminar cada historia: commit con su ID y `git push origin slice-3:claude/determined-einstein-lwwemc`.»
 - S6 (L8): order «S3-04 → S3-05 → S3-07 → S3-09 → S3-06 → S3-08 → S3-10 → S3-11, según su backlog. En S3-10, las 10 preguntas por texto en vivo con el tope de costo.»
+- S8 (L14, owner 2026-11-07, motor texts): W-10 «Sí, mismos textos» (u13 gasto scope opening also in efecto and cruce; Q3 capa 1 approved as dueño); H-04 «Abrir con «Cuántos se midieron la hemoglobina:»»; H-05 «Para comparar con la anemia de 2024: … (en soles de 2025)»; H-06 «El glosario muestra solo los términos que corresponden al tema de la respuesta»; H-07 «Agregar «no hay tabla publicada con esta cifra; se calcula de microdatos». No cambia el enlace.»
+- S9 (L14, web): H-03 «No se muestra hasta que apruebes X-01; el JSON y la CLI no cambian»; H-08, H-09, H-10, H-14 as proposed in `backlog/slice-3/evidencia/revision_usuario_s3.md` (type A/B).
 - S7 (L8) close: «Corre la suite completa, la regresión Q1–Q4, la matriz completa, la evaluación con grabaciones y scripts/comprobar_enlaces.sh; todo va a evidencia/.» «Sube la rama y abre el PR hacia main con `gh pr create`. No uses --force.» «Detente y avísame. La fusión y la etiqueta `slice-3-cerrado` se hacen solo cuando yo escriba «fusiona», después de la supervisión.»
 
 ## Tasks
@@ -37,6 +39,10 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T7 S3-06 | S6 | writer | done: 1211 passed, 1 skipped (screenshots only) | (S3-06 commit) |
 | T9 S3-08 | S6 | writer in worktree ../pap-s3-08 (parallel) | done: 1211 passed; live ≈ US$ 0.12 | (S3-08 commit) |
 | T10 S3-10 | S6, L12–L13 | reviewer subagent + fix writer | in progress: review «apto con observaciones»; H-01 fixed (B), H-02 broken phrase fixed (A), H-02 scope → W-10 (C); task 3 (failed questions into E-04) and owner phone test pending | |
+| T10a S3-10 motor texts | S8 | inline (writer launch refused: task id format) | done: tests/test_s3_10_textos_motor.py 21 passed; regresión 9 passed (Q1, Q3 dueño); W-10 local exception per L15 | (S3-10 fixes commit) |
+| T10b S3-10 web fixes | S9 | writer (context backstop) | done: tests/web 169 passed before base regeneration | (S3-10 fixes commit) |
+| T10c S3-10 task 3 eval set + recordings | S6, L12 | inline after T10a/b | pending | |
+| T10d owner phone test | L13, L14 | owner | pending | |
 | T11 | S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 
 ## Log
@@ -54,3 +60,5 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 - L11 (2026-11-06, owner before 3h away): u13 approved as proposed; pd02 expects aclaración; publish release biblioteca-010ea965 (done); continue S3-04→05→07→09→06→08, commit+push per story, stop before S3-10. «durante las siguientes 3 horas, continua con la implementación y no me pidas permisos en la TUI»: granted playwright+axe-core dev deps and Chromium, local Docker build/run, live LLM ≤ US$ 1 total for S3-07/S3-08, regenerate evidence folders via their scripts.
 - L12 (2026-11-06, owner, S3-10): live cap «US$ 0,50»; findings «Corrijo A/B; C te pregunto»; phone «No, solo el revisor»; W-01 tag «No, la subo yo».
 - L13 (2026-11-06, owner): «Sí, la prueba en celular lo probamos mañana.» → S3-10 proceeds now with the Playwright reviewer; owner phone test (pap servir --red-local) scheduled for 2026-11-07, before closing the slice.
+- L14 (2026-11-07, owner): W-10 «Sí, mismos textos (Recomendado)»; H-03 «Ocultarlo en la web (Recomendado)»; medios del motor: H-04 y H-05, H-06, H-07 selected; web H-08/H-09/H-10/H-14 fixed anyway; celular «Al final, después de los arreglos».
+- L15 (2026-11-07, owner): W-10 with the same texts exceeds R-04 125 words in provincia/distrito (up to 141) → «Sin apertura en provincia y distrito (Recomendado)».

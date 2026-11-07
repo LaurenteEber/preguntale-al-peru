@@ -19,6 +19,7 @@ paginas:                             # S3-04
     valor: "default-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
     decision: "S3-04 tarea 2: `default-src 'self'`, sin orígenes externos"
     supuesto: "S3-04-a (las tres directivas siguientes: las páginas solo envían formularios a sí mismas, no se incrustan y no usan <base>)"
+  mostrar_que_hacer_sin_revisar: {valor: false, decision: "dueño 7/11/2026 (H-03): «¿Qué puedo hacer?» no se muestra en la web hasta que apruebe X-01 (revisado_dueno: true); el JSON y la CLI no cambian"}
   mensajes_con_enlace_guiado: {valor: [no_disponible, tope_diario], supuesto: S3-04-b, nota: "motivos de `mensaje` que llevan el enlace a /guiado (S3-04 tarea 6); S3-07 confirma `tope_diario` como el motivo del tope diario"}
 guiado:                              # S3-05
   intenciones:

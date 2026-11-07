@@ -17,6 +17,7 @@ efecto:
 cruce:
   # S1-14 (H9): la capa 1 trae una sola cifra clave (R-04); la otra cifra del cruce va en «Más contexto»
   corta: ["La cifra clave es {sujeto_a}. La de {sujeto_b} del mismo lugar está en «Más contexto». No muestran si una causa la otra."]
+  corta_con_apertura: ["La cifra clave es el gasto. La de {sujeto_b} del mismo lugar está en «Más contexto». No muestran si una causa la otra."]   # S3-10 (W-10): la apertura dice qué gasto es
   etiqueta_otra_cifra: "Otra fuente: se muestra junto, no explica la cifra clave."   # S1-14 (H9): solo en cruce
   corta_cifra: "Esto es lo que se gastó {nivel_en}:"
   ojo: ["{{p:no_concluir_cruce}}"]
@@ -32,6 +33,10 @@ tarjetas:
     sin_nivel_fino: " La encuesta no da cifras por {nivel_palabra}."
   mismo_anio:                     # X-03: el gasto del mismo año que la cifra comparada
     titulo: "Gasto en {lugar} en {anio}"
+    texto_constantes: "Para comparar con la anemia de {anio}: {c} (en soles de {anio_base}), registrado por unidades ejecutoras con sede en {lugar} ({fuente})."   # S3-10 (H-05, dueño 7/11/2026)
     texto: "En {anio}, el gasto fue {c}, registrado por unidades ejecutoras con sede en {lugar} ({fuente}): el mismo año con el que se compara la anemia."   # S3-01-a: lleva la base ejecutora que exige R-LENGUAJE-02 (estructural)
     etiqueta: "Otro año: no se suma ni se compara con la cifra clave."
+  cobertura:                      # S3-10 (H-04, dueño 7/11/2026): la medición de hemoglobina sin registro local; no es la anemia
+    titulo: "Cuántos se midieron la hemoglobina ({lugar})"
+    texto: "En {anio}, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {c} de {{u:ninos_region}} ({fuente})."
 etiqueta_otro_territorio: "Otro territorio: no se suma ni se compara con la cifra clave."

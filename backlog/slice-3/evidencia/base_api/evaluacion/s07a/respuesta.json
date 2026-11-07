@@ -16,15 +16,16 @@
     "texto": "Confianza en los datos: media. La respuesta es parcial."
    },
    "ojo_al_leer": [
-    "Respondimos por el departamento de Huancavelica. Si buscabas la provincia o el distrito de Huancavelica, pregúntalo así: «provincia de Huancavelica» o «distrito de Huancavelica».",
     "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
    ],
-   "palabras": 96,
+   "palabras": 72,
    "que_hacer": null,
    "respuesta_corta": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2025, en Huancavelica, la desnutrición crónica en niñas y niños menores de 5 años fue:"
   },
   "capa2": {
-   "avisos": [],
+   "avisos": [
+    "Respondimos por el departamento de Huancavelica. Si buscabas la provincia o el distrito de Huancavelica, pregúntalo así: «provincia de Huancavelica» o «distrito de Huancavelica»."
+   ],
    "limites": [
     "Datos de: ENDES 2025 (INEI)",
     "Territorio: departamento de Huancavelica",
@@ -48,7 +49,7 @@
    ],
    "glosario": [
     {
-     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños.",
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la talla de los niños.",
      "termino": "ENDES"
     }
    ],

@@ -70,7 +70,7 @@
 {% if c1.confianza and c1.confianza.texto %}
 <p data-bloque="confianza" class="confianza">{{ c1.confianza.texto }}</p>
 {% endif %}
-{% if c1.que_hacer %}
+{% if c1.que_hacer and (c1.que_hacer.revisado_dueno or par.paginas.mostrar_que_hacer_sin_revisar.valor) %}
 <section data-bloque="que_hacer">
 <h2>{{ rot.que_hacer }}{% if not c1.que_hacer.revisado_dueno %} <small>{{ rot.texto_pendiente }}</small>{% endif %}</h2>
 <p>{{ c1.que_hacer.texto }}</p>

@@ -85,6 +85,8 @@ def _cita(c, alcance: str | None = None, nombre: str | None = None, tx: dict | N
         src = f"Pregúntale al Perú, cálculo propio con {sig} {c.anio}" + (f" ({ent})" if ent and ent not in sig else "")
         if c.get("fecha_descarga"):
             src += f", datos descargados el {c.fecha_descarga}"
+        if not o and tx and c.get("naturaleza_dato") in (tx.get("sin_tabla_naturaleza") or []):   # S3-10 (H-07)
+            src += tx["sin_tabla_publicada"]
     nom = c.nombre_ciudadano[0].lower() + c.nombre_ciudadano[1:] if c.nombre_ciudadano else c.indicador_id
     al = f" ({alcance})" if alcance else ""
     valor = _valor_cita(c)
@@ -181,9 +183,10 @@ def construir(motor, consulta: dict, borrador: dict, cifras: dict, ficha: dict, 
     citar = [_cita(cifras[i], (b.get("alcance") or {}).get(i), largos.get(f"{cifras[i].nivel}:{cifras[i].territorio_id}"), tx) for i in usados]
     citas = [{"texto": t, "url": _url(motor, cifras[i]), "id_cifra": i} for t, i in zip(citar, usados)]    # S3-01: cada cita con su enlace
     glos = (_textos(raiz, "glosario.yaml").get("terminos") or {})
-    glosario = [glos[k] for k in b.get("glosario") or [] if k in glos]
-    qh = None
     tema = b.get("tema")
+    glosario = [{"termino": glos[k]["termino"], "definicion": (glos[k].get("por_tema") or {}).get(tema, glos[k]["definicion"])}
+                for k in b.get("glosario") or [] if k in glos]       # S3-10 (H-06): la definición según el tema
+    qh = None
     if tema:
         t = (_textos(raiz, "que_hacer.yaml").get("temas") or {}).get(tema)
         if t:

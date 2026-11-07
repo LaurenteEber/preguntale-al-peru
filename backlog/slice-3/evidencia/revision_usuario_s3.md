@@ -113,3 +113,22 @@ Hechas tras la revisión (S3-10, tarea 2), solo las partes tipo A/B. Lo que qued
 - Evaluación del intérprete (solo grabaciones): cumple todos los umbrales.
 
 Suite completa en el Mac antes del commit parcial de S3-10: 1223 passed, 1 skipped in 880.14s (0:14:40).
+
+## Correcciones tras las decisiones del dueño (7/11/2026)
+
+Decisiones en `consultas_al_dueno.md` (W-10, W-11) y en el Log L14 de `odd/tasks/slice-3.md`.
+
+| Hallazgo | Antes | Después | Dónde |
+|---|---|---|---|
+| H-02 / W-10 (motor) | En efecto y cruce, el gasto salía sin decir qué cubre | Departamento, ámbitos de Lima, Callao y Perú abren con el texto de u13 («Esta cifra no es solo de anemia…»). Provincia y distrito sin apertura: su frase ya dice «solo de la municipalidad y de obras ubicadas…» (dueño: tope de 125 palabras) | `bloques.yaml` (anclas `apertura_gasto`), `cruce_efecto.yaml`, `plantillas.py` → `cruce_efecto` |
+| H-04 (motor) | «Niñas y niños de 6 a 35 meses con al menos una medición… (de cada 100) (Puno)» | «Cuántos se midieron la hemoglobina (Puno)»: «En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a entre 39,8 % y 50,5 % de los niños de 6 a 35 meses del departamento…» | `cruce_efecto.yaml` → `tarjetas.cobertura` |
+| H-05 (motor) | «En 2024, el gasto fue S/ 121,9 millones…: el mismo año con el que se compara la anemia.» | «Para comparar con la anemia de 2024: S/ 121,9 millones (en soles de 2025), registrado por unidades ejecutoras con sede en Puno (MEF 2024).» (solo si la cifra está en soles constantes) | `cruce_efecto.yaml` → `tarjetas.mismo_anio.texto_constantes` |
+| H-06 (motor) | ENDES «mide la hemoglobina» también en desnutrición; «cambio estadísticamente claro» también en el gasto | ENDES según el tema; «cambio estadísticamente claro» solo si el verbo es de una cifra de encuesta o de modelo | `glosario.yaml`, `capas.py`, `plantillas.py` → `cierre` |
+| H-07 (motor) | «Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI).» | «…; no hay tabla publicada con esta cifra; se calcula de microdatos.» Solo encuestas, sin cuadro oficial; el enlace no cambia | `capas.yaml` → `sin_tabla_publicada`, `capas.py` → `_cita` |
+| H-10 (motor) | «Hay varios lugares llamados «distrito Ayaviri»» | «Hay varios lugares llamados «Ayaviri»» (el nombre oficial, con tildes, si todos los candidatos lo comparten) | `territorio.py` |
+| H-03 (web) | «¿Qué puedo hacer? (texto pendiente de revisión)» visible | Oculto en la web mientras X-01 no esté aprobada; el JSON y la CLI no cambian | `curados/web/parametros.yaml` → `paginas.mostrar_que_hacer_sin_revisar`, `respuesta.html` |
+| H-08 (web) | «No encontramos ese lugar» y un enlace al mismo formulario | Vuelve al paso 2 con tema e intención, lugar vacío y «No encontramos «Cuzko». Revisa cómo está escrito…» | `guiado.py`, `paginas.py`, `curados/web/textos.yaml` |
+| H-09 (web) | «Espera un momento.» con la caja vacía | «Espera unos segundos y vuelve a intentar.», con lo escrito (o los campos del formulario) conservado; la pregunta no se registra | `app.py`, `paginas.py`, `_macros.html`, `aviso.html`, `textos.yaml` |
+| H-14 (web) | La opción tocada quedaba «Buscando…» | «Buscando… Huancavelica (departamento)» | `aclaracion.html` |
+
+**Pruebas.** `tests/test_s3_10_textos_motor.py` (21 casos) y `tests/web/test_s3_10_web.py`. Cada regla nueva se vio fallar antes de su arreglo. La regresión Q1–Q4 aprueba como «dueño» la cita de Q1 (H-07) y la tarjeta de 2024 de Q3 (H-05). Q3 es de distrito y no lleva la apertura. No cambia ninguna cifra, semáforo ni confianza. Base web regenerada (`s3-02_generar_base.py`): 52 respuestas cambian de texto, con las mismas cifras, semáforo, confianza y tipo.

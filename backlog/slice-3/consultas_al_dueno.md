@@ -42,11 +42,13 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 - **Qué pasa:** el límite por IP usa la IP que ve la aplicación. En la red de la casa es la del celular. Detrás de un proxy o un balanceador (slice 4) sería la del proxy, y el límite se aplicaría a todos juntos.
 - **Propuesta:** con el despliegue, lanzar uvicorn con las cabeceras de proxy del servidor de confianza. Hoy no aplica (P-05).
 
-### W-10 — H-02 (S3-10): el gasto en «¿sirvió?» y en cruces, sin el aviso de alcance de u13 · pendiente del dueño (no bloquea)
+### W-10 — H-02 (S3-10): el gasto en «¿sirvió?» y en cruces, sin el aviso de alcance de u13 · cerrada: aprobada por el dueño el 7/11/2026 y aplicada
 - **Qué pasa:** u13 se aprobó para el gasto de «¿cuánto hay hoy?». En «efecto» y «cruce» (w17: «¿El gasto sirvió en Lima Metropolitana?») la cifra de S/ 260,6 millones sale sin decir antes que no es solo anemia ni que no incluye a las entidades nacionales con sede en Lima. El revisor lo clasificó alto. La frase rota «lo gastado :» ya se corrigió («lo gastado en Lima Metropolitana:»).
 - **Propuesta:** extender la apertura de u13 a las respuestas de efecto y cruce con gasto, con los mismos textos. Cambia la capa 1 de Q3; se aprobaría como «dueño» en la regresión.
+- **Respuesta del dueño (7/11/2026):** «Sí, mismos textos». Con los mismos textos, en provincia y distrito la capa 1 pasaba de 125 palabras (tope de R-04: hasta 141). El dueño eligió entonces: **sin apertura en provincia y distrito**, donde la frase de la cifra ya dice «solo de la municipalidad y de obras ubicadas…».
+- **Aplicado:** la apertura va en efecto y cruce para departamento, ámbitos de Lima, Callao y Perú. Para entrar en el tope, en esos casos la frase de la cifra no repite «servicios de salud y nutrición infantil» (lo dice la apertura), el cruce dice «La cifra clave es el gasto.» y la oferta de X-22 va primero en «Avisos» (supuesto S3-10-a). Barrido de 72 respuestas de efecto y cruce: máximo 125 palabras. Q3 (distrito) no lleva la apertura.
 
-### W-11 — Hallazgos medios de la revisión S3-10 · para tu revisión (no bloquean)
+### W-11 — Hallazgos medios de la revisión S3-10 · aplicados (dueño, 7/11/2026), salvo lo que se indica
 Detalle y capturas en `evidencia/revision_usuario_s3.md`:
 - H-03: «¿Qué puedo hacer?» pendiente de revisión se ve en público (X-01).
 - H-04: la tarjeta de cobertura de hemoglobina no dice que no es anemia.
@@ -56,6 +58,8 @@ Detalle y capturas en `evidencia/revision_usuario_s3.md`:
 - H-08: el formulario con un lugar mal escrito no sugiere nada y reinicia.
 - H-09: «Espera un momento.» pierde lo escrito.
 - H-10: la aclaración repite «distrito Ayaviri».
+- **Decisión del dueño (7/11/2026):** H-03 se oculta solo en la web mientras X-01 no esté aprobada (`curados/web/parametros.yaml` → `paginas.mostrar_que_hacer_sin_revisar`); se aplican H-04, H-05, H-06 y H-07; H-08, H-09, H-10 y H-14 son de tipo A/B y se arreglaron (ver `evidencia/revision_usuario_s3.md`).
+- **Queda abierto (H-07):** el agregado «no hay tabla publicada con esta cifra; se calcula de microdatos» solo va en cifras de encuestas (ENDES). Las citas de gasto (MEF) y del SIEN siguen enlazando al portal de datos, sin ese agregado: decir «microdatos» de un registro o del gasto no sería exacto. Si quieres un texto para ellas, dímelo.
 
 ## Supuestos aplicados (vacíos tipo B)
 
@@ -100,6 +104,11 @@ Detalle y capturas en `evidencia/revision_usuario_s3.md`:
 | S3-08-a | S3-08 | Texto libre: p95 ≤ 3,5 s (p95 de 2,5 s medido en S2-09, más 1 s) y máximo ≤ 10 s. Medido: p95 3,1 s y máximo 4,5 s en 20 preguntas en vivo | `curados/web/parametros.yaml` → `rendimiento` |
 | S3-08-b | S3-08 | Arranque hasta `/salud` 200: ≤ 30 s (medido 4–5 s; 25 s en frío tras `uv sync`) | `curados/web/parametros.yaml` → `rendimiento` |
 | S3-08-c | S3-08 | Medición: semilla 3008, 20 preguntas en vivo y 50 por uvicorn real | `tests/web/medir.py` |
+| S3-10-a | S3-10 | Oferta de X-22 (provincia o distrito) primero en «Avisos» también en efecto y cruce: con la apertura del gasto (W-10), la capa 1 pasaba de 125 palabras | `src/pap/motor/preguntar.py` → `_OFERTA_EN_AVISOS` |
+| S3-10-b | S3-10 | H-04: tarjeta «Cuántos se midieron la hemoglobina (Puno)» con el texto de la tarjeta de cobertura del SIEN (**revisar**) | `curados/motor/textos/plantillas/cruce_efecto.yaml` → `tarjetas.cobertura` |
+| S3-10-c | S3-10 | H-06: ENDES se define según el tema. Anemia: igual que antes; desnutrición: «… y mide la talla de los niños»; sin tema: sin la última parte (**revisar**). «Cambio estadísticamente claro» solo con cifras de encuesta o de modelo | `curados/motor/textos/glosario.yaml` → `endes.por_tema`, `cambio_claro.solo_con_naturaleza` |
+| S3-10-d | S3-10 | H-08: con dos lugares en el formulario (comparación) y uno no encontrado, se nombran los dos y se vacían los dos (el motor no dice cuál falló) | `src/pap/web/guiado.py`, `curados/web/textos.yaml` |
+| S3-10-e | S3-10 | H-09: «Espera unos segundos y vuelve a intentar.» también en la API (es el mismo texto) | `curados/web/textos.yaml` → `mensajes.espera_un_momento` |
 
 ## Pendientes del dueño que siguen abiertos
 

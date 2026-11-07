@@ -38,7 +38,7 @@ def test_cruce_sin_lado_a_lado_en_la_capa_1(motor, lugar):
     assert r["tipo"] == "respuesta"
     assert C.cruce(r) == []
     c1 = r["capas"]["capa1"]["respuesta_corta"]
-    assert c1.startswith("La cifra clave es el gasto en servicios de salud y nutrición infantil. La de la anemia")
+    assert c1.startswith("La cifra clave es el gasto. La de la anemia")          # S3-10 (W-10): la apertura dice qué gasto es
     assert "está en «Más contexto»" in c1
     endes = [t for t in r["capas"]["capa2"]["mas_contexto"] if t["titulo"].endswith("(encuesta a hogares)")]
     assert endes and all(t["etiqueta"] == "Otra fuente: se muestra junto, no explica la cifra clave." for t in endes)

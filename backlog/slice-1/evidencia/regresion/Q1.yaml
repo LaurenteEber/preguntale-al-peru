@@ -86,3 +86,8 @@
   despues: el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior no se compara con la de hoy.
   motivo: 'S3-01b punto 1 (H-A), aprobado por el dueño el 6/11/2026: la definición de «forma de medir la anemia» dice «la anterior no se compara con la de hoy» en vez de «la anterior da cifras más altas». Cambia solo la redacción.'
   aprobado_por: dueño
+- capa: capa3.para_citar[2]
+  antes: '53,5 % (intervalo: 48,4 % a 58,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Huancavelica, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI).'
+  despues: '53,5 % (intervalo: 48,4 % a 58,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Huancavelica, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.'
+  motivo: 'S3-10 (H-07), aprobado por el dueño el 7/11/2026: la cita de un cálculo propio con microdatos de una encuesta dice que no hay tabla publicada con esa cifra; el enlace y la cifra no cambian.'
+  aprobado_por: dueño

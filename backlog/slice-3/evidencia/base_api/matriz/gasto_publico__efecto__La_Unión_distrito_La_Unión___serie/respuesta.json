@@ -65,7 +65,7 @@
     },
     {
      "etiqueta": "Otro año: no se suma ni se compara con la cifra clave.",
-     "texto": "En 2024, el gasto fue S/ 83,1 millones, registrado por unidades ejecutoras con sede en Arequipa (MEF 2024): el mismo año con el que se compara la anemia.",
+     "texto": "Para comparar con la anemia de 2024: S/ 83,1 millones (en soles de 2025), registrado por unidades ejecutoras con sede en Arequipa (MEF 2024).",
      "titulo": "Gasto en Arequipa en 2024"
     },
     {
@@ -99,7 +99,7 @@
     },
     {
      "id_cifra": "endes_anemia_6_35m_oms2024__proporcion__departamento__04__2025__contexto",
-     "texto": "40,4 % (intervalo: 34,2 % a 46,8 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Arequipa, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "40,4 % (intervalo: 34,2 % a 46,8 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Arequipa, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -142,7 +142,7 @@
     "S/ 75,4 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Arequipa, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
     "18,7 % (intervalo: 14,9 % a 23,2 %): niñas y niños de 6 a 35 meses tamizados con anemia en establecimientos del MINSA y de los gobiernos regionales, La Unión, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
     "entre 32,6 % y 42,7 %: niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100), Arequipa, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
-    "40,4 % (intervalo: 34,2 % a 46,8 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Arequipa, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "40,4 % (intervalo: 34,2 % a 46,8 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Arequipa, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "S/ 83,1 millones en soles de 2025 (monto registrado en 2024: S/ 81,9 millones; factor de inflación: 1,0150108): gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Arequipa, 2024. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2024."
    ]
   }
@@ -1089,7 +1089,7 @@
      },
      {
       "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
-      "oracion": "En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__04__2024__contexto}}, registrado por unidades ejecutoras con sede en Arequipa (MEF 2024): el mismo año con el que se compara la anemia."
+      "oracion": "Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__04__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en Arequipa (MEF 2024)."
      }
     ]
    },
@@ -1477,7 +1477,7 @@
      },
      {
       "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
-      "oracion": "En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__04__2024__contexto}}, registrado por unidades ejecutoras con sede en Arequipa (MEF 2024): el mismo año con el que se compara la anemia."
+      "oracion": "Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__04__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en Arequipa (MEF 2024)."
      }
     ]
    },
@@ -1488,8 +1488,8 @@
   }
  ],
  "semaforo_respuesta": "rojo",
- "texto": "No podemos mostrar el gasto en La Unión en 2025: la cifra no es lo bastante precisa. No se puede saber si el gasto contra la anemia sirvió en La Unión: no encontramos una evaluación publicada. No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo. En toda Arequipa se gastó S/ 75,4 millones en 2025, registrado por unidades ejecutoras con sede en Arequipa (MEF 2025). En 2025, de las niñas y los niños de 6 a 35 meses a quienes se les midió la hemoglobina en establecimientos ubicados en la provincia, alrededor de 19 % (entre 15 % y 23 %) tenía anemia en su último control del año (SIEN 2025, INS). En Arequipa se midió la hemoglobina a entre 33 % y 43 % de los niños de 6 a 35 meses que viven allí (SIEN 2025, INS; población estimada con cálculo propio). En Arequipa, a menos de la mitad de los niños se les midió la hemoglobina: la anemia de los niños medidos puede no representar a todos. El INS advierte que sus registros podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño. Solo tenemos el SIEN de 2025: no podemos mostrar cómo cambió en la provincia. Para Arequipa se estima que 40,4 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Arequipa, la anemia se mantuvo sin cambio estadísticamente claro. En 2024, el gasto fue S/ 83,1 millones, registrado por unidades ejecutoras con sede en Arequipa (MEF 2024): el mismo año con el que se compara la anemia. Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación publicada de estos servicios para La Unión. Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron. La cifra sale de muy pocos casos o varía demasiado, y publicarla podría llevar a conclusiones equivocadas.",
- "texto_con_marcadores": "No podemos mostrar el gasto en La Unión en 2025: la cifra no es lo bastante precisa. {{p:no_sirvio}} {{p:no_concluir_gasto}} En toda Arequipa se gastó {{c:gasto_ex_pan__devengado__departamento__04__2025__contexto}} en 2025, registrado por unidades ejecutoras con sede en Arequipa (MEF 2025). En 2025, de {{u:ninos}} a quienes se les midió la hemoglobina en establecimientos ubicados en la provincia, {{c:sien_anemia_tamizados_6_35m__proporcion__provincia__040800__2025__principal}} tenía anemia en su último control del año (SIEN 2025, INS). En Arequipa se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__04__2025__contexto}} de {{u:ninos_residen}} (SIEN 2025, INS; población estimada con cálculo propio). {{p:cobertura}} {{p:ins}} {{p:altitud}} {{p:sin_evolucion}} Para Arequipa se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__04__2025__contexto}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Arequipa, la anemia {{v:endes_anemia_6_35m_oms2024__proporcion__departamento__04__2025__contexto}}. En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__04__2024__contexto}}, registrado por unidades ejecutoras con sede en Arequipa (MEF 2024): el mismo año con el que se compara la anemia. {{p:efecto}} {{p:evaluaciones}} La cifra sale de muy pocos casos o varía demasiado, y publicarla podría llevar a conclusiones equivocadas.",
+ "texto": "No podemos mostrar el gasto en La Unión en 2025: la cifra no es lo bastante precisa. No se puede saber si el gasto contra la anemia sirvió en La Unión: no encontramos una evaluación publicada. No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo. En toda Arequipa se gastó S/ 75,4 millones en 2025, registrado por unidades ejecutoras con sede en Arequipa (MEF 2025). En 2025, de las niñas y los niños de 6 a 35 meses a quienes se les midió la hemoglobina en establecimientos ubicados en la provincia, alrededor de 19 % (entre 15 % y 23 %) tenía anemia en su último control del año (SIEN 2025, INS). En Arequipa se midió la hemoglobina a entre 33 % y 43 % de los niños de 6 a 35 meses que viven allí (SIEN 2025, INS; población estimada con cálculo propio). En Arequipa, a menos de la mitad de los niños se les midió la hemoglobina: la anemia de los niños medidos puede no representar a todos. El INS advierte que sus registros podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño. Solo tenemos el SIEN de 2025: no podemos mostrar cómo cambió en la provincia. Para Arequipa se estima que 40,4 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Arequipa, la anemia se mantuvo sin cambio estadísticamente claro. Para comparar con la anemia de 2024: S/ 83,1 millones (en soles de 2025), registrado por unidades ejecutoras con sede en Arequipa (MEF 2024). Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación publicada de estos servicios para La Unión. Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron. La cifra sale de muy pocos casos o varía demasiado, y publicarla podría llevar a conclusiones equivocadas.",
+ "texto_con_marcadores": "No podemos mostrar el gasto en La Unión en 2025: la cifra no es lo bastante precisa. {{p:no_sirvio}} {{p:no_concluir_gasto}} En toda Arequipa se gastó {{c:gasto_ex_pan__devengado__departamento__04__2025__contexto}} en 2025, registrado por unidades ejecutoras con sede en Arequipa (MEF 2025). En 2025, de {{u:ninos}} a quienes se les midió la hemoglobina en establecimientos ubicados en la provincia, {{c:sien_anemia_tamizados_6_35m__proporcion__provincia__040800__2025__principal}} tenía anemia en su último control del año (SIEN 2025, INS). En Arequipa se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__04__2025__contexto}} de {{u:ninos_residen}} (SIEN 2025, INS; población estimada con cálculo propio). {{p:cobertura}} {{p:ins}} {{p:altitud}} {{p:sin_evolucion}} Para Arequipa se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__04__2025__contexto}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Arequipa, la anemia {{v:endes_anemia_6_35m_oms2024__proporcion__departamento__04__2025__contexto}}. Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__04__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en Arequipa (MEF 2024). {{p:efecto}} {{p:evaluaciones}} La cifra sale de muy pocos casos o varía demasiado, y publicarla podría llevar a conclusiones equivocadas.",
  "tipo": "respuesta",
  "version_biblioteca": {
   "commit_cubo": "779357d",

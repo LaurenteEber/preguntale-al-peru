@@ -42,7 +42,7 @@
    "citas": [
     {
      "id_cifra": "endes_anemia_6_35m_oms2024__proporcion__CALLAO__CALLAO__2025__principal",
-     "texto": "28,4 % (intervalo: 23,3 % a 33,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "28,4 % (intervalo: 23,3 % a 33,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -62,7 +62,7 @@
     }
    ],
    "para_citar": [
-    "28,4 % (intervalo: 23,3 % a 33,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "28,4 % (intervalo: 23,3 % a 33,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Callao, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "34,9 % (intervalo del INEI: 33,7 % a 36,1 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Perú, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1 (Nueva directriz OMS 2024 / RM 251-2024-MINSA), p. 55 (PDF 57)."
    ]
   }

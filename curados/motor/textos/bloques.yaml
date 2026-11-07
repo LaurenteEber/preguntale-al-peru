@@ -138,7 +138,7 @@ bloques:
     cuando: {indicador: [gasto_ex_pan, gasto_ex_pan_opcion_c]}
     nivel_actual:                 # S1-09 (H5): el mismo alcance que el cruce (G-07), en la capa 1 y sin jerga
       gasto:                      # S3-01b (u13): la apertura dice qué cubre la cifra y qué no, y va antes de la cifra; reemplaza al «Ojo al leer» que lo repetía
-        apertura:
+        apertura: &apertura_gasto
           regional: "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en {lugar}."
           local: "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta a la municipalidad y las obras ubicadas en {lugar}."
           nacional: "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil de todas las entidades públicas del país."
@@ -147,8 +147,10 @@ bloques:
           local: "es lo que se gastó en {anio} en servicios de salud y nutrición infantil, solo de la municipalidad y de obras ubicadas {nivel_en} (sin lo que gastan el Ministerio de Salud y otras entidades)."
           nacional: "es lo que se gastó en {anio} en servicios de salud y nutrición infantil en todo el país, registrado por las entidades públicas."
     cruce_efecto:
+      apertura: *apertura_gasto           # S3-10 (W-10, dueño 7/11/2026): la misma apertura de u13, antes de la cifra del gasto; no en provincia ni distrito (tope R-04)
       clave_local: "en servicios de salud y nutrición infantil en {anio}, solo de la municipalidad y de obras ubicadas {nivel_en} (sin lo que gastan el Ministerio de Salud y otras entidades)."
       clave_regional: "en servicios de salud y nutrición infantil en {anio}, registrado por unidades ejecutoras con sede en {lugar} ({fuente})."
+      clave_regional_con_apertura: "en {anio}, registrado por unidades ejecutoras con sede en {lugar} ({fuente})."
       alcance_local: "solo de la municipalidad y de obras ubicadas {nivel_en}; sin el gasto del Ministerio de Salud ni de otras entidades"
       tarjeta_regional:
         titulo: "Gasto en toda {lugar}"
@@ -159,13 +161,14 @@ bloques:
     cuando: {indicador: [gasto_ex_pan, gasto_ex_pan_opcion_c], nivel: [LIMA_METROPOLITANA, LIMA_REGION]}
     nivel_actual:                 # S1-09 (H5): lo que no incluye la cifra de Lima, ya en la capa 1; la línea nacional, en la capa 2
       gasto_lima:
-        apertura: "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y no incluye lo que gastan las entidades nacionales con sede en Lima."   # S3-01b (u13): reemplaza al «Ojo al leer» de Lima
+        apertura: &apertura_gasto_lima "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y no incluye lo que gastan las entidades nacionales con sede en Lima."   # S3-01b (u13): reemplaza al «Ojo al leer» de Lima
         tarjeta:
           titulo: "Lo que no incluye esta cifra"
           texto: "{{p:sede}} {linea_ref}."
       protegidos:
         sede: "Aparte, sin sumar, los institutos nacionales de referencia con sede en Lima, que atienden a todo el país, gastaron"      # la capa 1 ya dijo que no se incluyen (H5)
     cruce_efecto:
+      apertura_lima: *apertura_gasto_lima   # S3-10 (W-10)
       atribuible: " Solo alrededor del {pct_atribuible} del gasto atribuido al departamento de Lima se puede ubicar en municipalidades y obras; el resto lo registran entidades sin un distrito."   # S1-14 (H12): el denominador es todo el departamento 15
       referencia: " {{p:sede}} {linea_ref}."
       protegidos:

@@ -18,7 +18,7 @@
     "ids": [
      "gasto_ex_pan__devengado__departamento__02__2025__principal"
     ],
-    "texto": "en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025).",
+    "texto": "en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025).",
     "valor": "S/ 66,6 millones"
    },
    "confianza": {
@@ -29,14 +29,14 @@
    "ojo_al_leer": [
     "No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo."
    ],
-   "palabras": 74,
+   "palabras": 96,
    "que_hacer": {
     "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
     "revisado_dueno": false,
     "texto": "Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6 meses.",
     "url": "https://www.gob.pe/69889-que-es-la-anemia-prevencion"
    },
-   "respuesta_corta": "No se puede saber si el gasto contra la anemia sirvió en Áncash: no encontramos una evaluación publicada. Lo que sí se sabe es lo gastado en el departamento:"
+   "respuesta_corta": "No se puede saber si el gasto contra la anemia sirvió en Áncash: no encontramos una evaluación publicada. Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en Áncash. Lo que sí se sabe es lo gastado en el departamento:"
   },
   "capa2": {
    "avisos": [
@@ -51,8 +51,8 @@
    "mas_contexto": [
     {
      "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave.",
-     "texto": "En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Áncash: entre 56 % y 62 % (SIEN 2025, INS).",
-     "titulo": "Niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) (Áncash)"
+     "texto": "En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a entre 56 % y 62 % de los niños de 6 a 35 meses del departamento de Áncash (SIEN 2025, INS).",
+     "titulo": "Cuántos se midieron la hemoglobina (Áncash)"
     },
     {
      "etiqueta": "Otra fuente u otro territorio: no se compara con la cifra clave.",
@@ -61,7 +61,7 @@
     },
     {
      "etiqueta": "Otro año: no se suma ni se compara con la cifra clave.",
-     "texto": "En 2024, el gasto fue S/ 69,9 millones, registrado por unidades ejecutoras con sede en Áncash (MEF 2024): el mismo año con el que se compara la anemia.",
+     "texto": "Para comparar con la anemia de 2024: S/ 69,9 millones (en soles de 2025), registrado por unidades ejecutoras con sede en Áncash (MEF 2024).",
      "titulo": "Gasto en Áncash en 2024"
     },
     {
@@ -85,7 +85,7 @@
     },
     {
      "id_cifra": "endes_anemia_6_35m_oms2024__proporcion__departamento__02__2025__principal",
-     "texto": "39,1 % (intervalo: 32,2 % a 46,2 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Áncash, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "39,1 % (intervalo: 32,2 % a 46,2 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Áncash, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -119,7 +119,7 @@
    "para_citar": [
     "S/ 66,6 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Áncash, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
     "entre 55,6 % y 61,9 %: niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100), Áncash, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
-    "39,1 % (intervalo: 32,2 % a 46,2 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Áncash, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+    "39,1 % (intervalo: 32,2 % a 46,2 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Áncash, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "S/ 69,9 millones en soles de 2025 (monto registrado en 2024: S/ 68,9 millones; factor de inflación: 1,0150108): gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Áncash, 2024. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2024."
    ]
   }
@@ -819,19 +819,6 @@
  "corrector": [
   {
    "accion": "rotular",
-   "clausula": "dígitos fuera de marcadores (salvo años y programas listados)",
-   "detalle": {
-    "numeros": [
-     "100"
-    ]
-   },
-   "modo": "corrector",
-   "motivo": "numero_fuera_de_marcador",
-   "objetivo": "respuesta",
-   "regla": "R-LENGUAJE-03"
-  },
-  {
-   "accion": "rotular",
    "clausula": "párrafo con >= 2 naturaleza_dato",
    "detalle": {
     "naturalezas": [
@@ -852,15 +839,15 @@
     "fallas": [
      {
       "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
-      "oracion": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__02__2025__principal}} en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025)."
+      "oracion": "Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__02__2025__principal}} en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025)."
      },
      {
       "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
-      "oracion": "{{p:no_concluir_gasto}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Áncash: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__02__2025__contexto}} (SIEN 2025, INS)."
+      "oracion": "{{p:no_concluir_gasto}} En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__02__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS)."
      },
      {
       "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
-      "oracion": "En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__02__2024__contexto}}, registrado por unidades ejecutoras con sede en Áncash (MEF 2024): el mismo año con el que se compara la anemia."
+      "oracion": "Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__02__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en Áncash (MEF 2024)."
      }
     ]
    },
@@ -1167,19 +1154,6 @@
   },
   {
    "accion": "rotular",
-   "clausula": "dígitos fuera de marcadores (salvo años y programas listados)",
-   "detalle": {
-    "numeros": [
-     "100"
-    ]
-   },
-   "modo": "corrector",
-   "motivo": "numero_fuera_de_marcador",
-   "objetivo": "respuesta",
-   "regla": "R-LENGUAJE-03"
-  },
-  {
-   "accion": "rotular",
    "clausula": "párrafo con >= 2 naturaleza_dato",
    "detalle": {
     "naturalezas": [
@@ -1200,15 +1174,15 @@
     "fallas": [
      {
       "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
-      "oracion": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__02__2025__principal}} en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025)."
+      "oracion": "Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__02__2025__principal}} en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025)."
      },
      {
       "b": "verbo de registro_administrativo ∉ ['se registraron', 'se atendieron', 'se tamizaron', 'se notificaron', 'figuran inscritos']",
-      "oracion": "{{p:no_concluir_gasto}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Áncash: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__02__2025__contexto}} (SIEN 2025, INS)."
+      "oracion": "{{p:no_concluir_gasto}} En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__02__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS)."
      },
      {
       "b": "verbo de presupuestal_financiero ∉ ['se gasto', 'se asigno', 'se transfirio']",
-      "oracion": "En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__02__2024__contexto}}, registrado por unidades ejecutoras con sede en Áncash (MEF 2024): el mismo año con el que se compara la anemia."
+      "oracion": "Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__02__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en Áncash (MEF 2024)."
      }
     ]
    },
@@ -1219,8 +1193,8 @@
   }
  ],
  "semaforo_respuesta": "ambar",
- "texto": "No se puede saber si el gasto contra la anemia sirvió en Áncash: no encontramos una evaluación publicada. Lo que sí se sabe es lo gastado en el departamento: S/ 66,6 millones en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025). No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo. En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Áncash: entre 56 % y 62 % (SIEN 2025, INS). Para Áncash se estima que 39,1 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Áncash, la anemia se mantuvo sin cambio estadísticamente claro. En 2024, el gasto fue S/ 69,9 millones, registrado por unidades ejecutoras con sede en Áncash (MEF 2024): el mismo año con el que se compara la anemia. Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación publicada de estos servicios para Áncash. Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron.",
- "texto_con_marcadores": "{{p:no_sirvio}} Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__02__2025__principal}} en servicios de salud y nutrición infantil en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025). {{p:no_concluir_gasto}} En 2025, niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100) en Áncash: {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__02__2025__contexto}} (SIEN 2025, INS). Para Áncash se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__02__2025__principal}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Áncash, la anemia {{v:endes_anemia_6_35m_oms2024__proporcion__departamento__02__2025__principal}}. En 2024, el gasto fue {{c:gasto_ex_pan__devengado_constante__departamento__02__2024__contexto}}, registrado por unidades ejecutoras con sede en Áncash (MEF 2024): el mismo año con el que se compara la anemia. {{p:efecto}} {{p:evaluaciones}}",
+ "texto": "No se puede saber si el gasto contra la anemia sirvió en Áncash: no encontramos una evaluación publicada. Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en Áncash. Lo que sí se sabe es lo gastado en el departamento: S/ 66,6 millones en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025). No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo. En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a entre 56 % y 62 % de los niños de 6 a 35 meses del departamento de Áncash (SIEN 2025, INS). Para Áncash se estima que 39,1 % de las niñas y los niños de 6 a 35 meses tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Áncash, la anemia se mantuvo sin cambio estadísticamente claro. Para comparar con la anemia de 2024: S/ 69,9 millones (en soles de 2025), registrado por unidades ejecutoras con sede en Áncash (MEF 2024). Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. Estos datos muestran qué se gastó y cómo está el indicador; no muestran si el gasto lo cambió. No encontramos una evaluación publicada de estos servicios para Áncash. Para saberlo haría falta comparar a niños que recibieron los servicios con niños parecidos que no los recibieron.",
+ "texto_con_marcadores": "{{p:no_sirvio}} Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en Áncash. Lo que sí se sabe es lo gastado en el departamento: {{c:gasto_ex_pan__devengado__departamento__02__2025__principal}} en 2025, registrado por unidades ejecutoras con sede en Áncash (MEF 2025). {{p:no_concluir_gasto}} En 2025, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {{c:sien_cobertura_tamizaje_6_35m__cobertura__departamento__02__2025__contexto}} de {{u:ninos_region}} (SIEN 2025, INS). Para Áncash se estima que {{c:endes_anemia_6_35m_oms2024__proporcion__departamento__02__2025__principal}} de {{u:ninos}} tenía anemia (ENDES 2025, INEI). Entre 2024 y 2025, en Áncash, la anemia {{v:endes_anemia_6_35m_oms2024__proporcion__departamento__02__2025__principal}}. Para comparar con la anemia de 2024: {{c:gasto_ex_pan__devengado_constante__departamento__02__2024__contexto}} (en soles de 2025), registrado por unidades ejecutoras con sede en Áncash (MEF 2024). {{p:efecto}} {{p:evaluaciones}}",
  "tipo": "respuesta",
  "version_biblioteca": {
   "commit_cubo": "779357d",

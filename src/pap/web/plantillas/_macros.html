@@ -1,11 +1,11 @@
-{% macro caja(etiqueta) %}
+{% macro caja(etiqueta, valor='') %}
 <form method="post" action="/preguntar" class="caja">
 <label for="texto">{{ etiqueta }}</label>
 <p class="ayuda" id="ayuda-texto">{{ p.caja_ayuda }}</p>
 {% if tope %}
 <p data-bloque="tope_diario" class="aviso" role="status">{{ tx.mensajes.tope_diario }} <a href="/guiado">{{ p.guiado_enlace }}</a></p>
 {% endif %}
-<textarea id="texto" name="texto" rows="3" maxlength="{{ maxlen }}" required aria-describedby="ayuda-texto"{% if tope %} disabled{% endif %}></textarea>
+<textarea id="texto" name="texto" rows="3" maxlength="{{ maxlen }}" required aria-describedby="ayuda-texto"{% if tope %} disabled{% endif %}>{{ valor }}</textarea>
 <button type="submit" data-buscando="{{ p.buscando }}"{% if tope %} disabled{% endif %}>{{ p.boton_preguntar }}</button>
 </form>
 {% endmacro %}

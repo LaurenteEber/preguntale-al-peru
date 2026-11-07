@@ -18,6 +18,7 @@ from ._html import formulario, leer
 RAIZ = Path(__file__).resolve().parents[2]
 BASE = RAIZ / "backlog" / "slice-3" / "evidencia" / "base_api"
 TX = yaml.safe_load((RAIZ / "curados/web/textos.yaml").read_text(encoding="utf-8"))
+PAR = yaml.safe_load((RAIZ / "curados/web/parametros.yaml").read_text(encoding="utf-8"))
 ROT = yaml.safe_load((RAIZ / "curados/motor/textos/capas.yaml").read_text(encoding="utf-8"))["rotulos"]
 Q1_Q4 = ["q1", "q2", "q3", "q4"]
 ORDEN = ["entendimos", "respuesta_corta", "cifra_clave", "lo_mas_cercano", "ojo_al_leer", "confianza", "que_hacer",
@@ -77,7 +78,7 @@ def _orden_esperado(res: dict) -> list[str]:
         "lo_mas_cercano": bool(c1.get("lo_mas_cercano") or res.get("alternativas") or res.get("temas_disponibles")),
         "ojo_al_leer": bool(c1.get("ojo_al_leer")),
         "confianza": bool((c1.get("confianza") or {}).get("texto")),
-        "que_hacer": bool(c1.get("que_hacer")),
+        "que_hacer": bool(c1.get("que_hacer") and (c1["que_hacer"].get("revisado_dueno") or PAR["paginas"]["mostrar_que_hacer_sin_revisar"]["valor"])),      # H-03
         "mas_contexto": bool(c2.get("mas_contexto") or c2.get("avisos") or c2.get("limites")),
         "para_citar": True,                                             # lleva siempre el rótulo de versión
     }
@@ -252,10 +253,7 @@ def test_cada_bloque_sale_de_su_campo_y_el_enlace_oficial_es_un_ancla(cli):
     assert c1["cifra_clave"]["valor"] in ck and c1["cifra_clave"]["texto"] in ck and c1["cifra_clave"]["fuente"] in ck
     ojo = d.buscar(**{"data-bloque": "ojo_al_leer"})[0]
     assert ROT["ojo_al_leer"] in ojo.texto() and [li.texto().strip() for li in ojo.buscar("li")] == c1["ojo_al_leer"]
-    qh = d.buscar(**{"data-bloque": "que_hacer"})[0]
-    assert ROT["que_hacer"] in qh.texto() and c1["que_hacer"]["texto"] in qh.texto()
-    assert ROT["texto_pendiente"] in qh.texto()                         # no está revisado por el dueño
-    assert [a.attrs["href"] for a in qh.buscar("a")] == [c1["que_hacer"]["url"]]
+    assert c1["que_hacer"]["revisado_dueno"] is False and not d.buscar(**{"data-bloque": "que_hacer"})      # H-03: oculto hasta que el dueño apruebe X-01
     pc = d.buscar(**{"data-bloque": "para_citar"})[0]
     assert [a.attrs["href"] for a in pc.buscar("a") if a.texto().strip() == ROT["enlace_oficial"]] \
         == [x["url"] for x in c3["citas"] if x["url"]]

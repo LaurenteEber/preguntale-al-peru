@@ -8,7 +8,7 @@
 <p data-bloque="guiado_mensaje"><a href="/guiado">{{ p.guiado_enlace }}</a></p>
 {% endif %}
 {% if con_caja %}
-{{ caja(p.caja_etiqueta_de_nuevo) }}
+{{ caja(p.caja_etiqueta_de_nuevo, valor) }}
 {% endif %}
 <p><a href="/">{{ p.volver_inicio }}</a></p>
 {% endblock %}

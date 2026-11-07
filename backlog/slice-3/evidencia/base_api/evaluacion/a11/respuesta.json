@@ -63,10 +63,6 @@
     {
      "definicion": "montos de distintos años expresados en soles de un mismo año, para que la subida de los precios no haga parecer que se gastó más. Se ajustan con el índice de precios al consumidor de Lima Metropolitana que publica el BCRP.",
      "termino": "soles constantes (ajustados por inflación)"
-    },
-    {
-     "definicion": "una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.",
-     "termino": "cambio estadísticamente claro"
     }
    ],
    "para_citar": [

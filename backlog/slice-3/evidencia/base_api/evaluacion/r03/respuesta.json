@@ -62,12 +62,12 @@
     },
     {
      "id_cifra": "endes_anemia_6_35m__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal",
-     "texto": "35,0 % (intervalo: 31,4 % a 38,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Lima Metropolitana (provincia de Lima), 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
+     "texto": "35,0 % (intervalo: 31,4 % a 38,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Lima Metropolitana (provincia de Lima), 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
      "id_cifra": "endes_anemia_6_35m__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2015__contexto",
-     "texto": "35,5 % (intervalo: 32,3 % a 38,8 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Lima Metropolitana (provincia de Lima), 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI).",
+     "texto": "35,5 % (intervalo: 32,3 % a 38,8 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Lima Metropolitana (provincia de Lima), 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
      "url": "https://proyectos.inei.gob.pe/microdatos/"
     },
     {
@@ -92,8 +92,8 @@
    ],
    "para_citar": [
     "25,3 % (intervalo del INEI: 21,9 % a 28,7 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Lima Metropolitana (provincia de Lima), 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58).",
-    "35,0 % (intervalo: 31,4 % a 38,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Lima Metropolitana (provincia de Lima), 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI).",
-    "35,5 % (intervalo: 32,3 % a 38,8 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Lima Metropolitana (provincia de Lima), 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI).",
+    "35,0 % (intervalo: 31,4 % a 38,9 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Lima Metropolitana (provincia de Lima), 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
+    "35,5 % (intervalo: 32,3 % a 38,8 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Lima Metropolitana (provincia de Lima), 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
     "24,0 % (intervalo: 20,8 % a 27,4 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Lima Metropolitana (provincia de Lima), 2024. Fuente: INEI, ENDES 2024 Lima Metropolitana, cap. 9 Nutrición, p. 58 (texto; Gráfico 9.3)."
    ]
   }

@@ -260,10 +260,14 @@ def _raiz_con_decisiones_de_antes(destino):
     pend["mostrar_conteo_sien"]["valor"], pend["cr01_mismo_anio"]["valor"], pend["intervalo_visible"]["valor"] = False, False, "ambos"
     p["territorio"]["departamento_a_secas"]["activo"] = False                      # X-22 (6/11/2026): antes, «Huancavelica» a secas aclaraba
     antes = RAIZ / "tests" / "fixtures" / "textos_antes_s3_02"
+    antes_s3_10 = RAIZ / "tests" / "fixtures" / "textos_antes_s3_10"     # S3-10: textos de antes de las decisiones del 7/11/2026
     reales = {("curados", "motor", "parametros_motor.yaml"): yaml.safe_dump(p, allow_unicode=True, sort_keys=False),
               ("curados", "motor", "textos", "bloques.yaml"): (antes / "bloques.yaml").read_text(encoding="utf-8"),
               ("curados", "motor", "textos", "plantillas", "nivel_actual.yaml"): (antes / "nivel_actual.yaml").read_text(encoding="utf-8"),
-              ("curados", "motor", "textos", "glosario.yaml"): (antes / "glosario.yaml").read_text(encoding="utf-8")}      # H-A (6/11/2026)
+              ("curados", "motor", "textos", "glosario.yaml"): (antes / "glosario.yaml").read_text(encoding="utf-8"),     # H-A (6/11/2026)
+              ("curados", "motor", "textos", "capas.yaml"): (antes_s3_10 / "capas.yaml").read_text(encoding="utf-8"),      # H-07 (7/11/2026)
+              ("curados", "motor", "textos", "plantillas", "cruce_efecto.yaml"):
+                  (antes_s3_10 / "cruce_efecto.yaml").read_text(encoding="utf-8")}                                          # W-10, H-04, H-05 (7/11/2026)
 
     def espejo(origen, dest, prefijo=()):
         dest.mkdir(parents=True)
@@ -291,7 +295,7 @@ def _sin_enlaces_de_citas(x):
 def test_via_estructurada_igual_a_la_base_de_s2_00(tmp_path):
     """Los `respuesta.json` de la vía estructurada, generados con los comandos exactos de `generar.sh`, son iguales a los
     guardados en S2-00, salvo las rutas (la carpeta de salida se reemplaza antes de comparar) y salvo lo aprobado en S3-01 y S3-01b:
-    X-02, X-03, X-04 y X-22 (con sus parámetros en el valor de antes, ver `_raiz_con_decisiones_de_antes`) y el campo `capa3.citas`
+    X-02, X-03, X-04, X-22 y las de S3-10 (W-10, H-04, H-05, H-07; con sus parámetros en el valor de antes, ver `_raiz_con_decisiones_de_antes`) y el campo `capa3.citas`
     con el enlace de cada cita (P-02)."""
     salida = tmp_path / "base"
     raiz_antes = _raiz_con_decisiones_de_antes(tmp_path / "raiz_antes")

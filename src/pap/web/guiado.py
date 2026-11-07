@@ -86,7 +86,7 @@ def montar(app: FastAPI, raiz, tx: dict, par: dict, opciones, pagina, atender) -
         return pagina("guiado_paso1.html", estado, g=g, temas=op["temas"], intenciones=intenciones,
                       error=g["errores"][error] if error else None)
 
-    def paso2(tema: str, intencion: str, valores: dict, estado: int = 200, error: str | None = None) -> Response:
+    def paso2(tema: str, intencion: str, valores: dict, estado: int = 200, error: str | None = None, texto_error: str | None = None) -> Response:
         op = opciones()
         rot = lambda lista, k: next(x["rotulo"] for x in lista if x["id"] == k)      # noqa: E731
         pedidos = pg["intenciones"]["valor"][intencion]["campos"]
@@ -96,7 +96,7 @@ def montar(app: FastAPI, raiz, tx: dict, par: dict, opciones, pagina, atender) -
                       niveles=[n for n in op["niveles"] if n["id"] != "nacional"], lugares=pg["lugares_con_todo_el_peru"]["valor"],
                       maxlugar=pg["lugar_max_caracteres"]["valor"], dentro_de="dentro_de" in pedidos and dentro_nacional,
                       tema_rotulo=rot(op["temas"], tema), intencion_rotulo=rot(op["intenciones"], intencion),
-                      error=g["errores"][error] if error else None)
+                      error=texto_error or (g["errores"][error] if error else None))
 
     def enviar(datos: dict) -> Response:
         op = opciones()
@@ -110,7 +110,22 @@ def montar(app: FastAPI, raiz, tx: dict, par: dict, opciones, pagina, atender) -
         consulta, error = armar(g, pg, intencion, tema, datos, nombres, niveles, dentro_nacional)
         if error:
             return paso2(tema, intencion, {k: v for k, v in datos.items() if isinstance(v, str)}, 422, error)
-        return atender({"consulta": json.dumps(consulta, ensure_ascii=False)})
+        previos = {k: v for k, v in datos.items() if isinstance(v, str)}
+
+        def no_encontrado() -> Response:
+            """H-08: vuelve al paso 2 con los lugares escritos vacíos (tema, intención y demás campos se conservan) y repite lo escrito."""
+            escritos = [c["texto"] for c in (consulta["territorio"], consulta.get("comparar_con") or {}) if c.get("texto")]
+            claves = {"lugar": 0, "lugar2": 1}
+            vacios = {k: v for k, v in previos.items() if k not in claves}
+            msg = (g["errores"]["lugar_no_encontrado"].format(lugar=escritos[0]) if len(escritos) == 1
+                   else g["errores"]["lugares_no_encontrados"].format(lugar=escritos[0], lugar2=escritos[1]))
+            return paso2(tema, intencion, vacios, 200, texto_error=msg)
+
+        def esperar(estado: int) -> Response:
+            """H-09: el límite por IP no borra lo que la persona eligió."""
+            return paso2(tema, intencion, previos, estado, "espera")
+
+        return atender({"consulta": json.dumps(consulta, ensure_ascii=False)}, al_esperar=esperar, al_no_encontrar=no_encontrado)
 
     @app.get("/guiado")
     def guiado_paso1() -> Response:

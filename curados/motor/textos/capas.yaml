@@ -2,6 +2,8 @@
 version: 1.0.0
 publicado_oficial: "; el {entidad} publicó {valor}"      # S1-09 (A-H3): la cita es de nuestro cálculo y el documento oficial publica otro valor
 # S1-12 (G-01, R-GASTO-12): cita de un monto en soles constantes, con el monto registrado de su año y el factor del IPC
+sin_tabla_publicada: "; no hay tabla publicada con esta cifra; se calcula de microdatos"   # S3-10 (H-07, dueño 7/11/2026): cálculo propio de una encuesta sin cuadro oficial
+sin_tabla_naturaleza: [encuesta_muestral]                                                    # solo microdatos de encuestas (gasto y registros: consulta abierta)
 cita_constantes: "{valor} en soles de {anio_base} (monto registrado en {anio}: {nominal}; factor de inflación: {factor})"
 # S3-01 (tarea 3): rótulos de sección. Los leen el .md de la CLI (ficha.markdown) y la web; antes estaban fijos en ficha.py.
 # Aquí va solo el texto; el formato (negrita, «▸», paréntesis de «texto pendiente») lo pone quien los muestra.
