@@ -174,7 +174,7 @@ Con varias consultas se escriben todas y el código de salida es el más grave. 
 
 Valores en `cli.codigo_salida` de `parametros_motor.yaml`. Un valor inválido de una opción con lista (p. ej. `--intencion foo`) lo rechaza el propio argparse: imprime el uso y sale también con **2**, aunque no sea una aclaración. Si solo necesitas distinguir una aclaración, mira que la salida empiece con «Hay varios…», «¿De qué problema…» o «No encontramos…».
 
-### 3.1b ✅ Verla en el navegador: `pap servir`
+### 3.1b ✅ La web: `pap servir`
 
 ```bash
 uv run pap servir                       # http://127.0.0.1:8000, solo desde este equipo
@@ -182,7 +182,41 @@ uv run pap servir --puerto 8123         # otro puerto
 uv run pap servir --red-local           # también desde otros equipos de la red de la casa
 ```
 
-Imprime la dirección y espera unos segundos mientras se prepara (`/salud` responde 503 hasta que termina). Pulsa Ctrl+C para pararlo. No es un despliegue público. La imagen Docker (`Dockerfile`, evidencia en `backlog/slice-3/evidencia/s3-09_imagen.md`) hace lo mismo y baja la biblioteca si no se monta.
+Imprime la dirección y espera unos segundos mientras se prepara (`/salud` responde 503 hasta que termina). Pulsa Ctrl+C para pararlo. No es un despliegue público (P-05). La imagen Docker hace lo mismo: [guia_de_operacion.md](guia_de_operacion.md) §6.
+
+**Abrirla en este equipo.** Entra a `http://127.0.0.1:8000` en el navegador. Si todavía dice «Estamos preparando el servicio…», espera unos segundos y vuelve a intentar. Para preguntar por texto necesitas la clave del intérprete (`PAP_ANTHROPIC_API_KEY`, [guia_de_operacion.md](guia_de_operacion.md) §4); sin ella, la caja responde con un aviso y el formulario guiado sigue funcionando.
+
+**Abrirla en el celular.** El celular y el equipo tienen que estar en la misma red (la wifi de la casa):
+1. En el equipo, corre `uv run pap servir --red-local`.
+2. Busca la dirección IP del equipo en esa red (por ejemplo `192.168.1.20`).
+3. En el celular, abre `http://<esa IP>:8000` (o el puerto que hayas elegido con `--puerto`).
+
+`--red-local` abre el servicio a todos los equipos de la red: úsalo solo en una red de confianza. Cuando termines, para el servicio con Ctrl+C.
+
+**La caja de pregunta.** La página de inicio tiene una caja para escribir con tus palabras, ejemplos que se tocan para preguntar, los temas de hoy con sus fuentes y el enlace «Elegir paso a paso, sin escribir». Mientras se busca, el botón dice «Buscando…». Si la pregunta es ambigua, la web muestra las opciones como botones grandes: toca la que quieras. Si te pide «Espera unos segundos y vuelve a intentar», lo que escribiste queda en la caja.
+
+**Cómo leer cada bloque.** La respuesta es la misma de §3.2, mostrada de arriba abajo en este orden:
+
+| Bloque | Qué es |
+|---|---|
+| **Entendimos** | Cómo entendió la pregunta (solo con texto libre). Si no es lo que querías, corrígela |
+| **Respuesta corta** | Responde la pregunta. Si no se puede responder, eso va primero |
+| **Cifra clave** | La cifra principal, con su fuente |
+| **Lo más cercano** | Solo en «no se puede»: lo que sí tenemos |
+| **Ojo al leer** | Lo que **no** debes concluir de la cifra |
+| **Confianza en los datos** | Una frase (alta, media o baja) con su motivo; sin colores |
+| **Más contexto** | Desplegable, cerrado: cifras secundarias, avisos y límites |
+| **Para citar y verificar** | Desplegable, cerrado: una cita por cifra, con el enlace al documento oficial cuando existe, y el glosario |
+
+La web no muestra la ficha técnica (solo está en el JSON). «¿Qué puedo hacer?» tampoco se muestra en la web mientras el dueño no apruebe el texto (X-01); en el JSON y en la CLI sigue como en §3.2.
+
+**El formulario guiado (`/guiado`).** Es la vía sin escribir y sin intérprete, y la más rápida. Tiene dos pasos:
+1. Elegir el tema y qué quieres saber (cada opción trae su descripción).
+2. Llenar solo los campos de esa opción: el lugar (o «Todo el Perú»), el año o desde/hasta, y, según la opción, un segundo lugar o el nivel.
+
+Si falta algo (por ejemplo, el lugar), vuelve al paso 2 con el aviso y sin perder tema ni opción. Si el lugar no se encuentra, vuelve al paso 2 con el lugar vacío y te dice qué escribiste. Una combinación que el motor no responde sale como un «no se puede» normal.
+
+**Si el servicio no responde:** `/salud` dice si está listo. «preparando» es normal los primeros segundos; «error_precalentamiento» significa que algo falló al arrancar: míralo en [guia_de_operacion.md](guia_de_operacion.md) §6.
 
 ### 3.2 ✅ Cómo leer una respuesta
 
@@ -192,7 +226,7 @@ Una respuesta trae tres capas, la confianza y, al final, el detalle técnico (co
 |---|---|
 | **Capa 1, visible** (≈ 100 palabras, máximo 125) | Respuesta corta, **una** cifra clave con su fuente, «Ojo al leer» (1 a 3 viñetas con lo que **no** debes concluir) y la confianza |
 | **Capa 2, «Más contexto»** | Cifras secundarias (con «no se compara» cuando aplica), avisos de las reglas y límites |
-| **Capa 3, «Para citar y verificar»** | Una cita por cifra, glosario y, solo en salud, «¿Qué puedo hacer?» con texto oficial (pendiente de revisión del dueño, X-01) |
+| **Capa 3, «Para citar y verificar»** | Una cita por cifra (con su enlace al documento oficial) y glosario. En el JSON y la CLI, además, «¿Qué puedo hacer?» (solo en salud) con texto oficial, que va en la capa 1 y está pendiente de revisión del dueño (X-01) |
 | **Ficha corta** | Confianza, fuentes y años, territorio y qué **no** permite concluir |
 | **Detalle técnico** | Tabla de cifras, ficha larga por cifra (origen, territorio, qué mide, precisión —nuestro intervalo y el del INEI—, método y contraste con la cifra oficial del mismo criterio) y reglas aplicadas (`resultados_respuesta`: cada regla, con su acción y su motivo). Solo para auditoría |
 | **Confianza en los datos** | `alta` (dato sólido), `media` (con limitaciones) o `baja` (muy aproximado). Habla de los datos, no de la situación; sin colores en la capa visible (R-05) |
@@ -263,6 +297,9 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 
 | 22 ✅ | Escribir la pregunta con mis palabras | `uv run pap preguntar --texto "¿Cuánta anemia hay en Puno?"` | «Entendimos…» y la respuesta por capas; o una aclaración con opciones |
 | 23 ✅ | Que me repregunte cuando mi texto es confuso | `--texto` y luego `--elegir N` | Las opciones armadas por el código o por el intérprete, cada una con su «Entendimos» |
+| 24 ✅ | Preguntar desde el celular | `uv run pap servir --red-local` y abrir `http://<IP del equipo>:8000` (§3.1b) | La caja de pregunta y la respuesta por bloques, con «Más contexto» y «Para citar» como desplegables |
+| 25 ✅ | Preguntar sin escribir | `/guiado` en la web | Dos pasos (tema y qué quieres saber; lugar y año) y la misma respuesta, sin intérprete |
+| 26 ✅ | Usar el servicio desde otro programa | `POST /api/preguntar` ([especificaciones/api.md](especificaciones/api.md)) | El `respuesta.json` del motor, sin cambios |
 
 **Una pregunta ambigua se resuelve así:** el comando imprime las opciones y sale con 2; repites **el mismo comando** agregando `--elegir N`.
 
@@ -270,9 +307,6 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 
 | # | Quiero… | Qué vas a poder hacer | Slice |
 |---|---|---|---|
-| P3 ⏳ | Preguntar desde el celular | Una caja de pregunta y la respuesta por capas como desplegables (visible, «Más contexto», «Para citar»), con la versión de la biblioteca y enlaces a las fuentes oficiales. Interfaz por definir | 3 |
-| P4 ⏳ | Usar el servicio desde otro programa | Una API sobre el cubo precalculado, con respuesta en < 2 s. Interfaz por definir (el plan menciona FastAPI + DuckDB en solo lectura) | 3 |
-| P5 ⏳ | Que la web sea accesible | Accesibilidad WCAG AA, confianza sin colores | 3 |
 | P6 ⏳ | Probar el servicio con un grupo pequeño de personas | Beta cerrada en la nube, con medición de uso sin datos personales | 4 |
 | P7 ⏳ | Preguntar por temas nuevos (más allá de anemia, desnutrición, pobreza y gasto) | Un tema nuevo por sub-slice: fuente aprobada → indicador con doradas → intenciones → web. Comando o interfaz por definir | 5 |
 
@@ -280,7 +314,8 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 
 | Límite | Detalle |
 |---|---|
-| ⏳ **Sin web ni API** | Todo es por Terminal (slice 3) |
+| **Web solo en local o en la red de la casa** | No hay servicio público: la web y la API corren con `pap servir` o con la imagen Docker en un equipo propio (P-05). Abrirla a más gente es el slice 4 |
+| **Sin «¿Qué puedo hacer?» en la web** | Se oculta hasta que el dueño apruebe el texto (X-01); el JSON y la CLI lo siguen mostrando |
 | **Solo 9 indicadores** | Los de §3.1: anemia (4), desnutrición crónica (1), pobreza (2) y gasto (2). Otro tema, un «no se puede» |
 | **Niveles y años con datos limitados** | Desnutrición y pobreza ENAHO: no hay provincia ni distrito (pobreza distrital: solo el Mapa de 2018, con rango). Anemia ENDES: sin provincia ni distrito; por distrito solo el SIEN 2025. Gasto: provincia y distrito solo con gasto municipal y obras ubicadas |
 | **Sin preguntas «dentro de»** | «El más alto dentro de Puno» responde «no se puede»: los rankings son nacionales (`planificador.extremo_dentro_de`: `solo_nacional`) |
@@ -308,11 +343,11 @@ Siguen abiertas, sin parámetro asociado en el slice 1: X-05 (revisar lo provisi
 |---|---|---|
 | **1. Motor por intenciones** | Cualquier pregunta estructurada sobre los 9 indicadores, por capas y validada; el motor pregunta si hay ambigüedad. La adenda agrega la evolución del gasto en soles constantes y corrige textos de evolución, cruce y efecto | ✅ cerrado el 3/11/2026; adenda cerrada el 4/11/2026 |
 | **2. Intérprete de preguntas** | Escribir la pregunta en lenguaje natural; un LLM la traduce a la consulta del slice 1. Antes, decisión del dueño sobre proveedor, presupuesto y qué se guarda de las preguntas (P-03) | ✅ cerrado el 5/11/2026 (PR #2) |
-| **3. API y web mínima** | Usarlo desde el celular: caja de pregunta, capas, versión de la biblioteca y enlaces oficiales. Antes, X-04 | en curso |
+| **3. API y web mínima** | Usarlo desde el celular: caja de pregunta, capas, versión de la biblioteca y enlaces oficiales. Antes, X-04 | ✅ hecho (la web corre en local o en la red de la casa; evidencia en `backlog/slice-3/evidencia/`) |
 | **4. Beta cerrada** | Un grupo pequeño de personas lo usa en la nube. Antes: prueba con usuarios (P-05), revisión de lo provisional (X-05), despliegue (F-05) y medición sin datos personales (P-03) | ⏳ |
 | **5. Ampliación de datos (Ola 1)** | Preguntar por temas nuevos, uno por sub-slice. Antes: GA-13 y X-06 | ⏳ |
 
-Las observaciones del cierre del slice 1 (el cruce que prometía cifras «lado a lado», la evolución que no mostraba el año con el que compara, la frase de efecto que se contradecía y la evolución del gasto que no comparaba años) se resolvieron en la adenda (`backlog/slice-1/evidencia/cierre.md`, sección «Adenda»). Las observaciones bajas que cambian el patrón de Q1–Q4 (H14, H15, H17, H18, H21 y A-H8) se revisan en el slice 3, con la web ⏳.
+Las observaciones del cierre del slice 1 (el cruce que prometía cifras «lado a lado», la evolución que no mostraba el año con el que compara, la frase de efecto que se contradecía y la evolución del gasto que no comparaba años) se resolvieron en la adenda (`backlog/slice-1/evidencia/cierre.md`, sección «Adenda»). Las observaciones bajas que cambian el patrón de Q1–Q4 (H14, H15, H17, H18, H21 y A-H8) se trataron en el slice 3 (S3-02; lo que queda abierto está en `backlog/slice-3/consultas_al_dueno.md`).
 
 ## 7. Problemas frecuentes
 

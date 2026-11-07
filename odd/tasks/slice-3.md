@@ -42,8 +42,11 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T10a S3-10 motor texts | S8 | inline (writer launch refused: task id format) | done: full suite 1253 passed | 693f96f |
 | T10b S3-10 web fixes | S9 | writer (context backstop) | done | 693f96f |
 | T10c S3-10 task 3 eval set + recordings | S6, L12 | inline | done: w01, w04, w05, w07 recorded (US$ 0.0305; S3-10 total 0.0732); eval 4/4 | (task 3 commit) |
-| T10d owner phone test | L13, L14 | owner | pending | |
+| T10d owner phone test | L13, L14, L17 | owner | done (owner, 2026-11-07, no findings reported) | |
 | T10e review by parts | L16 | inline (gentle_review, worktree pap-rev, code-only commits) | done: 13 parts approved, 0 blocking; S3-00 low risk without lenses | (review commit) |
+| T11a S3-11 fixes from review (/salud warm-up, bfcache buttons, axe vacuous) + matriz check false positive | L17 | inline | done | (S3-11 commit) |
+| T11b S3-11 docs | S3-11 task 2 | writer (context backstop) | done | (S3-11 commit) |
+| T11c S3-11 final checks + cierre.md + PR | S7 | inline | done: suite 1258 passed; matriz completa 5086/0 fallos; evaluación cumple; enlaces 1 falla W-06 | (S3-11 commit) |
 | T11 | S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 
 ## Log
@@ -64,3 +67,4 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 - L14 (2026-11-07, owner): W-10 «Sí, mismos textos (Recomendado)»; H-03 «Ocultarlo en la web (Recomendado)»; medios del motor: H-04 y H-05, H-06, H-07 selected; web H-08/H-09/H-10/H-14 fixed anyway; celular «Al final, después de los arreglos».
 - L15 (2026-11-07, owner): W-10 with the same texts exceeds R-04 125 words in provincia/distrito (up to 141) → «Sin apertura en provincia y distrito (Recomendado)».
 - L16 (2026-11-07, owner): «ok revisa el slice por partes».
+- L17 (2026-11-07, owner): «ya hice la prueba en celular. Arregla el S3-11» → phone test done; S3-11 with the recommended fixes 1, 2, 5 of revision_por_partes.md (/salud, bfcache buttons, axe); 3 and 4 to slice 4.

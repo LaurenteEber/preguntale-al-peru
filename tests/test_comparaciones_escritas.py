@@ -56,6 +56,19 @@ def test_acepta_mayor_en_cuando_coincide():
     assert C.comparaciones(r) == []
 
 
+def test_acepta_mayor_en_con_nombres_con_rotulo():
+    """S3-11: la cifra se llama «Lima Región (Lima Provincias)» y el texto dice «Lima Región» (como `_lugar` de plantillas.py)."""
+    r = _respuesta("En 2025, la anemia fue mayor en Lima Región que en Lima Metropolitana, con una diferencia clara.",
+                   {"a": _cifra("Lima Región (Lima Provincias)", 32.2), "b": _cifra("Lima Metropolitana (provincia de Lima)", 25.3)})
+    assert C.comparaciones(r) == []
+
+
+def test_detecta_mayor_en_al_reves_con_nombres_con_rotulo():
+    r = _respuesta("En 2025, la anemia fue mayor en Lima Metropolitana que en Lima Región, con una diferencia clara.",
+                   {"a": _cifra("Lima Región (Lima Provincias)", 32.2), "b": _cifra("Lima Metropolitana (provincia de Lima)", 25.3)})
+    assert [f["codigo"] for f in C.comparaciones(r)] == ["comparacion_contradice_cifras"]
+
+
 def test_una_comparacion_desconocida_falla():
     r = _respuesta("La anemia es menor que antes.", {"a": _cifra("Puno", 50.0)})
     assert [f["codigo"] for f in C.comparaciones(r)] == ["comparacion_sin_comprobar"]

@@ -198,6 +198,11 @@ def _cifras_de(r: dict, indicador=None, prefijo=None, rol=None) -> list[dict]:
             and (prefijo is None or c["indicador_id"].startswith(prefijo)) and (rol is None or c.get("rol") == rol)]
 
 
+def _sin_rotulo(nombre) -> str:
+    """El nombre como lo escribe la respuesta: sin el rótulo entre paréntesis (igual que `_lugar` en plantillas.py; S3-11)."""
+    return re.sub(r"\s*\([^)]*\)", "", str(nombre)).strip()
+
+
 def _comprobar_frase(r: dict, t: str) -> list[dict] | None:
     """Los fallos de una frase con comparativo, o None si no es una comparación que se sepa comprobar."""
     if FORMA_ANTERIOR_MAS_ALTA.search(t):          # la forma anterior de medir la anemia da cifras más altas que la vigente
@@ -212,7 +217,7 @@ def _comprobar_frase(r: dict, t: str) -> list[dict] | None:
                 for s in _cifras_de(r, prefijo="sien_anemia") for e in _cifras_de(r, prefijo="endes_anemia")
                 if int(s["anio"]) == int(e["anio"]) and not s["valor"] < e["valor"]]
     if m := MAYOR_EN.search(t):                    # comparación entre dos lugares: «fue mayor en A que en B»
-        val = {c["territorio_nombre"]: c["valor"] for c in _cifras_de(r, rol="principal")}
+        val = {_sin_rotulo(c["territorio_nombre"]): c["valor"] for c in _cifras_de(r, rol="principal")}
         a, b = val.get(m["a"]), val.get(m["b"])
         if a is None or b is None:
             return [_fallo("comparacion_sin_cifras", {"texto": t[:200], "lugares": [m["a"], m["b"]]})]
@@ -220,7 +225,7 @@ def _comprobar_frase(r: dict, t: str) -> list[dict] | None:
     if m := EXTREMO_UNO.search(t):                 # un solo lugar con la cifra más alta: ninguna otra del mismo año la supera
         anio = int(m["anio"])
         del_anio = [c for c in _cifras_de(r) if int(c["anio"]) == anio and c.get("medida") != "cobertura"]
-        suya = [c for c in del_anio if c["territorio_nombre"] == m["lugar"]]
+        suya = [c for c in del_anio if _sin_rotulo(c["territorio_nombre"]) == _sin_rotulo(m["lugar"])]
         if not suya:
             return [_fallo("comparacion_sin_cifras", {"texto": t[:200], "lugar": m["lugar"]})]
         mas = [c for c in del_anio if c["indicador_id"] == suya[0]["indicador_id"] and c["valor"] > suya[0]["valor"]]

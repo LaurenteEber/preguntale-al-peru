@@ -1,13 +1,13 @@
 # API de la web (S3-03)
 
-Servicio FastAPI, un solo proceso, sobre el mismo motor. Un candado envuelve toda llamada a `interpretar()` o `preguntar_minima()`. Textos en `curados/web/textos.yaml`, parámetros en `curados/web/parametros.yaml`. No hay ningún `GET` que lleve la pregunta.
+Servicio FastAPI, un solo proceso, sobre el mismo motor. La web (páginas HTML, abajo) es solo una presentación del JSON de `POST /api/preguntar`: no calcula, no redacta cifras y no cambia el JSON. Un candado envuelve toda llamada a `interpretar()` o `preguntar_minima()`. Textos en `curados/web/textos.yaml`, parámetros en `curados/web/parametros.yaml`. No hay ningún `GET` que lleve la pregunta.
 
 | Ruta | Entrada | Salida |
 |---|---|---|
-| `POST /api/preguntar` | JSON `{texto, elegir?}` o `{consulta, elegir?}` (uno solo de los dos). `elegir`: un número o una lista, acumulada en el orden de las aclaraciones | El `respuesta.json` del motor sin cambios |
+| `POST /api/preguntar` | JSON `{texto, elegir?}` o `{consulta, elegir?}` (uno solo de los dos). `elegir`: un número o una lista, acumulada en el orden de las aclaraciones | El `respuesta.json` del motor sin cambios. Incluye `capas.capa1.que_hacer` (siempre, en la capa 1) y, en `capas.capa3.citas[]`, la `url` de cada cita (vacía si no hay enlace oficial, P-02). Los rótulos de las secciones vienen de `curados/motor/textos/capas.yaml` → `rotulos`, no del código |
 | `GET /api/opciones` | — | `temas`, `intenciones`, `niveles` (con rótulo) y `ejemplos` |
 | `GET /api/version` | — | `Motor.version()` más `rotulo`: «Biblioteca {huella corta del cubo}, construida el {fecha}» |
-| `GET /salud` | — | `{"estado": "ok"}` o 503 `{"estado": "preparando"}` |
+| `GET /salud` | — | `{"estado": "ok"}`; 503 `{"estado": "preparando"}` mientras precalienta y 503 `{"estado": "error_precalentamiento"}` si el precalentamiento falló (S3-11) |
 
 ## Códigos HTTP
 
@@ -40,7 +40,7 @@ Las páginas usan la misma función que `POST /api/preguntar` (mismas validacion
 | `POST /preguntar` | Formulario: `texto` o `consulta` (JSON en un campo oculto), `elegir` (acumulado, «1,2») y `n` (el botón pulsado de una aclaración) | Página de respuesta, aclaración o aviso, con el estado HTTP de `/api/preguntar` |
 | `GET /estatico/app.js`, `/estatico/estilo.css` | — | El único JavaScript («Buscando…») y el único CSS |
 
-Cabeceras de las páginas y los archivos propios: `Content-Security-Policy` (`curados/web/parametros.yaml` → `paginas.csp`, `default-src 'self'`), `Referrer-Policy: no-referrer`, `X-Content-Type-Options: nosniff`. Ninguna respuesta pone cookies. Bloques de respuesta, en orden: Entendimos, respuesta corta (primero en «no se puede»), cifra clave, lo más cercano, ojo al leer, confianza (solo `capa1.confianza.texto`), qué hacer, «Más contexto» y «Para citar y verificar» (desplegables cerrados). Sin ficha técnica.
+Cabeceras de las páginas y los archivos propios: `Content-Security-Policy` (`curados/web/parametros.yaml` → `paginas.csp`, `default-src 'self'`), `Referrer-Policy: no-referrer`, `X-Content-Type-Options: nosniff`. Ninguna respuesta pone cookies. Bloques de respuesta, en orden: Entendimos, respuesta corta (primero en «no se puede»), cifra clave, lo más cercano, ojo al leer, confianza (solo `capa1.confianza.texto`), «Más contexto» y «Para citar y verificar» (desplegables cerrados; cada cita lleva su enlace oficial cuando hay `url`). Sin ficha técnica. «¿Qué puedo hacer?» está en la capa 1 del JSON, pero la página no lo muestra mientras `paginas.mostrar_que_hacer_sin_revisar` sea `false` (H-03: hasta que el dueño apruebe X-01); el JSON y la CLI no cambian.
 
 ## Formulario guiado (S3-05)
 

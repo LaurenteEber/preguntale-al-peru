@@ -1,6 +1,6 @@
 # Pregúntale al Perú — Guía de operación
 
-Cómo preparar el entorno y mantener la biblioteca de datos, las tablas curadas y las reglas. Para preguntar al motor: [manual_de_uso.md](manual_de_uso.md). Arquitectura: [arquitectura.md](arquitectura.md). Estado del proyecto: [estado.md](estado.md).
+Cómo preparar el entorno, mantener la biblioteca de datos, las tablas curadas y las reglas, y operar la web (§6). Para preguntar al motor: [manual_de_uso.md](manual_de_uso.md). Arquitectura: [arquitectura.md](arquitectura.md). Estado del proyecto: [estado.md](estado.md).
 
 ## 1. Preparar el entorno (una vez)
 
@@ -189,6 +189,79 @@ Cómo preguntar (opciones, `--texto`, aclaraciones, códigos de salida, cómo le
 | git dice «File exists» por un `.lock` | Otro proceso de git quedó a medias: cierra los editores y borra el `.lock` de `.git/` |
 | Desde una sesión remota de Claude, git deja `.lock` o un commit sale vacío | La sesión no tenía permiso para borrar en la carpeta. Hay que darle permiso de borrado antes de usar git y verificar el árbol del commit (`git ls-tree -r HEAD`) en un paso aparte |
 | Una dorada falla al construir | La cifra del INEI no se reproduce: revisa la definición, el criterio y la página citada. No uses `--forzar` |
+
+## 6. Operar la web (slice 3)
+
+Cómo usarla: [manual_de_uso.md](manual_de_uso.md) §3.1b. Rutas y códigos: [especificaciones/api.md](especificaciones/api.md). Hoy corre en local o en la red de la casa; no hay despliegue público (P-05, slice 4).
+
+### 6.1 `pap servir`
+
+```bash
+uv run pap servir                    # 127.0.0.1:8000, solo este equipo
+uv run pap servir --puerto 8123
+uv run pap servir --red-local        # 0.0.0.0: también desde otros equipos de la red
+```
+
+- Host y puerto por defecto: `curados/web/parametros.yaml` → `servicio`. Un puerto inválido no arranca.
+- Necesita la biblioteca (el cubo) en `biblioteca/`; en la nube, `scripts/bajar_biblioteca.sh` y luego `uv run pap calcular` (§1.1).
+- Al arrancar, un hilo precalienta el motor con Q1–Q4 y una consulta por intención (`curados/web/precalentar.yaml`). Mientras tanto, `/salud` y las preguntas responden 503 «preparando». Medido: de 4,2 a 4,7 s hasta `/salud` 200, y 24,9 s en el primer arranque en frío tras sincronizar dependencias (`backlog/slice-3/evidencia/s3-08_rendimiento.md`).
+- `GET /salud`: `{"estado": "ok"}` (200), `preparando` (503) o `error_precalentamiento` (503, el precalentamiento falló: revisa el registro; el nombre de la excepción queda en el registro, sin la pregunta).
+- El mensaje de arranque se imprime antes de que el puerto esté abierto: espera a `/salud` antes de preguntar.
+- `--red-local` abre el servicio a toda la red: úsalo solo en una red de confianza.
+
+### 6.2 Imagen Docker
+
+La receta es el `Dockerfile` de la raíz (Python 3.12 slim, usuario sin privilegios, dependencias desde `uv.lock`). Evidencia: `backlog/slice-3/evidencia/s3-09_imagen.md`.
+
+```bash
+docker build -t pap-s3-09:local .
+docker run --rm -p 8000:8000 -e PAP_ANTHROPIC_API_KEY pap-s3-09:local     # la clave pasa del entorno, sin escribirla
+```
+
+- **Con la biblioteca ya bajada**, móntala en solo lectura (`dimensiones`, `estandarizada` e `indicadores`, en `/app/biblioteca/…`) y no se baja nada.
+- **Sin ella**, `scripts/arranque_imagen.sh` la baja del release de GitHub (`biblioteca-010ea965`, o el que indique `PAP_BIBLIOTECA_ETIQUETA`) y comprueba las huellas con `SHA256SUMS` antes de descomprimir. Después compara la huella del cubo con la del manifiesto y, si no coincide, corre `pap calcular --permitir-sucio` (la imagen no lleva `.git`).
+- Termina con `pap servir --red-local --puerto $PAP_PUERTO`: dentro de la imagen escucha en todas las interfaces (S3-09-a), y es `-p` el que decide qué se publica. Revísalo en el despliegue del slice 4.
+- `HEALTHCHECK` sobre `/salud`, con 180 s de gracia para el precalentamiento y la descarga.
+
+### 6.3 Variables de entorno
+
+| Variable | Para qué | Por defecto |
+|---|---|---|
+| `PAP_ANTHROPIC_API_KEY` | Clave del intérprete de texto libre. Nunca en archivos ni en la imagen. Sin ella, el texto libre responde «no disponible» y el formulario guiado sigue | sin definir |
+| `PAP_PUERTO` | Puerto de la imagen (lo lee `scripts/arranque_imagen.sh` y el `HEALTHCHECK`) | `8000` |
+| `PAP_BIBLIOTECA_ETIQUETA` | Release del que la imagen baja la biblioteca si no hay una montada | `biblioteca-010ea965` |
+| `PAP_RAIZ` | Raíz del proyecto dentro de la imagen | `/app` |
+
+Fuera de la imagen, el puerto se elige con `--puerto`.
+
+### 6.4 Límites
+
+En `curados/web/parametros.yaml` → `limites` (todos `supuesto: S3-07`; el dueño los cambia editando una línea):
+
+| Límite | Valor de hoy | Qué pasa al pasarse |
+|---|---|---|
+| Preguntas por IP | 10 por minuto (ventana deslizante de 60 s) | 429, «Espera unos segundos y vuelve a intentar»; lo escrito se conserva |
+| Llamadas al LLM por día | 300 (día de Lima, reintentos incluidos; la caché de 24 h no cuenta) | 503 `tope_diario` solo en texto libre; el formulario guiado y la API con `consulta` siguen. Con los costos medidos, de US$ 0,72 a 5,40 por día |
+| Cuerpo de la petición | 8 KB | 413 |
+| Texto de la pregunta | 2 000 caracteres | 422 |
+
+- Los contadores están **en memoria**: se reinician al reiniciar el servicio y no se comparten entre procesos. Es un solo proceso (slice 4 los revisa).
+- La IP es la que ve el servidor; detrás de un proxy sería la del proxy (W-09, slice 4).
+- Las páginas no ponen cookies, no cargan nada de terceros y envían `Content-Security-Policy`, `Referrer-Policy: no-referrer` y `X-Content-Type-Options: nosniff`.
+- Objetivos de rendimiento y lo medido: `backlog/slice-3/evidencia/s3-08_rendimiento.md` (estructurada p95 0,27 s; texto con grabaciones p95 0,81 s; texto en vivo p95 3,13 s).
+
+### 6.5 Comprobar que no se registra la pregunta (P-03)
+
+La web no escribe archivos con la pregunta; el acceso guarda solo método, ruta (sin la consulta de la URL), código y tiempo; un error guarda el tipo de la excepción, sin mensaje ni traza. La única copia es la caché de interpretaciones de 24 h (`salidas/interprete/cache/`, P-03).
+
+1. **Prueba automática:**
+   ```bash
+   uv run pytest -q tests/web/test_privacidad.py
+   ```
+   Hace 50 preguntas con un marcador (por texto, caja y formulario guiado), fuerza una excepción y comprueba que el marcador no aparece en los registros, ni en stdout y stderr, ni en archivos nuevos; también lo comprueba con uvicorn real. Evidencia: `backlog/slice-3/evidencia/s3-07_privacidad.md`.
+2. **A mano:** con el servicio andando, haz una pregunta con una palabra rara (por ejemplo `zorzalprueba`) y busca esa palabra en lo que imprimió `pap servir` (o en `docker logs`) y en `salidas/`: solo debe aparecer en la caché de 24 h. En `salidas/interprete/uso.jsonl` solo hay huellas, nunca el texto.
+
+Los nombres de personas escritos en la pregunta no se detectan (P-03): mientras el servicio no se abra a terceros es un riesgo aceptado, y se revisa en el slice 4.
 
 ## Anexo: referencia de la CLI de ingesta
 

@@ -170,6 +170,8 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True, reloj
 
     @app.get("/salud")
     def salud() -> Response:
+        if listo.is_set() and app.state.error_precalentamiento:      # S3-11: un precalentamiento fallido no se informa como «ok»
+            return _json({"estado": "error_precalentamiento"}, 503)
         if listo.is_set():
             return _json({"estado": "ok"})
         return _json({"estado": "preparando"}, 503)

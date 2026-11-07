@@ -118,6 +118,7 @@ def _axe(pag) -> list[dict]:
     pag.evaluate("document.querySelectorAll('details').forEach(d => d.open = true)")          # el contenido plegado también se revisa
     pag.add_script_tag(content=AXE.read_text(encoding="utf-8"))
     res = pag.evaluate("() => axe.run(document)")
+    assert res["passes"], "axe no revisó ninguna regla: la prueba no probaría nada"      # S3-11: sin falso verde
     return [{"id": v["id"], "impacto": v["impact"], "nodos": [n["target"] for n in v["nodes"]][:5]} for v in res["violations"]]
 
 

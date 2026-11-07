@@ -6,9 +6,9 @@ Decidido por el dueño el 12/10/2026, tras la revisión desde la perspectiva del
 
 | Capa | Contenido | Reglas |
 |---|---|---|
-| **1. Visible** | respuesta corta · cifra clave · «Ojo al leer» · confianza | Objetivo ≈ 100 palabras, máximo 125 (prueba) |
+| **1. Visible** | respuesta corta · cifra clave · «Ojo al leer» · confianza · «¿Qué puedo hacer?» (`capa1.que_hacer`, solo en salud) | Objetivo ≈ 100 palabras, máximo 125 (prueba) |
 | **2. Más contexto** (desplegable) | tarjetas de cifras secundarias · avisos de las reglas · límites (ficha corta) | Cada tarjeta lleva su etiqueta «no se compara» cuando aplica |
-| **3. Para citar y verificar** (desplegable) | una cita por cifra · glosario · «¿Qué puedo hacer?» | La cita usa el documento oficial si hay dorada; si no, «cálculo propio con …». Cada cita lleva su enlace al documento oficial (`capa3.citas[].url`: la `url` de `cifras_doradas.csv` o, si no hay dorada, el portal de la fuente en `catalogo_fuentes.csv`; vacío si no hay enlace oficial, P-02). Los rótulos de las secciones salen de `curados/motor/textos/capas.yaml` (clave `rotulos`) |
+| **3. Para citar y verificar** (desplegable) | una cita por cifra · glosario | La cita usa el documento oficial si hay dorada; si no, «cálculo propio con …». Cada cita lleva su enlace al documento oficial (`capa3.citas[].url`: la `url` de `cifras_doradas.csv` o, si no hay dorada, el portal de la fuente en `catalogo_fuentes.csv`; vacío si no hay enlace oficial, P-02). Los rótulos de las secciones salen de `curados/motor/textos/capas.yaml` (clave `rotulos`) |
 | Detalle técnico | tabla de cifras, semáforo interno, ficha larga, reglas, texto con marcadores | Solo para auditoría |
 
 ## Reglas de redacción
@@ -21,7 +21,7 @@ Decidido por el dueño el 12/10/2026, tras la revisión desde la perspectiva del
 6. **Los avisos de las reglas** se muestran como lo que no se debe concluir (`capas._aviso_ciudadano`); la regla no cambia.
 7. **Todo texto visible pasa por el validador.** `texto` es la unión de corta + clave + ojo + contexto. Los números solo entran por marcadores.
 8. **Orden neutro** en listas que no se pueden ordenar (alfabético en Q4).
-9. **«¿Qué puedo hacer?»:** solo texto fijo que resume y enlaza una fuente oficial (`curados/motor/textos/que_hacer.yaml`). Se muestra «pendiente de revisión» hasta que `revisado_dueno: true`.
+9. **«¿Qué puedo hacer?»:** solo texto fijo que resume y enlaza una fuente oficial (`curados/motor/textos/que_hacer.yaml`). Va en la capa 1 del JSON (`capa1.que_hacer`), bajo la confianza. Se muestra «pendiente de revisión» hasta que `revisado_dueno: true`; la web lo oculta hasta que el dueño apruebe X-01 (el JSON y la CLI no cambian).
 
 ## Tipos de respuesta
 
@@ -49,6 +49,10 @@ Extensión para `pap preguntar --texto`: lo de arriba no cambia y la vía estruc
 - **Motivos `interprete_*` de `aclaracion`:** la misma forma que la aclaración de arriba (pregunta y opciones numeradas). `interprete_intencion_ambigua` y `interprete_varias_preguntas` (opciones propuestas por el LLM, cada una una consulta completa); `interprete_sin_intencion`, `interprete_sin_lugar` y `interprete_anio_relativo` (opciones armadas por el código).
 - **Motivo `interprete_fuera_de_alcance` de `no_se_puede`:** el intérprete reconoce una pregunta que el motor no responde (un «por qué», una proyección, una opinión). Sigue las reglas de `no_se_puede`; textos en `no_se_puede.yaml`.
 - **Códigos de salida** de `pap preguntar`: `cli.codigo_salida` de `parametros_motor.yaml` (respuesta y «no se puede» 0, aclaración y mensaje 2, `no_disponible` 3, error de uso 1).
+
+## La web como presentación (slice 3)
+
+La web (`docs/especificaciones/api.md`) pinta el `respuesta.json` sin tocarlo: mismos textos, mismas capas, mismas cifras. Lo único que cambia es qué bloques muestra (sin ficha técnica y, por ahora, sin «¿Qué puedo hacer?»). Los rótulos de las secciones («Más contexto», «Para citar y verificar»…) salen de `curados/motor/textos/capas.yaml` → `rotulos`, y cada cita lleva su enlace oficial en `capa3.citas[].url`.
 
 ## Implementación
 

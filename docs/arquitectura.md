@@ -14,7 +14,7 @@ Una web donde cualquier persona hace una pregunta sobre un problema del país (�
 - un motor por intenciones que responde cualquier pregunta **estructurada** sobre los 9 indicadores (cualquier territorio y año con datos) con texto por plantilla, entregado **por capas** (contrato de respuesta, §4.9). Q1–Q4 son ahora su regresión;
 - cuando no se puede responder, una respuesta de «no se puede» o una aclaración (§4.8).
 
-**Todavía no existen** la web ni el intérprete de preguntas con LLM (hoy la consulta se escribe con opciones de la CLI o en JSON). Son los slices 2 y 3 de la fase 5.
+El intérprete de preguntas con LLM (slice 2) y la web con su API (slice 3) ya existen y corren en local o en la red de la casa; el despliegue en la nube es el slice 4.
 
 ## 2. Principios de diseño
 
@@ -235,14 +235,32 @@ solo con el cuerpo de la respuesta y sus metadatos. pytest solo las reproduce (n
 `tests/interprete/evaluar.py` las graba (`--grabar`) y corre el conjunto de evaluación (`--evaluar`). Caché de 24 h en
 `salidas/interprete/cache/` y registro de uso sin texto en `salidas/interprete/uso.jsonl` (fuera de git).
 
+### 4.8b Servicio web (`src/pap/web/`, slice 3)
+
+`pap servir` levanta un solo proceso FastAPI (`app.py`, `crear_app`) con uvicorn, sobre el mismo `Motor` y el mismo intérprete. La web **presenta el JSON del motor**: no calcula, no redacta cifras ni decide reglas.
+
+| Pieza | Qué hace |
+|---|---|
+| `app.py` | `POST /api/preguntar` (texto o consulta), `GET /api/opciones`, `GET /api/version`, `GET /salud`; la función que resuelve una pregunta es la misma que usan las páginas |
+| `paginas.py`, `plantillas/`, `estatico/` | `GET /`, `POST /preguntar`, `/estatico/…`; HTML con Jinja, un solo CSS y un solo JavaScript («Buscando…»); cabeceras y CSP en `curados/web/parametros.yaml` |
+| `guiado.py` | `GET`/`POST /guiado`: arma la consulta mínima desde dos pasos, sin LLM |
+| `limites.py` | Límite por IP, tope diario de llamadas al LLM y contador de llamadas reales; todo **en memoria** |
+| `registro.py` | Registro de accesos sin la pregunta y guardia de excepciones no capturadas |
+| `servir.py` | `pap servir [--puerto] [--red-local]` |
+
+- **Precalentamiento.** Al crear la app, un hilo corre Q1–Q4 y una consulta por intención (`curados/web/precalentar.yaml`) para que la primera pregunta real no pague la carga. Mientras corre, `/salud` y las preguntas responden 503 «preparando»; si falla, `/salud` responde 503 `error_precalentamiento` y el nombre de la excepción queda en el registro.
+- **Candado.** Un `threading.Lock` envuelve toda llamada a `interpretar()` o `preguntar_minima()`: el motor atiende una pregunta a la vez. Con una persona no se nota (la vía estructurada p95 es 0,27 s); con varias a la vez habrá que medirlo (slice 4).
+- **Frontera con el motor.** La web solo llama a `interpretar()` / `preguntar_minima()` y recibe el `respuesta.json` sin cambios; los textos de las páginas son de `curados/web/textos.yaml` y los rótulos de las secciones, de `curados/motor/textos/capas.yaml`. La web no escribe `respuesta.json`, no lee el cubo por su cuenta y no guarda la pregunta (P-03): la única copia es la caché de interpretaciones de 24 h. Los códigos HTTP se derivan de `cli.codigo_salida`. Detalle de rutas: [especificaciones/api.md](especificaciones/api.md).
+- **Imagen.** El `Dockerfile` empaqueta el servicio; `scripts/arranque_imagen.sh` baja la biblioteca si falta, comprueba el cubo y sirve. Operación: [guia_de_operacion.md](guia_de_operacion.md) §6.
+
 ### 4.9 Contrato de respuesta por capas (12/10/2026)
 Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipos `no_se_puede` y `aclaracion`).
 
 | Capa | Contenido |
 |---|---|
-| 1. Visible (≈ 100 palabras; máximo 125) | Respuesta corta a la pregunta literal (si no se puede, se dice primero) · una cifra clave · «Ojo al leer» (qué **no** concluir) · «Confianza en los datos: alta / media / baja» · «¿Qué puedo hacer?» (solo texto oficial) |
+| 1. Visible (≈ 100 palabras; máximo 125) | Respuesta corta a la pregunta literal (si no se puede, se dice primero) · una cifra clave · «Ojo al leer» (qué **no** concluir) · «Confianza en los datos: alta / media / baja» · «¿Qué puedo hacer?» (solo texto oficial; la web lo oculta mientras X-01 no esté aprobada) |
 | 2. Más contexto | Cifras secundarias en tarjetas con la etiqueta «no se compara» · avisos de las reglas · límites |
-| 3. Para citar y verificar | Una cita por cifra (documento oficial si hay dorada) · glosario |
+| 3. Para citar y verificar | Una cita por cifra (documento oficial si hay dorada, con su `url`) · glosario |
 | Detalle técnico | Tabla de cifras, semáforo interno, ficha larga, reglas aplicadas, texto con marcadores |
 
 - **Validación:** el validador revisa todo el texto visible (corta + clave + «Ojo» + contexto).
@@ -259,7 +277,7 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 | `curados/generadores/` | Scripts que generaron tablas curadas (gasto E3/P3, doradas del SIEN), con sus insumos de revisión |
 | `reglas/` | Reglas (generadas: `reglas.json`, `reglas.md`, ficha y especificaciones de capa 0), su generador y sus verificaciones (`consolidador/`, `consolidador/pruebas/`), propuestas y alcance del piloto |
 | `biblioteca/` | Datos: cruda, dimensiones, estandarizada, indicadores (los Parquet y los crudos no van a git) |
-| `src/pap/` | La CLI `pap`: `cli.py`, ingesta (`registrar`, `descargar`, `verificar`, `citar`, `almacen`, `indice`, `recetas`), `capa0/` (construcciones) y `motor/` (cálculo, validador, respuesta) |
+| `src/pap/` | La CLI `pap`: `cli.py`, ingesta (`registrar`, `descargar`, `verificar`, `citar`, `almacen`, `indice`, `recetas`), `capa0/` (construcciones), `motor/` (cálculo, validador, respuesta), `interprete/` (texto libre) y `web/` (servicio y páginas) |
 | `tests/` | Pruebas automáticas (pytest); cuántas son: [estado.md](estado.md) |
 | `curados/capa0/` | Tablas curadas editables (fuente de verdad) |
 | `curados/motor/` | Catálogo de intenciones, parámetros, consultas mínimas, esquemas y textos fijos (`textos/`); las consultas del piloto archivadas y los casos del validador están en `tests/fixtures/consultas_piloto/` y `tests/casos_validador/` |
@@ -275,7 +293,8 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 - **Metadatos:** Frictionless Data Package v2 con términos DCAT/PROV.
 - **Tareas:** justfile.
 - **Fundamentos:** `docs/especificaciones/stack.md`.
-- **Futuro (fase 5):** FastAPI con DuckDB en solo lectura sobre el cubo, desplegado en la nube con Docker.
+- **Web (slice 3):** FastAPI + uvicorn, plantillas Jinja, sin JavaScript de terceros; imagen Docker desde `uv.lock`.
+- **Futuro (slice 4):** despliegue en la nube con dominio y HTTPS.
 
 ## 7. Gobierno del proyecto
 
@@ -285,7 +304,7 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 
 ## 8. Límites actuales
 
-- **Sin web ni LLM:** la pregunta debe llegar estructurada (opciones de la CLI o consulta mínima en JSON). Lo siguiente es el intérprete LLM (slice 2, fase 5b) y la API y web (fase 5c).
+- **Web solo en local o en la red de la casa:** sin despliegue público, dominio ni HTTPS (slice 4). Los contadores del límite por IP y del tope diario están en memoria y se reinician con el servicio; un solo candado atiende una pregunta a la vez; la IP detrás de un proxy sería la del proxy.
 - **Solo los 9 indicadores del piloto;** la Ola 1 espera GA-13 (gasto en proyectos fuera del detalle de inversiones).
 - **Series incompletas:**
   - el criterio vigente de anemia solo tiene 2024–2025 (el recálculo de años anteriores está decidido para después del MVP);
