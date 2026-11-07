@@ -59,7 +59,7 @@ Del cierre (`../slice-2/evidencia/cierre.md`):
 | S3-08 | [Rendimiento](S3-08-rendimiento.md) | hecha ([evidencia](evidencia/s3-08_rendimiento.md)); sin LLM p95 0,27 s; texto en vivo p95 3,1 s |
 | S3-09 | [Empaquetado: imagen y `pap servir`](S3-09-empaquetado.md) | hecha ([evidencia](evidencia/s3-09_imagen.md)); imagen probada con Docker (colima) |
 | S3-10 | [Revisión independiente en el celular](S3-10-revision-independiente.md) | hecha ([revisión de usuario](evidencia/revision_usuario_s3.md), [revisión por partes](evidencia/revision_por_partes.md)): «apto con observaciones», correcciones aplicadas; prueba del dueño en su celular el 7/11/2026 |
-| S3-11 | [Documentación y cierre](S3-11-documentacion-cierre.md) | hecha ([cierre](evidencia/cierre.md)); falta la fusión y la etiqueta `slice-3-cerrado`, cuando el dueño escriba «fusiona» |
+| S3-11 | [Documentación y cierre](S3-11-documentacion-cierre.md) | hecha ([cierre](evidencia/cierre.md)); fusionada en `main` (PR #3) y etiqueta `slice-3-cerrado` |
 
 Desde S3-03, en cada historia:
 - `uv run pytest -q`, en la nube con `-m "not solo_mac and not navegador"` si no hay Chromium;

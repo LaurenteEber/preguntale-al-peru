@@ -68,3 +68,4 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 - L15 (2026-11-07, owner): W-10 with the same texts exceeds R-04 125 words in provincia/distrito (up to 141) → «Sin apertura en provincia y distrito (Recomendado)».
 - L16 (2026-11-07, owner): «ok revisa el slice por partes».
 - L17 (2026-11-07, owner): «ya hice la prueba en celular. Arregla el S3-11» → phone test done; S3-11 with the recommended fixes 1, 2, 5 of revision_por_partes.md (/salud, bfcache buttons, axe); 3 and 4 to slice 4.
+- L18 (2026-11-07, owner): «ok, fusiona» → PR #3 merged (3103961), tag slice-3-cerrado pushed, pytest on main 1258 passed 1 skipped. «Ok, paramos por ahora. Guarda todo en engram y en el informe de cierre».

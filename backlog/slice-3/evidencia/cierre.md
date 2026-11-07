@@ -23,7 +23,7 @@ Todo es la misma respuesta del motor: la web no calcula, no redacta y no cambia 
 | 5 | Privacidad (P-03): la pregunta no queda en registros, archivos ni trazas (salvo la caché de 24 h); nada de terceros, sin cookies | sí | `tests/web/test_privacidad.py` ([s3-07_privacidad.md](s3-07_privacidad.md)) |
 | 6 | Límite por IP y tope diario del LLM; al llegar al tope, se ofrece el formulario | sí | `tests/web/test_limites.py` ([s3-07_privacidad.md](s3-07_privacidad.md)) |
 | 7 | `pap servir` en local; la imagen Docker baja la biblioteca, comprueba su huella y responde `/salud`; sin despliegue público | sí | [s3-09_imagen.md](s3-09_imagen.md) |
-| 8 | Revisión independiente en celular «apto», documentación al día, etiqueta `slice-3-cerrado` | sí, salvo la etiqueta | revisión: «apto con observaciones», con las correcciones aplicadas; revisión del código por partes: 13 de 13 aprobadas ([revision_por_partes.md](revision_por_partes.md)); documentación al día (S3-11). La etiqueta se crea cuando el dueño escriba «fusiona» |
+| 8 | Revisión independiente en celular «apto», documentación al día, etiqueta `slice-3-cerrado` | sí | revisión: «apto con observaciones», con las correcciones aplicadas; revisión del código por partes: 13 de 13 aprobadas ([revision_por_partes.md](revision_por_partes.md)); documentación al día (S3-11). Etiqueta `slice-3-cerrado` creada tras la fusión |
 
 ## Comprobaciones finales (7/11/2026)
 
@@ -45,6 +45,15 @@ Todo es la misma respuesta del motor: la web no calcula, no redacta y no cambia 
 - Al volver atrás en el navegador, los botones ya no quedan desactivados ni en «Buscando…».
 - La prueba de axe falla si axe no revisó ninguna regla.
 - El chequeo de comparaciones de la matriz ya no da un falso aviso con «Lima Región» y «Lima Metropolitana»: comparaba el nombre escrito con el nombre que lleva el rótulo entre paréntesis. La respuesta estaba bien (32,2 % frente a 25,3 %).
+
+## Fusión y cierre (7/11/2026)
+
+- El dueño escribió «fusiona».
+- El PR #3 se fusionó en `main` con un commit de merge (`3103961`).
+- La etiqueta `slice-3-cerrado` se creó sobre ese commit y se subió a GitHub.
+- La suite completa en `main` después de la fusión: 1258 pasan y 1 se salta (la de capturas).
+- El código de S3-11 también pasó la revisión independiente, con 7 observaciones que no bloquean. Con eso están revisadas todas las historias con código; S3-00 es una sola línea de documentación y no se revisa.
+- Las ramas `slice-3` y `claude/determined-einstein-lwwemc` se conservan.
 
 ## Qué quedó fuera
 
