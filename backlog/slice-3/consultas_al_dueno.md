@@ -55,6 +55,14 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 | S3-01b-c | S3-01b | Alias «lurigancho chosica» y «lurigancho-chosica» → 150118 (H-J) | `curados/motor/textos/territorio.yaml` → `alias_distrito` |
 | S3-01b-d | S3-01b | `comprobar_enlaces.sh` usa un agente de navegador (`-A 'Mozilla/5.0'`): datosabiertos.gob.pe responde 418 a curl sin él | `scripts/comprobar_enlaces.sh` |
 | S3-01b-e | S3-01b | Evaluación: pd09 «la municipalidad» = gasto del lugar; pd17 (inyección) = no responder | `tests/interprete/evaluacion.yaml` (notas) |
+| S3-04-a | S3-04 | La política de seguridad de las páginas suma `form-action 'self'`, `frame-ancestors 'none'`, `base-uri 'none'`, `Referrer-Policy: no-referrer` y `nosniff` | `curados/web/parametros.yaml` → `paginas.csp` |
+| S3-04-b | S3-04 | Llevan enlace al formulario guiado los mensajes `no_disponible` y `tope_diario` | `curados/web/parametros.yaml` → `paginas.mensajes_con_enlace_guiado` |
+| S3-04-c | S3-04 | Los avisos de la web son los textos del intérprete sin la frase de la terminal; `otro` cubre un motivo desconocido | `curados/web/textos.yaml` → `mensajes` |
+| S3-04-d | S3-04 | En «no se puede», la respuesta corta va antes que «Entendimos» (R-04); en una aclaración se muestra lo que escribió la persona, no «Entendimos» | plantillas web |
+| S3-04-e | S3-04 | De `alternativas` solo salen las que traen consulta, como botón «Preguntar esto» (**revisar el rótulo**) | `curados/web/textos.yaml` |
+| S3-04-f | S3-04 | Si la caché venció o la elección no vale: el texto de elección inválida y la caja vacía (la web no distingue los dos casos) | `curados/web/textos.yaml` → `errores.eleccion_invalida` |
+| S3-04-g | S3-04 | La línea de fuentes del inicio nombra INEI, Instituto Nacional de Salud y Ministerio de Economía y Finanzas (**revisar**) | `curados/web/textos.yaml` → `paginas` |
+| S3-04-h | S3-04 | Texto vacío: aviso y 422, sin llamar al motor | `curados/web/textos.yaml` → `paginas.texto_vacio` |
 
 ## Pendientes del dueño que siguen abiertos
 

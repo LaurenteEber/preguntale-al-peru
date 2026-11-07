@@ -1,6 +1,7 @@
-# Textos de la web (S3-03). Ninguno habla de la terminal: la web no muestra los textos de las excepciones.
-version: 1.0.0
-preparando: "Estamos preparando el servicio… Intenta de nuevo en unos segundos."
+# Textos de la web (S3-03, S3-04). Ninguno habla de la terminal: la web no muestra los textos de las excepciones ni los de la CLI.
+# Todo texto visible de las páginas sale de aquí o de curados/motor/textos/capas.yaml (rotulos); nunca de HTML, JavaScript ni Python.
+version: 1.1.0
+preparando: &preparando "Estamos preparando el servicio… Intenta de nuevo en unos segundos."
 version_rotulo: "Biblioteca {huella}, construida el {fecha}"
 errores:                              # por tipo de excepción o código de ConsultaInvalida
   solicitud_invalida: "No pudimos leer tu pregunta. Escríbela de nuevo."
@@ -32,3 +33,38 @@ ejemplos:
   - "¿Qué tanta anemia tienen los niños de Moquegua?"
   - "¿Cómo ha cambiado la pobreza en Puno?"
   - "¿Cuánto gasta el Estado en Ucayali?"
+
+# ---- S3-04: páginas -----------------------------------------------------------------------------------------------------
+# Mensajes del intérprete (`tipo: mensaje`), por `motivo`. Son los textos fijos de curados/motor/textos/interprete.yaml sin la frase
+# que manda a la terminal (`via_estructurada`); donde ofrecían las opciones, aquí va el enlace al formulario guiado.
+mensajes:
+  no_es_pregunta: "No encontramos una pregunta. Escribe qué quieres saber, de qué problema y de qué lugar; por ejemplo: «¿Cuánta anemia hay en Puno?»."
+  otro_idioma: "Por ahora solo respondemos preguntas en español."
+  no_entendida: "No entendimos la pregunta. ¿Puedes escribirla de otra forma?"
+  no_disponible: "Ahora no podemos interpretar preguntas escritas. Puedes elegir las opciones paso a paso."          # supuesto: S3-04-c
+  tope_diario: "Hoy ya no podemos interpretar más preguntas escritas. Puedes elegir las opciones paso a paso."       # supuesto: S3-04-c (el motivo lo fija S3-07)
+  volver_a_preguntar: "Escribe la pregunta de nuevo con el lugar o el año que quieres saber."
+  preparando: *preparando
+  otro: "No pudimos responder esa pregunta. Inténtalo de nuevo."                                                 # supuesto: S3-04-c
+paginas:
+  titulo_sitio: "Pregúntale al Perú"
+  lema: "Cifras de fuentes públicas oficiales sobre los problemas del país, por lugar y con los límites de cada cifra."
+  titulo_inicio: "¿Qué quieres saber?"
+  titulo_respuesta: "Respuesta"
+  titulo_aclaracion: "Necesitamos un dato más"
+  titulo_aviso: "Aviso"
+  caja_etiqueta: "Escribe tu pregunta"
+  caja_etiqueta_de_nuevo: "Escribe tu pregunta de nuevo"
+  caja_ayuda: "Cuéntanos de qué problema y de qué lugar quieres saber: un departamento, una provincia o un distrito."
+  boton_preguntar: "Preguntar"
+  buscando: "Buscando…"
+  ejemplos_titulo: "O toca un ejemplo"
+  temas_hoy: "Temas de hoy:"
+  fuentes_hoy: "Los datos salen de fuentes públicas oficiales: el INEI, el Instituto Nacional de Salud y el Ministerio de Economía y Finanzas."
+  guiado_enlace: "Elegir paso a paso, sin escribir"
+  texto_vacio: "Escribe tu pregunta antes de enviarla."
+  eco_rotulo: "Tu pregunta:"
+  fuente_rotulo: "Fuente:"
+  alternativa_boton: "Preguntar esto"
+  otra_pregunta: "Hacer otra pregunta"
+  volver_inicio: "Volver al inicio"

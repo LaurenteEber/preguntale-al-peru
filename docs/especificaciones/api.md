@@ -26,3 +26,15 @@ Derivados de `cli.codigo_salida` (`curados/motor/parametros_motor.yaml`) y del t
 | Error inesperado | — | 500 | `error_interno` |
 
 Los textos de error son de la web; el detalle de la excepción (sin la pregunta) va al registro y nunca a la respuesta.
+
+## Páginas HTML (S3-04)
+
+Las páginas usan la misma función que `POST /api/preguntar` (mismas validaciones, mismo candado, mismos estados HTTP); `/api/*` no cambia. Textos en `curados/web/textos.yaml` (`paginas`, `mensajes`) y rótulos en `curados/motor/textos/capas.yaml` → `rotulos`.
+
+| Ruta | Entrada | Salida |
+|---|---|---|
+| `GET /` | — | Inicio: caja de pregunta, ejemplos tocables, temas de hoy y fuentes, enlace a `/guiado` (lo construye S3-05) |
+| `POST /preguntar` | Formulario: `texto` o `consulta` (JSON en un campo oculto), `elegir` (acumulado, «1,2») y `n` (el botón pulsado de una aclaración) | Página de respuesta, aclaración o aviso, con el estado HTTP de `/api/preguntar` |
+| `GET /estatico/app.js`, `/estatico/estilo.css` | — | El único JavaScript («Buscando…») y el único CSS |
+
+Cabeceras de las páginas y los archivos propios: `Content-Security-Policy` (`curados/web/parametros.yaml` → `paginas.csp`, `default-src 'self'`), `Referrer-Policy: no-referrer`, `X-Content-Type-Options: nosniff`. Ninguna respuesta pone cookies. Bloques de respuesta, en orden: Entendimos, respuesta corta (primero en «no se puede»), cifra clave, lo más cercano, ojo al leer, confianza (solo `capa1.confianza.texto`), qué hacer, «Más contexto» y «Para citar y verificar» (desplegables cerrados). Sin ficha técnica.

@@ -19,6 +19,7 @@ from pap.motor.consulta import ConsultaInvalida
 from pap.motor.preguntar import EleccionInvalida, preguntar_minima
 from pap.motor.respuesta import Motor
 from pap.motor.validador.contexto import cargar_contexto
+from pap.web import paginas
 
 log = logging.getLogger("pap.web")
 
@@ -43,8 +44,11 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
     app.state.llm, app.state.dir_cache = llm, dir_cache          # las pruebas cambian la caché entre comparaciones
     app.state.error_precalentamiento = None
 
+    def fallo(clave: str, estado: int, texto: str | None = None) -> tuple[int, dict]:
+        return estado, {"tipo": "error", "motivo": clave, "texto": texto or tx["errores"][clave]}
+
     def error(clave: str, estado: int, texto: str | None = None) -> Response:
-        return _json({"tipo": "error", "motivo": clave, "texto": texto or tx["errores"][clave]}, estado)
+        return _json(fallo(clave, estado, texto)[1], estado)
 
     # ---- precalentamiento: en un hilo aparte; /salud y las preguntas responden 503 mientras corre
     def calentar() -> None:
@@ -80,22 +84,22 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
         return error("no_encontrado", 404)
 
     # ---- rutas
-    @app.post("/api/preguntar")
-    def preguntar(cuerpo: dict = Body(...)) -> Response:
+    def resolver(cuerpo: dict) -> tuple[int, dict]:
+        """Lo que responde `/api/preguntar`, como (estado HTTP, JSON); las páginas HTML (S3-04) llaman a esta misma función."""
         if not listo.is_set():
-            return _json({"tipo": "mensaje", "motivo": "preparando", "texto": tx["preparando"], "cifras": {}}, 503)
+            return 503, {"tipo": "mensaje", "motivo": "preparando", "texto": tx["preparando"], "cifras": {}}
         p = par["pregunta"]
         texto, consulta, elegir = cuerpo.get("texto"), cuerpo.get("consulta"), cuerpo.get("elegir")
         if (texto is None) == (consulta is None) or set(cuerpo) - {"texto", "consulta", "elegir"}:
-            return error("solicitud_invalida", 422)
+            return fallo("solicitud_invalida", 422)
         if (texto is not None and not isinstance(texto, str)) or (consulta is not None and not isinstance(consulta, dict)):
-            return error("solicitud_invalida", 422)
+            return fallo("solicitud_invalida", 422)
         if isinstance(texto, str) and len(texto) > p["texto_max_caracteres"]["valor"]:
-            return error("texto_muy_largo", 422)
+            return fallo("texto_muy_largo", 422)
         lista = elegir if isinstance(elegir, list) else [] if elegir is None else [elegir]
         if (len(lista) > p["elegir_max_numeros"]["valor"]
                 or not all(type(n) is int and 1 <= n <= p["elegir_max_valor"]["valor"] for n in lista)):
-            return error("solicitud_invalida", 422)
+            return fallo("solicitud_invalida", 422)
         try:
             with candado:
                 if texto is not None:
@@ -106,16 +110,21 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
             log.info("consulta inválida: %s", ",".join(e.codigos))      # el detalle va al registro, sin la pregunta (S3-07)
             propios = tx.get("codigos_consulta") or {}
             clave = next((c for c in e.codigos if c in propios), None)
-            return error("consulta_invalida", 422, propios[clave] if clave else None)
+            return fallo("consulta_invalida", 422, propios[clave] if clave else None)
         except EleccionInvalida:
             log.info("elección inválida")
-            return error("eleccion_invalida", 422)
+            return fallo("eleccion_invalida", 422)
         except Exception as e:  # noqa: BLE001
             log.error("error interno: %s", type(e).__name__)
-            return error("error_interno", 500)
+            return fallo("error_interno", 500)
         tabla = par["http"]["estado_por_motivo"]
         estado = tabla["valor"].get(res.get("motivo")) if res.get("tipo") == "mensaje" else None
-        return _json(res, estado or tabla["por_defecto"])
+        return estado or tabla["por_defecto"], res
+
+    @app.post("/api/preguntar")
+    def preguntar(cuerpo: dict = Body(...)) -> Response:
+        estado, res = resolver(cuerpo)
+        return _json(res, estado)
 
     @app.get("/api/opciones")
     def opciones() -> Response:
@@ -127,13 +136,16 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
         return _json({"temas": rot("rotulos_temas", i["temas"]), "intenciones": rot("rotulos_intenciones", i["intenciones"]),
                       "niveles": rot("rotulos_niveles", i["escalera_niveles"]["valor"]), "ejemplos": tx["ejemplos"]})
 
-    @app.get("/api/version")
-    def version() -> Response:
+    def version_web() -> dict:
         v = motor.version()
         man = motor.ctx.manifiestos.get("p1_indicadores", {})
         huella = (v.get("cubo") or "").removeprefix("sha256:")[:12]
         fecha = str(man.get("construido", ""))[:10]
-        return _json({**v, "rotulo": tx["version_rotulo"].format(huella=huella, fecha=fecha)})
+        return {**v, "rotulo": tx["version_rotulo"].format(huella=huella, fecha=fecha)}
+
+    @app.get("/api/version")
+    def version() -> Response:
+        return _json(version_web())
 
     @app.get("/salud")
     def salud() -> Response:
@@ -141,4 +153,5 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
             return _json({"estado": "ok"})
         return _json({"estado": "preparando"}, 503)
 
+    paginas.montar(app, raiz, tx, par, resolver, lambda: version_web()["rotulo"])      # S3-04: las páginas HTML
     return app

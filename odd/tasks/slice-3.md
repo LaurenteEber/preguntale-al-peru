@@ -29,7 +29,9 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T3b.3 X-22 + H-J | S4 | writer B (parallel, disjoint) | done | |
 | T3b.4 cubo test, docs, H-L, comprobar_enlaces.sh | S4 | writer C (parallel, disjoint) | done | |
 | T3b.5 E-04 18 questions + recordings, base_api, full checks | S4 | after T3b.2–4 | done | |
-| T4–T11 | S3-04 … S3-11 | order of S6 (L8 supersedes the L5 waves order) | pending | |
+| T3b commit | — | — | done | 329dda2 (pushed) |
+| T4 S3-04 | S6 | writer | done: 1089 passed | (S3-04 commit) |
+| T5–T11 | S3-05 … S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 
 ## Log
 

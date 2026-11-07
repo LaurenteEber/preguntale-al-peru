@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% from "_macros.html" import caja with context %}
+{% block titulo %}{{ p.titulo_aclaracion }} – {% endblock %}
+{% block contenido %}
+<h1>{{ p.titulo_aclaracion }}</h1>
+{% if texto is not none %}
+<p class="eco">{{ p.eco_rotulo }} <q data-eco>{{ texto }}</q></p>
+{% endif %}
+{% if a.opciones %}
+<form method="post" action="/preguntar" data-bloque="aclaracion">
+<p data-bloque="pregunta" class="pregunta" id="pregunta">{{ a.pregunta }}</p>
+{% if texto is not none %}
+<input type="hidden" name="texto" value="{{ texto }}">
+{% else %}
+<input type="hidden" name="consulta" value="{{ consulta }}">
+{% endif %}
+<input type="hidden" name="elegir" value="{{ elegir }}">
+<ul class="opciones" aria-labelledby="pregunta">
+{% for o in a.opciones %}
+<li><button type="submit" name="n" value="{{ o.n }}" data-buscando="{{ p.buscando }}">{{ o.etiqueta }}</button></li>
+{% endfor %}
+</ul>
+</form>
+{% else %}
+<p data-bloque="pregunta" class="pregunta">{{ a.pregunta }}</p>
+{% if texto is not none %}
+{{ caja(p.caja_etiqueta_de_nuevo) }}
+{% else %}
+<p><a href="/guiado">{{ p.guiado_enlace }}</a></p>
+{% endif %}
+{% endif %}
+{% endblock %}

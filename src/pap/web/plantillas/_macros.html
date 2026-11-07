@@ -1,0 +1,8 @@
+{% macro caja(etiqueta) %}
+<form method="post" action="/preguntar" class="caja">
+<label for="texto">{{ etiqueta }}</label>
+<p class="ayuda" id="ayuda-texto">{{ p.caja_ayuda }}</p>
+<textarea id="texto" name="texto" rows="3" maxlength="{{ maxlen }}" required aria-describedby="ayuda-texto"></textarea>
+<button type="submit" data-buscando="{{ p.buscando }}">{{ p.boton_preguntar }}</button>
+</form>
+{% endmacro %}

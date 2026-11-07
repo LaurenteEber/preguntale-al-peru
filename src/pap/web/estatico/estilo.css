@@ -1,0 +1,101 @@
+/* S3-04 — Un solo CSS propio. Móvil primero (las consultas de medios solo usan min-width). Letra base de 16 px.
+   Contraste AA en claro y oscuro: texto 16:1, enlaces y botones más de 7:1. Sin color ni clase por nivel de confianza (R-05). */
+:root {
+  --fondo: #ffffff;
+  --texto: #1a1a1a;
+  --suave: #4a4a4a;
+  --enlace: #0b4fa8;
+  --linea: #8a8a8a;
+  --panel: #f3f4f6;
+  --boton: #0b4fa8;
+  --boton-texto: #ffffff;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --fondo: #121212;
+    --texto: #ececec;
+    --suave: #b8b8b8;
+    --enlace: #8ab4f8;
+    --linea: #8a8a8a;
+    --panel: #1e1e1e;
+    --boton: #8ab4f8;
+    --boton-texto: #0a0a0a;
+  }
+}
+html { font-size: 100%; }
+body {
+  margin: 0;
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  line-height: 1.5;
+}
+.cabecera { padding: 0.75rem 1rem; border-bottom: 1px solid var(--linea); font-weight: 700; }
+.cabecera a { color: var(--texto); text-decoration: none; }
+main { max-width: 44rem; margin: 0 auto; padding: 1rem; }
+h1 { font-size: 1.5rem; line-height: 1.25; margin: 0.5rem 0 1rem; }
+h2 { font-size: 1.25rem; margin: 1.5rem 0 0.5rem; }
+h3 { font-size: 1.05rem; margin: 1rem 0 0.25rem; }
+a { color: var(--enlace); }
+a:focus-visible, button:focus-visible, textarea:focus-visible, summary:focus-visible { outline: 3px solid var(--enlace); outline-offset: 2px; }
+p, li { overflow-wrap: anywhere; }
+.lema, .ayuda, .fuente, .etiqueta, .version, .eco { color: var(--suave); }
+.caja label { display: block; font-weight: 700; margin-bottom: 0.25rem; }
+.caja .ayuda { margin: 0 0 0.5rem; }
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem;
+  font: inherit;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 2px solid var(--linea);
+  border-radius: 0.5rem;
+}
+button {
+  font: inherit;
+  font-weight: 700;
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  color: var(--boton-texto);
+  background: var(--boton);
+  border: 2px solid var(--boton);
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+button:disabled { cursor: progress; opacity: 0.85; }
+.caja button { margin-top: 0.5rem; width: 100%; }
+.ejemplos, .opciones, .alternativas { list-style: none; margin: 0; padding: 0; }
+.ejemplos li, .opciones li { margin: 0 0 0.5rem; }
+.ejemplos button, .opciones button {
+  width: 100%;
+  text-align: left;
+  font-weight: 400;
+  color: var(--texto);
+  background: var(--panel);
+  border-color: var(--linea);
+}
+.alternativas li { margin: 0 0 0.5rem; }
+.alternativas form { display: inline; }
+.datos { margin-top: 1.5rem; color: var(--suave); }
+.respuesta { font-size: 1.25rem; line-height: 1.4; margin: 0.5rem 0 1rem; }
+.entendimos { color: var(--suave); margin: 0.5rem 0; }
+.cifra { background: var(--panel); border-left: 4px solid var(--linea); border-radius: 0.5rem; padding: 0.75rem 1rem; margin: 1rem 0; }
+.cifra p { margin: 0.25rem 0; }
+.valor { font-size: 2rem; font-weight: 700; line-height: 1.2; }
+.confianza { font-weight: 700; border-top: 1px solid var(--linea); border-bottom: 1px solid var(--linea); padding: 0.75rem 0; margin: 1rem 0; }
+.aviso { padding: 0.75rem 1rem; background: var(--panel); border-left: 4px solid var(--linea); border-radius: 0.5rem; }
+.pregunta { font-size: 1.25rem; font-weight: 700; }
+q { quotes: "«" "»"; }
+details { border: 1px solid var(--linea); border-radius: 0.5rem; padding: 0.5rem 1rem; margin: 1rem 0; }
+summary { cursor: pointer; font-weight: 700; min-height: 2.75rem; display: flex; align-items: center; }
+details[open] summary { margin-bottom: 0.5rem; }
+dt { font-weight: 700; margin-top: 0.5rem; }
+dd { margin: 0 0 0.5rem; }
+.caja { margin: 1.5rem 0; }
+@media (min-width: 40em) {
+  main { padding: 1.5rem; }
+  h1 { font-size: 2rem; }
+  .caja button { width: auto; }
+}

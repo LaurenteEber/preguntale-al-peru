@@ -52,7 +52,7 @@ Del cierre (`../slice-2/evidencia/cierre.md`):
 | S3-02 | [Observaciones bajas aprobadas y base de la web](S3-02-observaciones-y-base.md) | hecha ([evidencia](evidencia/s3-02_observaciones.md)); H14 y H15 aplicadas, H21 pasó a la consulta W-02, H17 y H18 sin marca del dueño (W-03) |
 | S3-03 | [Servicio: FastAPI sobre el mismo motor](S3-03-servicio.md) | hecha ([evidencia](evidencia/s3-03_servicio.md)) |
 | S3-01b | [Correcciones del motor antes de la web](S3-01b-correcciones-motor.md) | hecha ([evidencia](evidencia/s3-01b/correcciones.md)); H-G pendiente del dueño (W-04) |
-| S3-04 | [Páginas: pregunta, respuesta y aclaración](S3-04-paginas.md) | pendiente |
+| S3-04 | [Páginas: pregunta, respuesta y aclaración](S3-04-paginas.md) | hecha ([evidencia](evidencia/s3-04_paginas.md)); supuestos S3-04-a a h |
 | S3-05 | [Formulario guiado, sin LLM](S3-05-formulario-guiado.md) | pendiente |
 | S3-06 | [Accesibilidad y celular](S3-06-accesibilidad.md) | pendiente |
 | S3-07 | [Privacidad, abuso y costo](S3-07-privacidad-abuso.md) | pendiente |

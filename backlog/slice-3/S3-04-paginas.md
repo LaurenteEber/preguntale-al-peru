@@ -59,5 +59,5 @@
 
 ## Criterios de aceptación
 
-- [ ] La prueba de números está en verde para Q1–Q4, la matriz reducida y el conjunto con grabaciones.
-- [ ] Ningún texto visible escrito en HTML ni en Python.
+- [x] La prueba de números está en verde para Q1–Q4, la matriz reducida y el conjunto con grabaciones.
+- [x] Ningún texto visible escrito en HTML ni en Python.

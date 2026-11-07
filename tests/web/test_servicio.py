@@ -144,7 +144,7 @@ def test_eleccion_invalida_usa_el_texto_de_la_web(cli):
 def test_no_hay_get_que_lleve_la_pregunta(app, cli):
     for ruta in app.routes:
         if "GET" in getattr(ruta, "methods", ()):
-            assert ruta.path in ("/salud", "/api/opciones", "/api/version"), ruta.path
+            assert ruta.path in ("/salud", "/api/opciones", "/api/version", "/", "/estatico/{nombre}"), ruta.path   # S3-04: inicio y archivos propios
     r = cli.get("/api/preguntar", params={"texto": "hola"})
     assert r.status_code == 405 and "--elegir" not in r.text
 
@@ -200,6 +200,7 @@ PERMITIDOS = {
     "pap.motor.formato": None,                                        # solo S3-04
     "pap.interprete.interpretar": {"interpretar"},
     "pap.interprete.llm": None,                                       # el adaptador del intérprete
+    "pap.web": {"paginas"},                                           # S3-04: las páginas HTML (app.py las monta)
 }
 
 
