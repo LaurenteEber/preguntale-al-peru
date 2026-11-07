@@ -217,7 +217,7 @@ class _Plantilla:
              "ciudadano": nom[:1].lower() + nom[1:], "ciudadano_cap": nom[:1].upper() + nom[1:],
              "sujeto": self.indic(c).get("sujeto") or (nom[:1].lower() + nom[1:]),
              "sujeto_corto": self.indic(c).get("sujeto_corto") or (nom[:1].lower() + nom[1:]),
-             "nivel_del": com["nivel_del"].get(nivel, ""), "nivel_en": com["nivel_en"].get(nivel, ""),
+             "nivel_del": com["nivel_del"].get(nivel, ""), "nivel_en": com["nivel_en"].get(c.nivel) or _sub(com["nivel_en"]["defecto"], {"lugar": lugar}),
              "nivel_palabra": com["nivel_palabra"].get(nivel, str(c.nivel)),
              "nivel_plural": com["nivel_plural"].get(nivel, com["nivel_plural"]["defecto"]),
              "fuente": _sub(fuente, {"anio": int(c.anio), "fuente_principal": c.fuente_principal})}

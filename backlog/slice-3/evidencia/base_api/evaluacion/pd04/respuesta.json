@@ -16,9 +16,10 @@
     "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
    },
    "ojo_al_leer": [
+    "Respondimos por el departamento de Puno. Si buscabas la provincia o el distrito de Puno, pregúntalo así: «provincia de Puno» o «distrito de Puno».",
     "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
    ],
-   "palabras": 68,
+   "palabras": 92,
    "que_hacer": {
     "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
     "revisado_dueno": false,
@@ -28,9 +29,7 @@
    "respuesta_corta": "En 2025, en Puno, la anemia en niñas y niños de 6 a 35 meses fue:"
   },
   "capa2": {
-   "avisos": [
-    "Respondimos por el departamento de Puno. Si buscabas la provincia o el distrito de Puno, pregúntalo así: «provincia de Puno» o «distrito de Puno»."
-   ],
+   "avisos": [],
    "limites": [
     "Datos de: ENDES 2025 (INEI)",
     "Territorio: departamento de Puno",

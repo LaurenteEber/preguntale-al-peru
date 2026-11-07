@@ -36,7 +36,7 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T6 S3-07 | S6 | writer | done: 1154 passed | (S3-07 commit) |
 | T7 S3-06 | S6 | writer | done: 1211 passed, 1 skipped (screenshots only) | (S3-06 commit) |
 | T9 S3-08 | S6 | writer in worktree ../pap-s3-08 (parallel) | done: 1211 passed; live ≈ US$ 0.12 | (S3-08 commit) |
-| T10 S3-10 | S6, L12–L13 | reviewer subagent | in progress | |
+| T10 S3-10 | S6, L12–L13 | reviewer subagent + fix writer | in progress: review «apto con observaciones»; H-01 fixed (B), H-02 broken phrase fixed (A), H-02 scope → W-10 (C); task 3 (failed questions into E-04) and owner phone test pending | |
 | T11 | S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 
 ## Log

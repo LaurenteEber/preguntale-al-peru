@@ -82,15 +82,15 @@ AVISO_X22 = "Respondimos por el departamento de Huancavelica."
 
 def _sin_aviso_x22(res: dict) -> dict:
     """«Huancavelica» a secas se responde por el departamento (X-22) y el motor agrega su aviso; la base de la API usaba «departamento
-    de Huancavelica» y no lo tiene. Aquí se comprueba que es la ÚNICA diferencia de las capas y se retira para aplicar los criterios
-    de la regresión (que no lo aprueba: backlog/slice-1/evidencia/regresion/Q1.yaml; ver s3-05_diferencias.md)."""
-    avisos = res["capas"]["capa2"]["avisos"]
+    de Huancavelica» y no lo tiene. En evolución (Q1) va primero en «Avisos» (S3-10: en «Ojo al leer» pasaría el máximo de la capa 1);
+    en otras intenciones iría primero en «Ojo al leer» (H-01). Aquí se comprueba que es la ÚNICA diferencia de las capas y se retira
+    para aplicar los criterios de la regresión (que no lo aprueba: backlog/slice-1/evidencia/regresion/Q1.yaml)."""
+    c1, avisos = res["capas"]["capa1"], res["capas"]["capa2"]["avisos"]
     propios = [a for a in avisos if a.startswith(AVISO_X22)]
     if not propios:
         return res
-    capas = {**res["capas"], "capa2": {**res["capas"]["capa2"], "avisos": [a for a in avisos if a not in propios]}}
-    assert len(propios) == 1
-    return {**res, "capas": capas}
+    assert len(propios) == 1 and avisos[0] == propios[0] and not any(o.startswith(AVISO_X22) for o in c1["ojo_al_leer"])
+    return {**res, "capas": {**res["capas"], "capa2": {**res["capas"]["capa2"], "avisos": avisos[1:]}}}
 
 
 Q = {"q1": ("anemia", "evolucion", {"lugar": "Huancavelica"}),

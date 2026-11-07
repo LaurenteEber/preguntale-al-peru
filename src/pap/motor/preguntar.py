@@ -550,6 +550,12 @@ def _resolver(motor, cm: dict, elegir, ofertas: list | None = None):
     return (out if len(out) > 1 else out[0]), None, numeros, elegidos
 
 
+# S3-10 (supuesto, reversible): intenciones donde la oferta de X-22 va en «Avisos» (capa 2) y no en «Ojo al leer»: una comparación
+# con dos departamentos a secas lleva dos ofertas, y la evolución de anemia ya llega a 3 «Ojo al leer»; en ambas la capa 1 pasaría de
+# `respuesta.capa1_palabras_max` (125 palabras) y se perdería una advertencia de la cifra.
+_OFERTA_EN_AVISOS = ("comparacion", "evolucion")
+
+
 def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bool = False) -> dict:
     """Responde una consulta mínima (dict o ruta a un JSON). Devuelve la respuesta (`tipo`: respuesta | no_se_puede) o la
     aclaración pendiente (`tipo`: aclaracion). `elegir`: número (desde 1) de la opción de la aclaración, para responderla sin
@@ -591,8 +597,14 @@ def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bo
     # S1-09 (H4): el lugar que la persona eligió entre homónimos conserva su nombre con provincia y departamento
     plan["desambiguados"] = {f"{r.nivel}:{r.id}": r.nombre_completo for r in elegidos if r.nivel in ("provincia", "distrito")}
     res = {"tipo": "plan"} if solo_plan else motor.responder(plan)
-    if ofertas and "capas" in res:                                             # X-22: la alternativa va en «Avisos» (capa 2), no en la capa 1
-        res["capas"]["capa2"]["avisos"] = list(dict.fromkeys(ofertas + res["capas"]["capa2"]["avisos"]))
+    if ofertas and "capas" in res:
+        if cm["intencion"] in _OFERTA_EN_AVISOS:                               # S3-10: con dos departamentos a secas la capa 1 se pasaría del tope
+            res["capas"]["capa2"]["avisos"] = list(dict.fromkeys(ofertas + res["capas"]["capa2"]["avisos"]))
+        else:                                                                  # X-22 (S3-10, H-01): PRIMERO en «Ojo al leer» (capa 1)
+            c1 = res["capas"]["capa1"]
+            nuevas = [o for o in ofertas if o not in c1["ojo_al_leer"]]
+            c1["ojo_al_leer"] = nuevas + c1["ojo_al_leer"]
+            c1["palabras"] += K.palabras(*nuevas)
     return _con_entrada(res, cm, plan)
 
 

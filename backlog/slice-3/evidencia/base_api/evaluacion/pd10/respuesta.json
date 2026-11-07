@@ -27,9 +27,10 @@
     "texto": "Confianza en los datos: media. La respuesta es parcial."
    },
    "ojo_al_leer": [
+    "Respondimos por el departamento de Ayacucho. Si buscabas el distrito de Ayacucho, pregúntalo así: «distrito de Ayacucho».",
     "No concluyas que el gasto funcionó o falló: estas cifras no permiten saberlo."
    ],
-   "palabras": 74,
+   "palabras": 91,
    "que_hacer": {
     "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
     "revisado_dueno": false,
@@ -40,7 +41,6 @@
   },
   "capa2": {
    "avisos": [
-    "Respondimos por el departamento de Ayacucho. Si buscabas el distrito de Ayacucho, pregúntalo así: «distrito de Ayacucho».",
     "Las cifras del cruce no cubren exactamente al mismo grupo: una se refiere a servicios para niñas y niños menores de 5 años y sus familias; la otra, a niñas y niños de 6 a 35 meses con hemoglobina medida que durmieron en la vivienda la noche anterior.",
     "Estas cifras vienen de fuentes de distinto tipo (encuesta a hogares, gasto registrado, registro de atenciones): se muestran juntas para dar contexto y cada una mide algo distinto."
    ],

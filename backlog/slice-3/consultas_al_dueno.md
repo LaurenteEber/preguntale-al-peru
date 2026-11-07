@@ -42,6 +42,21 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 - **Qué pasa:** el límite por IP usa la IP que ve la aplicación. En la red de la casa es la del celular. Detrás de un proxy o un balanceador (slice 4) sería la del proxy, y el límite se aplicaría a todos juntos.
 - **Propuesta:** con el despliegue, lanzar uvicorn con las cabeceras de proxy del servidor de confianza. Hoy no aplica (P-05).
 
+### W-10 — H-02 (S3-10): el gasto en «¿sirvió?» y en cruces, sin el aviso de alcance de u13 · pendiente del dueño (no bloquea)
+- **Qué pasa:** u13 se aprobó para el gasto de «¿cuánto hay hoy?». En «efecto» y «cruce» (w17: «¿El gasto sirvió en Lima Metropolitana?») la cifra de S/ 260,6 millones sale sin decir antes que no es solo anemia ni que no incluye a las entidades nacionales con sede en Lima. El revisor lo clasificó alto. La frase rota «lo gastado :» ya se corrigió («lo gastado en Lima Metropolitana:»).
+- **Propuesta:** extender la apertura de u13 a las respuestas de efecto y cruce con gasto, con los mismos textos. Cambia la capa 1 de Q3; se aprobaría como «dueño» en la regresión.
+
+### W-11 — Hallazgos medios de la revisión S3-10 · para tu revisión (no bloquean)
+Detalle y capturas en `evidencia/revision_usuario_s3.md`:
+- H-03: «¿Qué puedo hacer?» pendiente de revisión se ve en público (X-01).
+- H-04: la tarjeta de cobertura de hemoglobina no dice que no es anemia.
+- H-05: «Gasto en 2024» no explica por qué ese año ni que está en soles de 2025.
+- H-06: el glosario no se adapta al tema.
+- H-07: las citas de cálculo propio enlazan a portales genéricos.
+- H-08: el formulario con un lugar mal escrito no sugiere nada y reinicia.
+- H-09: «Espera un momento.» pierde lo escrito.
+- H-10: la aclaración repite «distrito Ayaviri».
+
 ## Supuestos aplicados (vacíos tipo B)
 
 | ID | Historia | Qué se supuso | Dónde vive |
@@ -54,7 +69,7 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 | S3-03-b | S3-03 | Topes de la entrada: `texto` hasta 2000 caracteres; `elegir` hasta 4 números, cada uno entre 1 y 50; se acepta un número o una lista | `curados/web/parametros.yaml` → `pregunta` |
 | S3-03-c | S3-03 | Las pruebas esperan hasta 120 s a que termine el precalentamiento | `curados/web/parametros.yaml` → `precalentamiento` |
 | S3-03-d | S3-03 | Estado HTTP: 200 para cualquier respuesta del motor (incluidos los mensajes fijos), 503 para `mensaje` con `motivo: no_disponible` y para «preparando», 422 para entradas inválidas. Tabla en `docs/especificaciones/api.md` | `curados/web/parametros.yaml` → `http`; `curados/web/textos.yaml` |
-| S3-01b-a | S3-01b | X-22: la frase que ofrece la provincia o el distrito va primero en «Avisos» (capa 2), así la capa 1 no cambia; solo nombra los niveles que existen con ese nombre | `curados/motor/textos/territorio.yaml` → `oferta_otros_niveles` |
+| S3-01b-a | S3-01b | X-22: la frase que ofrece la provincia o el distrito va ahora primero en «Ojo al leer» (capa 1), salvo en comparación y evolución, donde va primero en «Avisos» (capa 2) porque en comparación (dos departamentos a secas) y en evolución de anemia la capa 1 pasaría del máximo de 125 palabras; antes (S3-01b) iba en «Avisos». Cambiado tras la revisión S3-10 (H-01): quien lee «en Huancavelica» puede pensar en el distrito. Solo nombra los niveles que existen con ese nombre | `curados/motor/textos/territorio.yaml` → `oferta_otros_niveles` |
 | S3-01b-b | S3-01b | Interruptor `territorio.departamento_a_secas.activo` (con `false` vuelve la aclaración de antes; lo usa la prueba de la base del slice 2) | `curados/motor/parametros_motor.yaml` |
 | S3-01b-c | S3-01b | Alias «lurigancho chosica» y «lurigancho-chosica» → 150118 (H-J) | `curados/motor/textos/territorio.yaml` → `alias_distrito` |
 | S3-01b-d | S3-01b | `comprobar_enlaces.sh` usa un agente de navegador (`-A 'Mozilla/5.0'`): datosabiertos.gob.pe responde 418 a curl sin él | `scripts/comprobar_enlaces.sh` |

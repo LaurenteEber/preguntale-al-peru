@@ -27,15 +27,15 @@
     "texto": "Sí podemos mostrar qué lugares tienen el valor más alto de pobreza en todo el país. Puedes preguntarlo sin indicar un lugar.",
     "titulo": "Lo más cercano que sí tenemos"
    },
-   "ojo_al_leer": [],
-   "palabras": 53,
+   "ojo_al_leer": [
+    "Respondimos por el departamento de Huánuco. Si buscabas la provincia o el distrito de Huánuco, pregúntalo así: «provincia de Huánuco» o «distrito de Huánuco»."
+   ],
+   "palabras": 77,
    "que_hacer": null,
    "respuesta_corta": "No podemos mostrar qué lugares tienen el valor más alto de pobreza dentro de Huánuco: el orden que calculamos es solo para todo el país."
   },
   "capa2": {
-   "avisos": [
-    "Respondimos por el departamento de Huánuco. Si buscabas la provincia o el distrito de Huánuco, pregúntalo así: «provincia de Huánuco» o «distrito de Huánuco»."
-   ],
+   "avisos": [],
    "limites": [
     "Datos de: ninguna cifra publicada en esta respuesta",
     "Territorio: Huánuco",

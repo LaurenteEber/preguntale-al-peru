@@ -25,15 +25,15 @@
     "texto": "Sí tenemos la cifra de 2025 para Arequipa. Puedes preguntar por ese año.",
     "titulo": "Lo más cercano que sí tenemos"
    },
-   "ojo_al_leer": [],
-   "palabras": 26,
+   "ojo_al_leer": [
+    "Respondimos por el departamento de Arequipa. Si buscabas la provincia o el distrito de Arequipa, pregúntalo así: «provincia de Arequipa» o «distrito de Arequipa»."
+   ],
+   "palabras": 50,
    "que_hacer": null,
    "respuesta_corta": "No tenemos datos de pobreza de 2019."
   },
   "capa2": {
-   "avisos": [
-    "Respondimos por el departamento de Arequipa. Si buscabas la provincia o el distrito de Arequipa, pregúntalo así: «provincia de Arequipa» o «distrito de Arequipa»."
-   ],
+   "avisos": [],
    "limites": [
     "Datos de: ninguna cifra publicada en esta respuesta",
     "Territorio: Arequipa",
