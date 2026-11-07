@@ -18,6 +18,9 @@ Derivados de `cli.codigo_salida` (`curados/motor/parametros_motor.yaml`) y del t
 | `respuesta`, `no_se_puede`, `aclaracion` | 0, 0, 2 | 200 | respuesta del motor |
 | `mensaje` (`no_es_pregunta`, `otro_idioma`, `no_entendida`, `volver_a_preguntar`) | 2 | 200 | mensaje fijo del intérprete |
 | `mensaje` con `motivo: no_disponible` | 3 | 503 | mensaje fijo del intérprete |
+| Límite por IP superado (S3-07) | — | 429 | `{"tipo": "mensaje", "motivo": "espera_un_momento", "texto": «Espera un momento.»}` |
+| Tope diario de llamadas al LLM (S3-07), solo texto libre | 3 | 503 | `{"tipo": "mensaje", "motivo": "tope_diario", "texto": «Hoy ya no podemos interpretar más preguntas escritas…»}`; `consulta` (formulario guiado) sigue respondiendo |
+| Cuerpo de más de 8 KB (S3-07) | — | 413 | `{"tipo": "error", "motivo": "cuerpo_muy_grande", "texto"}` (texto plano fuera de `/api/`) |
 | Servicio preparándose | — | 503 | `{"tipo": "mensaje", "motivo": "preparando", "texto": «Estamos preparando el servicio…»}` |
 | `ConsultaInvalida` | 1 | 422 | `{"tipo": "error", "motivo": "consulta_invalida", "texto"}` |
 | `EleccionInvalida` | 1 | 422 | `{"tipo": "error", "motivo": "eleccion_invalida", "texto"}` |
@@ -49,3 +52,12 @@ Dos pasos, sin LLM y sin JavaScript. Las opciones salen de lo mismo que `GET /ap
 | `POST /guiado` | Paso 1: `tema`, `intencion`. Paso 2: además `paso=2` y los campos de la intención: `lugar` o `lugar_nacional` («Todo el Perú»), `lugar2` o `lugar2_nacional` (comparación), `anio`, `desde`, `hasta`, `nivel` (extremo; «dentro de» siempre Todo el Perú) | Sin `paso`: el formulario del paso 2 solo con los campos de esa intención. Con `paso=2`: arma la consulta mínima (`pregunta_original` con una plantilla de `textos.yaml`) y responde igual que `POST /preguntar` (respuesta, aclaración o aviso, mismo estado HTTP) |
 
 `periodo`: `{anio}` si se escribió el año y si no `{ultimo}`; en `evolucion`, `{serie, desde?, hasta?}`. Errores de llenado (falta el lugar, lugar y «Todo el Perú» a la vez, año que no es de cuatro cifras, nivel inválido) vuelven al paso 2 con 422 y su texto, sin llamar al motor. Una combinación sin fila en `intenciones.yaml` no se oculta: el motor responde su «no se puede».
+
+## Privacidad, abuso y costo (S3-07)
+
+Valores en `curados/web/parametros.yaml` → `limites` (todos `supuesto: S3-07`); contadores en memoria. Detalle y pruebas: `backlog/slice-3/evidencia/s3-07_privacidad.md`.
+
+- **Por IP:** 10 preguntas por minuto (ventana deslizante) entre `/api/preguntar`, `/preguntar` y el paso 2 de `/guiado`; el paso 1 no cuenta. La IP es la que ve el servidor (detrás de un proxy hay que pasarla con las cabeceras de proxy de uvicorn).
+- **Tope diario:** 300 peticiones reales al LLM por día de Lima (`America/Lima`), reintentos incluidos; los aciertos de la caché de 24 h no cuentan. Al llegarlo, `GET /` desactiva la caja y los ejemplos y muestra el mensaje con el enlace a `/guiado`; el formulario guiado y `consulta` siguen respondiendo.
+- **Cuerpo:** 8 KB como máximo, medido también sin `Content-Length`.
+- **Registros:** el acceso guarda método, ruta (sin la consulta de la URL), código y tiempo; un error guarda el tipo de la excepción, sin mensaje ni traza; una excepción no capturada la atrapa la guardia (500 `error_interno`) antes de llegar a uvicorn. La web no escribe archivos; la única copia de la interpretación es la caché de 24 h de P-03.

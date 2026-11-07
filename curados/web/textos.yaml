@@ -11,6 +11,7 @@ errores:                              # por tipo de excepción o código de Cons
   error_interno: "Algo salió mal de nuestro lado. Inténtalo de nuevo en un momento."
   metodo_no_permitido: "Esta dirección solo acepta preguntas enviadas desde el formulario."
   no_encontrado: "No encontramos esa dirección."
+  cuerpo_muy_grande: "Lo que enviaste es demasiado grande. Escribe una pregunta más corta."          # supuesto: S3-07
 codigos_consulta: {}                  # texto propio por código de ConsultaInvalida (opcional; sin él, `consulta_invalida`)
 rotulos_intenciones:
   nivel_actual: "¿Cuánto hay hoy?"
@@ -42,7 +43,8 @@ mensajes:
   otro_idioma: "Por ahora solo respondemos preguntas en español."
   no_entendida: "No entendimos la pregunta. ¿Puedes escribirla de otra forma?"
   no_disponible: "Ahora no podemos interpretar preguntas escritas. Puedes elegir las opciones paso a paso."          # supuesto: S3-04-c
-  tope_diario: "Hoy ya no podemos interpretar más preguntas escritas. Puedes elegir las opciones paso a paso."       # supuesto: S3-04-c (el motivo lo fija S3-07)
+  tope_diario: "Hoy ya no podemos interpretar más preguntas escritas. Puedes elegir las opciones paso a paso."       # supuesto: S3-04-c; motivo confirmado por S3-07
+  espera_un_momento: "Espera un momento."                                                                            # S3-07: límite por IP, mensaje fijo
   volver_a_preguntar: "Escribe la pregunta de nuevo con el lugar o el año que quieres saber."
   preparando: *preparando
   otro: "No pudimos responder esa pregunta. Inténtalo de nuevo."                                                 # supuesto: S3-04-c

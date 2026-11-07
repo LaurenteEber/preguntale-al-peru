@@ -8,7 +8,7 @@
 <h2 id="ejemplos-titulo">{{ p.ejemplos_titulo }}</h2>
 <ul class="ejemplos">
 {% for e in tx.ejemplos %}
-<li><form method="post" action="/preguntar"><button type="submit" name="texto" value="{{ e }}" data-buscando="{{ p.buscando }}">{{ e }}</button></form></li>
+<li><form method="post" action="/preguntar"><button type="submit" name="texto" value="{{ e }}" data-buscando="{{ p.buscando }}"{% if tope %} disabled{% endif %}>{{ e }}</button></form></li>
 {% endfor %}
 </ul>
 </section>

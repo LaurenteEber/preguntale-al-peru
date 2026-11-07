@@ -26,5 +26,5 @@
 
 ## Criterios de aceptación
 
-- [ ] El marcador no aparece fuera de la caché permitida.
-- [ ] Al llegar al tope, el texto libre se desactiva y el formulario sigue respondiendo.
+- [x] El marcador no aparece fuera de la caché permitida.
+- [x] Al llegar al tope, el texto libre se desactiva y el formulario sigue respondiendo.

@@ -38,6 +38,10 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 - **Qué pasa:** se esperaba una evolución de la anemia en Huancavelica; el intérprete pide aclarar entre «cómo cambió» y «cuánto hay hoy» (como en tu prueba). Es lo más prudente, pero cuenta como falla en la evaluación (los umbrales globales se cumplen).
 - **Propuesta:** aceptar la aclaración como resultado esperado (`resultado: aclaracion`, `intencion_ambigua`).
 
+### W-09 — Para el slice 4: la IP detrás de un proxy (S3-07) · abierta (no bloquea)
+- **Qué pasa:** el límite por IP usa la IP que ve la aplicación. En la red de la casa es la del celular. Detrás de un proxy o un balanceador (slice 4) sería la del proxy, y el límite se aplicaría a todos juntos.
+- **Propuesta:** con el despliegue, lanzar uvicorn con las cabeceras de proxy del servidor de confianza. Hoy no aplica (P-05).
+
 ## Supuestos aplicados (vacíos tipo B)
 
 | ID | Historia | Qué se supuso | Dónde vive |
@@ -70,6 +74,10 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 | S3-05-e | S3-05 | Año con cuatro cifras; si hay lugar y «Todo el Perú» a la vez, se pide dejar uno | `curados/web/textos.yaml` → `guiado` |
 | S3-05-f | S3-05 | Rótulos, ayudas, plantillas de `pregunta_original` y avisos del formulario (**revisar**) | `curados/web/textos.yaml` → `guiado` |
 | S3-05-g | S3-05 | Niveles en el orden de `/api/opciones`, sin «Todo el Perú» | `curados/web/parametros.yaml` → `guiado` |
+| S3-07-a | S3-07 | Límite por IP: 10 preguntas por minuto (ventana de 60 s) → «Espera un momento.» (429) | `curados/web/parametros.yaml` → `limites` |
+| S3-07-b | S3-07 | Tope diario: 300 llamadas reales al LLM (reintentos incluidos, la caché no cuenta), día de Lima; al llegar, la caja de texto se desactiva y lleva al formulario (503 en la API) | `curados/web/parametros.yaml` → `limites` |
+| S3-07-c | S3-07 | Cuerpo máximo de 8 192 bytes (413) | `curados/web/parametros.yaml` → `limites` |
+| S3-07-d | S3-07 | `tope_diario` es el motivo del tope (confirma S3-04-b) | `curados/web/parametros.yaml` → `paginas` |
 
 ## Pendientes del dueño que siguen abiertos
 

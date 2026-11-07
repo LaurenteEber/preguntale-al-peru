@@ -14,14 +14,15 @@ from fastapi import Body, FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import Response
 
-from pap.interprete.interpretar import interpretar
+from pap.interprete.interpretar import crear_cliente, interpretar
 from pap.motor.consulta import ConsultaInvalida
 from pap.motor.preguntar import EleccionInvalida, preguntar_minima
 from pap.motor.respuesta import Motor
 from pap.motor.validador.contexto import cargar_contexto
-from pap.web import paginas
+from pap.web import limites, paginas, registro
 
 log = logging.getLogger("pap.web")
+_DEFECTO = object()                          # `registro_uso` sin dar: `interpretar()` decide (salidas/interprete/uso.jsonl, salvo en pytest)
 
 
 def _yaml(raiz: Path, ruta: str) -> dict:
@@ -32,7 +33,8 @@ def _json(dato, estado: int = 200) -> Response:
     return Response(json.dumps(dato, ensure_ascii=False, default=str), status_code=estado, media_type="application/json")
 
 
-def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> FastAPI:
+def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True, reloj=None, registro_uso=_DEFECTO) -> FastAPI:
+    """`reloj`: devuelve la hora con zona (las pruebas cambian de día); `registro_uso`: ruta del registro de uso del intérprete (P-03)."""
     raiz = Path(raiz)
     par = _yaml(raiz, "curados/web/parametros.yaml")
     tx = _yaml(raiz, "curados/web/textos.yaml")
@@ -43,6 +45,11 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
     app.state.motor, app.state.listo, app.state.candado = motor, listo, candado
     app.state.llm, app.state.dir_cache = llm, dir_cache          # las pruebas cambian la caché entre comparaciones
     app.state.error_precalentamiento = None
+    lim = app.state.limites = limites.Limites(par, reloj)               # S3-07: contadores en memoria (P-05)
+    contado = limites.LlmContado(lim, llm, crear=lambda: crear_cliente(raiz))
+    extra_uso = {} if registro_uso is _DEFECTO else {"registro": registro_uso}
+    registro.instalar()
+    app.add_middleware(registro.Guardia, limites=lim, tx=tx, cabeceras=paginas.cabeceras_de(par))
 
     def fallo(clave: str, estado: int, texto: str | None = None) -> tuple[int, dict]:
         return estado, {"tipo": "error", "motivo": clave, "texto": texto or tx["errores"][clave]}
@@ -83,6 +90,11 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
     def _no_hay(_req: Request, _exc) -> Response:
         return error("no_encontrado", 404)
 
+    def mensaje_fijo(motivo: str) -> tuple[int, dict]:
+        tabla = par["http"]["estado_por_motivo"]
+        return tabla["valor"].get(motivo) or tabla["por_defecto"], {"tipo": "mensaje", "motivo": motivo,
+                                                                    "texto": tx["mensajes"][motivo], "cifras": {}}
+
     # ---- rutas
     def resolver(cuerpo: dict) -> tuple[int, dict]:
         """Lo que responde `/api/preguntar`, como (estado HTTP, JSON); las páginas HTML (S3-04) llaman a esta misma función."""
@@ -100,10 +112,15 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
         if (len(lista) > p["elegir_max_numeros"]["valor"]
                 or not all(type(n) is int and 1 <= n <= p["elegir_max_valor"]["valor"] for n in lista)):
             return fallo("solicitud_invalida", 422)
+        if not lim.ip_permitida(limites.IP_ACTUAL.get()):
+            return mensaje_fijo("espera_un_momento")
         try:
             with candado:
                 if texto is not None:
-                    res = interpretar(texto, motor, elegir=elegir, llm=app.state.llm, cache_dir=app.state.dir_cache)
+                    contado.base, contado.tope_visto = app.state.llm, False           # las pruebas cambian `app.state.llm`
+                    res = interpretar(texto, motor, elegir=elegir, llm=contado, cache_dir=app.state.dir_cache, **extra_uso)
+                    if res.get("tipo") == "mensaje" and res.get("motivo") == "no_disponible" and contado.tope_visto:
+                        return mensaje_fijo("tope_diario")              # el tope diario, no una caída del proveedor
                 else:
                     res = preguntar_minima(motor, consulta, elegir=elegir)
         except ConsultaInvalida as e:

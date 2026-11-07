@@ -229,6 +229,7 @@ class Cliente:
         self.llamadas: list[RespuestaLLM] = []      # las llamadas en vivo de esta corrida (costo y latencia de la evaluación)
         self.tope = float(self.par["tope_por_corrida"]["valor_usd"] if tope_usd is None else tope_usd)
         self.gastado = 0.0
+        self.intentos_http = 0                # peticiones reales enviadas al proveedor, reintentos incluidos (tope diario de la web, S3-07)
         self.detenido: str | None = None      # motivo por el que el cliente ya no llama (clave rechazada, límite agotado)
         self.espera = time.sleep              # las pruebas la reemplazan para no esperar
 
@@ -309,6 +310,7 @@ class Cliente:
             return None, "sin_clave"
         cab = {CABECERA_CLAVE: clave, "anthropic-version": self.par["api"]["version"], "content-type": "application/json"}
         del clave
+        self.intentos_http += 1
         try:
             with httpx.Client(transport=self.transporte, timeout=float(self.par["tiempo_max_segundos"]["valor"])) as h:
                 resp = h.post(self.par["api"]["url"], headers=cab, json=cuerpo)

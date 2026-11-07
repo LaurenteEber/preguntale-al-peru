@@ -11,15 +11,15 @@ precalentamiento:
   espera_maxima_segundos: {valor: 120, supuesto: S3-03-c, nota: "las pruebas esperan hasta este tiempo a que termine el hilo de precalentamiento"}
 http:
   estado_por_motivo:                 # tabla de docs/especificaciones/api.md, derivada de cli.codigo_salida (parametros_motor.yaml)
-    valor: {no_disponible: 503}
+    valor: {no_disponible: 503, tope_diario: 503, espera_un_momento: 429}
     por_defecto: 200
-    supuesto: S3-03-d
+    supuesto: "S3-03-d (no_disponible); S3-07 (tope_diario: el servicio no interpreta texto hoy; espera_un_momento: límite por IP)"
 paginas:                             # S3-04
   csp:
     valor: "default-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
     decision: "S3-04 tarea 2: `default-src 'self'`, sin orígenes externos"
     supuesto: "S3-04-a (las tres directivas siguientes: las páginas solo envían formularios a sí mismas, no se incrustan y no usan <base>)"
-  mensajes_con_enlace_guiado: {valor: [no_disponible, tope_diario], supuesto: S3-04-b, nota: "motivos de `mensaje` que llevan el enlace a /guiado (S3-04 tarea 6); S3-07 fija el motivo del tope"}
+  mensajes_con_enlace_guiado: {valor: [no_disponible, tope_diario], supuesto: S3-04-b, nota: "motivos de `mensaje` que llevan el enlace a /guiado (S3-04 tarea 6); S3-07 confirma `tope_diario` como el motivo del tope diario"}
 guiado:                              # S3-05
   intenciones:
     valor:                           # qué campos pide cada intención y cómo arma el `periodo` (puntual: {anio} o {ultimo}; serie: {serie, desde?, hasta?})
@@ -34,3 +34,9 @@ guiado:                              # S3-05
   lugares_con_todo_el_peru: {valor: [lugar, lugar2], supuesto: S3-05-c, nota: "campos de lugar que llevan la casilla «Todo el Perú» (`{campo}_nacional`)"}
   lugar_max_caracteres: {valor: 200, supuesto: S3-05-d, nota: "el esquema de la consulta mínima acepta hasta 200"}
   anio_digitos: {valor: 4, supuesto: S3-05-e, nota: "un año se escribe con cuatro cifras; el rango lo valida el motor (1990–2100)"}
+limites:                             # S3-07 (P-05, P-07). Contadores en memoria: se reinician al reiniciar; el slice 4 los revisa
+  preguntas_por_minuto_por_ip: {valor: 10, supuesto: S3-07, nota: "preguntas que llegan al motor o al intérprete (texto, formulario de la caja y guiado, API); el paso 1 del guiado no cuenta. Al pasarse: «Espera un momento»"}
+  ventana_segundos: {valor: 60, supuesto: S3-07, nota: "ventana deslizante del límite por IP"}
+  llamadas_llm_por_dia: {valor: 300, supuesto: S3-07, nota: "peticiones reales al proveedor, reintentos incluidos; los aciertos de caché no cuentan. A US$ 0,0024 por pregunta con caché del proveedor caliente y 0,018 sin ella, tope de US$ 0,72 a 5,40 por día"}
+  zona_horaria: {valor: America/Lima, supuesto: S3-07, nota: "el día del tope diario empieza a las 00:00 de Lima, no de UTC"}
+  cuerpo_max_bytes: {valor: 8192, supuesto: S3-07, nota: "cuerpo máximo de cualquier petición (413 si lo pasa); el texto se recorta después según el slice 2"}

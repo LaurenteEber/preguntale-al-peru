@@ -22,10 +22,16 @@ def _casos(grupo: str) -> list[Path]:
     return sorted((BASE / grupo).iterdir())
 
 
+def _sin_limite(app):
+    """Estas pruebas hacen cientos de preguntas desde una misma IP; el límite por IP (S3-07) se prueba en test_limites.py."""
+    app.state.limites.por_minuto = 10 ** 9
+    return app
+
+
 @pytest.fixture(scope="module")
 def app(tmp_path_factory):
     assert (RAIZ / "biblioteca/indicadores/fact_indicador.parquet").exists(), "falta el cubo"   # falla, no se salta
-    a = crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path_factory.mktemp("cache"), precalentar=True)
+    a = _sin_limite(crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path_factory.mktemp("cache"), precalentar=True))
     assert a.state.listo.wait(120)
     return a
 
@@ -85,7 +91,7 @@ def test_elegir_acumulado_dos_aclaraciones(cli):
 
 # ---------------------------------------------------------------- salud y precalentamiento
 def test_salud_antes_y_despues_del_precalentamiento(tmp_path):
-    a = crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path, precalentar=True)
+    a = _sin_limite(crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path, precalentar=True))
     c = TestClient(a)
     assert a.state.listo.wait(120)
     assert c.get("/salud").status_code == 200 and c.get("/salud").json() == {"estado": "ok"}
@@ -99,7 +105,7 @@ def test_salud_antes_y_despues_del_precalentamiento(tmp_path):
 
 
 def test_el_precalentamiento_corre_en_un_hilo_aparte(tmp_path):
-    a = crear_app(RAIZ, dir_cache=tmp_path, precalentar=True)
+    a = _sin_limite(crear_app(RAIZ, dir_cache=tmp_path, precalentar=True))
     assert a.state.error_precalentamiento is None
     assert a.state.listo.wait(120)
     assert a.state.error_precalentamiento is None
@@ -198,9 +204,9 @@ PERMITIDOS = {
     "pap.motor.consulta": {"ConsultaInvalida"},
     "pap.motor.plantillas": {"textos", "parametros"},
     "pap.motor.formato": None,                                        # solo S3-04
-    "pap.interprete.interpretar": {"interpretar"},
+    "pap.interprete.interpretar": {"interpretar", "crear_cliente"},
     "pap.interprete.llm": None,                                       # el adaptador del intérprete
-    "pap.web": {"paginas"},                                           # S3-04: las páginas HTML (app.py las monta)
+    "pap.web": {"paginas", "limites", "registro"},                    # S3-04: las páginas HTML; S3-07: límites y registros sin la pregunta
 }
 
 

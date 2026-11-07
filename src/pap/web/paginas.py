@@ -17,25 +17,30 @@ import pap.web.guiado as guiado          # `import`, no `from pap.web import`: t
 
 AQUI = Path(__file__).parent
 CABECERAS_FIJAS = {"Referrer-Policy": "no-referrer", "X-Content-Type-Options": "nosniff"}
-MAX_DIGITOS_ELEGIR = 3                      # `elegir` lleva números chicos (parametros.yaml → pregunta.elegir_max_valor)
+MAX_DIGITOS_ELEGIR = 3
+
+
+def cabeceras_de(par: dict) -> dict:
+    """Las cabeceras de toda respuesta (S3-04); la guardia de registro.py las pone también en las que genera ella (413, 500)."""
+    return {**CABECERAS_FIJAS, "Content-Security-Policy": par["paginas"]["csp"]["valor"]}                      # `elegir` lleva números chicos (parametros.yaml → pregunta.elegir_max_valor)
 
 
 def montar(app: FastAPI, raiz, tx: dict, par: dict, resolver, rotulo_version, opciones) -> None:
     raiz = Path(raiz)
     rot = yaml.safe_load((raiz / "curados/motor/textos/capas.yaml").read_text(encoding="utf-8"))["rotulos"]
     pg = par["paginas"]
-    cabeceras = {**CABECERAS_FIJAS, "Content-Security-Policy": pg["csp"]["valor"]}
+    cabeceras = cabeceras_de(par)
     entorno = Environment(loader=FileSystemLoader(AQUI / "plantillas"), autoescape=select_autoescape(["html"]),
                           trim_blocks=True, lstrip_blocks=True)
     entorno.filters["como_json"] = lambda x: json.dumps(x, ensure_ascii=False)          # la consulta viaja en un campo oculto
 
     def pagina(plantilla: str, estado: int = 200, **ctx) -> Response:
-        html = entorno.get_template(plantilla).render(tx=tx, p=tx["paginas"], rot=rot, par=par,
+        html = entorno.get_template(plantilla).render(tx=tx, p=tx["paginas"], rot=rot, par=par, tope=app.state.limites.tope_alcanzado(),
                                                       maxlen=par["pregunta"]["texto_max_caracteres"]["valor"], **ctx)
         return HTMLResponse(html, status_code=estado, headers=cabeceras)
 
     def aviso(bloque: str, texto: str, estado: int, guiado: bool = False, caja: bool = True) -> Response:
-        return pagina("aviso.html", estado, bloque=bloque, texto=texto, guiado=guiado, caja=caja)
+        return pagina("aviso.html", estado, bloque=bloque, texto=texto, guiado=guiado, con_caja=caja)      # `con_caja`: `caja` es el macro de _macros.html
 
     def numeros(previo: str, n: str | None) -> list | None:
         """`elegir` acumulado: lo que ya había más el botón pulsado. None si algo no es un número chico."""
@@ -74,7 +79,7 @@ def montar(app: FastAPI, raiz, tx: dict, par: dict, resolver, rotulo_version, op
         if tipo == "mensaje":
             motivo = res.get("motivo")
             return aviso("mensaje", tx["mensajes"].get(motivo) or tx["mensajes"]["otro"], estado,
-                         guiado=motivo in pg["mensajes_con_enlace_guiado"]["valor"])
+                         guiado=motivo in pg["mensajes_con_enlace_guiado"]["valor"], caja=motivo != "tope_diario")      # S3-07: el aviso ya lleva el enlace
         if tipo == "error":
             return aviso("error", res["texto"], estado)
         return aviso("error", tx["errores"]["error_interno"], 500)

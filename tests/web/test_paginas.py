@@ -33,10 +33,16 @@ def _leer(carpeta: Path) -> tuple[dict, dict]:
             json.loads((carpeta / "respuesta.json").read_text(encoding="utf-8")))
 
 
+def _sin_limite(app):
+    """Estas pruebas hacen cientos de preguntas desde una misma IP; el límite por IP (S3-07) se prueba en test_limites.py."""
+    app.state.limites.por_minuto = 10 ** 9
+    return app
+
+
 @pytest.fixture(scope="module")
 def app(tmp_path_factory):
     assert (RAIZ / "biblioteca/indicadores/fact_indicador.parquet").exists(), "falta el cubo"   # falla, no se salta
-    return crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path_factory.mktemp("cache"), precalentar=False)
+    return _sin_limite(crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path_factory.mktemp("cache"), precalentar=False))
 
 
 @pytest.fixture(scope="module")
@@ -376,7 +382,7 @@ class _SinLLM:
 
 
 def test_sin_llm_el_mensaje_lleva_el_enlace_al_formulario_guiado(app, tmp_path):
-    a = crear_app(RAIZ, llm=_SinLLM(), dir_cache=tmp_path, precalentar=False)
+    a = _sin_limite(crear_app(RAIZ, llm=_SinLLM(), dir_cache=tmp_path, precalentar=False))
     c = TestClient(a)
     r, d = _pagina(c, {"texto": "¿Cuánta anemia hay en Puno?"})
     assert r.status_code == 503                                          # el mismo estado que /api/preguntar
@@ -416,7 +422,7 @@ def test_texto_vacio_vuelve_al_inicio_con_su_aviso(cli):
 
 
 def test_la_pagina_de_preparacion_usa_el_texto_de_la_web(tmp_path):
-    a = crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path, precalentar=True)
+    a = _sin_limite(crear_app(RAIZ, llm=Cliente(RAIZ, modo="reproducir"), dir_cache=tmp_path, precalentar=True))
     assert a.state.listo.wait(120)
     a.state.listo.clear()
     r, d = _pagina(TestClient(a), {"texto": "hola"})

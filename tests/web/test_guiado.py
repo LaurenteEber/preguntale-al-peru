@@ -32,7 +32,9 @@ OCULTOS = {"tema", "intencion", "paso"}
 @pytest.fixture(scope="module")
 def app():
     assert (RAIZ / "biblioteca/indicadores/fact_indicador.parquet").exists(), "falta el cubo"   # falla, no se salta
-    return crear_app(RAIZ, llm=None, dir_cache=None, precalentar=False)
+    a = crear_app(RAIZ, llm=None, dir_cache=None, precalentar=False)
+    a.state.limites.por_minuto = 10 ** 9            # muchas preguntas desde una IP; el límite por IP (S3-07) se prueba en test_limites.py
+    return a
 
 
 @pytest.fixture(scope="module")
