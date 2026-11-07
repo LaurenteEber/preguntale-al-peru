@@ -1145,3 +1145,33 @@ entradas:
       resultado: consulta
       consulta: {intencion: nivel_actual, tema: anemia, territorio: {texto: "Junin"}}
     notas: "Prueba del dueño 18, con el celular ya reemplazado como lo hace el filtro de datos personales (P-03, interprete.datos_personales). Junín a secas = departamento 12 (X-22). El número de teléfono no entra al repositorio."
+
+  # ---------------------------------------------------------------- revisión de usuario S3-10 (preguntas con hallazgos)
+  - id: w01
+    pregunta: "¿Cuántos niños tienen anemia en Huancavelica?"
+    categoria: directa
+    esperado:
+      resultado: consulta
+      consulta: {intencion: nivel_actual, tema: anemia, territorio: {texto: "Huancavelica"}}
+    notas: "Revisión S3-10 (w01, H-01): Huancavelica a secas = departamento 09 (X-22); la capa 1 abre «Ojo al leer» con la oferta de provincia o distrito."
+  - id: w04
+    pregunta: "¿Cuánta pobreza hay en mi distrito Ayaviri?"
+    categoria: lugares_dificiles
+    esperado:
+      resultado: consulta
+      consulta: {intencion: nivel_actual, tema: pobreza_monetaria, territorio: {texto: "distrito Ayaviri"}}
+    notas: "Revisión S3-10 (w04, H-10): dos distritos Ayaviri (Yauyos y Melgar); la aclaración dice «llamados «Ayaviri»», sin la palabra de nivel."
+  - id: w05
+    pregunta: "¿Sirvió el gasto en salud contra la anemia en Puno?"
+    categoria: directa
+    esperado:
+      resultado: consulta
+      consulta: {intencion: efecto, tema: anemia, territorio: {texto: "Puno"}}
+    notas: "Revisión S3-10 (w05, H-02/W-10): respuesta parcial (R-CRUCES-07); el gasto del departamento abre con la apertura de u13 y la oferta de X-22 va en «Avisos»."
+  - id: w07
+    pregunta: "¿Cómo cambió el gasto en nutrición infantil en Perú?"
+    categoria: directa
+    esperado:
+      resultado: consulta
+      consulta: {intencion: evolucion, tema: gasto_publico, territorio: {nacional: true}}
+    notas: "Revisión S3-10 (w07, H-06): el gasto no es de una encuesta; el glosario no trae «cambio estadísticamente claro». «Perú» = todo el país."

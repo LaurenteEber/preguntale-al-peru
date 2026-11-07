@@ -39,9 +39,9 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T7 S3-06 | S6 | writer | done: 1211 passed, 1 skipped (screenshots only) | (S3-06 commit) |
 | T9 S3-08 | S6 | writer in worktree ../pap-s3-08 (parallel) | done: 1211 passed; live ≈ US$ 0.12 | (S3-08 commit) |
 | T10 S3-10 | S6, L12–L13 | reviewer subagent + fix writer | in progress: review «apto con observaciones»; H-01 fixed (B), H-02 broken phrase fixed (A), H-02 scope → W-10 (C); task 3 (failed questions into E-04) and owner phone test pending | |
-| T10a S3-10 motor texts | S8 | inline (writer launch refused: task id format) | done: tests/test_s3_10_textos_motor.py 21 passed; regresión 9 passed (Q1, Q3 dueño); W-10 local exception per L15 | (S3-10 fixes commit) |
-| T10b S3-10 web fixes | S9 | writer (context backstop) | done: tests/web 169 passed before base regeneration | (S3-10 fixes commit) |
-| T10c S3-10 task 3 eval set + recordings | S6, L12 | inline after T10a/b | pending | |
+| T10a S3-10 motor texts | S8 | inline (writer launch refused: task id format) | done: full suite 1253 passed | 693f96f |
+| T10b S3-10 web fixes | S9 | writer (context backstop) | done | 693f96f |
+| T10c S3-10 task 3 eval set + recordings | S6, L12 | inline | done: w01, w04, w05, w07 recorded (US$ 0.0305; S3-10 total 0.0732); eval 4/4 | (task 3 commit) |
 | T10d owner phone test | L13, L14 | owner | pending | |
 | T11 | S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 

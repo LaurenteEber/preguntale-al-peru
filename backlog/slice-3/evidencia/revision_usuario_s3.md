@@ -132,3 +132,18 @@ Decisiones en `consultas_al_dueno.md` (W-10, W-11) y en el Log L14 de `odd/tasks
 | H-14 (web) | La opción tocada quedaba «Buscando…» | «Buscando… Huancavelica (departamento)» | `aclaracion.html` |
 
 **Pruebas.** `tests/test_s3_10_textos_motor.py` (21 casos) y `tests/web/test_s3_10_web.py`. Cada regla nueva se vio fallar antes de su arreglo. La regresión Q1–Q4 aprueba como «dueño» la cita de Q1 (H-07) y la tarjeta de 2024 de Q3 (H-05). Q3 es de distrito y no lleva la apertura. No cambia ninguna cifra, semáforo ni confianza. Base web regenerada (`s3-02_generar_base.py`): 52 respuestas cambian de texto, con las mismas cifras, semáforo, confianza y tipo.
+
+## Tarea 3: preguntas con hallazgos en el conjunto de evaluación
+
+Ninguna pregunta del revisor tuvo una mala interpretación: los hallazgos eran de presentación. Las cuatro preguntas por texto con un hallazgo se agregaron a `tests/interprete/evaluacion.yaml` con su resultado esperado y su grabación (`evaluar.py --grabar --solo w01,w04,w05,w07`), para que la evaluación del intérprete y la base web las vigilen:
+
+| id | Hallazgo | Esperado | Lo que responde ahora |
+|---|---|---|---|
+| w01 | H-01 | nivel_actual · anemia · «Huancavelica» | la oferta de provincia o distrito abre «Ojo al leer» |
+| w04 | H-10 | nivel_actual · pobreza · «distrito Ayaviri» | aclaración «Hay varios lugares llamados «Ayaviri»» |
+| w05 | H-02 / W-10 | efecto · anemia · «Puno» | apertura de u13 en la capa 1; oferta de X-22 en «Avisos» |
+| w07 | H-06 | evolucion · gasto · todo el país | glosario sin «cambio estadísticamente claro» |
+
+w08, w09 y w10 no se resolvieron por el tope de envíos, no porque fallaran; sus aclaraciones (San Juan, Huancabelica, tema) ya están cubiertas por preguntas parecidas del conjunto. Evaluación con grabaciones: 4 de 4. Base web regenerada: solo se suman estas cuatro carpetas.
+
+**Costo en vivo de S3-10:** US$ 0,0427 (revisión) + US$ 0,0305 (grabaciones) = **US$ 0,0732** de US$ 0,50.

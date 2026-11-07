@@ -4,11 +4,11 @@
  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
  "tokens_entrada": 9247,
  "tokens_salida": 104,
- "costo_usd": 0.002046,
- "latencia_s": 1.555,
+ "costo_usd": 0.024136,
+ "latencia_s": 1.972,
  "respuesta": {
   "model": "claude-sonnet-5-5",
-  "id": "msg_011Cgiyp9J9obBiGTVMSWFEu",
+  "id": "msg_011CgooyfbQWM4uipVhJo5Us",
   "type": "message",
   "role": "assistant",
   "content": [
@@ -23,10 +23,10 @@
   "stop_details": null,
   "usage": {
    "input_tokens": 43,
-   "cache_creation_input_tokens": 0,
-   "cache_read_input_tokens": 9204,
+   "cache_creation_input_tokens": 9204,
+   "cache_read_input_tokens": 0,
    "cache_creation": {
-    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_5m_input_tokens": 9204,
     "ephemeral_1h_input_tokens": 0
    },
    "output_tokens": 104,

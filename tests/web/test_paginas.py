@@ -526,7 +526,7 @@ def test_ningun_numero_fuera_del_json_conjunto_con_grabaciones(cli, app, tmp_pat
         app.state.dir_cache = tmp_path / f"cache{i}"
         ent, res = _leer(c)
         _verificar(cli, ent, res, _rotulo(cli), c.name, cuenta)
-    assert cuenta["paginas"] == len(casos) == 158 and cuenta["ecos"] > 10
+    assert cuenta["paginas"] == len(casos) == 162 and cuenta["ecos"] > 10
     print("números evaluación:", cuenta)
 
 
