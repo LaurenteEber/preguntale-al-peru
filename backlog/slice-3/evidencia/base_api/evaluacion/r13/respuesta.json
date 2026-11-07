@@ -1,0 +1,629 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENAHO 2025 (INEI); el INEI publica la misma cifra (32,1 %) · ENAHO 2025 (INEI); el INEI publica la misma cifra (21,6 %)",
+    "ids": [
+     "enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal",
+     "enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal"
+    ],
+    "texto": "de personas en situación de pobreza monetaria en Callao en 2025, frente a 21,6 % en Lima Región.",
+    "valor": "32,1 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+    "No concluyas por qué es mayor en un lugar que en el otro: la diferencia no explica la causa."
+   ],
+   "palabras": 87,
+   "que_hacer": null,
+   "respuesta_corta": "En 2025, la pobreza monetaria fue mayor en Callao que en Lima Región, con una diferencia estadísticamente clara."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENAHO 2025 (INEI)",
+    "Territorio: Callao y Lima Región",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el Callao y Lima Región."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+     "titulo": "Cómo se comparó"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal",
+     "texto": "32,1 % (intervalo del INEI: 27,8 % a 36,5 %): personas en situación de pobreza monetaria, Callao, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal",
+     "texto": "21,6 % (intervalo del INEI: 18,0 % a 25,2 %): personas en situación de pobreza monetaria, Lima Región (Lima Provincias), 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    },
+    {
+     "definicion": "una diferencia entre dos lugares que no se explica por el azar de la encuesta: la prueba estadística que usamos tiene en cuenta el margen de error de cada cifra. «Sin diferencia clara» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.",
+     "termino": "diferencia estadísticamente clara"
+    }
+   ],
+   "para_citar": [
+    "32,1 % (intervalo del INEI: 27,8 % a 36,5 %): personas en situación de pobreza monetaria, Callao, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "21,6 % (intervalo del INEI: 18,0 % a 25,2 %): personas en situación de pobreza monetaria, Lima Región (Lima Provincias), 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [
+    "ambito_no_dominio"
+   ],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-CALLAO",
+    "valor": 32.1
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 6.94883374,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.23403004,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 27.8,
+    "ic_sup": 36.5,
+    "id_cifra": "DOR-POB-2025-CALLAO"
+   },
+   "ic_inf": 27.76409363,
+   "ic_sup": 36.7820226,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1013,
+   "nivel": "CALLAO",
+   "nivel_pedido": "CALLAO",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "departamento 15/07",
+     "detalle": {
+      "area": "total",
+      "nivel": "CALLAO",
+      "territorio_id": "CALLAO"
+     },
+     "motivo": "dominio_lima",
+     "regla": "R-ENC-07",
+     "rotulo": "Callao"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "ambito_no_dominio",
+     "clausula": "ámbito publicado (L1)",
+     "detalle": {
+      "ambito": "CALLAO",
+      "cita": "INEI, Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico)"
+     },
+     "mensaje": "El INEI publica esta cifra para Callao, aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+     "motivo": "ambito_no_dominio",
+     "regla": "R-ENC-08"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "32,1 % (entre 27,8 % y 36,8 %), ENAHO 2025, Callao; basado en 1013 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "32,1 % (entre 27,8 % y 36,8 %), ENAHO 2025, Callao; basado en 1013 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "CALLAO",
+   "territorio_nombre": "Callao",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "CALLAO",
+     "periodo_agrupado": null,
+     "territorio_id": "CALLAO"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-CALLAO",
+   "valor": 32.14971209
+  },
+  "enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [
+    "ambito_no_dominio"
+   ],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-LIMA_REGION",
+    "valor": 21.6
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 8.52188621,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.84152242,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 18.0,
+    "ic_sup": 25.2,
+    "id_cifra": "DOR-POB-2025-LIMA_REGION"
+   },
+   "ic_inf": 18.06186329,
+   "ic_sup": 25.49974933,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1460,
+   "nivel": "LIMA_REGION",
+   "nivel_pedido": "CALLAO",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "departamento 15/07",
+     "detalle": {
+      "area": "total",
+      "nivel": "LIMA_REGION",
+      "territorio_id": "LIMA_REGION"
+     },
+     "mensaje": "Esta cifra corresponde a Lima Región (Lima Provincias), no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+     "motivo": "dominio_lima",
+     "regla": "R-ENC-07",
+     "rotulo": "Lima Región (Lima Provincias)"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "ambito_no_dominio",
+     "clausula": "ámbito publicado (L1)",
+     "detalle": {
+      "ambito": "LIMA_REGION",
+      "cita": "INEI, Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico)"
+     },
+     "mensaje": "El INEI publica esta cifra para Lima Región (Lima Provincias), aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+     "motivo": "ambito_no_dominio",
+     "regla": "R-ENC-08"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "21,6 % (entre 18,1 % y 25,5 %), ENAHO 2025, Lima Región (Lima Provincias); basado en 1460 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "21,6 % (entre 18,1 % y 25,5 %), ENAHO 2025, Lima Región (Lima Provincias); basado en 1460 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "LIMA_REGION",
+   "territorio_nombre": "Lima Región (Lima Provincias)",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "LIMA_REGION",
+     "periodo_agrupado": null,
+     "territorio_id": "LIMA_REGION"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-LIMA_REGION",
+   "valor": 21.60932888
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "CALLAO",
+    "rol": "principal",
+    "territorio": "CALLAO"
+   },
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "LIMA_REGION",
+    "rol": "principal",
+    "territorio": "LIMA_REGION"
+   }
+  ],
+  "consulta_minima": {
+   "comparar_con": {
+    "texto": "Lima provincias"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "pregunta_original": "¿Dónde hay más pobreza, en el Callao o en Lima provincias?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Callao"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "comparacion__pobreza_monetaria__CALLAO__LIMA_REGION",
+  "intencion": "comparacion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "comparacion",
+  "pregunta": "¿Dónde hay más pobreza, en el Callao o en Lima provincias?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "CALLAO",
+   "nivel": "CALLAO",
+   "nombre_pedido": "Callao"
+  },
+  "territorio_comparado": {
+   "id": "LIMA_REGION",
+   "nivel": "LIMA_REGION",
+   "nombre_pedido": "Lima Región (Lima Provincias)"
+  }
+ },
+ "consulta_minima": {
+  "comparar_con": {
+   "texto": "Lima provincias"
+  },
+  "idioma": "es",
+  "intencion": "comparacion",
+  "pregunta_original": "¿Dónde hay más pobreza, en el Callao o en Lima provincias?",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "Callao"
+  }
+ },
+ "corrector": [
+  {
+   "accion": "rotular",
+   "clausula": "match(lenguaje.prohibidas) o regla estructural → regenerar",
+   "detalle": {
+    "estructurales": [],
+    "infracciones": [
+     {
+      "categoria": "causal",
+      "fragmento": "causa"
+     }
+    ],
+    "intentos": 0
+   },
+   "modo": "corrector",
+   "motivo": "lenguaje_prohibido",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-02"
+  }
+ ],
+ "cruces": [],
+ "entendimos": "Entendimos: cómo se compara la pobreza en Callao con Lima Región (Lima Provincias)",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENAHO 2025 (INEI)\nTerritorio: Callao y Lima Región\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el Callao y Lima Región.",
+  "larga": {
+   "cifras": {
+    "enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta para Callao.",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 27,8 % y 36,8 % (coeficiente de variación 6,9 %, 1013 casos en la muestra). El INEI publica para esta cifra un intervalo entre 27,8 % y 36,5 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 32,1 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "El INEI publica esta cifra para Callao, aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+      "32,1 % (entre 27,8 % y 36,8 %), ENAHO 2025, Callao; basado en 1013 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta para Lima Región (Lima Provincias). Se pidió por Callao; la fuente no alcanza ese nivel.",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 18,1 % y 25,5 % (coeficiente de variación 8,5 %, 1460 casos en la muestra). El INEI publica para esta cifra un intervalo entre 18,0 % y 25,2 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 21,6 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "Esta cifra corresponde a Lima Región (Lima Provincias), no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+      "El INEI publica esta cifra para Lima Región (Lima Provincias), aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+      "21,6 % (entre 18,1 % y 25,5 %), ENAHO 2025, Lima Región (Lima Provincias); basado en 1460 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el Callao y Lima Región."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "comparar_con": "Lima provincias",
+   "intencion": "Dónde hay más",
+   "tema": "pobreza",
+   "territorio": "Callao"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "comparar_con": {
+    "texto": "Lima provincias"
+   },
+   "intencion": "comparacion",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Callao"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal",
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "CALLAO",
+    "rol": "principal",
+    "territorio": "CALLAO"
+   },
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "LIMA_REGION",
+    "rol": "principal",
+    "territorio": "LIMA_REGION"
+   }
+  ],
+  "consulta_minima": {
+   "comparar_con": {
+    "texto": "Lima provincias"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "pregunta_original": "¿Dónde hay más pobreza, en el Callao o en Lima provincias?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Callao"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "comparacion__pobreza_monetaria__CALLAO__LIMA_REGION",
+  "intencion": "comparacion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "comparacion",
+  "pregunta": "¿Dónde hay más pobreza, en el Callao o en Lima provincias?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "CALLAO",
+   "nivel": "CALLAO",
+   "nombre_pedido": "Callao"
+  },
+  "territorio_comparado": {
+   "id": "LIMA_REGION",
+   "nivel": "LIMA_REGION",
+   "nombre_pedido": "Lima Región (Lima Provincias)"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal",
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "match(lenguaje.prohibidas) o regla estructural → regenerar",
+   "detalle": {
+    "estructurales": [],
+    "infracciones": [
+     {
+      "categoria": "causal",
+      "fragmento": "causa"
+     }
+    ],
+    "intentos": 0
+   },
+   "modo": "corrector",
+   "motivo": "lenguaje_prohibido",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-02"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2025, la pobreza monetaria fue mayor en Callao que en Lima Región, con una diferencia estadísticamente clara. 32,1 % de personas en situación de pobreza monetaria en Callao en 2025, frente a 21,6 % en Lima Región. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. No concluyas por qué es mayor en un lugar que en el otro: la diferencia no explica la causa. Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+ "texto_con_marcadores": "En 2025, la pobreza monetaria fue mayor en Callao que en Lima Región, con una diferencia estadísticamente clara. {{c:enaho_pobreza_monetaria__proporcion__CALLAO__CALLAO__2025__principal}} de personas en situación de pobreza monetaria en Callao en 2025, frente a {{c:enaho_pobreza_monetaria__proporcion__LIMA_REGION__LIMA_REGION__2025__principal}} en Lima Región. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. No concluyas por qué es mayor en un lugar que en el otro: la diferencia no explica la causa. Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

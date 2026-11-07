@@ -1,0 +1,357 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENAHO 2025 (INEI); el INEI publica la misma cifra (20,9 %)",
+    "ids": [
+     "enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal"
+    ],
+    "texto": "de personas en situación de pobreza monetaria en Apurímac en 2025.",
+    "valor": "20,9 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+   ],
+   "palabras": 50,
+   "que_hacer": null,
+   "respuesta_corta": "En 2025, en Apurímac, la pobreza monetaria fue:"
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENAHO 2025 (INEI)",
+    "Territorio: departamento de Apurímac",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "mas_contexto": []
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal",
+     "texto": "20,9 % (intervalo del INEI: 16,9 % a 24,9 %): personas en situación de pobreza monetaria, Apurímac, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    }
+   ],
+   "para_citar": [
+    "20,9 % (intervalo del INEI: 16,9 % a 24,9 %): personas en situación de pobreza monetaria, Apurímac, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-03",
+    "valor": 20.9
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 9.67389899,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.02143321,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 16.9,
+    "ic_sup": 24.9,
+    "id_cifra": "DOR-POB-2025-03"
+   },
+   "ic_inf": 17.00520571,
+   "ic_sup": 25.22528525,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 911,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "20,9 % (entre 17,0 % y 25,2 %), ENAHO 2025, Apurímac; basado en 911 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "20,9 % (entre 17,0 % y 25,2 %), ENAHO 2025, Apurímac; basado en 911 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "03",
+   "territorio_nombre": "Apurímac",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "03"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 20.89574444
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "03"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "dime la pobreza de Apurímac",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Apurímac"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__pobreza_monetaria__03",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "dime la pobreza de Apurímac",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "03",
+   "nivel": "departamento",
+   "nombre_pedido": "Apurímac"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "dime la pobreza de Apurímac",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "Apurímac"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cuánto hay de pobreza en el departamento de Apurímac",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENAHO 2025 (INEI)\nTerritorio: departamento de Apurímac\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento.",
+  "larga": {
+   "cifras": {
+    "enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Apurímac).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 17,0 % y 25,2 % (coeficiente de variación 9,7 %, 911 casos en la muestra). El INEI publica para esta cifra un intervalo entre 16,9 % y 24,9 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 20,9 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "20,9 % (entre 17,0 % y 25,2 %), ENAHO 2025, Apurímac; basado en 911 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "intencion": "dime la pobreza",
+   "tema": "pobreza",
+   "territorio": "Apurímac"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Apurímac"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "03"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "dime la pobreza de Apurímac",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Apurímac"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "nivel_actual__pobreza_monetaria__03",
+  "intencion": "nivel_actual",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "nivel_actual",
+  "pregunta": "dime la pobreza de Apurímac",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "03",
+   "nivel": "departamento",
+   "nombre_pedido": "Apurímac"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2025, en Apurímac, la pobreza monetaria fue: 20,9 % de personas en situación de pobreza monetaria en Apurímac en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+ "texto_con_marcadores": "En 2025, en Apurímac, la pobreza monetaria fue: {{c:enaho_pobreza_monetaria__proporcion__departamento__03__2025__principal}} de personas en situación de pobreza monetaria en Apurímac en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

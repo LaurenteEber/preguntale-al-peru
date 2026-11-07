@@ -262,16 +262,16 @@ def test_principal_suprimida_con_otra_publicable_es_parcial(raiz, motor, paramet
 
 
 def test_aclaracion_no_calcula(raiz, motor, monkeypatch):
-    """Huancavelica es departamento, provincia y distrito: se pregunta, con el departamento primero, y no se calcula nada."""
+    """Abancay es provincia y distrito (X-22: un nombre de departamento a secas ya no pregunta): se pregunta, con la provincia primero, y no se calcula nada."""
     def prohibido(*a, **k):
         raise AssertionError("una aclaración no calcula cifras")
     monkeypatch.setattr(motor, "cifra", prohibido)
-    r = P.preguntar_minima(motor, consulta(intencion="evolucion", lugar="Huancavelica"))
+    r = P.preguntar_minima(motor, consulta(intencion="evolucion", lugar="Abancay"))
     assert r["tipo"] == "aclaracion" and r["cifras"] == {} and "capas" not in r
     ops = r["aclaracion"]["opciones"]
-    assert [o["n"] for o in ops] == [1, 2, 3]
-    assert ops[0]["territorio"]["nivel"] == "departamento" and ops[0]["etiqueta"] == "Huancavelica (departamento)"
-    assert r["texto"].splitlines()[1] == "1) Huancavelica (departamento)"
+    assert [o["n"] for o in ops] == [1, 2]
+    assert ops[0]["territorio"]["nivel"] == "provincia" and ops[0]["etiqueta"] == "Abancay (provincia, departamento de Apurímac)"
+    assert r["texto"].splitlines()[1] == "1) Abancay (provincia, departamento de Apurímac)"
 
 
 def test_consulta_incompleta_pregunta_el_tema(raiz, motor):
@@ -287,8 +287,8 @@ def test_consulta_incompleta_pregunta_el_tema(raiz, motor):
 
 def test_elegir_fuera_de_rango(raiz, motor):
     with pytest.raises(P.EleccionInvalida) as e:
-        P.preguntar_minima(motor, consulta(lugar="Huancavelica"), elegir=9)
-    assert str(e.value) == "La opción 9 no existe. Elige un número entre 1 y 3."
+        P.preguntar_minima(motor, consulta(lugar="Abancay"), elegir=9)
+    assert str(e.value) == "La opción 9 no existe. Elige un número entre 1 y 2."
 
 
 def test_consulta_invalida_sigue_siendo_un_error(raiz, motor):

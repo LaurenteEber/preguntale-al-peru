@@ -10,7 +10,8 @@ conjuncion: y
 nivel_palabra: {distrito: distrito, provincia: provincia, departamento: departamento}
 nivel_plural: {distrito: distritos, provincia: provincias, departamento: departamentos, defecto: territorios}
 nivel_del: {distrito: "del distrito", provincia: "de la provincia", departamento: "del departamento"}
-nivel_en: {distrito: "en el distrito", provincia: "en la provincia", departamento: "en el departamento"}
+nivel_en: {distrito: "en el distrito", provincia: "en la provincia", departamento: "en el departamento", nacional: "en todo el país",
+           defecto: "en {lugar}"}      # S3-10 (H-02): ámbitos de Lima y demás niveles sin palabra propia nombran el lugar: «en Lima Metropolitana»
 region_art: {departamento: "el departamento de {lugar}", otro: "{lugar}"}      # «Todo el departamento de Puno» / «Todo Lima Metropolitana»
 region_de: {departamento: "del departamento de {lugar}", otro: "de {lugar}"}
 region_gen: {departamento: "del departamento", otro: "de {lugar}"}

@@ -23,6 +23,6 @@
 
 ## Criterios de aceptación
 
-- [ ] `uv run pap servir` responde Q1 en un navegador local.
-- [ ] La imagen construye y responde `/salud` (evidencia de quien la probó).
-- [ ] Ningún crudo ni secreto en la imagen (`docker history` y lista de archivos).
+- [x] `uv run pap servir` responde Q1 en un navegador local.
+- [x] La imagen construye y responde `/salud` (evidencia de quien la probó).
+- [x] Ningún crudo ni secreto en la imagen (`docker history` y lista de archivos).

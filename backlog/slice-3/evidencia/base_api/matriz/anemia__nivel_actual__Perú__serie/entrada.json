@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "nivel_actual",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "nacional": true
+  }
+ },
+ "elegir": null,
+ "id": "anemia|nivel_actual|Perú|serie"
+}

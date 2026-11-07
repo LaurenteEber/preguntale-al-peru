@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "23"
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|cruce|Tacna|serie"
+}

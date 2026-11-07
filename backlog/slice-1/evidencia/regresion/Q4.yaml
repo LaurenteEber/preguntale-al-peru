@@ -22,3 +22,73 @@
     resuelto y esa revisión falsa desaparece; es la corrección esperada (S1-07, tarea 4). Solo era una acción `revision_humana`:
     no cambia cifras, semáforos, confianza ni bloqueos.'
   aprobado_por: agente
+- capa: capa3.citas[0].url
+  antes: ''
+  despues: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[1].url
+  antes: ''
+  despues: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[2].url
+  antes: ''
+  despues: https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[3].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[4].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[5].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[6].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[7].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[8].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[9].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño

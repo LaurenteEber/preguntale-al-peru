@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% from "_macros.html" import caja with context %}
+{% block titulo %}{{ p.titulo_aviso }} – {% endblock %}
+{% block contenido %}
+<h1>{{ p.titulo_aviso }}</h1>
+<p data-bloque="{{ bloque }}" class="aviso" role="alert">{{ texto }}</p>
+{% if guiado %}
+<p data-bloque="guiado_mensaje"><a href="/guiado">{{ p.guiado_enlace }}</a></p>
+{% endif %}
+{% if con_caja %}
+{{ caja(p.caja_etiqueta_de_nuevo, valor) }}
+{% endif %}
+<p><a href="/">{{ p.volver_inicio }}</a></p>
+{% endblock %}

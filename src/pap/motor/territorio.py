@@ -67,6 +67,7 @@ def _config(raiz: str) -> dict:
         "similitud": float(par["similitud_min_para_sugerir"]["valor"]),
         "palabras_nivel": palabras,
         "nacional": {normalizar_texto(t) for t in par["textos_nacional"]["valor"]},
+        "depto_a_secas": bool(par.get("departamento_a_secas", {}).get("activo", False)),   # X-22
         "lima_opciones": par["lima_a_secas"]["opciones"],
         "lima_defecto": par["lima_a_secas"]["por_defecto_sin_respuesta"],
         "txt": txt,
@@ -285,7 +286,12 @@ def _resolver_texto(ctx, texto: str, fecha: str | None) -> Resuelto | Aclaracion
         return _resuelto(ctx, cand[0])
     if cand:
         niveles = {f["nivel"] for f in cand}
-        return _preguntar(ctx, "homonimo_niveles" if len(niveles) > 1 else "homonimo_mismo_nivel", cand, texto.strip())
+        dptos = [f for f in cand if f["nivel"] == "departamento"]
+        if _cfg(ctx)["depto_a_secas"] and len(partes) == 1 and partes[0][1] is None and len(dptos) == 1:
+            return _resuelto(ctx, dptos[0])                # X-22: el nombre a secas de un departamento se responde como departamento
+        nombres = {f["nombre_mostrado"] for f in cand}      # S3-10 (H-10): «Ayaviri», no «distrito Ayaviri» (y con tildes, T-02)
+        nombre = nombres.pop() if len(nombres) == 1 else texto.strip()
+        return _preguntar(ctx, "homonimo_niveles" if len(niveles) > 1 else "homonimo_mismo_nivel", cand, nombre)
     parcial = _buscar(ctx, partes, fecha, "parcial")
     if parcial:
         return _preguntar(ctx, "coincidencia_parcial", parcial, texto.strip())
@@ -293,6 +299,21 @@ def _resolver_texto(ctx, texto: str, fecha: str | None) -> Resuelto | Aclaracion
     if sug:
         return Aclaracion("sin_coincidencia", _t(ctx, "sugerencia", texto=texto.strip()), _opciones_ordenadas(ctx, sug))
     return _sin_coincidencia(ctx)
+
+
+def oferta_otros_niveles(ctx, entrada: dict, resuelto, fecha: str | None = None) -> str | None:
+    """X-22: si `entrada` (texto a secas) se resolvió como departamento y existe una provincia o un distrito con ese nombre,
+    la frase que lo dice y enseña a pedirlos (textos en territorio.yaml, `oferta_otros_niveles`). Solo ofrece niveles que existen."""
+    if not _cfg(ctx)["depto_a_secas"] or not isinstance(resuelto, Resuelto) or resuelto.nivel != "departamento" or not isinstance(entrada.get("texto"), str):
+        return None
+    partes = [_limpiar(ctx, p.strip()) for p in normalizar_texto(entrada["texto"]).split(",") if p.strip()]
+    if len(partes) != 1 or partes[0][1] is not None:
+        return None
+    niveles = {f["nivel"] for f in _buscar(ctx, partes, fecha, "exacta")} - {"departamento"}
+    clave = "ambos" if niveles == {"provincia", "distrito"} else next(iter(niveles), None)
+    if clave is None:
+        return None
+    return _cfg(ctx)["txt"]["oferta_otros_niveles"][clave].format(nombre=resuelto.nombre_mostrado)
 
 
 def _opciones_ordenadas(ctx, filas: list[dict]) -> list[dict]:

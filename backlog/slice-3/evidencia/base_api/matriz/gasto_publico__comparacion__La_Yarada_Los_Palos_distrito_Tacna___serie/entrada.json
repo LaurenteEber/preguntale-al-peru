@@ -1,0 +1,19 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "comparar_con": {
+   "ubigeo": "110114"
+  },
+  "intencion": "comparacion",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "230111"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|comparacion|La Yarada Los Palos (distrito, Tacna)|serie"
+}

@@ -1,0 +1,743 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "gasto registrado en el MEF 2025",
+    "ids": [
+     "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal"
+    ],
+    "texto": "es la cifra de gasto en servicios de salud y nutrición infantil en Perú en 2025, en soles de 2025.",
+    "valor": "S/ 2 455,9 millones"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó.",
+    "Montos en soles de 2025 (ajustados por inflación), para que se puedan comparar entre años."
+   ],
+   "palabras": 99,
+   "que_hacer": null,
+   "respuesta_corta": "En Perú, el gasto en servicios de salud y nutrición infantil pasó de S/ 2 263,9 millones en 2023 a S/ 2 455,9 millones en 2025, en soles de 2025: aumentó."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: Gasto MEF 2023–2025 (devengado)",
+    "Territorio: todo el país",
+    "No permite concluir: cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": "En soles de 2025, para compararlo con la cifra clave.",
+     "texto": "En Perú, el gasto en servicios de salud y nutrición infantil fue S/ 2 263,9 millones en 2023 y S/ 2 455,9 millones en 2025.",
+     "titulo": "El punto de partida: 2023"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+     "texto": "S/ 2 455,9 millones en soles de 2025 (monto registrado en 2025: S/ 2 455,9 millones; factor de inflación: 1,0000000): gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Perú, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
+     "url": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto"
+    },
+    {
+     "id_cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto",
+     "texto": "S/ 2 263,9 millones en soles de 2025 (monto registrado en 2023: S/ 2 179,2 millones; factor de inflación: 1,0388706): gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Perú, 2023. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2023.",
+     "url": "https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "lo que la entidad ya debe pagar porque recibió el bien o el servicio. Es distinto del presupuesto, que es lo que tiene autorizado gastar en el año.",
+     "termino": "gastado (devengado)"
+    },
+    {
+     "definicion": "los que antes eran del Programa Articulado Nutricional: controles de crecimiento, vacunas, hierro y vitamina A, atención de la anemia, de infecciones respiratorias y diarreas, consejería y agua segura, para menores de 5 años y sus familias.",
+     "termino": "servicios de salud y nutrición infantil"
+    },
+    {
+     "definicion": "montos de distintos años expresados en soles de un mismo año, para que la subida de los precios no haga parecer que se gastó más. Se ajustan con el índice de precios al consumidor de Lima Metropolitana que publica el BCRP.",
+     "termino": "soles constantes (ajustados por inflación)"
+    }
+   ],
+   "para_citar": [
+    "S/ 2 455,9 millones en soles de 2025 (monto registrado en 2025: S/ 2 455,9 millones; factor de inflación: 1,0000000): gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Perú, 2025. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2025.",
+    "S/ 2 263,9 millones en soles de 2025 (monto registrado en 2023: S/ 2 179,2 millones; factor de inflación: 1,0388706): gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Perú, 2023. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2023."
+   ]
+  }
+ },
+ "cifras": {
+  "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto": {
+   "accion_final": "publicar",
+   "anio": 2023,
+   "anio_base_deflactor": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": null,
+   "denominador": null,
+   "devengado": 2179204677.87,
+   "ee": null,
+   "estado_cifra": "publicable",
+   "factores_deflactor": {
+    "2023": 1.0388705671156508,
+    "2025": 1.0
+   },
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "indicador_id": "gasto_ex_pan",
+   "lineas_aparte": [],
+   "medida": "devengado_constante",
+   "metodo_ic": null,
+   "motivos_semaforo": [],
+   "n_muestra": null,
+   "nivel": "nacional",
+   "nivel_pedido": "nacional",
+   "numerador": null,
+   "pct_gasto_atribuible": 0.04423939,
+   "pim": 2244559725.0,
+   "precios": "constantes",
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "> 1 año → soles constantes",
+     "detalle": {
+      "anio_base": 2025,
+      "factores": {
+       "2023": 1.0388705671156508,
+       "2025": 1.0
+      },
+      "serie_ipc": "BCRP PN38705PM IPC Lima Metropolitana dic.2021=100, promedio anual"
+     },
+     "mensaje": "Montos en soles de 2025 (ajustados por inflación), para que se puedan comparar entre años.",
+     "motivo": "soles_constantes",
+     "regla": "R-GASTO-12",
+     "rotulo": "soles constantes de 2025"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "(3) cifra temática: solo gasto final",
+     "detalle": {
+      "bloque_consolidado": "gasto_final",
+      "pendiente": "monto (b) no disponible en el cubo",
+      "tema_id": "cpt_grupo_expan"
+     },
+     "motivo": "transferencias",
+     "regla": "R-GASTO-05",
+     "rotulo": "sin transferencias"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "fase en el rótulo",
+     "detalle": {
+      "columna": "MONTO_DEVENGADO",
+      "fase_gasto": "DEVENGADO"
+     },
+     "mensaje": "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM).",
+     "motivo": "fase_gasto",
+     "regla": "R-GASTO-06",
+     "rotulo": "gastado (devengado)"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "año cerrado: PIM final",
+     "detalle": {
+      "anio_cerrado": true,
+      "avance_pct": 97.08829101751792,
+      "denominador": "PIM final",
+      "fecha_corte": "2023-12-31",
+      "pim": 2244559725.0
+     },
+     "motivo": "avance",
+     "regla": "R-GASTO-07",
+     "rotulo": "avance respecto del PIM final, datos al 2023-12-31"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "rótulo := etiqueta_ciudadana / nombre propio por año",
+     "detalle": {
+      "cadena": "concepto",
+      "tema_id": "cpt_grupo_expan",
+      "version": "1.2"
+     },
+     "motivo": "tema_gasto",
+     "regla": "R-GASTO-08",
+     "rotulo": "Servicios de salud y nutrición infantil que antes eran del PAN"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2023.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "PE",
+   "territorio_nombre": "Perú",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2023,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "nacional",
+     "periodo_agrupado": null,
+     "territorio_id": "PE"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 2263911599.559886
+  },
+  "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "anio_base_deflactor": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": {
+    "anio": 2023,
+    "anio_base_deflactor": 2025,
+    "anio_cerrado": true,
+    "avisos": "[]",
+    "cota_inf": null,
+    "cota_sup": null,
+    "criterio": "dim_tema_gasto_v1.2|devengado|sin_transferencias",
+    "cv": null,
+    "deff": null,
+    "denominador": null,
+    "ee": null,
+    "estado_calculo": "calculada",
+    "factor_deflactor": 1.0388705671156508,
+    "fecha_corte": "2023-12-31",
+    "fecha_descarga": null,
+    "gl": null,
+    "grupo_robusto_nacional": null,
+    "grupo_robusto_regional": null,
+    "ic_inf": null,
+    "ic_sup": null,
+    "indicador_id": "gasto_ex_pan",
+    "indicador_validado": false,
+    "linea": "cifra",
+    "medida": "devengado_constante",
+    "metodo_ic": null,
+    "metodo_territorio": null,
+    "motivo_calculo": null,
+    "n_efectivo": null,
+    "n_muestra": null,
+    "nivel": "nacional",
+    "numerador": null,
+    "pct_gasto_atribuible": 0.04423939,
+    "poblacion": 33725844.0,
+    "prueba_cambio": null,
+    "territorio_id": "PE",
+    "territorio_nombre": "Perú",
+    "ubigeo_inei": "000000",
+    "validada_dorada": null,
+    "valor": 2263911599.559886,
+    "version_tabla": "1.2.0"
+   },
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": null,
+   "denominador": null,
+   "devengado": 2455856886.1,
+   "ee": null,
+   "estado_cifra": "publicable",
+   "factores_deflactor": {
+    "2023": 1.0388705671156508,
+    "2025": 1.0
+   },
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": null,
+   "ic_sup": null,
+   "indicador_id": "gasto_ex_pan",
+   "lineas_aparte": [],
+   "medida": "devengado_constante",
+   "metodo_ic": null,
+   "motivos_semaforo": [],
+   "n_muestra": null,
+   "nivel": "nacional",
+   "nivel_pedido": "nacional",
+   "numerador": null,
+   "pct_gasto_atribuible": 0.06372307,
+   "pim": 2498487173.0,
+   "precios": "constantes",
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "> 1 año → soles constantes",
+     "detalle": {
+      "anio_base": 2025,
+      "factores": {
+       "2023": 1.0388705671156508,
+       "2025": 1.0
+      },
+      "serie_ipc": "BCRP PN38705PM IPC Lima Metropolitana dic.2021=100, promedio anual"
+     },
+     "mensaje": "Montos en soles de 2025 (ajustados por inflación), para que se puedan comparar entre años.",
+     "motivo": "soles_constantes",
+     "regla": "R-GASTO-12",
+     "rotulo": "soles constantes de 2025"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "(3) cifra temática: solo gasto final",
+     "detalle": {
+      "bloque_consolidado": "gasto_final",
+      "pendiente": "monto (b) no disponible en el cubo",
+      "tema_id": "cpt_grupo_expan"
+     },
+     "motivo": "transferencias",
+     "regla": "R-GASTO-05",
+     "rotulo": "sin transferencias"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "fase en el rótulo",
+     "detalle": {
+      "columna": "MONTO_DEVENGADO",
+      "fase_gasto": "DEVENGADO"
+     },
+     "mensaje": "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM).",
+     "motivo": "fase_gasto",
+     "regla": "R-GASTO-06",
+     "rotulo": "gastado (devengado)"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "año cerrado: PIM final",
+     "detalle": {
+      "anio_cerrado": true,
+      "avance_pct": 98.29375602321733,
+      "denominador": "PIM final",
+      "fecha_corte": "2025-12-31",
+      "pim": 2498487173.0
+     },
+     "motivo": "avance",
+     "regla": "R-GASTO-07",
+     "rotulo": "avance respecto del PIM final, datos al 2025-12-31"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "rótulo := etiqueta_ciudadana / nombre propio por año",
+     "detalle": {
+      "cadena": "concepto",
+      "tema_id": "cpt_grupo_expan",
+      "version": "1.2"
+     },
+     "motivo": "tema_gasto",
+     "regla": "R-GASTO-08",
+     "rotulo": "Servicios de salud y nutrición infantil que antes eran del PAN"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde",
+      "semaforo_comparacion": {
+       "motivos": [],
+       "puntajes": {
+        "precision_cifra": 0,
+        "quiebre": 0
+       },
+       "semaforo": "verde"
+      }
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "PE",
+   "territorio_nombre": "Perú",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "nacional",
+     "periodo_agrupado": null,
+     "territorio_id": "PE"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 2455856886.1
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "comparar_con": 2023,
+    "id": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "medida": "devengado_constante",
+    "nivel": "nacional",
+    "rol": "principal",
+    "territorio": "PE"
+   },
+   {
+    "anio": 2023,
+    "en_serie_con": 2025,
+    "id": "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto",
+    "indicador": "gasto_ex_pan",
+    "medida": "devengado_constante",
+    "nivel": "nacional",
+    "rol": "contexto",
+    "territorio": "PE"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "periodo": {
+    "desde": 2023,
+    "hasta": 2025,
+    "tipo": "serie"
+   },
+   "pregunta_original": "¿Cómo varió el gasto en nutrición infantil del Perú de 2023 a 2025?",
+   "tema": "gasto_publico",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__gasto_publico__PE",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "desde": 2023,
+   "hasta": 2025,
+   "tipo": "serie"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "¿Cómo varió el gasto en nutrición infantil del Perú de 2023 a 2025?",
+  "respuesta_parcial": false,
+  "tema": "gasto_publico",
+  "tema_gasto": "cpt_grupo_expan",
+  "territorio": {
+   "id": "PE",
+   "nivel": "nacional",
+   "nombre_pedido": "Perú"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "evolucion",
+  "periodo": {
+   "desde": 2023,
+   "hasta": 2025,
+   "tipo": "serie"
+  },
+  "pregunta_original": "¿Cómo varió el gasto en nutrición infantil del Perú de 2023 a 2025?",
+  "tema": "gasto_publico",
+  "territorio": {
+   "nacional": true
+  }
+ },
+ "corrector": [
+  {
+   "accion": "rotular",
+   "clausula": "match(lenguaje.prohibidas) o regla estructural → regenerar",
+   "detalle": {
+    "estructurales": [
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto",
+      "oracion": "En Perú, el gasto en servicios de salud y nutrición infantil {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__pasa}} {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 a {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025, en soles de 2025: {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__sentido}}.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     },
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+      "oracion": "En Perú, el gasto en servicios de salud y nutrición infantil {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__pasa}} {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 a {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025, en soles de 2025: {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__sentido}}.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     },
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+      "oracion": "{{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} es la cifra de gasto en servicios de salud y nutrición infantil en Perú en 2025, en soles de 2025.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     },
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto",
+      "oracion": "En Perú, el gasto en servicios de salud y nutrición infantil fue {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 y {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     },
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+      "oracion": "En Perú, el gasto en servicios de salud y nutrición infantil fue {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 y {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     }
+    ],
+    "infracciones": [],
+    "intentos": 0
+   },
+   "modo": "corrector",
+   "motivo": "lenguaje_prohibido",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-02"
+  }
+ ],
+ "cruces": [],
+ "entendimos": "Entendimos: cómo cambió el gasto público en salud y nutrición infantil en todo el Perú entre 2023 y 2025",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: Gasto MEF 2023–2025 (devengado)\nTerritorio: todo el país\nNo permite concluir: cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito.",
+  "larga": {
+   "cifras": {
+    "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto": {
+     "1_origen": "Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado). Gasto MEF (MEF), 2023. Es el gasto registrado por las entidades públicas.",
+     "2_territorio": "La cifra se presenta por país (Perú).",
+     "3_que_mide": "Mide servicios de salud y nutrición infantil que antes eran del PAN (devengado, sin transferencias).",
+     "4_precision": "Monto registrado (devengado), en soles de 2025 (ajustado por inflación). El 4 % del gasto del departamento se puede ubicar en municipalidades y obras.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "avisos": [
+      "Montos en soles de 2025 (ajustados por inflación), para que se puedan comparar entre años.",
+      "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM)."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal": {
+     "1_origen": "Gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado). Gasto MEF (MEF), 2025. Es el gasto registrado por las entidades públicas.",
+     "2_territorio": "La cifra se presenta por país (Perú).",
+     "3_que_mide": "Mide servicios de salud y nutrición infantil que antes eran del PAN (devengado, sin transferencias).",
+     "4_precision": "Monto registrado (devengado), en soles de 2025 (ajustado por inflación). El 6 % del gasto del departamento se puede ubicar en municipalidades y obras.",
+     "5_metodo": "",
+     "6_contraste_oficial": "",
+     "avisos": [
+      "Montos en soles de 2025 (ajustados por inflación), para que se puedan comparar entre años.",
+      "“Gastado” es lo que la entidad ya debe pagar porque recibió el bien o servicio (el MEF lo llama devengado). “Presupuesto” es lo que tiene autorizado gastar en el año (el MEF lo llama PIM)."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Cuánto se gastó dentro de cada distrito: el gasto de ministerios y gobiernos regionales no se registra por distrito."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: gasto_ex_pan."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "desde": "2023",
+   "hasta": "2025",
+   "intencion": "Cómo varió",
+   "tema": "gasto en nutrición infantil",
+   "territorio": "del Perú"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "evolucion",
+   "periodo": {
+    "desde": 2023,
+    "hasta": 2025,
+    "tipo": "serie"
+   },
+   "tema": "gasto_publico",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "comparar_con": 2023,
+    "id": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+    "indicador": "gasto_ex_pan",
+    "medida": "devengado_constante",
+    "nivel": "nacional",
+    "rol": "principal",
+    "territorio": "PE"
+   },
+   {
+    "anio": 2023,
+    "en_serie_con": 2025,
+    "id": "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto",
+    "indicador": "gasto_ex_pan",
+    "medida": "devengado_constante",
+    "nivel": "nacional",
+    "rol": "contexto",
+    "territorio": "PE"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "periodo": {
+    "desde": 2023,
+    "hasta": 2025,
+    "tipo": "serie"
+   },
+   "pregunta_original": "¿Cómo varió el gasto en nutrición infantil del Perú de 2023 a 2025?",
+   "tema": "gasto_publico",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__gasto_publico__PE",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "desde": 2023,
+   "hasta": 2025,
+   "tipo": "serie"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "¿Cómo varió el gasto en nutrición infantil del Perú de 2023 a 2025?",
+  "respuesta_parcial": false,
+  "tema": "gasto_publico",
+  "tema_gasto": "cpt_grupo_expan",
+  "territorio": {
+   "id": "PE",
+   "nivel": "nacional",
+   "nombre_pedido": "Perú"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "match(lenguaje.prohibidas) o regla estructural → regenerar",
+   "detalle": {
+    "estructurales": [
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto",
+      "oracion": "En Perú, el gasto en servicios de salud y nutrición infantil {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__pasa}} {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 a {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025, en soles de 2025: {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__sentido}}.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     },
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+      "oracion": "En Perú, el gasto en servicios de salud y nutrición infantil {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__pasa}} {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 a {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025, en soles de 2025: {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__sentido}}.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     },
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+      "oracion": "{{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} es la cifra de gasto en servicios de salud y nutrición infantil en Perú en 2025, en soles de 2025.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     },
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto",
+      "oracion": "En Perú, el gasto en servicios de salud y nutrición infantil fue {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 y {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     },
+     {
+      "cifra": "gasto_ex_pan__devengado_constante__nacional__PE__2025__principal",
+      "oracion": "En Perú, el gasto en servicios de salud y nutrición infantil fue {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 y {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025.",
+      "regla": "gasto con base ejecutora sin ['registrado por unidades ejecutoras con sede en', 'la municipalidad']"
+     }
+    ],
+    "infracciones": [],
+    "intentos": 0
+   },
+   "modo": "corrector",
+   "motivo": "lenguaje_prohibido",
+   "objetivo": "respuesta",
+   "regla": "R-LENGUAJE-02"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En Perú, el gasto en servicios de salud y nutrición infantil pasó de S/ 2 263,9 millones en 2023 a S/ 2 455,9 millones en 2025, en soles de 2025: aumentó. S/ 2 455,9 millones es la cifra de gasto en servicios de salud y nutrición infantil en Perú en 2025, en soles de 2025. No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó. Montos en soles de 2025 (ajustados por inflación), para que se puedan comparar entre años. En Perú, el gasto en servicios de salud y nutrición infantil fue S/ 2 263,9 millones en 2023 y S/ 2 455,9 millones en 2025.",
+ "texto_con_marcadores": "En Perú, el gasto en servicios de salud y nutrición infantil {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__pasa}} {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 a {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025, en soles de 2025: {{v:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal__sentido}}. {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} es la cifra de gasto en servicios de salud y nutrición infantil en Perú en 2025, en soles de 2025. No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó. Montos en soles de 2025 (ajustados por inflación), para que se puedan comparar entre años. En Perú, el gasto en servicios de salud y nutrición infantil fue {{c:gasto_ex_pan__devengado_constante__nacional__PE__2023__contexto}} en 2023 y {{c:gasto_ex_pan__devengado_constante__nacional__PE__2025__principal}} en 2025.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

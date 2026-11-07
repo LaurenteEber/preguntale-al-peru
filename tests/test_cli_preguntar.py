@@ -22,6 +22,7 @@ REFERENCIAS = RAIZ / "tests" / "referencias"
 PARAMETROS = yaml.safe_load((RAIZ / "curados" / "motor" / "parametros_motor.yaml").read_text(encoding="utf-8"))
 COD = PARAMETROS["cli"]["codigo_salida"]["valor"]
 HUANCAVELICA = ["preguntar", "--intencion", "evolucion", "--tema", "anemia", "--territorio", "Huancavelica"]
+LIMA = ["preguntar", "--intencion", "evolucion", "--tema", "anemia", "--territorio", "Lima"]      # X-22: Lima sigue aclarando (T-03)
 
 
 @pytest.fixture(autouse=True)
@@ -42,23 +43,33 @@ def clave(c):
 
 # ------------------------------------------------------------------------- criterios de aceptación
 
-def test_huancavelica_pide_aclarar_y_no_escribe(capsys, tmp_path):
-    """Homónimo de departamento, provincia y distrito: imprime las opciones numeradas (el departamento primero, `aclaracion_orden`),
-    no escribe ninguna respuesta y sale con el código de aclaración."""
-    codigo, out, err = correr(capsys, *HUANCAVELICA, "--salida", str(tmp_path / "s"))
+def test_lima_pide_aclarar_y_no_escribe(capsys, tmp_path):
+    """«Lima» a secas (T-03; antes lo hacía también Huancavelica, hasta X-22): imprime las opciones numeradas, no escribe ninguna
+    respuesta y sale con el código de aclaración."""
+    codigo, out, err = correr(capsys, *LIMA, "--salida", str(tmp_path / "s"))
     lineas = out.splitlines()
     assert codigo == COD["aclaracion"] == 2 and err == ""
-    assert lineas[0] == "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?"
-    assert lineas[1] == "1) Huancavelica (departamento)"
-    assert lineas[2].startswith("2) Huancavelica (provincia") and lineas[3].startswith("3) Huancavelica (distrito")
+    assert lineas[0] == "Hay varios lugares llamados «Lima». ¿Cuál quieres?"
+    assert lineas[1] == "1) Lima Metropolitana (provincia de Lima)" and lineas[3] == "3) Callao"
     assert lineas[4] == "Para responder, repite el comando con --elegir <número>."
     assert not (tmp_path / "s").exists()
 
 
-def test_elegir_1_responde_como_q1(capsys, tmp_path):
-    """Con `--elegir 1` responde como Q1: mismas cifras y semáforos que la referencia (sin la de 2022, C-01); el JSON lleva la
+def test_huancavelica_a_secas_responde_el_departamento_sin_preguntar(capsys, tmp_path):
+    """X-22: «Huancavelica» (también provincia y distrito) se responde como departamento, sin aclaración ni --elegir, y la capa 2
+    ofrece la provincia o el distrito. Sale con el código de respuesta."""
+    codigo, out, err = correr(capsys, *HUANCAVELICA, "--salida", str(tmp_path))
+    assert codigo == COD["respondida"] == 0 and err == ""
+    md = (tmp_path / "evolucion__anemia__09.md").read_text(encoding="utf-8")
+    assert "Respondimos por el departamento de Huancavelica. Si buscabas la provincia o el distrito de Huancavelica" in md
+    codigo, out, err = correr(capsys, *HUANCAVELICA, "--elegir", "1", "--salida", str(tmp_path / "s"))
+    assert codigo == COD["error"] and err == "✘ Esta pregunta no tiene nada por elegir: repite el comando sin --elegir.\n"
+
+
+def test_huancavelica_responde_como_q1(capsys, tmp_path):
+    """Responde como Q1: mismas cifras y semáforos que la referencia (sin la de 2022, C-01); el JSON lleva la
     consulta mínima, el plan generado y la versión de la biblioteca; el markdown va por capas."""
-    codigo, out, err = correr(capsys, *HUANCAVELICA, "--elegir", "1", "--salida", str(tmp_path))
+    codigo, out, err = correr(capsys, *HUANCAVELICA, "--salida", str(tmp_path))
     assert codigo == COD["respondida"] == 0 and err == ""
     assert out.startswith("===== evolucion__anemia__09 · semáforo: verde")
     r = json.loads((tmp_path / "evolucion__anemia__09.json").read_text(encoding="utf-8"))
@@ -221,7 +232,7 @@ def test_consulta_invalida_en_archivo(capsys, tmp_path):
 
 
 def test_elegir_invalido_y_sin_nada_que_preguntar(capsys, tmp_path):
-    codigo, out, err = correr(capsys, *HUANCAVELICA, "--elegir", "9", "--salida", str(tmp_path / "s"))
+    codigo, out, err = correr(capsys, *LIMA, "--elegir", "9", "--salida", str(tmp_path / "s"))
     assert codigo == COD["error"] and err == "✘ La opción 9 no existe. Elige un número entre 1 y 3.\n" and not (tmp_path / "s").exists()
     codigo, out, err = correr(capsys, "preguntar")
     assert codigo == COD["error"] and err.startswith("✘ No hay nada que preguntar.")
@@ -238,18 +249,65 @@ def test_elegir_invalido_y_sin_nada_que_preguntar(capsys, tmp_path):
 BASE_ESTRUCTURADA = RAIZ / "backlog" / "slice-2" / "evidencia" / "base_estructurada"
 
 
+def _raiz_con_decisiones_de_antes(destino):
+    """Una raíz de trabajo que enlaza todo el proyecto salvo lo que cambiaron las decisiones aprobadas del slice 3, que vuelve
+    a su valor de antes: `parametros_motor.yaml` con X-02, X-03 y X-04 como antes de S3-01 (`mostrar_conteo_sien` y
+    `cr01_mismo_anio` en false, `intervalo_visible` en `ambos`), y los textos de H14, H15 y H-A (glosario de la forma de medir) como antes de S3-02/S3-01b
+    (`tests/fixtures/textos_antes_s3_02/`). La base de S2-00 es evidencia histórica y no se regenera: los cambios aprobados se
+    exceptúan así, y solo ellos."""
+    p = yaml.safe_load((RAIZ / "curados" / "motor" / "parametros_motor.yaml").read_text(encoding="utf-8"))
+    pend = p["pendientes_dueno"]
+    pend["mostrar_conteo_sien"]["valor"], pend["cr01_mismo_anio"]["valor"], pend["intervalo_visible"]["valor"] = False, False, "ambos"
+    p["territorio"]["departamento_a_secas"]["activo"] = False                      # X-22 (6/11/2026): antes, «Huancavelica» a secas aclaraba
+    antes = RAIZ / "tests" / "fixtures" / "textos_antes_s3_02"
+    antes_s3_10 = RAIZ / "tests" / "fixtures" / "textos_antes_s3_10"     # S3-10: textos de antes de las decisiones del 7/11/2026
+    reales = {("curados", "motor", "parametros_motor.yaml"): yaml.safe_dump(p, allow_unicode=True, sort_keys=False),
+              ("curados", "motor", "textos", "bloques.yaml"): (antes / "bloques.yaml").read_text(encoding="utf-8"),
+              ("curados", "motor", "textos", "plantillas", "nivel_actual.yaml"): (antes / "nivel_actual.yaml").read_text(encoding="utf-8"),
+              ("curados", "motor", "textos", "glosario.yaml"): (antes / "glosario.yaml").read_text(encoding="utf-8"),     # H-A (6/11/2026)
+              ("curados", "motor", "textos", "capas.yaml"): (antes_s3_10 / "capas.yaml").read_text(encoding="utf-8"),      # H-07 (7/11/2026)
+              ("curados", "motor", "textos", "plantillas", "cruce_efecto.yaml"):
+                  (antes_s3_10 / "cruce_efecto.yaml").read_text(encoding="utf-8")}                                          # W-10, H-04, H-05 (7/11/2026)
+
+    def espejo(origen, dest, prefijo=()):
+        dest.mkdir(parents=True)
+        for x in origen.iterdir():
+            ruta = prefijo + (x.name,)
+            if ruta in reales:
+                (dest / x.name).write_text(reales[ruta], encoding="utf-8")
+            elif any(r[:len(ruta)] == ruta for r in reales):
+                espejo(x, dest / x.name, ruta)
+            else:
+                (dest / x.name).symlink_to(x)
+    espejo(RAIZ, destino)
+    return destino
+
+
+def _sin_enlaces_de_citas(x):
+    """S3-01 (P-02, plan_slices.md slice 3): el campo nuevo `capa3.citas` (texto + enlace oficial) no existía en S2-00."""
+    if isinstance(x, dict):
+        return {k: _sin_enlaces_de_citas(v) for k, v in x.items() if k != "citas" or not isinstance(v, list)}
+    if isinstance(x, list):
+        return [_sin_enlaces_de_citas(v) for v in x]
+    return x
+
+
 def test_via_estructurada_igual_a_la_base_de_s2_00(tmp_path):
     """Los `respuesta.json` de la vía estructurada, generados con los comandos exactos de `generar.sh`, son iguales a los
-    guardados en S2-00, salvo las rutas (la carpeta de salida se reemplaza antes de comparar)."""
+    guardados en S2-00, salvo las rutas (la carpeta de salida se reemplaza antes de comparar) y salvo lo aprobado en S3-01 y S3-01b:
+    X-02, X-03, X-04, X-22 y las de S3-10 (W-10, H-04, H-05, H-07; con sus parámetros en el valor de antes, ver `_raiz_con_decisiones_de_antes`) y el campo `capa3.citas`
+    con el enlace de cada cita (P-02)."""
     salida = tmp_path / "base"
+    raiz_antes = _raiz_con_decisiones_de_antes(tmp_path / "raiz_antes")
     p = subprocess.run(["bash", str(BASE_ESTRUCTURADA / "generar.sh"), str(salida)], cwd=RAIZ, capture_output=True, text=True,
-                       env={**__import__("os").environ, "PAP_RAIZ": str(RAIZ)})
+                       env={**__import__("os").environ, "PAP_RAIZ": str(raiz_antes)})
     assert p.returncode == 0, p.stderr[-2000:]
     esperados = sorted(x.relative_to(BASE_ESTRUCTURADA) for x in BASE_ESTRUCTURADA.rglob("*.json"))
     assert esperados and sorted(x.relative_to(salida) for x in salida.rglob("*.json")) == esperados
     for rel in esperados:
-        nuevo = json.loads((salida / rel).read_text(encoding="utf-8").replace(str(salida), "<salida>"))
-        assert nuevo == json.loads((BASE_ESTRUCTURADA / rel).read_text(encoding="utf-8")), rel
+        texto = (salida / rel).read_text(encoding="utf-8").replace(str(salida), "<salida>")
+        nuevo = json.loads(texto)
+        assert _sin_enlaces_de_citas(nuevo) == json.loads((BASE_ESTRUCTURADA / rel).read_text(encoding="utf-8")), rel
         assert "entendimos" not in nuevo and "interpretacion" not in nuevo, rel
 
 
@@ -273,6 +331,6 @@ def test_help_en_espanol_para_cada_opcion(capsys):
 
 def test_proceso_real_aclaracion_y_elegir():
     """Como lo corre la persona (`pap preguntar …`): códigos de salida del proceso."""
-    base = [sys.executable, "-m", "pap.cli", *HUANCAVELICA]
+    base = [sys.executable, "-m", "pap.cli", *LIMA]
     p = subprocess.run(base, cwd=RAIZ, capture_output=True, text=True, env={**__import__("os").environ, "PAP_RAIZ": str(RAIZ)})
-    assert p.returncode == 2 and p.stdout.splitlines()[1] == "1) Huancavelica (departamento)" and p.stderr == ""
+    assert p.returncode == 2 and p.stdout.splitlines()[1] == "1) Lima Metropolitana (provincia de Lima)" and p.stderr == ""

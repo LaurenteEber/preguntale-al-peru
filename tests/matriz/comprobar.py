@@ -11,6 +11,8 @@ copiarlos. Cada comprobación devuelve una lista de fallos `{"codigo", "detalle"
   citas            cada cifra usada tiene su línea en `capa3.para_citar` (P-02); sin cifras, sin porcentajes ni montos visibles
   evolucion        S1-13 (AD-1, H11): una evolución muestra las dos cifras que compara, cada una con su marcador
   cruce            S1-14 (H9): la capa 1 de un cruce no dice «lado a lado» (trae una sola cifra clave, R-04)
+  comparaciones    S3-01b (punto 9): toda comparación escrita («más alta», «más baja», «mayor», «menor») coincide con las
+                   cifras de la misma respuesta; una comparación que no se sabe comprobar también falla
 """
 from __future__ import annotations
 
@@ -168,7 +170,83 @@ def cruce(r: dict) -> list[dict]:
     return [_fallo("cruce_lado_a_lado_en_capa1", t[:200]) for t in textos if "lado a lado" in t.lower()]
 
 
+# S3-01b (punto 9): comparaciones escritas. Cada frase visible con una palabra de COMPARATIVO debe ser una comparación que se
+# sabe comprobar (abajo) o una frase sin comparación entre cifras (NO_COMPARA); si no, falla, para que una comparación nueva
+# en un texto no pase sin revisar.
+COMPARATIVO = re.compile(r"\bmás\s+(alt|baj)[oa]s?\b|\bmayor(es)?\b|\bmenor(es)?\b", re.IGNORECASE)
+NO_COMPARA = [
+    re.compile(r"\bmenores de \d"),                                   # «niñas y niños menores de 5 años»
+    re.compile(r"dónde es más alto( o más bajo)?"),                     # menú de lo que se puede preguntar
+    re.compile(r"valor más alto de"),                                   # ofrecimiento de «no se puede»
+    re.compile(r"[Pp]or qué es mayor en un lugar que en el otro"),      # ojo de la comparación: no afirma cuál es mayor
+    # ranking: el grupo lo fija la prueba estadística (del INEI o la propia), no una comparación entre dos cifras escritas
+    re.compile(r"grupo con .+ más alta"),
+    re.compile(r"[Ll]os \w+ con .+ más alta \(\d{4}\)"),
+    re.compile(r"se estima que .+ era más alta, sin diferencias"),
+    re.compile(r"con el más alto con una prueba estadística"),
+]
+ANEMIA_ANTERIOR, ANEMIA_VIGENTE = "endes_anemia_6_35m", "endes_anemia_6_35m_oms2024"
+FORMA_ANTERIOR_MAS_ALTA = re.compile(r"(anterior|otra forma)[^.]*cifras más altas")
+SIEN_MAS_BAJA = re.compile(r"más baja que la de la encuesta")
+MAYOR_EN = re.compile(r"fue mayor en (?P<a>.+?) que en (?P<b>.+?),")
+EXTREMO_UNO = re.compile(r"En (?P<anio>\d{4}), (?P<lugar>.+?) es (el|la) \w+ con .+? más alta, con diferencia")
+
+
+def _cifras_de(r: dict, indicador=None, prefijo=None, rol=None) -> list[dict]:
+    return [c for c in (r.get("cifras") or {}).values() if c.get("valor") is not None
+            and (indicador is None or c["indicador_id"] == indicador)
+            and (prefijo is None or c["indicador_id"].startswith(prefijo)) and (rol is None or c.get("rol") == rol)]
+
+
+def _sin_rotulo(nombre) -> str:
+    """El nombre como lo escribe la respuesta: sin el rótulo entre paréntesis (igual que `_lugar` en plantillas.py; S3-11)."""
+    return re.sub(r"\s*\([^)]*\)", "", str(nombre)).strip()
+
+
+def _comprobar_frase(r: dict, t: str) -> list[dict] | None:
+    """Los fallos de una frase con comparativo, o None si no es una comparación que se sepa comprobar."""
+    if FORMA_ANTERIOR_MAS_ALTA.search(t):          # la forma anterior de medir la anemia da cifras más altas que la vigente
+        vig = {(str(c["territorio_id"]), int(c["anio"])): c for c in _cifras_de(r, ANEMIA_VIGENTE)}
+        return [_fallo("comparacion_contradice_cifras", {"texto": t[:200], "lugar": a["territorio_nombre"], "anio": int(a["anio"]),
+                                                       "anterior": a["valor"], "vigente": v["valor"]})
+                for a in _cifras_de(r, ANEMIA_ANTERIOR)
+                if (v := vig.get((str(a["territorio_id"]), int(a["anio"])))) and not a["valor"] > v["valor"]]
+    if SIEN_MAS_BAJA.search(t):                    # la cifra del SIEN es más baja que la de la ENDES de la misma respuesta
+        return [_fallo("comparacion_contradice_cifras", {"texto": t[:200], "sien": s["valor"], "encuesta": e["valor"],
+                                                       "lugar": s["territorio_nombre"]})
+                for s in _cifras_de(r, prefijo="sien_anemia") for e in _cifras_de(r, prefijo="endes_anemia")
+                if int(s["anio"]) == int(e["anio"]) and not s["valor"] < e["valor"]]
+    if m := MAYOR_EN.search(t):                    # comparación entre dos lugares: «fue mayor en A que en B»
+        val = {_sin_rotulo(c["territorio_nombre"]): c["valor"] for c in _cifras_de(r, rol="principal")}
+        a, b = val.get(m["a"]), val.get(m["b"])
+        if a is None or b is None:
+            return [_fallo("comparacion_sin_cifras", {"texto": t[:200], "lugares": [m["a"], m["b"]]})]
+        return [] if a > b else [_fallo("comparacion_contradice_cifras", {"texto": t[:200], m["a"]: a, m["b"]: b})]
+    if m := EXTREMO_UNO.search(t):                 # un solo lugar con la cifra más alta: ninguna otra del mismo año la supera
+        anio = int(m["anio"])
+        del_anio = [c for c in _cifras_de(r) if int(c["anio"]) == anio and c.get("medida") != "cobertura"]
+        suya = [c for c in del_anio if _sin_rotulo(c["territorio_nombre"]) == _sin_rotulo(m["lugar"])]
+        if not suya:
+            return [_fallo("comparacion_sin_cifras", {"texto": t[:200], "lugar": m["lugar"]})]
+        mas = [c for c in del_anio if c["indicador_id"] == suya[0]["indicador_id"] and c["valor"] > suya[0]["valor"]]
+        return [_fallo("comparacion_contradice_cifras", {"texto": t[:200], "lugar": m["lugar"], "mayor": c["territorio_nombre"]})
+                for c in mas]
+    return None
+
+
+def comparaciones(r: dict) -> list[dict]:
+    """S3-01b (punto 9): cada comparación escrita en el texto visible coincide con las cifras de la misma respuesta."""
+    out = []
+    for t in visible(r):
+        for frase in re.split(r"(?<=[.:;])\s+", t or ""):
+            if not COMPARATIVO.search(frase) or any(x.search(frase) for x in NO_COMPARA):
+                continue
+            fallos = _comprobar_frase(r, frase)
+            out += fallos if fallos is not None else [_fallo("comparacion_sin_comprobar", frase[:200])]
+    return out
+
+
 def revisar(res: dict, p: dict, lugares: list[str]) -> list[dict]:
     """Todas las comprobaciones sobre una respuesta con capas (respondida o no_se_puede)."""
     return (validador(res) + capa1_maximo(res, p) + corrector(res, p) + marcadores(res) + nombres(res, lugares) + citas(res)
-            + evolucion(res) + cruce(res))
+            + evolucion(res) + cruce(res) + comparaciones(res))

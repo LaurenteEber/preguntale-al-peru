@@ -1,0 +1,292 @@
+{
+ "aclaracion": {
+  "motivo": "homonimo_mismo_nivel",
+  "opciones": [
+   {
+    "etiqueta": "San Juan (distrito, provincia de Sihuas, departamento de Áncash)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Áncash",
+     "id": "021909",
+     "nivel": "distrito",
+     "nombre_completo": "San Juan (Sihuas, Áncash)",
+     "nombre_mostrado": "San Juan",
+     "provincia": "Sihuas",
+     "provisional": false,
+     "ubigeo": "021909"
+    }
+   },
+   {
+    "etiqueta": "San Juan (distrito, provincia de Lucanas, departamento de Ayacucho)",
+    "n": 2,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Ayacucho",
+     "id": "050616",
+     "nivel": "distrito",
+     "nombre_completo": "San Juan (Lucanas, Ayacucho)",
+     "nombre_mostrado": "San Juan",
+     "provincia": "Lucanas",
+     "provisional": false,
+     "ubigeo": "050616"
+    }
+   },
+   {
+    "etiqueta": "San Juan (distrito, provincia de Cajamarca, departamento de Cajamarca)",
+    "n": 3,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Cajamarca",
+     "id": "060112",
+     "nivel": "distrito",
+     "nombre_completo": "San Juan (Cajamarca, Cajamarca)",
+     "nombre_mostrado": "San Juan",
+     "provincia": "Cajamarca",
+     "provisional": false,
+     "ubigeo": "060112"
+    }
+   },
+   {
+    "etiqueta": "San Juan (distrito, provincia de Castrovirreyna, departamento de Huancavelica)",
+    "n": 4,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Huancavelica",
+     "id": "090410",
+     "nivel": "distrito",
+     "nombre_completo": "San Juan (Castrovirreyna, Huancavelica)",
+     "nombre_mostrado": "San Juan",
+     "provincia": "Castrovirreyna",
+     "provisional": false,
+     "ubigeo": "090410"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "Hay varios lugares llamados «San Juan». ¿Cuál quieres?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "homonimo_mismo_nivel",
+   "opciones": [
+    {
+     "etiqueta": "San Juan (distrito, provincia de Sihuas, departamento de Áncash)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Áncash",
+      "id": "021909",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan (Sihuas, Áncash)",
+      "nombre_mostrado": "San Juan",
+      "provincia": "Sihuas",
+      "provisional": false,
+      "ubigeo": "021909"
+     }
+    },
+    {
+     "etiqueta": "San Juan (distrito, provincia de Lucanas, departamento de Ayacucho)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Ayacucho",
+      "id": "050616",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan (Lucanas, Ayacucho)",
+      "nombre_mostrado": "San Juan",
+      "provincia": "Lucanas",
+      "provisional": false,
+      "ubigeo": "050616"
+     }
+    },
+    {
+     "etiqueta": "San Juan (distrito, provincia de Cajamarca, departamento de Cajamarca)",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Cajamarca",
+      "id": "060112",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan (Cajamarca, Cajamarca)",
+      "nombre_mostrado": "San Juan",
+      "provincia": "Cajamarca",
+      "provisional": false,
+      "ubigeo": "060112"
+     }
+    },
+    {
+     "etiqueta": "San Juan (distrito, provincia de Castrovirreyna, departamento de Huancavelica)",
+     "n": 4,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Huancavelica",
+      "id": "090410",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan (Castrovirreyna, Huancavelica)",
+      "nombre_mostrado": "San Juan",
+      "provincia": "Castrovirreyna",
+      "provisional": false,
+      "ubigeo": "090410"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Hay varios lugares llamados «San Juan». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "anemia en San Juan",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "San Juan"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__homonimo_mismo_nivel",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "anemia en San Juan",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "anemia en San Juan",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "San Juan"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de anemia en «San Juan»",
+ "interpretacion": {
+  "anclas": {
+   "tema": "anemia",
+   "territorio": "San Juan"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "San Juan"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "homonimo_mismo_nivel",
+   "opciones": [
+    {
+     "etiqueta": "San Juan (distrito, provincia de Sihuas, departamento de Áncash)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Áncash",
+      "id": "021909",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan (Sihuas, Áncash)",
+      "nombre_mostrado": "San Juan",
+      "provincia": "Sihuas",
+      "provisional": false,
+      "ubigeo": "021909"
+     }
+    },
+    {
+     "etiqueta": "San Juan (distrito, provincia de Lucanas, departamento de Ayacucho)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Ayacucho",
+      "id": "050616",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan (Lucanas, Ayacucho)",
+      "nombre_mostrado": "San Juan",
+      "provincia": "Lucanas",
+      "provisional": false,
+      "ubigeo": "050616"
+     }
+    },
+    {
+     "etiqueta": "San Juan (distrito, provincia de Cajamarca, departamento de Cajamarca)",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Cajamarca",
+      "id": "060112",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan (Cajamarca, Cajamarca)",
+      "nombre_mostrado": "San Juan",
+      "provincia": "Cajamarca",
+      "provisional": false,
+      "ubigeo": "060112"
+     }
+    },
+    {
+     "etiqueta": "San Juan (distrito, provincia de Castrovirreyna, departamento de Huancavelica)",
+     "n": 4,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Huancavelica",
+      "id": "090410",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan (Castrovirreyna, Huancavelica)",
+      "nombre_mostrado": "San Juan",
+      "provincia": "Castrovirreyna",
+      "provisional": false,
+      "ubigeo": "090410"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Hay varios lugares llamados «San Juan». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "anemia en San Juan",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "San Juan"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__homonimo_mismo_nivel",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "anemia en San Juan",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "Hay varios lugares llamados «San Juan». ¿Cuál quieres?\n1) San Juan (distrito, provincia de Sihuas, departamento de Áncash)\n2) San Juan (distrito, provincia de Lucanas, departamento de Ayacucho)\n3) San Juan (distrito, provincia de Cajamarca, departamento de Cajamarca)\n4) San Juan (distrito, provincia de Castrovirreyna, departamento de Huancavelica)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

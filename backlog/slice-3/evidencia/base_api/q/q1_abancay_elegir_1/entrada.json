@@ -1,0 +1,17 @@
+{
+ "consulta": {
+  "idioma": "es",
+  "intencion": "evolucion",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica?",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "Abancay"
+  }
+ },
+ "elegir": [
+  1
+ ]
+}

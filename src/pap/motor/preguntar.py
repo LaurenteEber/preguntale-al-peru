@@ -23,7 +23,7 @@ from . import capas as K
 from . import plantillas
 from .consulta import ConsultaInvalida, cargar
 from .planificador import cargar_intenciones, planificar
-from .territorio import Aclaracion, Resuelto, resolver
+from .territorio import Aclaracion, Resuelto, oferta_otros_niveles, resolver
 from .validador.reglas_etapa0 import contenedor
 from .validador.reglas_etapa1_3 import nombre_territorio
 
@@ -377,6 +377,7 @@ def respuesta_no_se_puede(motor, plan: dict, motivo: dict | str, *, cifras: dict
     capas = K.construir(motor, consulta, borrador, {}, {"corta": r.ficha["corta_texto"]}, sem_r.get("semaforo_respuesta"), avisos)
     if not capas["capa3"]["para_citar"]:
         capas["capa3"]["para_citar"] = [tx["sin_citas"]]                 # S1-09 (H16): sin cifras no hay qué citar, y se dice
+        capas["capa3"]["citas"] = [{"texto": tx["sin_citas"], "url": "", "id_cifra": None}]
     capas["capa1"]["lo_mas_cercano"] = {"titulo": tx["titulos"]["lo_mas_cercano"], "texto": cercano}
     capas["capa1"]["palabras"] += K.palabras(cercano)
     no_pub = [{"id": c.id_cifra if c.get("id_cifra") else k, "indicador": c.indicador_id, "anio": int(c.anio), "nivel": c.nivel,
@@ -519,7 +520,7 @@ def _plan_aparte(cm: dict | None, dato: dict, **claves) -> dict:
 
 # ======================================================================= camino completo
 
-def _resolver(motor, cm: dict, elegir):
+def _resolver(motor, cm: dict, elegir, ofertas: list | None = None):
     """(territorios resueltos del plan o None, aclaración pendiente o None, números de `elegir` que sobran, los lugares que salieron
     de una aclaración). Cada aclaración usa el siguiente número de `elegir`; sin número, se devuelve la aclaración."""
     t = cm["territorio"]
@@ -539,10 +540,20 @@ def _resolver(motor, cm: dict, elegir):
             _elegir(motor, a, n)                                               # valida el número
             r = r.opciones[n - 1]["territorio"]
             elegidos.append(r)
+        elif ofertas is not None:
+            o = oferta_otros_niveles(motor.ctx, p, r)                          # X-22
+            if o and o not in ofertas:
+                ofertas.append(o)
         out.append(r)
     if cm["intencion"] == "identificar_extremo":
         return (out[0] if out else None), None, numeros, elegidos
     return (out if len(out) > 1 else out[0]), None, numeros, elegidos
+
+
+# S3-10 (supuesto, reversible): intenciones donde la oferta de X-22 va en «Avisos» (capa 2) y no en «Ojo al leer»: una comparación
+# con dos departamentos a secas lleva dos ofertas, y la evolución de anemia ya llega a 3 «Ojo al leer»; en ambas la capa 1 pasaría de
+# `respuesta.capa1_palabras_max` (125 palabras) y se perdería una advertencia de la cifra.
+_OFERTA_EN_AVISOS = ("comparacion", "evolucion", "cruce", "efecto")   # cruce y efecto: S3-10 (W-10), la apertura del gasto ocupa la capa 1
 
 
 def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bool = False) -> dict:
@@ -571,7 +582,8 @@ def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bo
         dato = {**dato, "tema": _elegir(motor, a, numeros[0])["tema"]}
         elegir = numeros[1:]
         cm = cargar(dato, raiz)
-    resuelto, aclaracion, sobran, elegidos = _resolver(motor, cm, elegir)
+    ofertas: list[str] = []
+    resuelto, aclaracion, sobran, elegidos = _resolver(motor, cm, elegir, ofertas)
     if aclaracion is not None:
         plan = _plan_aparte(cm, dato, id=f"aclaracion__{aclaracion['motivo']}", aclaracion=aclaracion)
         return _con_entrada(motor.responder(plan), cm, plan)
@@ -584,7 +596,16 @@ def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bo
     plan["consulta_minima"] = cm
     # S1-09 (H4): el lugar que la persona eligió entre homónimos conserva su nombre con provincia y departamento
     plan["desambiguados"] = {f"{r.nivel}:{r.id}": r.nombre_completo for r in elegidos if r.nivel in ("provincia", "distrito")}
-    return _con_entrada({"tipo": "plan"} if solo_plan else motor.responder(plan), cm, plan)
+    res = {"tipo": "plan"} if solo_plan else motor.responder(plan)
+    if ofertas and "capas" in res:
+        if cm["intencion"] in _OFERTA_EN_AVISOS:                               # S3-10: con dos departamentos a secas la capa 1 se pasaría del tope
+            res["capas"]["capa2"]["avisos"] = list(dict.fromkeys(ofertas + res["capas"]["capa2"]["avisos"]))
+        else:                                                                  # X-22 (S3-10, H-01): PRIMERO en «Ojo al leer» (capa 1)
+            c1 = res["capas"]["capa1"]
+            nuevas = [o for o in ofertas if o not in c1["ojo_al_leer"]]
+            c1["ojo_al_leer"] = nuevas + c1["ojo_al_leer"]
+            c1["palabras"] += K.palabras(*nuevas)
+    return _con_entrada(res, cm, plan)
 
 
 def _con_entrada(res: dict, cm: dict, plan: dict) -> dict:

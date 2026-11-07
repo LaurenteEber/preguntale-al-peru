@@ -1,0 +1,293 @@
+{
+ "aclaracion": {
+  "motivo": "homonimo_mismo_nivel",
+  "opciones": [
+   {
+    "etiqueta": "Miraflores (distrito, provincia de Arequipa, departamento de Arequipa)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Arequipa",
+     "id": "040110",
+     "nivel": "distrito",
+     "nombre_completo": "Miraflores (Arequipa, Arequipa)",
+     "nombre_mostrado": "Miraflores",
+     "provincia": "Arequipa",
+     "provisional": false,
+     "ubigeo": "040110"
+    }
+   },
+   {
+    "etiqueta": "Miraflores (distrito, provincia de Huamalies, departamento de Huánuco)",
+    "n": 2,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Huánuco",
+     "id": "100506",
+     "nivel": "distrito",
+     "nombre_completo": "Miraflores (Huamalies, Huánuco)",
+     "nombre_mostrado": "Miraflores",
+     "provincia": "Huamalies",
+     "provisional": false,
+     "ubigeo": "100506"
+    }
+   },
+   {
+    "etiqueta": "Miraflores (distrito, provincia de Lima, departamento de Lima)",
+    "n": 3,
+    "territorio": {
+     "ambito_lima": "LIMA_METROPOLITANA",
+     "anio_datos_desde": 2017,
+     "departamento": "Lima",
+     "id": "150122",
+     "nivel": "distrito",
+     "nombre_completo": "Miraflores (Lima, Lima)",
+     "nombre_mostrado": "Miraflores",
+     "provincia": "Lima",
+     "provisional": false,
+     "ubigeo": "150122"
+    }
+   },
+   {
+    "etiqueta": "Miraflores (distrito, provincia de Yauyos, departamento de Lima)",
+    "n": 4,
+    "territorio": {
+     "ambito_lima": "LIMA_REGION",
+     "anio_datos_desde": 2017,
+     "departamento": "Lima",
+     "id": "151021",
+     "nivel": "distrito",
+     "nombre_completo": "Miraflores (Yauyos, Lima)",
+     "nombre_mostrado": "Miraflores",
+     "provincia": "Yauyos",
+     "provisional": false,
+     "ubigeo": "151021"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "Hay varios lugares llamados «Miraflores». ¿Cuál quieres?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "homonimo_mismo_nivel",
+   "opciones": [
+    {
+     "etiqueta": "Miraflores (distrito, provincia de Arequipa, departamento de Arequipa)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Arequipa",
+      "id": "040110",
+      "nivel": "distrito",
+      "nombre_completo": "Miraflores (Arequipa, Arequipa)",
+      "nombre_mostrado": "Miraflores",
+      "provincia": "Arequipa",
+      "provisional": false,
+      "ubigeo": "040110"
+     }
+    },
+    {
+     "etiqueta": "Miraflores (distrito, provincia de Huamalies, departamento de Huánuco)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Huánuco",
+      "id": "100506",
+      "nivel": "distrito",
+      "nombre_completo": "Miraflores (Huamalies, Huánuco)",
+      "nombre_mostrado": "Miraflores",
+      "provincia": "Huamalies",
+      "provisional": false,
+      "ubigeo": "100506"
+     }
+    },
+    {
+     "etiqueta": "Miraflores (distrito, provincia de Lima, departamento de Lima)",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": "LIMA_METROPOLITANA",
+      "anio_datos_desde": 2017,
+      "departamento": "Lima",
+      "id": "150122",
+      "nivel": "distrito",
+      "nombre_completo": "Miraflores (Lima, Lima)",
+      "nombre_mostrado": "Miraflores",
+      "provincia": "Lima",
+      "provisional": false,
+      "ubigeo": "150122"
+     }
+    },
+    {
+     "etiqueta": "Miraflores (distrito, provincia de Yauyos, departamento de Lima)",
+     "n": 4,
+     "territorio": {
+      "ambito_lima": "LIMA_REGION",
+      "anio_datos_desde": 2017,
+      "departamento": "Lima",
+      "id": "151021",
+      "nivel": "distrito",
+      "nombre_completo": "Miraflores (Yauyos, Lima)",
+      "nombre_mostrado": "Miraflores",
+      "provincia": "Yauyos",
+      "provisional": false,
+      "ubigeo": "151021"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Hay varios lugares llamados «Miraflores». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "¿Cuánta pobreza hay en Miraflores?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Miraflores"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__homonimo_mismo_nivel",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "¿Cuánta pobreza hay en Miraflores?",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "¿Cuánta pobreza hay en Miraflores?",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "Miraflores"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de pobreza en «Miraflores»",
+ "interpretacion": {
+  "anclas": {
+   "intencion": "Cuánta",
+   "tema": "pobreza",
+   "territorio": "Miraflores"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Miraflores"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "homonimo_mismo_nivel",
+   "opciones": [
+    {
+     "etiqueta": "Miraflores (distrito, provincia de Arequipa, departamento de Arequipa)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Arequipa",
+      "id": "040110",
+      "nivel": "distrito",
+      "nombre_completo": "Miraflores (Arequipa, Arequipa)",
+      "nombre_mostrado": "Miraflores",
+      "provincia": "Arequipa",
+      "provisional": false,
+      "ubigeo": "040110"
+     }
+    },
+    {
+     "etiqueta": "Miraflores (distrito, provincia de Huamalies, departamento de Huánuco)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Huánuco",
+      "id": "100506",
+      "nivel": "distrito",
+      "nombre_completo": "Miraflores (Huamalies, Huánuco)",
+      "nombre_mostrado": "Miraflores",
+      "provincia": "Huamalies",
+      "provisional": false,
+      "ubigeo": "100506"
+     }
+    },
+    {
+     "etiqueta": "Miraflores (distrito, provincia de Lima, departamento de Lima)",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": "LIMA_METROPOLITANA",
+      "anio_datos_desde": 2017,
+      "departamento": "Lima",
+      "id": "150122",
+      "nivel": "distrito",
+      "nombre_completo": "Miraflores (Lima, Lima)",
+      "nombre_mostrado": "Miraflores",
+      "provincia": "Lima",
+      "provisional": false,
+      "ubigeo": "150122"
+     }
+    },
+    {
+     "etiqueta": "Miraflores (distrito, provincia de Yauyos, departamento de Lima)",
+     "n": 4,
+     "territorio": {
+      "ambito_lima": "LIMA_REGION",
+      "anio_datos_desde": 2017,
+      "departamento": "Lima",
+      "id": "151021",
+      "nivel": "distrito",
+      "nombre_completo": "Miraflores (Yauyos, Lima)",
+      "nombre_mostrado": "Miraflores",
+      "provincia": "Yauyos",
+      "provisional": false,
+      "ubigeo": "151021"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "Hay varios lugares llamados «Miraflores». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "¿Cuánta pobreza hay en Miraflores?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "Miraflores"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__homonimo_mismo_nivel",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "¿Cuánta pobreza hay en Miraflores?",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "Hay varios lugares llamados «Miraflores». ¿Cuál quieres?\n1) Miraflores (distrito, provincia de Arequipa, departamento de Arequipa)\n2) Miraflores (distrito, provincia de Huamalies, departamento de Huánuco)\n3) Miraflores (distrito, provincia de Lima, departamento de Lima)\n4) Miraflores (distrito, provincia de Yauyos, departamento de Lima)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

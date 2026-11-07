@@ -1,0 +1,322 @@
+{
+ "alternativas": [],
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": null,
+   "confianza": {
+    "ficha": "Confianza: Sin cifra disponible.",
+    "nivel": "sin cifra",
+    "texto": "Confianza en los datos: sin cifra."
+   },
+   "lo_mas_cercano": {
+    "texto": "Por ahora no tenemos una cifra de un lugar cercano para ofrecerte.",
+    "titulo": "Lo más cercano que sí tenemos"
+   },
+   "ojo_al_leer": [],
+   "palabras": 39,
+   "que_hacer": null,
+   "respuesta_corta": "No tenemos datos propios de Alto Trujillo: es un distrito nuevo o cambió de límites después de los datos más recientes."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ninguna cifra publicada en esta respuesta",
+    "Territorio: Alto Trujillo",
+    "No permite concluir: nada sobre pobreza. No mostrar una cifra no quiere decir que el problema no exista."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Las cifras que tenemos son anteriores y se registraron con los límites de antes. No las repartimos hacia atrás ni inventamos las del distrito nuevo.",
+     "titulo": "Por qué no se puede"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": null,
+     "texto": "Esta respuesta no publica cifras.",
+     "url": ""
+    }
+   ],
+   "glosario": [],
+   "para_citar": [
+    "Esta respuesta no publica cifras."
+   ]
+  }
+ },
+ "cifras": {},
+ "cifras_no_publicadas": [],
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2026,
+    "id": "mapa_pobreza_2018__intervalo__distrito__130112__2026__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "principal",
+    "territorio": "130112"
+   },
+   {
+    "anio": 2026,
+    "id": "mapa_pobreza_2018__intervalo__distrito__120307__2026__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "principal",
+    "territorio": "120307"
+   }
+  ],
+  "consulta_minima": {
+   "comparar_con": {
+    "ubigeo": "120307"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "periodo": {
+    "anio": 2026,
+    "tipo": "anio"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "ubigeo": "130112"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "comparacion__pobreza_monetaria__130112__120307",
+  "intencion": "comparacion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "anio_datos_desde": 2027,
+    "anio_ultimo_dato": 2026,
+    "distrito": "Sangani",
+    "indicador": "mapa_pobreza_2018",
+    "motivo": "distrito_creado_despues",
+    "ubigeo": "120307"
+   },
+   {
+    "anio_pedido": 2026,
+    "anios_disponibles": [
+     2018
+    ],
+    "indicador": "mapa_pobreza_2018",
+    "motivo": "anio_sin_datos"
+   }
+  ],
+  "no_se_puede": {
+   "anio_datos_desde": 2027,
+   "anio_ultimo_dato": 2026,
+   "distrito": "Sangani",
+   "indicador": "mapa_pobreza_2018",
+   "motivo": "distrito_creado_despues",
+   "ubigeo": "120307"
+  },
+  "omitidas": [],
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "plantilla": "comparacion",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "130112",
+   "nivel": "distrito",
+   "nombre_pedido": "Alto Trujillo"
+  },
+  "territorio_comparado": {
+   "id": "120307",
+   "nivel": "distrito",
+   "nombre_pedido": "Sangani"
+  }
+ },
+ "consulta_minima": {
+  "comparar_con": {
+   "ubigeo": "120307"
+  },
+  "idioma": "es",
+  "intencion": "comparacion",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "130112"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "ficha": {
+  "corta": "Confianza: Sin cifra disponible.\nDatos de: ninguna cifra publicada en esta respuesta\nTerritorio: Alto Trujillo\nNo permite concluir: nada sobre pobreza. No mostrar una cifra no quiere decir que el problema no exista.",
+  "larga": {
+   "cifras": {},
+   "cruces": {},
+   "no_concluir": [],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: ."
+  }
+ },
+ "motivo": {
+  "codigo": "distrito_creado_despues",
+  "detalle": {
+   "anio_datos_desde": 2027,
+   "anio_ultimo_dato": 2026,
+   "distrito": "Sangani",
+   "indicador": "mapa_pobreza_2018",
+   "motivo": "distrito_creado_despues",
+   "ubigeo": "120307"
+  },
+  "otros": [
+   {
+    "anio_pedido": 2026,
+    "anios_disponibles": [
+     2018
+    ],
+    "indicador": "mapa_pobreza_2018",
+    "motivo": "anio_sin_datos"
+   }
+  ],
+  "regla_lenguaje_05": null
+ },
+ "motivos_semaforo_respuesta": [
+  "sin_cifra_principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2026,
+    "id": "mapa_pobreza_2018__intervalo__distrito__130112__2026__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "principal",
+    "territorio": "130112"
+   },
+   {
+    "anio": 2026,
+    "id": "mapa_pobreza_2018__intervalo__distrito__120307__2026__principal",
+    "indicador": "mapa_pobreza_2018",
+    "nivel": "distrito",
+    "rol": "principal",
+    "territorio": "120307"
+   }
+  ],
+  "consulta_minima": {
+   "comparar_con": {
+    "ubigeo": "120307"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "periodo": {
+    "anio": 2026,
+    "tipo": "anio"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "ubigeo": "130112"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "comparacion__pobreza_monetaria__130112__120307",
+  "intencion": "comparacion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "anio_datos_desde": 2027,
+    "anio_ultimo_dato": 2026,
+    "distrito": "Sangani",
+    "indicador": "mapa_pobreza_2018",
+    "motivo": "distrito_creado_despues",
+    "ubigeo": "120307"
+   },
+   {
+    "anio_pedido": 2026,
+    "anios_disponibles": [
+     2018
+    ],
+    "indicador": "mapa_pobreza_2018",
+    "motivo": "anio_sin_datos"
+   }
+  ],
+  "no_se_puede": {
+   "anio_datos_desde": 2027,
+   "anio_ultimo_dato": 2026,
+   "distrito": "Sangani",
+   "indicador": "mapa_pobreza_2018",
+   "motivo": "distrito_creado_despues",
+   "ubigeo": "120307"
+  },
+  "omitidas": [],
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "plantilla": "comparacion",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "130112",
+   "nivel": "distrito",
+   "nombre_pedido": "Alto Trujillo"
+  },
+  "territorio_comparado": {
+   "id": "120307",
+   "nivel": "distrito",
+   "nombre_pedido": "Sangani"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sin cifra principal publicable",
+   "detalle": {
+    "motivos": [
+     "sin_cifra_principal"
+    ],
+    "semaforo_respuesta": "sin_cifra"
+   },
+   "motivo": "sin_cifra_principal",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Sin cifra disponible"
+  }
+ ],
+ "semaforo_respuesta": "sin_cifra",
+ "temas_disponibles": [],
+ "texto": "No tenemos datos propios de Alto Trujillo: es un distrito nuevo o cambió de límites después de los datos más recientes. Por ahora no tenemos una cifra de un lugar cercano para ofrecerte. Las cifras que tenemos son anteriores y se registraron con los límites de antes. No las repartimos hacia atrás ni inventamos las del distrito nuevo.",
+ "texto_con_marcadores": "No tenemos datos propios de Alto Trujillo: es un distrito nuevo o cambió de límites después de los datos más recientes. Por ahora no tenemos una cifra de un lugar cercano para ofrecerte. Las cifras que tenemos son anteriores y se registraron con los límites de antes. No las repartimos hacia atrás ni inventamos las del distrito nuevo.",
+ "tipo": "no_se_puede",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

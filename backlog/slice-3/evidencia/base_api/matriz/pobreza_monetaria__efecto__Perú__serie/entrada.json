@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "efecto",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "nacional": true
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|efecto|Perú|serie"
+}

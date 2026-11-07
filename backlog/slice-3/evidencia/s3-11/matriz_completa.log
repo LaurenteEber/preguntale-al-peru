@@ -1,0 +1,74 @@
+200/5086 casos · 15 s
+400/5086 casos · 27 s
+600/5086 casos · 55 s
+800/5086 casos · 78 s
+1000/5086 casos · 99 s
+1200/5086 casos · 135 s
+1400/5086 casos · 149 s
+1600/5086 casos · 155 s
+1800/5086 casos · 161 s
+2000/5086 casos · 166 s
+2200/5086 casos · 172 s
+2400/5086 casos · 178 s
+2600/5086 casos · 188 s
+2800/5086 casos · 193 s
+3000/5086 casos · 199 s
+3200/5086 casos · 206 s
+3400/5086 casos · 213 s
+3600/5086 casos · 220 s
+3800/5086 casos · 229 s
+4000/5086 casos · 246 s
+4200/5086 casos · 263 s
+4400/5086 casos · 296 s
+4600/5086 casos · 327 s
+4800/5086 casos · 357 s
+5000/5086 casos · 399 s
+# 2026-11-07 12:53 commit 155464a — S1-08 matriz de cobertura
+
+Casos: 5086 · con fallos: 0 · tiempo: 6.9 min. Generado por `tests/matriz/correr.py`; las respuestas completas quedan fuera de git.
+
+## Totales por clase
+
+| clase | casos |
+| --- | --- |
+| respondida | 2087 |
+| no_se_puede | 2997 |
+| aclaracion | 2 |
+| error | 0 |
+| **total** | 5086 |
+
+## Totales por tema
+
+| tema | respondida | no_se_puede | aclaracion | error | total | con fallos |
+| --- | --- | --- | --- | --- | --- | --- |
+| anemia | 567 | 704 | 2 | 0 | 1273 | 0 |
+| desnutricion_cronica | 239 | 1032 | 0 | 0 | 1271 | 0 |
+| gasto_publico | 630 | 641 | 0 | 0 | 1271 | 0 |
+| pobreza_monetaria | 651 | 620 | 0 | 0 | 1271 | 0 |
+
+## Totales por intención
+
+| intención | respondida | no_se_puede | aclaracion | error | total |
+| --- | --- | --- | --- | --- | --- |
+| comparacion | 471 | 409 | 0 | 0 | 880 |
+| cruce | 469 | 411 | 0 | 0 | 880 |
+| efecto | 469 | 411 | 0 | 0 | 880 |
+| evolucion | 229 | 651 | 0 | 0 | 880 |
+| identificar_extremo | 16 | 668 | 0 | 0 | 684 |
+| nivel_actual | 433 | 447 | 2 | 0 | 882 |
+
+## «No se puede» por motivo (S1-05)
+
+| motivo | casos |
+| --- | --- |
+| anio_sin_datos | 847 |
+| distrito_creado_despues | 103 |
+| extremo_dentro_de_no_soportado | 636 |
+| intencion_no_soportada | 12 |
+| nivel_no_valido | 835 |
+| precision | 153 |
+| privacidad | 18 |
+| serie_un_solo_anio | 271 |
+| sin_registros | 122 |
+
+

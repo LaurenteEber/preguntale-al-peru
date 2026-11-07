@@ -29,7 +29,7 @@ uv run pap preguntar tests/fixtures/consultas_piloto/q1.yaml tests/fixtures/cons
 ```
 
 **Resultado esperado**
-- **Cubo:** `biblioteca/indicadores/manifiesto_p1_indicadores.json` con `fact_indicador.hash = sha256:ba1fbc55…`. Debe ser igual en macOS y Linux.
+- **Cubo:** `biblioteca/indicadores/manifiesto_p1_indicadores.json` con `fact_indicador.hash = sha256:010ea965…`. Debe ser igual en macOS y Linux.
 - **Semáforos internos:** `Q1 verde`, `Q2 ambar`, `Q3 rojo`, `Q4 rojo`. Al usuario se le muestran como confianza alta, media, baja y baja.
 
 ## 3. Pruebas automáticas
@@ -38,7 +38,7 @@ uv run pap preguntar tests/fixtures/consultas_piloto/q1.yaml tests/fixtures/cons
 # las del piloto (≈ 75 s)
 uv run pytest -q tests/test_calculo_p1.py tests/test_piloto_indicadores.py \
                  tests/test_validador_p2.py tests/test_respuesta_p3.py
-# toda la suite (748 pruebas, ≈ 6 min; las del gasto reconstruyen tablas grandes y necesitan varios GB libres:
+# toda la suite (cuántas pruebas son: estado.md; ≈ 11 min en el Mac; las del gasto reconstruyen tablas grandes y necesitan varios GB libres:
 # en la VM de Claude test_gasto.py no cabe, se corre en el Mac)
 uv run pytest -q
 # consistencia de las reglas (al cambiarlas)

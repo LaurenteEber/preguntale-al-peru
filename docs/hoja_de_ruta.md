@@ -10,7 +10,7 @@
 | 3 | Capa 0 de la biblioteca (territorio, población, gasto, salud), auditada | hecho (7/10/2026) |
 | 4 | Piloto de punta a punta (anemia, desnutrición, gasto ex-PAN, pobreza): cubo, validador de 68 reglas, respuesta por capas | cerrado (13/10/2026) |
 | 5a | Motor por intenciones (slice 1) | hecho (3/11/2026); adenda cerrada (4/11/2026) |
-| 5b | Intérprete de preguntas en lenguaje natural (slice 2) | hecho (5/11/2026) |
+| 5b | Intérprete de preguntas en lenguaje natural (slice 2) | cerrado (5/11/2026, PR #2) |
 | 5c | API y web mínima (slice 3) | en curso |
 | — | Beta cerrada (slice 4) y Ola 1 de datos (slice 5) | pendiente |
 

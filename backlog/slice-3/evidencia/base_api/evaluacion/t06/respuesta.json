@@ -1,0 +1,149 @@
+{
+ "aclaracion": {
+  "motivo": "sin_coincidencia",
+  "opciones": [
+   {
+    "etiqueta": "Juliaca (distrito, provincia de San Román, departamento de Puno)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Puno",
+     "id": "211101",
+     "nivel": "distrito",
+     "nombre_completo": "Juliaca (San Román, Puno)",
+     "nombre_mostrado": "Juliaca",
+     "provincia": "San Román",
+     "provisional": false,
+     "ubigeo": "211101"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "No encontramos «juliaka». ¿Quisiste decir alguno de estos?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "Juliaca (distrito, provincia de San Román, departamento de Puno)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Puno",
+      "id": "211101",
+      "nivel": "distrito",
+      "nombre_completo": "Juliaca (San Román, Puno)",
+      "nombre_mostrado": "Juliaca",
+      "provincia": "San Román",
+      "provisional": false,
+      "ubigeo": "211101"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «juliaka». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "cuanto se gasto en nutricion infantil en juliaka",
+   "tema": "gasto_publico",
+   "territorio": {
+    "texto": "juliaka"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "cuanto se gasto en nutricion infantil en juliaka",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "cuanto se gasto en nutricion infantil en juliaka",
+  "tema": "gasto_publico",
+  "territorio": {
+   "texto": "juliaka"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de gasto público en salud y nutrición infantil en «juliaka»",
+ "interpretacion": {
+  "anclas": {
+   "intencion": "cuanto",
+   "tema": "gasto en nutricion infantil",
+   "territorio": "juliaka"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "gasto_publico",
+   "territorio": {
+    "texto": "juliaka"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "Juliaca (distrito, provincia de San Román, departamento de Puno)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Puno",
+      "id": "211101",
+      "nivel": "distrito",
+      "nombre_completo": "Juliaca (San Román, Puno)",
+      "nombre_mostrado": "Juliaca",
+      "provincia": "San Román",
+      "provisional": false,
+      "ubigeo": "211101"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «juliaka». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "cuanto se gasto en nutricion infantil en juliaka",
+   "tema": "gasto_publico",
+   "territorio": {
+    "texto": "juliaka"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "cuanto se gasto en nutricion infantil en juliaka",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "No encontramos «juliaka». ¿Quisiste decir alguno de estos?\n1) Juliaca (distrito, provincia de San Román, departamento de Puno)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

@@ -1,0 +1,148 @@
+{
+ "aclaracion": {
+  "motivo": "sin_coincidencia",
+  "opciones": [
+   {
+    "etiqueta": "San Juan de Lurigancho (distrito, provincia de Lima, departamento de Lima)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": "LIMA_METROPOLITANA",
+     "anio_datos_desde": 2017,
+     "departamento": "Lima",
+     "id": "150132",
+     "nivel": "distrito",
+     "nombre_completo": "San Juan de Lurigancho (Lima, Lima)",
+     "nombre_mostrado": "San Juan de Lurigancho",
+     "provincia": "Lima",
+     "provisional": false,
+     "ubigeo": "150132"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "No encontramos «sanjuan de lurigancho». ¿Quisiste decir alguno de estos?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "San Juan de Lurigancho (distrito, provincia de Lima, departamento de Lima)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": "LIMA_METROPOLITANA",
+      "anio_datos_desde": 2017,
+      "departamento": "Lima",
+      "id": "150132",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan de Lurigancho (Lima, Lima)",
+      "nombre_mostrado": "San Juan de Lurigancho",
+      "provincia": "Lima",
+      "provisional": false,
+      "ubigeo": "150132"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «sanjuan de lurigancho». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "anemia en sanjuan de lurigancho",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "sanjuan de lurigancho"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "anemia en sanjuan de lurigancho",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "anemia en sanjuan de lurigancho",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "sanjuan de lurigancho"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de anemia en «sanjuan de lurigancho»",
+ "interpretacion": {
+  "anclas": {
+   "tema": "anemia",
+   "territorio": "sanjuan de lurigancho"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "sanjuan de lurigancho"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "San Juan de Lurigancho (distrito, provincia de Lima, departamento de Lima)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": "LIMA_METROPOLITANA",
+      "anio_datos_desde": 2017,
+      "departamento": "Lima",
+      "id": "150132",
+      "nivel": "distrito",
+      "nombre_completo": "San Juan de Lurigancho (Lima, Lima)",
+      "nombre_mostrado": "San Juan de Lurigancho",
+      "provincia": "Lima",
+      "provisional": false,
+      "ubigeo": "150132"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «sanjuan de lurigancho». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "anemia en sanjuan de lurigancho",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "sanjuan de lurigancho"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "anemia en sanjuan de lurigancho",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "No encontramos «sanjuan de lurigancho». ¿Quisiste decir alguno de estos?\n1) San Juan de Lurigancho (distrito, provincia de Lima, departamento de Lima)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

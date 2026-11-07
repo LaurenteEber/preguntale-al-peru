@@ -1,0 +1,28 @@
+tests/test_comparaciones_escritas.py::test_h_a_cajamarca_no_afirma_que_la_forma_anterior_da_mas FAILED [ 16%]
+tests/test_comparaciones_escritas.py::test_h_f_lurigancho_no_afirma_que_el_sien_es_mas_bajo FAILED [ 33%]
+tests/test_comparaciones_escritas.py::test_detecta_mayor_en_al_reves PASSED [ 50%]
+tests/test_comparaciones_escritas.py::test_acepta_mayor_en_cuando_coincide PASSED [ 66%]
+tests/test_comparaciones_escritas.py::test_una_comparacion_desconocida_falla PASSED [ 83%]
+tests/test_comparaciones_escritas.py::test_frases_sin_comparacion_no_fallan PASSED [100%]
+E       AssertionError: assert [{'codigo': '...024839, ...}}] == []
+E         
+E         Left contains 2 more items, first extra item: {'codigo': 'comparacion_contradice_cifras', 'detalle': {'texto': 'se medía de otra forma, que da cifras más altas.', 'lugar': 'Cajamarca', 'anio': 2025, 'anterior': 35.30024839, ...}}
+E         
+E         Full diff:
+E         - []
+E         + [
+E         +     {...
+E         
+E         ...Full output truncated (20 lines hidden), use '-vv' to show
+E       AssertionError: assert [{'codigo': '...Lurigancho'}}] == []
+E         
+E         Left contains one more item: {'codigo': 'comparacion_contradice_cifras', 'detalle': {'texto': 'Por qué esta cifra es más baja que la de la encuesta', 'sien': 44.73157051, 'encuesta': 25.32059166, 'lugar': 'Lurigancho'}}
+E         
+E         Full diff:
+E         - []
+E         + [
+E         +     {...
+E         
+E         ...Full output truncated (9 lines hidden), use '-vv' to show
+FAILED tests/test_comparaciones_escritas.py::test_h_a_cajamarca_no_afirma_que_la_forma_anterior_da_mas
+FAILED tests/test_comparaciones_escritas.py::test_h_f_lurigancho_no_afirma_que_el_sien_es_mas_bajo

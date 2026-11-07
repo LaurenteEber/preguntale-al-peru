@@ -1,6 +1,6 @@
 # Pregúntale al Perú — Manual de uso
 
-**Estado: al 4/11/2026, slice 1 y su adenda cerrados** (etiqueta `slice-1-adenda-cerrada`; la etiqueta `slice-1-cerrado` es de la carpeta de trabajo anterior y no existe en este repositorio, `docs/historia.md`). Hoy se usa desde la Terminal; lo que viene está marcado ⏳.
+**Estado del proyecto:** [estado.md](estado.md). Hoy se usa desde la Terminal; lo que viene está marcado ⏳.
 
 ## 1. Qué es y para quién es
 
@@ -8,10 +8,10 @@ Pregúntale al Perú responde preguntas sobre problemas del país con **cifras d
 
 | Quién | Qué puede hacer hoy | Dónde seguir |
 |---|---|---|
-| **Dueño o analista** que usa la Terminal | Preguntar (§3), mantener la biblioteca de datos (§5), comprobar la calidad (§6) | Este manual y `guia_de_operacion.md` |
-| **Público general** ⏳ | Escribir su pregunta en el celular y recibir la respuesta por capas | Slices 2 y 3 (§6) |
+| **Dueño o analista** que usa la Terminal | Preguntar (§3.1), comprobar la calidad (§3.3); mantener la biblioteca de datos (comandos, local o nube): [guia_de_operacion.md](guia_de_operacion.md) §1.1 y §3 | Este manual y la guía |
+| **Público general** ⏳ | Escribir su pregunta en el celular y recibir la respuesta por capas | Slice 3 (§6) |
 
-**Si solo vas a leer una sección:** ve a §3.1 (preguntar) y §4 (recetas «Quiero saber…»).
+**Si solo vas a leer una sección:** ve a §3.1 (preguntar) y §4 (casos de uso «Quiero saber…»).
 
 ## 2. Leyenda
 
@@ -59,7 +59,8 @@ Los alias viven en `curados/motor/parametros_motor.yaml` (`temas.alias_cli`). Un
 | Cómo escribirlo | Qué pasa |
 |---|---|
 | `"departamento de Puno"`, `"Perú"`, `"Ayaviri, Melgar"` | Se resuelve directo |
-| `Puno`, `Cusco`, `Huancavelica` (mismo nombre en varios niveles) | Pregunta cuál: departamento, provincia o distrito. Se responde con `--elegir N` |
+| `Puno`, `Cusco`, `Huancavelica` (nombre de un departamento, a secas) | Responde por el departamento y, en «Avisos», ofrece la provincia o el distrito del mismo nombre (X-22). Para otro nivel: `"provincia de Puno"` |
+| `Abancay` (provincia y distrito con el mismo nombre, sin departamento) | Pregunta cuál: provincia o distrito. Se responde con `--elegir N` |
 | `Lima` a secas (T-03) | Pregunta: Lima Metropolitana, Lima Región o Callao |
 | `San Juan` (homónimos entre distritos) | Pregunta con el distrito, la provincia y el departamento de cada opción |
 | Nombre mal escrito o inexistente | «No encontramos ese lugar…» y exit 2, sin opciones: escríbelo de nuevo |
@@ -110,11 +111,30 @@ uv run pap preguntar curados/motor/consultas_minimas/
 uv run pap preguntar tests/fixtures/consultas_piloto/q1.yaml
 ```
 
+#### Formato de una consulta del piloto (YAML)
+
+```yaml
+id: Q1
+pregunta: ¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica?
+intencion: evolucion            # nivel_actual | evolucion | comparacion | cruce | identificar_extremo | efecto
+territorio: {nivel: departamento, id: "09", nombre_pedido: Huancavelica (departamento)}
+periodo: {tipo: serie, desde: 2015, hasta: ultimo}   # o {tipo: ultimo}
+plantilla: q1_evolucion
+cifras:
+  - {id: anemia_hvca_2025, indicador: endes_anemia_6_35m_oms2024, anio: ultimo, nivel: departamento,
+     territorio: "09", rol: principal, comparar_con: 2024}
+grupos: []                      # opcional: mapa_grupo_robusto | ranking_departamental
+```
+
+- `rol` es `principal` (decide el semáforo) o `contexto` (no lo sube por encima de ámbar).
+- `comparar_con` pide una prueba de cambio frente a ese año (R-ENC-11). El validador la bloquea si cruza un quiebre de criterio o si uno de los años es 2020.
+- Las consultas del piloto escriben en `salidas/preguntar/qN.json` y `.md`.
+
 #### ✅ Escribir la pregunta con mis palabras: `--texto`
 
 ```bash
 uv run pap preguntar --texto "¿Cuánta anemia hay en Puno?"
-uv run pap preguntar --texto "¿Cómo cambió la anemia en Huancavelica?" --elegir 1   # elige la opción 1 de la aclaración
+uv run pap preguntar --texto "¿Cuánta anemia hay en Abancay?" --elegir 1   # elige la opción 1 de la aclaración
 ```
 
 Un LLM (Claude Sonnet 5.5, decisión P-07) traduce la frase a la consulta mínima. **No ve cifras ni redacta la respuesta**: cada
@@ -154,6 +174,50 @@ Con varias consultas se escriben todas y el código de salida es el más grave. 
 
 Valores en `cli.codigo_salida` de `parametros_motor.yaml`. Un valor inválido de una opción con lista (p. ej. `--intencion foo`) lo rechaza el propio argparse: imprime el uso y sale también con **2**, aunque no sea una aclaración. Si solo necesitas distinguir una aclaración, mira que la salida empiece con «Hay varios…», «¿De qué problema…» o «No encontramos…».
 
+### 3.1b ✅ La web: `pap servir`
+
+```bash
+uv run pap servir                       # http://127.0.0.1:8000, solo desde este equipo
+uv run pap servir --puerto 8123         # otro puerto
+uv run pap servir --red-local           # también desde otros equipos de la red de la casa
+```
+
+Imprime la dirección y espera unos segundos mientras se prepara (`/salud` responde 503 hasta que termina). Pulsa Ctrl+C para pararlo. No es un despliegue público (P-05). La imagen Docker hace lo mismo: [guia_de_operacion.md](guia_de_operacion.md) §6.
+
+**Abrirla en este equipo.** Entra a `http://127.0.0.1:8000` en el navegador. Si todavía dice «Estamos preparando el servicio…», espera unos segundos y vuelve a intentar. Para preguntar por texto necesitas la clave del intérprete (`PAP_ANTHROPIC_API_KEY`, [guia_de_operacion.md](guia_de_operacion.md) §4); sin ella, la caja responde con un aviso y el formulario guiado sigue funcionando.
+
+**Abrirla en el celular.** El celular y el equipo tienen que estar en la misma red (la wifi de la casa):
+1. En el equipo, corre `uv run pap servir --red-local`.
+2. Busca la dirección IP del equipo en esa red (por ejemplo `192.168.1.20`).
+3. En el celular, abre `http://<esa IP>:8000` (o el puerto que hayas elegido con `--puerto`).
+
+`--red-local` abre el servicio a todos los equipos de la red: úsalo solo en una red de confianza. Cuando termines, para el servicio con Ctrl+C.
+
+**La caja de pregunta.** La página de inicio tiene una caja para escribir con tus palabras, ejemplos que se tocan para preguntar, los temas de hoy con sus fuentes y el enlace «Elegir paso a paso, sin escribir». Mientras se busca, el botón dice «Buscando…». Si la pregunta es ambigua, la web muestra las opciones como botones grandes: toca la que quieras. Si te pide «Espera unos segundos y vuelve a intentar», lo que escribiste queda en la caja.
+
+**Cómo leer cada bloque.** La respuesta es la misma de §3.2, mostrada de arriba abajo en este orden:
+
+| Bloque | Qué es |
+|---|---|
+| **Entendimos** | Cómo entendió la pregunta (solo con texto libre). Si no es lo que querías, corrígela |
+| **Respuesta corta** | Responde la pregunta. Si no se puede responder, eso va primero |
+| **Cifra clave** | La cifra principal, con su fuente |
+| **Lo más cercano** | Solo en «no se puede»: lo que sí tenemos |
+| **Ojo al leer** | Lo que **no** debes concluir de la cifra |
+| **Confianza en los datos** | Una frase (alta, media o baja) con su motivo; sin colores |
+| **Más contexto** | Desplegable, cerrado: cifras secundarias, avisos y límites |
+| **Para citar y verificar** | Desplegable, cerrado: una cita por cifra, con el enlace al documento oficial cuando existe, y el glosario |
+
+La web no muestra la ficha técnica (solo está en el JSON). «¿Qué puedo hacer?» tampoco se muestra en la web mientras el dueño no apruebe el texto (X-01); en el JSON y en la CLI sigue como en §3.2.
+
+**El formulario guiado (`/guiado`).** Es la vía sin escribir y sin intérprete, y la más rápida. Tiene dos pasos:
+1. Elegir el tema y qué quieres saber (cada opción trae su descripción).
+2. Llenar solo los campos de esa opción: el lugar (o «Todo el Perú»), el año o desde/hasta, y, según la opción, un segundo lugar o el nivel.
+
+Si falta algo (por ejemplo, el lugar), vuelve al paso 2 con el aviso y sin perder tema ni opción. Si el lugar no se encuentra, vuelve al paso 2 con el lugar vacío y te dice qué escribiste. Una combinación que el motor no responde sale como un «no se puede» normal.
+
+**Si el servicio no responde:** `/salud` dice si está listo. «preparando» es normal los primeros segundos; «error_precalentamiento» significa que algo falló al arrancar: míralo en [guia_de_operacion.md](guia_de_operacion.md) §6.
+
 ### 3.2 ✅ Cómo leer una respuesta
 
 Una respuesta trae tres capas, la confianza y, al final, el detalle técnico (contrato completo: `docs/especificaciones/contrato_respuesta.md`).
@@ -162,8 +226,9 @@ Una respuesta trae tres capas, la confianza y, al final, el detalle técnico (co
 |---|---|
 | **Capa 1, visible** (≈ 100 palabras, máximo 125) | Respuesta corta, **una** cifra clave con su fuente, «Ojo al leer» (1 a 3 viñetas con lo que **no** debes concluir) y la confianza |
 | **Capa 2, «Más contexto»** | Cifras secundarias (con «no se compara» cuando aplica), avisos de las reglas y límites |
-| **Capa 3, «Para citar y verificar»** | Una cita por cifra, glosario y, solo en salud, «¿Qué puedo hacer?» con texto oficial (pendiente de revisión del dueño, X-01) |
-| **Detalle técnico** | Tabla de cifras, ficha larga, reglas aplicadas. Solo para auditoría |
+| **Capa 3, «Para citar y verificar»** | Una cita por cifra (con su enlace al documento oficial) y glosario. En el JSON y la CLI, además, «¿Qué puedo hacer?» (solo en salud) con texto oficial, que va en la capa 1 y está pendiente de revisión del dueño (X-01) |
+| **Ficha corta** | Confianza, fuentes y años, territorio y qué **no** permite concluir |
+| **Detalle técnico** | Tabla de cifras, ficha larga por cifra (origen, territorio, qué mide, precisión —nuestro intervalo y el del INEI—, método y contraste con la cifra oficial del mismo criterio) y reglas aplicadas (`resultados_respuesta`: cada regla, con su acción y su motivo). Solo para auditoría |
 | **Confianza en los datos** | `alta` (dato sólido), `media` (con limitaciones) o `baja` (muy aproximado). Habla de los datos, no de la situación; sin colores en la capa visible (R-05) |
 
 **Tres tipos de respuesta** (`tipo` en el JSON):
@@ -174,7 +239,7 @@ Una respuesta trae tres capas, la confianza y, al final, el detalle técnico (co
 | `no_se_puede` | Los datos o las reglas no lo permiten | Empieza con «No…» o «Todavía no…», **nunca** trae una cifra, ofrece «lo más cercano» y da el motivo en la capa 2 |
 | `aclaracion` | El lugar es ambiguo o falta el tema | Solo pregunta y numera las opciones; exit 2 |
 
-Ejemplo real (`pap preguntar --intencion comparacion --tema pobreza --territorio Cusco --comparar-con Puno --elegir 1,1`, recortado):
+Ejemplo real (`pap preguntar --intencion comparacion --tema pobreza --territorio Cusco --comparar-con Puno`, recortado; antes de X-22 pedía `--elegir 1,1`):
 
 ```text
 ===== comparacion__pobreza_monetaria__08__21 · semáforo: verde
@@ -188,51 +253,17 @@ Territorio: departamento de Cusco y departamento de Puno
 No permite concluir: nada sobre provincias o distritos concretos: [...]
 ```
 
-### 3.3 ✅ Mantener la biblioteca de datos
-
-Procedimientos paso a paso: `guia_de_operacion.md` §3. Aquí, el mapa de comandos.
-
-| Comando | Para qué | Cuándo | ¿Escribe? |
-|---|---|---|---|
-| `pap revisar [ID]` | Estado de las fuentes: estrategia, compuerta, capturas, días sin revisar; con ID, los pasos de descarga y pendientes | Antes de actualizar una fuente | No |
-| `pap descargar ID` | Descarga si la receta es automática; si es manual, muestra los pasos | Al incorporar una fuente | Almacén |
-| `pap registrar ID [archivos]` | Guarda en el almacén un archivo de la bandeja o los indicados (`--issued`, `--recurso`, `--nota`…) | Después de descargar a mano | Almacén |
-| `pap verificar [ID] [--rapido]` | Recalcula huellas (o solo tamaños) | Después de registrar | `verificaciones.jsonl` |
-| `pap citar CLAVE [--corta]` | Cita de una fuente (ID) o de un archivo (prefijo de huella) | Para citar | No |
-| `pap construir {territorio,poblacion,puentes,gasto,endes,enaho,mapa_pobreza,indicadores}` | Reconstruye una tabla curada o estandarizada | Tras cambiar crudos o código | `biblioteca` |
-| `pap calcular` | Reconstruye el cubo `fact_indicador.parquet` | Después de `construir` | `biblioteca` |
-| `pap almacen comprimir [--dry-run]` | Comprime con zstd los textos grandes; `--dry-run` solo lista | Mantenimiento | Almacén (sin `--dry-run`) |
-| `pap indice` | Reconstruye `indice.duckdb` | Tras registrar capturas | `biblioteca` |
-| `pap recetas {generar,validar,sincronizar}` | Recetas de descarga desde el catálogo; `validar` las contrasta con el catálogo y R-DEP-01 | Al tocar el catálogo | `validar`: no |
-| `pap validar-reglas [--carpeta casos_implementador]` | Corre los casos de prueba del validador de reglas | Al cambiar una regla | No |
-| `pap foto-pim` | **Desactivada** (8/10/2026): `registrar` y `extraer` se niegan; `listar` y `vistas` funcionan | No usar | No |
-
-**Orden de reconstrucción** (cada paso depende del anterior):
-
-```text
-construir territorio → poblacion → puentes → gasto → endes → enaho → mapa_pobreza → indicadores → calcular
-```
-
-Cuidados (detalle en `guia_de_operacion.md` §3.3):
-- Usa exactamente los crudos fijados en `curados/insumos.lock.yaml`; para tomar capturas nuevas, `--actualizar-insumos`.
-- Se niega a construir con código sin commit (`--permitir-sucio` deja el manifiesto «sucio») o si falla una prueba bloqueante (`--forzar`: no usarlo en producción).
-- `construir poblacion` usa ~3,5 GB de RAM; `construir gasto` es el bloque más pesado.
-- Con los mismos insumos y código, la huella del cubo debe repetirse: hoy es `ba1fbc55…`.
-- Los crudos y los Parquet no están en git: respalda `biblioteca/cruda/almacen/`.
-
-Consulta directa del cubo con SQL y edición de tablas curadas o reglas: `guia_de_operacion.md` §2.2, §3.4 y §3.5.
-
-### 3.4 ✅ Calidad: pruebas, regresión y matriz
+### 3.3 ✅ Calidad: pruebas, regresión y matriz
 
 | Qué | Comando | Resultado esperado hoy |
 |---|---|---|
-| Todas las pruebas | `uv run pytest -q` | 748 pasan, 1 aviso (≈ 6 min) |
+| Todas las pruebas | `uv run pytest -q` | Todas pasan; cuántas son: [estado.md](estado.md) (≈ 11 min en el Mac) |
 | Regresión Q1–Q4 (cifras, semáforos y confianza iguales a la referencia) | Incluida en `pytest`: `tests/test_regresion_q1_q4.py` | Verde |
 | Matriz de cobertura reducida (60 casos) | `uv run python tests/matriz/correr.py --reducida --salida salidas/matriz` | 60 casos, 0 fallos |
 | Matriz completa (≈ 5 000 casos, ~5 min) | `uv run python tests/matriz/correr.py --salida salidas/matriz --reporte backlog/slice-1/evidencia/matriz.md` | 5 086 casos, 0 errores, 0 fallos (sobrescribe el reporte del cierre: úsalo con otro nombre si no quieres perderlo) |
 | Validador de reglas | `uv run pap validar-reglas` y `… --carpeta casos_implementador` | 535 y 448 casos ok; 68 reglas del alcance implementadas |
 
-La matriz cuenta los casos por clase (respondida, no se puede, aclaración, error), tema e intención, y lista los fallos. Guía de las pruebas del piloto: `calidad.md`.
+`--limite N` corre solo los primeros N casos. La matriz requiere el cubo (`pap calcular`) y cuenta los casos por clase (respondida, no se puede, aclaración, error), tema e intención, y lista los fallos. Guía de las pruebas del piloto: `calidad.md`.
 
 ## 4. Casos de uso
 
@@ -247,7 +278,7 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 | 3 ✅ | ¿Cuántos niños tienen anemia en Ayaviri? (distrito, **SIEN**) | `--intencion nivel_actual --tema anemia --territorio "Ayaviri, Melgar"` | «No se puede saber cuántos niños de Ayaviri tienen anemia…»; lo más cercano: ≈ 10 % (7 %–12 %) de 547 niños medidos en establecimientos. Confianza media |
 | 4 ✅ | ¿Cuánta desnutrición crónica hay en Ayaviri? (**no se puede**, desnutrición) | `--intencion nivel_actual --tema desnutrición --territorio "Ayaviri, Melgar"` | «No podemos mostrar cuánto hay de desnutrición crónica en Ayaviri por distrito. Sí tenemos la cifra para el departamento de Puno». Sin cifra, exit 0 |
 | 5 ✅ | ¿Qué departamento tiene más anemia? (**identificar_extremo**) | `--intencion identificar_extremo --tema anemia --nivel departamento` | «En 2025, Puno es el departamento con la anemia … más alta, con diferencia estadísticamente clara frente a los demás»: 56,1 % |
-| 6 ✅ | ¿Es mayor la pobreza en Puno que en Cusco? (**comparacion**, pobreza, `--elegir 1,1`) | `--intencion comparacion --tema pobreza --territorio "Cusco" --comparar-con "Puno" --elegir 1,1` | «…mayor en Puno que en Cusco, con una diferencia estadísticamente clara»: 18,8 % frente a 37,5 % (2025). Sin `--elegir`: exit 2 y la aclaración de «Cusco». Con `--elegir 1` solo: pregunta por «Puno» |
+| 6 ✅ | ¿Es mayor la pobreza en Puno que en Cusco? (**comparacion**, pobreza) | `--intencion comparacion --tema pobreza --territorio "Cusco" --comparar-con "Puno"` | «…mayor en Puno que en Cusco, con una diferencia estadísticamente clara»: 18,8 % frente a 37,5 % (2025). Desde X-22 (6/11/2026) responde sin aclaración: Cusco y Puno se leen como departamentos |
 | 7 ✅ | ¿Cuánto se gastó en salud y nutrición infantil en Puno? (**gasto**) | `--intencion nivel_actual --tema gasto --territorio "departamento de Puno"` | «S/ 132,1 millones … en 2025 … registrado por entidades con sede en Puno», con «No leas esta cifra como todo el gasto en Puno» |
 | 8 ✅ | ¿Cómo evolucionó el gasto del país? (gasto, **serie**) | `--intencion evolucion --tema gasto --territorio "Perú" --desde 2023 --hasta 2025` | «En Perú, el gasto … pasó de S/ 2 263,9 millones en 2023 a S/ 2 455,9 millones en 2025, en soles de 2025: aumentó.» El monto registrado de 2023 (S/ 2 179,2 millones) y el factor del IPC van en «Para citar» |
 | 9 ✅ | ¿Cuánta pobreza hay en Ayaviri? (**pobreza**, distrito) | `--intencion nivel_actual --tema pobreza --territorio "Ayaviri, Melgar"` | «Entre 23 % y 42 % … en Ayaviri en 2018» (estimación con modelo), confianza **baja** y «cuál es la situación hoy: el dato es de 2018» |
@@ -266,6 +297,9 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 
 | 22 ✅ | Escribir la pregunta con mis palabras | `uv run pap preguntar --texto "¿Cuánta anemia hay en Puno?"` | «Entendimos…» y la respuesta por capas; o una aclaración con opciones |
 | 23 ✅ | Que me repregunte cuando mi texto es confuso | `--texto` y luego `--elegir N` | Las opciones armadas por el código o por el intérprete, cada una con su «Entendimos» |
+| 24 ✅ | Preguntar desde el celular | `uv run pap servir --red-local` y abrir `http://<IP del equipo>:8000` (§3.1b) | La caja de pregunta y la respuesta por bloques, con «Más contexto» y «Para citar» como desplegables |
+| 25 ✅ | Preguntar sin escribir | `/guiado` en la web | Dos pasos (tema y qué quieres saber; lugar y año) y la misma respuesta, sin intérprete |
+| 26 ✅ | Usar el servicio desde otro programa | `POST /api/preguntar` ([especificaciones/api.md](especificaciones/api.md)) | El `respuesta.json` del motor, sin cambios |
 
 **Una pregunta ambigua se resuelve así:** el comando imprime las opciones y sale con 2; repites **el mismo comando** agregando `--elegir N`.
 
@@ -273,9 +307,6 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 
 | # | Quiero… | Qué vas a poder hacer | Slice |
 |---|---|---|---|
-| P3 ⏳ | Preguntar desde el celular | Una caja de pregunta y la respuesta por capas como desplegables (visible, «Más contexto», «Para citar»), con la versión de la biblioteca y enlaces a las fuentes oficiales. Interfaz por definir | 3 |
-| P4 ⏳ | Usar el servicio desde otro programa | Una API sobre el cubo precalculado, con respuesta en < 2 s. Interfaz por definir (el plan menciona FastAPI + DuckDB en solo lectura) | 3 |
-| P5 ⏳ | Que la web sea accesible | Accesibilidad WCAG AA, confianza sin colores | 3 |
 | P6 ⏳ | Probar el servicio con un grupo pequeño de personas | Beta cerrada en la nube, con medición de uso sin datos personales | 4 |
 | P7 ⏳ | Preguntar por temas nuevos (más allá de anemia, desnutrición, pobreza y gasto) | Un tema nuevo por sub-slice: fuente aprobada → indicador con doradas → intenciones → web. Comando o interfaz por definir | 5 |
 
@@ -283,7 +314,8 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 
 | Límite | Detalle |
 |---|---|
-| ⏳ **Sin web ni API** | Todo es por Terminal (slice 3) |
+| **Web solo en local o en la red de la casa** | No hay servicio público: la web y la API corren con `pap servir` o con la imagen Docker en un equipo propio (P-05). Abrirla a más gente es el slice 4 |
+| **Sin «¿Qué puedo hacer?» en la web** | Se oculta hasta que el dueño apruebe el texto (X-01); el JSON y la CLI lo siguen mostrando |
 | **Solo 9 indicadores** | Los de §3.1: anemia (4), desnutrición crónica (1), pobreza (2) y gasto (2). Otro tema, un «no se puede» |
 | **Niveles y años con datos limitados** | Desnutrición y pobreza ENAHO: no hay provincia ni distrito (pobreza distrital: solo el Mapa de 2018, con rango). Anemia ENDES: sin provincia ni distrito; por distrito solo el SIEN 2025. Gasto: provincia y distrito solo con gasto municipal y obras ubicadas |
 | **Sin preguntas «dentro de»** | «El más alto dentro de Puno» responde «no se puede»: los rankings son nacionales (`planificador.extremo_dentro_de`: `solo_nacional`) |
@@ -298,9 +330,9 @@ Se resuelven editando una línea de `curados/motor/parametros_motor.yaml` (secci
 
 | ID | Qué hay que decidir | Valor de hoy | Recomendado |
 |---|---|---|---|
-| X-02 | ¿«¿Cuántos?» del SIEN da también el conteo (52 de 547 niños medidos)? | **No** (`mostrar_conteo_sien: false`) | Sí, como tarjeta de la capa 2 |
-| X-03 | ¿CR-01 muestra también el gasto del mismo año que la anemia comparada? | **No** (`cr01_mismo_anio: false`) | Sí |
-| X-04 | ¿Se muestran los dos intervalos o solo uno? | Los dos (el propio y el del INEI) en la ficha | Uno visible; los dos en la ficha técnica. Pesa en el slice 3 |
+| X-02 ✅ | ¿«¿Cuántos?» del SIEN da también el conteo (52 de 547 niños medidos)? | **Sí**, decidido y aplicado en el slice 3 (`mostrar_conteo_sien: true`), como tarjeta de «Más contexto» | — |
+| X-03 ✅ | ¿CR-01 muestra también el gasto del mismo año que la anemia comparada? | **Sí**, decidido y aplicado en el slice 3 (`cr01_mismo_anio: true`) | — |
+| X-04 ✅ | ¿Se muestran los dos intervalos o solo uno? | **Uno**, decidido y aplicado en el slice 3 (`intervalo_visible: uno`): el del INEI si existe, si no el propio; los dos en la ficha técnica | — |
 | X-01 | Aprobar el texto de «¿Qué puedo hacer?» | Se muestra «pendiente de revisión» | Revisarlo y poner `revisado_dueno: true` |
 
 Siguen abiertas, sin parámetro asociado en el slice 1: X-05 (revisar lo provisional antes de la beta), X-06 (separar ejecutoras mixtas antes de la Ola 1), X-07 (listas curadas sin revisar) y X-08 (solicitudes por la Ley 27806).
@@ -310,12 +342,12 @@ Siguen abiertas, sin parámetro asociado en el slice 1: X-05 (revisar lo provisi
 | Slice | Qué podrá hacer el usuario al terminar | Estado |
 |---|---|---|
 | **1. Motor por intenciones** | Cualquier pregunta estructurada sobre los 9 indicadores, por capas y validada; el motor pregunta si hay ambigüedad. La adenda agrega la evolución del gasto en soles constantes y corrige textos de evolución, cruce y efecto | ✅ cerrado el 3/11/2026; adenda cerrada el 4/11/2026 |
-| **2. Intérprete de preguntas** | Escribir la pregunta en lenguaje natural; un LLM la traduce a la consulta del slice 1. Antes, decisión del dueño sobre proveedor, presupuesto y qué se guarda de las preguntas (P-03) | ⏳ |
-| **3. API y web mínima** | Usarlo desde el celular: caja de pregunta, capas, versión de la biblioteca y enlaces oficiales. Antes, X-04 | ⏳ |
+| **2. Intérprete de preguntas** | Escribir la pregunta en lenguaje natural; un LLM la traduce a la consulta del slice 1. Antes, decisión del dueño sobre proveedor, presupuesto y qué se guarda de las preguntas (P-03) | ✅ cerrado el 5/11/2026 (PR #2) |
+| **3. API y web mínima** | Usarlo desde el celular: caja de pregunta, capas, versión de la biblioteca y enlaces oficiales. Antes, X-04 | ✅ hecho (la web corre en local o en la red de la casa; evidencia en `backlog/slice-3/evidencia/`) |
 | **4. Beta cerrada** | Un grupo pequeño de personas lo usa en la nube. Antes: prueba con usuarios (P-05), revisión de lo provisional (X-05), despliegue (F-05) y medición sin datos personales (P-03) | ⏳ |
 | **5. Ampliación de datos (Ola 1)** | Preguntar por temas nuevos, uno por sub-slice. Antes: GA-13 y X-06 | ⏳ |
 
-Las observaciones del cierre del slice 1 (el cruce que prometía cifras «lado a lado», la evolución que no mostraba el año con el que compara, la frase de efecto que se contradecía y la evolución del gasto que no comparaba años) se resolvieron en la adenda (`backlog/slice-1/evidencia/cierre.md`, sección «Adenda»). Las observaciones bajas que cambian el patrón de Q1–Q4 (H14, H15, H17, H18, H21 y A-H8) se revisan en el slice 3, con la web ⏳.
+Las observaciones del cierre del slice 1 (el cruce que prometía cifras «lado a lado», la evolución que no mostraba el año con el que compara, la frase de efecto que se contradecía y la evolución del gasto que no comparaba años) se resolvieron en la adenda (`backlog/slice-1/evidencia/cierre.md`, sección «Adenda»). Las observaciones bajas que cambian el patrón de Q1–Q4 (H14, H15, H17, H18, H21 y A-H8) se trataron en el slice 3 (S3-02; lo que queda abierto está en `backlog/slice-3/consultas_al_dueno.md`).
 
 ## 7. Problemas frecuentes
 
@@ -332,7 +364,7 @@ Las observaciones del cierre del slice 1 (el cruce que prometía cifras «lado a
 | La respuesta es «no se puede» | No es un fallo (exit 0): los datos o las reglas no permiten responder. Lee «Lo más cercano que sí tenemos»: otro año, el nivel superior o el distrito de origen |
 | «No hay datos de … de 2019 con la forma de medir actual» | La anemia con la forma vigente solo existe 2024–2025; la anterior, 2015–2025. Pregunta por un año con datos |
 | `pap construir` o `pap calcular` dice «El código tiene cambios sin commit» | Haz commit antes: los manifiestos citan el commit. `--permitir-sucio` solo para pruebas, deja el manifiesto marcado |
-| La huella del cubo no es `ba1fbc55…` | Revisa `uv sync` y la versión del commit; si persiste, avisa: es un problema de reproducibilidad |
+| La huella del cubo no es la del manifiesto (`010ea965…`) | Corre `uv run pap calcular`; `pytest` también se detiene con ese aviso. Si persiste, revisa `uv sync` y avisa: es un problema de reproducibilidad |
 | Una dorada falla al construir | La cifra del INEI no se reproduce: revisa definición, criterio y página citada. No uses `--forzar` |
 | No puedes descargar de `.gob.pe` | Descarga con el navegador a `biblioteca/cruda/bandeja/<ID>/` y luego `pap registrar` |
 

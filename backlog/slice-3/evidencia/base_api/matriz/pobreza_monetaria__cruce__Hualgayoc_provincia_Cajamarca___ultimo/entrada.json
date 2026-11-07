@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "0607"
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|cruce|Hualgayoc (provincia, Cajamarca)|ultimo"
+}

@@ -1,0 +1,401 @@
+{
+ "avisos_al_usuario": [
+  {
+   "objetivo": "respuesta",
+   "regla": "R-ENC-12",
+   "texto": "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno."
+  }
+ ],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENDES 2025 (INEI); el INEI publica la misma cifra (56,1 %)",
+    "ids": [
+     "endes_21"
+    ],
+    "texto": "de niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) en Puno en 2025.",
+    "valor": "56,1 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+   ],
+   "palabras": 80,
+   "que_hacer": {
+    "fuente": "Ministerio de Salud, «¿Qué es la anemia? – Prevención» (orientación en gob.pe, último cambio 23 de setiembre de 2026)",
+    "revisado_dueno": false,
+    "texto": "Si tienes una hija o un hijo pequeño: desde los 6 meses de edad, pide en el establecimiento de salud que le midan la hemoglobina para descartar o detectar la anemia a tiempo. Al cumplir un año se repite la medición, y luego cada 6 meses.",
+    "url": "https://www.gob.pe/69889-que-es-la-anemia-prevencion"
+   },
+   "respuesta_corta": "En 2025, Puno es el departamento con la anemia en niñas y niños de 6 a 35 meses más alta, con diferencia estadísticamente clara frente a los demás."
+  },
+  "capa2": {
+   "avisos": [
+    "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno."
+   ],
+   "limites": [
+    "Datos de: ENDES 2025 (INEI)",
+    "Territorio: todos los departamentos del país",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Comparamos cada departamento con el más alto con una prueba estadística: solo Puno queda en el grupo con la anemia más alta.",
+     "titulo": "Cómo se llegó a este resultado"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "endes_21",
+     "texto": "56,1 % (intervalo del INEI: 49,4 % a 62,7 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Puno, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58).",
+     "url": "https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños.",
+     "termino": "ENDES"
+    },
+    {
+     "definicion": "el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior no se compara con la de hoy.",
+     "termino": "forma de medir la anemia"
+    }
+   ],
+   "para_citar": [
+    "56,1 % (intervalo del INEI: 49,4 % a 62,7 %): niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024), Puno, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)."
+   ]
+  }
+ },
+ "cifras": {
+  "endes_21": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "RM251-2024/OMS2024",
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "entidad": "INEI",
+    "id_cifra": "DOR-OMS-2025-21",
+    "valor": 56.1
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 6.04921608,
+   "denominador": null,
+   "devengado": null,
+   "ee": 3.39174851,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "ic_inf": 49.4,
+    "ic_sup": 62.7,
+    "id_cifra": "DOR-OMS-2025-21"
+   },
+   "ic_inf": 49.06683732,
+   "ic_sup": 62.8975041,
+   "indicador_id": "endes_anemia_6_35m_oms2024",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 223,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "56,1 % (entre 49,1 % y 62,9 %), ENDES 2025, Puno; basado en 223 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "56,1 % (entre 49,1 % y 62,9 %), ENDES 2025, Puno; basado en 223 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "21",
+   "territorio_nombre": "Puno",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "21"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 56.06922395
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "identificar_extremo",
+   "pregunta_original": "ranking de anemia por departamentos",
+   "tema": "anemia",
+   "territorio": {
+    "nivel": "departamento"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-ENC-12",
+   "R-ENC-12 / E-06"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [
+   {
+    "anio": "ultimo",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "prefijo": "endes",
+    "rol": "principal",
+    "tipo": "ranking_departamental"
+   }
+  ],
+  "grupos_estadisticos": null,
+  "id": "identificar_extremo__anemia__departamento",
+  "intencion": "identificar_extremo",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "identificar_extremo",
+  "pregunta": "ranking de anemia por departamentos",
+  "respuesta_parcial": false,
+  "tema": "anemia",
+  "tema_gasto": null,
+  "territorio": {
+   "id": null,
+   "nivel": "departamento",
+   "nombre_pedido": null
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "identificar_extremo",
+  "pregunta_original": "ranking de anemia por departamentos",
+  "tema": "anemia",
+  "territorio": {
+   "nivel": "departamento"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: qué departamento tiene más anemia en todo el Perú",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENDES 2025 (INEI)\nTerritorio: todos los departamentos del país\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento.",
+  "larga": {
+   "cifras": {
+    "endes_21": {
+     "1_origen": "Niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024). ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Puno).",
+     "3_que_mide": "Mide niñas y niños de 6 a 35 meses con anemia, según la ENDES (encuesta a hogares), con la forma de medir vigente desde 2024 (RM 251-2024-MINSA).",
+     "4_precision": "El valor real está probablemente entre 49,1 % y 62,9 % (coeficiente de variación 6,0 %, 223 casos en la muestra). El INEI publica para esta cifra un intervalo entre 49,4 % y 62,7 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 56,1 % con la forma de medir vigente desde 2024 (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 06.1A (Nueva directriz OMS 2024), según departamento, p. 56 (PDF 58)). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "56,1 % (entre 49,1 % y 62,9 %), ENDES 2025, Puno; basado en 223 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_anemia_6_35m_oms2024."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "intencion": "ranking",
+   "nivel": "departamentos",
+   "tema": "anemia"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "identificar_extremo",
+   "tema": "anemia",
+   "territorio": {
+    "nivel": "departamento"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:endes_21"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "identificar_extremo",
+   "pregunta_original": "ranking de anemia por departamentos",
+   "tema": "anemia",
+   "territorio": {
+    "nivel": "departamento"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-ENC-12",
+   "R-ENC-12 / E-06"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [
+   {
+    "anio": "ultimo",
+    "indicador": "endes_anemia_6_35m_oms2024",
+    "prefijo": "endes",
+    "rol": "principal",
+    "tipo": "ranking_departamental"
+   }
+  ],
+  "grupos_estadisticos": null,
+  "id": "identificar_extremo__anemia__departamento",
+  "intencion": "identificar_extremo",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "identificar_extremo",
+  "pregunta": "ranking de anemia por departamentos",
+  "respuesta_parcial": false,
+  "tema": "anemia",
+  "tema_gasto": null,
+  "territorio": {
+   "id": null,
+   "nivel": "departamento",
+   "nombre_pedido": null
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "pregunta de ranking u orden de >= 3 territorios con cifras de encuesta",
+   "detalle": {
+    "excede_max_grupos": false,
+    "excluidas": [],
+    "grupos": [
+     [
+      {
+       "id": "endes_21",
+       "referencial": false,
+       "territorio": "21"
+      }
+     ]
+    ],
+    "max_grupos": 6,
+    "puede_decir_el_mas_alto": false,
+    "todas_en_un_grupo": false,
+    "unidades_fuera_de_lista": []
+   },
+   "mensaje": "Los departamentos se muestran en grupos: dentro de cada grupo las diferencias pueden deberse al azar de la encuesta, así que no tiene sentido ordenarlos uno por uno.",
+   "motivo": "ranking_por_grupos",
+   "objetivo": "respuesta",
+   "regla": "R-ENC-12"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:endes_21"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2025, Puno es el departamento con la anemia en niñas y niños de 6 a 35 meses más alta, con diferencia estadísticamente clara frente a los demás. 56,1 % de niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) en Puno en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. Comparamos cada departamento con el más alto con una prueba estadística: solo Puno queda en el grupo con la anemia más alta.",
+ "texto_con_marcadores": "En 2025, Puno es el departamento con la anemia en niñas y niños de 6 a 35 meses más alta, con diferencia estadísticamente clara frente a los demás. {{c:endes_21}} de niñas y niños de 6 a 35 meses con anemia (forma de medir vigente desde 2024) en Puno en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. Comparamos cada departamento con el más alto con una prueba estadística: solo Puno queda en el grupo con la anemia más alta.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

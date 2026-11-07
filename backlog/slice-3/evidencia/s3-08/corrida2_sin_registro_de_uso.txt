@@ -1,0 +1,52 @@
+# S3-08 medición (semilla 3008) — segundos, servicio precalentado
+
+## 1. Vía estructurada: 200 respuestas (60 casos de la matriz reducida, repetidos y mezclados)
+
+| medida | n | p50 (s) | p95 (s) | máx (s) |
+|---|---|---|---|---|
+| página HTML, total (POST /preguntar) | 200 | 0.038 | 0.268 | 0.315 |
+|   · motor | 200 | 0.035 | 0.265 | 0.312 |
+|   · página (render y validación = total − motor) | 200 | 0.003 | 0.003 | 0.027 |
+| API JSON, total (POST /api/preguntar) | 200 | 0.037 | 0.294 | 0.453 |
+|   · motor | 200 | 0.035 | 0.291 | 0.450 |
+|   · JSON y validación (total − motor) | 200 | 0.002 | 0.003 | 0.004 |
+
+Estados HTTP de la página: {200: 200}. Los más lentos por API: anemia|efecto|Luya (provincia, Amazonas)|ultimo 0.453, anemia|efecto|La Peca (distrito, Bagua)|ultimo 0.325, gasto_publico|cruce|Llaylla (distrito, Satipo)|ultimo 0.316, gasto_publico|cruce|Llaylla (distrito, Satipo)|ultimo 0.309, gasto_publico|cruce|Llaylla (distrito, Satipo)|ultimo 0.308
+
+## 2. Conjunto de evaluación por texto con grabaciones, sin LLM (158 preguntas)
+
+| medida | n | p50 (s) | p95 (s) | máx (s) |
+|---|---|---|---|---|
+| total (POST /preguntar con texto) | 158 | 0.302 | 0.816 | 0.923 |
+|   · intérprete (código propio, sin LLM) | 158 | 0.267 | 0.349 | 0.413 |
+|   · motor | 158 | 0.033 | 0.537 | 0.623 |
+|   · página (total − intérprete) | 158 | 0.003 | 0.003 | 0.005 |
+
+Estados HTTP: {200: 158} (un 500 sería una pregunta sin grabación). Las 5 más lentas: r14 0.923, r15 0.901, t05 0.896, t08 0.89, e05 0.889
+
+## 3. En vivo: 20 preguntas del conjunto (modelo `claude-sonnet-5-5`, esfuerzo `low`)
+
+| medida | n | p50 (s) | p95 (s) | máx (s) |
+|---|---|---|---|---|
+| total (POST /preguntar con texto) | 20 | 2.024 | 2.648 | 3.936 |
+|   · LLM (latencia del proveedor) | 20 | 1.596 | 2.126 | 3.702 |
+|   · intérprete (código propio) | 20 | 0.265 | 0.357 | 0.359 |
+|   · motor | 20 | 0.035 | 0.294 | 0.609 |
+|   · página (total − intérprete) | 20 | 0.003 | 0.003 | 0.003 |
+
+Estados HTTP: {200: 20}. Llamadas HTTP al proveedor: 21. Costo según el cliente: US$ 0.0688; según el cambio en uso.jsonl: US$ 0.0000 en 0 líneas (tope US$ 0.50). Ids: l10, e09, d07, r17, fp02, d22, d18, pd08, m09, d21, d20, a07, r14, pd16, q2, e03, fp03, r06, pd05, pd02.
+
+## 4. HTTP real con uvicorn (50 preguntas estructuradas, las mismas primeras de la serie 1)
+
+| medida | n | p50 (s) | p95 (s) | máx (s) |
+|---|---|---|---|---|
+| API JSON por HTTP | 50 | 0.035 | 0.257 | 0.296 |
+| página HTML por HTTP | 50 | 0.035 | 0.252 | 0.293 |
+| (en proceso) API JSON, mismas preguntas | 50 | 0.037 | 0.253 | 0.325 |
+| (en proceso) página HTML, mismas preguntas | 50 | 0.037 | 0.255 | 0.294 |
+
+## 5. Arranque
+
+`crear_app` + precalentamiento hasta `listo` (con los módulos ya cargados): 3.5 s.
+Desde lanzar el proceso (imports, uvicorn) hasta `/salud` 200, en procesos nuevos: 5.0 s, 4.3 s, 4.4 s.
+

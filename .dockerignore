@@ -1,0 +1,20 @@
+# S3-09 — contexto de la imagen: solo código, curados, reglas y textos. Nada de crudos, salidas, entornos ni la biblioteca
+# (la imagen la baja del release, o se monta como volumen).
+.git
+.gitignore
+.venv
+**/__pycache__
+**/*.pyc
+.pytest_cache
+.codegraph
+.atl
+.DS_Store
+.env
+.env.*
+salidas
+biblioteca
+backlog
+odd
+docs
+design
+tests

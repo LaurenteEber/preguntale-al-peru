@@ -1,0 +1,19 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "comparar_con": {
+   "ambito": "LIMA_REGION"
+  },
+  "intencion": "comparacion",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ambito": "LIMA_METROPOLITANA"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|comparacion|LIMA_METROPOLITANA|ultimo"
+}

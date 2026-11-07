@@ -1,0 +1,20 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "identificar_extremo",
+  "periodo": {
+   "anio": 2020,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "dentro_de": {
+    "ambito": "LIMA_METROPOLITANA"
+   },
+   "nivel": "distrito"
+  }
+ },
+ "elegir": null,
+ "id": "desnutricion_cronica|identificar_extremo|LIMA_METROPOLITANA|intermedio|distrito"
+}

@@ -6,3 +6,65 @@
   motivo: 'Nombre largo del distrito («Melgar, Puno») la primera vez que se nombra, solo en la capa 2 (T-02: provincia y departamento).
     Misma información de lugar que antes, sin ninguna afirmación nueva; la capa 1 queda igual (Q2 está en 124 de 125 palabras).'
   aprobado_por: agente
+- capa: capa2.mas_contexto[3].texto
+  antes: ''
+  despues: En 2025, a 547 niñas y niños de 6 a 35 meses se les midió la hemoglobina en establecimientos públicos de Ayaviri; 52 de ellos
+    tenía anemia en su último control.
+  motivo: 'X-02 (dueño, fila S-01 de decisiones.md; S3-01): en «¿cuántos?» del SIEN se da también el conteo, como tarjeta de «Más contexto»
+    (`mostrar_conteo_sien` = true). Es una tarjeta nueva: las demás se identifican por título y no cambian.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[3].titulo
+  antes: ''
+  despues: Cuántos niños se midieron
+  motivo: 'X-02 (dueño, fila S-01 de decisiones.md; S3-01): en «¿cuántos?» del SIEN se da también el conteo, como tarjeta de «Más contexto»
+    (`mostrar_conteo_sien` = true). Es una tarjeta nueva: las demás se identifican por título y no cambian.'
+  aprobado_por: dueño
+- capa: capa3.citas[0].url
+  antes: ''
+  despues: https://cdn.www.gob.pe/uploads/document/file/9599740/7857855-indicadores-ninos-diciembre-2025-base-de-datos-hisminsa.xlsx
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[1].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.glosario[3].termino
+  antes: ''
+  despues: forma de medir la anemia
+  motivo: 'H15 (S3-02, aprobada por el agente, agents.md §5.1): la respuesta usa «forma de medir vigente desde 2024» en sus citas y no tenía el término en el glosario; se agrega la entrada que ya existe en glosario.yaml (forma_de_medir), la misma que ya lleva Q1. Condiciones de §5.1: (1) no cambia ninguna cifra, semáforo, confianza ni regla de bloqueo, supresión, subida de nivel o referencial; (2) el término ya está en el texto de la respuesta y la definición es el texto fijo del glosario; (3) corrector sin infracciones y capa 1 sin cambios; (4) no cambia el orden de un «no se puede»'
+  aprobado_por: agente
+- capa: capa2.mas_contexto[2].texto
+  antes: El INS advierte que sus cifras son de niños atendidos en establecimientos del MINSA, que no son estrictamente comparables con la ENDES y que, como no a todos los atendidos se les mide la hemoglobina, podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño.
+  despues: ''
+  motivo: 'S3-01b punto 4 (H-F), aprobado por el dueño el 6/11/2026: el título de la tarjeta pasa a «Por qué esta cifra no se compara con la de la encuesta» (antes decía «es más baja»). El texto de la tarjeta no cambia. La tarjeta cambia de índice porque el corrector de la regresión empareja por título.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[2].titulo
+  antes: Por qué esta cifra es más baja que la de la encuesta
+  despues: ''
+  motivo: 'S3-01b punto 4 (H-F), aprobado por el dueño el 6/11/2026: el título de la tarjeta pasa a «Por qué esta cifra no se compara con la de la encuesta» (antes decía «es más baja»). El texto de la tarjeta no cambia. La tarjeta cambia de índice porque el corrector de la regresión empareja por título.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[4].texto
+  antes: ''
+  despues: El INS advierte que sus cifras son de niños atendidos en establecimientos del MINSA, que no son estrictamente comparables con la ENDES y que, como no a todos los atendidos se les mide la hemoglobina, podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño.
+  motivo: 'S3-01b punto 4 (H-F), aprobado por el dueño el 6/11/2026: el título de la tarjeta pasa a «Por qué esta cifra no se compara con la de la encuesta» (antes decía «es más baja»). El texto de la tarjeta no cambia. La tarjeta cambia de índice porque el corrector de la regresión empareja por título.'
+  aprobado_por: dueño
+- capa: capa2.mas_contexto[4].titulo
+  antes: ''
+  despues: Por qué esta cifra no se compara con la de la encuesta
+  motivo: 'S3-01b punto 4 (H-F), aprobado por el dueño el 6/11/2026: el título de la tarjeta pasa a «Por qué esta cifra no se compara con la de la encuesta» (antes decía «es más baja»). El texto de la tarjeta no cambia. La tarjeta cambia de índice porque el corrector de la regresión empareja por título.'
+  aprobado_por: dueño
+- capa: capa3.citas[2].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud
+  motivo: 'S3-01b punto 8 (H-K), aprobado por el dueño el 6/11/2026: el enlace oficial de la cita del SIEN pasa a la colección de informes de vigilancia en gob.pe (el anterior de web.ins.gob.pe daba error de certificado). No cambia ninguna cifra.'
+  aprobado_por: dueño
+- capa: capa3.glosario[3].definicion
+  antes: ''
+  despues: el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior no se compara con la de hoy.
+  motivo: 'S3-01b punto 1 (H-A), aprobado por el dueño el 6/11/2026: la definición de «forma de medir la anemia» dice «la anterior no se compara con la de hoy» en vez de «la anterior da cifras más altas». Cambia solo la redacción.'
+  aprobado_por: dueño

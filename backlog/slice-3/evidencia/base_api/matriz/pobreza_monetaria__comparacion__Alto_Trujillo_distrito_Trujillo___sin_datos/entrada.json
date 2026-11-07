@@ -1,0 +1,20 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "comparar_con": {
+   "ubigeo": "120307"
+  },
+  "intencion": "comparacion",
+  "periodo": {
+   "anio": 2026,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "130112"
+  }
+ },
+ "elegir": null,
+ "id": "pobreza_monetaria|comparacion|Alto Trujillo (distrito, Trujillo)|sin_datos"
+}

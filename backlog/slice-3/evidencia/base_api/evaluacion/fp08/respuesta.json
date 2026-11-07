@@ -1,0 +1,19 @@
+{
+ "cifras": {},
+ "entendimos": null,
+ "interpretacion": {
+  "anclas": null,
+  "avisos": [],
+  "cache": false,
+  "consulta": null,
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "no_es_pregunta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivo": "no_es_pregunta",
+ "texto": "No encontramos una pregunta. Escribe qué quieres saber, de qué problema y de qué lugar; por ejemplo: «¿Cuánta anemia hay en Puno?». También puedes preguntar con las opciones: por ejemplo, `uv run pap preguntar --intencion nivel_actual --tema anemia --territorio Puno`.",
+ "tipo": "mensaje"
+}

@@ -6,17 +6,21 @@ readme = "README.md"
 requires-python = ">=3.12,<3.13"
 dependencies = [
     "duckdb>=1.5,<1.6",
+    "fastapi>=0.162.0",
     "frictionless>=5.18",
     "httpx>=0.28",
+    "jinja2>=3.1.6",
     "jsonschema>=4.23",
     "openpyxl>=3.1",
     "pandas>=3.0.6",
     "pdfplumber>=0.11.10",
     "polars>=1.30",
     "pyreadstat>=1.2",
+    "python-multipart>=0.0.33",
     "pyyaml>=6.0",
     "svy==0.32.1",
     "tzdata>=2026.5",
+    "uvicorn>=0.54.0",
     "xlrd>=2.0.2",
     "zstandard>=0.25",
 ]
@@ -25,7 +29,10 @@ dependencies = [
 pap = "pap.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = [
+    "playwright>=1.64.1",
+    "pytest>=8",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -38,4 +45,11 @@ packages = ["src/pap"]
 testpaths = ["tests"]
 markers = [
     "solo_mac: needs the raw store (biblioteca/cruda/); runs only on the owner's Mac (X-11)",
+    "navegador: needs Playwright and Chromium (S3-06); when Chromium is missing, leave it out with -m \"not navegador\"",
+]
+# S3-01b (fila 13): se silencian solo estos dos avisos de librerías ajenas (con el mensaje exacto, para que cualquier otro aviso siga viéndose):
+# Starlette avisa de que TestClient usa httpx (fastapi/testclient.py) y openpyxl avisa de un área de impresión del Excel del INEI.
+filterwarnings = [
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+    "ignore:Print area cannot be set to Defined name:UserWarning:openpyxl",
 ]

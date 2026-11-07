@@ -1,0 +1,245 @@
+{
+ "aclaracion": {
+  "motivo": "sin_coincidencia",
+  "opciones": [
+   {
+    "etiqueta": "Huancavelica (departamento)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 1995,
+     "departamento": "Huancavelica",
+     "id": "09",
+     "nivel": "departamento",
+     "nombre_completo": "Huancavelica",
+     "nombre_mostrado": "Huancavelica",
+     "provincia": null,
+     "provisional": false,
+     "ubigeo": "090000"
+    }
+   },
+   {
+    "etiqueta": "Huancavelica (provincia, departamento de Huancavelica)",
+    "n": 2,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Huancavelica",
+     "id": "090100",
+     "nivel": "provincia",
+     "nombre_completo": "Huancavelica (Huancavelica)",
+     "nombre_mostrado": "Huancavelica",
+     "provincia": "Huancavelica",
+     "provisional": false,
+     "ubigeo": "090100"
+    }
+   },
+   {
+    "etiqueta": "Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
+    "n": 3,
+    "territorio": {
+     "ambito_lima": null,
+     "anio_datos_desde": 2017,
+     "departamento": "Huancavelica",
+     "id": "090101",
+     "nivel": "distrito",
+     "nombre_completo": "Huancavelica (Huancavelica, Huancavelica)",
+     "nombre_mostrado": "Huancavelica",
+     "provincia": "Huancavelica",
+     "provisional": false,
+     "ubigeo": "090101"
+    }
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "No encontramos «huancavelika». ¿Quisiste decir alguno de estos?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "Huancavelica (departamento)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 1995,
+      "departamento": "Huancavelica",
+      "id": "09",
+      "nivel": "departamento",
+      "nombre_completo": "Huancavelica",
+      "nombre_mostrado": "Huancavelica",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": "090000"
+     }
+    },
+    {
+     "etiqueta": "Huancavelica (provincia, departamento de Huancavelica)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Huancavelica",
+      "id": "090100",
+      "nivel": "provincia",
+      "nombre_completo": "Huancavelica (Huancavelica)",
+      "nombre_mostrado": "Huancavelica",
+      "provincia": "Huancavelica",
+      "provisional": false,
+      "ubigeo": "090100"
+     }
+    },
+    {
+     "etiqueta": "Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Huancavelica",
+      "id": "090101",
+      "nivel": "distrito",
+      "nombre_completo": "Huancavelica (Huancavelica, Huancavelica)",
+      "nombre_mostrado": "Huancavelica",
+      "provincia": "Huancavelica",
+      "provisional": false,
+      "ubigeo": "090101"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «huancavelika». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "pregunta_original": "como a evolusionado la anemia en huancavelika",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "huancavelika"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "evolucion",
+  "periodo": null,
+  "pregunta": "como a evolusionado la anemia en huancavelika",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "evolucion",
+  "pregunta_original": "como a evolusionado la anemia en huancavelika",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "huancavelika"
+  }
+ },
+ "entendimos": "Entendimos: cómo cambió la anemia en «huancavelika»",
+ "interpretacion": {
+  "anclas": {
+   "intencion": "evolusionado",
+   "tema": "anemia",
+   "territorio": "huancavelika"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "evolucion",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "huancavelika"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "sin_coincidencia",
+   "opciones": [
+    {
+     "etiqueta": "Huancavelica (departamento)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 1995,
+      "departamento": "Huancavelica",
+      "id": "09",
+      "nivel": "departamento",
+      "nombre_completo": "Huancavelica",
+      "nombre_mostrado": "Huancavelica",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": "090000"
+     }
+    },
+    {
+     "etiqueta": "Huancavelica (provincia, departamento de Huancavelica)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Huancavelica",
+      "id": "090100",
+      "nivel": "provincia",
+      "nombre_completo": "Huancavelica (Huancavelica)",
+      "nombre_mostrado": "Huancavelica",
+      "provincia": "Huancavelica",
+      "provisional": false,
+      "ubigeo": "090100"
+     }
+    },
+    {
+     "etiqueta": "Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": null,
+      "anio_datos_desde": 2017,
+      "departamento": "Huancavelica",
+      "id": "090101",
+      "nivel": "distrito",
+      "nombre_completo": "Huancavelica (Huancavelica, Huancavelica)",
+      "nombre_mostrado": "Huancavelica",
+      "provincia": "Huancavelica",
+      "provisional": false,
+      "ubigeo": "090101"
+     }
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "No encontramos «huancavelika». ¿Quisiste decir alguno de estos?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "pregunta_original": "como a evolusionado la anemia en huancavelika",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "huancavelika"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__sin_coincidencia",
+  "intencion": "evolucion",
+  "periodo": null,
+  "pregunta": "como a evolusionado la anemia en huancavelika",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "No encontramos «huancavelika». ¿Quisiste decir alguno de estos?\n1) Huancavelica (departamento)\n2) Huancavelica (provincia, departamento de Huancavelica)\n3) Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

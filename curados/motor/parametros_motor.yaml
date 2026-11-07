@@ -15,19 +15,19 @@ fecha: "2026-11-03"   # 1.1.0: ajustes del ensayo del implementador
 
 pendientes_dueno:
   mostrar_conteo_sien:            # «¿cuántos?» del SIEN: dar el conteo además del porcentaje (p. ej. 52 de 547)
-    valor: false
+    valor: true                    # decidido por el dueño (X-02, fila S-01); se aplica en S3-01
     recomendacion: true            # como tarjeta de la capa 2
     donde: capa2_tarjeta
-    pendiente: X-02
+    decision: X-02 (S-01)
   cr01_mismo_anio:                # CR-01: además del último año, el gasto del mismo año que la anemia con la que se compara
-    valor: false
+    valor: true                    # decidido por el dueño (X-03, fila R-03); se aplica en S3-01
     recomendacion: true
-    pendiente: X-03
-  intervalo_visible:              # ambos = como hoy (capa 1: el propio; cita: el del INEI si existe; ficha: los dos)
-    valor: ambos                   # uno = capa 1 y cita con el del INEI si existe, si no el propio
-    recomendacion: uno
+    decision: X-03 (R-03)
+  intervalo_visible:              # ambos = capa 1: el propio; cita: el del INEI si existe; ficha: los dos
+    valor: uno                     # uno = capa 1 y cita con el del INEI si existe, si no el propio; la ficha larga muestra los dos
+    recomendacion: uno             # decidido por el dueño (X-04, fila E-04); se aplica en S3-01
     permitidos: [ambos, uno]
-    pendiente: X-04
+    decision: X-04 (E-04)
 
 respuesta:
   capa1_palabras_objetivo: {valor: 100, decision: R-04}
@@ -49,6 +49,7 @@ territorio:
     por_defecto_sin_respuesta: LIMA_METROPOLITANA
     decision: T-03
   homonimos: {accion: aclarar, decision: R-TERRITORIO-09}
+  departamento_a_secas: {activo: true, valor: "el nombre a secas de un departamento (que también es provincia o distrito) se responde como departamento y se ofrece la provincia o el distrito como alternativa, en «Avisos» de la capa 2; Lima sigue con T-03; los homónimos del mismo nivel y los textos con palabra de nivel («provincia de…») no cambian", decision: X-22, texto_alternativa: "textos/territorio.yaml → oferta_otros_niveles (supuesto: S3-01b)"}
   aclaracion_max_opciones: {valor: 8, supuesto: S1-02}
   aclaracion_orden: {valor: "por nivel (departamento, provincia, distrito); dentro de cada nivel, alfabético por departamento, provincia y nombre", supuesto: S1-02}
   aclaracion_exceso: {valor: "si hay más opciones que el máximo, no se listan: se pide la provincia o el departamento", supuesto: S1-02}

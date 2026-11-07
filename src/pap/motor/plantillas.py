@@ -145,6 +145,7 @@ class _Plantilla:
         self.i = textos(raiz, f"plantillas/{nombre}.yaml")
         self.na = textos(raiz, "plantillas/nivel_actual.yaml")
         self.bl = textos(raiz, "bloques.yaml")
+        self.glos = textos(raiz, "glosario.yaml").get("terminos") or {}
         self.par = parametros(raiz)
         self.sec_nombre = "cruce_efecto" if nombre == "cruce_efecto" else nombre
         self.activos_d = {n: b for n, b in self.bl["bloques"].items() if self._cuando(b["cuando"])}
@@ -217,7 +218,7 @@ class _Plantilla:
              "ciudadano": nom[:1].lower() + nom[1:], "ciudadano_cap": nom[:1].upper() + nom[1:],
              "sujeto": self.indic(c).get("sujeto") or (nom[:1].lower() + nom[1:]),
              "sujeto_corto": self.indic(c).get("sujeto_corto") or (nom[:1].lower() + nom[1:]),
-             "nivel_del": com["nivel_del"].get(nivel, ""), "nivel_en": com["nivel_en"].get(nivel, ""),
+             "nivel_del": com["nivel_del"].get(nivel, ""), "nivel_en": com["nivel_en"].get(c.nivel) or _sub(com["nivel_en"]["defecto"], {"lugar": lugar}),
              "nivel_palabra": com["nivel_palabra"].get(nivel, str(c.nivel)),
              "nivel_plural": com["nivel_plural"].get(nivel, com["nivel_plural"]["defecto"]),
              "fuente": _sub(fuente, {"anio": int(c.anio), "fuente_principal": c.fuente_principal})}
@@ -372,7 +373,11 @@ class _Plantilla:
         for i in dict.fromkeys(self.usadas):
             glos += self.indic(self.cf[i]).get("glosario") or []
         glos += list(glosario_extra)
-        if any(self.v.values()):
+        nat = (self.glos.get("cambio_claro") or {}).get("solo_con_naturaleza")
+        def _nat(i):                                       # S3-10 (H-06): la cifra del verbo (las claves «<id>__pasa» son de su cifra)
+            c = self.cf.get(i) or self.cf.get(i.rsplit("__", 1)[0])
+            return c.naturaleza_dato if c is not None else None
+        if any(x and (not nat or _nat(i) in nat) for i, x in self.v.items()):
             glos.append("cambio_claro")
         nc = []
         for cod, prm in self.nc_asignados():
@@ -503,11 +508,12 @@ def _gasto_nivel_actual(P: _Plantilla, i: str, c, vs: dict):
     entidades nacionales) y sin «PAN» ni «devengado», que quedan en el glosario. Reutiliza los bloques `gasto` y `sesgo_sede_lima`."""
     g, lima = P.sec("gasto"), P.sec("gasto_lima")
     alcance = "nacional" if c.nivel == "nacional" else "local" if c.nivel in NIVELES_LOCALES else "regional"
+    if _publicable(c):                      # S3-01b (u13): qué cubre la cifra y qué no, antes de la cifra (si no hay cifra, «no se puede» va primero)
+        P.corta.append(P.t(lima["apertura"] if lima and alcance == "regional" else g["apertura"][alcance], **vs))
     P.corta.append(P.t(P.na["corta"], **vs))
     if not _publicable(c):
         return None
     P.usadas.append(i)
-    P.ojo.append(P.t(lima["ojo"] if lima and alcance == "regional" else g["ojo"][alcance], **vs))
     P.ojo.append(P.ojo_generico(c))
     ref_nac = [x["devengado"] for x in (c.lineas_aparte or []) if x["linea"] == "referencia_nacional"]
     if lima and ref_nac:
@@ -846,13 +852,20 @@ def cruce_efecto(P: _Plantilla) -> dict:
     P.nc += [[n, prm] for n, prm in dc["nc"] + ti["nc"]]
     clave = {"ids": [], "valor": "", "texto": ""}
     alcance = {}
-    P.corta += [P.t(x, **vs) for x in ti["corta"]]
+    ap = P.sec("apertura") if a is not None and _publicable(a) and a.nivel not in NIVELES_LOCALES else None   # local: la cifra ya dice qué cubre (dueño, 7/11/2026: tope R-04)
+    con = "_con_apertura" if ap else ""                   # S3-10 (W-10): con la apertura, la frase y la cifra no repiten lo que ya dijo
+    P.corta += [P.t(x, **vs) for x in ti.get("corta" + con) or ti["corta"]]
     if a is not None and _publicable(a):
         va = P.valores(vs, P.vars_cifra(a))
         P.usadas.append(a_id)
+        if ap:                                            # S3-10 (W-10): la apertura de u13 también aquí, antes de la cifra del gasto
+            lima = P.sec("apertura_lima")
+            alc = "nacional" if a.nivel == "nacional" else "local" if a.nivel in NIVELES_LOCALES else "regional"
+            P.corta.append(P.t(lima if lima and alc == "regional" else ap[alc], **va))
         P.corta.append(P.t(ti["corta_cifra"], **va))
         local = a.nivel in NIVELES_LOCALES
-        clave = {"ids": [a_id], "valor": P.cm(a_id), "texto": P.t(P.sec("clave_local" if local else "clave_regional"), **va)}
+        ck = "clave_local" if local else "clave_regional"
+        clave = {"ids": [a_id], "valor": P.cm(a_id), "texto": P.t(P.sec(ck + con) or P.sec(ck), **va)}
         if local:
             alcance[a_id] = P.t(P.sec("alcance_local"), **va)
     P.ojo += [P.t(x, **vs) for x in ti["ojo"]]
@@ -897,10 +910,15 @@ def cruce_efecto(P: _Plantilla) -> dict:
         ex = P.sec("explicaciones")
         if ex:
             P.expl = {k: _sub(x, vl) for k, x in ex.items()}
-    if not locales:
+    if not locales:                                       # S3-10 (H-04): la cobertura dice qué mide (la medición, no la anemia)
+        tcob = P.i["tarjetas"].get("cobertura")         # sin la clave, la tarjeta genérica de antes
         for i, c in cobs:
-            if _publicable(c):
+            if _publicable(c) and tcob is None:
                 P.ctxs.append(P.tarjeta_generica(c, i))
+            elif _publicable(c):
+                vc = P.valores(vs, P.vars_cifra(c), P.vars_region(c), c=P.cm(i))
+                P.usadas.append(i)
+                P.ctxs.append({"titulo": _sub(tcob["titulo"], vc), "texto": P.t(tcob["texto"], **vc), "etiqueta": P.c["no_se_compara"]})
     if b is not None and _publicable(b):
         tt = P.i["tarjetas"]["endes"]
         vb_ = P.valores(vs, P.vars_cifra(b), c=P.cm(b_id), nivel_palabra=vs["nivel_palabra"])
@@ -916,9 +934,11 @@ def cruce_efecto(P: _Plantilla) -> dict:
         for i, c in A:
             if i not in usados_a and _publicable(c):
                 tm = P.i["tarjetas"]["mismo_anio"]
-                vc = P.valores(vs, P.vars_cifra(c), c=P.cm(i))
+                constantes = c.get("precios") == "constantes"   # S3-10 (H-05): el monto del año comparado dice en soles de qué año está
+                vc = P.valores(vs, P.vars_cifra(c), c=P.cm(i), anio_base=c.anio_base_deflactor if constantes else "")
                 P.usadas.append(i)
-                P.ctxs.append({"titulo": _sub(tm["titulo"], vc), "texto": P.t(tm["texto"], **vc), "etiqueta": tm["etiqueta"]})
+                P.ctxs.append({"titulo": _sub(tm["titulo"], vc), "texto": P.t(tm["texto_constantes" if constantes and "texto_constantes" in tm else "texto"], **vc),
+                               "etiqueta": tm["etiqueta"]})
     if ti.get("tarjeta_final"):
         tf = ti["tarjeta_final"]
         P.ctxs.append({"titulo": tf["titulo"], "texto": P.t(tf["texto"], **P.valores(vs, lugar_largo=P.vars_cifra(ref)["lugar_largo"])),

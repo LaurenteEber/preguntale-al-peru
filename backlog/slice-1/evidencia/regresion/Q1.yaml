@@ -48,3 +48,46 @@
     con el que se compara. Se agrega la tarjeta con la anemia de 2024 con la forma vigente junto a la de 2025, con su marcador
     y su cita (S1-13). Va al final para no mover las tarjetas que ya estaban.'
   aprobado_por: dueño
+- capa: capa3.citas[0].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[1].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[2].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/microdatos/
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa3.citas[3].url
+  antes: ''
+  despues: https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes09/pdf/Cap09.pdf
+  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
+    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
+    el texto de la cita no cambia y el .md muestra el enlace.'
+  aprobado_por: dueño
+- capa: capa1.ojo_al_leer[0]
+  antes: 'No compares esta cifra con las de años anteriores a 2024: se medía de otra forma, que da cifras más altas.'
+  despues: 'No compares esta cifra con las de años anteriores a 2024: se medía de otra forma, que no se compara con la de hoy.'
+  motivo: 'S3-01b punto 1 (H-A), aprobado por el dueño el 6/11/2026: el aviso de la forma de medir la anemia dice «que no se compara con la de hoy» en vez de «que da cifras más altas» (no afirma una dirección). Cambia solo la redacción; ninguna cifra, semáforo, confianza ni regla.'
+  aprobado_por: dueño
+- capa: capa3.glosario[0].definicion
+  antes: el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior da cifras más altas.
+  despues: el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior no se compara con la de hoy.
+  motivo: 'S3-01b punto 1 (H-A), aprobado por el dueño el 6/11/2026: la definición de «forma de medir la anemia» dice «la anterior no se compara con la de hoy» en vez de «la anterior da cifras más altas». Cambia solo la redacción.'
+  aprobado_por: dueño
+- capa: capa3.para_citar[2]
+  antes: '53,5 % (intervalo: 48,4 % a 58,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Huancavelica, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI).'
+  despues: '53,5 % (intervalo: 48,4 % a 58,5 %): niñas y niños de 6 a 35 meses con anemia (forma de medir anterior a 2024), Huancavelica, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.'
+  motivo: 'S3-10 (H-07), aprobado por el dueño el 7/11/2026: la cita de un cálculo propio con microdatos de una encuesta dice que no hay tabla publicada con esa cifra; el enlace y la cifra no cambian.'
+  aprobado_por: dueño

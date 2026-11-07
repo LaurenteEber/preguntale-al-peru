@@ -1,0 +1,17 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "evolucion",
+  "periodo": {
+   "anio": 2024,
+   "tipo": "anio"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "Independencia"
+  }
+ },
+ "elegir": 2,
+ "id": "pobreza_monetaria|evolucion|Independencia (homónimo, opción 2 de 4)|intermedio"
+}

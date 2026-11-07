@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "efecto",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "gasto_publico",
+  "territorio": {
+   "ubigeo": "040800"
+  }
+ },
+ "elegir": null,
+ "id": "gasto_publico|efecto|La Unión (distrito, La Unión)|serie"
+}

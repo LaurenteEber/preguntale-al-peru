@@ -240,7 +240,7 @@ def test_efecto_q3_estructura_y_cifras(plan, motor):
     assert got == {(GASTO, "distrito", "150132", "principal", None), (GASTO, LM, LM, "contexto", None),
                    (SIEN, "distrito", "150132", "principal", None), (ENDES_V, LM, LM, "contexto", 2024),
                    (COBERTURA, LM, LM, "contexto", None)}
-    assert {c["anio"] for c in p["cifras"]} == {a}
+    assert {c["anio"] for c in p["cifras"]} == {a, 2024}             # X-03 (S3-01): además, el gasto de 2024 (mismo año que la anemia)
     assert p["respuesta_parcial"] is True and p["estructura_efecto"] is True
     assert p["plantilla"] == "cruce_efecto" and p["cruce"] == "CR-01" and p["lado_a_lado"] is True
 
@@ -279,7 +279,10 @@ def test_g07_el_tema_de_gasto_sale_de_map_intencion_tema(plan, motor):
 
 
 def test_x03_cr01_mismo_anio_detras_de_parametro(plan, raiz, motor):
-    hoy = plan("efecto", "gasto_publico", "San Juan de Lurigancho")
+    """X-03 está decidida (S3-01: `cr01_mismo_anio` = true en el YAML); el parámetro sigue siendo editable: en false, el plan de antes."""
+    par = copy.deepcopy(PL.cargar_parametros(raiz))
+    par["pendientes_dueno"]["cr01_mismo_anio"]["valor"] = False
+    hoy = plan("efecto", "gasto_publico", "San Juan de Lurigancho", parametros=par)
     assert not [c for c in hoy["cifras"] if c["indicador"] == GASTO and c["anio"] == 2024]
     par = copy.deepcopy(PL.cargar_parametros(raiz))
     par["pendientes_dueno"]["cr01_mismo_anio"]["valor"] = True
@@ -343,8 +346,8 @@ def test_ids_de_cifra_estables_y_con_el_formato_del_yaml(plan, raiz, motor):
     ids = [c["id"] for c in p1["cifras"]]
     assert ids == [c["id"] for c in p2["cifras"]] and len(set(ids)) == len(ids)
     for c in p1["cifras"]:
-        assert c["id"] == fmt.format(indicador=c["indicador"], medida=motor.medida(c["indicador"]), nivel=c["nivel"],
-                                     territorio=c["territorio"], anio=c["anio"], rol=c["rol"])
+        assert c["id"] == fmt.format(indicador=c["indicador"], medida=motor.medida(c["indicador"], c.get("medida")),
+                                     nivel=c["nivel"], territorio=c["territorio"], anio=c["anio"], rol=c["rol"])
     assert PL.formato_id_cifra(indicador="a", medida="m", nivel="n", territorio="t", anio=1, rol="r", raiz=raiz) == "a__m__n__t__1__r"
 
 

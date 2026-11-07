@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% from "_macros.html" import caja with context %}
+{% block contenido %}
+<h1>{{ p.titulo_inicio }}</h1>
+<p class="lema">{{ p.lema }}</p>
+{{ caja(p.caja_etiqueta) }}
+<section data-bloque="ejemplos" aria-labelledby="ejemplos-titulo">
+<h2 id="ejemplos-titulo">{{ p.ejemplos_titulo }}</h2>
+<ul class="ejemplos">
+{% for e in tx.ejemplos %}
+<li><form method="post" action="/preguntar"><button type="submit" name="texto" value="{{ e }}" data-buscando="{{ p.buscando }}"{% if tope %} disabled{% endif %}>{{ e }}</button></form></li>
+{% endfor %}
+</ul>
+</section>
+<p><a href="/guiado">{{ p.guiado_enlace }}</a></p>
+<section data-bloque="temas_hoy" class="datos">
+<p>{{ p.temas_hoy }} {% for t in tx.rotulos_temas.values() %}{{ t | lower }}{{ ", " if not loop.last else "." }}{% endfor %}</p>
+<p>{{ p.fuentes_hoy }}</p>
+</section>
+{% endblock %}

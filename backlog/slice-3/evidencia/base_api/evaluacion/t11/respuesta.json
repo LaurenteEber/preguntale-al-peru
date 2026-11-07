@@ -1,0 +1,624 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENAHO 2025 (INEI); el INEI publica la misma cifra (26,8 %)",
+    "ids": [
+     "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal"
+    ],
+    "texto": "de personas en situación de pobreza monetaria en Lima Metropolitana en 2025.",
+    "valor": "26,8 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+    "«Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
+   ],
+   "palabras": 75,
+   "que_hacer": null,
+   "respuesta_corta": "Entre 2024 y 2025, la pobreza monetaria se mantuvo sin cambio estadísticamente claro en Lima Metropolitana."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENAHO 2024–2025 (INEI)",
+    "Territorio: Lima Metropolitana",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para Lima Metropolitana."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "En Lima Metropolitana, la pobreza monetaria fue 27,6 % en 2024 y 26,8 % en 2025.",
+     "titulo": "El punto de partida: 2024"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal",
+     "texto": "26,8 % (intervalo del INEI: 24,2 % a 29,4 %): personas en situación de pobreza monetaria, Lima Metropolitana (provincia de Lima), 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    },
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2024__contexto",
+     "texto": "27,6 % (intervalo del INEI: 25,0 % a 30,1 %): personas en situación de pobreza monetaria, Lima Metropolitana (provincia de Lima), 2024. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico, Cuadro N.º III.1 (cont.), p. 220 (PDF 222).",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    },
+    {
+     "definicion": "una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.",
+     "termino": "cambio estadísticamente claro"
+    }
+   ],
+   "para_citar": [
+    "26,8 % (intervalo del INEI: 24,2 % a 29,4 %): personas en situación de pobreza monetaria, Lima Metropolitana (provincia de Lima), 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+    "27,6 % (intervalo del INEI: 25,0 % a 30,1 %): personas en situación de pobreza monetaria, Lima Metropolitana (provincia de Lima), 2024. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico, Cuadro N.º III.1 (cont.), p. 220 (PDF 222)."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2024__contexto": {
+   "accion_final": "publicar",
+   "anio": 2024,
+   "avisos": [
+    "ambito_no_dominio"
+   ],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2024-LM1501",
+    "valor": 27.6
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 4.73483167,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.30607789,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 220 (PDF 222)",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico",
+    "ic_inf": 25.0,
+    "ic_sup": 30.1,
+    "id_cifra": "DOR-POB-2024-LM1501"
+   },
+   "ic_inf": 25.03611825,
+   "ic_sup": 30.24633222,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 3063,
+   "nivel": "LIMA_METROPOLITANA",
+   "nivel_pedido": "LIMA_METROPOLITANA",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "departamento 15/07",
+     "detalle": {
+      "area": "total",
+      "nivel": "LIMA_METROPOLITANA",
+      "territorio_id": "LIMA_METROPOLITANA"
+     },
+     "mensaje": "Esta cifra corresponde a Lima Metropolitana (provincia de Lima), no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+     "motivo": "dominio_lima",
+     "regla": "R-ENC-07",
+     "rotulo": "Lima Metropolitana (provincia de Lima)"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "ambito_no_dominio",
+     "clausula": "ámbito publicado (L1)",
+     "detalle": {
+      "ambito": "LIMA_METROPOLITANA",
+      "cita": "INEI, Perú: Evolución de la Pobreza Monetaria 2015-2024 (Informe Técnico); también el informe 2016-2025 (Cuadro N.º III.1, p. 232)"
+     },
+     "mensaje": "El INEI publica esta cifra para Lima Metropolitana (provincia de Lima), aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+     "motivo": "ambito_no_dominio",
+     "regla": "R-ENC-08"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "27,6 % (entre 25,0 % y 30,2 %), ENAHO 2024, Lima Metropolitana (provincia de Lima); basado en 3063 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "27,6 % (entre 25,0 % y 30,2 %), ENAHO 2024, Lima Metropolitana (provincia de Lima); basado en 3063 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2024.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "LIMA_METROPOLITANA",
+   "territorio_nombre": "Lima Metropolitana (provincia de Lima)",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2024,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "LIMA_METROPOLITANA",
+     "periodo_agrupado": null,
+     "territorio_id": "LIMA_METROPOLITANA"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2024-LM1501",
+   "valor": 27.58446303
+  },
+  "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [
+    "ambito_no_dominio"
+   ],
+   "bloqueos_cruce": [],
+   "comparacion": {
+    "anio": 2024,
+    "anio_cerrado": true,
+    "avisos": "[\"ambito_no_dominio\"]",
+    "cota_inf": null,
+    "cota_sup": null,
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cv": 4.73483167,
+    "deff": 2.61485164,
+    "denominador": null,
+    "ee": 1.30607789,
+    "estado_calculo": "calculada",
+    "fecha_corte": null,
+    "fecha_descarga": null,
+    "gl": 535,
+    "grupo_robusto_nacional": null,
+    "grupo_robusto_regional": null,
+    "ic_inf": 25.03611825,
+    "ic_sup": 30.24633222,
+    "indicador_id": "enaho_pobreza_monetaria",
+    "indicador_validado": true,
+    "linea": "cifra",
+    "medida": "proporcion",
+    "metodo_ic": "korn-graubard",
+    "metodo_territorio": "ubigeo",
+    "motivo_calculo": null,
+    "n_efectivo": 1171.00333821,
+    "n_muestra": 3063,
+    "nivel": "LIMA_METROPOLITANA",
+    "numerador": null,
+    "pct_gasto_atribuible": null,
+    "poblacion": 10292408.0,
+    "prueba_cambio": {
+     "anios": [
+      2024,
+      2025
+     ],
+     "diferencia": -0.8013,
+     "ee_diferencia": 1.86,
+     "p_valor": 0.666616,
+     "significativa": false,
+     "z": -0.4308
+    },
+    "territorio_id": "LIMA_METROPOLITANA",
+    "territorio_nombre": "Lima Metropolitana (provincia de Lima)",
+    "ubigeo_inei": null,
+    "validada_dorada": "DOR-POB-2024-LM1501",
+    "valor": 27.58446303,
+    "version_tabla": "1.2.0"
+   },
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-LM1501",
+    "valor": 26.8
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 4.9447683,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.32436524,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 24.2,
+    "ic_sup": 29.4,
+    "id_cifra": "DOR-POB-2025-LM1501"
+   },
+   "ic_inf": 24.20183021,
+   "ic_sup": 29.48772466,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 3116,
+   "nivel": "LIMA_METROPOLITANA",
+   "nivel_pedido": "LIMA_METROPOLITANA",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "departamento 15/07",
+     "detalle": {
+      "area": "total",
+      "nivel": "LIMA_METROPOLITANA",
+      "territorio_id": "LIMA_METROPOLITANA"
+     },
+     "mensaje": "Esta cifra corresponde a Lima Metropolitana (provincia de Lima), no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+     "motivo": "dominio_lima",
+     "regla": "R-ENC-07",
+     "rotulo": "Lima Metropolitana (provincia de Lima)"
+    },
+    {
+     "accion": "advertir",
+     "aviso": "ambito_no_dominio",
+     "clausula": "ámbito publicado (L1)",
+     "detalle": {
+      "ambito": "LIMA_METROPOLITANA",
+      "cita": "INEI, Perú: Evolución de la Pobreza Monetaria 2016-2025 (Informe Técnico)"
+     },
+     "mensaje": "El INEI publica esta cifra para Lima Metropolitana (provincia de Lima), aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+     "motivo": "ambito_no_dominio",
+     "regla": "R-ENC-08"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "26,8 % (entre 24,2 % y 29,5 %), ENAHO 2025, Lima Metropolitana (provincia de Lima); basado en 3116 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "26,8 % (entre 24,2 % y 29,5 %), ENAHO 2025, Lima Metropolitana (provincia de Lima); basado en 3116 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde",
+      "semaforo_comparacion": {
+       "motivos": [],
+       "puntajes": {
+        "precision_cifra": 0,
+        "quiebre": 0
+       },
+       "semaforo": "verde"
+      }
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "LIMA_METROPOLITANA",
+   "territorio_nombre": "Lima Metropolitana (provincia de Lima)",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "LIMA_METROPOLITANA",
+     "periodo_agrupado": null,
+     "territorio_id": "LIMA_METROPOLITANA"
+    }
+   ],
+   "validada_dorada": "DOR-POB-2025-LM1501",
+   "valor": 26.78316076
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "comparar_con": 2024,
+    "id": "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "LIMA_METROPOLITANA",
+    "rol": "principal",
+    "territorio": "LIMA_METROPOLITANA"
+   },
+   {
+    "anio": 2024,
+    "id": "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2024__contexto",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "LIMA_METROPOLITANA",
+    "rol": "contexto",
+    "territorio": "LIMA_METROPOLITANA"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "pregunta_original": "la pobresa a bajado en lima metropolitana?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "lima metropolitana"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__pobreza_monetaria__LIMA_METROPOLITANA",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "desde": 2024,
+   "hasta": "ultimo",
+   "tipo": "serie"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "la pobresa a bajado en lima metropolitana?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "LIMA_METROPOLITANA",
+   "nivel": "LIMA_METROPOLITANA",
+   "nombre_pedido": "Lima Metropolitana"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "evolucion",
+  "pregunta_original": "la pobresa a bajado en lima metropolitana?",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "texto": "lima metropolitana"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cómo cambió la pobreza en Lima Metropolitana",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENAHO 2024–2025 (INEI)\nTerritorio: Lima Metropolitana\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para Lima Metropolitana.",
+  "larga": {
+   "cifras": {
+    "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2024__contexto": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2024. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta para Lima Metropolitana (provincia de Lima).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 25,0 % y 30,2 % (coeficiente de variación 4,7 %, 3063 casos en la muestra). El INEI publica para esta cifra un intervalo entre 25,0 % y 30,1 % (Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico, Cuadro N.º III.1 (cont.), p. 220 (PDF 222)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 27,6 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2015-2024. Informe Técnico, Cuadro N.º III.1 (cont.), p. 220 (PDF 222)). Nuestra cifra coincide.",
+     "avisos": [
+      "Esta cifra corresponde a Lima Metropolitana (provincia de Lima), no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+      "El INEI publica esta cifra para Lima Metropolitana (provincia de Lima), aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+      "27,6 % (entre 25,0 % y 30,2 %), ENAHO 2024, Lima Metropolitana (provincia de Lima); basado en 3063 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta para Lima Metropolitana (provincia de Lima).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 24,2 % y 29,5 % (coeficiente de variación 4,9 %, 3116 casos en la muestra). El INEI publica para esta cifra un intervalo entre 24,2 % y 29,4 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "Entre 2024 y 2025: sin cambio estadísticamente claro (prueba de diferencia con el diseño de la encuesta, al 95 % de confianza).",
+     "6_contraste_oficial": "El INEI publica 26,8 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Esta cifra corresponde a Lima Metropolitana (provincia de Lima), no a todo el departamento de Lima (Lima Metropolitana + Lima Región).",
+      "El INEI publica esta cifra para Lima Metropolitana (provincia de Lima), aunque la encuesta no se diseñó para dar resultados de ese ámbito por separado. Calculamos aparte qué tan precisa es.",
+      "26,8 % (entre 24,2 % y 29,5 %), ENAHO 2025, Lima Metropolitana (provincia de Lima); basado en 3116 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para Lima Metropolitana."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "intencion": "a bajado",
+   "tema": "pobresa",
+   "territorio": "lima metropolitana"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "evolucion",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "lima metropolitana"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "comparar_con": 2024,
+    "id": "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "LIMA_METROPOLITANA",
+    "rol": "principal",
+    "territorio": "LIMA_METROPOLITANA"
+   },
+   {
+    "anio": 2024,
+    "id": "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2024__contexto",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "LIMA_METROPOLITANA",
+    "rol": "contexto",
+    "territorio": "LIMA_METROPOLITANA"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "pregunta_original": "la pobresa a bajado en lima metropolitana?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "texto": "lima metropolitana"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__pobreza_monetaria__LIMA_METROPOLITANA",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "desde": 2024,
+   "hasta": "ultimo",
+   "tipo": "serie"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "la pobresa a bajado en lima metropolitana?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "LIMA_METROPOLITANA",
+   "nivel": "LIMA_METROPOLITANA",
+   "nombre_pedido": "Lima Metropolitana"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "p >= alfa → significativo = false",
+   "detalle": {
+    "alfa": 0.05,
+    "anios": [
+     2024,
+     2025
+    ],
+    "diferencia": -0.8013,
+    "direccion": null,
+    "origen": "motor",
+    "p_valor": 0.666616,
+    "significativa": false
+   },
+   "motivo": "prueba_cambio",
+   "objetivo": "enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal",
+   "regla": "R-ENC-11",
+   "rotulo": "sin cambio estadísticamente claro"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "Entre 2024 y 2025, la pobreza monetaria se mantuvo sin cambio estadísticamente claro en Lima Metropolitana. 26,8 % de personas en situación de pobreza monetaria en Lima Metropolitana en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. «Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. En Lima Metropolitana, la pobreza monetaria fue 27,6 % en 2024 y 26,8 % en 2025.",
+ "texto_con_marcadores": "Entre 2024 y 2025, la pobreza monetaria {{v:enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal}} en Lima Metropolitana. {{c:enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal}} de personas en situación de pobreza monetaria en Lima Metropolitana en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. «Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. En Lima Metropolitana, la pobreza monetaria fue {{c:enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2024__contexto}} en 2024 y {{c:enaho_pobreza_monetaria__proporcion__LIMA_METROPOLITANA__LIMA_METROPOLITANA__2025__principal}} en 2025.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

@@ -63,7 +63,7 @@ def test_hasta_2024_responde_con_la_forma_anterior(motor):
     assert ctx == {(ANTERIOR, 2015), (VIGENTE, 2024)}
     c1 = r["capas"]["capa1"]
     assert c1["respuesta_corta"].startswith("Entre 2015 y 2024, la anemia")
-    assert "Con la forma de medir actual solo hay datos desde 2024. Esta serie usa la anterior, que da cifras más altas." in c1["ojo_al_leer"]
+    assert "Con la forma de medir actual solo hay datos desde 2024. Esta serie usa la anterior, que no se compara con la de hoy." in c1["ojo_al_leer"]
     assert any("(forma de medir vigente desde 2024), Perú, 2024." in x for x in r["capas"]["capa3"]["para_citar"])
     assert "más reciente" not in todo(r)
 
@@ -73,7 +73,7 @@ def test_hasta_2018_responde_con_la_forma_anterior_sin_la_vigente(motor):
     assert r["tipo"] == "respuesta"
     assert {(c["indicador_id"], c["anio"], c["rol"]) for c in r["cifras"].values()} == {(ANTERIOR, 2018, "principal"),
                                                                                        (ANTERIOR, 2015, "contexto")}
-    assert "Con la forma de medir actual solo hay datos desde 2024. Esta serie usa la anterior, que da cifras más altas." in \
+    assert "Con la forma de medir actual solo hay datos desde 2024. Esta serie usa la anterior, que no se compara con la de hoy." in \
         r["capas"]["capa1"]["ojo_al_leer"]
 
 

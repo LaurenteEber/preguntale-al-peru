@@ -1,0 +1,155 @@
+{
+ "aclaracion": {
+  "motivo": "falta_tema",
+  "opciones": [
+   {
+    "etiqueta": "Anemia",
+    "n": 1,
+    "tema": "anemia"
+   },
+   {
+    "etiqueta": "Desnutrición crónica",
+    "n": 2,
+    "tema": "desnutricion_cronica"
+   },
+   {
+    "etiqueta": "Gasto público en salud y nutrición infantil",
+    "n": 3,
+    "tema": "gasto_publico"
+   },
+   {
+    "etiqueta": "Pobreza",
+    "n": 4,
+    "tema": "pobreza_monetaria"
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "¿De qué problema quieres saber?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "falta_tema",
+   "opciones": [
+    {
+     "etiqueta": "Anemia",
+     "n": 1,
+     "tema": "anemia"
+    },
+    {
+     "etiqueta": "Desnutrición crónica",
+     "n": 2,
+     "tema": "desnutricion_cronica"
+    },
+    {
+     "etiqueta": "Gasto público en salud y nutrición infantil",
+     "n": 3,
+     "tema": "gasto_publico"
+    },
+    {
+     "etiqueta": "Pobreza",
+     "n": 4,
+     "tema": "pobreza_monetaria"
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "¿De qué problema quieres saber?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "¿Y en Cusco?",
+   "territorio": {
+    "texto": "Cusco"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__falta_tema",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "¿Y en Cusco?",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "¿Y en Cusco?",
+  "territorio": {
+   "texto": "Cusco"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de el tema que elijas en el departamento de Cusco",
+ "interpretacion": {
+  "anclas": {
+   "territorio": "Cusco"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "territorio": {
+    "texto": "Cusco"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "falta_tema",
+   "opciones": [
+    {
+     "etiqueta": "Anemia",
+     "n": 1,
+     "tema": "anemia"
+    },
+    {
+     "etiqueta": "Desnutrición crónica",
+     "n": 2,
+     "tema": "desnutricion_cronica"
+    },
+    {
+     "etiqueta": "Gasto público en salud y nutrición infantil",
+     "n": 3,
+     "tema": "gasto_publico"
+    },
+    {
+     "etiqueta": "Pobreza",
+     "n": 4,
+     "tema": "pobreza_monetaria"
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "¿De qué problema quieres saber?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "¿Y en Cusco?",
+   "territorio": {
+    "texto": "Cusco"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__falta_tema",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "¿Y en Cusco?",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "¿De qué problema quieres saber?\n1) Anemia\n2) Desnutrición crónica\n3) Gasto público en salud y nutrición infantil\n4) Pobreza",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

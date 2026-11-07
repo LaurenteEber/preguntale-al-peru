@@ -1,0 +1,141 @@
+{% extends "base.html" %}
+{% from "_macros.html" import caja with context %}
+{% block titulo %}{{ p.titulo_respuesta }} – {% endblock %}
+{# Cada bloque sale de un campo de respuesta.json y se omite si el campo no viene. Orden: contrato de la historia S3-04. #}
+{% set c1 = res.capas.capa1 %}
+{% set c2 = res.capas.capa2 or {} %}
+{% set c3 = res.capas.capa3 or {} %}
+{% macro entendimos() %}
+{% if res.entendimos %}
+<p data-bloque="entendimos" class="entendimos">{{ res.entendimos }}</p>
+{% endif %}
+{% endmacro %}
+{% macro corta() %}
+{% if res.capas.capa1.respuesta_corta %}
+<p data-bloque="respuesta_corta" class="respuesta">{{ res.capas.capa1.respuesta_corta }}</p>
+{% endif %}
+{% endmacro %}
+{% block contenido %}
+<h1>{{ p.titulo_respuesta }}</h1>
+{% if res.tipo == "no_se_puede" %}
+{{ corta() }}{{ entendimos() }}
+{% else %}
+{{ entendimos() }}{{ corta() }}
+{% endif %}
+{% if c1.cifra_clave %}
+<section data-bloque="cifra_clave" class="cifra">
+{% if c1.cifra_clave.valor %}
+<p class="valor">{{ c1.cifra_clave.valor }}</p>
+{% endif %}
+<p>{{ c1.cifra_clave.texto }}</p>
+{% if c1.cifra_clave.fuente %}
+<p class="fuente">{{ p.fuente_rotulo }} {{ c1.cifra_clave.fuente }}</p>
+{% endif %}
+</section>
+{% endif %}
+{% set alternativas = res.alternativas | default([]) | selectattr("consulta_minima") | list %}
+{% set temas = res.temas_disponibles | default([]) %}
+{% if c1.lo_mas_cercano or alternativas or temas %}
+<section data-bloque="lo_mas_cercano">
+{% if c1.lo_mas_cercano %}
+<h2>{{ c1.lo_mas_cercano.titulo }}</h2>
+<p>{{ c1.lo_mas_cercano.texto }}</p>
+{% endif %}
+{% if alternativas %}
+<ul class="alternativas">
+{% for a in alternativas %}
+<li>{% if a.texto %}{{ a.texto }} {% endif %}<form method="post" action="/preguntar"><input type="hidden" name="consulta" value="{{ a.consulta_minima | como_json }}"><button type="submit" data-buscando="{{ p.buscando }}">{{ p.alternativa_boton }}</button></form></li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if temas %}
+<ul class="temas">
+{% for t in temas %}
+<li>{{ t.nombre }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+</section>
+{% endif %}
+{% if c1.ojo_al_leer %}
+<section data-bloque="ojo_al_leer" class="ojo">
+<h2>{{ rot.ojo_al_leer }}</h2>
+<ul>
+{% for t in c1.ojo_al_leer %}
+<li>{{ t }}</li>
+{% endfor %}
+</ul>
+</section>
+{% endif %}
+{% if c1.confianza and c1.confianza.texto %}
+<p data-bloque="confianza" class="confianza">{{ c1.confianza.texto }}</p>
+{% endif %}
+{% if c1.que_hacer and (c1.que_hacer.revisado_dueno or par.paginas.mostrar_que_hacer_sin_revisar.valor) %}
+<section data-bloque="que_hacer">
+<h2>{{ rot.que_hacer }}{% if not c1.que_hacer.revisado_dueno %} <small>{{ rot.texto_pendiente }}</small>{% endif %}</h2>
+<p>{{ c1.que_hacer.texto }}</p>
+{% if c1.que_hacer.fuente %}
+<p class="fuente">{{ p.fuente_rotulo }} {% if c1.que_hacer.url %}<a href="{{ c1.que_hacer.url }}">{{ c1.que_hacer.fuente }}</a>{% else %}{{ c1.que_hacer.fuente }}{% endif %}</p>
+{% endif %}
+</section>
+{% endif %}
+{% if c2.mas_contexto or c2.avisos or c2.limites %}
+<details data-bloque="mas_contexto">
+<summary>{{ rot.mas_contexto }}</summary>
+{% for t in c2.mas_contexto or [] %}
+<article>
+<h3>{{ t.titulo }}</h3>
+<p>{{ t.texto }}</p>
+{% if t.etiqueta %}
+<p class="etiqueta">{{ t.etiqueta }}</p>
+{% endif %}
+</article>
+{% endfor %}
+{% if c2.avisos %}
+<h3>{{ rot.avisos }}</h3>
+<ul>
+{% for t in c2.avisos %}
+<li>{{ t }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if c2.limites %}
+<h3>{{ rot.limites }}</h3>
+<ul>
+{% for t in c2.limites %}
+<li>{{ t }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+</details>
+{% endif %}
+<details data-bloque="para_citar">
+<summary>{{ rot.para_citar }}</summary>
+{% if c3.citas %}
+<h3>{{ rot.como_citar }}</h3>
+<ul>
+{% for x in c3.citas %}
+<li>{{ x.texto }}{% if x.url %} <a href="{{ x.url }}">{{ rot.enlace_oficial }}</a>{% endif %}</li>
+{% endfor %}
+</ul>
+{% elif c3.para_citar %}
+<h3>{{ rot.como_citar }}</h3>
+<ul>
+{% for t in c3.para_citar %}
+<li>{{ t }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+{% if c3.glosario %}
+<h3>{{ rot.glosario }}</h3>
+<dl>
+{% for g in c3.glosario %}
+<dt>{{ g.termino }}</dt>
+<dd>{{ g.definicion }}</dd>
+{% endfor %}
+</dl>
+{% endif %}
+<p class="version">{{ rotulo_version }}</p>
+</details>
+{{ caja(p.otra_pregunta) }}
+{% endblock %}

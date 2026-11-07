@@ -295,3 +295,22 @@ def test_costo_cuenta_el_cache_del_proveedor():
     r = L._de_cuerpo(cuerpo, "m", "v", 0.0, L.parametros(RAIZ))
     # 100 × 2 + 1000 × 2 × 1,25 + 10 000 × 2 × 0,05 + 100 × 10, por millón
     assert r.tokens_entrada == 11_100 and r.costo_usd == round((200 + 2500 + 1000 + 1000) / 1e6, 6)
+
+
+def test_intentos_http_cuenta_cada_peticion_real_incluido_el_reintento(raiz_tmp, monkeypatch):
+    """S3-07: el tope diario de la web cuenta las llamadas reales al proveedor; una grabación reproducida no cuenta."""
+    monkeypatch.setenv(VAR, CLAVE)
+    prompt, version = armar(raiz_tmp)
+    respuestas = iter([httpx.Response(529, json={"type": "error"}), httpx.Response(200, json=respuesta_api())])
+    c = L.Cliente(raiz_tmp, modo="vivo", transporte=transporte(lambda req: next(respuestas)))
+    c.espera = lambda s: None
+    assert c.intentos_http == 0
+    c.interpretar_crudo(prompt, "anemia en Puno", version)
+    assert c.intentos_http == 2
+    sin_clave = L.Cliente(raiz_tmp, modo="vivo", transporte=transporte(lambda req: httpx.Response(200, json=respuesta_api())))
+    monkeypatch.delenv(VAR)
+    with pytest.raises(L.NoDisponible):
+        sin_clave.interpretar_crudo(prompt, "anemia en Puno", version)
+    assert sin_clave.intentos_http == 0                                   # sin clave no sale ninguna petición
+    with pytest.raises(L.FaltaGrabacion):
+        L.Cliente(raiz_tmp, modo="reproducir").interpretar_crudo(prompt, "anemia en Puno", version)

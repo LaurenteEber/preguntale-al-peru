@@ -34,8 +34,8 @@ Elegir es más fácil que escribir para muchas preguntas, y el formulario sigue 
 
 ## Criterios de aceptación
 
-- [ ] Q1–Q4 por el formulario cumplen los criterios de la regresión.
-- [ ] En `evidencia/s3-05_diferencias.md` se listan las rutas que difieren de `base_api`, sin que ninguna sea de capas, cifras, semáforo ni confianza:
+- [x] Q1–Q4 por el formulario cumplen los criterios de la regresión.
+- [x] En `evidencia/s3-05_diferencias.md` se listan las rutas que difieren de `base_api`, sin que ninguna sea de capas, cifras, semáforo ni confianza:
   - `pregunta_original` en `consulta_minima` y en `plan`;
   - el `territorio.texto` escrito («Huancavelica» frente a «departamento de Huancavelica»);
   - el `detalle.disparadores` de R-CRUCES-07, que en `efecto` se activa por la intención y no cambia su rótulo.

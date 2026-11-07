@@ -24,5 +24,5 @@
 
 ## Criterios de aceptación
 
-- [ ] axe: 0 graves o críticas en todas las páginas y anchos (del agente o del supervisor).
-- [ ] Lista manual completa, con capturas; Q1 ≤ 100 KB.
+- [x] axe: 0 graves o críticas en todas las páginas y anchos (del agente o del supervisor).
+- [x] Lista manual completa, con capturas; Q1 ≤ 100 KB.

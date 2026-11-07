@@ -417,6 +417,9 @@ def _cliente(raiz):
     return L.Cliente(raiz, modo=modo if modo in ("vivo", "completar") else "vivo")
 
 
+crear_cliente = _cliente                    # nombre público: la web lo usa cuando no recibe un `llm` (S3-07)
+
+
 def interpretar(texto: str, motor, *, elegir=None, llm=None, cache_dir=None, registro=DEFECTO) -> dict:
     """Responde una pregunta en texto libre. Devuelve la respuesta del motor (`tipo`: respuesta | no_se_puede | aclaracion)
     o un mensaje fijo (`tipo`: mensaje), con `interpretacion` y `entendimos`. `elegir`: un número o varios (las aclaraciones

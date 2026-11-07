@@ -1,0 +1,506 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENDES 2025 (INEI)",
+    "ids": [
+     "endes_dci_menores_5__proporcion__departamento__01__2025__principal",
+     "endes_dci_menores_5__proporcion__departamento__03__2025__principal"
+    ],
+    "texto": "de niñas y niños menores de 5 años con desnutrición crónica en Amazonas en 2025, frente a 17,0 % en Apurímac.",
+    "valor": "17,7 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error.",
+    "«Sin diferencia clara» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
+   ],
+   "palabras": 91,
+   "que_hacer": null,
+   "respuesta_corta": "En 2025, la desnutrición crónica en niñas y niños menores de 5 años en Amazonas y en Apurímac: sin diferencia estadísticamente clara."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENDES 2025 (INEI)",
+    "Territorio: departamento de Amazonas y departamento de Apurímac",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+     "titulo": "Cómo se comparó"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "endes_dci_menores_5__proporcion__departamento__01__2025__principal",
+     "texto": "17,7 % (intervalo: 14,0 % a 21,9 %): niñas y niños menores de 5 años con desnutrición crónica, Amazonas, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
+     "url": "https://proyectos.inei.gob.pe/microdatos/"
+    },
+    {
+     "id_cifra": "endes_dci_menores_5__proporcion__departamento__03__2025__principal",
+     "texto": "17,0 % (intervalo: 13,8 % a 20,6 %): niñas y niños menores de 5 años con desnutrición crónica, Apurímac, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
+     "url": "https://proyectos.inei.gob.pe/microdatos/"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la talla de los niños.",
+     "termino": "ENDES"
+    },
+    {
+     "definicion": "una diferencia entre dos lugares que no se explica por el azar de la encuesta: la prueba estadística que usamos tiene en cuenta el margen de error de cada cifra. «Sin diferencia clara» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.",
+     "termino": "diferencia estadísticamente clara"
+    }
+   ],
+   "para_citar": [
+    "17,7 % (intervalo: 14,0 % a 21,9 %): niñas y niños menores de 5 años con desnutrición crónica, Amazonas, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos.",
+    "17,0 % (intervalo: 13,8 % a 20,6 %): niñas y niños menores de 5 años con desnutrición crónica, Apurímac, 2025. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2025 (INEI); no hay tabla publicada con esta cifra; se calcula de microdatos."
+   ]
+  }
+ },
+ "cifras": {
+  "endes_dci_menores_5__proporcion__departamento__01__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 10.87764776,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.92267326,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 14.00129701,
+   "ic_sup": 21.8537918,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 821,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "17,7 % (entre 14,0 % y 21,9 %), ENDES 2025, Amazonas; basado en 821 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "17,7 % (entre 14,0 % y 21,9 %), ENDES 2025, Amazonas; basado en 821 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "01",
+   "territorio_nombre": "Amazonas",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "01"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 17.67545067
+  },
+  "endes_dci_menores_5__proporcion__departamento__03__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": null,
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 9.76395022,
+   "denominador": null,
+   "devengado": null,
+   "ee": 1.66120057,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 13.82572628,
+   "ic_sup": 20.59669335,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 609,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "17,0 % (entre 13,8 % y 20,6 %), ENDES 2025, Apurímac; basado en 609 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "17,0 % (entre 13,8 % y 20,6 %), ENDES 2025, Apurímac; basado en 609 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "03",
+   "territorio_nombre": "Apurímac",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "03"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 17.01361161
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "endes_dci_menores_5__proporcion__departamento__01__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "01"
+   },
+   {
+    "anio": 2025,
+    "id": "endes_dci_menores_5__proporcion__departamento__03__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "03"
+   }
+  ],
+  "consulta_minima": {
+   "comparar_con": {
+    "texto": "Apurímac"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "pregunta_original": "Compara la desnutrición crónica de Amazonas con la de Apurímac",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "Amazonas"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "comparacion__desnutricion_cronica__01__03",
+  "intencion": "comparacion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "comparacion",
+  "pregunta": "Compara la desnutrición crónica de Amazonas con la de Apurímac",
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "01",
+   "nivel": "departamento",
+   "nombre_pedido": "Amazonas"
+  },
+  "territorio_comparado": {
+   "id": "03",
+   "nivel": "departamento",
+   "nombre_pedido": "Apurímac"
+  }
+ },
+ "consulta_minima": {
+  "comparar_con": {
+   "texto": "Apurímac"
+  },
+  "idioma": "es",
+  "intencion": "comparacion",
+  "pregunta_original": "Compara la desnutrición crónica de Amazonas con la de Apurímac",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "texto": "Amazonas"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cómo se compara la desnutrición crónica en el departamento de Amazonas con el departamento de Apurímac",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENDES 2025 (INEI)\nTerritorio: departamento de Amazonas y departamento de Apurímac\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento.",
+  "larga": {
+   "cifras": {
+    "endes_dci_menores_5__proporcion__departamento__01__2025__principal": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Amazonas).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 14,0 % y 21,9 % (coeficiente de variación 10,9 %, 821 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "17,7 % (entre 14,0 % y 21,9 %), ENDES 2025, Amazonas; basado en 821 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "endes_dci_menores_5__proporcion__departamento__03__2025__principal": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Apurímac).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 13,8 % y 20,6 % (coeficiente de variación 9,8 %, 609 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "No tenemos registrada una cifra oficial para comparar esta cifra con la misma forma de medir.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "17,0 % (entre 13,8 % y 20,6 %), ENDES 2025, Apurímac; basado en 609 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_dci_menores_5."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "comparar_con": "Apurímac",
+   "intencion": "Compara",
+   "tema": "desnutrición crónica",
+   "territorio": "Amazonas"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "comparar_con": {
+    "texto": "Apurímac"
+   },
+   "intencion": "comparacion",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "Amazonas"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:endes_dci_menores_5__proporcion__departamento__01__2025__principal",
+  "peor_cifra_principal:endes_dci_menores_5__proporcion__departamento__03__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "endes_dci_menores_5__proporcion__departamento__01__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "01"
+   },
+   {
+    "anio": 2025,
+    "id": "endes_dci_menores_5__proporcion__departamento__03__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "03"
+   }
+  ],
+  "consulta_minima": {
+   "comparar_con": {
+    "texto": "Apurímac"
+   },
+   "idioma": "es",
+   "intencion": "comparacion",
+   "pregunta_original": "Compara la desnutrición crónica de Amazonas con la de Apurímac",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "texto": "Amazonas"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "comparacion__desnutricion_cronica__01__03",
+  "intencion": "comparacion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "comparacion",
+  "pregunta": "Compara la desnutrición crónica de Amazonas con la de Apurímac",
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "01",
+   "nivel": "departamento",
+   "nombre_pedido": "Amazonas"
+  },
+  "territorio_comparado": {
+   "id": "03",
+   "nivel": "departamento",
+   "nombre_pedido": "Apurímac"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:endes_dci_menores_5__proporcion__departamento__01__2025__principal",
+     "peor_cifra_principal:endes_dci_menores_5__proporcion__departamento__03__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "En 2025, la desnutrición crónica en niñas y niños menores de 5 años en Amazonas y en Apurímac: sin diferencia estadísticamente clara. 17,7 % de niñas y niños menores de 5 años con desnutrición crónica en Amazonas en 2025, frente a 17,0 % en Apurímac. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. «Sin diferencia clara» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+ "texto_con_marcadores": "En 2025, la desnutrición crónica en niñas y niños menores de 5 años en Amazonas y en Apurímac: sin diferencia estadísticamente clara. {{c:endes_dci_menores_5__proporcion__departamento__01__2025__principal}} de niñas y niños menores de 5 años con desnutrición crónica en Amazonas en 2025, frente a {{c:endes_dci_menores_5__proporcion__departamento__03__2025__principal}} en Apurímac. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. «Sin diferencia clara» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta. Comparamos las dos cifras con una prueba estadística que tiene en cuenta el margen de error de cada una.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

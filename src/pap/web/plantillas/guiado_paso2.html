@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block titulo %}{{ g.titulo_paso2 }} – {% endblock %}
+{% block contenido %}
+<h1>{{ g.titulo_paso2 }}</h1>
+<p class="lema">{{ g.resumen_rotulo }} <span data-bloque="guiado_resumen">{{ tema_rotulo }} · {{ intencion_rotulo }}</span></p>
+{% if error %}
+<p data-bloque="guiado_error" class="aviso" role="alert">{{ error }}</p>
+{% endif %}
+<form method="post" action="/guiado" data-bloque="guiado_paso2" class="guiado">
+<input type="hidden" name="tema" value="{{ tema }}">
+<input type="hidden" name="intencion" value="{{ intencion }}">
+<input type="hidden" name="paso" value="2">
+{% for c in campos %}
+{% if c.nombre == "nivel" %}
+<fieldset>
+<legend>{{ c.rotulo }}</legend>
+{% for n in niveles %}
+<p class="opcion"><label><input type="radio" name="nivel" value="{{ n.id }}"{% if v.nivel == n.id %} checked{% endif %} required> {{ n.rotulo }}</label></p>
+{% endfor %}
+<p class="ayuda">{{ c.ayuda }}</p>
+</fieldset>
+{% elif c.nombre in lugares %}
+<p class="campo"><label for="{{ c.nombre }}">{{ c.rotulo }}</label>
+<input type="text" id="{{ c.nombre }}" name="{{ c.nombre }}" value="{{ v[c.nombre] or '' }}" maxlength="{{ maxlugar }}" autocomplete="off" aria-describedby="ayuda-{{ c.nombre }}">
+<span class="ayuda" id="ayuda-{{ c.nombre }}">{{ c.ayuda }}</span></p>
+{% elif c.nombre.endswith("_nacional") %}
+<p class="opcion"><label><input type="checkbox" name="{{ c.nombre }}" value="on"{% if v[c.nombre] %} checked{% endif %}> {{ c.rotulo }}</label></p>
+{% else %}
+<p class="campo"><label for="{{ c.nombre }}">{{ c.rotulo }}</label>
+<input type="text" id="{{ c.nombre }}" name="{{ c.nombre }}" value="{{ v[c.nombre] or '' }}" inputmode="numeric" autocomplete="off" aria-describedby="ayuda-{{ c.nombre }}">
+<span class="ayuda" id="ayuda-{{ c.nombre }}">{{ c.ayuda }}</span></p>
+{% endif %}
+{% endfor %}
+{% if dentro_de %}
+<p class="campo" data-bloque="guiado_dentro_de">{{ g.dentro_de_rotulo }}: <strong>{{ g.dentro_de_nacional }}</strong></p>
+{% endif %}
+<button type="submit" data-buscando="{{ p.buscando }}">{{ g.preguntar }}</button>
+</form>
+<p><a href="/guiado">{{ g.volver }}</a></p>
+{% endblock %}

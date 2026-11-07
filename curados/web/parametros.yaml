@@ -1,0 +1,48 @@
+# Parámetros de la web (S3-03). Cada uno con `decision:` o `supuesto: S3-xx`; el dueño los cambia editando una línea.
+version: 1.0.0
+servicio:
+  puerto: {valor: 8000, supuesto: S3-03-a, nota: "puerto de desarrollo local (P-05); el de producción lo fija S3-09"}
+  host: {valor: "127.0.0.1", supuesto: S3-03-a}
+pregunta:
+  texto_max_caracteres: {valor: 2000, supuesto: S3-03-b, nota: "tope del cuerpo `texto`; el intérprete recorta por su cuenta y avisa"}
+  elegir_max_numeros: {valor: 4, supuesto: S3-03-b, nota: "cuántos números caben en `elegir` (a lo más dos aclaraciones del intérprete y dos de territorio)"}
+  elegir_max_valor: {valor: 50, supuesto: S3-03-b}
+precalentamiento:
+  espera_maxima_segundos: {valor: 120, supuesto: S3-03-c, nota: "las pruebas esperan hasta este tiempo a que termine el hilo de precalentamiento"}
+http:
+  estado_por_motivo:                 # tabla de docs/especificaciones/api.md, derivada de cli.codigo_salida (parametros_motor.yaml)
+    valor: {no_disponible: 503, tope_diario: 503, espera_un_momento: 429}
+    por_defecto: 200
+    supuesto: "S3-03-d (no_disponible); S3-07 (tope_diario: el servicio no interpreta texto hoy; espera_un_momento: límite por IP)"
+paginas:                             # S3-04
+  csp:
+    valor: "default-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+    decision: "S3-04 tarea 2: `default-src 'self'`, sin orígenes externos"
+    supuesto: "S3-04-a (las tres directivas siguientes: las páginas solo envían formularios a sí mismas, no se incrustan y no usan <base>)"
+  mostrar_que_hacer_sin_revisar: {valor: false, decision: "dueño 7/11/2026 (H-03): «¿Qué puedo hacer?» no se muestra en la web hasta que apruebe X-01 (revisado_dueno: true); el JSON y la CLI no cambian"}
+  mensajes_con_enlace_guiado: {valor: [no_disponible, tope_diario], supuesto: S3-04-b, nota: "motivos de `mensaje` que llevan el enlace a /guiado (S3-04 tarea 6); S3-07 confirma `tope_diario` como el motivo del tope diario"}
+guiado:                              # S3-05
+  intenciones:
+    valor:                           # qué campos pide cada intención y cómo arma el `periodo` (puntual: {anio} o {ultimo}; serie: {serie, desde?, hasta?})
+      nivel_actual: {campos: [lugar, anio], periodo: puntual}
+      evolucion: {campos: [lugar, desde, hasta], periodo: serie}
+      comparacion: {campos: [lugar, lugar2, anio], periodo: puntual}
+      cruce: {campos: [lugar, anio], periodo: puntual}
+      efecto: {campos: [lugar, anio], periodo: puntual}
+      identificar_extremo: {campos: [nivel, dentro_de], periodo: puntual}
+    supuesto: S3-05-b
+    nota: "tabla de la tarea 1 de S3-05; `cruce` y `efecto` piden lo mismo que `nivel_actual`"
+  lugares_con_todo_el_peru: {valor: [lugar, lugar2], supuesto: S3-05-c, nota: "campos de lugar que llevan la casilla «Todo el Perú» (`{campo}_nacional`)"}
+  lugar_max_caracteres: {valor: 200, supuesto: S3-05-d, nota: "el esquema de la consulta mínima acepta hasta 200"}
+  anio_digitos: {valor: 4, supuesto: S3-05-e, nota: "un año se escribe con cuatro cifras; el rango lo valida el motor (1990–2100)"}
+limites:                             # S3-07 (P-05, P-07). Contadores en memoria: se reinician al reiniciar; el slice 4 los revisa
+  preguntas_por_minuto_por_ip: {valor: 10, supuesto: S3-07, nota: "preguntas que llegan al motor o al intérprete (texto, formulario de la caja y guiado, API); el paso 1 del guiado no cuenta. Al pasarse: «Espera un momento»"}
+  ventana_segundos: {valor: 60, supuesto: S3-07, nota: "ventana deslizante del límite por IP"}
+  llamadas_llm_por_dia: {valor: 300, supuesto: S3-07, nota: "peticiones reales al proveedor, reintentos incluidos; los aciertos de caché no cuentan. A US$ 0,0024 por pregunta con caché del proveedor caliente y 0,018 sin ella, tope de US$ 0,72 a 5,40 por día"}
+  zona_horaria: {valor: America/Lima, supuesto: S3-07, nota: "el día del tope diario empieza a las 00:00 de Lima, no de UTC"}
+  cuerpo_max_bytes: {valor: 8192, supuesto: S3-07, nota: "cuerpo máximo de cualquier petición (413 si lo pasa); el texto se recorta después según el slice 2"}
+rendimiento:                         # S3-08 (medido con tests/web/medir.py; ver backlog/slice-3/evidencia/s3-08_rendimiento.md)
+  sin_llm_p95_segundos: {valor: 2, decision: "plan_slices.md, fila del slice 3: respuesta en < 2 s sin LLM", nota: "vía estructurada y texto con grabaciones, con el servicio precalentado"}
+  texto_libre_p95_segundos: {valor: 3.5, supuesto: S3-08, nota: "p95 del LLM medido en S2-09 (2,5 s) + 1 s para el intérprete, el motor y la página"}
+  texto_libre_max_segundos: {valor: 10, supuesto: S3-08, nota: "ninguna pregunta por texto debería pasar de esto"}
+  arranque_max_segundos: {valor: 30, supuesto: S3-08, nota: "desde lanzar el proceso hasta que /salud responde 200"}

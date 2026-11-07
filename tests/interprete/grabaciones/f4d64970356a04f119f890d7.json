@@ -5,10 +5,10 @@
  "tokens_entrada": 9238,
  "tokens_salida": 17,
  "costo_usd": 0.001158,
- "latencia_s": 1.224,
+ "latencia_s": 0.991,
  "respuesta": {
   "model": "claude-sonnet-5-5",
-  "id": "msg_011Cgiyp3D3GSzRgppbwMeZc",
+  "id": "msg_011CgnbgKP74pJLodMtn5LM7",
   "type": "message",
   "role": "assistant",
   "content": [

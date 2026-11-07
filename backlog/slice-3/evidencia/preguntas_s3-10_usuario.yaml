@@ -1,0 +1,21 @@
+entradas:
+  - {id: w01, persona: madre de Huancavelica, via: texto, pregunta: "¿Cuántos niños tienen anemia en Huancavelica?"}
+  - {id: w02, persona: madre de Puno, via: texto, pregunta: "mi hijo tiene 2 años, ¿la desnutrición en Puno ha bajado o subido?"}
+  - {id: w03, persona: periodista, via: texto, pregunta: "¿Qué departamento tiene la anemia infantil más alta del país?"}
+  - {id: w04, persona: regidor, via: texto, pregunta: "¿Cuánta pobreza hay en mi distrito Ayaviri?"}
+  - {id: w05, persona: funcionario, via: texto, pregunta: "¿Sirvió el gasto en salud contra la anemia en Puno?"}
+  - {id: w06, persona: estudiante, via: texto, pregunta: "Compara la pobreza de Cusco con la de Puno"}
+  - {id: w07, persona: periodista, via: texto, pregunta: "¿Cómo cambió el gasto en nutrición infantil en Perú?"}
+  - {id: w08, persona: madre de Huancavelica, via: texto, pregunta: "¿Cuánta desnutrición hay en San Juan?"}
+  - {id: w09, persona: docente, via: texto, pregunta: "anemia en Huancabelica"}
+  - {id: w10, persona: estudiante, via: texto, pregunta: "¿Cómo está el país?"}
+  - {id: w11, persona: madre de Puno, via: formulario, pregunta: "Anemia, cuánto hay, departamento de Puno"}
+  - {id: w12, persona: madre de Huancavelica, via: formulario, pregunta: "Desnutrición crónica, cómo cambió, Huancavelica"}
+  - {id: w13, persona: periodista, via: formulario, pregunta: "Pobreza, comparar Cusco con Puno"}
+  - {id: w14, persona: periodista, via: formulario, pregunta: "Anemia, dónde es más alto, por departamento"}
+  - {id: w15, persona: regidor, via: formulario, pregunta: "Gasto público, cuánto hay, Puno"}
+  - {id: w16, persona: funcionario, via: formulario, pregunta: "Gasto y anemia juntos en Puno"}
+  - {id: w17, persona: funcionario, via: formulario, pregunta: "¿Sirvió el gasto contra la anemia? Lima (ambiguo)"}
+  - {id: w18, persona: estudiante, via: formulario, pregunta: "Pobreza, cuánto hay, Abancay (provincia y distrito homónimos)"}
+  - {id: w19, persona: docente, via: formulario, pregunta: "Desnutrición, cuánto hay, lugar mal escrito (Cuzko)"}
+  - {id: w20, persona: madre de Puno, via: formulario, pregunta: "Pobreza, cómo cambió, Puno entre 2024 y 2025"}

@@ -1,4 +1,4 @@
-"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen."""
+"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | servir."""
 from __future__ import annotations
 
 import json
@@ -451,6 +451,15 @@ def _preguntar_texto(a, rutas, m, texto: str, salida: Path, cod: dict, msgs: dic
     return cod["respondida"] if res["tipo"] == "respuesta" else cod["no_se_puede"]
 
 
+def cmd_servir(a, rutas) -> int:
+    """S3-09: levanta el servicio web en local (`--puerto`, `--red-local`); bloquea hasta Ctrl+C."""
+    from .web import servir as S
+    try:
+        return S.servir(rutas.raiz, puerto=a.puerto, red_local=a.red_local)
+    except KeyboardInterrupt:
+        return 0
+
+
 def cmd_foto_pim(a, rutas) -> int:
     """Pieza D (rondas 1-2): foto mensual del PIM (receta MEF-FOTO-PIM-MENSUAL, tabla foto_pim).
     DESACTIVADA por decisión del dueño del 8/10/2026: `registrar` y `extraer` se niegan; `listar` y `vistas` siguen."""
@@ -496,6 +505,16 @@ def _numeros_elegir(texto: str) -> list[int]:
     except ValueError:
         raise argparse.ArgumentTypeError(f"«{texto}» no es un número de opción: escribe uno (2) o varios separados por coma (1,1)")
     return numeros
+
+
+def _puerto(texto: str) -> int:
+    try:
+        n = int(texto)
+    except ValueError:
+        n = 0
+    if not 1 <= n <= 65535:
+        raise argparse.ArgumentTypeError(f"«{texto}» no es un puerto: escribe un número entre 1 y 65535")
+    return n
 
 
 def construir_parser() -> argparse.ArgumentParser:
@@ -589,6 +608,15 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--plan", action="store_true", help="Solo imprime el plan de cifras (JSON), sin calcular ni escribir respuestas; sirve para depurar")
     s.add_argument("--salida", help="Carpeta donde se escriben respuesta.json y .md por capas (por defecto salidas/preguntar, fuera de git)")
     s.set_defaults(fn=cmd_preguntar)
+
+    s = sub.add_parser("servir", help="Levantar la web en este equipo (por defecto solo http://127.0.0.1:8000)",
+                       description="Levanta la web de Pregúntale al Perú con el mismo motor. Por defecto solo se entra desde este equipo; "
+                                   "con --red-local también desde otros equipos de la red de la casa. No es un despliegue público. "
+                                   "Pulsa Ctrl+C para pararlo.")
+    s.add_argument("--puerto", type=_puerto, help="Puerto donde escucha (por defecto, el de curados/web/parametros.yaml: 8000)")
+    s.add_argument("--red-local", action="store_true",
+                   help="Escuchar también en la red de la casa (0.0.0.0); sin esta opción, solo en 127.0.0.1")
+    s.set_defaults(fn=cmd_servir)
 
     s = sub.add_parser("validar-reglas", help="Piloto P2: casos de prueba del validador de reglas")
     s.add_argument("--carpeta", default="casos", choices=["casos", "casos_implementador"])

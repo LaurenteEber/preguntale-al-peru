@@ -1,0 +1,369 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENAHO 2025 (INEI); el INEI publica la misma cifra (17,4 %)",
+    "ids": [
+     "enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal"
+    ],
+    "texto": "de personas en situación de pobreza monetaria en Tacna en 2025.",
+    "valor": "17,4 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: media (dato con limitaciones): la respuesta es parcial.",
+    "nivel": "media",
+    "texto": "Confianza en los datos: media. La respuesta es parcial."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+   ],
+   "palabras": 60,
+   "que_hacer": null,
+   "respuesta_corta": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2025, en Tacna, la pobreza monetaria fue:"
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENAHO 2025 (INEI)",
+    "Territorio: departamento de Tacna",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+     "titulo": "Lo que no pudimos mostrar"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal",
+     "texto": "17,4 % (intervalo del INEI: 12,9 % a 22,0 %): personas en situación de pobreza monetaria, Tacna, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232.",
+     "url": "https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud.",
+     "termino": "pobreza monetaria"
+    },
+    {
+     "definicion": "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza.",
+     "termino": "ENAHO"
+    }
+   ],
+   "para_citar": [
+    "17,4 % (intervalo del INEI: 12,9 % a 22,0 %): personas en situación de pobreza monetaria, Tacna, 2025. Fuente: INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232."
+   ]
+  }
+ },
+ "cifras": {
+  "enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "metodologia_INEI_pobreza_monetaria_gasto",
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "entidad": "INEI",
+    "id_cifra": "DOR-POB-2025-23",
+    "valor": 17.4
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 13.38347747,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.33284839,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º III.1 (cont.), p. 232",
+    "documento": "INEI, Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico",
+    "ic_inf": 12.9,
+    "ic_sup": 22.0,
+    "id_cifra": "DOR-POB-2025-23"
+   },
+   "ic_inf": 13.03795514,
+   "ic_sup": 22.57776228,
+   "indicador_id": "enaho_pobreza_monetaria",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 1258,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "17,4 % (entre 13,0 % y 22,6 %), ENAHO 2025, Tacna; basado en 1258 hogares encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "17,4 % (entre 13,0 % y 22,6 %), ENAHO 2025, Tacna; basado en 1258 hogares encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "23",
+   "territorio_nombre": "Tacna",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "23"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 17.43080895
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "23"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "efecto",
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "ubigeo": "23"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04",
+   "R-CRUCES-07 / R-03"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "efecto__pobreza_monetaria__23",
+  "intencion": "efecto",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "pobreza_monetaria"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "cruce_fuera_de_lista_blanca",
+   "tema": "pobreza_monetaria"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "23",
+   "nivel": "departamento",
+   "nombre_pedido": "Tacna"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "efecto",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "ubigeo": "23"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "ficha": {
+  "corta": "Confianza en los datos: media (dato con limitaciones): la respuesta es parcial.\nDatos de: ENAHO 2025 (INEI)\nTerritorio: departamento de Tacna\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento.",
+  "larga": {
+   "cifras": {
+    "enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal": {
+     "1_origen": "Personas en situación de pobreza monetaria. ENAHO (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Tacna).",
+     "3_que_mide": "Mide personas en pobreza monetaria, según la ENAHO (encuesta a hogares).",
+     "4_precision": "El valor real está probablemente entre 13,0 % y 22,6 % (coeficiente de variación 13,4 %, 1258 casos en la muestra). El INEI publica para esta cifra un intervalo entre 12,9 % y 22,0 % (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 17,4 % con la misma definición (Perú: Evolución de la Pobreza Monetaria, 2016-2025. Informe Técnico, Cuadro N.º III.1 (cont.), p. 232). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "17,4 % (entre 13,0 % y 22,6 %), ENAHO 2025, Tacna; basado en 1258 hogares encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: enaho_pobreza_monetaria."
+  }
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal",
+  "respuesta_parcial"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal",
+    "indicador": "enaho_pobreza_monetaria",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "23"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "efecto",
+   "periodo": {
+    "tipo": "ultimo"
+   },
+   "pregunta_original": "pregunta de la matriz de cobertura",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "ubigeo": "23"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "R-04",
+   "R-CRUCES-07 / R-03"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "efecto__pobreza_monetaria__23",
+  "intencion": "efecto",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "pobreza_monetaria"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "cruce_fuera_de_lista_blanca",
+   "tema": "pobreza_monetaria"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
+  "pregunta": "pregunta de la matriz de cobertura",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "23",
+   "nivel": "departamento",
+   "nombre_pedido": "Tacna"
+  }
+ },
+ "respuesta_parcial": true,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal",
+     "respuesta_parcial"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "ambar"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato con limitaciones. La respuesta es parcial.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato con limitaciones"
+  }
+ ],
+ "semaforo_respuesta": "ambar",
+ "texto": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2025, en Tacna, la pobreza monetaria fue: 17,4 % de personas en situación de pobreza monetaria en Tacna en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+ "texto_con_marcadores": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2025, en Tacna, la pobreza monetaria fue: {{c:enaho_pobreza_monetaria__proporcion__departamento__23__2025__principal}} de personas en situación de pobreza monetaria en Tacna en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

@@ -1,0 +1,278 @@
+{
+ "aclaracion": {
+  "motivo": "lima_a_secas",
+  "opciones": [
+   {
+    "etiqueta": "Lima Metropolitana (provincia de Lima)",
+    "n": 1,
+    "territorio": {
+     "ambito_lima": "LIMA_METROPOLITANA",
+     "anio_datos_desde": null,
+     "departamento": "Lima",
+     "id": "LIMA_METROPOLITANA",
+     "nivel": "LIMA_METROPOLITANA",
+     "nombre_completo": "Lima Metropolitana",
+     "nombre_mostrado": "Lima Metropolitana",
+     "provincia": "Lima",
+     "provisional": false,
+     "ubigeo": null
+    }
+   },
+   {
+    "etiqueta": "Lima Región (Lima Provincias)",
+    "n": 2,
+    "territorio": {
+     "ambito_lima": "LIMA_REGION",
+     "anio_datos_desde": null,
+     "departamento": "Lima",
+     "id": "LIMA_REGION",
+     "nivel": "LIMA_REGION",
+     "nombre_completo": "Lima Región (Lima Provincias)",
+     "nombre_mostrado": "Lima Región (Lima Provincias)",
+     "provincia": null,
+     "provisional": false,
+     "ubigeo": null
+    }
+   },
+   {
+    "etiqueta": "Callao",
+    "n": 3,
+    "territorio": {
+     "ambito_lima": "CALLAO",
+     "anio_datos_desde": null,
+     "departamento": "Callao",
+     "id": "CALLAO",
+     "nivel": "CALLAO",
+     "nombre_completo": "Callao",
+     "nombre_mostrado": "Callao",
+     "provincia": null,
+     "provisional": false,
+     "ubigeo": null
+    }
+   }
+  ],
+  "por_defecto": {
+   "ambito_lima": "LIMA_METROPOLITANA",
+   "anio_datos_desde": null,
+   "departamento": "Lima",
+   "id": "LIMA_METROPOLITANA",
+   "nivel": "LIMA_METROPOLITANA",
+   "nombre_completo": "Lima Metropolitana",
+   "nombre_mostrado": "Lima Metropolitana",
+   "provincia": "Lima",
+   "provisional": false,
+   "ubigeo": null
+  },
+  "pregunta": "Hay varios lugares llamados «Lima». ¿Cuál quieres?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "lima_a_secas",
+   "opciones": [
+    {
+     "etiqueta": "Lima Metropolitana (provincia de Lima)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": "LIMA_METROPOLITANA",
+      "anio_datos_desde": null,
+      "departamento": "Lima",
+      "id": "LIMA_METROPOLITANA",
+      "nivel": "LIMA_METROPOLITANA",
+      "nombre_completo": "Lima Metropolitana",
+      "nombre_mostrado": "Lima Metropolitana",
+      "provincia": "Lima",
+      "provisional": false,
+      "ubigeo": null
+     }
+    },
+    {
+     "etiqueta": "Lima Región (Lima Provincias)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": "LIMA_REGION",
+      "anio_datos_desde": null,
+      "departamento": "Lima",
+      "id": "LIMA_REGION",
+      "nivel": "LIMA_REGION",
+      "nombre_completo": "Lima Región (Lima Provincias)",
+      "nombre_mostrado": "Lima Región (Lima Provincias)",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": null
+     }
+    },
+    {
+     "etiqueta": "Callao",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": "CALLAO",
+      "anio_datos_desde": null,
+      "departamento": "Callao",
+      "id": "CALLAO",
+      "nivel": "CALLAO",
+      "nombre_completo": "Callao",
+      "nombre_mostrado": "Callao",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": null
+     }
+    }
+   ],
+   "por_defecto": {
+    "ambito_lima": "LIMA_METROPOLITANA",
+    "anio_datos_desde": null,
+    "departamento": "Lima",
+    "id": "LIMA_METROPOLITANA",
+    "nivel": "LIMA_METROPOLITANA",
+    "nombre_completo": "Lima Metropolitana",
+    "nombre_mostrado": "Lima Metropolitana",
+    "provincia": "Lima",
+    "provisional": false,
+    "ubigeo": null
+   },
+   "pregunta": "Hay varios lugares llamados «Lima». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "¿Cuánta anemia hay en Lima?",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "Lima"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__lima_a_secas",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "¿Cuánta anemia hay en Lima?",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "nivel_actual",
+  "pregunta_original": "¿Cuánta anemia hay en Lima?",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "Lima"
+  }
+ },
+ "entendimos": "Entendimos: cuánto hay de anemia en «Lima»",
+ "interpretacion": {
+  "anclas": {
+   "intencion": "Cuánta",
+   "tema": "anemia",
+   "territorio": "Lima"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "nivel_actual",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "Lima"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "lima_a_secas",
+   "opciones": [
+    {
+     "etiqueta": "Lima Metropolitana (provincia de Lima)",
+     "n": 1,
+     "territorio": {
+      "ambito_lima": "LIMA_METROPOLITANA",
+      "anio_datos_desde": null,
+      "departamento": "Lima",
+      "id": "LIMA_METROPOLITANA",
+      "nivel": "LIMA_METROPOLITANA",
+      "nombre_completo": "Lima Metropolitana",
+      "nombre_mostrado": "Lima Metropolitana",
+      "provincia": "Lima",
+      "provisional": false,
+      "ubigeo": null
+     }
+    },
+    {
+     "etiqueta": "Lima Región (Lima Provincias)",
+     "n": 2,
+     "territorio": {
+      "ambito_lima": "LIMA_REGION",
+      "anio_datos_desde": null,
+      "departamento": "Lima",
+      "id": "LIMA_REGION",
+      "nivel": "LIMA_REGION",
+      "nombre_completo": "Lima Región (Lima Provincias)",
+      "nombre_mostrado": "Lima Región (Lima Provincias)",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": null
+     }
+    },
+    {
+     "etiqueta": "Callao",
+     "n": 3,
+     "territorio": {
+      "ambito_lima": "CALLAO",
+      "anio_datos_desde": null,
+      "departamento": "Callao",
+      "id": "CALLAO",
+      "nivel": "CALLAO",
+      "nombre_completo": "Callao",
+      "nombre_mostrado": "Callao",
+      "provincia": null,
+      "provisional": false,
+      "ubigeo": null
+     }
+    }
+   ],
+   "por_defecto": {
+    "ambito_lima": "LIMA_METROPOLITANA",
+    "anio_datos_desde": null,
+    "departamento": "Lima",
+    "id": "LIMA_METROPOLITANA",
+    "nivel": "LIMA_METROPOLITANA",
+    "nombre_completo": "Lima Metropolitana",
+    "nombre_mostrado": "Lima Metropolitana",
+    "provincia": "Lima",
+    "provisional": false,
+    "ubigeo": null
+   },
+   "pregunta": "Hay varios lugares llamados «Lima». ¿Cuál quieres?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "nivel_actual",
+   "pregunta_original": "¿Cuánta anemia hay en Lima?",
+   "tema": "anemia",
+   "territorio": {
+    "texto": "Lima"
+   }
+  },
+  "grupos": [],
+  "id": "aclaracion__lima_a_secas",
+  "intencion": "nivel_actual",
+  "periodo": null,
+  "pregunta": "¿Cuánta anemia hay en Lima?",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "Hay varios lugares llamados «Lima». ¿Cuál quieres?\n1) Lima Metropolitana (provincia de Lima)\n2) Lima Región (Lima Provincias)\n3) Callao",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

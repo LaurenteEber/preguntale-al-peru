@@ -1,0 +1,589 @@
+{
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENDES 2025 (INEI); el INEI publica la misma cifra (12,1 %)",
+    "ids": [
+     "endes_dci_menores_5__proporcion__nacional__PE__2025__principal"
+    ],
+    "texto": "de niñas y niños menores de 5 años con desnutrición crónica en Perú en 2025.",
+    "valor": "12,1 %"
+   },
+   "confianza": {
+    "ficha": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.",
+    "nivel": "alta",
+    "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2025."
+   },
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+   ],
+   "palabras": 68,
+   "que_hacer": null,
+   "respuesta_corta": "Entre 2015 y 2025, la desnutrición crónica en niñas y niños menores de 5 años bajó de forma estadísticamente clara en Perú."
+  },
+  "capa2": {
+   "avisos": [],
+   "limites": [
+    "Datos de: ENDES 2015–2025 (INEI)",
+    "Territorio: todo el país",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para todo el país."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "En Perú, la desnutrición crónica en niñas y niños menores de 5 años fue 14,3 % en 2015 y 12,1 % en 2025.",
+     "titulo": "El punto de partida: 2015"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": "endes_dci_menores_5__proporcion__nacional__PE__2025__principal",
+     "texto": "12,1 % (intervalo del INEI: 11,4 % a 12,7 %): niñas y niños menores de 5 años con desnutrición crónica, Perú, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04 (Patrón de referencia OMS), p. 49 (PDF 51).",
+     "url": "https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf"
+    },
+    {
+     "id_cifra": "endes_dci_menores_5__proporcion__nacional__PE__2015__contexto",
+     "texto": "14,3 % (intervalo: 13,6 % a 14,9 %): niñas y niños menores de 5 años con desnutrición crónica, Perú, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI); el INEI publicó 14,4 %.",
+     "url": "https://www.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-n094-2016-inei.pdf"
+    }
+   ],
+   "glosario": [
+    {
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la talla de los niños.",
+     "termino": "ENDES"
+    },
+    {
+     "definicion": "una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.",
+     "termino": "cambio estadísticamente claro"
+    }
+   ],
+   "para_citar": [
+    "12,1 % (intervalo del INEI: 11,4 % a 12,7 %): niñas y niños menores de 5 años con desnutrición crónica, Perú, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04 (Patrón de referencia OMS), p. 49 (PDF 51).",
+    "14,3 % (intervalo: 13,6 % a 14,9 %): niñas y niños menores de 5 años con desnutrición crónica, Perú, 2015. Fuente: Pregúntale al Perú, cálculo propio con ENDES 2015 (INEI); el INEI publicó 14,4 %."
+   ]
+  }
+ },
+ "cifras": {
+  "endes_dci_menores_5__proporcion__nacional__PE__2015__contexto": {
+   "accion_final": "publicar",
+   "anio": 2015,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "patron_OMS2006_talla_edad_-2DE",
+    "cuadro_pagina": "p. 1",
+    "documento": "INEI, Nota de prensa N.º 094-2016 (ENDES 2015)",
+    "entidad": "INEI",
+    "id_cifra": "DOR-DCI-2015-PE",
+    "valor": 14.4
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 2.43862604,
+   "denominador": null,
+   "devengado": null,
+   "ee": 0.3475773,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": null,
+   "ic_inf": 13.57694779,
+   "ic_sup": 14.94970817,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 24070,
+   "nivel": "nacional",
+   "nivel_pedido": "nacional",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "14,3 % (entre 13,6 % y 14,9 %), ENDES 2015, Perú; basado en 24070 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "14,3 % (entre 13,6 % y 14,9 %), ENDES 2015, Perú; basado en 24070 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2015.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "contexto",
+   "semaforo_cifra": "verde",
+   "territorio_id": "PE",
+   "territorio_nombre": "Perú",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2015,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "nacional",
+     "periodo_agrupado": null,
+     "territorio_id": "PE"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 14.25299696
+  },
+  "endes_dci_menores_5__proporcion__nacional__PE__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": {
+    "anio": 2015,
+    "anio_cerrado": true,
+    "avisos": "[]",
+    "cota_inf": null,
+    "cota_sup": null,
+    "criterio": "patron_OMS2006_talla_edad_-2DE",
+    "cv": 2.43862604,
+    "deff": 2.37922603,
+    "denominador": null,
+    "ee": 0.3475773,
+    "estado_calculo": "calculada",
+    "fecha_corte": null,
+    "fecha_descarga": null,
+    "gl": 3091,
+    "grupo_robusto_nacional": null,
+    "grupo_robusto_regional": null,
+    "ic_inf": 13.57694779,
+    "ic_sup": 14.94970817,
+    "indicador_id": "endes_dci_menores_5",
+    "indicador_validado": true,
+    "linea": "cifra",
+    "medida": "proporcion",
+    "metodo_ic": "korn-graubard",
+    "metodo_territorio": null,
+    "motivo_calculo": null,
+    "n_efectivo": 10116.31498999,
+    "n_muestra": 24070,
+    "nivel": "nacional",
+    "numerador": null,
+    "pct_gasto_atribuible": null,
+    "poblacion": null,
+    "prueba_cambio": {
+     "anios": [
+      2015,
+      2025
+     ],
+     "diferencia": -2.1959,
+     "ee_diferencia": 0.4841,
+     "p_valor": 6e-06,
+     "significativa": true,
+     "z": -4.5361
+    },
+    "territorio_id": "PE",
+    "territorio_nombre": "Perú",
+    "ubigeo_inei": "000000",
+    "validada_dorada": null,
+    "valor": 14.25299696,
+    "version_tabla": "1.2.0"
+   },
+   "contraste_oficial": {
+    "criterio": "patron_OMS2006_talla_edad_-2DE",
+    "cuadro_pagina": "Cuadro N.º 04 (Patrón de referencia OMS), p. 49 (PDF 51)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "entidad": "INEI",
+    "id_cifra": "DOR-DCI-2025-PE",
+    "valor": 12.1
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 2.79467116,
+   "denominador": null,
+   "devengado": null,
+   "ee": 0.33695587,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º 04 (Patrón de referencia OMS), p. 49 (PDF 51)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "ic_inf": 11.4,
+    "ic_sup": 12.7,
+    "id_cifra": "DOR-DCI-2025-PE"
+   },
+   "ic_inf": 11.40299532,
+   "ic_sup": 12.73495761,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 18583,
+   "nivel": "nacional",
+   "nivel_pedido": "nacional",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "12,1 % (entre 11,4 % y 12,7 %), ENDES 2025, Perú; basado en 18583 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "12,1 % (entre 11,4 % y 12,7 %), ENDES 2025, Perú; basado en 18583 niñas y niños encuestados."
+    },
+    {
+     "accion": "advertir",
+     "aviso": "quiebre_modo_entrevista",
+     "clausula": "serie abarca un año con quiebre no comparable",
+     "detalle": {
+      "anios_quiebre": [
+       2020
+      ],
+      "excluir_de_tendencia": [
+       2020
+      ],
+      "fuente": "INEI-ENDES"
+     },
+     "mensaje": "En 2020 la encuesta se hizo en parte por teléfono por la pandemia; esa cifra no es del todo comparable con los demás años y no se usa para calcular la tendencia.",
+     "motivo": "quiebre",
+     "regla": "R-ENC-13"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "hay quiebre pero misma definición (versión homologada)",
+     "detalle": {
+      "anio_a": 2015,
+      "anio_b": 2025,
+      "criterio": "patron_OMS2006_talla_edad_-2DE",
+      "quiebres": [
+       2020,
+       2024
+      ]
+     },
+     "motivo": "quiebre",
+     "regla": "R-CRUCES-04",
+     "rotulo": "misma_definicion_en_ambos_anios"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde",
+      "semaforo_comparacion": {
+       "motivos": [],
+       "puntajes": {
+        "precision_cifra": 0,
+        "quiebre": 0
+       },
+       "semaforo": "verde"
+      }
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "PE",
+   "territorio_nombre": "Perú",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "nacional",
+     "periodo_agrupado": null,
+     "territorio_id": "PE"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 12.05708492
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "comparar_con": 2015,
+    "id": "endes_dci_menores_5__proporcion__nacional__PE__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "nacional",
+    "rol": "principal",
+    "territorio": "PE"
+   },
+   {
+    "anio": 2015,
+    "id": "endes_dci_menores_5__proporcion__nacional__PE__2015__contexto",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "nacional",
+    "rol": "contexto",
+    "territorio": "PE"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "pregunta_original": "¿Cómo evolucionó la desnutrición crónica infantil en el Perú?",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__desnutricion_cronica__PE",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "desde": 2015,
+   "hasta": "ultimo",
+   "tipo": "serie"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "¿Cómo evolucionó la desnutrición crónica infantil en el Perú?",
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "PE",
+   "nivel": "nacional",
+   "nombre_pedido": "Perú"
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "evolucion",
+  "pregunta_original": "¿Cómo evolucionó la desnutrición crónica infantil en el Perú?",
+  "tema": "desnutricion_cronica",
+  "territorio": {
+   "nacional": true
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: cómo cambió la desnutrición crónica en todo el Perú",
+ "ficha": {
+  "corta": "Confianza en los datos: alta (dato sólido): hay suficientes datos y son de 2025.\nDatos de: ENDES 2015–2025 (INEI)\nTerritorio: todo el país\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para todo el país.",
+  "larga": {
+   "cifras": {
+    "endes_dci_menores_5__proporcion__nacional__PE__2015__contexto": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2015. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por país (Perú).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 13,6 % y 14,9 % (coeficiente de variación 2,4 %, 24070 casos en la muestra). Este intervalo es nuestro cálculo (no tenemos registrado uno publicado por el INEI para esta cifra), con un método que se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 14,4 % con la misma definición (Nota de prensa N.º 094-2016 (ENDES 2015), p. 1). Nuestra cifra coincide.",
+     "avisos": [
+      "14,3 % (entre 13,6 % y 14,9 %), ENDES 2015, Perú; basado en 24070 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    },
+    "endes_dci_menores_5__proporcion__nacional__PE__2025__principal": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por país (Perú).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 11,4 % y 12,7 % (coeficiente de variación 2,8 %, 18583 casos en la muestra). El INEI publica para esta cifra un intervalo entre 11,4 % y 12,7 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04 (Patrón de referencia OMS), p. 49 (PDF 51)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "Entre 2015 y 2025: cambio estadísticamente claro (prueba de diferencia con el diseño de la encuesta, al 95 % de confianza).",
+     "6_contraste_oficial": "El INEI publica 12,1 % con la misma definición (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04 (Patrón de referencia OMS), p. 49 (PDF 51)). Nuestra cifra coincide.",
+     "avisos": [
+      "12,1 % (entre 11,4 % y 12,7 %), ENDES 2025, Perú; basado en 18583 niñas y niños encuestados.",
+      "En 2020 la encuesta se hizo en parte por teléfono por la pandemia; esa cifra no es del todo comparable con los demás años y no se usa para calcular la tendencia."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para todo el país."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_dci_menores_5."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "intencion": "evolucionó",
+   "tema": "desnutrición crónica",
+   "territorio": "el Perú"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "evolucion",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:endes_dci_menores_5__proporcion__nacional__PE__2025__principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "comparar_con": 2015,
+    "id": "endes_dci_menores_5__proporcion__nacional__PE__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "nacional",
+    "rol": "principal",
+    "territorio": "PE"
+   },
+   {
+    "anio": 2015,
+    "id": "endes_dci_menores_5__proporcion__nacional__PE__2015__contexto",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "nacional",
+    "rol": "contexto",
+    "territorio": "PE"
+   }
+  ],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "evolucion",
+   "pregunta_original": "¿Cómo evolucionó la desnutrición crónica infantil en el Perú?",
+   "tema": "desnutricion_cronica",
+   "territorio": {
+    "nacional": true
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-06",
+   "E-06 / E-07"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "evolucion__desnutricion_cronica__PE",
+  "intencion": "evolucion",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [],
+  "no_se_puede": null,
+  "omitidas": [],
+  "periodo": {
+   "desde": 2015,
+   "hasta": "ultimo",
+   "tipo": "serie"
+  },
+  "plantilla": "evolucion",
+  "pregunta": "¿Cómo evolucionó la desnutrición crónica infantil en el Perú?",
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "PE",
+   "nivel": "nacional",
+   "nombre_pedido": "Perú"
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "p < alfa → declarar dirección",
+   "detalle": {
+    "alfa": 0.05,
+    "anios": [
+     2015,
+     2025
+    ],
+    "diferencia": -2.1959,
+    "direccion": "disminucion",
+    "origen": "motor",
+    "p_valor": 6e-06,
+    "significativa": true
+   },
+   "motivo": "prueba_cambio",
+   "objetivo": "endes_dci_menores_5__proporcion__nacional__PE__2025__principal",
+   "regla": "R-ENC-11",
+   "rotulo": "cambio estadísticamente claro"
+  },
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:endes_dci_menores_5__proporcion__nacional__PE__2025__principal"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "verde"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato sólido. Hay suficientes datos y son de 2025.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato sólido"
+  }
+ ],
+ "semaforo_respuesta": "verde",
+ "texto": "Entre 2015 y 2025, la desnutrición crónica en niñas y niños menores de 5 años bajó de forma estadísticamente clara en Perú. 12,1 % de niñas y niños menores de 5 años con desnutrición crónica en Perú en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. En Perú, la desnutrición crónica en niñas y niños menores de 5 años fue 14,3 % en 2015 y 12,1 % en 2025.",
+ "texto_con_marcadores": "Entre 2015 y 2025, la desnutrición crónica en niñas y niños menores de 5 años {{v:endes_dci_menores_5__proporcion__nacional__PE__2025__principal}} en Perú. {{c:endes_dci_menores_5__proporcion__nacional__PE__2025__principal}} de niñas y niños menores de 5 años con desnutrición crónica en Perú en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. En Perú, la desnutrición crónica en niñas y niños menores de 5 años fue {{c:endes_dci_menores_5__proporcion__nacional__PE__2015__contexto}} en 2015 y {{c:endes_dci_menores_5__proporcion__nacional__PE__2025__principal}} en 2025.",
+ "tipo": "respuesta",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

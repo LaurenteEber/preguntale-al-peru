@@ -1,3 +1,5 @@
+import hashlib
+import json
 import textwrap
 from pathlib import Path
 
@@ -8,6 +10,30 @@ import pytest
 from pap.config import Rutas
 
 RAIZ_REAL = Path(__file__).resolve().parents[1]
+
+MENSAJE_CUBO_DISTINTO = "el cubo local no es el del manifiesto: corre `pap calcular`"
+
+
+def discrepancia_cubo(raiz: Path) -> str | None:
+    """S3-01b (fila 10): el mensaje único si el sha256 del cubo local no es el del manifiesto; None si coincide o si falta
+    el cubo o el manifiesto (entonces fallan por sí solas las pruebas que los necesitan)."""
+    ind = Path(raiz) / "biblioteca" / "indicadores"
+    cubo, manifiesto = ind / "fact_indicador.parquet", ind / "manifiesto_p1_indicadores.json"
+    if not cubo.exists() or not manifiesto.exists():
+        return None
+    declarado = json.loads(manifiesto.read_text(encoding="utf-8"))["tablas"]["fact_indicador"]["hash"].removeprefix("sha256:")
+    h = hashlib.sha256()
+    with open(cubo, "rb") as f:
+        for bloque in iter(lambda: f.read(1 << 20), b""):
+            h.update(bloque)
+    return None if h.hexdigest() == declarado else MENSAJE_CUBO_DISTINTO
+
+
+def pytest_sessionstart(session):
+    """Antes de correr cualquier prueba: si el cubo local no es el del manifiesto, la sesión se detiene con un solo mensaje."""
+    mensaje = discrepancia_cubo(RAIZ_REAL)
+    if mensaje:
+        pytest.exit(mensaje, returncode=3)
 
 RECETA_CSV = """
 id: PRUEBA-CSV

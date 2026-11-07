@@ -1,0 +1,115 @@
+# Textos de la web (S3-03, S3-04). Ninguno habla de la terminal: la web no muestra los textos de las excepciones ni los de la CLI.
+# Todo texto visible de las páginas sale de aquí o de curados/motor/textos/capas.yaml (rotulos); nunca de HTML, JavaScript ni Python.
+version: 1.1.0
+preparando: &preparando "Estamos preparando el servicio… Intenta de nuevo en unos segundos."
+version_rotulo: "Biblioteca {huella}, construida el {fecha}"
+errores:                              # por tipo de excepción o código de ConsultaInvalida
+  solicitud_invalida: "No pudimos leer tu pregunta. Escríbela de nuevo."
+  texto_muy_largo: "Tu pregunta es demasiado larga. Hazla más corta."
+  consulta_invalida: "No pudimos entender esa consulta. Revisa los datos que elegiste e inténtalo de nuevo."
+  eleccion_invalida: "Esa opción ya no es válida. Haz la pregunta de nuevo y elige una de las opciones que te mostramos."
+  error_interno: "Algo salió mal de nuestro lado. Inténtalo de nuevo en un momento."
+  metodo_no_permitido: "Esta dirección solo acepta preguntas enviadas desde el formulario."
+  no_encontrado: "No encontramos esa dirección."
+  cuerpo_muy_grande: "Lo que enviaste es demasiado grande. Escribe una pregunta más corta."          # supuesto: S3-07
+codigos_consulta: {}                  # texto propio por código de ConsultaInvalida (opcional; sin él, `consulta_invalida`)
+rotulos_intenciones:
+  nivel_actual: "¿Cuánto hay hoy?"
+  evolucion: "¿Cómo ha cambiado?"
+  comparacion: "Comparar dos lugares"
+  identificar_extremo: "¿Dónde es más alto o más bajo?"
+  efecto: "¿Cuánto influye?"
+  cruce: "Cruzar con otra característica"
+rotulos_temas:
+  anemia: "Anemia infantil"
+  desnutricion_cronica: "Desnutrición crónica infantil"
+  pobreza_monetaria: "Pobreza monetaria"
+  gasto_publico: "Gasto público"
+rotulos_niveles:
+  distrito: "Distrito"
+  provincia: "Provincia"
+  departamento: "Departamento"
+  nacional: "Todo el Perú"
+ejemplos:
+  - "¿Qué tanta anemia tienen los niños de Moquegua?"
+  - "¿Cómo ha cambiado la pobreza en Puno?"
+  - "¿Cuánto gasta el Estado en Ucayali?"
+
+# ---- S3-04: páginas -----------------------------------------------------------------------------------------------------
+# Mensajes del intérprete (`tipo: mensaje`), por `motivo`. Son los textos fijos de curados/motor/textos/interprete.yaml sin la frase
+# que manda a la terminal (`via_estructurada`); donde ofrecían las opciones, aquí va el enlace al formulario guiado.
+mensajes:
+  no_es_pregunta: "No encontramos una pregunta. Escribe qué quieres saber, de qué problema y de qué lugar; por ejemplo: «¿Cuánta anemia hay en Puno?»."
+  otro_idioma: "Por ahora solo respondemos preguntas en español."
+  no_entendida: "No entendimos la pregunta. ¿Puedes escribirla de otra forma?"
+  no_disponible: "Ahora no podemos interpretar preguntas escritas. Puedes elegir las opciones paso a paso."          # supuesto: S3-04-c
+  tope_diario: "Hoy ya no podemos interpretar más preguntas escritas. Puedes elegir las opciones paso a paso."       # supuesto: S3-04-c; motivo confirmado por S3-07
+  espera_un_momento: "Espera unos segundos y vuelve a intentar."                                                                            # S3-07: límite por IP, mensaje fijo
+  volver_a_preguntar: "Escribe la pregunta de nuevo con el lugar o el año que quieres saber."
+  preparando: *preparando
+  otro: "No pudimos responder esa pregunta. Inténtalo de nuevo."                                                 # supuesto: S3-04-c
+paginas:
+  titulo_sitio: "Pregúntale al Perú"
+  lema: "Cifras de fuentes públicas oficiales sobre los problemas del país, por lugar y con los límites de cada cifra."
+  titulo_inicio: "¿Qué quieres saber?"
+  titulo_respuesta: "Respuesta"
+  titulo_aclaracion: "Necesitamos un dato más"
+  titulo_aviso: "Aviso"
+  caja_etiqueta: "Escribe tu pregunta"
+  caja_etiqueta_de_nuevo: "Escribe tu pregunta de nuevo"
+  caja_ayuda: "Cuéntanos de qué problema y de qué lugar quieres saber: un departamento, una provincia o un distrito."
+  boton_preguntar: "Preguntar"
+  buscando: "Buscando…"
+  ejemplos_titulo: "O toca un ejemplo"
+  temas_hoy: "Temas de hoy:"
+  fuentes_hoy: "Los datos salen de fuentes públicas oficiales: el INEI, el Instituto Nacional de Salud y el Ministerio de Economía y Finanzas."
+  guiado_enlace: "Elegir paso a paso, sin escribir"
+  texto_vacio: "Escribe tu pregunta antes de enviarla."
+  eco_rotulo: "Tu pregunta:"
+  fuente_rotulo: "Fuente:"
+  alternativa_boton: "Preguntar esto"
+  otra_pregunta: "Hacer otra pregunta"
+  volver_inicio: "Volver al inicio"
+
+# ---- S3-05: formulario guiado (dos pasos, sin LLM). Los nombres de los temas y las intenciones salen de /api/opciones
+# (rotulos_temas, rotulos_intenciones) y de curados/interprete/intenciones_descripcion.yaml; aquí van los demás textos.
+guiado:
+  titulo_paso1: "Elige paso a paso"
+  ayuda_paso1: "Primero el tema y lo que quieres saber. Después te pedimos el lugar."
+  tema_titulo: "¿De qué tema?"
+  intencion_titulo: "¿Qué quieres saber?"
+  continuar: "Continuar"
+  titulo_paso2: "Dime el lugar"
+  resumen_rotulo: "Elegiste:"
+  preguntar: "Ver la respuesta"
+  volver: "Cambiar el tema o lo que quiero saber"
+  campos:                              # rótulo y ayuda de cada campo; los muestra solo la intención que los usa
+    lugar: {rotulo: "Lugar", ayuda: "Escribe un departamento, una provincia o un distrito."}
+    lugar_nacional: {rotulo: "Todo el Perú", ayuda: ""}
+    lugar2: {rotulo: "Segundo lugar", ayuda: "El lugar con el que quieres comparar."}
+    lugar2_nacional: {rotulo: "Todo el Perú", ayuda: ""}
+    anio: {rotulo: "Año (opcional)", ayuda: "Si lo dejas vacío, usamos el último año con datos."}
+    desde: {rotulo: "Desde el año (opcional)", ayuda: "Si lo dejas vacío, empezamos en el primer año con datos."}
+    hasta: {rotulo: "Hasta el año (opcional)", ayuda: "Si lo dejas vacío, terminamos en el último año con datos."}
+    nivel: {rotulo: "Qué quieres ordenar", ayuda: "Compararemos todos los de ese nivel."}
+  dentro_de_rotulo: "Dentro de"
+  dentro_de_nacional: "Todo el Perú"
+  lugar_nacional_frase: "todo el Perú"       # cómo se escribe «Todo el Perú» dentro de la pregunta armada
+  niveles_frase: {departamento: "departamento", provincia: "provincia", distrito: "distrito"}
+  pregunta:                                 # `pregunta_original` de la consulta armada; {tema}, {tema_art}, {lugar}, {lugar2}, {nivel}
+    nivel_actual: "¿Cuánto hay de {tema} en {lugar}?"
+    evolucion: "¿Cómo ha cambiado {tema_art} en {lugar}?"
+    comparacion: "¿Cómo se compara {tema} entre {lugar} y {lugar2}?"
+    cruce: "¿Cómo se ven juntos el gasto y la anemia en {lugar}?"
+    efecto: "¿Sirvió lo que se gastó contra la anemia en {lugar}?"
+    identificar_extremo: "¿Qué {nivel} del Perú tiene más o menos {tema}?"
+  errores:
+    falta_eleccion: "Elige un tema y qué quieres saber."
+    falta_lugar: "Escribe un lugar o marca «Todo el Perú»."
+    lugar_doble: "Escribiste un lugar y marcaste «Todo el Perú». Deja solo una de las dos."
+    lugar_muy_largo: "El lugar es demasiado largo. Escribe solo su nombre."
+    anio_invalido: "El año debe ser un número de cuatro cifras."
+    nivel_invalido: "Elige uno de los niveles de la lista."
+    lugar_no_encontrado: "No encontramos «{lugar}». Revisa cómo está escrito o escribe el departamento, la provincia o el distrito."      # H-08
+    lugares_no_encontrados: "No encontramos alguno de estos lugares: «{lugar}» o «{lugar2}». Revisa cómo están escritos."          # H-08, comparación
+    espera: "Espera unos segundos y vuelve a intentar."                                                                           # H-09

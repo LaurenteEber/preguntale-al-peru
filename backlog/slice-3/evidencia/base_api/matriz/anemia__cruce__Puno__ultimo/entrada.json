@@ -1,0 +1,16 @@
+{
+ "clase": "respondida",
+ "consulta": {
+  "intencion": "cruce",
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "ubigeo": "21"
+  }
+ },
+ "elegir": null,
+ "id": "anemia|cruce|Puno|ultimo"
+}

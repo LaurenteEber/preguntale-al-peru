@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿Cómo cambió el gasto en nutrición infantil en Perú?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9250,
+ "tokens_salida": 106,
+ "costo_usd": 0.002072,
+ "latencia_s": 1.757,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011Cgooz38wwT1T3t7z71nNu",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "{\"resultado\": \"consulta\", \"consulta\": {\"intencion\": \"evolucion\", \"tema\": \"gasto_publico\", \"territorio\": {\"nacional\": true}}, \"anclas\": {\"intencion\": \"Cómo cambió\", \"tema\": \"gasto en nutrición infantil\", \"territorio\": \"Perú\"}}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 46,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 106,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

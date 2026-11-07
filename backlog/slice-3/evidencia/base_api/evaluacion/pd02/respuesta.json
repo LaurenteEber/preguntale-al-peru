@@ -1,0 +1,139 @@
+{
+ "aclaracion": {
+  "motivo": "interprete_intencion_ambigua",
+  "opciones": [
+   {
+    "consulta": {
+     "intencion": "evolucion",
+     "tema": "anemia",
+     "territorio": {
+      "texto": "Huancavelica"
+     }
+    },
+    "etiqueta": "Cómo cambió la anemia en el departamento de Huancavelica",
+    "n": 1
+   },
+   {
+    "consulta": {
+     "intencion": "nivel_actual",
+     "tema": "anemia",
+     "territorio": {
+      "texto": "Huancavelica"
+     }
+    },
+    "etiqueta": "Cuánto hay de anemia en el departamento de Huancavelica",
+    "n": 2
+   }
+  ],
+  "por_defecto": null,
+  "pregunta": "¿Qué quieres saber?"
+ },
+ "cifras": {},
+ "consulta": {
+  "aclaracion": {
+   "motivo": "interprete_intencion_ambigua",
+   "opciones": [
+    {
+     "consulta": {
+      "intencion": "evolucion",
+      "tema": "anemia",
+      "territorio": {
+       "texto": "Huancavelica"
+      }
+     },
+     "etiqueta": "Cómo cambió la anemia en el departamento de Huancavelica",
+     "n": 1
+    },
+    {
+     "consulta": {
+      "intencion": "nivel_actual",
+      "tema": "anemia",
+      "territorio": {
+       "texto": "Huancavelica"
+      }
+     },
+     "etiqueta": "Cuánto hay de anemia en el departamento de Huancavelica",
+     "n": 2
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "¿Qué quieres saber?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "pregunta_original": "¿en Huancavelica los niños siguen con anemia como antes?"
+  },
+  "grupos": [],
+  "id": "aclaracion__interprete_intencion_ambigua",
+  "intencion": null,
+  "periodo": null,
+  "pregunta": "¿en Huancavelica los niños siguen con anemia como antes?",
+  "tema": null,
+  "territorio": null
+ },
+ "consulta_minima": null,
+ "entendimos": null,
+ "interpretacion": {
+  "anclas": null,
+  "avisos": [],
+  "cache": false,
+  "consulta": null,
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "aclaracion",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "plan": {
+  "aclaracion": {
+   "motivo": "interprete_intencion_ambigua",
+   "opciones": [
+    {
+     "consulta": {
+      "intencion": "evolucion",
+      "tema": "anemia",
+      "territorio": {
+       "texto": "Huancavelica"
+      }
+     },
+     "etiqueta": "Cómo cambió la anemia en el departamento de Huancavelica",
+     "n": 1
+    },
+    {
+     "consulta": {
+      "intencion": "nivel_actual",
+      "tema": "anemia",
+      "territorio": {
+       "texto": "Huancavelica"
+      }
+     },
+     "etiqueta": "Cuánto hay de anemia en el departamento de Huancavelica",
+     "n": 2
+    }
+   ],
+   "por_defecto": null,
+   "pregunta": "¿Qué quieres saber?"
+  },
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "pregunta_original": "¿en Huancavelica los niños siguen con anemia como antes?"
+  },
+  "grupos": [],
+  "id": "aclaracion__interprete_intencion_ambigua",
+  "intencion": null,
+  "periodo": null,
+  "pregunta": "¿en Huancavelica los niños siguen con anemia como antes?",
+  "tema": null,
+  "territorio": null
+ },
+ "texto": "¿Qué quieres saber?\n1) Cómo cambió la anemia en el departamento de Huancavelica\n2) Cuánto hay de anemia en el departamento de Huancavelica",
+ "tipo": "aclaracion",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}
