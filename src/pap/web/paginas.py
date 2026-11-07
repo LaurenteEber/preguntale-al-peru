@@ -13,12 +13,14 @@ from fastapi.responses import FileResponse, HTMLResponse, Response
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from starlette.concurrency import run_in_threadpool
 
+import pap.web.guiado as guiado          # `import`, no `from pap.web import`: test_servicio.py lista los imports permitidos
+
 AQUI = Path(__file__).parent
 CABECERAS_FIJAS = {"Referrer-Policy": "no-referrer", "X-Content-Type-Options": "nosniff"}
 MAX_DIGITOS_ELEGIR = 3                      # `elegir` lleva números chicos (parametros.yaml → pregunta.elegir_max_valor)
 
 
-def montar(app: FastAPI, raiz, tx: dict, par: dict, resolver, rotulo_version) -> None:
+def montar(app: FastAPI, raiz, tx: dict, par: dict, resolver, rotulo_version, opciones) -> None:
     raiz = Path(raiz)
     rot = yaml.safe_load((raiz / "curados/motor/textos/capas.yaml").read_text(encoding="utf-8"))["rotulos"]
     pg = par["paginas"]
@@ -89,6 +91,8 @@ def montar(app: FastAPI, raiz, tx: dict, par: dict, resolver, rotulo_version) ->
         except Exception:  # noqa: BLE001 — cuerpo que no es un formulario
             return aviso("error", tx["errores"]["solicitud_invalida"], 422)
         return await run_in_threadpool(atender, datos)
+
+    guiado.montar(app, raiz, tx, par, opciones, pagina, atender)          # S3-05: el formulario guiado
 
     estaticos = {f.name for f in (AQUI / "estatico").iterdir() if f.is_file()}
 

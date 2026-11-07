@@ -126,15 +126,19 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
         estado, res = resolver(cuerpo)
         return _json(res, estado)
 
-    @app.get("/api/opciones")
-    def opciones() -> Response:
+    def datos_opciones() -> dict:
+        """Lo que responde `/api/opciones`; el formulario guiado (S3-05) lee lo mismo en el servidor."""
         i = _yaml(raiz, "curados/motor/intenciones.yaml")
 
         def rot(clave: str, ids) -> list[dict]:
             return [{"id": k, "rotulo": tx[clave].get(k, k)} for k in ids]
 
-        return _json({"temas": rot("rotulos_temas", i["temas"]), "intenciones": rot("rotulos_intenciones", i["intenciones"]),
-                      "niveles": rot("rotulos_niveles", i["escalera_niveles"]["valor"]), "ejemplos": tx["ejemplos"]})
+        return {"temas": rot("rotulos_temas", i["temas"]), "intenciones": rot("rotulos_intenciones", i["intenciones"]),
+                "niveles": rot("rotulos_niveles", i["escalera_niveles"]["valor"]), "ejemplos": tx["ejemplos"]}
+
+    @app.get("/api/opciones")
+    def opciones() -> Response:
+        return _json(datos_opciones())
 
     def version_web() -> dict:
         v = motor.version()
@@ -153,5 +157,5 @@ def crear_app(raiz, *, llm=None, dir_cache=None, precalentar: bool = True) -> Fa
             return _json({"estado": "ok"})
         return _json({"estado": "preparando"}, 503)
 
-    paginas.montar(app, raiz, tx, par, resolver, lambda: version_web()["rotulo"])      # S3-04: las páginas HTML
+    paginas.montar(app, raiz, tx, par, resolver, lambda: version_web()["rotulo"], datos_opciones)      # S3-04 y S3-05: las páginas HTML
     return app

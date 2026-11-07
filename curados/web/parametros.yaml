@@ -20,3 +20,17 @@ paginas:                             # S3-04
     decision: "S3-04 tarea 2: `default-src 'self'`, sin orígenes externos"
     supuesto: "S3-04-a (las tres directivas siguientes: las páginas solo envían formularios a sí mismas, no se incrustan y no usan <base>)"
   mensajes_con_enlace_guiado: {valor: [no_disponible, tope_diario], supuesto: S3-04-b, nota: "motivos de `mensaje` que llevan el enlace a /guiado (S3-04 tarea 6); S3-07 fija el motivo del tope"}
+guiado:                              # S3-05
+  intenciones:
+    valor:                           # qué campos pide cada intención y cómo arma el `periodo` (puntual: {anio} o {ultimo}; serie: {serie, desde?, hasta?})
+      nivel_actual: {campos: [lugar, anio], periodo: puntual}
+      evolucion: {campos: [lugar, desde, hasta], periodo: serie}
+      comparacion: {campos: [lugar, lugar2, anio], periodo: puntual}
+      cruce: {campos: [lugar, anio], periodo: puntual}
+      efecto: {campos: [lugar, anio], periodo: puntual}
+      identificar_extremo: {campos: [nivel, dentro_de], periodo: puntual}
+    supuesto: S3-05-b
+    nota: "tabla de la tarea 1 de S3-05; `cruce` y `efecto` piden lo mismo que `nivel_actual`"
+  lugares_con_todo_el_peru: {valor: [lugar, lugar2], supuesto: S3-05-c, nota: "campos de lugar que llevan la casilla «Todo el Perú» (`{campo}_nacional`)"}
+  lugar_max_caracteres: {valor: 200, supuesto: S3-05-d, nota: "el esquema de la consulta mínima acepta hasta 200"}
+  anio_digitos: {valor: 4, supuesto: S3-05-e, nota: "un año se escribe con cuatro cifras; el rango lo valida el motor (1990–2100)"}

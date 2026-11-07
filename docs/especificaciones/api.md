@@ -33,8 +33,19 @@ Las páginas usan la misma función que `POST /api/preguntar` (mismas validacion
 
 | Ruta | Entrada | Salida |
 |---|---|---|
-| `GET /` | — | Inicio: caja de pregunta, ejemplos tocables, temas de hoy y fuentes, enlace a `/guiado` (lo construye S3-05) |
+| `GET /` | — | Inicio: caja de pregunta, ejemplos tocables, temas de hoy y fuentes, enlace a `/guiado` |
 | `POST /preguntar` | Formulario: `texto` o `consulta` (JSON en un campo oculto), `elegir` (acumulado, «1,2») y `n` (el botón pulsado de una aclaración) | Página de respuesta, aclaración o aviso, con el estado HTTP de `/api/preguntar` |
 | `GET /estatico/app.js`, `/estatico/estilo.css` | — | El único JavaScript («Buscando…») y el único CSS |
 
 Cabeceras de las páginas y los archivos propios: `Content-Security-Policy` (`curados/web/parametros.yaml` → `paginas.csp`, `default-src 'self'`), `Referrer-Policy: no-referrer`, `X-Content-Type-Options: nosniff`. Ninguna respuesta pone cookies. Bloques de respuesta, en orden: Entendimos, respuesta corta (primero en «no se puede»), cifra clave, lo más cercano, ojo al leer, confianza (solo `capa1.confianza.texto`), qué hacer, «Más contexto» y «Para citar y verificar» (desplegables cerrados). Sin ficha técnica.
+
+## Formulario guiado (S3-05)
+
+Dos pasos, sin LLM y sin JavaScript. Las opciones salen de lo mismo que `GET /api/opciones` (leídas en el servidor); los campos de cada intención, de `curados/web/parametros.yaml` → `guiado`; los textos, de `curados/web/textos.yaml` → `guiado`.
+
+| Ruta | Entrada | Salida |
+|---|---|---|
+| `GET /guiado` | — | Paso 1: tema y qué quieres saber (con la descripción de cada intención) |
+| `POST /guiado` | Paso 1: `tema`, `intencion`. Paso 2: además `paso=2` y los campos de la intención: `lugar` o `lugar_nacional` («Todo el Perú»), `lugar2` o `lugar2_nacional` (comparación), `anio`, `desde`, `hasta`, `nivel` (extremo; «dentro de» siempre Todo el Perú) | Sin `paso`: el formulario del paso 2 solo con los campos de esa intención. Con `paso=2`: arma la consulta mínima (`pregunta_original` con una plantilla de `textos.yaml`) y responde igual que `POST /preguntar` (respuesta, aclaración o aviso, mismo estado HTTP) |
+
+`periodo`: `{anio}` si se escribió el año y si no `{ultimo}`; en `evolucion`, `{serie, desde?, hasta?}`. Errores de llenado (falta el lugar, lugar y «Todo el Perú» a la vez, año que no es de cuatro cifras, nivel inválido) vuelven al paso 2 con 422 y su texto, sin llamar al motor. Una combinación sin fila en `intenciones.yaml` no se oculta: el motor responde su «no se puede».

@@ -31,7 +31,9 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T3b.5 E-04 18 questions + recordings, base_api, full checks | S4 | after T3b.2–4 | done | |
 | T3b commit | — | — | done | 329dda2 (pushed) |
 | T4 S3-04 | S6 | writer | done: 1089 passed | (S3-04 commit) |
-| T5–T11 | S3-05 … S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
+| T5 S3-05 | S6 | writer | done: 1130 passed | (S3-05 commit) |
+| T8 S3-09 | S6 | writer in worktree ../pap-s3-09 (parallel) | done, patch held until S3-07 commit | |
+| T6–T11 | S3-07 … S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 
 ## Log
 

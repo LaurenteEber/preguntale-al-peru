@@ -63,6 +63,13 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 | S3-04-f | S3-04 | Si la caché venció o la elección no vale: el texto de elección inválida y la caja vacía (la web no distingue los dos casos) | `curados/web/textos.yaml` → `errores.eleccion_invalida` |
 | S3-04-g | S3-04 | La línea de fuentes del inicio nombra INEI, Instituto Nacional de Salud y Ministerio de Economía y Finanzas (**revisar**) | `curados/web/textos.yaml` → `paginas` |
 | S3-04-h | S3-04 | Texto vacío: aviso y 422, sin llamar al motor | `curados/web/textos.yaml` → `paginas.texto_vacio` |
+| S3-05-a | S3-05 | Los rótulos del paso 1 son los de `/api/opciones`; los nombres de `no_se_puede.yaml` solo van dentro de la pregunta armada | `curados/web/textos.yaml` → `guiado` |
+| S3-05-b | S3-05 | Campos por intención y armado del periodo | `curados/web/parametros.yaml` → `guiado` |
+| S3-05-c | S3-05 | El segundo lugar de una comparación también admite «Todo el Perú» | `curados/web/parametros.yaml` → `guiado` |
+| S3-05-d | S3-05 | El lugar admite hasta 200 caracteres | `curados/web/parametros.yaml` → `guiado` |
+| S3-05-e | S3-05 | Año con cuatro cifras; si hay lugar y «Todo el Perú» a la vez, se pide dejar uno | `curados/web/textos.yaml` → `guiado` |
+| S3-05-f | S3-05 | Rótulos, ayudas, plantillas de `pregunta_original` y avisos del formulario (**revisar**) | `curados/web/textos.yaml` → `guiado` |
+| S3-05-g | S3-05 | Niveles en el orden de `/api/opciones`, sin «Todo el Perú» | `curados/web/parametros.yaml` → `guiado` |
 
 ## Pendientes del dueño que siguen abiertos
 

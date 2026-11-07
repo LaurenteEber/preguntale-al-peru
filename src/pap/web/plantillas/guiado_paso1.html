@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}{{ g.titulo_paso1 }} – {% endblock %}
+{% block contenido %}
+<h1>{{ g.titulo_paso1 }}</h1>
+<p class="lema">{{ g.ayuda_paso1 }}</p>
+{% if error %}
+<p data-bloque="guiado_error" class="aviso" role="alert">{{ error }}</p>
+{% endif %}
+<form method="post" action="/guiado" data-bloque="guiado_paso1" class="guiado">
+<fieldset>
+<legend>{{ g.tema_titulo }}</legend>
+{% for t in temas %}
+<p class="opcion"><label><input type="radio" name="tema" value="{{ t.id }}" required> {{ t.rotulo }}</label></p>
+{% endfor %}
+</fieldset>
+<fieldset>
+<legend>{{ g.intencion_titulo }}</legend>
+{% for i in intenciones %}
+<p class="opcion"><label><input type="radio" name="intencion" value="{{ i.id }}" required> {{ i.rotulo }}</label>
+{% if i.descripcion %}<span class="ayuda">{{ i.descripcion }}</span>{% endif %}</p>
+{% endfor %}
+</fieldset>
+<button type="submit" data-buscando="{{ p.buscando }}">{{ g.continuar }}</button>
+</form>
+<p><a href="/">{{ p.volver_inicio }}</a></p>
+{% endblock %}

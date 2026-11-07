@@ -53,7 +53,7 @@ Del cierre (`../slice-2/evidencia/cierre.md`):
 | S3-03 | [Servicio: FastAPI sobre el mismo motor](S3-03-servicio.md) | hecha ([evidencia](evidencia/s3-03_servicio.md)) |
 | S3-01b | [Correcciones del motor antes de la web](S3-01b-correcciones-motor.md) | hecha ([evidencia](evidencia/s3-01b/correcciones.md)); H-G pendiente del dueño (W-04) |
 | S3-04 | [Páginas: pregunta, respuesta y aclaración](S3-04-paginas.md) | hecha ([evidencia](evidencia/s3-04_paginas.md)); supuestos S3-04-a a h |
-| S3-05 | [Formulario guiado, sin LLM](S3-05-formulario-guiado.md) | pendiente |
+| S3-05 | [Formulario guiado, sin LLM](S3-05-formulario-guiado.md) | hecha ([evidencia](evidencia/s3-05_guiado.md), [diferencias](evidencia/s3-05_diferencias.md)); Q1 sin elegir por X-22 |
 | S3-06 | [Accesibilidad y celular](S3-06-accesibilidad.md) | pendiente |
 | S3-07 | [Privacidad, abuso y costo](S3-07-privacidad-abuso.md) | pendiente |
 | S3-08 | [Rendimiento](S3-08-rendimiento.md) | pendiente |

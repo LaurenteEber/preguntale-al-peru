@@ -68,3 +68,43 @@ paginas:
   alternativa_boton: "Preguntar esto"
   otra_pregunta: "Hacer otra pregunta"
   volver_inicio: "Volver al inicio"
+
+# ---- S3-05: formulario guiado (dos pasos, sin LLM). Los nombres de los temas y las intenciones salen de /api/opciones
+# (rotulos_temas, rotulos_intenciones) y de curados/interprete/intenciones_descripcion.yaml; aquí van los demás textos.
+guiado:
+  titulo_paso1: "Elige paso a paso"
+  ayuda_paso1: "Primero el tema y lo que quieres saber. Después te pedimos el lugar."
+  tema_titulo: "¿De qué tema?"
+  intencion_titulo: "¿Qué quieres saber?"
+  continuar: "Continuar"
+  titulo_paso2: "Dime el lugar"
+  resumen_rotulo: "Elegiste:"
+  preguntar: "Ver la respuesta"
+  volver: "Cambiar el tema o lo que quiero saber"
+  campos:                              # rótulo y ayuda de cada campo; los muestra solo la intención que los usa
+    lugar: {rotulo: "Lugar", ayuda: "Escribe un departamento, una provincia o un distrito."}
+    lugar_nacional: {rotulo: "Todo el Perú", ayuda: ""}
+    lugar2: {rotulo: "Segundo lugar", ayuda: "El lugar con el que quieres comparar."}
+    lugar2_nacional: {rotulo: "Todo el Perú", ayuda: ""}
+    anio: {rotulo: "Año (opcional)", ayuda: "Si lo dejas vacío, usamos el último año con datos."}
+    desde: {rotulo: "Desde el año (opcional)", ayuda: "Si lo dejas vacío, empezamos en el primer año con datos."}
+    hasta: {rotulo: "Hasta el año (opcional)", ayuda: "Si lo dejas vacío, terminamos en el último año con datos."}
+    nivel: {rotulo: "Qué quieres ordenar", ayuda: "Compararemos todos los de ese nivel."}
+  dentro_de_rotulo: "Dentro de"
+  dentro_de_nacional: "Todo el Perú"
+  lugar_nacional_frase: "todo el Perú"       # cómo se escribe «Todo el Perú» dentro de la pregunta armada
+  niveles_frase: {departamento: "departamento", provincia: "provincia", distrito: "distrito"}
+  pregunta:                                 # `pregunta_original` de la consulta armada; {tema}, {tema_art}, {lugar}, {lugar2}, {nivel}
+    nivel_actual: "¿Cuánto hay de {tema} en {lugar}?"
+    evolucion: "¿Cómo ha cambiado {tema_art} en {lugar}?"
+    comparacion: "¿Cómo se compara {tema} entre {lugar} y {lugar2}?"
+    cruce: "¿Cómo se ven juntos el gasto y la anemia en {lugar}?"
+    efecto: "¿Sirvió lo que se gastó contra la anemia en {lugar}?"
+    identificar_extremo: "¿Qué {nivel} del Perú tiene más o menos {tema}?"
+  errores:
+    falta_eleccion: "Elige un tema y qué quieres saber."
+    falta_lugar: "Escribe un lugar o marca «Todo el Perú»."
+    lugar_doble: "Escribiste un lugar y marcaste «Todo el Perú». Deja solo una de las dos."
+    lugar_muy_largo: "El lugar es demasiado largo. Escribe solo su nombre."
+    anio_invalido: "El año debe ser un número de cuatro cifras."
+    nivel_invalido: "Elige uno de los niveles de la lista."

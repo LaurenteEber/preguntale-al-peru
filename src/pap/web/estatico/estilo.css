@@ -99,3 +99,27 @@ dd { margin: 0 0 0.5rem; }
   h1 { font-size: 2rem; }
   .caja button { width: auto; }
 }
+/* S3-05 — formulario guiado */
+fieldset { border: 1px solid var(--linea); border-radius: 0.5rem; margin: 0 0 1rem; padding: 0.5rem 1rem; }
+legend { font-weight: 700; padding: 0 0.25rem; }
+.opcion { margin: 0; }
+.opcion label { display: flex; align-items: center; gap: 0.5rem; min-height: 2.75rem; }
+.opcion input { width: 1.5rem; height: 1.5rem; flex: none; }
+.opcion .ayuda { display: block; margin: 0 0 0.5rem 2rem; font-size: 0.9rem; }
+.campo { margin: 0 0 1rem; }
+.campo label { display: block; font-weight: 700; }
+.campo .ayuda { display: block; }
+input[type=text] {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.75rem;
+  font: inherit;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 2px solid var(--linea);
+  border-radius: 0.5rem;
+}
+input:focus-visible { outline: 3px solid var(--enlace); outline-offset: 2px; }
+.guiado button { width: 100%; }
+@media (min-width: 40em) { .guiado button { width: auto; } }
