@@ -56,9 +56,9 @@ Del cierre (`../slice-2/evidencia/cierre.md`):
 | S3-05 | [Formulario guiado, sin LLM](S3-05-formulario-guiado.md) | hecha ([evidencia](evidencia/s3-05_guiado.md), [diferencias](evidencia/s3-05_diferencias.md)); Q1 sin elegir por X-22 |
 | S3-06 | [Accesibilidad y celular](S3-06-accesibilidad.md) | hecha ([evidencia](evidencia/s3-06_accesibilidad.md)); axe 0 fallas en 36 corridas; Chromium local |
 | S3-07 | [Privacidad, abuso y costo](S3-07-privacidad-abuso.md) | hecha ([evidencia](evidencia/s3-07_privacidad.md)); supuestos S3-07-a a d |
-| S3-08 | [Rendimiento](S3-08-rendimiento.md) | pendiente |
+| S3-08 | [Rendimiento](S3-08-rendimiento.md) | hecha ([evidencia](evidencia/s3-08_rendimiento.md)); sin LLM p95 0,27 s; texto en vivo p95 3,1 s |
 | S3-09 | [Empaquetado: imagen y `pap servir`](S3-09-empaquetado.md) | hecha ([evidencia](evidencia/s3-09_imagen.md)); imagen probada con Docker (colima) |
-| S3-10 | [Revisión independiente en el celular](S3-10-revision-independiente.md) | pendiente |
+| S3-10 | [Revisión independiente en el celular](S3-10-revision-independiente.md) | en curso (revisor con Playwright; prueba del dueño en su celular el 7/11/2026) |
 | S3-11 | [Documentación y cierre](S3-11-documentacion-cierre.md) | pendiente |
 
 Desde S3-03, en cada historia:

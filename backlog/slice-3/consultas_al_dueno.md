@@ -82,6 +82,9 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 | S3-09-b | S3-09 | El `HEALTHCHECK` lee `PAP_PUERTO` y espera 180 s al precalentamiento | `Dockerfile` |
 | S3-09-c | S3-09 | Al arrancar, si el cubo no es el del manifiesto, se corre `pap calcular --permitir-sucio` (la imagen no lleva `.git`) | `scripts/arranque_imagen.sh` |
 | S3-09-d | S3-09 | uv se instala con pip solo para construir la imagen (no es una dependencia del proyecto) | `Dockerfile` |
+| S3-08-a | S3-08 | Texto libre: p95 ≤ 3,5 s (p95 de 2,5 s medido en S2-09, más 1 s) y máximo ≤ 10 s. Medido: p95 3,1 s y máximo 4,5 s en 20 preguntas en vivo | `curados/web/parametros.yaml` → `rendimiento` |
+| S3-08-b | S3-08 | Arranque hasta `/salud` 200: ≤ 30 s (medido 4–5 s; 25 s en frío tras `uv sync`) | `curados/web/parametros.yaml` → `rendimiento` |
+| S3-08-c | S3-08 | Medición: semilla 3008, 20 preguntas en vivo y 50 por uvicorn real | `tests/web/medir.py` |
 
 ## Pendientes del dueño que siguen abiertos
 

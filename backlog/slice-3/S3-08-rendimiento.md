@@ -20,5 +20,5 @@
 
 ## Criterios de aceptación
 
-- [ ] `evidencia/s3-08_rendimiento.md` con la tabla y los objetivos cumplidos.
-- [ ] Si hay caché, una prueba de que la respuesta de la caché es igual a una recién calculada.
+- [x] `evidencia/s3-08_rendimiento.md` con la tabla y los objetivos cumplidos.
+- [x] (No aplica: no hizo falta caché.) Si hay caché, una prueba de que la respuesta de la caché es igual a una recién calculada.

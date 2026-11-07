@@ -40,3 +40,8 @@ limites:                             # S3-07 (P-05, P-07). Contadores en memoria
   llamadas_llm_por_dia: {valor: 300, supuesto: S3-07, nota: "peticiones reales al proveedor, reintentos incluidos; los aciertos de caché no cuentan. A US$ 0,0024 por pregunta con caché del proveedor caliente y 0,018 sin ella, tope de US$ 0,72 a 5,40 por día"}
   zona_horaria: {valor: America/Lima, supuesto: S3-07, nota: "el día del tope diario empieza a las 00:00 de Lima, no de UTC"}
   cuerpo_max_bytes: {valor: 8192, supuesto: S3-07, nota: "cuerpo máximo de cualquier petición (413 si lo pasa); el texto se recorta después según el slice 2"}
+rendimiento:                         # S3-08 (medido con tests/web/medir.py; ver backlog/slice-3/evidencia/s3-08_rendimiento.md)
+  sin_llm_p95_segundos: {valor: 2, decision: "plan_slices.md, fila del slice 3: respuesta en < 2 s sin LLM", nota: "vía estructurada y texto con grabaciones, con el servicio precalentado"}
+  texto_libre_p95_segundos: {valor: 3.5, supuesto: S3-08, nota: "p95 del LLM medido en S2-09 (2,5 s) + 1 s para el intérprete, el motor y la página"}
+  texto_libre_max_segundos: {valor: 10, supuesto: S3-08, nota: "ninguna pregunta por texto debería pasar de esto"}
+  arranque_max_segundos: {valor: 30, supuesto: S3-08, nota: "desde lanzar el proceso hasta que /salud responde 200"}

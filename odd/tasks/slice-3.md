@@ -35,8 +35,9 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T8 S3-09 | S6 | writer in worktree ../pap-s3-09 (parallel) | done: image rebuilt on current web; 1162 passed | (S3-09 commit) |
 | T6 S3-07 | S6 | writer | done: 1154 passed | (S3-07 commit) |
 | T7 S3-06 | S6 | writer | done: 1211 passed, 1 skipped (screenshots only) | (S3-06 commit) |
-| T9 S3-08 | S6 | writer in worktree ../pap-s3-08 (parallel) | done; live ≈ US$ 0.12 | |
-| T10–T11 | S3-10, S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
+| T9 S3-08 | S6 | writer in worktree ../pap-s3-08 (parallel) | done: 1211 passed; live ≈ US$ 0.12 | (S3-08 commit) |
+| T10 S3-10 | S6, L12–L13 | reviewer subagent | in progress | |
+| T11 | S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 
 ## Log
 
@@ -51,3 +52,5 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 - L9 (2026-11-06, owner answers): H-A «que no se compara con la de hoy»; H-F «…no se compara con la de la encuesta»; X-22 «Apruebo X-22».
 - L10 (2026-11-06, owner): H-K url → gob.pe colección SIEN 19321. H-G: «OK, lo dejamos pendiente, luego agrego datos de altura para cada distrito (sí cuento con ello)». u13 questionnaire cancelled by owner → stays pending, not applied.
 - L11 (2026-11-06, owner before 3h away): u13 approved as proposed; pd02 expects aclaración; publish release biblioteca-010ea965 (done); continue S3-04→05→07→09→06→08, commit+push per story, stop before S3-10. «durante las siguientes 3 horas, continua con la implementación y no me pidas permisos en la TUI»: granted playwright+axe-core dev deps and Chromium, local Docker build/run, live LLM ≤ US$ 1 total for S3-07/S3-08, regenerate evidence folders via their scripts.
+- L12 (2026-11-06, owner, S3-10): live cap «US$ 0,50»; findings «Corrijo A/B; C te pregunto»; phone «No, solo el revisor»; W-01 tag «No, la subo yo».
+- L13 (2026-11-06, owner): «Sí, la prueba en celular lo probamos mañana.» → S3-10 proceeds now with the Playwright reviewer; owner phone test (pap servir --red-local) scheduled for 2026-11-07, before closing the slice.
