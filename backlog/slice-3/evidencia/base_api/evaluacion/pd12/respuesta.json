@@ -1,0 +1,262 @@
+{
+ "alternativas": [
+  {
+   "consulta_minima": {
+    "idioma": "es",
+    "intencion": "identificar_extremo",
+    "pregunta_original": "¿Qué distrito de Huánuco es el más pobre?",
+    "tema": "pobreza_monetaria",
+    "territorio": {
+     "nivel": "distrito"
+    }
+   },
+   "texto": "",
+   "tipo": "pais"
+  }
+ ],
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": null,
+   "confianza": {
+    "ficha": "Confianza: Sin cifra disponible.",
+    "nivel": "sin cifra",
+    "texto": "Confianza en los datos: sin cifra."
+   },
+   "lo_mas_cercano": {
+    "texto": "Sí podemos mostrar qué lugares tienen el valor más alto de pobreza en todo el país. Puedes preguntarlo sin indicar un lugar.",
+    "titulo": "Lo más cercano que sí tenemos"
+   },
+   "ojo_al_leer": [],
+   "palabras": 53,
+   "que_hacer": null,
+   "respuesta_corta": "No podemos mostrar qué lugares tienen el valor más alto de pobreza dentro de Huánuco: el orden que calculamos es solo para todo el país."
+  },
+  "capa2": {
+   "avisos": [
+    "Respondimos por el departamento de Huánuco. Si buscabas la provincia o el distrito de Huánuco, pregúntalo así: «provincia de Huánuco» o «distrito de Huánuco»."
+   ],
+   "limites": [
+    "Datos de: ninguna cifra publicada en esta respuesta",
+    "Territorio: Huánuco",
+    "No permite concluir: nada sobre pobreza. No mostrar una cifra no quiere decir que el problema no exista."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Las comparaciones entre lugares que usamos se hacen con todo el país a la vez, no dentro de un solo lugar.",
+     "titulo": "Por qué no se puede"
+    }
+   ]
+  },
+  "capa3": {
+   "citas": [
+    {
+     "id_cifra": null,
+     "texto": "Esta respuesta no publica cifras.",
+     "url": ""
+    }
+   ],
+   "glosario": [],
+   "para_citar": [
+    "Esta respuesta no publica cifras."
+   ]
+  }
+ },
+ "cifras": {},
+ "cifras_no_publicadas": [],
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "identificar_extremo",
+   "pregunta_original": "¿Qué distrito de Huánuco es el más pobre?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "dentro_de": {
+     "texto": "Huánuco"
+    },
+    "nivel": "distrito"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-08"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "identificar_extremo__pobreza_monetaria__distrito",
+  "intencion": "identificar_extremo",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "dentro_de": "Huánuco",
+    "motivo": "extremo_dentro_de_no_soportado"
+   }
+  ],
+  "no_se_puede": {
+   "dentro_de": "Huánuco",
+   "motivo": "extremo_dentro_de_no_soportado"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "identificar_extremo",
+  "pregunta": "¿Qué distrito de Huánuco es el más pobre?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": null,
+   "nivel": "distrito",
+   "nombre_pedido": null
+  }
+ },
+ "consulta_minima": {
+  "idioma": "es",
+  "intencion": "identificar_extremo",
+  "pregunta_original": "¿Qué distrito de Huánuco es el más pobre?",
+  "tema": "pobreza_monetaria",
+  "territorio": {
+   "dentro_de": {
+    "texto": "Huánuco"
+   },
+   "nivel": "distrito"
+  }
+ },
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: qué distrito tiene más pobreza en el departamento de Huánuco",
+ "ficha": {
+  "corta": "Confianza: Sin cifra disponible.\nDatos de: ninguna cifra publicada en esta respuesta\nTerritorio: Huánuco\nNo permite concluir: nada sobre pobreza. No mostrar una cifra no quiere decir que el problema no exista.",
+  "larga": {
+   "cifras": {},
+   "cruces": {},
+   "no_concluir": [],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: ."
+  }
+ },
+ "interpretacion": {
+  "anclas": {
+   "dentro_de": "Huánuco",
+   "intencion": "es el más",
+   "nivel": "distrito",
+   "tema": "pobre"
+  },
+  "avisos": [],
+  "cache": false,
+  "consulta": {
+   "intencion": "identificar_extremo",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "dentro_de": {
+     "texto": "Huánuco"
+    },
+    "nivel": "distrito"
+   }
+  },
+  "datos_personales_quitados": 0,
+  "descartados": [],
+  "modelo": "claude-sonnet-5-5",
+  "reintentos": 0,
+  "resultado": "consulta",
+  "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
+ },
+ "motivo": {
+  "codigo": "extremo_dentro_de_no_soportado",
+  "detalle": {
+   "dentro_de": "Huánuco",
+   "motivo": "extremo_dentro_de_no_soportado"
+  },
+  "otros": [],
+  "regla_lenguaje_05": null
+ },
+ "motivos_semaforo_respuesta": [
+  "sin_cifra_principal"
+ ],
+ "plan": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [],
+  "consulta_minima": {
+   "idioma": "es",
+   "intencion": "identificar_extremo",
+   "pregunta_original": "¿Qué distrito de Huánuco es el más pobre?",
+   "tema": "pobreza_monetaria",
+   "territorio": {
+    "dentro_de": {
+     "texto": "Huánuco"
+    },
+    "nivel": "distrito"
+   }
+  },
+  "cruce": null,
+  "decisiones": [
+   "E-08"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
+  "grupos": [],
+  "grupos_estadisticos": null,
+  "id": "identificar_extremo__pobreza_monetaria__distrito",
+  "intencion": "identificar_extremo",
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "dentro_de": "Huánuco",
+    "motivo": "extremo_dentro_de_no_soportado"
+   }
+  ],
+  "no_se_puede": {
+   "dentro_de": "Huánuco",
+   "motivo": "extremo_dentro_de_no_soportado"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "identificar_extremo",
+  "pregunta": "¿Qué distrito de Huánuco es el más pobre?",
+  "respuesta_parcial": false,
+  "tema": "pobreza_monetaria",
+  "tema_gasto": null,
+  "territorio": {
+   "id": null,
+   "nivel": "distrito",
+   "nombre_pedido": null
+  }
+ },
+ "respuesta_parcial": false,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sin cifra principal publicable",
+   "detalle": {
+    "motivos": [
+     "sin_cifra_principal"
+    ],
+    "semaforo_respuesta": "sin_cifra"
+   },
+   "motivo": "sin_cifra_principal",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Sin cifra disponible"
+  }
+ ],
+ "semaforo_respuesta": "sin_cifra",
+ "temas_disponibles": [],
+ "texto": "No podemos mostrar qué lugares tienen el valor más alto de pobreza dentro de Huánuco: el orden que calculamos es solo para todo el país. Sí podemos mostrar qué lugares tienen el valor más alto de pobreza en todo el país. Puedes preguntarlo sin indicar un lugar. Las comparaciones entre lugares que usamos se hacen con todo el país a la vez, no dentro de un solo lugar.",
+ "texto_con_marcadores": "No podemos mostrar qué lugares tienen el valor más alto de pobreza dentro de Huánuco: el orden que calculamos es solo para todo el país. Sí podemos mostrar qué lugares tienen el valor más alto de pobreza en todo el país. Puedes preguntarlo sin indicar un lugar. Las comparaciones entre lugares que usamos se hacen con todo el país a la vez, no dentro de un solo lugar.",
+ "tipo": "no_se_puede",
+ "version_biblioteca": {
+  "commit_cubo": "779357d",
+  "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
+  "reglas": "0682897f4b70"
+ }
+}

@@ -46,7 +46,7 @@ bloques:
       corta_verbo: "Con la forma de medir que usa hoy el Ministerio de Salud, entre {a1} y {b1} la anemia {verbo1}."
       clave: "de {{u:ninos}} de {lugar} tenía anemia en {anio}, con la forma de medir que usa hoy el Ministerio de Salud."
       ojo:
-        - "No compares esta cifra con las de años anteriores a {anio_vigente}: se medía de otra forma, que da cifras más altas."
+        - "No compares esta cifra con las de años anteriores a {anio_vigente}: se medía de otra forma, que no se compara con la de hoy."
         - "«Sin cambio claro» no quiere decir «igual»: la diferencia puede deberse al azar de la encuesta."
       tarjeta_vigente:                       # AD-1 (dueño, 4/11/2026): la cifra del año con el que se compara
         titulo: "{a1} y {b1}, con la forma de medir actual"
@@ -68,7 +68,7 @@ bloques:
     glosario: [forma_de_medir, cambio_claro, endes]
     vigente: endes_anemia_6_35m_oms2024
     evolucion:
-      ojo_vigente: "Con la forma de medir actual solo hay datos desde {anio_vigente}. Esta serie usa la anterior, que da cifras más altas."
+      ojo_vigente: "Con la forma de medir actual solo hay datos desde {anio_vigente}. Esta serie usa la anterior, que no se compara con la de hoy."
       etiqueta_vigente: "Otra forma de medir: no se compara con la cifra clave."
 
   # ---------------------------------------------------------------- SIEN: registro de niños medidos (S-01)
@@ -92,7 +92,7 @@ bloques:
         titulo: "¿A cuántos niños se les mide la hemoglobina?"
         texto: "En {anio}, en los establecimientos del MINSA y del gobierno regional se midió la hemoglobina a {c} de {{u:ninos_region}} ({fuente}). {{p:cobertura}}"
       tarjeta_porque:
-        titulo: "Por qué esta cifra es más baja que la de la encuesta"
+        titulo: "Por qué esta cifra no se compara con la de la encuesta"
         texto: "{{p:ins}} {{p:altitud}}"
       tarjeta_conteo:                 # X-02 (pendientes_dueno.mostrar_conteo_sien)
         titulo: "Cuántos niños se midieron"
@@ -137,15 +137,15 @@ bloques:
   gasto:
     cuando: {indicador: [gasto_ex_pan, gasto_ex_pan_opcion_c]}
     nivel_actual:                 # S1-09 (H5): el mismo alcance que el cruce (G-07), en la capa 1 y sin jerga
-      gasto:
+      gasto:                      # S3-01b (u13): la apertura dice qué cubre la cifra y qué no, y va antes de la cifra; reemplaza al «Ojo al leer» que lo repetía
+        apertura:
+          regional: "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en {lugar}."
+          local: "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta a la municipalidad y las obras ubicadas en {lugar}."
+          nacional: "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil de todas las entidades públicas del país."
         clave:
           regional: "es lo que se gastó en {anio} en servicios de salud y nutrición infantil, registrado por entidades con sede en {lugar}."
           local: "es lo que se gastó en {anio} en servicios de salud y nutrición infantil, solo de la municipalidad y de obras ubicadas {nivel_en} (sin lo que gastan el Ministerio de Salud y otras entidades)."
           nacional: "es lo que se gastó en {anio} en servicios de salud y nutrición infantil en todo el país, registrado por las entidades públicas."
-        ojo:
-          regional: "No leas esta cifra como todo el gasto en {lugar}: solo cuenta lo que registran las entidades con sede allí."
-          local: "No es todo el gasto {nivel_en}: no incluye lo que gastan el Ministerio de Salud ni otras entidades."
-          nacional: "No es el gasto de cada lugar: es la suma de lo que registran las entidades públicas."
     cruce_efecto:
       clave_local: "en servicios de salud y nutrición infantil en {anio}, solo de la municipalidad y de obras ubicadas {nivel_en} (sin lo que gastan el Ministerio de Salud y otras entidades)."
       clave_regional: "en servicios de salud y nutrición infantil en {anio}, registrado por unidades ejecutoras con sede en {lugar} ({fuente})."
@@ -159,7 +159,7 @@ bloques:
     cuando: {indicador: [gasto_ex_pan, gasto_ex_pan_opcion_c], nivel: [LIMA_METROPOLITANA, LIMA_REGION]}
     nivel_actual:                 # S1-09 (H5): lo que no incluye la cifra de Lima, ya en la capa 1; la línea nacional, en la capa 2
       gasto_lima:
-        ojo: "No incluye a las entidades nacionales con sede en Lima, que atienden a todo el país."
+        apertura: "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y no incluye lo que gastan las entidades nacionales con sede en Lima."   # S3-01b (u13): reemplaza al «Ojo al leer» de Lima
         tarjeta:
           titulo: "Lo que no incluye esta cifra"
           texto: "{{p:sede}} {linea_ref}."

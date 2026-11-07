@@ -41,14 +41,6 @@
     = true): tarjeta nueva de «Más contexto» con la cifra exceptuada `gasto_ex_pan` 2024 de Lima Metropolitana (rol contexto), y el
     rango de años de la línea «Datos de:» pasa a incluir 2024.'
   aprobado_por: dueño
-- capa: capa2.mas_contexto[4].texto
-  antes: ''
-  despues: 'En 2024, el gasto fue S/ 260,7 millones, registrado por unidades ejecutoras con sede en Lima Metropolitana (MEF 2024): el
-    mismo año con el que se compara la anemia.'
-  motivo: 'X-03 (dueño, fila R-03 de decisiones.md; S3-01): CR-01 muestra además el gasto del mismo año que la anemia comparada (`cr01_mismo_anio`
-    = true): tarjeta nueva de «Más contexto» con la cifra exceptuada `gasto_ex_pan` 2024 de Lima Metropolitana (rol contexto), y el
-    rango de años de la línea «Datos de:» pasa a incluir 2024.'
-  aprobado_por: dueño
 - capa: capa2.mas_contexto[4].titulo
   antes: ''
   despues: Gasto en Lima Metropolitana en 2024
@@ -77,13 +69,6 @@
     oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
     el texto de la cita no cambia y el .md muestra el enlace.'
   aprobado_por: dueño
-- capa: capa3.citas[3].url
-  antes: ''
-  despues: https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional
-  motivo: 'plan_slices.md, slice 3; P-02 (S3-01, tarea 2): cada entrada de «Para citar y verificar» lleva el enlace (`url`) al documento
-    oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
-    el texto de la cita no cambia y el .md muestra el enlace.'
-  aprobado_por: dueño
 - capa: capa3.citas[4].url
   antes: ''
   despues: https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
@@ -98,19 +83,6 @@
     oficial, tomado de la columna `url` de cifras_doradas.csv (cifras con dorada) o del portal de la fuente en catalogo_fuentes.csv;
     el texto de la cita no cambia y el .md muestra el enlace.'
   aprobado_por: dueño
-- capa: capa3.para_citar[5]
-  antes: ''
-  despues: 'S/ 260,7 millones: gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Lima Metropolitana
-    (provincia de Lima), 2024. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2024.'
-  motivo: 'X-03 (dueño, fila R-03 de decisiones.md; S3-01): CR-01 muestra además el gasto del mismo año que la anemia comparada (`cr01_mismo_anio`
-    = true): tarjeta nueva de «Más contexto» con la cifra exceptuada `gasto_ex_pan` 2024 de Lima Metropolitana (rol contexto), y el
-    rango de años de la línea «Datos de:» pasa a incluir 2024.'
-  aprobado_por: dueño
-- capa: capa3.glosario[5].definicion
-  antes: 'una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.'
-  despues: el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior da cifras más altas.
-  motivo: 'H15 (S3-02, aprobada por el agente, agents.md §5.1): la respuesta usa «forma de medir vigente desde 2024» en sus citas y no tenía el término en el glosario; se agrega la entrada que ya existe en glosario.yaml (forma_de_medir), la misma que ya lleva Q1. Condiciones de §5.1: (1) no cambia ninguna cifra, semáforo, confianza ni regla de bloqueo, supresión, subida de nivel o referencial; (2) el término ya está en el texto de la respuesta y la definición es el texto fijo del glosario; (3) corrector sin infracciones y capa 1 sin cambios; (4) no cambia el orden de un «no se puede»'
-  aprobado_por: agente
 - capa: capa3.glosario[5].termino
   antes: cambio estadísticamente claro
   despues: forma de medir la anemia
@@ -126,3 +98,23 @@
   despues: cambio estadísticamente claro
   motivo: 'H15 (S3-02, aprobada por el agente, agents.md §5.1): la respuesta usa «forma de medir vigente desde 2024» en sus citas y no tenía el término en el glosario; se agrega la entrada que ya existe en glosario.yaml (forma_de_medir), la misma que ya lleva Q1. Condiciones de §5.1: (1) no cambia ninguna cifra, semáforo, confianza ni regla de bloqueo, supresión, subida de nivel o referencial; (2) el término ya está en el texto de la respuesta y la definición es el texto fijo del glosario; (3) corrector sin infracciones y capa 1 sin cambios; (4) no cambia el orden de un «no se puede»'
   aprobado_por: agente
+- capa: capa2.mas_contexto[4].texto
+  antes: ''
+  despues: 'En 2024, el gasto fue S/ 264,6 millones, registrado por unidades ejecutoras con sede en Lima Metropolitana (MEF 2024): el mismo año con el que se compara la anemia.'
+  motivo: 'S3-01b punto 2 (H-B), aprobado por el dueño el 6/11/2026 (R-GASTO-12, X-03): la tarjeta del gasto de 2024 va en soles de 2025 y la cita trae el monto nominal de 2024; antes mostraba 2024 en soles de 2024 junto a 2025.'
+  aprobado_por: dueño
+- capa: capa3.citas[3].url
+  antes: ''
+  despues: https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud
+  motivo: 'S3-01b punto 8 (H-K), aprobado por el dueño el 6/11/2026: el enlace oficial de la cita del SIEN pasa a la colección de informes de vigilancia en gob.pe (el anterior de web.ins.gob.pe daba error de certificado). No cambia ninguna cifra.'
+  aprobado_por: dueño
+- capa: capa3.glosario[5].definicion
+  antes: 'una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error.'
+  despues: el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior no se compara con la de hoy.
+  motivo: 'S3-01b punto 1 (H-A), aprobado por el dueño el 6/11/2026: la definición de «forma de medir la anemia» dice «la anterior no se compara con la de hoy» en vez de «la anterior da cifras más altas». Cambia solo la redacción.'
+  aprobado_por: dueño
+- capa: capa3.para_citar[5]
+  antes: ''
+  despues: 'S/ 264,6 millones en soles de 2025 (monto registrado en 2024: S/ 260,7 millones; factor de inflación: 1,0150108): gasto en servicios de salud y nutrición infantil que antes eran del PAN (devengado), Lima Metropolitana (provincia de Lima), 2024. Fuente: Pregúntale al Perú, cálculo propio con gasto registrado en el MEF 2024.'
+  motivo: 'S3-01b punto 2 (H-B), aprobado por el dueño el 6/11/2026 (R-GASTO-12, X-03): la tarjeta del gasto de 2024 va en soles de 2025 y la cita trae el monto nominal de 2024; antes mostraba 2024 en soles de 2024 junto a 2025.'
+  aprobado_por: dueño

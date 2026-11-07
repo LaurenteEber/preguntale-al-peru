@@ -1,0 +1,16 @@
+{
+ "clase": "no_se_puede",
+ "consulta": {
+  "intencion": "nivel_actual",
+  "periodo": {
+   "tipo": "serie"
+  },
+  "pregunta_original": "pregunta de la matriz de cobertura",
+  "tema": "anemia",
+  "territorio": {
+   "texto": "Independencia"
+  }
+ },
+ "elegir": 2,
+ "id": "anemia|nivel_actual|Independencia (homónimo, opción 2 de 4)|serie"
+}

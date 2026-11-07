@@ -5,7 +5,7 @@ id: INS-CENAN-SIEN
 strategy: manual
 publisher: INS/CENAN
 dataset_title: Sistema de Información del Estado Nutricional de niños y gestantes
-access_url: https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional
+access_url: https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud
 documentation_url: https://www.datosabiertos.gob.pe/dataset/sien-sistema-de-informaci%C3%B3n-del-estado-nutricional-de-ni%C3%B1os-y-gestantes-per%C3%BA-inscenan
 temporal:
   inicio: 2012

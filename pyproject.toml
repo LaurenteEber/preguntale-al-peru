@@ -43,3 +43,9 @@ testpaths = ["tests"]
 markers = [
     "solo_mac: needs the raw store (biblioteca/cruda/); runs only on the owner's Mac (X-11)",
 ]
+# S3-01b (fila 13): se silencian solo estos dos avisos de librerías ajenas (con el mensaje exacto, para que cualquier otro aviso siga viéndose):
+# Starlette avisa de que TestClient usa httpx (fastapi/testclient.py) y openpyxl avisa de un área de impresión del Excel del INEI.
+filterwarnings = [
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+    "ignore:Print area cannot be set to Defined name:UserWarning:openpyxl",
+]

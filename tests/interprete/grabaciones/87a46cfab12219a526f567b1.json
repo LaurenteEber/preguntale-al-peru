@@ -1,0 +1,42 @@
+{
+ "pregunta_limpia": "¿en Huancavelica los niños siguen con anemia como antes?",
+ "modelo": "claude-sonnet-5-5",
+ "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6",
+ "tokens_entrada": 9247,
+ "tokens_salida": 369,
+ "costo_usd": 0.004696,
+ "latencia_s": 3.068,
+ "respuesta": {
+  "model": "claude-sonnet-5-5",
+  "id": "msg_011CgnbeUPY22u8kxsE3mKsQ",
+  "type": "message",
+  "role": "assistant",
+  "content": [
+   {
+    "type": "text",
+    "text": "Esta pregunta puede leerse de dos formas: cuánta anemia hay ahora (`nivel_actual`) o cómo cambió con el tiempo (`evolucion`). «Siguen... como antes» sugiere una comparación en el tiempo, pero sin años ni verbo claro. Lo más razonable es la evolución, aunque también cabe preguntar por el nivel actual, así que pido aclaración.\n\n{\"resultado\": \"aclaracion\", \"motivo\": \"intencion_ambigua\", \"opciones\": [{\"consulta\": {\"intencion\": \"evolucion\", \"tema\": \"anemia\", \"territorio\": {\"texto\": \"Huancavelica\"}}, \"anclas\": {\"intencion\": \"siguen con anemia como antes\", \"tema\": \"anemia\", \"territorio\": \"Huancavelica\"}}, {\"consulta\": {\"intencion\": \"nivel_actual\", \"tema\": \"anemia\", \"territorio\": {\"texto\": \"Huancavelica\"}}, \"anclas\": {\"intencion\": \"siguen con anemia\", \"tema\": \"anemia\", \"territorio\": \"Huancavelica\"}}]}"
+   }
+  ],
+  "container": null,
+  "stop_reason": "end_turn",
+  "stop_sequence": null,
+  "stop_details": null,
+  "usage": {
+   "input_tokens": 43,
+   "cache_creation_input_tokens": 0,
+   "cache_read_input_tokens": 9204,
+   "cache_creation": {
+    "ephemeral_5m_input_tokens": 0,
+    "ephemeral_1h_input_tokens": 0
+   },
+   "output_tokens": 369,
+   "output_tokens_details": {
+    "thinking_tokens": 0
+   },
+   "service_tier": "standard",
+   "inference_geo": "global",
+   "speed": "standard"
+  },
+  "diagnostics": null
+ }
+}

@@ -177,8 +177,8 @@ def casos(raiz, ctx) -> list[dict]:
                                 and intencion == "nivel_actual" and clase == "ultimo")
                     out.append(_caso(tema, intencion, t, clase, cm, elegir=t.get("elegir"),
                                      espera="no_se_puede" if sin_datos or sin_sien else None))
-    # aclaraciones esperadas (T-03 y R-TERRITORIO-09)
-    for texto in ("Lima", "Huancavelica"):
+    # aclaraciones esperadas (T-03 y R-TERRITORIO-09); X-22: «Huancavelica» a secas ya no aclara, se responde como departamento
+    for texto in ("Lima", "San Juan"):
         t = {"etiqueta": texto + " (a secas)", "lugar": {"texto": texto}, "ubigeo": None, "grupo": "aclaracion"}
         out.append(_caso("anemia", "nivel_actual", t, "ultimo",
                          {"intencion": "nivel_actual", "tema": "anemia", "territorio": t["lugar"], "periodo": {"tipo": "ultimo"},

@@ -23,7 +23,7 @@ from . import capas as K
 from . import plantillas
 from .consulta import ConsultaInvalida, cargar
 from .planificador import cargar_intenciones, planificar
-from .territorio import Aclaracion, Resuelto, resolver
+from .territorio import Aclaracion, Resuelto, oferta_otros_niveles, resolver
 from .validador.reglas_etapa0 import contenedor
 from .validador.reglas_etapa1_3 import nombre_territorio
 
@@ -520,7 +520,7 @@ def _plan_aparte(cm: dict | None, dato: dict, **claves) -> dict:
 
 # ======================================================================= camino completo
 
-def _resolver(motor, cm: dict, elegir):
+def _resolver(motor, cm: dict, elegir, ofertas: list | None = None):
     """(territorios resueltos del plan o None, aclaración pendiente o None, números de `elegir` que sobran, los lugares que salieron
     de una aclaración). Cada aclaración usa el siguiente número de `elegir`; sin número, se devuelve la aclaración."""
     t = cm["territorio"]
@@ -540,6 +540,10 @@ def _resolver(motor, cm: dict, elegir):
             _elegir(motor, a, n)                                               # valida el número
             r = r.opciones[n - 1]["territorio"]
             elegidos.append(r)
+        elif ofertas is not None:
+            o = oferta_otros_niveles(motor.ctx, p, r)                          # X-22
+            if o and o not in ofertas:
+                ofertas.append(o)
         out.append(r)
     if cm["intencion"] == "identificar_extremo":
         return (out[0] if out else None), None, numeros, elegidos
@@ -572,7 +576,8 @@ def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bo
         dato = {**dato, "tema": _elegir(motor, a, numeros[0])["tema"]}
         elegir = numeros[1:]
         cm = cargar(dato, raiz)
-    resuelto, aclaracion, sobran, elegidos = _resolver(motor, cm, elegir)
+    ofertas: list[str] = []
+    resuelto, aclaracion, sobran, elegidos = _resolver(motor, cm, elegir, ofertas)
     if aclaracion is not None:
         plan = _plan_aparte(cm, dato, id=f"aclaracion__{aclaracion['motivo']}", aclaracion=aclaracion)
         return _con_entrada(motor.responder(plan), cm, plan)
@@ -585,7 +590,10 @@ def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bo
     plan["consulta_minima"] = cm
     # S1-09 (H4): el lugar que la persona eligió entre homónimos conserva su nombre con provincia y departamento
     plan["desambiguados"] = {f"{r.nivel}:{r.id}": r.nombre_completo for r in elegidos if r.nivel in ("provincia", "distrito")}
-    return _con_entrada({"tipo": "plan"} if solo_plan else motor.responder(plan), cm, plan)
+    res = {"tipo": "plan"} if solo_plan else motor.responder(plan)
+    if ofertas and "capas" in res:                                             # X-22: la alternativa va en «Avisos» (capa 2), no en la capa 1
+        res["capas"]["capa2"]["avisos"] = list(dict.fromkeys(ofertas + res["capas"]["capa2"]["avisos"]))
+    return _con_entrada(res, cm, plan)
 
 
 def _con_entrada(res: dict, cm: dict, plan: dict) -> dict:

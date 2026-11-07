@@ -8,6 +8,7 @@ import threading
 from pathlib import Path
 
 import pytest
+import yaml
 from fastapi.testclient import TestClient
 
 from pap.interprete.llm import Cliente
@@ -61,7 +62,8 @@ def test_equivalencia_via_estructurada(cli, grupo):
 
 def test_equivalencia_via_texto_con_cache_nueva_por_comparacion(app, cli, tmp_path):
     casos = _casos("evaluacion")
-    assert len(casos) == 140
+    entradas = yaml.safe_load((RAIZ / "tests" / "interprete" / "evaluacion.yaml").read_text(encoding="utf-8"))["entradas"]
+    assert len(casos) == len(entradas)                                # todo el conjunto, sin exclusiones (158 desde S3-01b)
     for i, c in enumerate(casos):
         ent, esperado = _leer(c)
         app.state.dir_cache = tmp_path / f"cache{i}"                 # carpeta nueva: «cache» sale igual que en la base

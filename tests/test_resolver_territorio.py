@@ -10,7 +10,7 @@ import pytest
 import yaml
 
 from pap.config import Rutas
-from pap.motor.territorio import Aclaracion, Resuelto, resolver
+from pap.motor.territorio import Aclaracion, Resuelto, _config, resolver
 from pap.motor.validador.contexto import cargar_contexto
 
 from conftest import RAIZ_REAL
@@ -164,31 +164,49 @@ def test_lima_a_secas(ctx):
 
 # ------------------------------------------------------------------ homónimos entre niveles
 
-def test_huancavelica_a_secas(ctx):
-    a = texto(ctx, "Huancavelica")
+def test_abancay_a_secas_aclara_entre_provincia_y_distrito(ctx):
+    # X-22: el homónimo entre niveles sigue aclarando cuando ningún departamento lleva ese nombre
+    a = texto(ctx, "Abancay")
     assert isinstance(a, Aclaracion) and a.motivo == "homonimo_niveles"
     assert etiquetas(a) == [
-        "Huancavelica (departamento)",
-        "Huancavelica (provincia, departamento de Huancavelica)",
-        "Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
+        "Abancay (provincia, departamento de Apurímac)",
+        "Abancay (distrito, provincia de Abancay, departamento de Apurímac)",
     ]
-    assert [o["territorio"].id for o in a.opciones] == ["09", "090100", "090101"]
+    assert [o["territorio"].id for o in a.opciones] == ["030100", "030101"]
     assert a.por_defecto is None
 
 
-@pytest.mark.parametrize("t", ["Puno", "Cusco", "Arequipa", "Cajamarca", "huancavelica"])
+def test_huancavelica_a_secas_se_responde_como_departamento(ctx):
+    # X-22 (6/11/2026): el nombre a secas de un departamento se responde como departamento; la alternativa va en Avisos
+    r = texto(ctx, "Huancavelica")
+    assert isinstance(r, Resuelto) and (r.nivel, r.id) == ("departamento", "09")
+
+
+@pytest.mark.parametrize("t", ["Acomayo", "Aija", "Ambo", "Andahuaylas", "abancay"])
 def test_homonimos_entre_niveles(ctx, t):
     a = texto(ctx, t)
     assert isinstance(a, Aclaracion) and a.motivo == "homonimo_niveles"
-    assert [o["territorio"].nivel for o in a.opciones][0] == "departamento"
+    assert [o["territorio"].nivel for o in a.opciones] == ["provincia", "distrito"]
     assert len(a.opciones) >= 2
 
 
-def test_niveles_ordenados(ctx):
-    a = texto(ctx, "Puno")
+@pytest.mark.parametrize("t", ["Puno", "Cusco", "Arequipa", "Cajamarca", "huancavelica"])
+def test_nombre_de_departamento_a_secas_se_resuelve_como_departamento(ctx, t):
+    r = texto(ctx, t)
+    assert isinstance(r, Resuelto) and r.nivel == "departamento"
+
+
+def test_niveles_ordenados(ctx, monkeypatch):
     orden = {"departamento": 0, "provincia": 1, "distrito": 2}
+    a = texto(ctx, "Abancay")
     niv = [orden[o["territorio"].nivel] for o in a.opciones]
     assert niv == sorted(niv)
+    # con X-22 apagada (comportamiento anterior) el orden de tres niveles se conserva
+    monkeypatch.setitem(_config(str(ctx.raiz)), "depto_a_secas", False)
+    a = texto(ctx, "Puno")
+    assert isinstance(a, Aclaracion) and a.motivo == "homonimo_niveles"
+    niv = [orden[o["territorio"].nivel] for o in a.opciones]
+    assert niv == sorted(niv) and niv[0] == 0
 
 
 def test_palabra_de_nivel_deshace_el_empate(ctx):

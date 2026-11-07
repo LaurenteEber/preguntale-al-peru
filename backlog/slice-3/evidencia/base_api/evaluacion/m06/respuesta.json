@@ -10,7 +10,7 @@
       "texto": "Puno"
      }
     },
-    "etiqueta": "Cómo cambió la anemia en «Puno»",
+    "etiqueta": "Cómo cambió la anemia en el departamento de Puno",
     "n": 1
    },
    {
@@ -24,7 +24,7 @@
       "texto": "Puno"
      }
     },
-    "etiqueta": "Cómo se compara la anemia en «Puno» con «Cusco»",
+    "etiqueta": "Cómo se compara la anemia en el departamento de Puno con el departamento de Cusco",
     "n": 2
    }
   ],
@@ -44,7 +44,7 @@
        "texto": "Puno"
       }
      },
-     "etiqueta": "Cómo cambió la anemia en «Puno»",
+     "etiqueta": "Cómo cambió la anemia en el departamento de Puno",
      "n": 1
     },
     {
@@ -58,7 +58,7 @@
        "texto": "Puno"
       }
      },
-     "etiqueta": "Cómo se compara la anemia en «Puno» con «Cusco»",
+     "etiqueta": "Cómo se compara la anemia en el departamento de Puno con el departamento de Cusco",
      "n": 2
     }
    ],
@@ -104,7 +104,7 @@
        "texto": "Puno"
       }
      },
-     "etiqueta": "Cómo cambió la anemia en «Puno»",
+     "etiqueta": "Cómo cambió la anemia en el departamento de Puno",
      "n": 1
     },
     {
@@ -118,7 +118,7 @@
        "texto": "Puno"
       }
      },
-     "etiqueta": "Cómo se compara la anemia en «Puno» con «Cusco»",
+     "etiqueta": "Cómo se compara la anemia en el departamento de Puno con el departamento de Cusco",
      "n": 2
     }
    ],
@@ -138,7 +138,7 @@
   "tema": null,
   "territorio": null
  },
- "texto": "Tu mensaje tiene más de una pregunta. ¿Cuál respondemos?\n1) Cómo cambió la anemia en «Puno»\n2) Cómo se compara la anemia en «Puno» con «Cusco»",
+ "texto": "Tu mensaje tiene más de una pregunta. ¿Cuál respondemos?\n1) Cómo cambió la anemia en el departamento de Puno\n2) Cómo se compara la anemia en el departamento de Puno con el departamento de Cusco",
  "tipo": "aclaracion",
  "version_biblioteca": {
   "commit_cubo": "779357d",

@@ -103,10 +103,10 @@ EQUIVALENCIA = [
               intencion="Hay más", tema="desnutrición", territorio="Loreto", comparar_con="Ucayali", anio="2022"),
      {"intencion": "comparacion", "tema": "desnutricion_cronica", "territorio": {"texto": "Loreto"},
       "comparar_con": {"texto": "Ucayali"}, "periodo": {"tipo": "anio", "anio": 2022}}),
-    ("¿Cómo ha evolucionado la anemia en Huancavelica?",
-     consulta({"intencion": "evolucion", "tema": "anemia", "territorio": {"texto": "Huancavelica"}},
-              intencion="Cómo ha evolucionado", tema="anemia", territorio="Huancavelica"),
-     {"intencion": "evolucion", "tema": "anemia", "territorio": {"texto": "Huancavelica"}}),
+    ("¿Cuánta anemia hay en Abancay?",
+     consulta({"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Abancay"}},
+              intencion="Cuánta", tema="anemia", territorio="Abancay"),
+     {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Abancay"}}),
 ]
 
 
@@ -125,12 +125,12 @@ def test_q1_homonimo_y_luego_elegir(motor, preguntar):
     falso = Falso(interp)
     r = preguntar(pregunta, falso)
     assert r["tipo"] == "aclaracion" and r["aclaracion"]["motivo"] == "homonimo_niveles"
-    assert r["entendimos"] == "Entendimos: cómo cambió la anemia en «Huancavelica»"
+    assert r["entendimos"] == "Entendimos: cuánto hay de anemia en «Abancay»"
     r1 = preguntar(pregunta, falso, elegir=1)
     assert len(falso.llamadas) == 1                                                # la segunda vez, de la caché
     base = preguntar_minima(motor, {**esperada, "pregunta_original": pregunta, "idioma": "es"}, elegir=1)
     assert r1["tipo"] == "respuesta" and igual(r1, base) and r1["interpretacion"]["cache"] is True
-    assert r1["entendimos"] == "Entendimos: cómo cambió la anemia en el departamento de Huancavelica"
+    assert r1["entendimos"] == "Entendimos: cuánto hay de anemia en la provincia de Abancay (Apurímac)"
 
 
 def test_entendimos_con_nombre_del_resolver_y_anios(preguntar):
@@ -432,26 +432,26 @@ def test_llm_falso_adversario_todo_junto(preguntar):
 
 # ------------------------------------------------------------------ --elegir
 
-LUGAR_AMBIGUO = "¿Cómo va la anemia en Huancavelica?"
+LUGAR_AMBIGUO = "¿Cómo va la anemia en Abancay?"
 AMBIGUA_HV = {"resultado": "aclaracion", "motivo": "intencion_ambigua", "opciones": [
-    {"consulta": {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Huancavelica"}},
-     "anclas": {"intencion": "Cómo va", "tema": "anemia", "territorio": "Huancavelica"}},
-    {"consulta": {"intencion": "evolucion", "tema": "anemia", "territorio": {"texto": "Huancavelica"}},
-     "anclas": {"intencion": "Cómo va", "tema": "anemia", "territorio": "Huancavelica"}}]}
+    {"consulta": {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Abancay"}},
+     "anclas": {"intencion": "Cómo va", "tema": "anemia", "territorio": "Abancay"}},
+    {"consulta": {"intencion": "evolucion", "tema": "anemia", "territorio": {"texto": "Abancay"}},
+     "anclas": {"intencion": "Cómo va", "tema": "anemia", "territorio": "Abancay"}}]}
 
 
 def test_elegir_2_1_interprete_y_luego_territorio(motor, preguntar):
     falso = Falso(AMBIGUA_HV)
     r = preguntar(LUGAR_AMBIGUO, falso)
     assert r["aclaracion"]["motivo"] == "interprete_intencion_ambigua"
-    assert r["aclaracion"]["opciones"][1]["etiqueta"] == "Cuánto hay de anemia en «Huancavelica»"
+    assert r["aclaracion"]["opciones"][1]["etiqueta"] == "Cuánto hay de anemia en «Abancay»"
     r2 = preguntar(LUGAR_AMBIGUO, falso, elegir=[2])
     assert r2["aclaracion"]["motivo"] == "homonimo_niveles"
     r21 = preguntar(LUGAR_AMBIGUO, falso, elegir=[2, 1])
-    base = preguntar_minima(motor, {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Huancavelica"},
+    base = preguntar_minima(motor, {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Abancay"},
                                     "pregunta_original": LUGAR_AMBIGUO, "idioma": "es"}, elegir=[1])
     assert r21["tipo"] == "respuesta" and igual(r21, base) and len(falso.llamadas) == 1
-    assert r21["entendimos"] == "Entendimos: cuánto hay de anemia en el departamento de Huancavelica"
+    assert r21["entendimos"] == "Entendimos: cuánto hay de anemia en la provincia de Abancay (Apurímac)"
 
 
 @pytest.mark.parametrize("elegir,clave,hay", [([2, 1, 1], "elegir_de_mas", 2), ([1, 1], "elegir_de_mas_una", 1)])

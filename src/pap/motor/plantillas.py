@@ -503,11 +503,12 @@ def _gasto_nivel_actual(P: _Plantilla, i: str, c, vs: dict):
     entidades nacionales) y sin «PAN» ni «devengado», que quedan en el glosario. Reutiliza los bloques `gasto` y `sesgo_sede_lima`."""
     g, lima = P.sec("gasto"), P.sec("gasto_lima")
     alcance = "nacional" if c.nivel == "nacional" else "local" if c.nivel in NIVELES_LOCALES else "regional"
+    if _publicable(c):                      # S3-01b (u13): qué cubre la cifra y qué no, antes de la cifra (si no hay cifra, «no se puede» va primero)
+        P.corta.append(P.t(lima["apertura"] if lima and alcance == "regional" else g["apertura"][alcance], **vs))
     P.corta.append(P.t(P.na["corta"], **vs))
     if not _publicable(c):
         return None
     P.usadas.append(i)
-    P.ojo.append(P.t(lima["ojo"] if lima and alcance == "regional" else g["ojo"][alcance], **vs))
     P.ojo.append(P.ojo_generico(c))
     ref_nac = [x["devengado"] for x in (c.lineas_aparte or []) if x["linea"] == "referencia_nacional"]
     if lima and ref_nac:

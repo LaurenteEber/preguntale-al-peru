@@ -1,117 +1,185 @@
 {
- "aclaracion": {
-  "motivo": "homonimo_niveles",
-  "opciones": [
-   {
-    "etiqueta": "Huancavelica (departamento)",
-    "n": 1,
-    "territorio": {
-     "ambito_lima": null,
-     "anio_datos_desde": 1995,
-     "departamento": "Huancavelica",
-     "id": "09",
-     "nivel": "departamento",
-     "nombre_completo": "Huancavelica",
-     "nombre_mostrado": "Huancavelica",
-     "provincia": null,
-     "provisional": false,
-     "ubigeo": "090000"
-    }
+ "avisos_al_usuario": [],
+ "capas": {
+  "capa1": {
+   "cifra_clave": {
+    "fuente": "ENDES 2025 (INEI); el INEI publica la misma cifra (20,3 %)",
+    "ids": [
+     "endes_dci_menores_5__proporcion__departamento__09__2025__principal"
+    ],
+    "texto": "de niñas y niños menores de 5 años con desnutrición crónica en Huancavelica en 2025.",
+    "valor": "20,3 %"
    },
-   {
-    "etiqueta": "Huancavelica (provincia, departamento de Huancavelica)",
-    "n": 2,
-    "territorio": {
-     "ambito_lima": null,
-     "anio_datos_desde": 2017,
-     "departamento": "Huancavelica",
-     "id": "090100",
-     "nivel": "provincia",
-     "nombre_completo": "Huancavelica (Huancavelica)",
-     "nombre_mostrado": "Huancavelica",
-     "provincia": "Huancavelica",
-     "provisional": false,
-     "ubigeo": "090100"
-    }
+   "confianza": {
+    "ficha": "Confianza en los datos: media (dato con limitaciones): la respuesta es parcial.",
+    "nivel": "media",
+    "texto": "Confianza en los datos: media. La respuesta es parcial."
    },
-   {
-    "etiqueta": "Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
-    "n": 3,
-    "territorio": {
-     "ambito_lima": null,
-     "anio_datos_desde": 2017,
-     "departamento": "Huancavelica",
-     "id": "090101",
-     "nivel": "distrito",
-     "nombre_completo": "Huancavelica (Huancavelica, Huancavelica)",
-     "nombre_mostrado": "Huancavelica",
-     "provincia": "Huancavelica",
-     "provisional": false,
-     "ubigeo": "090101"
+   "ojo_al_leer": [
+    "No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error."
+   ],
+   "palabras": 72,
+   "que_hacer": null,
+   "respuesta_corta": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2025, en Huancavelica, la desnutrición crónica en niñas y niños menores de 5 años fue:"
+  },
+  "capa2": {
+   "avisos": [
+    "Respondimos por el departamento de Huancavelica. Si buscabas la provincia o el distrito de Huancavelica, pregúntalo así: «provincia de Huancavelica» o «distrito de Huancavelica»."
+   ],
+   "limites": [
+    "Datos de: ENDES 2025 (INEI)",
+    "Territorio: departamento de Huancavelica",
+    "No permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "mas_contexto": [
+    {
+     "etiqueta": null,
+     "texto": "Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+     "titulo": "Lo que no pudimos mostrar"
     }
-   }
-  ],
-  "por_defecto": null,
-  "pregunta": "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?"
- },
- "cifras": {},
- "consulta": {
-  "aclaracion": {
-   "motivo": "homonimo_niveles",
-   "opciones": [
+   ]
+  },
+  "capa3": {
+   "citas": [
     {
-     "etiqueta": "Huancavelica (departamento)",
-     "n": 1,
-     "territorio": {
-      "ambito_lima": null,
-      "anio_datos_desde": 1995,
-      "departamento": "Huancavelica",
-      "id": "09",
-      "nivel": "departamento",
-      "nombre_completo": "Huancavelica",
-      "nombre_mostrado": "Huancavelica",
-      "provincia": null,
-      "provisional": false,
-      "ubigeo": "090000"
-     }
-    },
-    {
-     "etiqueta": "Huancavelica (provincia, departamento de Huancavelica)",
-     "n": 2,
-     "territorio": {
-      "ambito_lima": null,
-      "anio_datos_desde": 2017,
-      "departamento": "Huancavelica",
-      "id": "090100",
-      "nivel": "provincia",
-      "nombre_completo": "Huancavelica (Huancavelica)",
-      "nombre_mostrado": "Huancavelica",
-      "provincia": "Huancavelica",
-      "provisional": false,
-      "ubigeo": "090100"
-     }
-    },
-    {
-     "etiqueta": "Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
-     "n": 3,
-     "territorio": {
-      "ambito_lima": null,
-      "anio_datos_desde": 2017,
-      "departamento": "Huancavelica",
-      "id": "090101",
-      "nivel": "distrito",
-      "nombre_completo": "Huancavelica (Huancavelica, Huancavelica)",
-      "nombre_mostrado": "Huancavelica",
-      "provincia": "Huancavelica",
-      "provisional": false,
-      "ubigeo": "090101"
-     }
+     "id_cifra": "endes_dci_menores_5__proporcion__departamento__09__2025__principal",
+     "texto": "20,3 % (intervalo del INEI: 15,9 % a 24,7 %): niñas y niños menores de 5 años con desnutrición crónica, Huancavelica, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52).",
+     "url": "https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf"
     }
    ],
-   "por_defecto": null,
-   "pregunta": "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?"
-  },
-  "cifras": [],
+   "glosario": [
+    {
+     "definicion": "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños.",
+     "termino": "ENDES"
+    }
+   ],
+   "para_citar": [
+    "20,3 % (intervalo del INEI: 15,9 % a 24,7 %): niñas y niños menores de 5 años con desnutrición crónica, Huancavelica, 2025. Fuente: INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)."
+   ]
+  }
+ },
+ "cifras": {
+  "endes_dci_menores_5__proporcion__departamento__09__2025__principal": {
+   "accion_final": "publicar",
+   "anio": 2025,
+   "avisos": [],
+   "bloqueos_cruce": [],
+   "comparacion": null,
+   "contraste_oficial": {
+    "criterio": "patron_OMS2006_talla_edad_-2DE",
+    "cuadro_pagina": "Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "entidad": "INEI",
+    "id_cifra": "DOR-DCI-2025-09",
+    "valor": 20.3
+   },
+   "cota_inf": null,
+   "cota_sup": null,
+   "cv": 11.03050407,
+   "denominador": null,
+   "devengado": null,
+   "ee": 2.23745479,
+   "estado_cifra": "publicable",
+   "grupo_robusto_nacional": null,
+   "ic_inei": {
+    "cuadro_pagina": "Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)",
+    "documento": "INEI, Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025",
+    "ic_inf": 15.9,
+    "ic_sup": 24.7,
+    "id_cifra": "DOR-DCI-2025-09"
+   },
+   "ic_inf": 15.98912343,
+   "ic_sup": 25.14638034,
+   "indicador_id": "endes_dci_menores_5",
+   "lineas_aparte": null,
+   "medida": "proporcion",
+   "metodo_ic": "korn-graubard",
+   "motivos_semaforo": [],
+   "n_muestra": 542,
+   "nivel": "departamento",
+   "nivel_pedido": "departamento",
+   "numerador": null,
+   "pct_gasto_atribuible": null,
+   "pim": null,
+   "resultados": [
+    {
+     "accion": "rotular",
+     "clausula": "periodo nulo → último año cerrado",
+     "detalle": {
+      "anio_cifra": 2025,
+      "compuerta_fuente": "aprobada",
+      "nota_gasto": null,
+      "ultimo_anio_cerrado": 2025
+     },
+     "mensaje": "Mostramos el último año completo disponible: 2025.",
+     "motivo": "periodo_por_defecto",
+     "regla": "R-MOTOR-03"
+    },
+    {
+     "accion": "rotular",
+     "clausula": "estado publicable",
+     "detalle": {
+      "referencial": false
+     },
+     "mensaje": "20,3 % (entre 16,0 % y 25,1 %), ENDES 2025, Huancavelica; basado en 542 niñas y niños encuestados.",
+     "motivo": "formato",
+     "regla": "R-ENC-05",
+     "rotulo": "20,3 % (entre 16,0 % y 25,1 %), ENDES 2025, Huancavelica; basado en 542 niñas y niños encuestados."
+    },
+    {
+     "accion": "rotular",
+     "clausula": "nivel 0",
+     "detalle": {
+      "accion_vigente": "publicar",
+      "escalado": false,
+      "motivos": [],
+      "puntajes": {
+       "base_geografica": 0,
+       "precision": 0,
+       "tipo_medida_vs_concepto": 0,
+       "vigencia": 0
+      },
+      "semaforo": "verde"
+     },
+     "mensaje": "Dato sólido: Hay suficientes datos y son de 2025.",
+     "motivo": "semaforo",
+     "regla": "R-CRUCES-09",
+     "rotulo": "Dato sólido"
+    }
+   ],
+   "rol": "principal",
+   "semaforo_cifra": "verde",
+   "territorio_id": "09",
+   "territorio_nombre": "Huancavelica",
+   "traza": [
+    {
+     "accion": "publicar",
+     "anio": 2025,
+     "estado": "publicable",
+     "motivos": [],
+     "nivel": "departamento",
+     "periodo_agrupado": null,
+     "territorio_id": "09"
+    }
+   ],
+   "validada_dorada": null,
+   "valor": 20.28424785
+  }
+ },
+ "comparaciones_bloqueadas": [],
+ "consulta": {
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "endes_dci_menores_5__proporcion__departamento__09__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "09"
+   }
+  ],
   "consulta_minima": {
    "idioma": "es",
    "intencion": "efecto",
@@ -121,13 +189,42 @@
     "texto": "Huancavelica"
    }
   },
+  "cruce": null,
+  "decisiones": [
+   "R-04",
+   "R-CRUCES-07 / R-03"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
   "grupos": [],
-  "id": "aclaracion__homonimo_niveles",
+  "grupos_estadisticos": null,
+  "id": "efecto__desnutricion_cronica__09",
   "intencion": "efecto",
-  "periodo": null,
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "desnutricion_cronica"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "cruce_fuera_de_lista_blanca",
+   "tema": "desnutricion_cronica"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
   "pregunta": "¿El gasto público en nutrición redujo la desnutrición crónica en Huancavelica?",
-  "tema": null,
-  "territorio": null
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "09",
+   "nivel": "departamento",
+   "nombre_pedido": "Huancavelica"
+  }
  },
  "consulta_minima": {
   "idioma": "es",
@@ -138,7 +235,35 @@
    "texto": "Huancavelica"
   }
  },
- "entendimos": "Entendimos: si en «Huancavelica» el gasto contra la desnutrición crónica tuvo efecto",
+ "corrector": [],
+ "cruces": [],
+ "entendimos": "Entendimos: si en el departamento de Huancavelica el gasto contra la desnutrición crónica tuvo efecto",
+ "ficha": {
+  "corta": "Confianza en los datos: media (dato con limitaciones): la respuesta es parcial.\nDatos de: ENDES 2025 (INEI)\nTerritorio: departamento de Huancavelica\nNo permite concluir: nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento.",
+  "larga": {
+   "cifras": {
+    "endes_dci_menores_5__proporcion__departamento__09__2025__principal": {
+     "1_origen": "Niñas y niños menores de 5 años con desnutrición crónica. ENDES (INEI), 2025. Es una encuesta a una muestra de hogares.",
+     "2_territorio": "La cifra se presenta por departamento (Huancavelica).",
+     "3_que_mide": "Mide niñas y niños menores de 5 años con desnutrición crónica (talla baja para la edad, patrón OMS), según la ENDES.",
+     "4_precision": "El valor real está probablemente entre 16,0 % y 25,1 % (coeficiente de variación 11,0 %, 542 casos en la muestra). El INEI publica para esta cifra un intervalo entre 15,9 % y 24,7 % (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)). Los dos salen de los mismos datos y tienen la misma cifra central; cambia el método: el del INEI es simétrico alrededor de la cifra y el nuestro se ajusta mejor cuando hay pocos casos o el porcentaje es muy alto o muy bajo. Por eso pueden diferir en algunas décimas.",
+     "5_metodo": "",
+     "6_contraste_oficial": "El INEI publica 20,3 % con la misma definición (Informe Preliminar Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2025, Cuadro N.º 04A (Patrón de referencia OMS), por departamento, p. 50 (PDF 52)). Nuestra cifra coincide.",
+     "avisos": [
+      "Mostramos el último año completo disponible: 2025.",
+      "20,3 % (entre 16,0 % y 25,1 %), ENDES 2025, Huancavelica; basado en 542 niñas y niños encuestados."
+     ],
+     "estado": "publicable",
+     "semaforo": "verde"
+    }
+   },
+   "cruces": {},
+   "no_concluir": [
+    "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
+   ],
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_dci_menores_5."
+  }
+ },
  "interpretacion": {
   "anclas": {
    "intencion": "redujo",
@@ -161,63 +286,23 @@
   "resultado": "consulta",
   "version_prompt": "sha256:c5ff04823bc6b45e3126eecb142dedfffd106bc55ec2101203874bfce8e39eb6"
  },
+ "motivos_semaforo_respuesta": [
+  "peor_cifra_principal:endes_dci_menores_5__proporcion__departamento__09__2025__principal",
+  "respuesta_parcial"
+ ],
  "plan": {
-  "aclaracion": {
-   "motivo": "homonimo_niveles",
-   "opciones": [
-    {
-     "etiqueta": "Huancavelica (departamento)",
-     "n": 1,
-     "territorio": {
-      "ambito_lima": null,
-      "anio_datos_desde": 1995,
-      "departamento": "Huancavelica",
-      "id": "09",
-      "nivel": "departamento",
-      "nombre_completo": "Huancavelica",
-      "nombre_mostrado": "Huancavelica",
-      "provincia": null,
-      "provisional": false,
-      "ubigeo": "090000"
-     }
-    },
-    {
-     "etiqueta": "Huancavelica (provincia, departamento de Huancavelica)",
-     "n": 2,
-     "territorio": {
-      "ambito_lima": null,
-      "anio_datos_desde": 2017,
-      "departamento": "Huancavelica",
-      "id": "090100",
-      "nivel": "provincia",
-      "nombre_completo": "Huancavelica (Huancavelica)",
-      "nombre_mostrado": "Huancavelica",
-      "provincia": "Huancavelica",
-      "provisional": false,
-      "ubigeo": "090100"
-     }
-    },
-    {
-     "etiqueta": "Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
-     "n": 3,
-     "territorio": {
-      "ambito_lima": null,
-      "anio_datos_desde": 2017,
-      "departamento": "Huancavelica",
-      "id": "090101",
-      "nivel": "distrito",
-      "nombre_completo": "Huancavelica (Huancavelica, Huancavelica)",
-      "nombre_mostrado": "Huancavelica",
-      "provincia": "Huancavelica",
-      "provisional": false,
-      "ubigeo": "090101"
-     }
-    }
-   ],
-   "por_defecto": null,
-   "pregunta": "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?"
-  },
-  "cifras": [],
+  "avisos_periodo": [],
+  "bloques": [],
+  "cifras": [
+   {
+    "anio": 2025,
+    "id": "endes_dci_menores_5__proporcion__departamento__09__2025__principal",
+    "indicador": "endes_dci_menores_5",
+    "nivel": "departamento",
+    "rol": "principal",
+    "territorio": "09"
+   }
+  ],
   "consulta_minima": {
    "idioma": "es",
    "intencion": "efecto",
@@ -227,16 +312,67 @@
     "texto": "Huancavelica"
    }
   },
+  "cruce": null,
+  "decisiones": [
+   "R-04",
+   "R-CRUCES-07 / R-03"
+  ],
+  "desambiguados": {},
+  "estructura_efecto": false,
   "grupos": [],
-  "id": "aclaracion__homonimo_niveles",
+  "grupos_estadisticos": null,
+  "id": "efecto__desnutricion_cronica__09",
   "intencion": "efecto",
-  "periodo": null,
+  "lado_a_lado": false,
+  "motivos_no_se_puede": [
+   {
+    "motivo": "cruce_fuera_de_lista_blanca",
+    "tema": "desnutricion_cronica"
+   }
+  ],
+  "no_se_puede": {
+   "motivo": "cruce_fuera_de_lista_blanca",
+   "tema": "desnutricion_cronica"
+  },
+  "omitidas": [],
+  "periodo": {
+   "tipo": "ultimo"
+  },
+  "plantilla": "cruce_efecto",
   "pregunta": "¿El gasto público en nutrición redujo la desnutrición crónica en Huancavelica?",
-  "tema": null,
-  "territorio": null
+  "respuesta_parcial": false,
+  "tema": "desnutricion_cronica",
+  "tema_gasto": null,
+  "territorio": {
+   "id": "09",
+   "nivel": "departamento",
+   "nombre_pedido": "Huancavelica"
+  }
  },
- "texto": "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?\n1) Huancavelica (departamento)\n2) Huancavelica (provincia, departamento de Huancavelica)\n3) Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)",
- "tipo": "aclaracion",
+ "respuesta_parcial": true,
+ "resultados_respuesta": [
+  {
+   "accion": "rotular",
+   "clausula": "sem_resp = max(principales) con pisos ámbar",
+   "detalle": {
+    "motivos": [
+     "peor_cifra_principal:endes_dci_menores_5__proporcion__departamento__09__2025__principal",
+     "respuesta_parcial"
+    ],
+    "semaforo_cruces": {},
+    "semaforo_respuesta": "ambar"
+   },
+   "mensaje": "Confianza de esta respuesta: Dato con limitaciones. La respuesta es parcial.",
+   "motivo": "semaforo_respuesta",
+   "objetivo": "respuesta",
+   "regla": "R-CRUCES-10",
+   "rotulo": "Dato con limitaciones"
+  }
+ ],
+ "semaforo_respuesta": "ambar",
+ "texto": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2025, en Huancavelica, la desnutrición crónica en niñas y niños menores de 5 años fue: 20,3 % de niñas y niños menores de 5 años con desnutrición crónica en Huancavelica en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+ "texto_con_marcadores": "No podemos decir si una cifra explica la otra: las mostramos por separado. En 2025, en Huancavelica, la desnutrición crónica en niñas y niños menores de 5 años fue: {{c:endes_dci_menores_5__proporcion__departamento__09__2025__principal}} de niñas y niños menores de 5 años con desnutrición crónica en Huancavelica en 2025. No leas esta cifra como exacta: es una estimación de una encuesta, con margen de error. Solo comparamos dos cifras entre sí cuando hay una razón verificada para hacerlo.",
+ "tipo": "respuesta",
  "version_biblioteca": {
   "commit_cubo": "779357d",
   "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",

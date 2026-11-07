@@ -1,6 +1,6 @@
 # Pregúntale al Perú — Guía de operación
 
-Versión al 13/10/2026. Cubre lo que hoy funciona: la biblioteca de datos, el cubo y el motor del piloto, todo desde la Terminal. Desde el slice 2 también responde preguntas en texto libre (`pap preguntar --texto`, §4.5); la web es del slice 3. Arquitectura: `arquitectura_y_funcionamiento.md`.
+Cómo preparar el entorno y mantener la biblioteca de datos, las tablas curadas y las reglas. Para preguntar al motor: [manual_de_uso.md](manual_de_uso.md). Arquitectura: [arquitectura.md](arquitectura.md). Estado del proyecto: [estado.md](estado.md).
 
 ## 1. Preparar el entorno (una vez)
 
@@ -17,10 +17,21 @@ uv run pap --help       # lista de comandos
 - Los **crudos** (`biblioteca/cruda/almacen/`) y los **Parquet** no están en git. Si clonas en otra máquina, hay que copiar el almacén desde un respaldo o volver a descargar las fuentes y reconstruir.
 - Todos los comandos se corren con `uv run …` desde la raíz del proyecto.
 
+### 1.1 Trabajar en local o en la nube
+
+| | Mac del dueño (local) | Claude Code en la nube |
+|---|---|---|
+| Datos | Tiene el almacén de crudos (`biblioteca/cruda/almacen/`) | No tiene los crudos |
+| Biblioteca | `uv run pap construir …` (solo aquí) y `uv run pap calcular` | `scripts/bajar_biblioteca.sh` baja los Parquet del release de GitHub; **después hay que correr `uv run pap calcular`** |
+| Pruebas | Suite completa: `uv run pytest -q` | `uv run pytest -q -m "not solo_mac"` (se dejan fuera las que piden los crudos) |
+| Clave del intérprete | `PAP_ANTHROPIC_API_KEY` en el entorno, cargada por el dueño; nunca se imprime ni se escribe en archivos | Ídem |
+
+El release `biblioteca-010ea965` trae el cubo actual; si se baja otro (p. ej. `biblioteca-ba1fbc55`), `pytest` se detiene antes de la primera prueba con un solo mensaje, «el cubo local no es el del manifiesto: corre `pap calcular`», si el cubo local no es el del manifiesto (`tests/conftest.py`, `tests/test_cubo_manifiesto.py`). Si falta el cubo, esa comprobación no aborta: fallan por sí solas las pruebas que lo necesitan.
+
 ## 2. Consultar lo que ya está calculado
 
 ### 2.1 Ver las respuestas del piloto
-Las del primer piloto tienen su referencia en `tests/referencias/q1.json` … `q4.json` (las nuevas salen en `salidas/preguntar/`, ver 4.1), por capas: lo visible, «Más contexto», «Para citar y verificar» y, al final, el detalle técnico (tabla de cifras, ficha larga y reglas aplicadas). El `.json` trae lo mismo, estructurado; las capas van en `capas.capa1/2/3`.
+Las del primer piloto tienen su referencia en `tests/referencias/q1.json` … `q4.json` (las nuevas salen en `salidas/preguntar/`, ver el manual §3.1), por capas: lo visible, «Más contexto», «Para citar y verificar» y, al final, el detalle técnico (tabla de cifras, ficha larga y reglas aplicadas). El `.json` trae lo mismo, estructurado; las capas van en `capas.capa1/2/3`.
 
 ### 2.2 Consultar el cubo de indicadores con SQL
 
@@ -45,7 +56,7 @@ PY
 - `nivel`: `nacional`, `departamento`, `provincia`, `distrito`, `establecimiento` o el ámbito.
 - `linea`: `cifra` para la cifra principal; el gasto tiene además líneas aparte, como la de referencia nacional.
 
-> La cifra del cubo **todavía no es una respuesta publicable**. Las reglas (precisión, nivel, quiebres, rótulos) se aplican en el motor (§4).
+> La cifra del cubo **todavía no es una respuesta publicable**. Las reglas (precisión, nivel, quiebres, rótulos) se aplican en el motor (manual §3.1).
 
 ### 2.3 Citar una fuente
 ```bash
@@ -97,7 +108,7 @@ uv run pap calcular                   # cubo fact_indicador
   - el código tiene cambios sin commit, salvo `--permitir-sucio`, que deja el manifiesto marcado como «sucio»;
   - falla una prueba bloqueante, salvo `--forzar`, que no se debe usar en producción.
 - **Cada construcción escribe** su manifiesto (huellas de insumos, código y salidas) y un archivo de pruebas. La versión anterior queda en `historial/`.
-- **Con los mismos insumos y el mismo código, la huella debe repetirse.** La del cubo actual es `ba1fbc55…` (3/11/2026).
+- **Con los mismos insumos y el mismo código, la huella debe repetirse.** La huella actual está en `biblioteca/indicadores/manifiesto_p1_indicadores.json` (`tablas.fact_indicador.hash`) y empieza con `010ea965…`.
 
 ### 3.4 Editar datos curados (indicadores, doradas, cruces, listas)
 1. Edita el archivo en `curados/capa0/`: `dim_indicador.yaml`, `cifras_doradas.csv`, `cruces_permitidos.yaml`, `grupos_oficiales_inei.csv`, etc.
@@ -124,119 +135,30 @@ just catalogo                             # recalcula la compuerta del catálogo
 
 **Respaldo:** copia `biblioteca/cruda/almacen/` (1,2 GB) a un disco o una nube. Es lo único que no se puede regenerar sin volver a descargar.
 
-## 4. Hacer una pregunta al motor
+### 3.7 Mapa de comandos de mantenimiento
 
-### 4.1 Preguntar con `pap preguntar`
-Desde S1-06 hay tres formas de preguntar. Todas escriben `respuesta.json` y `.md` (por capas) en `--salida` (por defecto `salidas/preguntar`, fuera de git) e imprimen el texto validado y la ficha corta.
+| Comando | Para qué | Cuándo | ¿Escribe? |
+|---|---|---|---|
+| `pap revisar [ID]` | Estado de las fuentes: estrategia, compuerta, capturas, días sin revisar; con ID, los pasos de descarga y pendientes | Antes de actualizar una fuente | No |
+| `pap descargar ID` | Descarga si la receta es automática; si es manual, muestra los pasos | Al incorporar una fuente | Almacén |
+| `pap registrar ID [archivos]` | Guarda en el almacén un archivo de la bandeja o los indicados (`--issued`, `--recurso`, `--nota`…) | Después de descargar a mano | Almacén |
+| `pap verificar [ID] [--rapido]` | Recalcula huellas (o solo tamaños) | Después de registrar | `verificaciones.jsonl` |
+| `pap citar CLAVE [--corta]` | Cita de una fuente (ID) o de un archivo (prefijo de huella) | Para citar | No |
+| `pap construir {territorio,poblacion,puentes,gasto,endes,enaho,mapa_pobreza,indicadores}` | Reconstruye una tabla curada o estandarizada | Tras cambiar crudos o código (solo en el Mac) | `biblioteca` |
+| `pap calcular` | Reconstruye el cubo `fact_indicador.parquet` | Después de `construir`, o de bajar el release | `biblioteca` |
+| `pap almacen comprimir [--dry-run]` | Comprime con zstd los textos grandes; `--dry-run` solo lista | Mantenimiento | Almacén (sin `--dry-run`) |
+| `pap indice` | Reconstruye `indice.duckdb` | Tras registrar capturas | `biblioteca` |
+| `pap recetas {generar,validar,sincronizar}` | Recetas de descarga desde el catálogo; `validar` las contrasta con el catálogo y R-DEP-01 | Al tocar el catálogo | `validar`: no |
+| `pap validar-reglas [--carpeta casos_implementador]` | Corre los casos de prueba del validador de reglas | Al cambiar una regla | No |
+| `pap foto-pim` | **Desactivada** (8/10/2026): `registrar` y `extraer` se niegan; `listar` y `vistas` funcionan | No usar | No |
 
-**a) Con opciones directas** (la consulta mínima, sin escribir un archivo):
-```bash
-uv run pap preguntar --intencion evolucion --tema anemia --territorio "departamento de Huancavelica"
-uv run pap preguntar --intencion nivel_actual --tema desnutrición --territorio "Ayaviri, Melgar" --anio 2024
-uv run pap preguntar --intencion comparacion --tema anemia --territorio "Puno" --comparar-con "Cusco"
-uv run pap preguntar --intencion identificar_extremo --tema anemia --nivel departamento
-```
-
-| Opción | Qué hace |
-|---|---|
-| `--intencion` | `nivel_actual`, `evolucion`, `comparacion`, `cruce`, `identificar_extremo` o `efecto` |
-| `--tema` o `--indicador` | El problema (`anemia`, `desnutricion_cronica`, `pobreza_monetaria`, `gasto_publico`; también alias como `desnutrición`, `pobreza`, `gasto`) o un id de `dim_indicador`. Un tema fuera del piloto se responde con la lista de temas que sí hay |
-| `--territorio` | El lugar, como se escribe: «Puno», «Ayaviri, Melgar», «Lima Metropolitana», «Perú» |
-| `--anio` o `--desde` / `--hasta` | Un año, o una serie. Sin periodo: el último año con datos (`evolucion`: toda la serie) |
-| `--comparar-con` | El segundo lugar de una `comparacion` |
-| `--nivel` y `--dentro-de` | Solo con `identificar_extremo`: el nivel de los lugares que se ordenan (hoy solo se responde para todo el país) |
-| `--elegir N` o `--elegir N,N` | Responde una aclaración sin preguntar; con dos lugares ambiguos (una comparación), un número por lugar y en orden (ver abajo) |
-| `--plan` | Imprime solo el plan de cifras (JSON), sin calcular ni escribir; sirve para depurar |
-| `--salida` | Carpeta de salida |
-
-**Aclaraciones.** Si el lugar es ambiguo (p. ej. «Huancavelica» es departamento, provincia y distrito) o falta el tema, el comando imprime las opciones numeradas, no escribe ninguna respuesta y sale con el código 2:
-```text
-Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?
-1) Huancavelica (departamento)
-2) Huancavelica (provincia, departamento de Huancavelica)
-3) Huancavelica (distrito, provincia de Huancavelica, departamento de Huancavelica)
-```
-Se responde repitiendo el comando con `--elegir 1`. Si no hay ninguna opción para elegir («No encontramos ese lugar…»), el comando no pide `--elegir`: escribe el lugar de nuevo.
-
-**Comparaciones con dos lugares ambiguos.** `--elegir` toma un número por cada lugar que tenga opciones, en el orden en que se piden (primero `--territorio`, después `--comparar-con`):
-```bash
-uv run pap preguntar --intencion comparacion --tema pobreza --territorio "Cusco" --comparar-con "Puno" --elegir 1,1
-```
-Con un solo número, se aplica al primer lugar ambiguo y el comando vuelve a preguntar por el segundo (e imprime el ejemplo `--elegir 1,1`).
-
-**Comparaciones entre dos lugares (R-ENC-11).** La respuesta dice cuál es mayor solo si la prueba estadística de diferencia lo permite (p < 0,05); si no, dice «sin diferencia estadísticamente clara». Si un lugar contiene al otro (p. ej. el país y un departamento) o una cifra no se puede publicar, muestra las cifras sin decir cuál es mayor.
-
-**Códigos de salida** (`cli.codigo_salida` en `curados/motor/parametros_motor.yaml`): 0 respondida o «no se puede» (también se escribe, con su motivo), 2 aclaración pendiente, 1 error (consulta inválida, archivo que no existe, `--elegir` fuera de rango; el mensaje sale en lenguaje sencillo).
-
-**b) Con una consulta mínima en un archivo, varios o una carpeta** (`curados/motor/consultas_minimas/` trae Q1–Q4):
-```bash
-uv run pap preguntar curados/motor/consultas_minimas/            # Q1–Q4
-uv run pap preguntar curados/motor/consultas_minimas/q1.json --salida /tmp/respuestas
-```
-El archivo es el JSON de la consulta mínima (`curados/motor/esquemas/consulta_minima.schema.json`). El `respuesta.json` incluye la consulta mínima (`consulta_minima`), el plan generado (`plan`) y la versión de la biblioteca (`version_biblioteca`: cubo, commit y reglas). `tipo` dice si es `respuesta` o `no_se_puede`.
-
-**c) Las consultas del piloto** (archivadas en `tests/fixtures/consultas_piloto/`; siguen funcionando):
-```bash
-uv run pap preguntar tests/fixtures/consultas_piloto/q1.yaml   # o varias: q1.yaml q2.yaml …
-```
-Escriben en `salidas/preguntar/qN.json` y `.md`, no en `00_proyecto/piloto/p3/respuestas/` (esa carpeta es solo el archivo del piloto y no se vuelve a escribir).
-
-**Cómo leer una aclaración.** Una aclaración no es un error ni una respuesta: es el motor pidiéndote que precises. No lleva cifras ni capas, el comando sale con código 2 y no escribe ningún archivo de respuesta. Hay dos casos:
-- *Lugar ambiguo*: la pregunta dice a qué se refiere («Hay varios lugares llamados «Huancavelica»…») y lista las opciones con su nivel y el lugar que las contiene. Elige el número que corresponde y repite **el mismo comando** agregando `--elegir N`. Para «Lima», las opciones son Lima Metropolitana, Lima Región y el Callao.
-- *Falta el tema*: «¿De qué problema quieres saber?», con los temas que hay en orden alfabético. Repite el comando con `--tema`.
-Si dice «Escribe el lugar de nuevo» no hay opciones: el lugar no se encontró; corrige el nombre. Un `--elegir` fuera de rango da un error con el rango válido.
-
-**Correr la matriz de cobertura a mano** (≈ 5 000 consultas, ~5 min; la salida queda fuera de git):
-```bash
-uv run python tests/matriz/correr.py --salida salidas/matriz --reporte backlog/slice-1/evidencia/matriz.md
-uv run python tests/matriz/correr.py --reducida --salida salidas/matriz   # solo los casos de pytest
-```
-`--limite N` corre solo los primeros N casos. El reporte cuenta los casos por clase (respondida, no se puede, aclaración, error), tema e intención y lista los fallos. Se espera 0 errores y 0 fallos. Requiere el cubo (`pap calcular`).
-
-**Cuando no se puede.** Una pregunta que los datos no pueden responder da una respuesta de «no se puede» por las mismas capas: la respuesta corta dice primero lo que no se puede, «Lo más cercano que sí tenemos» ofrece una alternativa que el validador deja publicar (otro año, el nivel superior, el distrito de origen…) y el motivo va en «Más contexto». Nunca lleva una cifra. Si solo falta una parte, la respuesta se da y dice lo que falta. Los textos están en `curados/motor/textos/no_se_puede.yaml`.
-
-### 4.2 Formato de una consulta del piloto (YAML)
-```yaml
-id: Q1
-pregunta: ¿Cómo ha evolucionado la anemia en niñas y niños pequeños en Huancavelica?
-intencion: evolucion            # nivel_actual | evolucion | comparacion | cruce | identificar_extremo | efecto
-territorio: {nivel: departamento, id: "09", nombre_pedido: Huancavelica (departamento)}
-periodo: {tipo: serie, desde: 2015, hasta: ultimo}   # o {tipo: ultimo}
-plantilla: q1_evolucion
-cifras:
-  - {id: anemia_hvca_2025, indicador: endes_anemia_6_35m_oms2024, anio: ultimo, nivel: departamento,
-     territorio: "09", rol: principal, comparar_con: 2024}
-grupos: []                      # opcional: mapa_grupo_robusto | ranking_departamental
-```
-
-- `rol` es `principal` (decide el semáforo) o `contexto` (no lo sube por encima de ámbar).
-- `comparar_con` pide una prueba de cambio frente a ese año (R-ENC-11). El validador la bloquea si cruza un quiebre de criterio o si uno de los años es 2020.
-
-### 4.3 Qué se puede cambiar hoy y qué no
+### 3.8 Qué se puede cambiar hoy y qué no
 - **Sí, sin escribir código:** cualquier intención, tema, territorio y año de los 9 indicadores del piloto: el planificador arma las cifras (`curados/motor/intenciones.yaml`) y las plantillas genéricas redactan. Los textos están en `curados/motor/textos/` y los valores por defecto en `curados/motor/parametros_motor.yaml`.
 - **Con trabajo:** un indicador o tema nuevo (tablas curadas, doradas y una fila en `intenciones.yaml`) o una intención nueva (una plantilla genérica y su texto, siguiendo el contrato por capas, `docs/especificaciones/contrato_respuesta.md`).
-- **No, todavía:** la web (slice 3).
 
-### 4.4 Cómo leer una respuesta
-- **Capa visible:**
-  - respuesta corta;
-  - cifra clave, con su fuente y si la entidad oficial publica la misma cifra;
-  - «Ojo al leer»: lo que **no** se debe concluir;
-  - confianza;
-  - «¿Qué puedo hacer?», solo en temas de salud, con texto oficial.
-- **Confianza en los datos** (antes, semáforo):
-  - **alta** (verde): dato sólido;
-  - **media** (ámbar): dato con limitaciones;
-  - **baja** (rojo): dato muy aproximado, solo como referencia.
-  - Habla de los datos, no de la situación. El color solo queda en el detalle técnico.
-- **Respuesta «no se puede»:** misma estructura, sin cifra; la respuesta corta dice primero lo que no se puede, «Lo más cercano que sí tenemos» ofrece una alternativa y el motivo está en «Más contexto». `tipo` es `no_se_puede` en el JSON.
-- **Más contexto:** cifras secundarias con su etiqueta «no se compara», avisos de las reglas y límites (fuentes, territorio, qué no permite concluir).
-- **Para citar y verificar:** una línea de cita por cifra y el glosario.
-- **Ficha corta:** confianza, fuentes y años, territorio, y qué **no** permite concluir.
-- **Ficha larga, por cifra:** origen, territorio, qué mide, precisión (**nuestro intervalo y el del INEI**, con la nota de por qué difieren), método y **contraste con la cifra oficial del mismo criterio**.
-- **Resultados de las reglas** (`resultados_respuesta`): cada regla aplicada, con su acción y su motivo.
+## 4. Operar el intérprete de texto libre (slice 2)
 
-### 4.5 El intérprete de texto libre (slice 2)
+Cómo preguntar (opciones, `--texto`, aclaraciones, códigos de salida, cómo leer una respuesta, la matriz de cobertura y los formatos de consulta): [manual_de_uso.md](manual_de_uso.md) §3. Aquí solo lo que se mantiene.
 
 - **Clave:** variable de entorno `PAP_ANTHROPIC_API_KEY` (nunca en archivos). Comprobar que existe sin mostrarla:
   `uv run python -c "import os; print(bool(os.environ.get('PAP_ANTHROPIC_API_KEY')))"`.
@@ -260,7 +182,7 @@ grupos: []                      # opcional: mapa_grupo_robusto | ranking_departa
 | Síntoma | Causa y solución |
 |---|---|
 | «El código tiene cambios sin commit» | Haz commit antes de construir; los manifiestos citan el commit |
-| La huella del cubo difiere de `ba1fbc55…` | Revisa `uv sync` y la versión del commit. Si persiste, avisa: es un problema de reproducibilidad entre sistemas |
+| La huella del cubo difiere de la del manifiesto (`010ea965…`) | Revisa `uv sync` y la versión del commit. Si persiste, avisa: es un problema de reproducibilidad entre sistemas |
 | «No space left» o memoria en `construir gasto` o `poblacion` | Libera disco; DuckDB usa una carpeta temporal y la población usa ~3,5 GB de RAM |
 | No se puede descargar de `.gob.pe` | Descarga con el navegador a la bandeja y luego `pap registrar` |
 | git dice «File exists» por un `.lock` | Otro proceso de git quedó a medias: cierra los editores y borra el `.lock` de `.git/` |

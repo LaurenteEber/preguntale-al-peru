@@ -97,8 +97,10 @@
    },
    {
     "anio": 2025,
-    "id": "gasto_ex_pan__devengado__departamento__10__2025__contexto",
+    "en_serie_con": 2026,
+    "id": "gasto_ex_pan__devengado_constante__departamento__10__2025__contexto",
     "indicador": "gasto_ex_pan",
+    "medida": "devengado_constante",
     "nivel": "departamento",
     "rol": "contexto",
     "territorio": "10"
@@ -313,8 +315,10 @@
    },
    {
     "anio": 2025,
-    "id": "gasto_ex_pan__devengado__departamento__10__2025__contexto",
+    "en_serie_con": 2026,
+    "id": "gasto_ex_pan__devengado_constante__departamento__10__2025__contexto",
     "indicador": "gasto_ex_pan",
+    "medida": "devengado_constante",
     "nivel": "departamento",
     "rol": "contexto",
     "territorio": "10"

@@ -132,7 +132,7 @@ Son la fuente de verdad editable (YAML/CSV en git); `pap construir indicadores` 
 - **CAL-11:** cada fila `devengado` del gasto hasta el año base tiene su fila `devengado_constante`, con valor = devengado × factor.
 - **CAL-10:** el SIEN reproduce las cifras oficiales del INS (casos y evaluados exactos: nacional, 24 departamentos y Callao, Lima Región, Ayaviri y San Juan de Lurigancho).
 
-**Huella actual:** `sha256:010ea965…` (desde el 4/11/2026, adenda S1-12: soles constantes; la anterior, `ba1fbc55…`, es la del release `biblioteca-ba1fbc55`). Debe ser idéntica en macOS y Linux: en la nube se reproduce con `pap calcular` después de bajar el release.
+**Huella actual:** `sha256:010ea965…` (desde el 4/11/2026, adenda S1-12: soles constantes; la anterior, `ba1fbc55…`, es la del release `biblioteca-ba1fbc55`; la actual se publica en `biblioteca-010ea965`). Debe ser idéntica en macOS y Linux: en la nube se reproduce con `pap calcular` después de bajar el release.
 
 ### 4.6 Reglas de publicación (`reglas/`)
 - **Contenido:** 96 reglas vigentes (93 del MVP) en 11 etapas:
@@ -260,7 +260,7 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 | `reglas/` | Reglas (generadas: `reglas.json`, `reglas.md`, ficha y especificaciones de capa 0), su generador y sus verificaciones (`consolidador/`, `consolidador/pruebas/`), propuestas y alcance del piloto |
 | `biblioteca/` | Datos: cruda, dimensiones, estandarizada, indicadores (los Parquet y los crudos no van a git) |
 | `src/pap/` | La CLI `pap`: `cli.py`, ingesta (`registrar`, `descargar`, `verificar`, `citar`, `almacen`, `indice`, `recetas`), `capa0/` (construcciones) y `motor/` (cálculo, validador, respuesta) |
-| `tests/` | 748 pruebas automáticas (pytest) |
+| `tests/` | Pruebas automáticas (pytest); cuántas son: [estado.md](estado.md) |
 | `curados/capa0/` | Tablas curadas editables (fuente de verdad) |
 | `curados/motor/` | Catálogo de intenciones, parámetros, consultas mínimas, esquemas y textos fijos (`textos/`); las consultas del piloto archivadas y los casos del validador están en `tests/fixtures/consultas_piloto/` y `tests/casos_validador/` |
 | `backlog/` | Plan por slices (`plan_slices.md`) y el slice 1 con su evidencia (`backlog/slice-1/evidencia/`) |

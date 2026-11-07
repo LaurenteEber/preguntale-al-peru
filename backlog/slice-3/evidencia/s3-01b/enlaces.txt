@@ -1,0 +1,36 @@
+200  https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+200  https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes09/pdf/Cap09.pdf
+200  https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes21/pdf/Cap09.pdf
+200  https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes15/pdf/Cap09.pdf
+200  https://m.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-n-040-2024-inei.pdf
+200  https://m.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-no-088-2018-inei.pdf
+200  https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes16/pdf/Cap09.pdf
+200  https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes25/pdf/Cap09.pdf
+200  https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes06/pdf/Cap09.pdf
+200  https://m.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-no-070-2023-inei.pdf
+200  https://proyectos.inei.gob.pe/endes/2022/departamentales/Endes09/pdf/Cap09.pdf
+200  https://www.inei.gob.pe/descargar/encuestas/documentos/nota-de-prensa-no-075-2022-inei_1.pdf
+200  https://www.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-n017-2019-inei.pdf
+200  https://www.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-n043-2017-inei.pdf
+200  https://www.inei.gob.pe/media/MenuRecursivo/noticias/nota-de-prensa-n094-2016-inei.pdf
+200  https://proyectos.inei.gob.pe/endes/2025/ppr/Informe_Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2025.pdf
+200  https://www.gob.pe/institucion/inei/informes-publicaciones/6763186-peru-evolucion-de-la-pobreza-monetaria-2015-2024
+200  https://www.gob.pe/institucion/inei/informes-publicaciones/8088591-peru-evolucion-de-la-pobreza-monetaria-2016-2025
+200  https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1718/Libro.pdf
+200  https://cdn.www.gob.pe/uploads/document/file/9599740/7857855-indicadores-ninos-diciembre-2025-base-de-datos-hisminsa.xlsx
+200  https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto
+200  https://www.datosabiertos.gob.pe/dataset/transferencias-de-fondos-y-asignaciones-financieras
+200  https://www.datosabiertos.gob.pe/dataset/presupuesto-y-ejecuci%C3%B3n-de-gasto-%E2%80%93-devengado-mensual
+200  https://www.datosabiertos.gob.pe/dataset/detalle-de-inversiones
+200  https://www.datosabiertos.gob.pe/dataset/seguimiento-de-proyectos-de-inversi%C3%B3n
+200  https://www.mef.gob.pe/es/obras-por-impuestos/estadisticas
+200  https://proyectos.inei.gob.pe/microdatos/
+200  https://www.gob.pe/institucion/inei/informes-publicaciones/3204872-mapa-de-pobreza-provincial-y-distrital-2018
+200  https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud
+200  https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf
+200  http://umc.minedu.gob.pe/resultadosenla2025/
+200  https://www.gob.pe/institucion/inei/colecciones/71202-estimaciones-y-proyecciones-de-poblacion-nacional-departamental-provincial-y-distrital
+200  https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1722/libro.pdf
+000  https://portales.reniec.gob.pe/web/estadistica/identificada
+---
+34 enlaces; 1 con falla

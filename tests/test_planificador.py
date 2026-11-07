@@ -346,8 +346,8 @@ def test_ids_de_cifra_estables_y_con_el_formato_del_yaml(plan, raiz, motor):
     ids = [c["id"] for c in p1["cifras"]]
     assert ids == [c["id"] for c in p2["cifras"]] and len(set(ids)) == len(ids)
     for c in p1["cifras"]:
-        assert c["id"] == fmt.format(indicador=c["indicador"], medida=motor.medida(c["indicador"]), nivel=c["nivel"],
-                                     territorio=c["territorio"], anio=c["anio"], rol=c["rol"])
+        assert c["id"] == fmt.format(indicador=c["indicador"], medida=motor.medida(c["indicador"], c.get("medida")),
+                                     nivel=c["nivel"], territorio=c["territorio"], anio=c["anio"], rol=c["rol"])
     assert PL.formato_id_cifra(indicador="a", medida="m", nivel="n", territorio="t", anio=1, rol="r", raiz=raiz) == "a__m__n__t__1__r"
 
 

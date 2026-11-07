@@ -170,16 +170,16 @@ def test_aclaracion_del_interprete_y_luego_elegir(capsys, monkeypatch, tmp_path)
 
 
 def test_aclaracion_de_territorio(capsys, monkeypatch, tmp_path):
-    q = "¿Cómo ha evolucionado la anemia en Huancavelica?"
-    con_llm(monkeypatch, Falso(consulta({"intencion": "evolucion", "tema": "anemia", "territorio": {"texto": "Huancavelica"}},
-                                        intencion="Cómo ha evolucionado", tema="anemia", territorio="Huancavelica")))
+    q = "¿Cuánta anemia hay en Abancay?"                                    # X-22: Huancavelica a secas ya no aclara; Abancay es provincia y distrito
+    con_llm(monkeypatch, Falso(consulta({"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Abancay"}},
+                                        intencion="Cuánta", tema="anemia", territorio="Abancay")))
     codigo, out, err = correr(capsys, "--texto", q, "--salida", str(tmp_path / "s"))
     lineas = out.splitlines()
     assert codigo == COD["aclaracion"] and err == "" and not (tmp_path / "s").exists()
-    assert lineas[0] == "Hay varios lugares llamados «Huancavelica». ¿Cuál quieres?" and lineas[1] == "1) Huancavelica (departamento)"
+    assert lineas[0] == "Hay varios lugares llamados «Abancay». ¿Cuál quieres?" and lineas[1] == "1) Abancay (provincia, departamento de Apurímac)"
     assert lineas[-1] == CLI["elegir_pista"]
     codigo, out, _ = correr(capsys, "--texto", q, "--elegir", "1", "--salida", str(tmp_path / "s"))
-    assert codigo == 0 and out.startswith("Entendimos: cómo cambió la anemia en el departamento de Huancavelica\n")
+    assert codigo == 0 and out.startswith("Entendimos: cuánto hay de anemia en la provincia de Abancay (Apurímac)\n")
 
 
 # ------------------------------------------------------------------ fila «mensaje»: código 2, no escribe, ofrece la vía estructurada
@@ -256,10 +256,10 @@ def test_corrector_sin_infracciones_en_entendimos_y_en_interprete_yaml(capsys, m
               consulta({"intencion": "identificar_extremo", "tema": "pobreza_monetaria",
                         "territorio": {"nivel": "distrito", "dentro_de": {"nacional": True}}},
                        intencion="más pobre", tema="pobre", nivel="distrito", dentro_de="del Perú"), []),
-             ("¿Hay más desnutrición en Loreto que en Ucayali entre 2015 y 2022?",
-              consulta({"intencion": "comparacion", "tema": "desnutricion_cronica", "territorio": {"texto": "Loreto"},
-                        "comparar_con": {"texto": "Ucayali"}, "periodo": {"tipo": "serie", "desde": 2015, "hasta": 2022}},
-                       intencion="Hay más", tema="desnutrición", territorio="Loreto", comparar_con="Ucayali",
+             ("¿Hay más desnutrición en Abancay que en Ambo entre 2015 y 2022?",           # X-22: Loreto y Ucayali a secas ya no aclaran
+              consulta({"intencion": "comparacion", "tema": "desnutricion_cronica", "territorio": {"texto": "Abancay"},
+                        "comparar_con": {"texto": "Ambo"}, "periodo": {"tipo": "serie", "desde": 2015, "hasta": 2022}},
+                       intencion="Hay más", tema="desnutrición", territorio="Abancay", comparar_con="Ambo",
                        desde="2015", hasta="2022"), ["--elegir", "1,1"]),
              ("¿Cuánto se gastó contra la anemia en San Juan de Lurigancho y sirvió?",       # efecto en un distrito (Q3)
               consulta({"intencion": "efecto", "tema": "gasto_publico", "territorio": {"texto": "San Juan de Lurigancho"}},
@@ -307,14 +307,10 @@ def cumple_regresion(new: dict, ref: dict):
 @pytest.mark.parametrize("q", R.QS)
 def test_q1_q4_por_texto_con_grabaciones(capsys, monkeypatch, tmp_path, motor, q):
     """La pregunta escrita como en su `pregunta_original`, con el cliente en modo «reproducir» (nunca la red). Q1
-    («Huancavelica») da la aclaración de territorio y luego `--elegir 1`. Sin la grabación, FALLA con «falta la grabación»."""
+    («Huancavelica», X-22) se responde como departamento, sin aclaración. Sin la grabación, FALLA con «falta la grabación»."""
     con_llm(monkeypatch, L.Cliente(RAIZ, modo="reproducir"))
     pregunta = json.loads((RAIZ / "curados" / "motor" / "consultas_minimas" / f"{q}.json").read_text(encoding="utf-8"))["pregunta_original"]
     argv = ["--texto", pregunta, "--salida", str(tmp_path / "s")]
-    if q == "q1":
-        codigo, out, _ = correr(capsys, *argv)
-        assert codigo == COD["aclaracion"] and "1) Huancavelica (departamento)" in out.splitlines()
-        argv += ["--elegir", "1"]
     codigo, out, err = correr(capsys, *argv)
     assert codigo == COD["respondida"] and err == "" and out.startswith("Entendimos: ")
     [f] = (tmp_path / "s").glob("*.json")

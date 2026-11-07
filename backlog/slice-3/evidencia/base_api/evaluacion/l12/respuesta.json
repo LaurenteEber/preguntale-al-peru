@@ -69,7 +69,7 @@
     {
      "etiqueta": null,
      "texto": "El INS advierte que sus cifras son de niños atendidos en establecimientos del MINSA, que no son estrictamente comparables con la ENDES y que, como no a todos los atendidos se les mide la hemoglobina, podrían subestimar la anemia real. La hemoglobina se corrigió según la altitud del distrito del establecimiento, no la del lugar de donde procede el niño.",
-     "titulo": "Por qué esta cifra es más baja que la de la encuesta"
+     "titulo": "Por qué esta cifra no se compara con la de la encuesta"
     }
    ]
   },
@@ -78,7 +78,7 @@
     {
      "id_cifra": "sien_anemia_tamizados_6_35m__proporcion__distrito__210101__2025__principal",
      "texto": "17,2 % (intervalo: 15,7 % a 18,8 %): niñas y niños de 6 a 35 meses tamizados con anemia en establecimientos del MINSA y de los gobiernos regionales, Puno, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
-     "url": "https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional"
+     "url": "https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud"
     },
     {
      "id_cifra": "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__contexto",
@@ -88,7 +88,7 @@
     {
      "id_cifra": "sien_cobertura_tamizaje_6_35m__cobertura__departamento__21__2025__contexto",
      "texto": "entre 39,8 % y 50,5 %: niñas y niños de 6 a 35 meses con al menos una medición de hemoglobina en establecimientos del MINSA o del gobierno regional (de cada 100), Puno, 2025. Fuente: Pregúntale al Perú, cálculo propio con SIEN 2025 (INS), datos descargados el 2026-10-06.",
-     "url": "https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional"
+     "url": "https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud"
     }
    ],
    "glosario": [
@@ -105,7 +105,7 @@
      "termino": "ENDES"
     },
     {
-     "definicion": "el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior da cifras más altas.",
+     "definicion": "el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior no se compara con la de hoy.",
      "termino": "forma de medir la anemia"
     }
    ],

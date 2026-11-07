@@ -51,7 +51,7 @@ def terminos(r):
 # ------------------------------------------------------------------------------------------------------------ H14
 
 def test_h14_la_corta_dice_el_sujeto_una_sola_vez(raiz, motor):
-    r = PRE.preguntar_minima(motor, {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Huancavelica"}}, elegir=1)
+    r = PRE.preguntar_minima(motor, {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Huancavelica"}})     # X-22: el departamento a secas no pide elegir
     k = r["capas"]["capa1"]
     assert k["respuesta_corta"] == "En 2025, en Huancavelica, la anemia en niñas y niños de 6 a 35 meses fue:"
     assert not k["respuesta_corta"].startswith("Esto es lo que dicen")
@@ -68,7 +68,7 @@ def test_h14_otros_temas_de_nivel_actual_usan_la_misma_forma(raiz, motor):
 # ------------------------------------------------------------------------------------------------------------ H15
 
 def test_h15_toda_respuesta_con_la_forma_de_medir_trae_su_glosario(raiz, motor, q):
-    r = PRE.preguntar_minima(motor, {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Huancavelica"}}, elegir=1)
+    r = PRE.preguntar_minima(motor, {"intencion": "nivel_actual", "tema": "anemia", "territorio": {"texto": "Huancavelica"}})     # X-22: el departamento a secas no pide elegir
     for nombre, x in [("nivel_actual", r), ("q1", q["q1"]), ("q2", q["q2"]), ("q3", q["q3"])]:
         assert "forma de medir la anemia" in terminos(x), nombre
         assert "forma de medir" in " ".join(x["capas"]["capa3"]["para_citar"]), nombre

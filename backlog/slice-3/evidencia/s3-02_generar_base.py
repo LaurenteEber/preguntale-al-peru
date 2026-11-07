@@ -1,7 +1,7 @@
 """S3-02, tarea 4 — Regenera la base de la web: `backlog/slice-3/evidencia/base_api/`.
 
 Guarda el `respuesta.json` completo (la respuesta del motor tal cual) de:
-  - Q1–Q4 con `preguntar_minima` (curados/motor/consultas_minimas/), y Q1 también con «Huancavelica» + elegir=[1]  -> q/
+  - Q1–Q4 con `preguntar_minima` (curados/motor/consultas_minimas/), y Q1 también con «Abancay» + elegir=[1] (X-22, S3-01b)  -> q/
   - cada caso de la matriz reducida, con el mismo código que `tests/matriz/correr.py --reducida` (`correr_caso`),
     incluidas las aclaraciones, que la CLI no escribe                                                              -> matriz/
   - el conjunto de evaluación (tests/interprete/evaluacion.yaml) con `interpretar()` y las grabaciones (modo
@@ -76,13 +76,13 @@ def main() -> int:
         usados.add(str(c))
         return c
 
-    # --- Q1–Q4 (y Q1 con «Huancavelica» + elegir=[1])
+    # --- Q1–Q4 (y Q1 con «Abancay» + elegir=[1]: desde X-22 «Huancavelica» a secas ya no aclara)
     for f in sorted(CONSULTAS.glob("q*.json")):
         entrada = json.loads(f.read_text(encoding="utf-8"))
         n["q"] += escribir(carpeta("q", f.stem), {"consulta": entrada, "elegir": None}, P.preguntar_minima(motor, entrada))
     q1 = json.loads((CONSULTAS / "q1.json").read_text(encoding="utf-8"))
-    q1["territorio"] = {"texto": "Huancavelica"}
-    n["q"] += escribir(carpeta("q", "q1_huancavelica_elegir_1"), {"consulta": q1, "elegir": [1]}, P.preguntar_minima(motor, q1, elegir=[1]))
+    q1["territorio"] = {"texto": "Abancay"}
+    n["q"] += escribir(carpeta("q", "q1_abancay_elegir_1"), {"consulta": q1, "elegir": [1]}, P.preguntar_minima(motor, q1, elegir=[1]))
 
     # --- matriz reducida, con el mismo código que `tests/matriz/correr.py --reducida` (incluidas las aclaraciones)
     par = G.parametros(RAIZ)

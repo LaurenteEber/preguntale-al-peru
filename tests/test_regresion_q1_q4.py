@@ -29,8 +29,9 @@ QS = ["q1", "q2", "q3", "q4"]
 CLAVE_2022_Q1 = ("endes_anemia_6_35m", 2022, "departamento", "09", "proporcion", "contexto")   # anemia_hvca_2022_ant
 # AD-1 (dueño, 4/11/2026, fila R-04): la evolución da también la cifra vigente del año con el que se compara (S1-13)
 CLAVE_2024_Q1 = ("endes_anemia_6_35m_oms2024", 2024, "departamento", "09", "proporcion", "contexto")
-# X-03 (dueño, 4/11/2026, fila R-03; S3-01): CR-01 suma el gasto del mismo año que la anemia comparada (Lima Metropolitana 2024)
-CLAVE_2024_Q3 = ("gasto_ex_pan", 2024, "LIMA_METROPOLITANA", "LIMA_METROPOLITANA", "devengado", "contexto")
+# X-03 (dueño, 4/11/2026, fila R-03; S3-01): CR-01 suma el gasto del mismo año que la anemia comparada (Lima Metropolitana 2024);
+# S3-01b punto 2 (H-B, dueño, 6/11/2026): esa cifra va en soles de 2025 (devengado_constante, R-GASTO-12), no en soles de 2024
+CLAVE_2024_Q3 = ("gasto_ex_pan", 2024, "LIMA_METROPOLITANA", "LIMA_METROPOLITANA", "devengado_constante", "contexto")
 
 
 @pytest.fixture(scope="module")

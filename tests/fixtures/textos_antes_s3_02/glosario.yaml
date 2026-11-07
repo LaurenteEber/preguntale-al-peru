@@ -1,0 +1,18 @@
+# Glosario ciudadano de las respuestas (contrato de respuesta, 12/10/2026). Cada plantilla declara qué términos usa;
+# la respuesta muestra solo esos, en la capa «Para citar y verificar». Texto fijo: no lo redacta el motor.
+version: 1.0.0
+terminos:
+  medir_hemoglobina: {termino: medir la hemoglobina (tamizaje), definicion: "análisis de una gota de sangre que se hace en el establecimiento de salud para saber si la niña o el niño tiene anemia."}
+  cambio_claro: {termino: cambio estadísticamente claro, definicion: "una diferencia entre dos años que no se explica por el azar de la encuesta. «Sin cambio claro» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error."}
+  diferencia_clara: {termino: diferencia estadísticamente clara, definicion: "una diferencia entre dos lugares que no se explica por el azar de la encuesta: la prueba estadística que usamos tiene en cuenta el margen de error de cada cifra. «Sin diferencia clara» no quiere decir «igual»: la diferencia puede existir, pero es pequeña frente al margen de error."}
+  forma_de_medir: {termino: forma de medir la anemia, definicion: "el nivel de hemoglobina por debajo del cual se considera anemia y cómo se ajusta según la altitud. Desde 2024 el Ministerio de Salud usa una nueva (la vigente); la anterior da cifras más altas."}
+  rango_probable: {termino: rango probable (intervalo), definicion: "los valores entre los que está probablemente la cifra real, según el margen de error de la encuesta o del modelo."}
+  gastado: {termino: gastado (devengado), definicion: "lo que la entidad ya debe pagar porque recibió el bien o el servicio. Es distinto del presupuesto, que es lo que tiene autorizado gastar en el año."}
+  soles_constantes: {termino: soles constantes (ajustados por inflación), definicion: "montos de distintos años expresados en soles de un mismo año, para que la subida de los precios no haga parecer que se gastó más. Se ajustan con el índice de precios al consumidor de Lima Metropolitana que publica el BCRP."}
+  servicios_ex_pan: {termino: servicios de salud y nutrición infantil, definicion: "los que antes eran del Programa Articulado Nutricional: controles de crecimiento, vacunas, hierro y vitamina A, atención de la anemia, de infecciones respiratorias y diarreas, consejería y agua segura, para menores de 5 años y sus familias."}
+  pobreza_monetaria: {termino: pobreza monetaria, definicion: "personas cuyo gasto no alcanza para comprar una canasta básica de alimentos y otros bienes y servicios. No mide el acceso a servicios como agua o salud."}
+  mapa_pobreza: {termino: Mapa de Pobreza, definicion: "estimación estadística del INEI de la pobreza de cada distrito en 2018. No es un conteo casa por casa, por eso cada distrito tiene un rango y no una cifra exacta."}
+  grupo_semejante: {termino: grupo sin diferencias claras, definicion: "territorios cuyas cifras no se pueden ordenar entre sí porque sus diferencias pueden deberse al azar de la encuesta o del modelo."}
+  endes: {termino: ENDES, definicion: "Encuesta Demográfica y de Salud Familiar del INEI: visita una muestra de hogares de todo el país y mide la hemoglobina de los niños."}
+  enaho: {termino: ENAHO, definicion: "Encuesta Nacional de Hogares del INEI, con la que se mide la pobreza."}
+  sien: {termino: SIEN, definicion: "Sistema de Información del Estado Nutricional del INS: registra a los niños atendidos en los establecimientos de salud del MINSA y de los gobiernos regionales."}

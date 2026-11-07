@@ -1,10 +1,13 @@
 #!/usr/bin/env bash
 # Baja los Parquet de la biblioteca desde un release de GitHub y comprueba sus huellas (decisión F-05).
-# Uso: scripts/bajar_biblioteca.sh [etiqueta]   (por defecto, biblioteca-ba1fbc55)
+# Uso: scripts/bajar_biblioteca.sh [etiqueta]   (por defecto, biblioteca-010ea965)
+# S3-01b (fila 10): el release `biblioteca-010ea965` (6/11/2026) trae la biblioteca del cubo actual; `biblioteca-ba1fbc55` es el
+# anterior. DESPUÉS DE BAJAR el release hay que correr `uv run pap calcular`: reconstruye
+# el cubo con el código de hoy; sin eso, pytest se detiene con «el cubo local no es el del manifiesto: corre `pap calcular`».
 # Solo escribe dentro de biblioteca/ (archivos fuera de git). No toca los crudos, los manifiestos ni nada versionado.
 set -euo pipefail
 
-ETIQUETA="${1:-biblioteca-ba1fbc55}"
+ETIQUETA="${1:-biblioteca-010ea965}"
 REPO="LaurenteEber/preguntale-al-peru"
 BASE="https://github.com/$REPO/releases/download/$ETIQUETA"
 RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
@@ -33,4 +36,5 @@ if [ "$REAL" != "$ESPERADA" ]; then
   echo "ERROR: la huella del cubo es $REAL y debía ser $ESPERADA" >&2
   exit 1
 fi
+echo "Siguiente paso: uv run pap calcular   (el cubo bajado es el anterior; pytest se detiene si no coincide con el manifiesto)"
 echo "Listo: $(find "$RAIZ/biblioteca" -name '*.parquet' -not -path '*/_respaldo*' | wc -l | tr -d ' ') Parquet; cubo $REAL…"

@@ -83,7 +83,7 @@ def test_h1_comparacion_sin_diferencia_clara(motor):
     assert "sin diferencia estadísticamente clara" in k["respuesta_corta"]
     assert not re.search(r"\b(mayor|menor|más alta|más baja)\b", todo(r))
     assert any("azar" in x for x in k["ojo_al_leer"])
-    assert len(k["cifra_clave"]["ids"]) == 2 and "no se compara" not in todo(r).lower()
+    assert len(k["cifra_clave"]["ids"]) == 2 and "no se compara" not in todo(r).lower().replace("no se compara con la de hoy", "")   # H-A: la frase del glosario de la forma de medir no es una comparación bloqueada
 
 
 def test_h1_borde_tacna_moquegua_dice_mayor_en_moquegua(motor):
@@ -173,9 +173,9 @@ def test_a_h1_preserva_comparar_a_traves_de_2020(motor):
 
 
 @pytest.mark.parametrize("lugar,elegir,periodo", [
-    ("Huancavelica", 1, {"tipo": "anio", "anio": 2020}),
+    ("Huancavelica", None, {"tipo": "anio", "anio": 2020}),                 # X-22: el departamento a secas se responde sin elegir
     ("Perú", None, {"tipo": "anio", "anio": 2020}),
-    ("Huancavelica", 1, {"tipo": "serie", "hasta": 2020}),
+    ("Huancavelica", None, {"tipo": "serie", "hasta": 2020}),
     ("Perú", None, {"tipo": "serie", "hasta": 2020}),
 ])
 def test_a_h1_desnutricion_hasta_2020_no_compara_con_2020(motor, lugar, elegir, periodo):
@@ -191,7 +191,7 @@ def test_a_h1_desnutricion_hasta_2020_no_compara_con_2020(motor, lugar, elegir, 
 def test_a_h1_comparacion_bloqueada_usa_la_redaccion_sin_comparacion(motor, monkeypatch):
     """Con la comparación bloqueada por el validador, la plantilla nunca dice «pasó de X a Y»."""
     monkeypatch.setattr(PLT, "_bloqueada", lambda c: True)
-    r = preg(motor, "evolucion", "desnutricion_cronica", "Huancavelica", elegir=1)
+    r = preg(motor, "evolucion", "desnutricion_cronica", "Huancavelica")
     assert "pasó de" not in todo(r)
     assert r["capas"]["capa1"]["respuesta_corta"].startswith("Esto es lo que dicen los datos oficiales sobre")
 
@@ -278,15 +278,15 @@ def _cli(capsys, tmp_path, *args):
 
 
 def test_h3_elegir_acepta_dos_numeros_para_una_comparacion(capsys, tmp_path):
-    codigo, out, _ = _cli(capsys, tmp_path, "--intencion", "comparacion", "--tema", "pobreza", "--territorio", "Cusco",
-                          "--comparar-con", "Puno", "--elegir", "1,1")
-    assert codigo == 0 and "mayor en Puno que en Cusco" in out
+    codigo, out, _ = _cli(capsys, tmp_path, "--intencion", "comparacion", "--tema", "pobreza", "--territorio", "Abancay",
+                          "--comparar-con", "Ambo", "--elegir", "1,1")
+    assert codigo == 0 and "Abancay (Apurímac)" in out and "Ambo (Huánuco)" in out     # X-22: Cusco y Puno ya no aclaran
     assert list(tmp_path.glob("*.md"))
 
 
 def test_h3_la_instruccion_dice_como_elegir_los_dos(capsys, tmp_path):
-    codigo, out, _ = _cli(capsys, tmp_path, "--intencion", "comparacion", "--tema", "pobreza", "--territorio", "Cusco",
-                          "--comparar-con", "Puno", "--elegir", "1")
+    codigo, out, _ = _cli(capsys, tmp_path, "--intencion", "comparacion", "--tema", "pobreza", "--territorio", "Abancay",
+                          "--comparar-con", "Ambo", "--elegir", "1")
     assert codigo == 2 and "--elegir 1,1" in out                              # el primero ya se eligió; falta el segundo
     assert not list(tmp_path.glob("*.md"))
 
@@ -298,15 +298,15 @@ def test_h3_sin_coincidencia_no_manda_a_usar_elegir(capsys, tmp_path):
 
 def test_n1_elegir_con_numeros_de_mas_en_una_comparacion_es_un_error(capsys, tmp_path):
     """N-1: `--elegir 1,1,1` con dos aclaraciones → error en español, código `cli.codigo_salida.error`, nada escrito."""
-    codigo, out, err = _cli(capsys, tmp_path, "--intencion", "comparacion", "--tema", "pobreza", "--territorio", "Cusco",
-                            "--comparar-con", "Puno", "--elegir", "1,1,1")
+    codigo, out, err = _cli(capsys, tmp_path, "--intencion", "comparacion", "--tema", "pobreza", "--territorio", "Abancay",
+                            "--comparar-con", "Ambo", "--elegir", "1,1,1")
     assert codigo == COD_ERROR and out == ""
     assert err == "✘ Escribiste 3 números en --elegir, pero solo había 2 preguntas por responder. Escribe un número por cada una.\n"
     assert not list(tmp_path.iterdir())
 
 
 def test_n1_elegir_con_dos_numeros_y_una_sola_aclaracion_es_un_error(capsys, tmp_path):
-    codigo, out, err = _cli(capsys, tmp_path, "--intencion", "nivel_actual", "--tema", "pobreza", "--territorio", "Cusco", "--elegir", "1,2")
+    codigo, out, err = _cli(capsys, tmp_path, "--intencion", "nivel_actual", "--tema", "pobreza", "--territorio", "Abancay", "--elegir", "1,2")
     assert codigo == COD_ERROR and out == ""
     assert err == "✘ Escribiste 2 números en --elegir, pero solo había 1 pregunta por responder. Escribe un solo número.\n"
     assert not list(tmp_path.iterdir())
@@ -326,18 +326,18 @@ def test_n1_el_texto_sale_de_cli_yaml(raiz):
 
 def test_n1_preserva_elegir_con_tantos_numeros_como_aclaraciones(capsys, tmp_path):
     """PRESERVE: `--elegir 1,1` con dos aclaraciones y `--elegir N` con una siguen respondiendo (código 0, archivos escritos)."""
-    codigo, out, err = _cli(capsys, tmp_path, "--intencion", "comparacion", "--tema", "pobreza", "--territorio", "Cusco",
-                            "--comparar-con", "Puno", "--elegir", "1,1")
+    codigo, out, err = _cli(capsys, tmp_path, "--intencion", "comparacion", "--tema", "pobreza", "--territorio", "Abancay",
+                            "--comparar-con", "Ambo", "--elegir", "1,1")
     assert codigo == 0 and err == "" and list(tmp_path.glob("*.md"))
 
 
 def test_h3_preserva_elegir_con_un_numero(capsys, tmp_path):
-    codigo, out, _ = _cli(capsys, tmp_path, "--intencion", "nivel_actual", "--tema", "anemia", "--territorio", "Huancavelica", "--elegir", "1")
-    assert codigo == 0 and "Huancavelica" in out
+    codigo, out, _ = _cli(capsys, tmp_path, "--intencion", "nivel_actual", "--tema", "anemia", "--territorio", "Abancay", "--elegir", "1")
+    assert codigo == 0 and "Abancay" in out
 
 
 def test_h3_elegir_fuera_de_rango_sigue_siendo_un_error(capsys, tmp_path):
-    codigo, _, err = _cli(capsys, tmp_path, "--intencion", "nivel_actual", "--tema", "anemia", "--territorio", "Huancavelica", "--elegir", "9")
+    codigo, _, err = _cli(capsys, tmp_path, "--intencion", "nivel_actual", "--tema", "anemia", "--territorio", "Abancay", "--elegir", "9")
     assert codigo == 1 and "La opción 9 no existe" in err
 
 
@@ -346,7 +346,7 @@ def test_h3_ayuda_y_guia_dicen_los_dos_numeros(capsys, raiz):
         cli.main(["preguntar", "--help"])
     ayuda = " ".join(capsys.readouterr().out.split())
     assert "N,N" in ayuda or "1,1" in ayuda
-    assert "--elegir 1,1" in (raiz / "docs" / "guia_de_operacion.md").read_text(encoding="utf-8")
+    assert "--elegir 1,1" in (raiz / "docs" / "manual_de_uso.md").read_text(encoding="utf-8")
 
 
 # ======================================================================= User H4 (alto): el homónimo aclarado conserva su nombre completo
@@ -378,7 +378,7 @@ def test_h4_preserva_el_lugar_sin_homonimo(motor):
 
 # ======================================================================= User H5 (alto): gasto «nivel_actual» sin jerga y con su alcance
 
-@pytest.mark.parametrize("lugar,elegir", [("Lima Metropolitana", None), ("Puno", 1), ("Perú", None)])
+@pytest.mark.parametrize("lugar,elegir", [("Lima Metropolitana", None), ("Puno", None), ("Perú", None)])
 def test_h5_gasto_sin_jerga_en_la_capa_1(motor, lugar, elegir):
     r = preg(motor, "nivel_actual", "gasto_publico", lugar, elegir=elegir)
     k = capa1(r)
@@ -389,7 +389,7 @@ def test_h5_gasto_sin_jerga_en_la_capa_1(motor, lugar, elegir):
 def test_h5_gasto_de_lima_dice_que_no_incluye_a_las_entidades_nacionales(motor):
     r = preg(motor, "nivel_actual", "gasto_publico", "Lima Metropolitana")
     k = capa1(r)
-    assert "con sede en Lima Metropolitana" in k and "no incluye a las entidades nacionales" in k.lower()
+    assert "con sede en Lima Metropolitana" in k and "no incluye lo que gastan las entidades nacionales" in k.lower()   # u13 (S3-01b)
     assert r["capas"]["capa1"]["palabras"] <= 125
     assert any("devengado" in g["termino"] for g in r["capas"]["capa3"]["glosario"])      # la jerga queda en el glosario
 
@@ -397,7 +397,8 @@ def test_h5_gasto_de_lima_dice_que_no_incluye_a_las_entidades_nacionales(motor):
 def test_h5_la_frase_de_lo_que_no_incluye_no_se_repite(motor):
     r = preg(motor, "nivel_actual", "gasto_publico", "Lima Metropolitana")
     t = todo(r).lower()
-    assert t.count("no incluye a las entidades nacionales con sede en lima") == 1
+    assert t.count("no incluye lo que gastan las entidades nacionales con sede en lima") == 1            # u13 (S3-01b)
+    assert "no incluye a las entidades nacionales con sede en lima" not in t
     assert "institutos nacionales de referencia" in t and "3,2" in t                 # la línea aparte sigue, con su cifra
 
 
@@ -461,7 +462,7 @@ def test_h10_la_aclaracion_de_lima_no_promete_un_defecto_que_la_cli_no_aplica(mo
 
 
 def test_h19_una_sola_frase_para_las_aclaraciones_de_homonimos(motor):
-    textos = [preg(motor, "nivel_actual", "pobreza_monetaria", x)["texto"].splitlines()[0] for x in ("Lima", "Huancavelica", "San Juan", "Ayaviri")]
+    textos = [preg(motor, "nivel_actual", "pobreza_monetaria", x)["texto"].splitlines()[0] for x in ("Lima", "Abancay", "San Juan", "Ayaviri")]
     assert all(re.fullmatch(r"Hay varios lugares llamados «[^»]+»\. ¿Cuál quieres\?", t) for t in textos), textos
 
 
@@ -473,7 +474,7 @@ def test_h8_serie_de_un_solo_anio_no_promete_una_cifra_de_ahora(motor):
 
 def test_h13_extremo_dentro_de_un_lugar_nombra_el_lugar_en_la_ficha(motor):
     r = PRE.preguntar_minima(motor, {"intencion": "identificar_extremo", "tema": "pobreza_monetaria",
-                                     "territorio": {"nivel": "distrito", "dentro_de": T("Puno")}}, elegir=1)
+                                     "territorio": {"nivel": "distrito", "dentro_de": T("Puno")}})
     assert r["tipo"] == "no_se_puede"
     assert "sin lugar identificado" not in r["ficha"]["corta"] and "Puno" in r["ficha"]["corta"]
 

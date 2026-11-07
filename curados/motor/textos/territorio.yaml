@@ -17,6 +17,10 @@ preguntas:
   coincidencia_parcial: "No encontramos «{texto}» tal cual. ¿Quisiste decir alguno de estos?"
   sugerencia: "No encontramos «{texto}». ¿Quisiste decir alguno de estos?"
   sin_coincidencia: "No encontramos ese lugar. Revisa cómo está escrito o dinos el departamento, la provincia o el distrito."
+oferta_otros_niveles:   # X-22: el nombre a secas de un departamento se responde como departamento; va en «Avisos» de la capa 2
+  ambos: "Respondimos por el departamento de {nombre}. Si buscabas la provincia o el distrito de {nombre}, pregúntalo así: «provincia de {nombre}» o «distrito de {nombre}»."
+  provincia: "Respondimos por el departamento de {nombre}. Si buscabas la provincia de {nombre}, pregúntalo así: «provincia de {nombre}»."
+  distrito: "Respondimos por el departamento de {nombre}. Si buscabas el distrito de {nombre}, pregúntalo así: «distrito de {nombre}»."
 lima_opciones:          # T-03: rótulos de las tres opciones de «Lima» (los mismos de R-TERRITORIO-09, rotulos_lima)
   LIMA_METROPOLITANA: "Lima Metropolitana (provincia de Lima)"
   LIMA_REGION: "Lima Región (Lima Provincias)"
@@ -29,3 +33,5 @@ alias_ambito:           # texto (sin tildes) → ámbito de dim_ambito que se re
   area metropolitana de lima y callao: AREA_METROPOLITANA_LIMA_CALLAO
 alias_distrito:         # R-TERRITORIO-09 (sin_respuesta.Callao): el distrito solo si se pide así
   callao cercado: "070101"
+  lurigancho chosica: "150118"       # H-J (S3-01b): el distrito se escribe «Lurigancho-Chosica» o «Lurigancho Chosica»
+  lurigancho-chosica: "150118"

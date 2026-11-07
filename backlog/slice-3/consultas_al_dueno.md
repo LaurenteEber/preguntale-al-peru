@@ -8,7 +8,7 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 - **Qué pasa:** el slice 2 se fusionó en `main` ([PR #2](https://github.com/LaurenteEber/preguntale-al-peru/pull/2), `e1a0d0f`). La etiqueta se creó en local, pero el push de etiquetas desde este entorno se corta («the remote end hung up»), aunque el de ramas funciona.
 - **Propuesta:** desde el Mac: `git fetch origin main && git tag -a slice-2-cerrado e1a0d0f -m "Slice 2 cerrado" && git push origin slice-2-cerrado`.
 
-### W-02 — H21: quitar los porcentajes de «Más contexto» de Q4 también quita un aviso (S3-02) · abierta (no bloquea)
+### W-02 — H21: quitar los porcentajes de «Más contexto» de Q4 también quita un aviso (S3-02) · cerrada sin aplicar (dueño, 6/11/2026, S3-01b punto 14)
 - **Qué pasa:** la historia pide que «Más contexto» de Q4 muestre solo el rango del grupo (35,7 % a 39,8 %) y no los porcentajes de los siete departamentos. Lo probé: el texto cambia como se pidió, pero **también desaparece el aviso «Estas cifras vienen de fuentes de distinto tipo (encuesta a hogares, estimación con modelo)…»** y la regla R-LENGUAJE-06 (rotular) deja de dispararse, porque esa regla se activa cuando el texto mezcla cifras de distinta naturaleza. Quitar un aviso no es «decir lo mismo de otra forma» (`agents.md` §5.1, condición 2), y ante la duda es tipo C.
 - **Por qué importa:** la respuesta sigue mostrando juntos el Mapa de Pobreza 2018 (modelo) y el grupo de ENAHO 2025 (encuesta); sin el aviso, esa diferencia queda solo en «Ojo al leer» y en «Límites».
 - **No se hizo:** el texto de `identificar_extremo.yaml` queda como estaba; Q4 no cambia.
@@ -17,6 +17,26 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 ### W-03 — H17 y H18: el dueño no los marcó (S3-02, caso B) · pendiente del dueño (no bloquea)
 - **Qué pasa:** la tabla de S3-02 los deja en blanco (☐), así que no se hicieron y no se tocó `reglas/` ni `ajustes_dueno.py`. Siguen con el texto de hoy: H17 «solo sabemos de los que se les midió la hemoglobina»; H18 «nada sobre provincias o distritos concretos… para Lima Metropolitana».
 - **Para aplicarlos:** el dueño marca la columna con la fecha en `S3-02-observaciones-y-base.md`; entonces se cambian solo por `reglas/consolidador/ajustes_dueno.py` y `consolida_reglas.py`.
+
+### W-04 — H-G: cifras del SIEN muy altas en distritos con mucha diferencia de altura (S3-01b, punto 5) · pendiente del dueño (no bloquea)
+- **Qué pasa:** San Antonio (Huarochirí, 150716) da 94,9 % de anemia (1 516 de 1 597 niños). El INS publica lo mismo (Cuadro 15), así que no es un error nuestro de cálculo. Pero la hemoglobina sin ajustar de esos niños tiene mediana 11,5 g/dL (normal), y el 95 % sale de ajustarla por 3 456 m, la altura de la capital del distrito, aunque la mayoría se atiende en anexos de Jicamarca, mucho más abajo. Lo mismo puede pasar en Santo Domingo de los Olleros; Incahuasi, Pullo y Unión Progreso sí están en altura. El informe gerencial del INS (p. 11) dice que ajusta por la altura de la residencia del niño, pero el dato usa la de la capital (choca también con S-01). Detalle: `evidencia/s3-01b/correcciones.md`.
+- **Decisión del dueño (6/11/2026):** «lo dejamos pendiente, luego agrego datos de altura para cada distrito». No se cambió ningún dato ni regla.
+
+### W-05 — u13: qué cubre la cifra de gasto (S3-01b, punto 3) · cerrada: aprobada por el dueño el 6/11/2026 y aplicada
+- **Qué pasa:** «¿Cuánto gastó el gobierno en anemia en Lima?» responde «S/ 260,6 millones es lo que se gastó en 2025 en servicios de salud y nutrición infantil…»; lo que la cifra no cubre llega después.
+- **Propuesta:** que toda respuesta de gasto (nivel actual) abra con lo que cubre y lo que no, y la cifra vaya después. Lima: «Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y no incluye lo que gastan las entidades nacionales con sede en Lima.» Otras regiones: «…y solo cuenta lo que registran las entidades con sede en {lugar}.» Municipios: «…y solo cuenta a la municipalidad y las obras ubicadas en {lugar}.» El «Ojo al leer» que repite lo mismo se quita. Aplicada (nacional: «…de todas las entidades públicas del país.»).
+
+### W-06 — Enlace oficial de RENIEC con certificado vencido (S3-01b, punto 8) · abierta (no bloquea)
+- **Qué pasa:** `scripts/comprobar_enlaces.sh` da 33 de 34 enlaces bien; falla `portales.reniec.gob.pe/web/estadistica/identificada` («certificate has expired»). Es la página oficial; el problema es de RENIEC.
+- **Propuesta:** dejarla como está y volver a probar al cierre del slice; si sigue fallando, buscar el mismo dato en gob.pe/reniec.
+
+### W-07 — No hay release de la biblioteca del cubo actual (S3-01b, punto 10) · cerrada: release `biblioteca-010ea965` publicado el 6/11/2026 (autorizado por el dueño) y valor por defecto del script
+- **Qué pasa:** el único release es `biblioteca-ba1fbc55`; el cubo actual es `010ea965`. En la nube, `bajar_biblioteca.sh` + `pap calcular` reconstruye el cubo, pero el release no coincide con la huella de hoy.
+- **Propuesta:** publicar `biblioteca-010ea965` desde el Mac (empaquetar `biblioteca/` sin crudos, como el anterior) y cambiar el valor por defecto del script.
+
+### W-08 — pd02: «¿en Huancavelica los niños siguen con anemia como antes?» (S3-01b, punto 12) · cerrada: el dueño acepta la aclaración (6/11/2026)
+- **Qué pasa:** se esperaba una evolución de la anemia en Huancavelica; el intérprete pide aclarar entre «cómo cambió» y «cuánto hay hoy» (como en tu prueba). Es lo más prudente, pero cuenta como falla en la evaluación (los umbrales globales se cumplen).
+- **Propuesta:** aceptar la aclaración como resultado esperado (`resultado: aclaracion`, `intencion_ambigua`).
 
 ## Supuestos aplicados (vacíos tipo B)
 
@@ -30,6 +50,11 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 | S3-03-b | S3-03 | Topes de la entrada: `texto` hasta 2000 caracteres; `elegir` hasta 4 números, cada uno entre 1 y 50; se acepta un número o una lista | `curados/web/parametros.yaml` → `pregunta` |
 | S3-03-c | S3-03 | Las pruebas esperan hasta 120 s a que termine el precalentamiento | `curados/web/parametros.yaml` → `precalentamiento` |
 | S3-03-d | S3-03 | Estado HTTP: 200 para cualquier respuesta del motor (incluidos los mensajes fijos), 503 para `mensaje` con `motivo: no_disponible` y para «preparando», 422 para entradas inválidas. Tabla en `docs/especificaciones/api.md` | `curados/web/parametros.yaml` → `http`; `curados/web/textos.yaml` |
+| S3-01b-a | S3-01b | X-22: la frase que ofrece la provincia o el distrito va primero en «Avisos» (capa 2), así la capa 1 no cambia; solo nombra los niveles que existen con ese nombre | `curados/motor/textos/territorio.yaml` → `oferta_otros_niveles` |
+| S3-01b-b | S3-01b | Interruptor `territorio.departamento_a_secas.activo` (con `false` vuelve la aclaración de antes; lo usa la prueba de la base del slice 2) | `curados/motor/parametros_motor.yaml` |
+| S3-01b-c | S3-01b | Alias «lurigancho chosica» y «lurigancho-chosica» → 150118 (H-J) | `curados/motor/textos/territorio.yaml` → `alias_distrito` |
+| S3-01b-d | S3-01b | `comprobar_enlaces.sh` usa un agente de navegador (`-A 'Mozilla/5.0'`): datosabiertos.gob.pe responde 418 a curl sin él | `scripts/comprobar_enlaces.sh` |
+| S3-01b-e | S3-01b | Evaluación: pd09 «la municipalidad» = gasto del lugar; pd17 (inyección) = no responder | `tests/interprete/evaluacion.yaml` (notas) |
 
 ## Pendientes del dueño que siguen abiertos
 

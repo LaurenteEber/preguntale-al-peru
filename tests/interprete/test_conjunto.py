@@ -9,7 +9,7 @@ import yaml
 
 from pap.config import Rutas
 from pap.motor.interpretacion import validar
-from pap.motor.territorio import Aclaracion, resolver
+from pap.motor.territorio import Aclaracion, Resuelto, resolver
 from pap.motor.validador.contexto import cargar_contexto
 
 from conftest import RAIZ_REAL
@@ -102,6 +102,6 @@ def test_q1_q4_resuelven_como_sus_json(entradas, q):
     else:
         rj = resolver(tj, ctx)
         rc = resolver(con_comas(tc), ctx)
-        if q == "q1":                                       # «Huancavelica»: aclaración; con --elegir 1, el departamento
-            assert isinstance(rc, Aclaracion)
+        if q == "q1":                                       # «Huancavelica» (X-22): se responde como departamento, sin aclaración
+            assert isinstance(rc, Resuelto) and (rc.nivel, rc.id) == ("departamento", "09")
         assert _resuelto(rc, rj.nivel) == _resuelto(rj)

@@ -16,12 +16,11 @@
     "texto": "Confianza en los datos: alta. Hay suficientes datos y son de 2024."
    },
    "ojo_al_leer": [
-    "No leas esta cifra como todo el gasto en Amazonas: solo cuenta lo que registran las entidades con sede allí.",
     "No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó."
    ],
-   "palabras": 85,
+   "palabras": 94,
    "que_hacer": null,
-   "respuesta_corta": "En 2024, en Amazonas, el gasto en servicios de salud y nutrición infantil fue:"
+   "respuesta_corta": "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en Amazonas. En 2024, en Amazonas, el gasto en servicios de salud y nutrición infantil fue:"
   },
   "capa2": {
    "avisos": [],
@@ -426,8 +425,8 @@
   }
  ],
  "semaforo_respuesta": "verde",
- "texto": "En 2024, en Amazonas, el gasto en servicios de salud y nutrición infantil fue: S/ 81,3 millones es lo que se gastó en 2024 en servicios de salud y nutrición infantil, registrado por entidades con sede en Amazonas. No leas esta cifra como todo el gasto en Amazonas: solo cuenta lo que registran las entidades con sede allí. No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó.",
- "texto_con_marcadores": "En 2024, en Amazonas, el gasto en servicios de salud y nutrición infantil fue: {{c:gasto_ex_pan__devengado__departamento__01__2024__principal}} es lo que se gastó en 2024 en servicios de salud y nutrición infantil, registrado por entidades con sede en Amazonas. No leas esta cifra como todo el gasto en Amazonas: solo cuenta lo que registran las entidades con sede allí. No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó.",
+ "texto": "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en Amazonas. En 2024, en Amazonas, el gasto en servicios de salud y nutrición infantil fue: S/ 81,3 millones es lo que se gastó en 2024 en servicios de salud y nutrición infantil, registrado por entidades con sede en Amazonas. No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó.",
+ "texto_con_marcadores": "Esta cifra no es solo de anemia: es de todos los servicios de salud y nutrición infantil, y solo cuenta lo que registran las entidades con sede en Amazonas. En 2024, en Amazonas, el gasto en servicios de salud y nutrición infantil fue: {{c:gasto_ex_pan__devengado__departamento__01__2024__principal}} es lo que se gastó en 2024 en servicios de salud y nutrición infantil, registrado por entidades con sede en Amazonas. No concluyas que el gasto dio resultados: la cifra solo dice cuánto se gastó.",
  "tipo": "respuesta",
  "version_biblioteca": {
   "commit_cubo": "779357d",
