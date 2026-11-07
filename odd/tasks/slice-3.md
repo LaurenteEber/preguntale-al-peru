@@ -34,7 +34,9 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T5 S3-05 | S6 | writer | done: 1130 passed | (S3-05 commit) |
 | T8 S3-09 | S6 | writer in worktree ../pap-s3-09 (parallel) | done: image rebuilt on current web; 1162 passed | (S3-09 commit) |
 | T6 S3-07 | S6 | writer | done: 1154 passed | (S3-07 commit) |
-| T7,T9–T11 | S3-06, S3-08, S3-10, S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
+| T7 S3-06 | S6 | writer | done: 1211 passed, 1 skipped (screenshots only) | (S3-06 commit) |
+| T9 S3-08 | S6 | writer in worktree ../pap-s3-08 (parallel) | done; live ≈ US$ 0.12 | |
+| T10–T11 | S3-10, S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 
 ## Log
 

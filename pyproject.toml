@@ -29,7 +29,10 @@ dependencies = [
 pap = "pap.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8"]
+dev = [
+    "playwright>=1.64.1",
+    "pytest>=8",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -42,6 +45,7 @@ packages = ["src/pap"]
 testpaths = ["tests"]
 markers = [
     "solo_mac: needs the raw store (biblioteca/cruda/); runs only on the owner's Mac (X-11)",
+    "navegador: needs Playwright and Chromium (S3-06); when Chromium is missing, leave it out with -m \"not navegador\"",
 ]
 # S3-01b (fila 13): se silencian solo estos dos avisos de librerías ajenas (con el mensaje exacto, para que cualquier otro aviso siga viéndose):
 # Starlette avisa de que TestClient usa httpx (fastapi/testclient.py) y openpyxl avisa de un área de impresión del Excel del INEI.

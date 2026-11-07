@@ -1,0 +1,6 @@
+axe-core 4.14.0 (MPL-2.0)
+Origen: https://registry.npmjs.org/axe-core/-/axe-core-4.14.0.tgz (archivo package/axe.min.js)
+Tarball: shasum (sha1) a9819d3932a8198fbe935d8cbd8afcdfecbcf31d; integrity (sha512) 9WTZxEjsZ7b13TH8JPmbV2z8CHbl80/2hm3XPEG4JgNdQLK81IBRXmSxHfMAOkSqQeRxT/0dwNDz2GOm3zzpcQ==
+  (ambos coinciden con https://registry.npmjs.org/axe-core/4.14.0 → dist)
+axe.min.js sha256: 20c09fe157a8a34a30e241aaa1fcdade657734f08ab379ecfbeb7d45cc46e878
+Lo comprueba tests/web/test_accesibilidad.py::test_axe_vendorizado_coincide_con_su_huella.
