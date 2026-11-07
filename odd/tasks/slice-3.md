@@ -43,6 +43,7 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 | T10b S3-10 web fixes | S9 | writer (context backstop) | done | 693f96f |
 | T10c S3-10 task 3 eval set + recordings | S6, L12 | inline | done: w01, w04, w05, w07 recorded (US$ 0.0305; S3-10 total 0.0732); eval 4/4 | (task 3 commit) |
 | T10d owner phone test | L13, L14 | owner | pending | |
+| T10e review by parts | L16 | inline (gentle_review, worktree pap-rev, code-only commits) | done: 13 parts approved, 0 blocking; S3-00 low risk without lenses | (review commit) |
 | T11 | S3-11 | order of S6; one commit per story = slice boundary (delivery: one PR at close, S7) | pending | |
 
 ## Log
@@ -62,3 +63,4 @@ Each spec is the acceptance criteria of its story file (`backlog/slice-3/S3-nn-*
 - L13 (2026-11-06, owner): «Sí, la prueba en celular lo probamos mañana.» → S3-10 proceeds now with the Playwright reviewer; owner phone test (pap servir --red-local) scheduled for 2026-11-07, before closing the slice.
 - L14 (2026-11-07, owner): W-10 «Sí, mismos textos (Recomendado)»; H-03 «Ocultarlo en la web (Recomendado)»; medios del motor: H-04 y H-05, H-06, H-07 selected; web H-08/H-09/H-10/H-14 fixed anyway; celular «Al final, después de los arreglos».
 - L15 (2026-11-07, owner): W-10 with the same texts exceeds R-04 125 words in provincia/distrito (up to 141) → «Sin apertura en provincia y distrito (Recomendado)».
+- L16 (2026-11-07, owner): «ok revisa el slice por partes».
