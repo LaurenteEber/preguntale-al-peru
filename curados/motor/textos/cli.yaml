@@ -1,4 +1,4 @@
-# Mensajes de `pap preguntar` (S1-06) en lenguaje sencillo. Los de una consulta inválida salen de errores_consulta.yaml (S1-01);
+# Mensajes de `pap preguntar` (S1-06) y de `pap servir` (S3-09) en lenguaje sencillo. Los de una consulta inválida salen de errores_consulta.yaml (S1-01);
 # los de «no se puede» y las aclaraciones, de no_se_puede.yaml. Aquí solo lo que es propio de la línea de comandos.
 version: 1.0.0
 mensajes:
@@ -16,3 +16,5 @@ mensajes:
   elegir_de_mas_una: "Escribiste {escritos} números en --elegir, pero solo había 1 pregunta por responder. Escribe un solo número."
   elegir_de_mas: "Escribiste {escritos} números en --elegir, pero solo había {hay} preguntas por responder. Escribe un número por cada una."
   consulta_de: "En «{nombre}»:"
+  servir_local: "Pregúntale al Perú escucha en {direccion} (solo desde este equipo). Se está preparando: espera unos segundos antes de preguntar. Para pararlo, pulsa Ctrl+C."
+  servir_red_local: "Pregúntale al Perú escucha en {direccion} (también desde la red de la casa). Desde otro equipo, entra con la dirección IP de este equipo y el puerto {puerto}. Se está preparando: espera unos segundos antes de preguntar. Para pararlo, pulsa Ctrl+C."

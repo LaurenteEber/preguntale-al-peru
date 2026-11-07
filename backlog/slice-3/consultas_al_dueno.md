@@ -78,6 +78,10 @@ Mismas reglas que los slices anteriores (`agents.md` §5). Tipo C o D: «Consult
 | S3-07-b | S3-07 | Tope diario: 300 llamadas reales al LLM (reintentos incluidos, la caché no cuenta), día de Lima; al llegar, la caja de texto se desactiva y lleva al formulario (503 en la API) | `curados/web/parametros.yaml` → `limites` |
 | S3-07-c | S3-07 | Cuerpo máximo de 8 192 bytes (413) | `curados/web/parametros.yaml` → `limites` |
 | S3-07-d | S3-07 | `tope_diario` es el motivo del tope (confirma S3-04-b) | `curados/web/parametros.yaml` → `paginas` |
+| S3-09-a | S3-09 | La imagen escucha en la red (`--red-local`, 0.0.0.0) porque está dentro de un contenedor; el puerto sale de `PAP_PUERTO` (8000) | `Dockerfile`, `scripts/arranque_imagen.sh` |
+| S3-09-b | S3-09 | El `HEALTHCHECK` lee `PAP_PUERTO` y espera 180 s al precalentamiento | `Dockerfile` |
+| S3-09-c | S3-09 | Al arrancar, si el cubo no es el del manifiesto, se corre `pap calcular --permitir-sucio` (la imagen no lleva `.git`) | `scripts/arranque_imagen.sh` |
+| S3-09-d | S3-09 | uv se instala con pip solo para construir la imagen (no es una dependencia del proyecto) | `Dockerfile` |
 
 ## Pendientes del dueño que siguen abiertos
 

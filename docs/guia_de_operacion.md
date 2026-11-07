@@ -147,6 +147,7 @@ just catalogo                             # recalcula la compuerta del catálogo
 | `pap construir {territorio,poblacion,puentes,gasto,endes,enaho,mapa_pobreza,indicadores}` | Reconstruye una tabla curada o estandarizada | Tras cambiar crudos o código (solo en el Mac) | `biblioteca` |
 | `pap calcular` | Reconstruye el cubo `fact_indicador.parquet` | Después de `construir`, o de bajar el release | `biblioteca` |
 | `pap almacen comprimir [--dry-run]` | Comprime con zstd los textos grandes; `--dry-run` solo lista | Mantenimiento | Almacén (sin `--dry-run`) |
+| `pap servir [--puerto N] [--red-local]` | Levanta la web en local (por defecto solo `127.0.0.1:8000`) | Para ver la web o probar la imagen | No |
 | `pap indice` | Reconstruye `indice.duckdb` | Tras registrar capturas | `biblioteca` |
 | `pap recetas {generar,validar,sincronizar}` | Recetas de descarga desde el catálogo; `validar` las contrasta con el catálogo y R-DEP-01 | Al tocar el catálogo | `validar`: no |
 | `pap validar-reglas [--carpeta casos_implementador]` | Corre los casos de prueba del validador de reglas | Al cambiar una regla | No |

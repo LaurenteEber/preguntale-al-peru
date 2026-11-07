@@ -207,6 +207,7 @@ PERMITIDOS = {
     "pap.interprete.interpretar": {"interpretar", "crear_cliente"},
     "pap.interprete.llm": None,                                       # el adaptador del intérprete
     "pap.web": {"paginas", "limites", "registro"},                    # S3-04: las páginas HTML; S3-07: límites y registros sin la pregunta
+    "pap.web.app": {"crear_app"},                                     # S3-09: `pap servir` levanta la misma app
 }
 
 

@@ -174,6 +174,16 @@ Con varias consultas se escriben todas y el código de salida es el más grave. 
 
 Valores en `cli.codigo_salida` de `parametros_motor.yaml`. Un valor inválido de una opción con lista (p. ej. `--intencion foo`) lo rechaza el propio argparse: imprime el uso y sale también con **2**, aunque no sea una aclaración. Si solo necesitas distinguir una aclaración, mira que la salida empiece con «Hay varios…», «¿De qué problema…» o «No encontramos…».
 
+### 3.1b ✅ Verla en el navegador: `pap servir`
+
+```bash
+uv run pap servir                       # http://127.0.0.1:8000, solo desde este equipo
+uv run pap servir --puerto 8123         # otro puerto
+uv run pap servir --red-local           # también desde otros equipos de la red de la casa
+```
+
+Imprime la dirección y espera unos segundos mientras se prepara (`/salud` responde 503 hasta que termina). Pulsa Ctrl+C para pararlo. No es un despliegue público. La imagen Docker (`Dockerfile`, evidencia en `backlog/slice-3/evidencia/s3-09_imagen.md`) hace lo mismo y baja la biblioteca si no se monta.
+
 ### 3.2 ✅ Cómo leer una respuesta
 
 Una respuesta trae tres capas, la confianza y, al final, el detalle técnico (contrato completo: `docs/especificaciones/contrato_respuesta.md`).

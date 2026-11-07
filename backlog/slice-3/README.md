@@ -57,7 +57,7 @@ Del cierre (`../slice-2/evidencia/cierre.md`):
 | S3-06 | [Accesibilidad y celular](S3-06-accesibilidad.md) | pendiente |
 | S3-07 | [Privacidad, abuso y costo](S3-07-privacidad-abuso.md) | hecha ([evidencia](evidencia/s3-07_privacidad.md)); supuestos S3-07-a a d |
 | S3-08 | [Rendimiento](S3-08-rendimiento.md) | pendiente |
-| S3-09 | [Empaquetado: imagen y `pap servir`](S3-09-empaquetado.md) | pendiente |
+| S3-09 | [Empaquetado: imagen y `pap servir`](S3-09-empaquetado.md) | hecha ([evidencia](evidencia/s3-09_imagen.md)); imagen probada con Docker (colima) |
 | S3-10 | [Revisión independiente en el celular](S3-10-revision-independiente.md) | pendiente |
 | S3-11 | [Documentación y cierre](S3-11-documentacion-cierre.md) | pendiente |
 
