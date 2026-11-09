@@ -143,7 +143,7 @@ just secretos                       # gitleaks sobre todo el historial (secretos
 ### 3.5c Verificador en R y esperados (M0-09)
 
 ```bash
-cd verificador_r && Rscript -e 'source("renv/activate.R"); renv::restore(prompt = FALSE)'   # una vez; necesita gfortran (C-M0-09-1)
+cd verificador_r && RENV_CONFIG_CACHE_ENABLED=FALSE Rscript -e 'options(pkgType = "binary"); source("renv/activate.R"); renv::restore(prompt = FALSE)'   # una vez; solo binarios, sin caché
 just esperados-r                                                                          # regenera tests/esperados/r_survey_sintetico.csv
 uv run python -m pap.inferencia.verificador_r esperados                                   # lo mismo, sin just
 ```

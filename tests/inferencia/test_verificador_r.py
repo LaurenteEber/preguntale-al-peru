@@ -35,6 +35,24 @@ def test_renv_lock_apunta_a_una_instantanea_con_fecha_de_al_menos_dos_semanas():
     assert LOCK["R"]["Version"].startswith("4.6.")
 
 
+def paquetes_dudosos(lock: dict) -> list[str]:
+    """Paquetes del lock con un `Title` que dice «stub» o con un `Repository` que no es CRAN ni RSPM (M0-09, dueño 9/11/2026:
+    la biblioteca se restaura solo con binarios de la instantánea; un paquete de reemplazo no puede volver a colarse)."""
+    return sorted(nombre for nombre, p in lock["Packages"].items()
+                  if "stub" in p.get("Title", "").lower() or p.get("Repository") not in ("CRAN", "RSPM"))
+
+
+def test_ningun_paquete_del_lock_es_un_stub_y_todos_vienen_de_cran_o_rspm():
+    assert LOCK["Packages"] and paquetes_dudosos(LOCK) == []
+
+
+def test_paquetes_dudosos_detecta_un_stub_y_un_repositorio_ajeno():
+    lock = {"Packages": {"minqa": {"Title": "Stub provisional sin Fortran", "Repository": "CRAN"},
+                         "otro": {"Title": "Un paquete", "Repository": "github"},
+                         "bien": {"Title": "Un paquete", "Repository": "RSPM"}}}
+    assert paquetes_dudosos(lock) == ["minqa", "otro"]
+
+
 def test_el_proyecto_renv_esta_completo_y_la_biblioteca_local_no_se_versiona():
     assert 'source("renv/activate.R")' in (CARPETA / ".Rprofile").read_text(encoding="utf-8")
     assert 'version <- "1.3.1"' in (CARPETA / "renv" / "activate.R").read_text(encoding="utf-8")

@@ -117,6 +117,9 @@ verificador_r:
   # Verificador en R (M0-09; docs/diseno/tecnologias.md §3). Instantánea de CRAN en Posit Package Manager: la fecha más reciente con al menos
   # 14 días de antigüedad (seguridad.lock_dias_min) el 9/11/2026 que trae renv 1.3.1, nanoparquet 0.5.2 y survey. Está en verificador_r/renv.lock.
   cran_instantanea: {valor: "2026-10-26", supuesto: M0-09}
+  # R 4.6.2 salió el 29/10/2026: tenía 11 días el 9/11/2026, menos de los 14 de seguridad.lock_dias_min. Excepción decidida por el
+  # dueño (9/11/2026) para avanzar; se revisa al subir R.
+  r_version: {valor: "4.6.2", fecha_publicacion: "2026-10-29", excepcion_lock_dias_min: true, supuesto: M0-09}
   # La última de CRAN a esa fecha. La 4.5-2 (corrección del ee sobreestimado) no está publicada; ver backlog/slice-m0/evidencia/m0-09_r.md.
   survey_version: {valor: "4.5", supuesto: M0-09}
   # M0-03/M0-09: svy debe coincidir con R en est, ee e IC; gl y n exactos. Nunca se afloja para que una prueba pase.

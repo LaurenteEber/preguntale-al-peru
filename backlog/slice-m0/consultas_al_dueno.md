@@ -58,7 +58,8 @@ Rigen las mismas reglas que en los slices anteriores (`agents.md` §5):
 - **Propuesta:** US$ 5 por día (`docs/diseno/tecnologias.md` §8), más un tope por lote del enriquecimiento del índice de US$ 50.
 
 ## Consultas que bloquean (vacíos tipo C o D)
-### C-M0-09-1 — Falta `gfortran` para compilar `minqa` (dependencia de `survey`) · tipo C · **bloquea los esperados de R (criterios 1 y 2 de M0-09)**
+### C-M0-09-1 — Falta `gfortran` para compilar `minqa` (dependencia de `survey`) · **resuelta el 9/11/2026**
+- **Cómo se resolvió (dueño, 9/11/2026):** no hacía falta `gfortran`. La misma instantánea de Posit trae binarios para macOS arm64 (`sonoma-arm64`). El dueño restauró la biblioteca solo con binarios y sin caché, y regeneró `renv.lock` con el `minqa` 1.2.8 real (commit `2847b2b`). El agente generó los esperados de R y cerró los criterios 1 y 2 de M0-09 (`evidencia/m0-09_r.md`), sin tocar la tolerancia.
 - **Qué pasa:** el verificador en R necesita el paquete `survey`, y `survey` necesita `minqa`, que se compila con Fortran. El Mac no tiene `gfortran` (R lo busca en `/opt/gfortran/bin/gfortran`) y CRAN no publica binarios de macOS para R 4.6, así que `renv::restore()` falla en `minqa`. Sin eso no se pueden generar los esperados de R (`tests/esperados/r_survey_sintetico.csv`) ni cerrar la comparación oficial de `svy` 0.35.0 con R.
 - **Por qué importa:** sin esa comparación, la política de versiones de M0-03 no se cierra y las pruebas `test_esperados_r.py` fallan (a propósito: no se saltan).
 - **Qué hizo el agente mientras tanto:** dejó listo todo lo demás (compuertas, sintético, `verificar.R` adaptado del prototipo, `renv.lock`, README, tarea `esperados-r`). Para diagnosticar, corrió el verificador con una copia de `survey` 4.5 compilada con un `minqa` de reemplazo sin Fortran (el reemplazo solo afecta funciones que `survey` no usa aquí) y comparó: máxima diferencia con `svy` 1,3e-15 en los 50 dominios (`evidencia/m0-09_r.md`). Eso es **solo diagnóstico**; no se guardó como esperados y no cuenta como criterio cumplido. No se bajó ningún compilador de terceros (F-04).
@@ -135,6 +136,8 @@ No hubo vacíos tipo C ni D: las cifras no se tocan (el cubo sigue en `010ea965`
 - **Qué se propone:** dejarlo así en M0 (campo `universo_analitico` informativo) y, en M1, que el verificador tome del plan el universo que la receta nombra; hasta entonces la prueba de arriba es el control.
 
 ## Supuestos aplicados (tipo B)
+
+- **M0-09 — R 4.6.2 como excepción a la regla de 2 semanas** (`supuesto: M0-09`): R 4.6.2 salió el 29/10/2026 y tenía 11 días el 9/11/2026, menos de los 14 de `seguridad.lock_dias_min`. El dueño decidió avanzar con esa versión (9/11/2026). Queda registrado en `curados/inferencia/parametros.yaml` (`verificador_r.r_version`). Se revisa al subir R.
 
 - **M0-00b — límites de `abrir_zip_seguro`** (`curados/inferencia/parametros.yaml`, `almacen.zip_*`): 1 024 MB por miembro, 2 048 MB en total, proporción de compresión máxima 100 (solo en miembros de 1 MB o más), bloques de 1 024 KB. Margen sobre el ZIP más grande registrado (89,6 MB; 732 MB descomprimidos; proporción 28,3). `supuesto: M0-00b`.
 - **M0-00b — regla del lock** (`seguridad.lock_dias_min` y `seguridad.lock_excepciones` en el mismo YAML): 14 días mínimo, sin excepciones registradas. `supuesto: M0-00b`.

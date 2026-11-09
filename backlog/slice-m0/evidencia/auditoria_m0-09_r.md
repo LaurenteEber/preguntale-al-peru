@@ -4,8 +4,7 @@ Plantilla de M0-00b (`backlog/plantillas/auditoria_dependencia.md`).
 
 **Historia:** M0-09 · **Fecha:** 9/11/2026 · **Quién la hizo:** agente
 
-> **Estado: aprobado con condiciones; el paso «compilado en el Mac» de `survey`/`minqa` está pendiente** (C-M0-09-1: falta `gfortran`).
-> Hasta que el dueño lo instale y se corra `renv::restore()`, `survey` y `minqa` no están instalados con el lock.
+> **Estado: aprobado con condiciones.** El dueño restauró la biblioteca el 9/11/2026 solo con binarios de la instantánea de Posit (`sonoma-arm64`), sin la caché de renv, y regeneró `renv.lock` con el `minqa` 1.2.8 real (commit `2847b2b`). No se compiló nada en el Mac.
 
 ## 1. Qué es y por qué entra
 - **Qué hace y para qué la usamos:** `survey` calcula proporciones con diseño muestral (la segunda implementación frente a `svy`); `nanoparquet` lee el Parquet del sintético; `jsonlite` lee los parámetros; `renv` fija las versiones.
@@ -36,8 +35,25 @@ Fuente única: CRAN, a través de la instantánea `https://packagemanager.posit.
 
 ## 3. Qué trae
 - **Dependencias nuevas que arrastra:** las de la tabla (`survey` → `minqa`, `mitools`, `numDeriv`, `Rcpp`, `RcppArmadillo`, `DBI`, `Matrix`, `lattice`, `survival`). Todas de CRAN, GPL/LGPL/MIT.
-- **Binarios, extensiones de C o Fortran, scripts de instalación:** se instalan **desde fuente** (no hay binarios de macOS para R 4.6). Compilan C/C++ (`jsonlite`, `nanoparquet`, `Rcpp`, `RcppArmadillo`, `survey`) y **Fortran** (`minqa`). `nanoparquet` trae copias empaquetadas de zstd, snappy, thrift y miniz. Ningún paquete usa un script de instalación propio (`configure` de `RcppArmadillo` solo detecta el compilador).
+- **Binarios, extensiones de C o Fortran, scripts de instalación:** se instalan como **binarios de macOS arm64** de la instantánea fechada de Posit (`https://packagemanager.posit.co/cran/2026-10-26`, etiqueta `4.6-macos-arm64`), con `options(pkgType = "binary")`; no se compila nada. Traen código nativo ya compilado de C/C++ (`jsonlite`, `nanoparquet`, `Rcpp`, `RcppArmadillo`, `survey`) y de Fortran (`minqa`). `nanoparquet` trae copias empaquetadas de zstd, snappy, thrift y miniz. Ningún paquete usa un script de instalación propio (`configure` de `RcppArmadillo` solo detecta el compilador).
 - **Qué hace en segundo plano:** nada de red al cargarse. `renv` descarga solo en `restore()`/`install()`, del repositorio fechado.
+
+## 3b. Binarios descargados (sha256)
+
+Cada binario de la instantánea `https://packagemanager.posit.co/cran/2026-10-26/bin/macosx/sonoma-arm64/contrib/4.6/` (redirige a `rspm-sync.rstudio.com/bin/4.6-macos-arm64/`). Huellas tomadas el 9/11/2026 volviendo a bajar cada archivo a una carpeta temporal, sin instalarlo ni ejecutarlo; se comprobó que cada uno es un `.tgz` con su `<paquete>/DESCRIPTION`. Como la restauración del dueño fue sin caché, renv no guardó los archivos que bajó; son los mismos de la misma URL fechada.
+
+| Paquete | Versión | sha256 | Bytes | Comprobación |
+|---|---|---|---:|---|
+| DBI | 1.3.0 | 17ac851d1de50ac43040d42cd413800c4f3dd0ec59596b669f5628db436ad5e9 | 947922 | gzip compressed data; DESCRIPTION=1 |
+| Rcpp | 1.1.2 | caf7ac197ebcf3815e02d1079c252c779caef962ff49192f7844c68a0ea58281 | 2298980 | gzip compressed data; DESCRIPTION=1 |
+| RcppArmadillo | 15.6.2-1 | 51c4b405377433cd4abe2794ce44282a028d941f4dd641549f3db5fdf537ad4c | 1098776 | gzip compressed data; DESCRIPTION=1 |
+| jsonlite | 2.0.0 | 2165a19e5f87f4e7f238da548bad1b7fc3ef8519bfc26f240ceedae67d5b31ad | 1088947 | gzip compressed data; DESCRIPTION=1 |
+| minqa | 1.2.8 | 9975b2eb21398d47713fce6765e1ba89df4b2045ec8aad4fec89d432e12b23e8 | 120464 | gzip compressed data; DESCRIPTION=1 |
+| mitools | 2.7 | 2dbbe56a662162450a3405dda62c660a19700ec54134a3b259dea7ae12a20e52 | 342081 | gzip compressed data; DESCRIPTION=1 |
+| nanoparquet | 0.5.2 | 7ae10aedf0ba6fecc059160f8fcc841b6ce5a0e888c2abecf75841bb08c53bef | 1014316 | gzip compressed data; DESCRIPTION=1 |
+| numDeriv | 2016.8-1.1 | 3d62d2677d09104ef7452fd8f759a367684c15e78a13c4a3004f9752ea86ce74 | 115703 | gzip compressed data; DESCRIPTION=1 |
+| renv | 1.3.1 | 248a532ef23e6e47b36580c0e4e7add504bb394c99f4e646929f9defaf652acb | 2717179 | gzip compressed data; DESCRIPTION=1 |
+| survey | 4.5 | b85e98eaf1d33a9b2b26db37d3037bdca81987408319b6e94da7792c5f30fab5 | 3611443 | gzip compressed data; DESCRIPTION=1 |
 
 ## 4. Vulnerabilidades conocidas
 | Fuente | Cómo se consultó | Resultado |
@@ -52,8 +68,9 @@ Fuente única: CRAN, a través de la instantánea `https://packagemanager.posit.
 - `verificar.R` no llama a `system()` ni a la red, no instala paquetes y solo lee el JSON y el Parquet (probado por inspección del código en el mismo archivo de pruebas).
 - R no corre dentro de pytest ni en la web; los esperados se generan una vez y se versionan con las versiones en la cabecera.
 - Subir cualquier versión del lock exige repetir esta auditoría y regenerar los esperados.
-- **Pendiente (C-M0-09-1):** instalar `gfortran` oficial de R en el Mac, correr `renv::restore()` y comprobar que `minqa` y `survey` compilan desde el lock; después, anotar aquí la fecha. El `gfortran` es una herramienta de sistema que instala el dueño; el agente no bajó ningún compilador de terceros (F-04).
+- La biblioteca se restaura solo con binarios y sin caché: `RENV_CONFIG_CACHE_ENABLED=FALSE` y `options(pkgType = "binary")` (`verificador_r/README.md`). Ningún `Title` del lock puede decir «stub» y todos los paquetes vienen de `CRAN` o `RSPM` (`tests/inferencia/test_verificador_r.py`).
+- `Matrix`, `lattice` y `survival` son paquetes recomendados que vienen con R 4.6.2: no se descargan.
 
 ## 6. Veredicto
-**Aprobado con condiciones** (las de la sección 5; la compilación en el Mac, pendiente).
+**Aprobado con condiciones** (las de la sección 5).
 - **Revisión siguiente:** al subir `survey` (por ejemplo, cuando aparezca la 4.5-2 en CRAN), `renv` o `nanoparquet`, y al cerrar cada slice.

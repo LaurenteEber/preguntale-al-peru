@@ -37,17 +37,17 @@ comprobó, con los casos del verificador (dominios por subconjunto, estratos con
 
 ## Preparar el Mac (una vez)
 
-1. R 4.6.x (`R --version`) y las herramientas de compilación de macOS. **`survey` depende de `minqa`, que se compila con Fortran**:
-   hace falta `gfortran` en `/opt/gfortran/bin` (el instalador oficial de R: <https://mac.r-project.org/tools/>, `gfortran-14.2`).
-   Mientras no esté, `renv::restore()` falla en `minqa` (C-M0-09-1 en `backlog/slice-m0/consultas_al_dueno.md`).
-2. Reconstruir la biblioteca desde el lock:
+1. R 4.6.x (`R --version`). No hace falta compilador: la instantánea de Posit del lock trae binarios para macOS arm64
+   (`sonoma-arm64`), también el de `minqa`.
+2. Reconstruir la biblioteca desde el lock, **solo con binarios y sin la caché de renv**:
 
 ```bash
 cd verificador_r
-Rscript -e 'source("renv/activate.R"); renv::restore(prompt = FALSE)'
+RENV_CONFIG_CACHE_ENABLED=FALSE Rscript -e 'options(pkgType = "binary"); source("renv/activate.R"); renv::restore(prompt = FALSE)'
 ```
 
-`renv::restore()` usa el repositorio fechado del lock y baja los fuentes (no hay binarios de macOS para R 4.6).
+`renv::restore()` usa el repositorio fechado del lock (`https://packagemanager.posit.co/cran/2026-10-26`). Con
+`pkgType = "binary"` no compila nada; si un paquete no tuviera binario, el restore falla en lugar de bajar los fuentes.
 
 ## Generar los esperados
 
