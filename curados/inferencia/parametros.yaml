@@ -70,3 +70,31 @@ indice:
   vocales_acento_grave: {valor: "àèìòù", supuesto: M0-05}
   # Stata corta las etiquetas de variable en 80 caracteres: una de exactamente ese largo puede estar cortada.
   etiqueta_largo_posible_corte: {valor: 80, supuesto: M0-05}
+
+verificador:
+  # Verificador base (M0-07; diseño §12.1 y anexo B). El resto del §12.1 (sujeto, ventana, quiebres, cortes_max…) va en M1.
+  # Anexo B: «se mide en la fase 0» (M0-08 lo mide con el ejecutor); mientras tanto, el valor inicial del anexo.
+  dominios_max_llamada: {valor: 100, supuesto: M0-07}
+  anios_apilados_max_llamada: {valor: 4, supuesto: M0-07}
+  # §12.1: «una pérdida mayor al 1 % [de filas de u al unir] es falla».
+  union_perdida_max: {valor: 0.01, supuesto: M0-07}
+  # §12.1: «hasta la fase 3, solo proporciones».
+  medidas_disponibles: {valor: [proporcion], supuesto: M0-07}
+  # Un nivel fuera de inferencia_verificada sube al que lo contiene (R-ENC-06). Los dos ámbitos de Lima están dentro del
+  # departamento 15 (territorios.yaml: HV024 = 15); los demás niveles suben por NIVEL_RANK (provincia, departamento, nacional).
+  contencion_territorial:
+    valor:
+      LIMA_METROPOLITANA: {nivel: departamento, id: "15"}
+      LIMA_REGION: {nivel: departamento, id: "15"}
+    supuesto: M0-07
+  # Nombre de la fuente en catalogo/inferencia_verificada.csv.
+  fuente_inferencia_verificada: {valor: {ENDES: INEI-ENDES, ENAHO: INEI-ENAHO}, supuesto: M0-07}
+  # Categoría de un corte sin dato (§12.1: «un corte sin dato pasa a la categoría “sin dato”»).
+  corte_sin_dato: {valor: "sin dato", supuesto: M0-07}
+
+duckdb:
+  # Conexión endurecida (M0-07; diseño §22). Memoria = memoria_trabajador_mb del anexo B.
+  memoria_mb: {valor: 1536, supuesto: M0-07}
+  threads: {valor: 2, supuesto: M0-07}
+  # Carpetas desde las que DuckDB puede leer, relativas a la raíz del repositorio.
+  carpetas_permitidas: {valor: [biblioteca/microdatos, biblioteca/variables], supuesto: M0-07}

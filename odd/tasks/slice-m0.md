@@ -23,7 +23,7 @@ Owner waits: K-01 (ZIP list), K-02 (R), K-03 (visto), K-07 (R-ENC-19), K-09 (gh 
 | T6 | M0-04 conversor y almacén | S1 | worker | done: 34 DTA → Parquet, RSS max 778 MB, hash max 0.68 s; suite 1322 passed | see git log M0-04 |
 | T7 | M0-05 índice de variables | S1 | worker | done: 2 856 vars, joins exact, suite 1369 passed; reconverted with full classes (content hashes unchanged) | see git log M0-05 |
 | T8 | M0-06 tablas curadas 2024 | S1 S3 | worker + auditor (verify) | done: counts match cube; auditor H-1 citation fixed; K-03 visto pending | see git log M0-06 |
-| T9 | M0-07 gramática, verificador, DuckDB | S1 | inline | pending | |
+| T9 | M0-07 gramática, verificador, DuckDB | S1 | worker | done: 217 new tests, suite 1620 passed; note: DuckDB allows writes inside allowed dirs (review in M0-11) | see git log M0-07 |
 | T10 | M0-08 ejecutor y pool | S1 | inline | pending | |
 | T11 | M0-09 compuertas y verificador R | S1 | inline | pending | |
 | T12 | M0-10 recetas 2024 vs cubo | S1 S3 | inline | pending | |
