@@ -140,6 +140,17 @@ just secretos                       # gitleaks sobre todo el historial (secretos
 - Las pruebas no salen a internet (`pytest-socket` en `pyproject.toml`; solo el bucle local) y `tests/conftest.py` fija `HF_HUB_OFFLINE=1` y `SVYLAB_OFFLINE=1`. Una prueba revisa que `uv.lock` tenga hash en cada archivo, solo PyPI y nada con menos de 14 días, y otra prohíbe en `src/` las APIs peligrosas (C2, C6).
 - El paquete de la biblioteca se compara contra la huella versionada en `curados/releases.yaml`; un release nuevo se agrega ahí, con su huella, en el mismo commit que lo anuncia.
 
+### 3.5c Verificador en R y esperados (M0-09)
+
+```bash
+cd verificador_r && Rscript -e 'source("renv/activate.R"); renv::restore(prompt = FALSE)'   # una vez; necesita gfortran (C-M0-09-1)
+just esperados-r                                                                          # regenera tests/esperados/r_survey_sintetico.csv
+uv run python -m pap.inferencia.verificador_r esperados                                   # lo mismo, sin just
+```
+
+- R **no corre dentro de pytest**: se regenera en el Mac al subir `svy` o `survey`, y pytest solo compara (`tests/inferencia/test_esperados_r.py`, tolerancia 1e-9, nunca se afloja). Si el CSV falta, esas pruebas fallan.
+- Detalle y versiones fijadas: `verificador_r/README.md`.
+
 ### 3.6 Mantenimiento
 ```bash
 uv run pap almacen comprimir --dry-run   # qué se comprimiría (texto > 10 MB, zstd, verificado)

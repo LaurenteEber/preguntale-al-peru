@@ -1,0 +1,5 @@
+Package: verificadorr
+Type: Project
+Title: Verificador en R de Pregúntale al Perú (M0-09)
+Version: 0.1.0
+Imports: survey, jsonlite, nanoparquet

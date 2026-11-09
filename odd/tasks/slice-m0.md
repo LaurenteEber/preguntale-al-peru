@@ -25,7 +25,7 @@ Owner waits: K-01 (ZIP list), K-02 (R), K-03 (visto), K-07 (R-ENC-19), K-09 (gh 
 | T8 | M0-06 tablas curadas 2024 | S1 S3 | worker + auditor (verify) | done: counts match cube; auditor H-1 citation fixed; K-03 visto pending | see git log M0-06 |
 | T9 | M0-07 gramática, verificador, DuckDB | S1 | worker | done: 217 new tests, suite 1620 passed; note: DuckDB allows writes inside allowed dirs (review in M0-11) | see git log M0-07 |
 | T10 | M0-08 ejecutor y pool | S1 | worker | done on Mac: equivalence diff 0, 90-row early read ≤ 4.99e-9, suite 1669 passed; Linux pool run pending; memory margin note for M0-11 | see git log M0-08 |
-| T11 | M0-09 compuertas y verificador R | S1 | inline | pending | |
+| T11 | M0-09 compuertas y verificador R | S1 | worker | partial: gates + 90 rows match oracle; R expected values blocked by gfortran (owner, L9); 2 intentional failing tests in tests/inferencia/test_esperados_r.py | see git log M0-09 |
 | T12 | M0-10 recetas 2024 vs cubo | S1 S3 | inline | pending | |
 | T13 | M0-11 medición, almacén, cierre | S1 S2 | inline | pending | |
 
@@ -39,3 +39,4 @@ Owner waits: K-01 (ZIP list), K-02 (R), K-03 (visto), K-07 (R-ENC-19), K-09 (gh 
 - L6 (owner, 9/11/2026): base regrab for M0-01 → "Sí, regrabá (recomendado)" (regrabar slice-2/base_estructurada y slice-3/base_api con sus scripts y cambiar la aserción max_alternativas a 3); review of M0-00b → "(a) Hacerla en M0-11 (recomendado)" → review mode disabled for this clone; per-part review happens in M0-11.
 - L7 (owner, 9/11/2026): D-M0-00b-1 → "No es un secreto: es el enlace público de Power BI «Publicar en la web» del tablero del MEF … Exclúyelo por fingerprint en .gitleaksignore, con un comentario. … No toques la regla ni el historial. Vuelve a correr gitleaks: debe dar 0." Applied (2 identical findings excluded by fingerprint), gitleaks git = 0, verified independently. Full suite before M0-02 commit: first run 1 intermittent failure in tests/web/test_privacidad.py (uvicorn; passed 5/5 alone), rerun 1291 passed, 1 skipped.
 - L8: Commit slicing: one commit per story (M0-xx), stories are the reviewable slices; per-part review in M0-11 (owner decision L6).
+- L9 (owner, 9/11/2026): "OK, la configuración del entorno de R lo hago yo mismo, avanza con todo lo que no dependa de este". gfortran/survey install is the owner's; R expected values (M0-09 criteria 1–2) wait for it; agent did not use option (b) unaudited binary.
