@@ -8,6 +8,7 @@ version: 1.1.0
 fecha: '2026-10-09'
 indicadores:
 - id: endes_anemia_6_35m
+  receta: endes_anemia_6_35m
   estado_propuesta: activo_piloto
   preguntas:
   - 1
@@ -254,6 +255,7 @@ indicadores:
     nunca: el departamento 15 junto con LM o LR; el dominio 8 (AREA_METROPOLITANA_LIMA_CALLAO)
     decision: L8 (9/10/2026; reemplaza D-AUD-2)
 - id: endes_anemia_6_35m_oms2024
+  receta: endes_anemia_6_35m_oms2024
   estado_propuesta: activo_piloto
   preguntas:
   - 1
@@ -479,6 +481,7 @@ indicadores:
     nunca: el departamento 15 junto con LM o LR; el dominio 8 (AREA_METROPOLITANA_LIMA_CALLAO)
     decision: L8 (9/10/2026; reemplaza D-AUD-2)
 - id: endes_dci_menores_5
+  receta: endes_dci_menores_5
   estado_propuesta: piloto_ampliado
   preguntas:
   - 7

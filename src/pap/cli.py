@@ -186,7 +186,11 @@ def cmd_variables(a, rutas) -> int:
 
 
 def cmd_inferencia(a, rutas) -> int:
-    """pap inferencia validar-tablas: las 6 tablas curadas de curados/inferencia/ contra su esquema y sus cruces (M0-06)."""
+    """pap inferencia validar-tablas | validar-recetas | receta <id> --anio AAAA [--comparar-cubo] (M0-06, M0-10)."""
+    if a.accion == "validar-recetas":
+        return _inferencia_validar_recetas(rutas)
+    if a.accion == "receta":
+        return _inferencia_receta(a, rutas)
     from .inferencia import tablas_curadas
 
     res = tablas_curadas.validar(rutas)
@@ -194,6 +198,76 @@ def cmd_inferencia(a, rutas) -> int:
         print(("✘ " if errores else "✔ ") + f"{tablas_curadas.ARCHIVOS_TABLAS[nombre]}: {filas} fila(s)"
               + ("" if errores else ", todas con cita") + "".join(f"\n    - {e}" for e in errores))
     return 1 if any(e for _, e in res.values()) else 0
+
+
+def _inferencia_validar_recetas(rutas) -> int:
+    """pap inferencia validar-recetas: las recetas de curados/inferencia/recetas/ contra su esquema, las tablas curadas, las doradas y dim_indicador."""
+    from .inferencia import recetas
+
+    res = recetas.validar(rutas)
+    for id_, (ok, errores) in res.items():
+        r = recetas.leer_receta(rutas.raiz, id_) if ok and not errores else None
+        print(("✘ " if errores or not ok else "✔ ") + f"{id_}" + (f": estado {r.estado}, pendiente {r.pendiente}, {len(r.doradas)} dorada(s)" if r else "")
+              + "".join(f"\n    - {e}" for e in errores))
+    return 1 if any(e or not ok for ok, e in res.values()) else 0
+
+
+def _inferencia_receta(a, rutas) -> int:
+    """pap inferencia receta <id> --anio AAAA [--comparar-cubo]: plan → verificador → ejecutor → compuertas para todos los territorios del año."""
+    from .inferencia import recetas
+    from .inferencia.ejecutor import Ejecutor, PoolEjecutor
+
+    if not a.id or a.anio is None:
+        raise PapError("Uso: pap inferencia receta <id> --anio AAAA [--comparar-cubo]")
+    receta = recetas.leer_receta(rutas.raiz, a.id)
+    with PoolEjecutor(raiz=rutas.raiz) as pool:
+        estimaciones = recetas.calcular(receta, a.anio, rutas.raiz, ejecutor=Ejecutor(pool, raiz=rutas.raiz))
+    doradas = recetas.reproducir_doradas(receta, estimaciones)
+    filas = recetas.compuertas_de(receta, estimaciones, doradas, rutas.raiz)
+    print(f"Receta {receta.id} ({receta.estado}, pendiente {receta.pendiente}) · {receta.encuesta} {a.anio} · {len(estimaciones)} territorio(s)")
+    if not a.comparar_cubo:
+        for f in filas:
+            e = f.estimacion
+            print(f"  {f.nivel:<20} {f.territorio_id:<20} {100 * e.valor:6.2f} % (IC {100 * e.ic_inf:.2f}–{100 * e.ic_sup:.2f})  n={e.n}  {f.compuerta.estado}")
+        _imprimir_doradas(doradas)
+        return 1 if any(not d["pasa"] for d in doradas) else 0
+
+    p = recetas.ParametrosRecetas.desde_yaml()
+    cubo = recetas.leer_csv(rutas.raiz / recetas.FILAS_CUBO_2024, ("indicador_id", "nivel", "territorio_id"))
+    estados = recetas.leer_csv(rutas.raiz / recetas.ESTADOS_CUBO_2024, ("indicador_id", "nivel", "territorio_id"))
+    if a.anio != 2024:
+        raise PapError("--comparar-cubo solo tiene las filas de 2024 (backlog/slice-m0/evidencia/m0-00_filas_cubo_2024.csv).")
+    maximos, fallan, sin_fila = dict.fromkeys(recetas.COLUMNAS, 0.0), [], []
+    for f in filas:
+        llave = (receta.indicador_id, f.nivel, f.territorio_id)
+        if llave not in cubo:
+            sin_fila.append(llave)
+            continue
+        for d in recetas.comparar_fila(f.estimacion, cubo[llave], p):
+            if d.dif is not None:
+                maximos[d.columna] = max(maximos[d.columna], abs(d.dif))
+            if not d.ok:
+                fallan.append(f"{'/'.join(llave)}: {d.columna} cubo {d.cubo} nuevo {d.nuevo}")
+    print(f"  Contra el cubo ({len(filas) - len(sin_fila)} de {len(cubo and [k for k in cubo if k[0] == receta.indicador_id])} filas), "
+          f"máxima |dif| redondeada a {p.cubo_decimales} decimales:")
+    print("    " + "  ".join(f"{c}={m:.2e}" for c, m in maximos.items()))
+    distintos = [f"{f.nivel}/{f.territorio_id}: cubo {estados[(receta.indicador_id, f.nivel, f.territorio_id)]['estado']} · nuevo {f.compuerta.estado}"
+                 for f in filas if (receta.indicador_id, f.nivel, f.territorio_id) in estados
+                 and (estados[(receta.indicador_id, f.nivel, f.territorio_id)]["estado"] != f.compuerta.estado
+                      or estados[(receta.indicador_id, f.nivel, f.territorio_id)]["reglas"] != recetas.firma_reglas(f.compuerta))]
+    print(f"  Compuertas: {len(distintos)} fila(s) con estado o reglas distintos de m0-00_estados_cubo.csv")
+    _imprimir_doradas(doradas)
+    for linea in [*(f"sin fila en el cubo: {'/'.join(k)}" for k in sin_fila), *fallan, *distintos]:
+        print(f"    ✘ {linea}")
+    return 1 if (sin_fila or fallan or distintos or any(not d["pasa"] for d in doradas)) else 0
+
+
+def _imprimir_doradas(doradas: list[dict]) -> None:
+    pasan = sum(d["pasa"] for d in doradas)
+    print(f"  Doradas (E-05): {pasan} de {len(doradas)} se reproducen")
+    for d in doradas:
+        if not d["pasa"]:
+            print(f"    ✘ {d['id_cifra']}: publicado {d['publicado']} · nuestro {d['nuestro']} (dif {d['dif_pp']} pp)")
 
 
 def cmd_citar(a, rutas) -> int:
@@ -693,8 +767,11 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
     s.set_defaults(fn=cmd_variables)
 
-    s = sub.add_parser("inferencia", help="Motor de inferencia: validar las tablas curadas de curados/inferencia/ (esquema, citas y cruces)")
-    s.add_argument("accion", choices=["validar-tablas"])
+    s = sub.add_parser("inferencia", help="Motor de inferencia: validar las tablas curadas y las recetas de curados/inferencia/, o calcular una receta")
+    s.add_argument("accion", choices=["validar-tablas", "validar-recetas", "receta"])
+    s.add_argument("id", nargs="?", help="receta: id de la receta (curados/inferencia/recetas/<id>.yaml)")
+    s.add_argument("--anio", type=int, help="receta: año de la encuesta (p. ej. 2024)")
+    s.add_argument("--comparar-cubo", action="store_true", help="receta: compara las filas con las 90 de 2024 del cubo y las compuertas con m0-00_estados_cubo.csv")
     s.set_defaults(fn=cmd_inferencia)
 
     s = sub.add_parser("indice", help="Reconstruir el índice DuckDB")

@@ -48,3 +48,16 @@ def marco(d: pd.DataFrame, anio: int, nivel: str, clave: str = "anemia_6_35m") -
     return pl.DataFrame({"u": u.to_numpy(), "y": pl.Series(y.where(u).to_numpy()).fill_nan(None).cast(pl.Int64),
                          "peso": da.peso.astype(float).to_numpy(), "estrato": da.id_estrato.astype(str).to_numpy(),
                          "upm": da.id_conglomerado.astype(str).to_numpy(), "territorio": pl.Series(t.to_list(), dtype=pl.String)})
+
+
+def oraculo_completo(d: pd.DataFrame, anio: int, clave: str) -> dict[tuple[str, str], dict]:
+    """M0-10: (nivel, territorio_id) → fila de `calculo._svy_niveles` para las 30 unidades del año, con las mismas etiquetas que
+    `calculo._calcular_endes` (nacional, área, departamento sin el Callao y los tres ámbitos de Lima; el ámbito es su propio nivel)."""
+    from pap.capa0 import ambitos_lima
+
+    defi = definicion(clave)
+    da = d[d.anio == anio].reset_index(drop=True)
+    u = _en_universo(da, anio, defi)
+    et = {**etiquetas(da), "AMBITOS": ambitos_lima.ambito_lima_endes(da)}
+    filas = calculo._svy_niveles(da, da[defi["variable"]], u, et, "id_estrato", "id_conglomerado", "peso")
+    return {((f["territorio_id"] if f["nivel"] == "AMBITOS" else f["nivel"]), f["territorio_id"]): f for f in filas}

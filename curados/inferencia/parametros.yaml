@@ -128,3 +128,10 @@ compuertas:
   paso_no_respuesta_activo: {valor: false, pendiente: K-07}
   # El §15.2 no dice qué confianza lleva una cifra publicable de una receta sin verificar: ante la duda, la más baja.
   confianza_receta_no_verificada: {valor: baja, supuesto: M0-09}
+
+recetas:
+  # Recetas de indicador (M0-10; src/pap/inferencia/recetas.py). Son los criterios del punto 1 de la definición de hecho de M0
+  # (backlog/slice-m0/README.md) para comparar una receta con el cubo; nunca se aflojan para que una prueba pase.
+  cubo_decimales: {valor: 8, supuesto: M0-10}               # el cubo guarda 8 decimales (calculo.DECIMALES)
+  cubo_tolerancia_unidades: {valor: 1, supuesto: M0-10}     # |dif| ≤ 1 unidad del último decimal = 1e-8, ya redondeado
+  oraculo_tolerancia: {valor: 1.0e-12, supuesto: M0-10}     # sin redondear, contra calculo._svy_niveles
