@@ -9,11 +9,12 @@ Cómo preparar el entorno, mantener la biblioteca de datos, las tablas curadas y
 ```bash
 cd ~/Documents/SideProjects/preguntale-al-peru
 git checkout main
-uv sync                 # crea .venv con las versiones exactas de uv.lock
+uv sync --locked --no-build   # crea .venv con las versiones exactas de uv.lock, solo desde wheels; falla si el lock no está al día
 uv run pap --help       # lista de comandos
 ```
 
 **Importante:**
+- **Instalar siempre con `--locked --no-build`** (M0-00b): `--locked` se niega a cambiar `uv.lock` y `--no-build` no ejecuta código de instalación de paquetes fuente. `pyproject.toml` fija `exclude-newer = "2 weeks"`: ningún paquete con menos de dos semanas de publicado entra al lock. Para subir una dependencia: auditoría con `backlog/plantillas/auditoria_dependencia.md`, `uv lock`, `just auditar`.
 - Los **crudos** (`biblioteca/cruda/almacen/`) y los **Parquet** no están en git. Si clonas en otra máquina, hay que copiar el almacén desde un respaldo o volver a descargar las fuentes y reconstruir.
 - Todos los comandos se corren con `uv run …` desde la raíz del proyecto.
 
@@ -125,6 +126,20 @@ uv run pap calcular                   # cubo fact_indicador
 4. Si la regla está en el alcance del validador, ajusta su función en `src/pap/motor/validador/` y sus casos en `tests/casos_validador/casos*`.
 5. Corre `uv run pap validar-reglas` (y `--carpeta casos_implementador`) y las pruebas.
 
+### 3.5b Seguridad: `just auditar` y el gancho de secretos (M0-00b)
+
+```bash
+brew install osv-scanner gitleaks   # una vez (versiones auditadas: osv-scanner 2.7.0, gitleaks 8.30.1)
+just auditar                        # pip-audit + osv-scanner sobre uv.lock; sale con error si hay una vulnerabilidad abierta (necesita red)
+scripts/instalar_ganchos.sh         # una vez por clon: gitleaks revisa lo preparado antes de cada commit (core.hooksPath = scripts/ganchos)
+just secretos                       # gitleaks sobre todo el historial (secretos tapados en la salida)
+```
+
+- Correr `just auditar` en cada cambio de dependencias y al cerrar cada slice.
+- Si el gancho detiene un commit, el secreto aparece tapado: se saca del cambio (nunca se copia a la evidencia) y, si ya estuvo en el historial, se avisa al dueño para revocarlo.
+- Las pruebas no salen a internet (`pytest-socket` en `pyproject.toml`; solo el bucle local) y `tests/conftest.py` fija `HF_HUB_OFFLINE=1` y `SVYLAB_OFFLINE=1`. Una prueba revisa que `uv.lock` tenga hash en cada archivo, solo PyPI y nada con menos de 14 días, y otra prohíbe en `src/` las APIs peligrosas (C2, C6).
+- El paquete de la biblioteca se compara contra la huella versionada en `curados/releases.yaml`; un release nuevo se agrega ahí, con su huella, en el mismo commit que lo anuncia.
+
 ### 3.6 Mantenimiento
 ```bash
 uv run pap almacen comprimir --dry-run   # qué se comprimiría (texto > 10 MB, zstd, verificado)
@@ -211,7 +226,7 @@ uv run pap servir --red-local        # 0.0.0.0: también desde otros equipos de 
 
 ### 6.2 Imagen Docker
 
-La receta es el `Dockerfile` de la raíz (Python 3.12 slim, usuario sin privilegios, dependencias desde `uv.lock`). Evidencia: `backlog/slice-3/evidencia/s3-09_imagen.md`.
+La receta es el `Dockerfile` de la raíz (Python 3.12.16 slim y `uv` 0.13.5 fijados por huella, usuario sin privilegios, dependencias con `uv sync --locked --no-build --no-dev`). Evidencia: `backlog/slice-3/evidencia/s3-09_imagen.md`.
 
 ```bash
 docker build -t pap-s3-09:local .
@@ -219,7 +234,7 @@ docker run --rm -p 8000:8000 -e PAP_ANTHROPIC_API_KEY pap-s3-09:local     # la c
 ```
 
 - **Con la biblioteca ya bajada**, móntala en solo lectura (`dimensiones`, `estandarizada` e `indicadores`, en `/app/biblioteca/…`) y no se baja nada.
-- **Sin ella**, `scripts/arranque_imagen.sh` la baja del release de GitHub (`biblioteca-010ea965`, o el que indique `PAP_BIBLIOTECA_ETIQUETA`) y comprueba las huellas con `SHA256SUMS` antes de descomprimir. Después compara la huella del cubo con la del manifiesto y, si no coincide, corre `pap calcular --permitir-sucio` (la imagen no lleva `.git`).
+- **Sin ella**, `scripts/arranque_imagen.sh` la baja del release de GitHub (`biblioteca-010ea965`, o el que indique `PAP_BIBLIOTECA_ETIQUETA`) y comprueba la huella del paquete contra `curados/releases.yaml` (versionada en el repo) antes de descomprimir. Después compara la huella del cubo con la del manifiesto y, si no coincide, corre `pap calcular --permitir-sucio` (la imagen no lleva `.git`).
 - Termina con `pap servir --red-local --puerto $PAP_PUERTO`: dentro de la imagen escucha en todas las interfaces (S3-09-a), y es `-p` el que decide qué se publica. Revísalo en el despliegue del slice 4.
 - `HEALTHCHECK` sobre `/salud`, con 180 s de gracia para el precalentamiento y la descarga.
 

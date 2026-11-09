@@ -36,3 +36,7 @@ catalogo/scripts/catalogo_fuentes_v2.json
 
 # M0-00: copias del cubo para la regresión (solo se registra su huella)
 backlog/**/evidencia/*.parquet
+
+# Secretos locales (M0-00b, A5)
+.env
+.env.*

@@ -55,8 +55,18 @@ Rigen las mismas reglas que en los slices anteriores (`agents.md` §5):
 
 ## Consultas que bloquean (vacíos tipo C o D)
 
-(vacío)
+### D-M0-00b-1 — gitleaks marca 2 hallazgos en el historial · tipo D · no bloquea M0 (probable falso positivo)
+- **Qué pasa:** gitleaks 8.30.1 sobre los 83 commits encontró 2 coincidencias de la regla `grafana-api-key`, las dos en el commit `f98fb753` (4/11/2026): `catalogo/catalogo_fuentes.json` línea 3567 y `catalogo/scripts/catalogo_v03_base.json` línea 1927. Es la misma cadena en los dos archivos.
+- **Qué es, a primera vista:** el campo `url_datos` de una fuente del catálogo, una URL de un informe público de Power BI (`app.fabric.microsoft.com/view?r=…`). Su parámetro `r` empieza con el mismo prefijo que usan las claves de Grafana, por eso salta. No parece un secreto, pero eso lo confirma quien conoce la fuente.
+- **Por qué importa:** si fuera una clave real, habría que revocarla. El secreto no se copia aquí.
+- **Qué se propone:** el dueño confirma que esa URL es el enlace público de la fuente. Si lo es, se agrega la huella de los dos hallazgos a un `.gitleaksignore` (el agente lo hace) para que `just secretos` quede en verde. Mientras tanto, el gancho antes de cada commit no se ve afectado (solo mira lo nuevo).
+
 
 ## Supuestos aplicados (tipo B)
 
-(vacío)
+- **M0-00b — límites de `abrir_zip_seguro`** (`curados/inferencia/parametros.yaml`, `almacen.zip_*`): 1 024 MB por miembro, 2 048 MB en total, proporción de compresión máxima 100 (solo en miembros de 1 MB o más), bloques de 1 024 KB. Margen sobre el ZIP más grande registrado (89,6 MB; 732 MB descomprimidos; proporción 28,3). `supuesto: M0-00b`.
+- **M0-00b — regla del lock** (`seguridad.lock_dias_min` y `seguridad.lock_excepciones` en el mismo YAML): 14 días mínimo, sin excepciones registradas. `supuesto: M0-00b`.
+- **M0-00b — versiones elegidas con la regla de 2 semanas:** Python 3.12.16 (la última 3.12.x), `uv` 0.13.5 en la imagen (la 0.13.7 tenía menos de 2 semanas), `pip-audit` 2.10.1. `exclude-newer = "2 weeks"` bajó `opentelemetry-api` a 1.45.1 y `python-multipart` a 0.0.32. `supuesto: M0-00b`.
+- **M0-00b — pruebas sin red:** `pytest-socket` deja pasar solo el bucle local (`127.0.0.1`, `::1`, `localhost`) y los sockets Unix, porque la web y las pruebas con navegador usan un servidor local. `supuesto: M0-00b`.
+- **M0-00b — A9:** `test_sin_secretos.py` busca el prefijo de GitHub seguido de un cuerpo de 20 o más caracteres (no el prefijo solo), porque la historia M0-00b y la auditoría previa nombran los prefijos en prosa. `supuesto: M0-00b`.
+- **M0-00b — `puentes.py:262`** abre el ZIP del SIEN con `zipfile.ZipFile` y lo lee en flujo (`z.open`), no con `z.read()`; la historia solo pide los tres `z.read()`, así que no se tocó. Pasarlo por `abrir_zip_seguro` queda a criterio del dueño (tipo A, bajo riesgo).

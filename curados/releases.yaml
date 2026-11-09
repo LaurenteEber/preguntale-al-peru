@@ -1,0 +1,10 @@
+# Releases de la biblioteca (M0-00b, A8). La huella esperada del paquete vive AQUÍ, versionada: scripts/bajar_biblioteca.sh
+# compara el .tar.zst bajado contra ella, no contra el SHA256SUMS del mismo release (ese solo prueba la integridad, no el origen).
+# Al publicar un release nuevo, la huella se agrega en el mismo commit que lo anuncia (con la auditoría de la plantilla).
+repo: LaurenteEber/preguntale-al-peru
+releases:
+  biblioteca-010ea965:
+    archivo: biblioteca-010ea965.tar.zst
+    sha256: 4c10cad0d5f7f703e943b52aafe775a2a75adad4c5864a29afec19235fe5a904
+    cubo: "010ea965"
+    verificado: "2026-11-09"     # copiada del SHA256SUMS del release y recalculada al bajarlo

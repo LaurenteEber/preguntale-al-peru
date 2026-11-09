@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# M0-00b (C9): antes de cada commit, gitleaks revisa lo que está en el área de preparación (staged). Si encuentra un secreto,
+# el commit no se hace y el secreto aparece tapado (--redact). Se instala con scripts/instalar_ganchos.sh.
+set -euo pipefail
+
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "ERROR: falta gitleaks (brew install gitleaks); el commit se detiene para no saltarse la revisión de secretos." >&2
+  exit 1
+fi
+exec gitleaks git --pre-commit --staged --redact --no-banner

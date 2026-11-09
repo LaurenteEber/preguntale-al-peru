@@ -12,7 +12,6 @@ from __future__ import annotations
 import os
 import re
 import tempfile
-import zipfile
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -21,6 +20,7 @@ import yaml
 
 from ..config import Rutas
 from ..errores import PapError
+from ..zip_seguro import abrir_zip_seguro
 from . import ambitos_lima as AL
 from . import insumos
 
@@ -54,14 +54,14 @@ def leer_miembro(ins: insumos.Insumo, patron: str, columnas: set[str] | None = N
     pyreadstat necesita un archivo: se escribe en un temporal que se borra al salir (no queda copia del crudo)."""
     import pyreadstat
 
-    with zipfile.ZipFile(ins.ruta) as z:
-        nombres = [n for n in z.namelist() if re.search(patron, n.rsplit("/", 1)[-1], re.I)]
+    with abrir_zip_seguro(ins.ruta) as z:
+        nombres = [n for n in z.miembros() if re.search(patron, n.rsplit("/", 1)[-1], re.I)]
         if len(nombres) != 1:
             raise PapError(f"{ins.nombre}: se esperaba 1 miembro que cumpla {patron!r}, hay {nombres}")
         miembro = nombres[0]
         sufijo = os.path.splitext(miembro)[1].lower()
         with tempfile.NamedTemporaryFile(suffix=sufijo) as t:
-            t.write(z.read(miembro))
+            z.copiar(miembro, t)
             t.flush()
             lector = pyreadstat.read_sav if sufijo == ".sav" else pyreadstat.read_dta
             _, meta = lector(t.name, metadataonly=True)

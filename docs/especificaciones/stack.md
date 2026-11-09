@@ -30,7 +30,7 @@ Alternativas descartadas para esta etapa: PostgreSQL/PostGIS (un servidor que op
 
 | Capa | Ahora (capa 0 + piloto) | Después (web) | Diferido hasta que… |
 |---|---|---|---|
-| Entorno | **uv + Python 3.12** con `uv.lock`; git. Hoy corre en el Mac del dueño | **Despliegue en un servicio en la nube con todo el proyecto** (código, almacén de crudos, biblioteca y web), con una imagen Docker desde `uv.lock` (decisión del dueño, 9/10/2026) | pixi: si R pasa a motor productivo |
+| Entorno | **uv + Python 3.12.16** (`.python-version`; ≥ 3.12.12 por CVE-2024-0450 y CVE-2025-8291 de `zipfile`) con `uv.lock`, `exclude-newer = "2 weeks"` e instalación con `--locked --no-build`; git. Hoy corre en el Mac del dueño | **Despliegue en un servicio en la nube con todo el proyecto** (código, almacén de crudos, biblioteca y web), con una imagen Docker desde `uv.lock` (decisión del dueño, 9/10/2026) | pixi: si R pasa a motor productivo |
 | Crudos | Archivos inmutables guardados por su huella SHA-256, con manifiesto (ver `docs/especificaciones/datos_crudos.md`) | Igual | DVC/rclone: si hay que sincronizar crudos entre máquinas |
 | Formato curado | **Parquet** (zstd), ordenado por clave; montos en DECIMAL; ubigeo como texto de 6 dígitos | Igual | — |
 | Motor de transformación | **DuckDB SQL** para lo pesado; **Polars o pandas** para Excel y PDF; un script o un `.sql` por paso | Igual | SQLMesh o dbt: con más de 40–60 modelos o un segundo colaborador |
@@ -60,6 +60,19 @@ Alternativas descartadas para esta etapa: PostgreSQL/PostGIS (un servidor que op
 | DuckDB 2.0 sale este mes | Versión fijada; el `.duckdb` se reconstruye desde Parquet |
 | Python 3.10 de tu laptop llega a fin de vida este mes y no sirve para svy ni GeoPandas 1.2 | uv instala Python 3.12 aparte, sin tocar el del sistema |
 | Herramienta propia (CLI `pap`) que hay que mantener | Pequeña (500–800 líneas), con pruebas; la escribe y mantiene la IA |
+
+### Versiones fijadas por la seguridad (M0-00b, 9/11/2026)
+
+| Componente | Versión | Por qué |
+|---|---|---|
+| Python | 3.12.16 (`.python-version` e imagen `python:3.12.16-slim@sha256:5e2bdb1b…`) | CVE-2024-0450 y CVE-2025-8291 en `zipfile` |
+| `uv` en la imagen | 0.13.5 (`ghcr.io/astral-sh/uv:0.13.5@sha256:32a7bb39…`) | la 0.13.7 tenía menos de 2 semanas |
+| Pillow (vía `pdfplumber`) | 13.0.0 (`constraint-dependencies ≥ 13.0.0`) | 12.3.0 tenía 39 advisories de GitHub |
+| `certifi` | 2026.10.23 (`≥ 2026.10.18`) | PYSEC-2026-4320 |
+| `python-multipart` | 0.0.32 (`≥ 0.0.32`) | la 0.0.33 tenía menos de 2 semanas |
+| `opentelemetry-api` | 1.45.1 | la 1.45.2 tenía menos de 2 semanas (la fija `exclude-newer`) |
+| `pytest-socket` (solo desarrollo) | 0.8.1 | pruebas sin red (C5); auditoría en `backlog/slice-m0/evidencia/auditoria_pytest-socket.md` |
+| `pip-audit` / `osv-scanner` / `gitleaks` | 2.10.1 / 2.7.0 / 8.30.1 | `just auditar` y el gancho de secretos; no son dependencias del proyecto |
 
 ## 6. Aprobado (6/10/2026)
 
