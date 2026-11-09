@@ -15,10 +15,10 @@ Owner waits: K-01 (ZIP list), K-02 (R), K-03 (visto), K-07 (R-ENC-19), K-09 (gh 
 
 | ID | Story | Specs | Route | Status | Commit |
 |---|---|---|---|---|---|
-| T1 | M0-00 preparación y base | S1 S3 | inline + explore (interfaces) | in_progress: cube copy, 90-row CSV, estados CSV (85 publicable / 5 referencial), interfaces.md done; pytest base running | |
-| T2 | M0-00b seguridad A1–A9 y controles | S1 S3 | worker (context backstop) | in_progress: zip_seguro.py + tests (12 pass) + curados/inferencia/parametros.yaml written; callers not yet switched | |
-| T3 | M0-01 decisiones, reglas, agents.md | S1 S3 | inline | pending | |
-| T4 | M0-02 lista ZIP (tarea 1), luego espera K-01 | S1 S4 S5 | inline | pending | |
+| T1 | M0-00 preparación y base | S1 S3 | inline + explore (interfaces) | done | f51a8ce |
+| T2 | M0-00b seguridad A1–A9 y controles | S1 S3 | worker (context backstop) | done except Docker image (daemon off) and D-M0-00b-1 (gitleaks, owner checks); review deferred to M0-11 | 4787964, c1ceaff |
+| T3 | M0-01 decisiones, reglas, agents.md | S1 S3 | worker | done (R-ENC-19 waits K-07) | d187ea8 |
+| T4 | M0-02 lista, descarga, registro | S1 S4 S5 | worker | done except backup upload + restore (wait K-09) | see git log M0-02 |
 | T5 | M0-03 svy 0.35.0 y pyreadstat 1.3.7 | S1 S3 | inline | pending | |
 | T6 | M0-04 conversor y almacén (sintético primero) | S1 | inline | pending | |
 | T7 | M0-05 índice de variables | S1 | inline | pending | |
@@ -37,3 +37,4 @@ Owner waits: K-01 (ZIP list), K-02 (R), K-03 (visto), K-07 (R-ENC-19), K-09 (gh 
 - L4: Facts for M0-00b: latest Python 3.12.16 (25/10/2026); python:3.12.16-slim digest sha256:5e2bdb1b0d542d5039cffb8181c65930093949194a65c365dfb1b0fe13a4fa5b; uv 0.13.7 is only 6 days old (3/11) → Docker uses uv 0.13.5 (22/10) to respect the ≥2-week rule; Docker daemon is not running on the Mac; gitleaks, osv-scanner and pip-audit are not installed. Largest registered ZIP: 89.6 MB / 732 MB uncompressed (SIEN), max member 54 MB, max ratio 28.3 — the backlog's «unos 15 MB» is outdated; limits set as supuesto M0-00b.
 - L5 (owner, 9/11/2026): "1) ok con k-01; 2) dame los comandos para validar por mi cuenta cuales son esos hallazgos que señalas; 3) no recuerdo que hayamos creado el prototipo de R, pero la carpeta de trabajo anterior es \"SideProject/pregunta-al-peru\"". Prototype found at ~/Documents/SideProjects/pregunta-al-peru/00_proyecto/investigacion/r_verificador/analista/verificar.R. gitleaks findings: grafana-api-key in catalogo/scripts/catalogo_v03_base.json:1927 and catalogo/catalogo_fuentes.json:3567 (commit f98fb753). Native review of M0-00b stopped with lens_context_budget_exceeded (candidate since 2a8f18d too large); owner decision (a) defer to M0-11 / (b) split history still open.
 - L6 (owner, 9/11/2026): base regrab for M0-01 → "Sí, regrabá (recomendado)" (regrabar slice-2/base_estructurada y slice-3/base_api con sus scripts y cambiar la aserción max_alternativas a 3); review of M0-00b → "(a) Hacerla en M0-11 (recomendado)" → review mode disabled for this clone; per-part review happens in M0-11.
+- L7 (owner, 9/11/2026): D-M0-00b-1 → "No es un secreto: es el enlace público de Power BI «Publicar en la web» del tablero del MEF … Exclúyelo por fingerprint en .gitleaksignore, con un comentario. … No toques la regla ni el historial. Vuelve a correr gitleaks: debe dar 0." Applied (2 identical findings excluded by fingerprint), gitleaks git = 0, verified independently. Full suite before M0-02 commit: first run 1 intermittent failure in tests/web/test_privacidad.py (uvicorn; passed 5/5 alone), rerun 1291 passed, 1 skipped.

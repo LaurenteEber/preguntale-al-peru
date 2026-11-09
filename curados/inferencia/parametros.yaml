@@ -16,6 +16,11 @@ almacen:
   zip_proporcion_desde_mb: {valor: 1, supuesto: M0-00b}   # la proporción solo se mira en miembros de 1 MB o más
   zip_bloque_kb: {valor: 1024, supuesto: M0-00b}           # tamaño de cada bloque de lectura
 
+  # Respaldo de los crudos (M0-02, F-03; docs/diseno/motor_inferencia.md anexo B). El repo principal es público y nunca recibe crudos.
+  repo_crudos: {valor: "LaurenteEber/preguntale-al-peru-crudos", decision: F-03}
+  # Al cerrar cada fase, o antes si el espacio libre baja de este valor, se respalda y se liberan los crudos locales (§6).
+  espacio_libre_min_gb: {valor: 50, decision: F-03}
+
 seguridad:
   # Prueba del lock (M0-00b, control C2; tests/test_lock_seguro.py): ningún paquete con menos de estos días de publicado.
   lock_dias_min: {valor: 14, supuesto: M0-00b}

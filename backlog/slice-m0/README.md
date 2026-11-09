@@ -57,7 +57,7 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 | M0-00 | [Preparación](M0-00-preparacion.md) | — | hecha ([evidencia](evidencia/m0-00_interfaces.md)) |
 | M0-00b | [Seguridad: correcciones del repo actual y controles](M0-00b-auditoria-seguridad.md) 
 | M0-01 | [Decisiones, reglas y `agents.md`](M0-01-decisiones-reglas-agents.md) | M0-00 | hecha ([evidencia](evidencia/m0-01_decisiones.md)); R-ENC-19 espera K-07 |
-| M0-02 | [ZIP de la ENDES 2024: lista, registro y respaldo](M0-02-zip-endes-2024.md) | M0-01; K-06 y K-01 | pendiente |
+| M0-02 | [ZIP de la ENDES 2024: lista, registro y respaldo](M0-02-zip-endes-2024.md) | M0-01; K-06 y K-01 | en curso: lista, descarga, registro y tamaños hechos ([evidencia](evidencia/m0-02_tamano_zip.md)); respaldo y restauración esperan K-09 |
 | M0-03 | [Versiones: `svy` 0.35.0 y `pyreadstat` 1.3.7](M0-03-versiones.md) | M0-00b | pendiente |
 | M0-04 | [Conversor y almacén](M0-04-conversor-almacen.md) | M0-02 (tareas 1–4: ZIP registrados), M0-03 | pendiente |
 | M0-05 | [Índice de variables y controles](M0-05-indice-variables.md) | M0-04 | pendiente |
