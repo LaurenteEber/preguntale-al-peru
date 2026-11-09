@@ -98,3 +98,17 @@ duckdb:
   threads: {valor: 2, supuesto: M0-07}
   # Carpetas desde las que DuckDB puede leer, relativas a la raíz del repositorio.
   carpetas_permitidas: {valor: [biblioteca/microdatos, biblioteca/variables], supuesto: M0-07}
+
+ejecutor:
+  # Pool de procesos del ejecutor (M0-08; diseño §14 y tecnologias.md §4). Los cinco primeros son los valores iniciales del anexo B
+  # («se mide en la fase 0»); M0-08 los mide en backlog/slice-m0/evidencia/m0-08_tiempos.md. `dominios_max_llamada` y
+  # `anios_apilados_max_llamada` siguen en `verificador.*` (M0-07).
+  ejecutor_timeout_s: {valor: 5, supuesto: M0-08}          # tiempo suave: signal.alarm dentro del trabajador
+  ejecutor_gracia_s: {valor: 2, supuesto: M0-08}           # tiempo duro = timeout + gracia: el padre mata al trabajador y recrea el pool
+  memoria_trabajador_mb: {valor: 1536, supuesto: M0-08}    # vigía: os._exit(137) si ru_maxrss pasa de esto (bytes en macOS, KiB en Linux)
+  max_tareas_por_trabajador: {valor: 200, supuesto: M0-08} # tecnologias.md §4: max_tasks_per_child
+  trabajadores: {valor: 1, supuesto: M0-08}                # M0 no atiende concurrencia; el valor de la web (mín(núcleos − 1, 4)) es de curados/web
+  duckdb_threads: {valor: 1, supuesto: M0-08}              # tecnologias.md §4: threads=1 por trabajador (la medición 1 frente a 2 hilos queda para M0-11)
+  duckdb_memoria_mb: {valor: 512, supuesto: M0-08}         # tecnologias.md §4: memory_limit=512MB por trabajador
+  vigia_sondeo_s: {valor: 0.05, supuesto: M0-08}           # cada cuánto el hilo vigía mira ru_maxrss
+  arranque_max_s: {valor: 60, supuesto: M0-08}             # tope del precalentamiento (importar svy y abrir DuckDB); no cuenta contra el tiempo del cálculo

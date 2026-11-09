@@ -63,7 +63,7 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 | M0-05 | [Índice de variables y controles](M0-05-indice-variables.md) | M0-04 | hecha: 34 archivos, 2 856 variables ([conteos](evidencia/m0-05_conteos.md)); notas D-M0-05-1 y C-M0-05-2, que no bloquean |
 | M0-06 | [Tablas curadas de 2024](M0-06-tablas-curadas.md) | M0-05 | hecha: 6 tablas, conteos 9 959 / 19 511 / 20 290 iguales al cubo ([tablas](evidencia/m0-06_tablas.md), [revisión](evidencia/m0-06_revision.md)); visto del dueño (K-03) pendiente; C-M0-06-1 a 4 abiertas, no bloquean M0 |
 | M0-07 | [Gramática, verificador base y DuckDB endurecido](M0-07-gramatica-verificador.md) | M0-05; M0-06 con las tablas validadas (el visto del dueño solo condiciona `verificado` en M0-10) | hecha: 3 planes completos, 9 959 / 9 959 / 19 511 ([evidencia](evidencia/m0-07_gramatica.md)) |
-| M0-08 | [Ejecutor: pool y adaptador de `svy`](M0-08-ejecutor.md) | M0-07 | pendiente |
+| M0-08 | [Ejecutor: pool y adaptador de `svy`](M0-08-ejecutor.md) | M0-07 | hecha en el Mac: equivalencia con dif 0, p95 medido ([ejecutor](evidencia/m0-08_ejecutor.md), [tiempos](evidencia/m0-08_tiempos.md)); falta correr el pool en Linux |
 | M0-09 | [Compuertas y verificador en R](M0-09-compuertas-verificador-r.md) | M0-08 | pendiente |
 | M0-10 | [Recetas 2024 que igualan al cubo](M0-10-recetas-2024.md) | M0-08 y las compuertas de M0-09 (los esperados de R no la bloquean) | pendiente |
 | M0-11 | [Medición, espacio local, documentación y cierre](M0-11-medicion-cierre.md) | todas | pendiente |
