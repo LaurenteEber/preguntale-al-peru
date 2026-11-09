@@ -61,7 +61,7 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 | M0-03 | [Versiones: `svy` 0.35.0 y `pyreadstat` 1.3.7](M0-03-versiones.md) | M0-00b | hecha: cubo idéntico `010ea965` ([regresión](evidencia/m0-03_regresion_svy.csv), [lock](evidencia/m0-03_lock.md)); la comparación con R cierra en M0-09 |
 | M0-04 | [Conversor y almacén](M0-04-conversor-almacen.md) | M0-02 (tareas 1–4: ZIP registrados), M0-03 | hecha: 34 archivos de 2024 ([evidencia](evidencia/m0-04_tamano.md)) |
 | M0-05 | [Índice de variables y controles](M0-05-indice-variables.md) | M0-04 | hecha: 34 archivos, 2 856 variables ([conteos](evidencia/m0-05_conteos.md)); notas D-M0-05-1 y C-M0-05-2, que no bloquean |
-| M0-06 | [Tablas curadas de 2024](M0-06-tablas-curadas.md) | M0-05 | pendiente |
+| M0-06 | [Tablas curadas de 2024](M0-06-tablas-curadas.md) | M0-05 | hecha: 6 tablas, conteos 9 959 / 19 511 / 20 290 iguales al cubo ([tablas](evidencia/m0-06_tablas.md), [revisión](evidencia/m0-06_revision.md)); visto del dueño (K-03) pendiente; C-M0-06-1 a 4 abiertas, no bloquean M0 |
 | M0-07 | [Gramática, verificador base y DuckDB endurecido](M0-07-gramatica-verificador.md) | M0-05; M0-06 con las tablas validadas (el visto del dueño solo condiciona `verificado` en M0-10) | pendiente |
 | M0-08 | [Ejecutor: pool y adaptador de `svy`](M0-08-ejecutor.md) | M0-07 | pendiente |
 | M0-09 | [Compuertas y verificador en R](M0-09-compuertas-verificador-r.md) | M0-08 | pendiente |

@@ -1,0 +1,79 @@
+# Territorios de la ENDES 2024 (M0-06, tarea 3; diseño §7.4 y anexo A): cómo se arma cada nivel, igual que hoy.
+# `expr`: condición SQL (DuckDB) sobre RECH0 (un hogar por fila) que dice quién entra al nivel; `unidad_expr`: expresión SQL que da
+# el identificador de la unidad dentro del nivel. Una fila de RECH0 sin unidad (nula) no entra al nivel. Los niños se
+# ubican por el hogar: RECH6 se une a RECH0 por HHID (relación declarada en curados/inferencia/archivos_endes_2024.yaml).
+# Todos los niveles se estiman como `dominio` (la subpoblación se marca con indicadora y el diseño completo se conserva: R-ENC-01).
+# Unidades por indicador: 1 (nacional) + 2 (urbano, rural) + 24 (departamentos sin el 07) + 3 (CALLAO, LIMA_METROPOLITANA,
+# LIMA_REGION) = 30. Los nombres de nivel son los de `niveles_validos` de curados/capa0/dim_indicador.yaml.
+# Los tres ámbitos de Lima se asignan por el ubigeo del hogar (src/pap/capa0/ambitos_lima.py, `ambito_por_ubigeo`); aquí
+# CALLAO y LIMA_REGION se expresan con HV024, y la prueba comprueba que dan las mismas filas que el ubigeo en 2024.
+version: 0.1.0
+fecha: "2026-11-09"
+territorios:
+  - nivel: nacional
+    encuesta: ENDES
+    anios: [2024, 2024]
+    expr: "TRUE"
+    unidad_expr: "'PE'"
+    columnas: [HV024]
+    como: dominio
+    cita: >-
+      src/pap/motor/calculo.py:157 («nacional»: la etiqueta «PE» para todas las filas); curados/capa0/dim_indicador.yaml:97-98
+      (niveles_validos, nivel nacional); Ficha técnica ENDES 2024, §3.7 p. 7 («Anual - Nacional»)
+  - nivel: dominio_subnacional
+    encuesta: ENDES
+    anios: [2024, 2024]
+    expr: "HV025 IN (1, 2)"
+    unidad_expr: "CASE HV025 WHEN 1 THEN 'urbano' WHEN 2 THEN 'rural' END"
+    columnas: [HV025]
+    como: dominio
+    cita: >-
+      src/pap/motor/calculo.py:158 (dominio_subnacional = área); src/pap/capa0/encuestas.py:142 (HV025: 1 urbano, 2 rural);
+      curados/capa0/dim_indicador.yaml:99-104 (dominios urbano y rural); Ficha técnica ENDES 2024, §3.7 p. 7 («Nacional
+      Urbana», «Nacional Rural»)
+  - nivel: departamento
+    encuesta: ENDES
+    anios: [2024, 2024]
+    expr: "HV024 <> 7"
+    unidad_expr: "printf('%02d', HV024)"
+    columnas: [HV024]
+    como: dominio
+    cita: >-
+      src/pap/motor/calculo.py:159 (departamento = HV024 con el 07 en nulo); src/pap/capa0/encuestas.py:141 (HV024 con dos
+      dígitos); curados/capa0/dim_indicador.yaml:105-107 (24 departamentos; el 15 entero incluye Lima Metropolitana y Lima Región;
+      el Callao se publica con nivel CALLAO); Ficha técnica ENDES 2024, §3.7 p. 7 («Cada uno de los 24 departamentos del país
+      y la Provincia Constitucional del Callao»)
+  - nivel: CALLAO
+    encuesta: ENDES
+    anios: [2024, 2024]
+    expr: "HV024 = 7"
+    unidad_expr: "'CALLAO'"
+    columnas: [HV024]
+    como: dominio
+    cita: >-
+      src/pap/capa0/ambitos_lima.py:47 (ubigeo con prefijo 07 = CALLAO) y docstring del módulo (CALLAO: departamento 07);
+      curados/capa0/dim_indicador.yaml:152 (nivel CALLAO); Ficha técnica ENDES 2024, Cuadro N° 1 p. 4 («Provincia
+      Constitucional del Callao») y §3.7 p. 7
+  - nivel: LIMA_METROPOLITANA
+    encuesta: ENDES
+    anios: [2024, 2024]
+    expr: "substr(UBIGEO, 1, 4) = '1501'"
+    unidad_expr: "'LIMA_METROPOLITANA'"
+    columnas: [UBIGEO]
+    como: dominio
+    cita: >-
+      src/pap/capa0/ambitos_lima.py:46 (ubigeo con prefijo 1501 = LIMA_METROPOLITANA) y docstring del módulo (provincia 1501, 43
+      distritos, Ley 31140); curados/capa0/dim_indicador.yaml:108-111 (LIMA_METROPOLITANA; método ubigeo desde 2018); Ficha
+      técnica ENDES 2024, Cuadro N° 1 p. 4 («Lima Metropolitana 1/ Comprende los 43 distritos … Ley 31140»)
+  - nivel: LIMA_REGION
+    encuesta: ENDES
+    anios: [2024, 2024]
+    expr: "HV024 = 15 AND substr(UBIGEO, 1, 4) <> '1501'"
+    unidad_expr: "'LIMA_REGION'"
+    columnas: [HV024, UBIGEO]
+    como: dominio
+    cita: >-
+      src/pap/capa0/ambitos_lima.py:45-46 (prefijo 15 y no 1501 = LIMA_REGION) y docstring del módulo (departamento 15 sin la
+      1501, 9 provincias); curados/capa0/dim_indicador.yaml:130 (nivel LIMA_REGION); Ficha técnica ENDES 2024, Cuadro N° 1
+      p. 4 («Departamento de Lima 2/ Comprende las provincias: Barranca, Cajatambo, Canta, Cañete, Huaral, Huarochirí,
+      Huaura, Oyón y Yauyos»)

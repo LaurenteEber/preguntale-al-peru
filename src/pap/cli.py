@@ -185,6 +185,17 @@ def cmd_variables(a, rutas) -> int:
     return 0
 
 
+def cmd_inferencia(a, rutas) -> int:
+    """pap inferencia validar-tablas: las 6 tablas curadas de curados/inferencia/ contra su esquema y sus cruces (M0-06)."""
+    from .inferencia import tablas_curadas
+
+    res = tablas_curadas.validar(rutas)
+    for nombre, (filas, errores) in res.items():
+        print(("✘ " if errores else "✔ ") + f"{tablas_curadas.ARCHIVOS_TABLAS[nombre]}: {filas} fila(s)"
+              + ("" if errores else ", todas con cita") + "".join(f"\n    - {e}" for e in errores))
+    return 1 if any(e for _, e in res.values()) else 0
+
+
 def cmd_citar(a, rutas) -> int:
     clave = a.clave
     if clave.startswith("sha256:") or all(c in "0123456789abcdef" for c in clave.lower()) and len(clave) >= 6:
@@ -681,6 +692,10 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta a indexar")
     s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
     s.set_defaults(fn=cmd_variables)
+
+    s = sub.add_parser("inferencia", help="Motor de inferencia: validar las tablas curadas de curados/inferencia/ (esquema, citas y cruces)")
+    s.add_argument("accion", choices=["validar-tablas"])
+    s.set_defaults(fn=cmd_inferencia)
 
     s = sub.add_parser("indice", help="Reconstruir el índice DuckDB")
     s.set_defaults(fn=cmd_indice)
