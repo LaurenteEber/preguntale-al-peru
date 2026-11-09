@@ -34,7 +34,7 @@ Alternativas descartadas para esta etapa: PostgreSQL/PostGIS (un servidor que op
 | Crudos | Archivos inmutables guardados por su huella SHA-256, con manifiesto (ver `docs/especificaciones/datos_crudos.md`) | Igual | DVC/rclone: si hay que sincronizar crudos entre máquinas |
 | Formato curado | **Parquet** (zstd), ordenado por clave; montos en DECIMAL; ubigeo como texto de 6 dígitos | Igual | — |
 | Motor de transformación | **DuckDB SQL** para lo pesado; **Polars o pandas** para Excel y PDF; un script o un `.sql` por paso | Igual | SQLMesh o dbt: con más de 40–60 modelos o un segundo colaborador |
-| Encuestas | **svy** (Python, versión exacta en `uv.lock`) como motor; lectura de SPSS/Stata con **pyreadstat**. **La validación es contra las cifras publicadas por el INEI** (R-ENC-18; `curados/capa0/cifras_control_inei.yaml`). El verificador con R queda **diferido** (9/10/2026): el prototipo mostró que svy y R `survey` coinciden (≤ 1e-13 en la ENAHO 2025) y se guarda en `00_proyecto/investigacion/r_verificador/` para cuando haga falta | Cifras precalculadas | Verificador R (`estrategia.md`): si svy cambia de versión mayor, si una cifra no reproduce al INEI o al desplegar en la nube; R como motor: si svy no coincide en algún caso |
+| Encuestas | **svy** (Python, versión exacta en `uv.lock`) como motor; lectura de SPSS/Stata con **pyreadstat**. **La validación es contra las cifras publicadas por el INEI** (R-ENC-18; `curados/capa0/cifras_control_inei.yaml`). Versiones (M0-03, 9/11/2026): `svy` 0.35.0 y `pyreadstat` 1.3.7, con `pydantic` 2.13.5 y `ftfy` 6.3.1 declaradas. **Política de `svy`:** versión exacta; cada cambio de versión es una historia propia (F-05) con su regresión de cifras y errores estándar contra el cubo anterior. El verificador con R se **activa en M0-09** (antes diferido): el prototipo mostró que svy y R `survey` coinciden (≤ 1e-13 en la ENAHO 2025) y allí se compara `svy` 0.35.0 con R | Cifras precalculadas | Verificador R (`estrategia.md`): si svy cambia de versión mayor, si una cifra no reproduce al INEI o al desplegar en la nube; R como motor: si svy no coincide en algún caso |
 | Orquestación | **justfile + CLI propia** (`pap`), incremental por hash | Tarea programada mensual con la misma CLI | Dagster: ejecución desatendida o más de ~100 activos |
 | Calidad de datos | Pruebas SQL + pandera | Igual | — |
 | Validador de reglas (96 vigentes; 68 en el piloto) | Código propio: reglas en YAML compiladas a SQL | Corre antes de publicar cada versión | — |
@@ -56,7 +56,7 @@ Alternativas descartadas para esta etapa: PostgreSQL/PostGIS (un servidor que op
 
 | Riesgo | Mitigación |
 |---|---|
-| svy está en versión beta y lo mantiene un solo proveedor | Versión exacta fijada; cifras doradas contra el INEI en cada construcción; el verificador R ya prototipado se activa si una cifra no reproduce o al subir svy de versión |
+| svy está en versión beta y lo mantiene un solo proveedor | Versión exacta fijada; cifras doradas contra el INEI en cada construcción; el verificador R se activa en M0-09 y corre al subir svy de versión o si una cifra no reproduce |
 | DuckDB 2.0 sale este mes | Versión fijada; el `.duckdb` se reconstruye desde Parquet |
 | Python 3.10 de tu laptop llega a fin de vida este mes y no sirve para svy ni GeoPandas 1.2 | uv instala Python 3.12 aparte, sin tocar el del sistema |
 | Herramienta propia (CLI `pap`) que hay que mantener | Pequeña (500–800 líneas), con pruebas; la escribe y mantiene la IA |
@@ -71,6 +71,9 @@ Alternativas descartadas para esta etapa: PostgreSQL/PostGIS (un servidor que op
 | `certifi` | 2026.10.23 (`≥ 2026.10.18`) | PYSEC-2026-4320 |
 | `python-multipart` | 0.0.32 (`≥ 0.0.32`) | la 0.0.33 tenía menos de 2 semanas |
 | `opentelemetry-api` | 1.45.1 | la 1.45.2 tenía menos de 2 semanas (la fija `exclude-newer`) |
+| `svy` / `svy-io` / `svy-rs` | 0.35.0 / 0.7.1 / 0.19.1 | M0-03 (F-05); las ramas 0.8 y 0.20 de `svy-io`/`svy-rs` son de `svy` 0.36; auditoría en `backlog/slice-m0/evidencia/auditoria_m0-03.md` |
+| `pyreadstat` | 1.3.7 | M0-03; misma auditoría |
+| `pydantic` / `ftfy` (y `wcwidth` 0.9.4, que arrastra `ftfy`) | 2.13.5 / 6.3.1 / 0.9.4 | declaradas en M0-03; misma auditoría |
 | `pytest-socket` (solo desarrollo) | 0.8.1 | pruebas sin red (C5); auditoría en `backlog/slice-m0/evidencia/auditoria_pytest-socket.md` |
 | `pip-audit` / `osv-scanner` / `gitleaks` | 2.10.1 / 2.7.0 / 8.30.1 | `just auditar` y el gancho de secretos; no son dependencias del proyecto |
 
@@ -83,7 +86,7 @@ Alternativas descartadas para esta etapa: PostgreSQL/PostGIS (un servidor que op
 
 ## 7. Ajustes del 9/10/2026 (dueño)
 
-1. **Verificador R diferido.** Se instaló R en el Mac, pero la verificación automática svy ↔ R (`renv`, registros firmados) queda como funcionalidad posterior. Lo avanzado (diseño, auditoría, scripts y resultados) está en `00_proyecto/investigacion/r_verificador/` (`estrategia.md`). Se retoma si una cifra no reproduce al INEI, si svy cambia de versión mayor o al desplegar en la nube.
+1. **Verificador R diferido (se activa en M0-09).** Se instaló R en el Mac, pero la verificación automática svy ↔ R (`renv`, registros firmados) queda como funcionalidad posterior. Lo avanzado (diseño, auditoría, scripts y resultados) está en `00_proyecto/investigacion/r_verificador/` (`estrategia.md`). Se activa en M0-09 (ajuste del 9/11/2026) y corre también si una cifra no reproduce al INEI, si svy cambia de versión o al desplegar en la nube.
 2. **Validación con el INEI.** Toda cifra de encuesta del piloto debe reproducir lo publicado por el INEI (±0,1 pp, R-ENC-18). Desde S4 la estandarización ya lo comprueba con 36 cifras nacionales y departamentales.
 3. **Korn-Graubard.** La variante que se publica es la del NCHS (Parker et al. 2017, `r_verificador/referencias/sr02_175.pdf`): primero se ajusta el n efectivo por grados de libertad y después se trunca en n. Se comprobó con los ejemplos del Apéndice II (p. ej., n = 74, publicado 36,0–59,7). En svy es `ci_method="korn-graubard"`; `ci_method="beta"` equivale a `svyciprop(method="beta")` de R. Se corrige así §4.1 de la investigación del stack.
 4. **Despliegue.** Hoy todo corre en el Mac del dueño; cuando el proyecto madure se desplegará entero en un servicio en la nube. Consecuencias que ya se cuidan: rutas relativas a la raíz (`PAP_RAIZ`), almacén por huella transportable (1,2 GB) y ninguna dependencia de herramientas instaladas solo en el Mac.

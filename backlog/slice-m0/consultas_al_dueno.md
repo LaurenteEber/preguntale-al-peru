@@ -57,6 +57,11 @@ Rigen las mismas reglas que en los slices anteriores (`agents.md` §5):
 - **Propuesta:** US$ 5 por día (`docs/diseno/tecnologias.md` §8), más un tope por lote del enriquecimiento del índice de US$ 50.
 
 ## Consultas que bloquean (vacíos tipo C o D)
+### D-M0-03-1 — `wcwidth` entra con `ftfy` · tipo D · no bloquea (para revisar)
+- **Qué pasa:** M0-03 pide declarar `ftfy==6.3.1` y dice que, fuera de `svy-io` y `svy-rs`, no debe entrar ninguna dependencia nueva. `ftfy` 6.3.1 tiene una sola dependencia, `wcwidth` (0.9.4, MIT, Python puro, 16 días), así que no puede entrar sin ella.
+- **Qué hizo el agente:** siguió la tarea explícita (declarar `ftfy`) y auditó `wcwidth` como las demás: aprobado, sin advisories (`evidencia/auditoria_m0-03.md`).
+- **Qué se pide:** confirmar. Si preferís no tener `ftfy`, la reparación de etiquetas de M0-05 se haría solo con NFC y una lista propia, y `wcwidth` sale del lock.
+
 
 ### D-M0-00b-1 — gitleaks marca 2 hallazgos en el historial · **resuelta el 9/11/2026**
 - **Respuesta del dueño (9/11/2026):** «No es un secreto: es el enlace público de Power BI "Publicar en la web" del tablero del MEF (r= es base64 de {"k":id_reporte,"t":id_inquilino,"c":n}). Exclúyelo por fingerprint en .gitleaksignore, con un comentario.»
