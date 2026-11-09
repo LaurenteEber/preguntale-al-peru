@@ -53,6 +53,7 @@ testpaths = ["tests"]
 addopts = "--disable-socket --allow-unix-socket --allow-hosts=127.0.0.1,::1,localhost"
 markers = [
     "solo_mac: needs the raw store (biblioteca/cruda/); runs only on the owner's Mac (X-11)",
+    "regresion_microdatos: needs the ENDES microdata Parquet store; runs only on the owner's Mac (also marked solo_mac)",
     "navegador: needs Playwright and Chromium (S3-06); when Chromium is missing, leave it out with -m \"not navegador\"",
 ]
 # S3-01b (fila 13): se silencian solo estos dos avisos de librerías ajenas (con el mensaje exacto, para que cualquier otro aviso siga viéndose):

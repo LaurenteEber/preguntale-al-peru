@@ -19,6 +19,7 @@ Pregúntale al Perú responde preguntas sobre problemas del país con cifras de 
 | 7 | `docs/arquitectura.md` | Cómo está hecho el código hoy | Al empezar el slice |
 | 8 | `curados/capa0/` (`dim_indicador.yaml`, `cruces_permitidos.yaml`, `nombres_mostrados.yaml`…) | Tablas curadas: la fuente de verdad de indicadores, cruces y nombres | Al planificar cifras |
 | 9 | `docs/estado.md` | Foto del proyecto y deuda conocida | Para contexto |
+| 10 | `docs/diseno/motor_inferencia.md` | Diseño del motor de inferencia (M0–M5): plan, recetas, ejecutor, gobierno (§26) | Al trabajar una historia de `backlog/slice-m*/` |
 
 Las citas a documentos de trabajo anteriores al repositorio (`03_auditoria/`, `00_proyecto/`…) no están aquí ni hacen falta: ver `docs/historia.md`. La evidencia de cada slice (`backlog/slice-N/evidencia/`) es registro, no instrucción.
 
@@ -66,13 +67,23 @@ Ante la duda entre B y C, es C.
 
 ### 5.1 Cuándo el agente puede aprobar una diferencia de texto
 
-En la regresión (S1-07), el agente puede aprobar por sí mismo un cambio de texto en Q1–Q4 solo si se cumplen **todas** estas condiciones:
+En la regresión (S1-07), en la regresión del cubo y en las respuestas de las recetas, el agente puede aprobar por sí mismo un cambio de texto en Q1–Q4 solo si se cumplen **todas** estas condiciones:
 1. no cambian cifras, semáforos, nivel de confianza ni reglas con acción de bloqueo, supresión, subida de nivel o referencial;
 2. el texto nuevo no agrega ninguna afirmación que el anterior no hiciera (solo cambia la forma de decir lo mismo, o quita algo que la plantilla genérica no puede producir);
 3. pasa el corrector sin infracciones (`respuesta.infracciones_corrector`) y la capa 1 queda dentro de `respuesta.capa1_palabras_max`;
 4. si la respuesta es «no se puede», eso sigue yendo primero.
 
 Lo registra en `evidencia/regresion/<Q>.yaml` con `aprobado_por: agente`. Si falla cualquier condición, es una consulta tipo C.
+
+### 5.2 Cambios de cifra que el agente puede aprobar
+
+Solo dos:
+1. una receta que reproduce su cifra oficial dentro de la tolerancia de E-05;
+2. la regresión del cubo sin cambios.
+
+Cualquier otro cambio de cifra es tipo C.
+
+**Estados del índice de variables.** El agente marca `propuesto`; el auditor-agente propone `revisado`, que se aplica con el visto del dueño por lote; `verificado` solo lo da la reproducción de una cifra oficial.
 
 ## 6. Criterios para elegir un default (vacíos tipo B)
 
@@ -85,9 +96,12 @@ En este orden:
 
 ## 7. Lo que nunca se hace
 
-- Calcular o redondear una cifra fuera del cubo o de la biblioteca, o meterla al texto sin marcador (P-01, R-04).
+- Calcular o redondear una cifra fuera del ejecutor del motor de inferencia, de una receta de indicador, del cubo o de la biblioteca, o meterla al texto sin marcador (P-01, R-04).
 - Citar algo que no sea un documento oficial (P-02); guardar datos personales (P-03).
-- Descargar datos o agregar fuentes (F-04). Usar un LLM dentro del motor (está fuera del slice 1).
+- Descargar datos fuera de la lista aprobada de la fase, o agregar fuentes (F-04). Usar un LLM fuera del intérprete, del planificador (que elige por ID) y del enriquecimiento del índice fuera de línea.
+- Agregar o subir de versión una dependencia, un modelo, un paquete de R o un repo de terceros sin su auditoría de seguridad en `evidencia/` (F-04).
+- Subir crudos del INEI al repo público, o liberar crudos locales sin restauración probada (F-03).
+- Ejecutar código de un repo de terceros: solo se usan sus datos, con commit y huella fijos.
 - Editar `reglas/reglas.json` a mano: las reglas se cambian solo con `python3 reglas/consolidador/consolida_reglas.py`, y solo si una decisión lo pide.
 - Corregir un dato, una tabla curada o una dorada para que una prueba pase.
 - Editar `docs/decisiones.md`, salvo para registrar lo que el dueño decidió (editando la fila, nunca agregando una que aclare otra).
@@ -95,7 +109,7 @@ En este orden:
 
 ## 8. Entorno y comandos
 
-- Se trabaja en el Mac del dueño o en Claude Code en la nube, con uv y Python 3.12 (`uv sync`; ayuda: `uv run pap --help`). En la nube, la biblioteca se baja con `scripts/bajar_biblioteca.sh` (los Parquet del release de GitHub cuya etiqueta nombra la huella del cubo). `pap construir` desde los crudos solo corre en el Mac, donde está el almacén. Una prueba que necesita los crudos lleva la marca `solo_mac` y se deja fuera en la nube con `-m "not solo_mac"`; la evidencia dice cuántas y cuáles quedaron fuera.
+- Se trabaja en el Mac del dueño o en Claude Code en la nube, con uv y Python 3.12 (`uv sync`; ayuda: `uv run pap --help`). En la nube, la biblioteca se baja con `scripts/bajar_biblioteca.sh` (los Parquet del release de GitHub cuya etiqueta nombra la huella del cubo). `pap construir` desde los crudos solo corre en el Mac, donde está el almacén. Una prueba que necesita los crudos lleva la marca `solo_mac` y se deja fuera en la nube con `-m "not solo_mac"`; la evidencia dice cuántas y cuáles quedaron fuera. Las pruebas de regresión que calculan desde los microdatos llevan la marca `regresion_microdatos`; en la nube se dejan fuera todas juntas con `-m "not solo_mac and not navegador and not regresion_microdatos"`.
 - **Si no puedes correr `uv run pytest -q` ni `uv run pap`** (otro equipo, sin Python 3.12, sin la biblioteca de Parquet): no implementes historias que toquen cifras o respuestas. Escribe la consulta en `consultas_al_dueno.md` y detente; solo puedes avanzar en lo que no necesita el cubo (esquemas, textos, documentación).
 - Las pruebas nuevas que dependen del cubo o de la biblioteca **fallan** si faltan, no se saltan (no copiar el `pytest.skip` de `test_respuesta_p3.py`): un salto daría un falso verde.
 - Pruebas: `uv run pytest -q`.

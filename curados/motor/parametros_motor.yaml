@@ -49,7 +49,7 @@ territorio:
     por_defecto_sin_respuesta: LIMA_METROPOLITANA
     decision: T-03
   homonimos: {accion: aclarar, decision: R-TERRITORIO-09}
-  departamento_a_secas: {activo: true, valor: "el nombre a secas de un departamento (que también es provincia o distrito) se responde como departamento y se ofrece la provincia o el distrito como alternativa, en «Avisos» de la capa 2; Lima sigue con T-03; los homónimos del mismo nivel y los textos con palabra de nivel («provincia de…») no cambian", decision: X-22, texto_alternativa: "textos/territorio.yaml → oferta_otros_niveles (supuesto: S3-01b)"}
+  departamento_a_secas: {activo: true, valor: "el nombre a secas de un departamento (que también es provincia o distrito) se responde como departamento y se ofrece la provincia o el distrito como alternativa, en «Avisos» de la capa 2; Lima sigue con T-03; los homónimos del mismo nivel y los textos con palabra de nivel («provincia de…») no cambian", decision: T-03, texto_alternativa: "textos/territorio.yaml → oferta_otros_niveles (supuesto: S3-01b)"}
   aclaracion_max_opciones: {valor: 8, supuesto: S1-02}
   aclaracion_orden: {valor: "por nivel (departamento, provincia, distrito); dentro de cada nivel, alfabético por departamento, provincia y nombre", supuesto: S1-02}
   aclaracion_exceso: {valor: "si hay más opciones que el máximo, no se listan: se pide la provincia o el departamento", supuesto: S1-02}

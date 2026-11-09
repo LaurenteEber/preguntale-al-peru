@@ -309,7 +309,7 @@ def test_respuesta_con_cifras_conserva_su_forma(raiz, motor):
 def test_textos_y_motivos_de_la_regla(raiz, motor, parametros):
     tx = yaml.safe_load((raiz / "curados" / "motor" / "textos" / "no_se_puede.yaml").read_text(encoding="utf-8"))
     codificados = set(motor.ctx.param("R-LENGUAJE-05", "motivos_codificados"))
-    assert motor.ctx.param("R-LENGUAJE-05", "max_alternativas") == 2
+    assert motor.ctx.param("R-LENGUAJE-05", "max_alternativas") == 3                     # M0-01 / R-01: decisión del dueño (8/11/2026), antes 2
     reglas = {m: s["regla"] for m, s in tx["motivos"].items()}
     assert {r for r in reglas.values() if r} <= codificados                       # lo que usa de la regla, lo reutiliza tal cual
     agregados = {m for m, r in reglas.items() if r is None}

@@ -13,11 +13,13 @@ Rigen las mismas reglas que en los slices anteriores (`agents.md` §5):
   - **(b) SPSS en todos los años.** Hay que volver a bajar 1629 y 1638, y M0-10 compararía datos que vienen de SPSS con un cubo que viene de Stata.
 - **Recomendación:** (a).
 
-### K-01 — Aprobar la lista de ZIP de la ENDES 2024 (M0-02) · abierta
+### K-01 — Aprobar la lista de ZIP de la ENDES 2024 (M0-02) · **aprobada el 9/11/2026, con condiciones**
+- **Respuesta del dueño (9/11/2026):** «ok con k-01», sobre esta propuesta: los 13 módulos de 2024 en Stata (1629 a 1641; 1629 y 1638 `ya_registrado`, sin volver a bajar), la ficha técnica, los cuestionarios (hogar, individual y salud) y los diccionarios en PDF, solo con URL `https://proyectos.inei.gob.pe`. El dueño revisa la lista después.
 - **Qué se pide:** revisar `curados/inferencia/descargas/endes_2024.yaml` y escribir aquí «aprobada» con la fecha.
 - **Descarga:** si el agente no llega a `.gob.pe` desde el Mac, el dueño deja los ZIP en `biblioteca/cruda/bandeja/INEI-ENDES/`.
 
-### K-02 — R en el Mac (M0-09) · abierta
+### K-02 — R en el Mac (M0-09) · abierta (prototipo ubicado)
+- **9/11/2026:** el dueño indicó la carpeta de trabajo anterior (`~/Documents/SideProjects/pregunta-al-peru`). El prototipo está en `00_proyecto/investigacion/r_verificador/analista/verificar.R` (más los scripts del auditor en `auditor/scripts/`). Lo copia el agente en M0-09; falta confirmar la versión de R.
 - **Qué dice el repo:** `docs/especificaciones/stack.md` registra que R ya se instaló en el Mac y que hay un prototipo del verificador en la carpeta de trabajo anterior (`00_proyecto/investigacion/r_verificador/`).
 - **Qué se pide:**
   1. confirmar la versión con `R --version`;
@@ -60,6 +62,14 @@ Rigen las mismas reglas que en los slices anteriores (`agents.md` §5):
 - **Qué es, a primera vista:** el campo `url_datos` de una fuente del catálogo, una URL de un informe público de Power BI (`app.fabric.microsoft.com/view?r=…`). Su parámetro `r` empieza con el mismo prefijo que usan las claves de Grafana, por eso salta. No parece un secreto, pero eso lo confirma quien conoce la fuente.
 - **Por qué importa:** si fuera una clave real, habría que revocarla. El secreto no se copia aquí.
 - **Qué se propone:** el dueño confirma que esa URL es el enlace público de la fuente. Si lo es, se agrega la huella de los dos hallazgos a un `.gitleaksignore` (el agente lo hace) para que `just secretos` quede en verde. Mientras tanto, el gancho antes de cada commit no se ve afectado (solo mira lo nuevo).
+
+
+### C-M0-01-1 — Cambiar las reglas cambia la «huella de reglas» que llevan las respuestas · tipo C · **resuelta el 9/11/2026**
+- **Respuesta del dueño (9/11/2026):** «Sí, regrabá (recomendado)». Se regrabaron `slice-2/base_estructurada` y `slice-3/base_api` con sus scripts y se cambió a 3 la aserción de `max_alternativas`. Detalle en `evidencia/m0-01_decisiones.md`, «Regrabación autorizada».
+- **Qué pasa:** al aplicar las dos decisiones del 8/11 (`max_alternativas: 3` en R-LENGUAJE-05 y la cláusula de Benjamini-Hochberg en R-ENC-11), `reglas.json` cambia y con él la huella corta de reglas que toda respuesta lleva en «Para citar y verificar» (`14b83c8814a7`, antes `0682897f4b70`). **Ninguna cifra, semáforo, nivel de confianza ni texto de Q1–Q4 cambia**: se comparó la salida de `consultas_minimas/` con las reglas de antes y de después y solo difieren esas huellas (evidencia en `evidencia/m0-01_decisiones.md`).
+- **Efecto en las pruebas:** 10 pruebas comparan la respuesta con una base grabada que incluye esa huella y fallan solo por eso: `test_cli_preguntar.py::test_via_estructurada_igual_a_la_base_de_s2_00`, `web/test_guiado.py::test_diferencias_con_la_base_api_solo_las_permitidas[q1..q4]`, `web/test_paginas.py::test_la_api_no_cambia_por_las_paginas`, `web/test_servicio.py` (3). Además, `test_no_se_puede.py::test_textos_y_motivos_de_la_regla` afirma `max_alternativas == 2`, que la decisión cambia a 3.
+- **Por qué importa:** «la suite sin cambios» no se cumple tal cual. Las bases viven en `backlog/slice-3/evidencia/base_api/` y afines, fuera de lo que esta historia puede editar, y regrabarlas es decidir qué diferencias se aceptan.
+- **Qué se propone:** aceptar la huella nueva y regrabar esas bases (y subir a 3 el valor que afirma `test_no_se_puede.py`) en una historia aparte o con el visto del dueño. El código del motor no cambia.
 
 
 ## Supuestos aplicados (tipo B)

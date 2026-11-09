@@ -6816,7 +6816,7 @@
     "alfa": 0.05,
     "cov_ab": "0 entre departamentos distintos o entre años con muestras independientes; si un territorio contiene al otro (departamento vs nacional) → comparar contra el resto del país o estimar la covarianza (svyby covmat + svycontrast); con panel o conglomerados repetidos → base apilada",
     "gl_prueba": "min(gl_a, gl_b)",
-    "comparaciones_multiples": "máx. 1 comparación por par de cifras; tendencias: primer vs último año del tramo sin quiebre",
+    "comparaciones_multiples": "máx. 1 comparación por par de cifras; tendencias: primer vs último año del tramo sin quiebre; con más de 4 grupos: prueba global y luego pares con BH al 5 % sobre todos los pares de la consulta",
     "p_valor": "2·P(T_gl > |t|), gl = min(gl_a, gl_b)"
    },
    "mensaje_usuario": "(p<0,05) «La cifra {{v}} de {a} % a {b} %, y el cambio es estadísticamente claro.» (p≥0,05) «La cifra pasó de {a} % a {b} %, pero la diferencia es tan pequeña que puede deberse a qué hogares tocó encuestar: no se puede afirmar que haya cambiado.»",
@@ -7556,7 +7556,7 @@
      "fuente_en_ingesta",
      "fuera_de_alcance"
     ],
-    "max_alternativas": 2
+    "max_alternativas": 3
    },
    "mensaje_usuario": "Con los datos públicos que usamos no se puede responder {parte} para {territorio} porque {motivo_ciudadano}. Lo más cercano que sí podemos mostrar es: {alternativa}.",
    "justificacion": "Decir con claridad qué no se sabe es parte de comunicar la incertidumbre (OSR). Una respuesta parcial bien rotulada es más útil que un rechazo, pero inventar o forzar cifras para llenar el hueco sería engañoso.",

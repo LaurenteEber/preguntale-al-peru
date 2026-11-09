@@ -2462,3 +2462,19 @@ CAMPOS_REGLAS += [
 FRASES_ESTANDAR = {   # AD-2: lo aplica consolida_reglas.py sobre lenguaje.frases_estandar
  'efecto': 'Saber si un gasto o programa funcionó requiere una evaluación que compare con lo que habría pasado sin él. ' + _AD2,
 }
+
+
+# ================================================================ Motor de inferencia, M0-01 (dueño, 8/11/2026)
+# docs/diseno/motor_inferencia.md §26.1, fila R-01. Solo cambian dos reglas; el motor actual no las usa todavía (las usa el
+# motor nuevo desde M0-09): arma como máximo 2 alternativas, así que max_alternativas 3 no cambia sus respuestas.
+#  (a) R-LENGUAJE-05: hasta 3 alternativas en una aclaración o un «no se puede» (antes 2).
+#  (b) R-ENC-11: familias de comparaciones con Benjamini-Hochberg (§16), aceptado por el dueño el 8/11/2026. Se conserva el
+#      texto anterior de comparaciones_multiples y se le suma la cláusula.
+#  (c) R-ENC-19 (no respuesta del ítem, §15.1 paso 8) NO se agrega: el dueño aún no aprueba sus umbrales (K-07).
+SOBRESCRITURAS_CONSCIENTES = globals().get('SOBRESCRITURAS_CONSCIENTES', set()) | {('R-ENC-11', 'parametros.comparaciones_multiples')}   # PR-33 lo fijó; el dueño lo amplía
+CAMPOS_REGLAS += [
+ ('R-LENGUAJE-05', 'parametros.max_alternativas', 3),
+ ('R-ENC-11', 'parametros.comparaciones_multiples',
+  'máx. 1 comparación por par de cifras; tendencias: primer vs último año del tramo sin quiebre; '
+  'con más de 4 grupos: prueba global y luego pares con BH al 5 % sobre todos los pares de la consulta'),
+]

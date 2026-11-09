@@ -67,7 +67,7 @@ def _config(raiz: str) -> dict:
         "similitud": float(par["similitud_min_para_sugerir"]["valor"]),
         "palabras_nivel": palabras,
         "nacional": {normalizar_texto(t) for t in par["textos_nacional"]["valor"]},
-        "depto_a_secas": bool(par.get("departamento_a_secas", {}).get("activo", False)),   # X-22
+        "depto_a_secas": bool(par.get("departamento_a_secas", {}).get("activo", False)),   # T-03
         "lima_opciones": par["lima_a_secas"]["opciones"],
         "lima_defecto": par["lima_a_secas"]["por_defecto_sin_respuesta"],
         "txt": txt,
@@ -288,7 +288,7 @@ def _resolver_texto(ctx, texto: str, fecha: str | None) -> Resuelto | Aclaracion
         niveles = {f["nivel"] for f in cand}
         dptos = [f for f in cand if f["nivel"] == "departamento"]
         if _cfg(ctx)["depto_a_secas"] and len(partes) == 1 and partes[0][1] is None and len(dptos) == 1:
-            return _resuelto(ctx, dptos[0])                # X-22: el nombre a secas de un departamento se responde como departamento
+            return _resuelto(ctx, dptos[0])                # T-03: el nombre a secas de un departamento se responde como departamento
         nombres = {f["nombre_mostrado"] for f in cand}      # S3-10 (H-10): «Ayaviri», no «distrito Ayaviri» (y con tildes, T-02)
         nombre = nombres.pop() if len(nombres) == 1 else texto.strip()
         return _preguntar(ctx, "homonimo_niveles" if len(niveles) > 1 else "homonimo_mismo_nivel", cand, nombre)
@@ -302,7 +302,7 @@ def _resolver_texto(ctx, texto: str, fecha: str | None) -> Resuelto | Aclaracion
 
 
 def oferta_otros_niveles(ctx, entrada: dict, resuelto, fecha: str | None = None) -> str | None:
-    """X-22: si `entrada` (texto a secas) se resolvió como departamento y existe una provincia o un distrito con ese nombre,
+    """T-03: si `entrada` (texto a secas) se resolvió como departamento y existe una provincia o un distrito con ese nombre,
     la frase que lo dice y enseña a pedirlos (textos en territorio.yaml, `oferta_otros_niveles`). Solo ofrece niveles que existen."""
     if not _cfg(ctx)["depto_a_secas"] or not isinstance(resuelto, Resuelto) or resuelto.nivel != "departamento" or not isinstance(entrada.get("texto"), str):
         return None
