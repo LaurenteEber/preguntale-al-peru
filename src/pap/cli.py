@@ -1,4 +1,4 @@
-"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | servir."""
+"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | microdatos | servir."""
 from __future__ import annotations
 
 import json
@@ -158,6 +158,17 @@ def cmd_almacen(a, rutas) -> int:
     if errores:
         print(f"✘ {errores} objeto(s) con error: sus originales quedaron intactos.")
     return 1 if errores else 0
+
+
+def cmd_microdatos(a, rutas) -> int:
+    """pap microdatos convertir: ZIP registrados de una encuesta y año → Parquet + manifiesto (M0-04)."""
+    from .inferencia import almacen as microdatos     # importación diferida: trae polars, duckdb y pyreadstat
+
+    m = microdatos.convertir(rutas, a.encuesta, a.anio)
+    n = len(m["archivos"])
+    print(f"\n{n} archivo(s) de {a.encuesta} {a.anio} en {rutas.relativa(microdatos.carpeta_salida(rutas, a.encuesta, a.anio))}"
+          f" (manifiesto.json); huellas de los ZIP agregadas a curados/insumos.lock.yaml.")
+    return 0
 
 
 def cmd_citar(a, rutas) -> int:
@@ -644,6 +655,12 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--max-segundos", type=float, default=0,
                    help="No empezar un objeto nuevo pasado este tiempo (para correr por partes)")
     s.set_defaults(fn=cmd_almacen)
+
+    s = sub.add_parser("microdatos", help="Microdatos de las encuestas: convertir los ZIP registrados a Parquet (SAV/DTA aislados)")
+    s.add_argument("accion", choices=["convertir"])
+    s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta a convertir")
+    s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
+    s.set_defaults(fn=cmd_microdatos)
 
     s = sub.add_parser("indice", help="Reconstruir el índice DuckDB")
     s.set_defaults(fn=cmd_indice)

@@ -59,7 +59,7 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 | M0-01 | [Decisiones, reglas y `agents.md`](M0-01-decisiones-reglas-agents.md) | M0-00 | hecha ([evidencia](evidencia/m0-01_decisiones.md)); R-ENC-19 espera K-07 |
 | M0-02 | [ZIP de la ENDES 2024: lista, registro y respaldo](M0-02-zip-endes-2024.md) | M0-01; K-06 y K-01 | en curso: lista, descarga, registro y tamaños hechos ([evidencia](evidencia/m0-02_tamano_zip.md)); respaldo y restauración esperan K-09 |
 | M0-03 | [Versiones: `svy` 0.35.0 y `pyreadstat` 1.3.7](M0-03-versiones.md) | M0-00b | hecha: cubo idéntico `010ea965` ([regresión](evidencia/m0-03_regresion_svy.csv), [lock](evidencia/m0-03_lock.md)); la comparación con R cierra en M0-09 |
-| M0-04 | [Conversor y almacén](M0-04-conversor-almacen.md) | M0-02 (tareas 1–4: ZIP registrados), M0-03 | pendiente |
+| M0-04 | [Conversor y almacén](M0-04-conversor-almacen.md) | M0-02 (tareas 1–4: ZIP registrados), M0-03 | hecha: 34 archivos de 2024 ([evidencia](evidencia/m0-04_tamano.md)) |
 | M0-05 | [Índice de variables y controles](M0-05-indice-variables.md) | M0-04 | pendiente |
 | M0-06 | [Tablas curadas de 2024](M0-06-tablas-curadas.md) | M0-05 | pendiente |
 | M0-07 | [Gramática, verificador base y DuckDB endurecido](M0-07-gramatica-verificador.md) | M0-05; M0-06 con las tablas validadas (el visto del dueño solo condiciona `verificado` en M0-10) | pendiente |

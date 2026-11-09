@@ -1,0 +1,27 @@
+# Clases de columna del conversor de microdatos (M0-04). VERSIÓN PROVISIONAL: solo las llaves y columnas de diseño
+# conocidas de la ENDES 2024; M0-05 (índice de variables) la completa y la declara desde el índice.
+# Clases (docs/diseno/motor_inferencia.md §6):
+#   llave, geo → texto; se recortan los espacios de los extremos (no los internos) y se verifica el `ancho`: un ancho
+#                distinto es un error, nunca se corta. Un valor nulo queda nulo.
+#   categoria  → INTEGER (un valor con decimales o fuera de INTEGER es un error)
+#   medida     → DOUBLE
+# `deriva`: columna que se calcula del valor CRUDO de esta (antes de recortar). `quitar_final: n` quita los n últimos
+#           caracteres (CASEID = HHID + número de línea de 3 caracteres, con espacios). Si el archivo ya trae la columna
+#           derivada, se compara y una diferencia es un error; si no la trae, se agrega.
+# Lo que no está aquí: texto → VARCHAR tal cual; numérico (o toda nula) → DOUBLE; fechas → se conservan.
+version: 0.1.0
+provisional: true
+fecha: "2026-11-09"
+columnas:
+  HHID: {clase: llave, ancho: 9}
+  CASEID: {clase: llave, ancho: 12, deriva: {HHID: {quitar_final: 3}}}
+  UBIGEO: {clase: geo, ancho: 6}
+  HVIDX: {clase: categoria}
+  HC0: {clase: categoria}
+  HV001: {clase: categoria}
+  HV021: {clase: categoria}
+  HV022: {clase: categoria}
+  HV024: {clase: categoria}
+  HV025: {clase: categoria}
+  HV005: {clase: medida}
+  V005: {clase: medida}

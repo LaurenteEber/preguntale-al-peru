@@ -26,3 +26,28 @@ seguridad:
   lock_dias_min: {valor: 14, supuesto: M0-00b}
   # Excepciones registradas a esa regla (paquete==versión, con motivo y fecha). Vacío: no hay ninguna.
   lock_excepciones: []
+
+conversion:
+  # Conversor de microdatos (M0-04; diseño §6 y tecnologias.md §5). Cada SAV/DTA se lee en un subproceso con estos topes (C8).
+  # Límite de espacio de direcciones del subproceso (RLIMIT_AS). En macOS el sistema no lo hace cumplir: el conversor lo
+  # detecta (manifiesto: rlimit_as_aplicado) y el tope real de memoria allí es el vigilante de RSS de abajo.
+  lector_as_mb: {valor: 12288, supuesto: M0-04}
+  lector_cpu_s: {valor: 900, supuesto: M0-04}           # RLIMIT_CPU: segundos de procesador del subproceso
+  lector_tiempo_s: {valor: 1800, supuesto: M0-04}       # tiempo de pared por archivo; pasado esto se mata el subproceso
+  lector_rss_max_mb: {valor: 3072, supuesto: M0-04}     # vigilante de memoria residente (se sondea cada lector_sondeo_s)
+  lector_sondeo_s: {valor: 0.2, supuesto: M0-04}
+  # Criterios de aceptación de M0-04 (se miden y se informan; no frenan la conversión).
+  criterio_rss_max_mb: {valor: 1536, supuesto: M0-04}   # «RSS máximo por archivo < 1,5 GB»
+  criterio_huella_s: {valor: 5, supuesto: M0-04}        # «huella de contenido en < 5 s por archivo»
+  # Lectura por bloques (tecnologias.md §5): los archivos de más de 200 MB, de 25 000 en 25 000 filas.
+  bloques_desde_mb: {valor: 200, supuesto: M0-04}
+  bloques_filas: {valor: 25000, supuesto: M0-04}
+  # DTA anteriores al formato 118 no declaran su codificación (tecnologias.md §5).
+  dta_codificacion_sin_declarar: {valor: "WINDOWS-1252", supuesto: M0-04}
+  # Escritura Parquet (tecnologias.md §5): DuckDB COPY, un archivo por encuesta, año y archivo.
+  parquet_compresion: {valor: zstd, supuesto: M0-04}
+  parquet_nivel: {valor: 3, supuesto: M0-04}
+  parquet_grupo_filas: {valor: 122880, supuesto: M0-04}
+  duckdb_memoria_mb: {valor: 1024, supuesto: M0-04}     # memory_limit de DuckDB dentro del subproceso
+  # Nombre del archivo Parquet: miembro sin extensión, sin el sufijo _<año> y con «_» en vez de espacios (RECH0_2024.dta → RECH0).
+  nombre_parquet_espacio: {valor: "_", supuesto: M0-04}
