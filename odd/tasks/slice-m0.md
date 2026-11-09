@@ -21,7 +21,7 @@ Owner waits: K-01 (ZIP list), K-02 (R), K-03 (visto), K-07 (R-ENC-19), K-09 (gh 
 | T4 | M0-02 lista, descarga, registro | S1 S4 S5 | worker | done except backup upload + restore (wait K-09) | see git log M0-02 |
 | T5 | M0-03 svy 0.35.0 y pyreadstat 1.3.7 | S1 S3 | worker | done; cube byte-identical 010ea965 | c9dbffc |
 | T6 | M0-04 conversor y almacén | S1 | worker | done: 34 DTA → Parquet, RSS max 778 MB, hash max 0.68 s; suite 1322 passed | see git log M0-04 |
-| T7 | M0-05 índice de variables | S1 | inline | pending | |
+| T7 | M0-05 índice de variables | S1 | worker | done: 2 856 vars, joins exact, suite 1369 passed; reconverted with full classes (content hashes unchanged) | see git log M0-05 |
 | T8 | M0-06 tablas curadas 2024 | S1 S3 | inline | pending | |
 | T9 | M0-07 gramática, verificador, DuckDB | S1 | inline | pending | |
 | T10 | M0-08 ejecutor y pool | S1 | inline | pending | |

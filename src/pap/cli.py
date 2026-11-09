@@ -1,4 +1,4 @@
-"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | microdatos | servir."""
+"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | microdatos | variables | servir."""
 from __future__ import annotations
 
 import json
@@ -168,6 +168,20 @@ def cmd_microdatos(a, rutas) -> int:
     n = len(m["archivos"])
     print(f"\n{n} archivo(s) de {a.encuesta} {a.anio} en {rutas.relativa(microdatos.carpeta_salida(rutas, a.encuesta, a.anio))}"
           f" (manifiesto.json); huellas de los ZIP agregadas a curados/insumos.lock.yaml.")
+    return 0
+
+
+def cmd_variables(a, rutas) -> int:
+    """pap variables indexar: ZIP registrados de una encuesta y año → biblioteca/variables/*.parquet (M0-05)."""
+    from .inferencia import indice as indice_variables     # importación diferida: trae polars, duckdb y pyreadstat
+
+    ind, rutas_salida = indice_variables.indexar(rutas, a.encuesta, a.anio)
+    c = indice_variables.conteos(ind)
+    print(f"\n{c['filas']['archivos']} archivo(s), {c['filas']['variables']:,} variable(s) y {c['filas']['categorias']:,} categoría(s) "
+          f"de {a.encuesta} {a.anio} en {rutas.relativa(indice_variables.carpeta_indice(rutas))} "
+          f"({', '.join(p.name for p in rutas_salida.values())}); todas en estado propuesto.")
+    print(f"{c['especiales_propuestos']} código(s) especial(es) propuesto(s); {c['textos_distintos']:,} textos de etiqueta distintos; "
+          "controles que saltaron: " + (", ".join(f"{k} {n}" for k, n in c["controles"].items() if n) or "ninguno") + ".")
     return 0
 
 
@@ -661,6 +675,12 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta a convertir")
     s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
     s.set_defaults(fn=cmd_microdatos)
+
+    s = sub.add_parser("variables", help="Índice de variables de las encuestas: indexar los ZIP registrados (metadatos de SAV/DTA)")
+    s.add_argument("accion", choices=["indexar"])
+    s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta a indexar")
+    s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
+    s.set_defaults(fn=cmd_variables)
 
     s = sub.add_parser("indice", help="Reconstruir el índice DuckDB")
     s.set_defaults(fn=cmd_indice)

@@ -2,7 +2,7 @@
  "anio": 2024,
  "archivos": {
   "CSALUD01": {
-   "bytes_parquet": 1781652,
+   "bytes_parquet": 1785441,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -16,9 +16,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -1291,7 +1291,7 @@
      "tipo": "DOUBLE"
     },
     {
-     "clase": null,
+     "clase": "peso",
      "nombre": "PESO15_AMAS",
      "tipo": "DOUBLE"
     },
@@ -1304,7 +1304,7 @@
    "filas": 34018,
    "huella_contenido_v1": "b27303853c94753a3364c9f81fcda14201033f525a752210bcec113396939661",
    "huella_datos": "381e00a3aa4114fc04d4d79c71b41c9663ffc529f4d008b8de2637a30c8a7974",
-   "huella_parquet": "2a5081e34c9ee1690431019017d5af590fd4df03250c862d7a989849b04cefb5",
+   "huella_parquet": "fe207097f5ee78fd48eb3616fe5b6254eedaa8ae6ff5084a8352aca980d0a5b7",
    "leido_en_bloques": false,
    "n_columnas": 259,
    "origen": {
@@ -1316,9 +1316,9 @@
    "parquet": "CSALUD01.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 569.1,
-   "segundos_conversion": 1.591,
-   "segundos_huella": 0.675,
+   "rss_max_mb": 564.8,
+   "segundos_conversion": 1.651,
+   "segundos_huella": 0.676,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -1329,7 +1329,7 @@
    }
   },
   "CSALUD08": {
-   "bytes_parquet": 690620,
+   "bytes_parquet": 694406,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -1343,9 +1343,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -1593,7 +1593,7 @@
      "tipo": "DOUBLE"
     },
     {
-     "clase": null,
+     "clase": "peso",
      "nombre": "PESOMEN12",
      "tipo": "DOUBLE"
     },
@@ -1606,7 +1606,7 @@
    "filas": 41309,
    "huella_contenido_v1": "9feeaac2be876d068c77478c43cb17dae36623f4b1067429fa1a1a49533e35be",
    "huella_datos": "d6d74408055966b8d228fc12f38f551209a178a5b0cf79860aca6e89d63ae032",
-   "huella_parquet": "c8e1a68ce0d6723161e1260b7e687efe7ba0bc982377d63c9298004e0636a35a",
+   "huella_parquet": "4770ba0f7d5598d7a0a845fa07dbea593af5ccbb25f8ca2ec6b2cd71efdda368",
    "leido_en_bloques": false,
    "n_columnas": 54,
    "origen": {
@@ -1618,9 +1618,9 @@
    "parquet": "CSALUD08.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 288.0,
-   "segundos_conversion": 0.532,
-   "segundos_huella": 0.234,
+   "rss_max_mb": 292.6,
+   "segundos_conversion": 0.533,
+   "segundos_huella": 0.227,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -1975,8 +1975,8 @@
    "parquet": "DIT.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 255.0,
-   "segundos_conversion": 0.301,
+   "rss_max_mb": 252.0,
+   "segundos_conversion": 0.318,
    "segundos_huella": 0.088,
    "versiones": {
     "duckdb": "1.5.6",
@@ -1988,7 +1988,7 @@
    }
   },
   "PS_BECA18": {
-   "bytes_parquet": 2807,
+   "bytes_parquet": 2793,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -2002,9 +2002,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -2050,7 +2050,7 @@
    "filas": 48,
    "huella_contenido_v1": "639803dc2bbe1236cf22a585ef2db445c5a936bc576cc089d453a707a3a43e67",
    "huella_datos": "22ee4bf0f9688fb02e36b9154a661f010fc9bf841688b793704124976340c600",
-   "huella_parquet": "5b1230d0626e1f66e551e86d121aa8e8f588de3d6efc7233f160e26db1c4f4fe",
+   "huella_parquet": "709adcc5f3da78d90e4b1c1cd3c779971ba5c7a120a4ab8fe4b0e29f8b30eba9",
    "leido_en_bloques": false,
    "n_columnas": 11,
    "origen": {
@@ -2062,8 +2062,8 @@
    "parquet": "PS_BECA18.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 169.0,
-   "segundos_conversion": 0.093,
+   "rss_max_mb": 168.8,
+   "segundos_conversion": 0.091,
    "segundos_huella": 0.009,
    "versiones": {
     "duckdb": "1.5.6",
@@ -2075,7 +2075,7 @@
    }
   },
   "PS_COMEDOR": {
-   "bytes_parquet": 11090,
+   "bytes_parquet": 11408,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -2089,9 +2089,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -2137,7 +2137,7 @@
    "filas": 1437,
    "huella_contenido_v1": "244c46190798af0f20ea9487c74f191b2a5d340dc9984225c082d382c1a7d33b",
    "huella_datos": "3d83b7409ced9bee8ff4af2d56b5a93abe87b5aec40ed712fa31bf19df20c095",
-   "huella_parquet": "c03093d485e33b0df24f1c20885defe54dec50e362d14366a5816d2f15634ce7",
+   "huella_parquet": "7fcd9d0074fb3765b7353c9eb46a69499e138c646e61c81ca86e55df01614ccc",
    "leido_en_bloques": false,
    "n_columnas": 11,
    "origen": {
@@ -2149,8 +2149,8 @@
    "parquet": "PS_COMEDOR.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 169.8,
-   "segundos_conversion": 0.097,
+   "rss_max_mb": 169.7,
+   "segundos_conversion": 0.095,
    "segundos_huella": 0.011,
    "versiones": {
     "duckdb": "1.5.6",
@@ -2162,7 +2162,7 @@
    }
   },
   "PS_PENSION65": {
-   "bytes_parquet": 18866,
+   "bytes_parquet": 19625,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -2176,9 +2176,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -2224,7 +2224,7 @@
    "filas": 2745,
    "huella_contenido_v1": "7a25f63b29a7d3534f7e5fb08147ba2c39f26812b64a000913f344e2ad52c8ac",
    "huella_datos": "8940db065221f12d77406d6d12fc6494b8556dabc22a21176abd7776a4fe3012",
-   "huella_parquet": "7baa0e116f15d7a321480da6afc4227e4f63ac7ba16342d605b04c147c10a52b",
+   "huella_parquet": "1dfe3aa9d573e066aac026541e1acf70f8824a63a073b49aeb2002c378aff39c",
    "leido_en_bloques": false,
    "n_columnas": 11,
    "origen": {
@@ -2236,8 +2236,8 @@
    "parquet": "PS_PENSION65.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 171.3,
-   "segundos_conversion": 0.101,
+   "rss_max_mb": 171.9,
+   "segundos_conversion": 0.1,
    "segundos_huella": 0.015,
    "versiones": {
     "duckdb": "1.5.6",
@@ -2249,7 +2249,7 @@
    }
   },
   "PS_QALIWARMA": {
-   "bytes_parquet": 107956,
+   "bytes_parquet": 111098,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -2263,9 +2263,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -2316,7 +2316,7 @@
    "filas": 18984,
    "huella_contenido_v1": "2765a0e0ab6e71108895bb783e53626f625f1624739a8f85b992dd0c3c3da367",
    "huella_datos": "c2ea99093f29fc6758c6ccec37db45e04b64dd83162177ef312400b8801fa24f",
-   "huella_parquet": "8296669c7d0a194f40f6149f5a0a88b1e85667ebf898156518877cadbdf4e6b8",
+   "huella_parquet": "7ac77db39dd5a4bbe18d07d686c1a4caa0f8391d251ff9de45d7cbcd54c4af81",
    "leido_en_bloques": false,
    "n_columnas": 12,
    "origen": {
@@ -2328,8 +2328,8 @@
    "parquet": "PS_QALIWARMA.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 186.0,
-   "segundos_conversion": 0.148,
+   "rss_max_mb": 189.2,
+   "segundos_conversion": 0.161,
    "segundos_huella": 0.045,
    "versiones": {
     "duckdb": "1.5.6",
@@ -2341,7 +2341,7 @@
    }
   },
   "PS_TRABAJA": {
-   "bytes_parquet": 2939,
+   "bytes_parquet": 2945,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -2355,9 +2355,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -2403,7 +2403,7 @@
    "filas": 78,
    "huella_contenido_v1": "61fce161e513b3088e5d78afbe71a6ecd4c0d6e65de7bebaf2e7f1a8943734be",
    "huella_datos": "e972d235da79f6ab5189e287e79b943f612e269bb70cb73ee14dc3fc064db4ed",
-   "huella_parquet": "986fe471b3616e30940a321dd1acb31e714a1c2e9a8ee9c17d0fd4cefedad778",
+   "huella_parquet": "3fc7dc7bde78dba3fd0988f20b9bc8af522745ea659a08eb3d10ebcd6e3a25bb",
    "leido_en_bloques": false,
    "n_columnas": 11,
    "origen": {
@@ -2415,8 +2415,8 @@
    "parquet": "PS_TRABAJA.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 168.8,
-   "segundos_conversion": 0.094,
+   "rss_max_mb": 168.6,
+   "segundos_conversion": 0.096,
    "segundos_huella": 0.009,
    "versiones": {
     "duckdb": "1.5.6",
@@ -2428,7 +2428,7 @@
    }
   },
   "PS_VL": {
-   "bytes_parquet": 56257,
+   "bytes_parquet": 56760,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -2442,9 +2442,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -2490,7 +2490,7 @@
    "filas": 9824,
    "huella_contenido_v1": "01e27cc958571518891de832542e9bf8b093eba1069c274f0761b335915149d5",
    "huella_datos": "70e1e7377bb81084dd81128a21052c02569f193e4a409ce5e2e266ca98fa08ee",
-   "huella_parquet": "8d757af75e9af128494b6357146f84e8940442b4b6573ed6d51b8500fdac27ae",
+   "huella_parquet": "a87b6d87819ea60c0b5dcd476fb9d258e56aa6c83bb6ca12d84629c70c7b5bb7",
    "leido_en_bloques": false,
    "n_columnas": 11,
    "origen": {
@@ -2502,9 +2502,9 @@
    "parquet": "PS_VL.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 175.7,
-   "segundos_conversion": 0.117,
-   "segundos_huella": 0.027,
+   "rss_max_mb": 174.3,
+   "segundos_conversion": 0.118,
+   "segundos_huella": 0.024,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -2515,7 +2515,7 @@
    }
   },
   "PS_WAWAWASI": {
-   "bytes_parquet": 8053,
+   "bytes_parquet": 8610,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -2529,9 +2529,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -2577,7 +2577,7 @@
    "filas": 725,
    "huella_contenido_v1": "cdacf4fc7ab14585dc0dcede41fdc51983bce5dba69a4eaa78b6f9ee675f73d1",
    "huella_datos": "58adb18bd801041495082bd65fc6cf5d4252c04d75046b6f5c01eca4d62cd44f",
-   "huella_parquet": "0b9a080e134eb46b50322e85c91f0cb543ea7fff9d9d332ebced109f54180cbb",
+   "huella_parquet": "28f40296cd8efb489404ca27d4f6e02df0fab391b7d87a2d0439b42748ce1f10",
    "leido_en_bloques": false,
    "n_columnas": 11,
    "origen": {
@@ -2590,8 +2590,8 @@
    "perdidos": {},
    "release_dta": 118,
    "rss_max_mb": 169.0,
-   "segundos_conversion": 0.094,
-   "segundos_huella": 0.01,
+   "segundos_conversion": 0.102,
+   "segundos_huella": 0.011,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -2602,7 +2602,7 @@
    }
   },
   "Programas_Sociales_x_Hogar": {
-   "bytes_parquet": 207506,
+   "bytes_parquet": 211293,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -2691,9 +2691,9 @@
      "tipo": "DOUBLE"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "QHCLUSTER",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -2714,7 +2714,7 @@
    "filas": 34018,
    "huella_contenido_v1": "0325901e5c940c73df9c90e9da225979b6c194c78be47e1ec675066e89e27723",
    "huella_datos": "da5e125174527543ddb191098f2cc9784341187a178e4f3d1184695c19f43cfd",
-   "huella_parquet": "e20c3a338316f06ad5d16b181845385eba2a9c02d883a78a8ccd7a38f34f0db9",
+   "huella_parquet": "6d65f69be2a25d9479ca3cd9dee701bd2e62850770589a119e7f62471dc5a86f",
    "leido_en_bloques": false,
    "n_columnas": 21,
    "origen": {
@@ -2726,9 +2726,9 @@
    "parquet": "Programas_Sociales_x_Hogar.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 208.8,
-   "segundos_conversion": 0.226,
-   "segundos_huella": 0.09,
+   "rss_max_mb": 210.4,
+   "segundos_conversion": 0.227,
+   "segundos_huella": 0.089,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -3513,9 +3513,9 @@
    "parquet": "RE223132.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 400.9,
-   "segundos_conversion": 1.027,
-   "segundos_huella": 0.325,
+   "rss_max_mb": 441.6,
+   "segundos_conversion": 1.075,
+   "segundos_huella": 0.341,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -3975,9 +3975,9 @@
    "parquet": "RE516171.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 312.2,
-   "segundos_conversion": 0.728,
-   "segundos_huella": 0.299,
+   "rss_max_mb": 310.9,
+   "segundos_conversion": 0.771,
+   "segundos_huella": 0.302,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -5007,9 +5007,9 @@
    "parquet": "RE758081.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 440.5,
-   "segundos_conversion": 0.99,
-   "segundos_huella": 0.295,
+   "rss_max_mb": 456.9,
+   "segundos_conversion": 1.022,
+   "segundos_huella": 0.298,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -5020,7 +5020,7 @@
    }
   },
   "REC0111": {
-   "bytes_parquet": 1292516,
+   "bytes_parquet": 1300005,
    "codificacion": "declarada por el archivo",
    "columnas": [
     {
@@ -5039,9 +5039,9 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "V001",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -5129,9 +5129,9 @@
      "tipo": "DOUBLE"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "V021",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -5139,14 +5139,14 @@
      "tipo": "DOUBLE"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "V024",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
-     "clase": null,
+     "clase": "categoria",
      "nombre": "V025",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
      "clase": null,
@@ -5519,12 +5519,12 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": null,
+     "clase": "diseno",
      "nombre": "V022",
-     "tipo": "DOUBLE"
+     "tipo": "INTEGER"
     },
     {
-     "clase": "medida",
+     "clase": "peso",
      "nombre": "V005",
      "tipo": "DOUBLE"
     },
@@ -5552,7 +5552,7 @@
    "filas": 37117,
    "huella_contenido_v1": "64394ef5b1c510a653c76a724520b89b1a7806273aa1b5c060bf4d5582f7b0e2",
    "huella_datos": "f11cf4ba6867f87dfb622691ad22d2b2701b5f78f27364a4abd58baf93b41a35",
-   "huella_parquet": "58ba48729cc17a3fc328f5bb9324be34401c7a0eb78d04cdbc2d0887e74fd46c",
+   "huella_parquet": "8441f662f5a99ffbc217861d082c24b8f9c50b5ec730f5ae37b618c606da1ead",
    "leido_en_bloques": false,
    "n_columnas": 105,
    "origen": {
@@ -5564,9 +5564,9 @@
    "parquet": "REC0111.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 372.3,
-   "segundos_conversion": 1.032,
-   "segundos_huella": 0.505,
+   "rss_max_mb": 371.4,
+   "segundos_conversion": 0.922,
+   "segundos_huella": 0.497,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -5776,9 +5776,9 @@
    "parquet": "REC21.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 261.4,
-   "segundos_conversion": 0.558,
-   "segundos_huella": 0.262,
+   "rss_max_mb": 280.6,
+   "segundos_conversion": 0.573,
+   "segundos_huella": 0.268,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -6553,9 +6553,9 @@
    "parquet": "REC41.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 358.7,
-   "segundos_conversion": 0.601,
-   "segundos_huella": 0.208,
+   "rss_max_mb": 380.2,
+   "segundos_conversion": 0.604,
+   "segundos_huella": 0.213,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -7440,9 +7440,9 @@
    "parquet": "REC42.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 410.8,
-   "segundos_conversion": 0.988,
-   "segundos_huella": 0.363,
+   "rss_max_mb": 423.4,
+   "segundos_conversion": 1.026,
+   "segundos_huella": 0.362,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -8322,9 +8322,9 @@
    "parquet": "REC43.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 375.0,
-   "segundos_conversion": 0.605,
-   "segundos_huella": 0.206,
+   "rss_max_mb": 377.3,
+   "segundos_conversion": 0.617,
+   "segundos_huella": 0.204,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -8534,9 +8534,9 @@
    "parquet": "REC44.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 217.8,
-   "segundos_conversion": 0.254,
-   "segundos_huella": 0.129,
+   "rss_max_mb": 219.0,
+   "segundos_conversion": 0.249,
+   "segundos_huella": 0.126,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -8596,9 +8596,9 @@
    "parquet": "REC82.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 275.2,
-   "segundos_conversion": 0.484,
-   "segundos_huella": 0.154,
+   "rss_max_mb": 284.6,
+   "segundos_conversion": 0.462,
+   "segundos_huella": 0.153,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -8733,9 +8733,9 @@
    "parquet": "REC83.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 295.4,
-   "segundos_conversion": 0.544,
-   "segundos_huella": 0.224,
+   "rss_max_mb": 291.9,
+   "segundos_conversion": 0.541,
+   "segundos_huella": 0.228,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -9875,9 +9875,9 @@
    "parquet": "REC84DV.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 522.6,
-   "segundos_conversion": 1.139,
-   "segundos_huella": 0.257,
+   "rss_max_mb": 488.0,
+   "segundos_conversion": 1.165,
+   "segundos_huella": 0.255,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -11632,9 +11632,9 @@
    "parquet": "REC91.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 777.5,
-   "segundos_conversion": 2.441,
-   "segundos_huella": 0.635,
+   "rss_max_mb": 758.4,
+   "segundos_conversion": 2.363,
+   "segundos_huella": 0.638,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -11764,9 +11764,9 @@
    "parquet": "REC93DVdisciplina.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 191.7,
-   "segundos_conversion": 0.171,
-   "segundos_huella": 0.033,
+   "rss_max_mb": 192.2,
+   "segundos_conversion": 0.167,
+   "segundos_huella": 0.034,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -12111,9 +12111,9 @@
    "parquet": "REC94.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 248.4,
-   "segundos_conversion": 0.353,
-   "segundos_huella": 0.123,
+   "rss_max_mb": 252.5,
+   "segundos_conversion": 0.355,
+   "segundos_huella": 0.127,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -13653,9 +13653,9 @@
    "parquet": "REC95.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 580.7,
-   "segundos_conversion": 1.236,
-   "segundos_huella": 0.535,
+   "rss_max_mb": 574.3,
+   "segundos_conversion": 1.263,
+   "segundos_huella": 0.531,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -13685,7 +13685,7 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": "categoria",
+     "clase": "diseno",
      "nombre": "HV001",
      "tipo": "INTEGER"
     },
@@ -13765,7 +13765,7 @@
      "tipo": "DOUBLE"
     },
     {
-     "clase": "categoria",
+     "clase": "diseno",
      "nombre": "HV021",
      "tipo": "INTEGER"
     },
@@ -13775,7 +13775,7 @@
      "tipo": "DOUBLE"
     },
     {
-     "clase": "categoria",
+     "clase": "diseno",
      "nombre": "HV024",
      "tipo": "INTEGER"
     },
@@ -13855,12 +13855,12 @@
      "tipo": "VARCHAR"
     },
     {
-     "clase": "categoria",
+     "clase": "diseno",
      "nombre": "HV022",
      "tipo": "INTEGER"
     },
     {
-     "clase": "medida",
+     "clase": "peso",
      "nombre": "HV005",
      "tipo": "DOUBLE"
     },
@@ -13910,9 +13910,9 @@
    "parquet": "RECH0.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 264.2,
-   "segundos_conversion": 0.521,
-   "segundos_huella": 0.187,
+   "rss_max_mb": 261.2,
+   "segundos_conversion": 0.637,
+   "segundos_huella": 0.195,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -14127,9 +14127,9 @@
    "parquet": "RECH1.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 348.5,
-   "segundos_conversion": 1.16,
-   "segundos_huella": 0.411,
+   "rss_max_mb": 359.7,
+   "segundos_conversion": 1.122,
+   "segundos_huella": 0.412,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -14814,9 +14814,9 @@
    "parquet": "RECH23.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 408.6,
-   "segundos_conversion": 1.041,
-   "segundos_huella": 0.377,
+   "rss_max_mb": 390.5,
+   "segundos_conversion": 0.984,
+   "segundos_huella": 0.387,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -14961,9 +14961,9 @@
    "parquet": "RECH4.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 298.3,
-   "segundos_conversion": 0.757,
-   "segundos_huella": 0.273,
+   "rss_max_mb": 293.0,
+   "segundos_conversion": 0.723,
+   "segundos_huella": 0.271,
    "versiones": {
     "duckdb": "1.5.6",
     "polars": "2.0.0",
@@ -15198,8 +15198,8 @@
    "parquet": "RECH5.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 254.0,
-   "segundos_conversion": 0.42,
+   "rss_max_mb": 248.5,
+   "segundos_conversion": 0.425,
    "segundos_huella": 0.217,
    "versiones": {
     "duckdb": "1.5.6",
@@ -15450,8 +15450,8 @@
    "parquet": "RECH6.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 225.7,
-   "segundos_conversion": 0.291,
+   "rss_max_mb": 228.2,
+   "segundos_conversion": 0.288,
    "segundos_huella": 0.154,
    "versiones": {
     "duckdb": "1.5.6",
@@ -15527,8 +15527,8 @@
    "parquet": "RECHM.parquet",
    "perdidos": {},
    "release_dta": 118,
-   "rss_max_mb": 171.4,
-   "segundos_conversion": 0.104,
+   "rss_max_mb": 170.6,
+   "segundos_conversion": 0.1,
    "segundos_huella": 0.013,
    "versiones": {
     "duckdb": "1.5.6",
@@ -15541,7 +15541,7 @@
   }
  },
  "encuesta": "ENDES",
- "generado": "2026-11-09T12:52:23-05:00",
+ "generado": "2026-11-09T13:48:20-05:00",
  "rlimit_as_aplicado": false,
  "version_conversor": "1"
 }

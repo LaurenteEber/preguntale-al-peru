@@ -125,9 +125,9 @@ def _normalizar(df, clases: dict, anio: int, formato: str, meta, perdidos: dict)
         clase, s = cl.get("clase"), df[col]
         if clase in ("llave", "geo"):
             s = _texto_fijo(s, col, cl.get("ancho"))
-        elif clase == "categoria":
+        elif clase in ("categoria", "diseno"):
             s = _entero(s, col)
-        elif clase == "medida" or (clase is None and (s.dtype.is_numeric() or s.dtype == pl.Null)):
+        elif clase in ("medida", "peso") or (clase is None and (s.dtype.is_numeric() or s.dtype == pl.Null)):
             s = _doble(s, col)
         salidas.append(s.alias(col))
     for col, cl in clases.items():
@@ -264,13 +264,54 @@ def leer_y_escribir(spec: dict) -> dict:
             "versiones": versiones()}
 
 
+# ------------------------------------------------------------------ metadatos para el índice (M0-05)
+
+def _clave_json(v):
+    """Código de una etiqueta de valor: entero si lo es (1.0 → 1); texto o decimal se conservan."""
+    return int(v) if isinstance(v, float) and v == int(v) else v
+
+
+def leer_metadatos(spec: dict) -> dict:
+    """Metadatos de un SAV/DTA para `pap variables indexar`: `metadataonly=True` **y** `user_missing=True` (sin lo
+    segundo `missing_ranges` sale vacío; tecnologias.md §5), sin tope de etiquetas. Las columnas conservan el orden
+    del archivo. Devuelve solo tipos de JSON (los códigos de las etiquetas de valor, como pares [código, etiqueta])."""
+    import pyreadstat
+
+    formato = spec["formato"]
+    codificacion, release = _codificacion(formato, Path(spec["entrada"]), spec["codificacion_sin_declarar"])
+    leer = pyreadstat.read_dta if formato == "dta" else pyreadstat.read_sav
+    _, meta = leer(spec["entrada"], metadataonly=True, user_missing=True, encoding=codificacion)
+    cols = []
+    for nombre in meta.column_names:
+        conjunto = meta.variable_to_label.get(nombre)
+        etiquetas = meta.variable_value_labels.get(nombre) or {}
+        cols.append({
+            "nombre": nombre,
+            "etiqueta": meta.column_names_to_labels.get(nombre),
+            "formato": meta.original_variable_types.get(nombre),
+            "conjunto_etiquetas": conjunto,
+            "etiquetas_valor": [[_clave_json(k), v] for k, v in etiquetas.items()],
+            "rangos_perdidos": [{"lo": r["lo"], "hi": r["hi"]} for r in (meta.missing_ranges or {}).get(nombre, [])],
+            "perdidos_usuario": [_clave_json(v) if not isinstance(v, str) else v
+                                 for v in (meta.missing_user_values or {}).get(nombre, [])],
+        })
+    return {"filas": int(meta.number_rows), "columnas": cols, "codificacion": codificacion or "declarada por el archivo",
+            "release_dta": release, "versiones": versiones_lector()}
+
+
+def versiones_lector() -> dict:
+    from .almacen import versiones
+
+    return versiones()
+
+
 # ------------------------------------------------------------------ punto de entrada del subproceso
 
 def main(argv: list[str]) -> int:
     spec = json.loads(Path(argv[1]).read_text(encoding="utf-8"))
     resultado_ruta = Path(spec["resultado"])
     try:
-        res = leer_y_escribir(spec)
+        res = leer_metadatos(spec) if spec.get("modo") == "metadatos" else leer_y_escribir(spec)
     except ErrorConversion as e:
         resultado_ruta.write_text(json.dumps({"error": str(e)}, ensure_ascii=False), encoding="utf-8")
         return 3

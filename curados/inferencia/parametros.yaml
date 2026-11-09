@@ -51,3 +51,22 @@ conversion:
   duckdb_memoria_mb: {valor: 1024, supuesto: M0-04}     # memory_limit de DuckDB dentro del subproceso
   # Nombre del archivo Parquet: miembro sin extensión, sin el sufijo _<año> y con «_» en vez de espacios (RECH0_2024.dta → RECH0).
   nombre_parquet_espacio: {valor: "_", supuesto: M0-04}
+
+indice:
+  # Índice de variables (M0-05; diseño §7.1–7.3). Todo lo que se propone queda en `propuesto`/`revisión`: lo confirma M1.
+  # Códigos especiales propuestos por la etiqueta (además de los que declara el archivo): el texto normalizado de la
+  # etiqueta (minúsculas, sin acentos) contiene alguno de estos, o el código es uno de la lista y tiene etiqueta.
+  especiales_textos: {valor: ["no sabe", "no responde", "no aplica"], supuesto: M0-05}
+  # Historia: «98 y 99 con etiqueta». Diseño §7.2 agrega 9996–9999 (y 998/999 son los equivalentes de 3 dígitos).
+  especiales_codigos: {valor: [98, 99, 998, 999, 9996, 9997, 9998, 9999], supuesto: M0-05}
+  # Control del universo contra los datos (diseño §7.3): coincidencia mínima entre el universo declarado y las filas con valor.
+  universo_coincidencia_min: {valor: 0.995, supuesto: M0-05}
+  # Control de frecuencia de un código especial entre años: salta si la proporción de filas con ese código cambia por un
+  # factor de al menos `razon` Y por al menos `cambio_min_pp` puntos porcentuales (para no marcar códigos rarísimos).
+  frecuencia_especial_razon: {valor: 2.0, supuesto: M0-05}
+  frecuencia_especial_cambio_min_pp: {valor: 1.0, supuesto: M0-05}
+  # Etiquetas con vocal de acento grave (à è ì ò ù): no existen en español; en la ENDES 2024 son erratas del INEI («querìa», «màs»),
+  # no mojibake. No se corrigen solas: se marcan para revisión (`controles`).
+  vocales_acento_grave: {valor: "àèìòù", supuesto: M0-05}
+  # Stata corta las etiquetas de variable en 80 caracteres: una de exactamente ese largo puede estar cortada.
+  etiqueta_largo_posible_corte: {valor: 80, supuesto: M0-05}
