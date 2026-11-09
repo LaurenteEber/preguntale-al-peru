@@ -33,3 +33,6 @@ catalogo/scripts/catalogo_fuentes_v2.json
 
 # Para apagar conf de MCP que se usa solo en cloud
 .claude/settings.local.json
+
+# M0-00: copias del cubo para la regresión (solo se registra su huella)
+backlog/**/evidencia/*.parquet

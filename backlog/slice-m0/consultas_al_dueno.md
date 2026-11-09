@@ -6,7 +6,7 @@ Rigen las mismas reglas que en los slices anteriores (`agents.md` §5):
 
 ## Consultas abiertas desde el inicio
 
-### K-06 — Formato de la serie ENDES (antes de M0-02) · abierta (tipo C)
+### K-06 — Formato de la serie ENDES (antes de M0-02) · **respondida el 9/11/2026: (a) Stata donde exista y SPSS en 2015–2020**
 - **Qué pasa:** el INEI publica la ENDES 2021–2025 en Stata y en SPSS, pero la de 2015–2020 solo en SPSS. El cubo y los ZIP de 2024 que ya están registrados (módulos 1629 y 1638) son Stata.
 - **Opciones:**
   - **(a) Stata donde exista y SPSS en 2015–2020.** No duplica las descargas de 2024 y compara contra el cubo con el mismo formato. El conversor normaliza los perdidos de los dos formatos.
@@ -37,10 +37,16 @@ Rigen las mismas reglas que en los slices anteriores (`agents.md` §5):
 - **Qué pasa:** el repo principal es público. Los Parquet de la ENDES pueden publicarse (ODbL), pero la licencia de la ENAHO no está verificada.
 - **Qué se pide:** confirmar si los Parquet de la ENAHO pueden ir al repo público. Si no, irán al repo privado de crudos.
 
-### K-09 — Token de `gh` para el repo privado de crudos (M0-02) · abierta
+### K-09 — Token de `gh` para el repo privado de crudos (M0-02) · **resuelta (9/11/2026)**
 - **Qué pasa:** el repo `LaurenteEber/preguntale-al-peru-crudos` ya existe (9/11/2026).
 - **Qué se pide:** crear un token de grano fino solo para ese repo, con `contents: write`, y guardarlo en el Llavero de macOS. El script lo pasa solo como `GH_TOKEN` del comando. Si el agente no puede usarlo, el dueño corre `scripts/respaldar_crudos.sh`.
 - **De paso:** activar Push protection (secret scanning) en el repo público, en Settings → Code security.
+- **Respuesta del dueño (9/11/2026):** hecho.
+  - Token de grano fino `pap-crudos-respaldo`: solo `LaurenteEber/preguntale-al-peru-crudos`, con *Contents: read and write* (más *Metadata: read-only*), y vencimiento de 90 días.
+  - Guardado en el Llavero de macOS con el servicio `pap-gh-crudos`. Se lee con `security find-generic-password -s pap-gh-crudos -w` y se pasa solo como `GH_TOKEN` del comando `gh`. Nunca se imprime ni se escribe en archivos.
+  - Comprobación: `gh repo view LaurenteEber/preguntale-al-peru-crudos --json visibility` → `PRIVATE`.
+  - Push protection activado en el repo público.
+  - Si se filtra o vence: revocar o crear otro en GitHub (Developer settings → Fine-grained tokens) y reemplazarlo con `security add-generic-password -U -a "$USER" -s pap-gh-crudos -w`.
 
 ### K-04 — Horas por semana para revisiones y vistos · abierta (no bloquea M0)
 

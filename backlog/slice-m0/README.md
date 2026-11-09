@@ -54,8 +54,8 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 
 | ID | Historia | Depende de | Estado |
 |---|---|---|---|
-| M0-00 | [Preparación](M0-00-preparacion.md) | — | pendiente |
-| M0-00b | [Seguridad: correcciones del repo actual y controles](M0-00b-auditoria-seguridad.md) | M0-00 | pendiente |
+| M0-00 | [Preparación](M0-00-preparacion.md) | — | hecha ([evidencia](evidencia/m0-00_interfaces.md)) |
+| M0-00b | [Seguridad: correcciones del repo actual y controles](M0-00b-auditoria-seguridad.md) | M0-00 | en curso |
 | M0-01 | [Decisiones, reglas y `agents.md`](M0-01-decisiones-reglas-agents.md) | M0-00 | pendiente |
 | M0-02 | [ZIP de la ENDES 2024: lista, registro y respaldo](M0-02-zip-endes-2024.md) | M0-01; K-06 y K-01 | pendiente |
 | M0-03 | [Versiones: `svy` 0.35.0 y `pyreadstat` 1.3.7](M0-03-versiones.md) | M0-00b | pendiente |
