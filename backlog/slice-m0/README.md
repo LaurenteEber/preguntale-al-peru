@@ -65,7 +65,7 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 | M0-07 | [Gramática, verificador base y DuckDB endurecido](M0-07-gramatica-verificador.md) | M0-05; M0-06 con las tablas validadas (el visto del dueño solo condiciona `verificado` en M0-10) | hecha: 3 planes completos, 9 959 / 9 959 / 19 511 ([evidencia](evidencia/m0-07_gramatica.md)) |
 | M0-08 | [Ejecutor: pool y adaptador de `svy`](M0-08-ejecutor.md) | M0-07 | hecha en el Mac: equivalencia con dif 0, p95 medido ([ejecutor](evidencia/m0-08_ejecutor.md), [tiempos](evidencia/m0-08_tiempos.md)); falta correr el pool en Linux |
 | M0-09 | [Compuertas y verificador en R](M0-09-compuertas-verificador-r.md) | M0-08 | hecha: compuertas y 90 filas iguales al oráculo ([compuertas](evidencia/m0-09_compuertas.md)); `svy` 0.35.0 = R `survey` 4.5 en los 50 dominios del sintético, máx. 1,3e-15 ([R](evidencia/m0-09_r.md)) |
-| M0-10 | [Recetas 2024 que igualan al cubo](M0-10-recetas-2024.md) | M0-08 y las compuertas de M0-09 (los esperados de R no la bloquean) | pendiente |
+| M0-10 | [Recetas 2024 que igualan al cubo](M0-10-recetas-2024.md) | M0-08 y las compuertas de M0-09 (los esperados de R no la bloquean) | hecha salvo `verificado`: 90 filas con 0 diferencias, 21 de 21 doradas ([recetas](evidencia/m0-10_recetas.md), [90 filas](evidencia/m0-10_recetas_vs_cubo.csv), [revisión](evidencia/m0-10_revision.md)); `verificado` espera el visto del dueño (K-03) |
 | M0-11 | [Medición, espacio local, documentación y cierre](M0-11-medicion-cierre.md) | todas | pendiente |
 
 **Pueden ir en paralelo:**
