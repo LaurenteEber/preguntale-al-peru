@@ -91,3 +91,18 @@ Alternativas descartadas para esta etapa: PostgreSQL/PostGIS (un servidor que op
 3. **Korn-Graubard.** La variante que se publica es la del NCHS (Parker et al. 2017, `r_verificador/referencias/sr02_175.pdf`): primero se ajusta el n efectivo por grados de libertad y después se trunca en n. Se comprobó con los ejemplos del Apéndice II (p. ej., n = 74, publicado 36,0–59,7). En svy es `ci_method="korn-graubard"`; `ci_method="beta"` equivale a `svyciprop(method="beta")` de R. Se corrige así §4.1 de la investigación del stack.
 4. **Despliegue.** Hoy todo corre en el Mac del dueño; cuando el proyecto madure se desplegará entero en un servicio en la nube. Consecuencias que ya se cuidan: rutas relativas a la raíz (`PAP_RAIZ`), almacén por huella transportable (1,2 GB) y ninguna dependencia de herramientas instaladas solo en el Mac.
 5. **Modo de trabajo.** Analistas y auditores independientes solo donde un error se escaparía fácilmente (definiciones estadísticas, decisiones con varias opciones, cifras que se publican). El trabajo mecánico y verificable con pruebas lo hace el orquestador.
+
+## 8. Motor de inferencia (M0, 10/11/2026)
+
+Qué se usa en cada capa del motor de inferencia (`src/pap/inferencia/`). Diseño: `docs/diseno/motor_inferencia.md`; tecnologías y su porqué: `docs/diseno/tecnologias.md`.
+
+| Capa | Se usa | Nota |
+|---|---|---|
+| Lectura de SAV/DTA | `pyreadstat` 1.3.7 en un subproceso aislado, con topes de memoria, procesador y tiempo | Nunca `svy_io` |
+| Microdatos | Parquet (zstd) escrito con DuckDB `COPY`, más manifiesto con `huella_contenido_v1` | Fuente de verdad; no van a git |
+| Consulta | DuckDB endurecido: solo lectura, acceso solo a `biblioteca/microdatos` y `biblioteca/variables`, sin extensiones, configuración bloqueada | El plan no lleva SQL: los valores van siempre como parámetros |
+| Estimación | `svy` 0.35.0 (único módulo que lo importa: `svy_adaptador.py`) | Misma llamada que el cubo |
+| Verificación | R 4.6.2 con `survey` 4.5, entorno `renv` fijado; tolerancia 1e-9 | Genera los valores esperados una vez; pytest solo compara |
+| Ejecución | Pool de procesos con `spawn`, tiempos suave y duro y vigía de memoria | Probado en el Mac; la corrida en Linux está pendiente |
+
+Versiones fijadas y su justificación: §5 («Versiones fijadas por la seguridad»).

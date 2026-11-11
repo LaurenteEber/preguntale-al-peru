@@ -108,7 +108,7 @@ ejecutor:
   memoria_trabajador_mb: {valor: 1536, supuesto: M0-08}    # vigía: os._exit(137) si ru_maxrss pasa de esto (bytes en macOS, KiB en Linux)
   max_tareas_por_trabajador: {valor: 200, supuesto: M0-08} # tecnologias.md §4: max_tasks_per_child
   trabajadores: {valor: 1, supuesto: M0-08}                # M0 no atiende concurrencia; el valor de la web (mín(núcleos − 1, 4)) es de curados/web
-  duckdb_threads: {valor: 1, supuesto: M0-08}              # tecnologias.md §4: threads=1 por trabajador (la medición 1 frente a 2 hilos queda para M0-11)
+  duckdb_threads: {valor: 1, supuesto: M0-08}              # tecnologias.md §4: threads=1 por trabajador; M0-11 midió 1 frente a 2 hilos sin diferencia (evidencia/m0-11_medicion.md)
   duckdb_memoria_mb: {valor: 512, supuesto: M0-08}         # tecnologias.md §4: memory_limit=512MB por trabajador
   vigia_sondeo_s: {valor: 0.05, supuesto: M0-08}           # cada cuánto el hilo vigía mira ru_maxrss
   arranque_max_s: {valor: 60, supuesto: M0-08}             # tope del precalentamiento (importar svy y abrir DuckDB); no cuenta contra el tiempo del cálculo

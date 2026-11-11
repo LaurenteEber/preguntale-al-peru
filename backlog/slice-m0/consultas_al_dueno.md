@@ -135,6 +135,11 @@ No hubo vacíos tipo C ni D: las cifras no se tocan (el cubo sigue en `010ea965`
 - **Por qué importa:** si un año futuro HC55 ≠ 0 conviviera con un nivel de anemia, la receta contaría a un niño que el cubo no cuenta, sin que nada lo avise.
 - **Qué se propone:** dejarlo así en M0 (campo `universo_analitico` informativo) y, en M1, que el verificador tome del plan el universo que la receta nombra; hasta entonces la prueba de arriba es el control.
 
+### C-M0-11-1 — Tope de F-04 para la ENDES 2015–2025 · tipo C · no bloquea el cierre de M0 (sí la descarga de 2015–2023)
+- **Qué pasa:** F-04 pide «un tope medido (ENDES en la fase 0)». Medido en 2024: 104,8 MB de ZIP y PDF, 22,7 MB de Parquet y 184 KB de índice. Proyección 2015–2025: ≈ 1,35 GB en el Mac con los ZIP, y ≈ 0,5 GB después de liberarlos (`evidencia/m0-11_medicion.md` §1).
+- **Por qué importa:** sin tope aprobado, el agente no debe bajar los demás años.
+- **Propuesta:** **2 GB en el Mac** (ZIP, PDF, Parquet e índice de la ENDES 2015–2025) y **1,5 GB en el repo privado**. Si un bloque hace pasar el tope, se detiene y se consulta.
+
 ## Supuestos aplicados (tipo B)
 
 - **M0-09 — R 4.6.2 como excepción a la regla de 2 semanas** (`supuesto: M0-09`): R 4.6.2 salió el 29/10/2026 y tenía 11 días el 9/11/2026, menos de los 14 de `seguridad.lock_dias_min`. El dueño decidió avanzar con esa versión (9/11/2026). Queda registrado en `curados/inferencia/parametros.yaml` (`verificador_r.r_version`). Se revisa al subir R.
