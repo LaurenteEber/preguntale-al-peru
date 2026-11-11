@@ -36,6 +36,7 @@ import yaml
 
 from ..zip_seguro import RUTA_PARAMETROS
 from . import tablas_curadas as tc
+from .duckdb_seguro import ejecutar_select
 from .gramatica import Esquema, ErrorGramatica, ARCHIVO_TERRITORIO, compilar
 from .indice import ruta_curada_archivos
 from .plan import Condicion, CorteResuelto, Plan, PlanCompleto, UnionPlan
@@ -342,12 +343,12 @@ def _con_dominios(ctx: Contexto, pc: PlanCompleto, n_unidades: int | None):
 def _controles(ctx: Contexto, pc: PlanCompleto, con) -> PlanCompleto | Falla:
     plan, anio = pc.plan, pc.plan.anios[0]
     ruta_unidad = str(ctx.carpeta_microdatos / plan.encuesta / str(anio) / f"{pc.archivo_unidad}.parquet")
-    filas_unidad = con.execute("SELECT count(*) FROM read_parquet(?)", [ruta_unidad]).fetchone()[0]
+    filas_unidad = ejecutar_select(con, "SELECT count(*) FROM read_parquet(?)", [ruta_unidad]).fetchone()[0]
     antes = compilar(pc, ctx.esquema, ctx.carpeta_microdatos, solo_u_y=True, sin_dato=ctx.p.corte_sin_dato)
-    n_antes = con.execute(f"SELECT count(*) FILTER (WHERE u) FROM ({antes.sql})", antes.parametros).fetchone()[0]
+    n_antes = ejecutar_select(con, f"SELECT count(*) FILTER (WHERE u) FROM ({antes.sql})", antes.parametros).fetchone()[0]
     d = compilar(pc, ctx.esquema, ctx.carpeta_microdatos, sin_dato=ctx.p.corte_sin_dato)
-    r = con.execute(
-        "SELECT count(*), count(*) FILTER (WHERE u), sum(peso) FILTER (WHERE u), count(DISTINCT upm) FILTER (WHERE u), "
+    r = ejecutar_select(
+        con, "SELECT count(*), count(*) FILTER (WHERE u), sum(peso) FILTER (WHERE u), count(DISTINCT upm) FILTER (WHERE u), "
         "count(DISTINCT estrato) FILTER (WHERE u), count(*) FILTER (WHERE u AND y IS NULL), "
         "count(*) FILTER (WHERE u AND (peso IS NULL OR estrato IS NULL OR upm IS NULL)), "
         f"count(DISTINCT territorio) FILTER (WHERE u) FROM ({d.sql})", d.parametros).fetchone()

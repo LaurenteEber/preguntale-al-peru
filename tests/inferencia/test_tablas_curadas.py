@@ -244,3 +244,22 @@ def test_cli_registra_pap_inferencia_validar_tablas(capsys):
     for archivo in tc.ARCHIVOS_TABLAS.values():
         assert f"✔ {archivo}" in salida
     assert "✘" not in salida
+
+
+@pytest.mark.parametrize("var", ["hc1", "1HC", "HC 1", 'HC1"', "HC1;", "", "_HC1"])
+def test_predicado_var_solo_acepta_nombres_de_variable(var):
+    """H06-2: `Predicado.var` es un nombre en mayúsculas (^[A-Z][A-Z0-9_]*$), nunca texto libre."""
+    with pytest.raises(ValidationError):
+        tc.Predicado(var=var, op="en", valores=[1])
+
+
+@pytest.mark.parametrize("expr", ["(SELECT 1)", "select HV024", "HV024 FROM x", "HV024 from RECH0", "HV024 Select"])
+def test_expr_rechaza_select_y_from_como_palabras(expr):
+    """H06-2: una expresión curada no abre subconsultas."""
+    with pytest.raises(ValueError):
+        tc._expr(expr)
+
+
+def test_expr_admite_nombres_que_solo_contienen_esas_palabras():
+    assert tc._expr("HV005/1e6") == "HV005/1e6"
+    assert tc._expr("FROMAGE + SELECTOR") == "FROMAGE + SELECTOR"

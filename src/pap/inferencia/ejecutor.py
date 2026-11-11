@@ -37,6 +37,7 @@ import yaml
 
 from ..errores import PapError
 from ..zip_seguro import RUTA_PARAMETROS
+from .duckdb_seguro import ejecutar_select
 from .estimacion import Estimacion
 
 if TYPE_CHECKING:
@@ -138,7 +139,7 @@ class FuenteSql:
         import polars as pl
 
         sql, parametros = (self.estables if upm_estable else self.consultas)[anio]
-        df = pl.from_arrow(_conexion(self.raiz, self.carpetas).execute(sql, parametros).arrow())
+        df = pl.from_arrow(ejecutar_select(_conexion(self.raiz, self.carpetas), sql, parametros).arrow())
         # Un corte numérico llega como «1.0» si la columna es DOUBLE: se deja en «1», como las categorías del plan.
         return df.with_columns([pl.col(c).str.replace(r"\.0$", "") for c in df.columns if c.startswith("corte_")])
 

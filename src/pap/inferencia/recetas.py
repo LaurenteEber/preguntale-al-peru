@@ -178,6 +178,10 @@ def _doradas_csv(raiz: Path) -> dict[str, dict]:
 
 def _errores_de_doradas(r: Receta, doradas: dict[str, dict]) -> list[str]:
     errores = []
+    # H10-1: las doradas de la receta son exactamente las de su indicador y años en cifras_doradas.csv (ninguna falta)
+    tengo = {d.id_cifra for d in r.doradas}
+    errores += [f"dorada {i}: falta en la receta (está en cifras_doradas.csv para {r.indicador_id})" for i, f in sorted(doradas.items())
+                if f["indicador_id"] == r.indicador_id and r.anios[0] <= int(f["anio"]) <= r.anios[1] and i not in tengo]
     for d in r.doradas:
         f = doradas.get(d.id_cifra)
         if f is None:

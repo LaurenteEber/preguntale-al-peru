@@ -116,7 +116,7 @@ def _confianza(estado: str, verificada: bool, coincide_oficial: bool, compuesto:
     return CONFIANZA_MEDIA, MOTIVO_CONFIANZA[CONFIANZA_MEDIA]
 
 
-def evaluar_cifra(c: Cifra, ctx: Contexto | None = None, *, verificada: bool = True, coincide_oficial: bool = False,
+def evaluar_cifra(c: Cifra, ctx: Contexto | None = None, *, verificada: bool, coincide_oficial: bool = False,
                   compuesto: bool = False, tasa_no_respuesta: float | None = None) -> Compuerta:
     """El árbol del §15.1 sobre una `Cifra` ya armada (en % como el cubo)."""
     ctx = ctx or contexto_compuertas()
@@ -131,12 +131,14 @@ def evaluar_cifra(c: Cifra, ctx: Contexto | None = None, *, verificada: bool = T
     final = accion_final(resultados, ctx)
     estado = estado_cifra(final, resultados)
     rotulo = next((r.rotulo for r in resultados if r.accion == "rotular"), None) if estado in ("publicable", "referencial") else None
-    motivos = tuple(Motivo(r.regla, r.accion, r.motivo, r.clausula, r.rotulo if r.accion == "rotular" else None) for r in resultados)
+    publicable = estado in ("publicable", "referencial")             # suprimida: ningún rótulo en los motivos (H09-4)
+    motivos = tuple(Motivo(r.regla, r.accion, r.motivo, r.clausula, r.rotulo if r.accion == "rotular" and publicable else None)
+                    for r in resultados)
     confianza, por_que = _confianza(estado, verificada, coincide_oficial, compuesto)
     return Compuerta(estado, motivos, confianza, por_que, rotulo, tasa_no_respuesta, tuple(resultados))
 
 
-def evaluar(est: Estimacion, ctx: Contexto | None = None, *, meta: dict | None = None, verificada: bool = True,
+def evaluar(est: Estimacion, ctx: Contexto | None = None, *, meta: dict | None = None, verificada: bool,
             coincide_oficial: bool = False, compuesto: bool = False) -> Compuerta:
     """El árbol del §15.1 sobre la `Estimacion` de un dominio (0–1)."""
     return evaluar_cifra(cifra_desde_estimacion(est, meta), ctx, verificada=verificada, coincide_oficial=coincide_oficial,

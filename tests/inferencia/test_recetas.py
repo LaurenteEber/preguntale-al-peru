@@ -143,7 +143,19 @@ def test_validar_detecta_una_dorada_inexistente_y_un_universo_inexistente(copia)
         "universo_analitico: nino_hecho", "universo_analitico: nino_inventado"), encoding="utf-8")
     errores = _sin_lineas(rc.validar(Rutas(copia))["endes_dci_menores_5"][1])
     assert errores == ["universo_analitico «nino_inventado» no está en universos_analiticos.yaml",
+                       "dorada DOR-DCI-2024-RURAL: falta en la receta (está en cifras_doradas.csv para endes_dci_menores_5)",   # H10-1
                        "dorada DOR-NO-EXISTE: no está en cifras_doradas.csv"]
+
+
+def test_validar_detecta_una_dorada_de_la_tabla_que_la_receta_no_lleva(copia):
+    """H10-1: las doradas de la receta son exactamente las de su indicador y año en cifras_doradas.csv."""
+    ruta = copia / rc.CARPETA / "endes_dci_menores_5.yaml"
+    datos = yaml.safe_load(ruta.read_text(encoding="utf-8"))
+    assert any(d["id_cifra"] == "DOR-DCI-2024-RURAL" for d in datos["doradas"])
+    datos["doradas"] = [d for d in datos["doradas"] if d["id_cifra"] != "DOR-DCI-2024-RURAL"]
+    ruta.write_text(yaml.safe_dump(datos, allow_unicode=True, sort_keys=False), encoding="utf-8")
+    errores = _sin_lineas(rc.validar(Rutas(copia))["endes_dci_menores_5"][1])
+    assert len(errores) == 1 and "DOR-DCI-2024-RURAL" in errores[0] and "falta" in errores[0]
 
 
 def test_validar_exige_el_campo_receta_en_dim_indicador(copia):

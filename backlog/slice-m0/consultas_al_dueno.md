@@ -140,6 +140,11 @@ No hubo vacíos tipo C ni D: las cifras no se tocan (el cubo sigue en `010ea965`
 - **Por qué importa:** sin tope aprobado, el agente no debe bajar los demás años.
 - **Propuesta:** **2 GB en el Mac** (ZIP, PDF, Parquet e índice de la ENDES 2015–2025) y **1,5 GB en el repo privado**. Si un bloque hace pasar el tope, se detiene y se consulta.
 
+### C-M0-11-2 — Con 25 a 49 casos, una cifra muy imprecisa sale como «referencial» y no se suprime · tipo C (contradicción D entre el diseño y las reglas) · no bloquea M0
+- **Qué pasa:** con menos de 50 casos (R-ENC-02, paso 2), la compuerta deja la cifra como «referencial» con confianza baja, aunque su coeficiente de variación sea muy alto. Ejemplo de la revisión: n = 40, p = 30 %, ee = 20 % (CV ≈ 67 %) → referencial. El diseño (§15.1) dice que el paso 2 «sigue» a los pasos 6 y 7, y esos pasos suprimirían la cifra si el CV pasa del 30 %. Pero R-ENC-03 y R-ENC-04 de `reglas.json` exigen `n_sin_ponderar >= 50` para aplicarse.
+- **Por qué importa:** `reglas.json` tiene más precedencia y el validador del cubo ya hacía lo mismo, así que las 90 filas no cambian. Pero una cifra con un error enorme podría mostrarse, aunque sea marcada como referencial.
+- **Propuesta:** que el dueño decida si R-ENC-03/04 también se aplican bajo 50 casos. La recomendación es que sí: es más prudente suprimir. Si se cambia, el cambio va por el consolidador y se vuelve a correr la regresión de las 90 filas. Mientras tanto, una prueba fija el comportamiento de hoy (`evidencia/revision_por_partes.md`, H09-1).
+
 ## Supuestos aplicados (tipo B)
 
 - **M0-09 — R 4.6.2 como excepción a la regla de 2 semanas** (`supuesto: M0-09`): R 4.6.2 salió el 29/10/2026 y tenía 11 días el 9/11/2026, menos de los 14 de `seguridad.lock_dias_min`. El dueño decidió avanzar con esa versión (9/11/2026). Queda registrado en `curados/inferencia/parametros.yaml` (`verificador_r.r_version`). Se revisa al subir R.

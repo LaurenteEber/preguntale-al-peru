@@ -27,6 +27,7 @@ from pathlib import Path
 from typing import Callable, Mapping
 
 from ..errores import PapError
+from .duckdb_seguro import ejecutar_select
 from .plan import MAX_CONDICIONES, Condicion, Indicador, PlanCompleto, UnionPlan
 
 _NOMBRE = re.compile(r"^[A-Za-z0-9_]{1,64}$")
@@ -103,7 +104,7 @@ class Compilado:
     archivos: tuple[str, ...]                                         # archivos leídos, en orden
 
     def ejecutar(self, con):
-        return con.execute(self.sql, self.parametros)
+        return ejecutar_select(con, self.sql, self.parametros)
 
 
 class _Constructor:
@@ -171,6 +172,8 @@ def calificar_expresion(expr: str, resolver: Callable[[str], str], par: Callable
         if not m:
             raise ErrorGramatica(f"expresión con un símbolo que la gramática no admite: {expr[pos:pos + 10]!r}")
         t, pos = m.group(0), m.end()
+        if (t == "-" and expr[pos:pos + 1] == "-") or (t == "/" and expr[pos:pos + 1] == "*"):
+            raise ErrorGramatica(f"expresión con un comentario SQL («--» o «/*»): {expr!r}")        # H07-2
         if t.startswith("'"):
             salida.append(par(t[1:-1].replace("''", "'")))
         elif t[0].isalpha() or t[0] == "_":

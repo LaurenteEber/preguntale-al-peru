@@ -47,7 +47,7 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
    - responder K-06 (formato de la serie);
    - aprobar la lista de ZIP (K-01).
 3. **Del dueño, antes de cerrar M0-09:** confirmar R en el Mac (K-02).
-4. **Repo privado de crudos:** `git@github.com:LaurenteEber/preguntale-al-peru-crudos.git`, creado por el dueño el 9/11/2026. Falta el token de `gh` de grano fino (K-09).
+4. **Repo privado de crudos:** `git@github.com:LaurenteEber/preguntale-al-peru-crudos.git`, creado por el dueño el 9/11/2026. Token de `gh` de grano fino en el Llavero (K-09, resuelta).
 5. **Nada de esto cambia lo que responde la web.** M0-00b solo toca dependencias, la imagen y la lectura segura de los ZIP. Q1–Q4, la matriz y la evaluación grabada no cambian en ninguna historia.
 
 ## Historias
@@ -55,9 +55,9 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 | ID | Historia | Depende de | Estado |
 |---|---|---|---|
 | M0-00 | [Preparación](M0-00-preparacion.md) | — | hecha ([evidencia](evidencia/m0-00_interfaces.md)) |
-| M0-00b | [Seguridad: correcciones del repo actual y controles](M0-00b-auditoria-seguridad.md) 
+| M0-00b | [Seguridad: correcciones del repo actual y controles](M0-00b-auditoria-seguridad.md) | M0-00 | hecha salvo la imagen Docker (A6), que espera el demonio de Docker ([correcciones](evidencia/m0-00b_correcciones.md), [auditoría](evidencia/auditoria_seguridad.md)) |
 | M0-01 | [Decisiones, reglas y `agents.md`](M0-01-decisiones-reglas-agents.md) | M0-00 | hecha ([evidencia](evidencia/m0-01_decisiones.md)); R-ENC-19 espera K-07 |
-| M0-02 | [ZIP de la ENDES 2024: lista, registro y respaldo](M0-02-zip-endes-2024.md) | M0-01; K-06 y K-01 | en curso: lista, descarga, registro y tamaños hechos ([evidencia](evidencia/m0-02_tamano_zip.md)); respaldo y restauración esperan K-09 |
+| M0-02 | [ZIP de la ENDES 2024: lista, registro y respaldo](M0-02-zip-endes-2024.md) | M0-01; K-06 y K-01 | hecha: lista, descarga, registro y tamaños ([evidencia](evidencia/m0-02_tamano_zip.md)); respaldo subido y restauración probada el 10/11/2026 con `pap almacen restaurar`, que reemplaza a `m0-02_restauracion.txt` ([restauración](evidencia/m0-11_restauracion.txt)) |
 | M0-03 | [Versiones: `svy` 0.35.0 y `pyreadstat` 1.3.7](M0-03-versiones.md) | M0-00b | hecha: cubo idéntico `010ea965` ([regresión](evidencia/m0-03_regresion_svy.csv), [lock](evidencia/m0-03_lock.md)); la comparación con R cierra en M0-09 |
 | M0-04 | [Conversor y almacén](M0-04-conversor-almacen.md) | M0-02 (tareas 1–4: ZIP registrados), M0-03 | hecha: 34 archivos de 2024 ([evidencia](evidencia/m0-04_tamano.md)) |
 | M0-05 | [Índice de variables y controles](M0-05-indice-variables.md) | M0-04 | hecha: 34 archivos, 2 856 variables ([conteos](evidencia/m0-05_conteos.md)); notas D-M0-05-1 y C-M0-05-2, que no bloquean |
@@ -66,7 +66,7 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 | M0-08 | [Ejecutor: pool y adaptador de `svy`](M0-08-ejecutor.md) | M0-07 | hecha en el Mac: equivalencia con dif 0, p95 medido ([ejecutor](evidencia/m0-08_ejecutor.md), [tiempos](evidencia/m0-08_tiempos.md)); falta correr el pool en Linux |
 | M0-09 | [Compuertas y verificador en R](M0-09-compuertas-verificador-r.md) | M0-08 | hecha: compuertas y 90 filas iguales al oráculo ([compuertas](evidencia/m0-09_compuertas.md)); `svy` 0.35.0 = R `survey` 4.5 en los 50 dominios del sintético, máx. 1,3e-15 ([R](evidencia/m0-09_r.md)) |
 | M0-10 | [Recetas 2024 que igualan al cubo](M0-10-recetas-2024.md) | M0-08 y las compuertas de M0-09 (los esperados de R no la bloquean) | hecha salvo `verificado`: 90 filas con 0 diferencias, 21 de 21 doradas ([recetas](evidencia/m0-10_recetas.md), [90 filas](evidencia/m0-10_recetas_vs_cubo.csv), [revisión](evidencia/m0-10_revision.md)); `verificado` espera el visto del dueño (K-03) |
-| M0-11 | [Medición, espacio local, documentación y cierre](M0-11-medicion-cierre.md) | todas | pendiente |
+| M0-11 | [Medición, espacio local, documentación y cierre](M0-11-medicion-cierre.md) | todas | en curso: restaurar y liberar ([restauración](evidencia/m0-11_restauracion.txt), [simulación](evidencia/m0-11_liberar_simulacion.txt)), medición ([medición](evidencia/m0-11_medicion.md)), documentación y revisión por partes ([revisión](evidencia/revision_por_partes.md)) |
 
 **Pueden ir en paralelo:**
 - M0-00b con M0-01 y M0-02;

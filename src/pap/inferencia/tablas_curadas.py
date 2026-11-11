@@ -44,7 +44,8 @@ ARCHIVOS_TABLAS = {
 _DONDE = re.compile(r"\bpp?\. ?\d|\.(?:py|ya?ml|md|csv|json|parquet):\d|[Ee]tiqueta del archivo [A-Za-z0-9_]+ \d{4}")
 _ARCHIVO_LINEA = re.compile(r"\b((?:src|curados|docs|tests|backlog)/[\w./-]+\.(?:py|ya?ml|md|csv|json)):(\d+)(?:-(\d+))?")
 _EXPR_SEGURA = re.compile(r"^[\w\s.,()'<>=+*/%-]+$")
-_PROHIBIDO = re.compile(r"--|/\*|;")
+_PROHIBIDO = re.compile(r"--|/\*|;|\b(?:SELECT|FROM)\b", re.IGNORECASE)
+_VAR = re.compile(r"^[A-Z][A-Z0-9_]*$")
 
 
 def _cita(v: str) -> str:
@@ -123,6 +124,8 @@ class Predicado(_Fila):
 
     @model_validator(mode="after")
     def _forma(self):
+        if not _VAR.match(self.var):
+            raise ValueError(f"nombre de variable no permitido: {self.var!r}")
         if not self.valores:
             raise ValueError("predicado sin valores")
         if self.op == "entre" and (len(self.valores) != 2 or self.valores[0] > self.valores[1]):

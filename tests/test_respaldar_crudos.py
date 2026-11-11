@@ -67,6 +67,7 @@ def test_se_niega_sin_token(script, entorno):
     assert [x for x in _llamadas(registro) if "release" in x] == []
 
 
+@pytest.mark.solo_mac                       # lee archivos crudos (H02-3)
 def test_simulacion_privada_arma_paquete_y_no_sube(entorno):
     env, registro = entorno
     r = _correr("scripts/respaldar_crudos.sh", env, "--repo", REPO, "--simular")

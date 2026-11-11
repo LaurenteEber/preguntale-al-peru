@@ -4,7 +4,7 @@ import polars as pl
 import pyarrow as pa
 import pytest
 
-from pap.inferencia.duckdb_seguro import ParametrosDuckdb, conexion_segura
+from pap.inferencia.duckdb_seguro import ErrorSqlNoPermitido, ParametrosDuckdb, conexion_segura, ejecutar_select
 
 
 @pytest.fixture
@@ -98,3 +98,37 @@ def test_arrow_devuelve_un_record_batch_reader_que_polars_acepta(carpetas):
     assert isinstance(lector, pa.RecordBatchReader)
     df = pl.from_arrow(lector)
     assert df.to_dict(as_series=False) == {"a": [1, 2, 3]}
+
+
+# ------------------------------------------------------------------ ejecutar_select (H07-1)
+
+def test_ejecutar_select_corre_un_select_con_parametros(carpetas):
+    permitida, _ = carpetas
+    con = conexion_segura(carpetas=[permitida])
+    assert ejecutar_select(con, "SELECT sum(a) FROM read_parquet(?)", [str(permitida / "ok.parquet")]).fetchone() == (6,)
+
+
+def test_ejecutar_select_rechaza_copy_a_una_carpeta_permitida_y_no_toca_el_archivo(carpetas):
+    permitida, _ = carpetas
+    con = conexion_segura(carpetas=[permitida])
+    destino = permitida / "ok.parquet"
+    antes = destino.read_bytes()
+    with pytest.raises(ErrorSqlNoPermitido):
+        ejecutar_select(con, f"COPY (SELECT 1 AS a) TO '{destino}' (FORMAT parquet)", [])
+    assert destino.read_bytes() == antes
+
+
+def test_ejecutar_select_rechaza_varias_sentencias(carpetas):
+    permitida, _ = carpetas
+    con = conexion_segura(carpetas=[permitida])
+    destino = permitida / "nuevo.csv"
+    with pytest.raises(ErrorSqlNoPermitido):
+        ejecutar_select(con, f"SELECT 1; COPY (SELECT 2) TO '{destino}'", [])
+    assert not destino.exists()
+
+
+@pytest.mark.parametrize("sql", ["", "CREATE TABLE t AS SELECT 1", "SET threads=1", "INSERT INTO t VALUES (1)"])
+def test_ejecutar_select_rechaza_lo_que_no_es_un_select(carpetas, sql):
+    permitida, _ = carpetas
+    with pytest.raises(ErrorSqlNoPermitido):
+        ejecutar_select(conexion_segura(carpetas=[permitida]), sql, [])

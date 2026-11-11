@@ -17,6 +17,7 @@ from pathlib import Path
 
 import yaml
 
+from ..errores import PapError
 from ..zip_seguro import RUTA_PARAMETROS
 
 RAIZ_REPO = Path(__file__).resolve().parents[3]
@@ -55,3 +56,20 @@ def conexion_segura(raiz: Path = RAIZ_REPO, *, p: ParametrosDuckdb | None = None
     con.execute(f"SET threads={int(p.threads)}")
     con.execute("SET lock_configuration=true")                                                              # 5
     return con
+
+
+class ErrorSqlNoPermitido(PapError):
+    """El SQL que se iba a ejecutar no es exactamente una sentencia SELECT."""
+
+
+def ejecutar_select(con, sql: str, params=None):
+    """Ejecuta `sql` solo si es **una** sentencia de tipo SELECT (H07-1). `allowed_directories` deja escribir en las carpetas
+    permitidas (`COPY … TO` a un Parquet existente lo sobrescribiría): todo SQL armado a partir de un plan pasa por aquí.
+    El SQL fijo de `conexion_segura` (SET) no pasa por aquí."""
+    import duckdb
+
+    sentencias = con.extract_statements(sql)
+    if len(sentencias) != 1 or sentencias[0].type != duckdb.StatementType.SELECT:
+        tipos = [str(x.type) for x in sentencias]
+        raise ErrorSqlNoPermitido(f"solo se ejecuta una sentencia SELECT (llegó: {tipos or 'ninguna'})")
+    return con.execute(sql, params if params is not None else [])

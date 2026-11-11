@@ -272,3 +272,18 @@ def test_el_territorio_con_id_filtra_la_unidad(ctx_sint):
     c = compilar(_completo(ctx, plan_anemia("departamento", "15")), ctx.esquema, ctx.carpeta_microdatos)
     assert {f[2] for f in con.execute(c.sql, c.parametros).fetchall()} <= {"15", None}
     assert "15" in c.parametros
+
+
+@pytest.mark.parametrize("expr", ["HV024 -- resto", "HV024 /* x */ + 1", "HV024 + 1 --", "1 /*"])
+def test_calificar_expresion_rechaza_comentarios_sql(expr):
+    """H07-2: `--` y `/*` no son parte de la gramática (los tokens `-` y `/` sueltos sí)."""
+    with pytest.raises(ErrorGramatica, match="comentario"):
+        calificar_expresion(expr, _resolver, lambda v: "?")
+
+
+def test_calificar_expresion_admite_guiones_y_barras_sueltos_y_comentarios_dentro_de_un_texto():
+    par = []
+    assert calificar_expresion("HV005/1e6", _resolver, lambda v: par.append(v) or "?").endswith("/1e6")
+    assert calificar_expresion("HV024 - 1", _resolver, lambda v: "?").endswith("- 1")
+    assert calificar_expresion("HV024 = 'a -- b /* c'", _resolver, lambda v: par.append(v) or "?").endswith("= ?")
+    assert par[-1] == "a -- b /* c"

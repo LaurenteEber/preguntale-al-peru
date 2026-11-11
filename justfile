@@ -16,7 +16,7 @@ auditar:
     scripts/auditar.sh
 # Seguridad (M0-00b, C9): gitleaks sobre todo el historial; el gancho antes de cada commit se instala con scripts/instalar_ganchos.sh
 secretos:
-    gitleaks git --redact --no-banner .
+    gitleaks git --redact --no-banner --log-opts=--all .
 # Verificador en R (M0-09; tecnologias.md §3): regenera los esperados de R survey que usa pytest. Corre en el Mac, nunca en pytest.
 # Primero, una sola vez: cd verificador_r && Rscript -e 'source("renv/activate.R"); renv::restore()'
 # Equivale a: uv run python -m pap.inferencia.verificador_r esperados
