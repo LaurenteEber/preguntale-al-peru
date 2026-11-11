@@ -151,6 +151,26 @@ uv run python -m pap.inferencia.verificador_r esperados                         
 - R **no corre dentro de pytest**: se regenera en el Mac al subir `svy` o `survey`, y pytest solo compara (`tests/inferencia/test_esperados_r.py`, tolerancia 1e-9, nunca se afloja). Si el CSV falta, esas pruebas fallan.
 - Detalle y versiones fijadas: `verificador_r/README.md`.
 
+### 3.5d Microdatos por bloque: convertir, indexar, respaldar, restaurar y liberar (M0-04 a M0-11)
+
+Un bloque es una encuesta y un año (`endes-2024`). Todo corre en el Mac, donde están los ZIP.
+
+```bash
+uv run pap microdatos convertir --encuesta ENDES --anio 2024     # ZIP registrados → biblioteca/microdatos/ENDES/2024/*.parquet + manifiesto.json
+uv run pap variables indexar --encuesta ENDES --anio 2024        # índice de variables → biblioteca/variables/
+scripts/respaldar_crudos.sh --simular                            # qué se subiría al release crudos-endes-2024 (no sube nada)
+scripts/respaldar_crudos.sh                                      # sube los ZIP y PDF al repo PRIVADO de crudos
+uv run pap almacen restaurar --bloque endes-2024                 # prueba el respaldo y marca el bloque «respaldado»
+uv run pap almacen liberar --bloque endes-2024                   # simulación: qué ZIP se borrarían y cuánto
+uv run pap almacen liberar --bloque endes-2024 --ejecutar        # borra de verdad; pide escribir «liberar endes-2024»
+```
+
+- **Token de `gh`:** de grano fino, solo para `LaurenteEber/preguntale-al-peru-crudos` y con `contents: write`. Se toma de `GH_TOKEN` o del Llavero de macOS (servicio `pap-gh-crudos`) y nunca se imprime. El script y `restaurar` se niegan si el repo no es el configurado (`almacen.repo_crudos`) o no es privado.
+- **`restaurar`** baja el release a un directorio temporal, comprueba `SHA256SUMS` y la huella de cada recurso del bloque contra los `datapackage.json` (falla si falta uno), reconvierte el archivo más chico del manifiesto y exige la misma `huella_contenido_v1`. Si todo cuadra, anota el bloque en `biblioteca/cruda/almacen_zst.json` (clave `bloques`: fecha, URL del release y huellas comprobadas) y en `verificaciones.jsonl`. Si a un bloque liberado le faltan ZIP en el almacén, los vuelve a poner (ya comprobados); lo demás no lo toca.
+- **`liberar`** solo borra los ZIP de un bloque `respaldado` cuya huella se comprobó al restaurar. Nunca toca los PDF, los Parquet ni su manifiesto, los `datapackage.json`, `insumos.lock.yaml`, `indice.duckdb`, los crudos de otras fuentes, los objetos que comparte otro recurso ni los ZIP que lee `pap calcular` (hogar y anemia de la ENDES, sumaria de la ENAHO). Cada ZIP borrado queda en `verificaciones.jsonl`. Avisa si el espacio libre baja de `almacen.espacio_libre_min_gb` (50 GB).
+- **Cuándo liberar:** al cerrar cada fase o si el espacio libre baja del mínimo. Liberar el bloque de 2024 es decisión del dueño.
+- **Después de liberar:** para reconvertir o reindexar un bloque hay que reponer antes sus ZIP con `pap almacen restaurar --bloque <bloque>`. Las respuestas no cambian: el motor lee los Parquet.
+
 ### 3.6 Mantenimiento
 ```bash
 uv run pap almacen comprimir --dry-run   # qué se comprimiría (texto > 10 MB, zstd, verificado)
@@ -159,7 +179,7 @@ uv run pap recetas validar                # recetas contra el catálogo y R-DEP-
 just catalogo                             # recalcula la compuerta del catálogo (requiere just)
 ```
 
-**Respaldo:** copia `biblioteca/cruda/almacen/` (1,2 GB) a un disco o una nube. Es lo único que no se puede regenerar sin volver a descargar.
+**Respaldo:** los ZIP y PDF de cada bloque de microdatos van al repo privado de crudos (§3.5d). El resto de `biblioteca/cruda/almacen/` (1,2 GB) todavía no tiene respaldo externo: cópialo a un disco o una nube. Es lo único que no se puede regenerar sin volver a descargar.
 
 ### 3.7 Mapa de comandos de mantenimiento
 
@@ -173,6 +193,9 @@ just catalogo                             # recalcula la compuerta del catálogo
 | `pap construir {territorio,poblacion,puentes,gasto,endes,enaho,mapa_pobreza,indicadores}` | Reconstruye una tabla curada o estandarizada | Tras cambiar crudos o código (solo en el Mac) | `biblioteca` |
 | `pap calcular` | Reconstruye el cubo `fact_indicador.parquet` | Después de `construir`, o de bajar el release | `biblioteca` |
 | `pap almacen comprimir [--dry-run]` | Comprime con zstd los textos grandes; `--dry-run` solo lista | Mantenimiento | Almacén (sin `--dry-run`) |
+| `pap almacen restaurar --bloque ENC-AAAA` | Prueba el respaldo del bloque en el repo privado (huellas y una reconversión) y lo marca `respaldado` | Después de `scripts/respaldar_crudos.sh` | `almacen_zst.json`, `verificaciones.jsonl` |
+| `pap almacen liberar --bloque ENC-AAAA [--ejecutar] [--si]` | Lista (por defecto) o borra los ZIP liberables de un bloque respaldado | Al cerrar una fase o con poco espacio | Almacén, `almacen_zst.json`, `verificaciones.jsonl` (solo con `--ejecutar`) |
+| `pap variables indexar --encuesta ENDES --anio 2024` | Índice de variables, categorías y uniones de los Parquet | Tras convertir (solo en el Mac) | `biblioteca/variables/` |
 | `pap microdatos convertir --encuesta ENDES --anio 2024` | Convierte los DTA/SAV de los ZIP registrados a Parquet (uno por archivo) con manifiesto | Tras registrar los ZIP de una encuesta y año (solo en el Mac) | `biblioteca/microdatos/`, `curados/insumos.lock.yaml` |
 | `pap inferencia validar-tablas` | Valida las 6 tablas curadas de `curados/inferencia/` (esquema, citas, llaves y cruces) | Tras editar una tabla curada | No |
 | `pap inferencia validar-recetas` | Valida las recetas de indicador de `curados/inferencia/recetas/` (esquema, universo, cortes, doradas contra `cifras_doradas.csv`, campo `receta` de `dim_indicador`) | Tras editar una receta | No |

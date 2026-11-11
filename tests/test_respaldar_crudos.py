@@ -1,4 +1,4 @@
-"""M0-02 (tarea 5/7): los scripts de respaldo y restauración se niegan ante un repo público o distinto del configurado.
+"""M0-02 (tarea 5/7): el script de respaldo se niega ante un repo público o distinto del configurado.
 `gh` se reemplaza por un programa falso en PATH: no hay red ni token real."""
 import os
 import subprocess
@@ -10,7 +10,8 @@ import yaml
 from conftest import RAIZ_REAL
 
 REPO = yaml.safe_load((RAIZ_REAL / "curados/inferencia/parametros.yaml").read_text(encoding="utf-8"))["almacen"]["repo_crudos"]["valor"]
-SCRIPTS = ["scripts/respaldar_crudos.sh", "scripts/restaurar_crudos.sh"]
+# La restauración pasó a `pap almacen restaurar` en M0-11 (sus guardias: tests/test_almacen_bloques.py).
+SCRIPTS = ["scripts/respaldar_crudos.sh"]
 SECRETO = "gh" + "p_" + "SECRETO_DE_PRUEBA_123"   # token falso, armado por partes para que gitleaks no lo tome por uno real
 
 

@@ -1,0 +1,29 @@
+# M0-11 — pap almacen restaurar --bloque endes-2024 (10/11/2026 18:55, Darwin arm64)
+
+SHA256SUMS: OK (20 archivos)
+OK         endes-2024-anemia  968-Modulo1638.zip
+OK         endes-2024-cuestionario-hogar  2024-5-CuestionarioHogar.pdf
+OK         endes-2024-cuestionario-individual  2024-5-CuestionarioIndividual.pdf
+OK         endes-2024-cuestionario-salud  2024-5-CuestionarioSalud.pdf
+OK         endes-2024-datos-basicos-mef  968-Modulo1631.zip
+OK         endes-2024-diccionario-hogar  2024-5-DiccionarioHogar.pdf
+OK         endes-2024-diccionario-individual  2024-5-DiccionarioIndividual.pdf
+OK         endes-2024-diccionario-salud  2024-5-DiccionarioSalud.pdf
+OK         endes-2024-disciplina-infantil  968-Modulo1639.zip
+OK         endes-2024-embarazo-parto  968-Modulo1633.zip
+OK         endes-2024-ficha-tecnica  2024-5-FichaTecnica.pdf
+OK         endes-2024-historia-nacimiento  968-Modulo1632.zip
+OK         endes-2024-hogar  968-Modulo1629.zip
+OK         endes-2024-inmunizacion-salud  968-Modulo1634.zip
+OK         endes-2024-mortalidad-materna-violencia  968-Modulo1637.zip
+OK         endes-2024-nupcialidad-fecundidad  968-Modulo1635.zip
+OK         endes-2024-programas-sociales  968-Modulo1641.zip
+OK         endes-2024-salud  968-Modulo1640.zip
+OK         endes-2024-sida-condon  968-Modulo1636.zip
+OK         endes-2024-vivienda  968-Modulo1630.zip
+Reconversión de PS_BECA18 (968-Modulo1641/PS_BECA18_2024.dta): huella_contenido_v1 igual a la del manifiesto (639803dc2bbe1236…)
+Bloque endes-2024 marcado como respaldado (https://github.com/LaurenteEber/preguntale-al-peru-crudos/releases/tag/crudos-endes-2024).
+real 7.61
+user 1.46
+sys 0.67
+código de salida: 0

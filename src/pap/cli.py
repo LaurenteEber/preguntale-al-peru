@@ -112,6 +112,22 @@ def _gb(n: int | None) -> str:
 
 
 def cmd_almacen(a, rutas) -> int:
+    """pap almacen comprimir | restaurar | liberar."""
+    if a.accion in ("restaurar", "liberar"):
+        from . import bloques
+
+        if not a.bloque:
+            raise PapError(f"pap almacen {a.accion} necesita --bloque <encuesta>-<anio> (p. ej. endes-2024)")
+        if a.accion == "restaurar":
+            bloques.restaurar(rutas, a.bloque, repo_pedido=a.repo)
+        else:
+            bloques.liberar(rutas, a.bloque, ejecutar=a.ejecutar,
+                            confirmar=(lambda: True) if a.si else (lambda: bloques.confirmar_por_terminal(a.bloque)))
+        return 0
+    return _comprimir(a, rutas)
+
+
+def _comprimir(a, rutas) -> int:
     """pap almacen comprimir: CSV/TXT grandes del almacén → <huella>.zst verificado, uno por uno (reanudable)."""
     import time
 
@@ -743,8 +759,18 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--consultado", help="Momento de obtención, si no es ahora (ISO 8601)")
     s.set_defaults(fn=cmd_foto_pim)
 
-    s = sub.add_parser("almacen", help="Mantenimiento del almacén de crudos (comprimir con zstd)")
-    s.add_argument("accion", choices=["comprimir"])
+    s = sub.add_parser("almacen", help="Mantenimiento del almacén de crudos: comprimir con zstd, restaurar un bloque "
+                                       "desde su respaldo y liberar sus ZIP")
+    s.add_argument("accion", choices=["comprimir", "restaurar", "liberar"],
+                   help="comprimir: CSV/TXT grandes → .zst; restaurar: prueba el respaldo del bloque y lo marca "
+                        "«respaldado»; liberar: borra los ZIP de un bloque respaldado (simulación por defecto)")
+    s.add_argument("--bloque", help="restaurar/liberar: <encuesta>-<anio>, p. ej. endes-2024")
+    s.add_argument("--repo", help="restaurar: repo de respaldo; debe ser el configurado (almacen.repo_crudos)")
+    s.add_argument("--simular", dest="ejecutar", action="store_false", default=False,
+                   help="liberar: solo mostrar qué se borraría y cuánto (por defecto)")
+    s.add_argument("--ejecutar", dest="ejecutar", action="store_true",
+                   help="liberar: borrar de verdad, después de confirmar")
+    s.add_argument("--si", action="store_true", help="liberar --ejecutar: no preguntar (confirmación dada)")
     s.add_argument("--min-mb", type=float, default=almacen.COMPRIMIR_MIN_MB,
                    help=f"Solo archivos de texto de más de N MB (por defecto {almacen.COMPRIMIR_MIN_MB})")
     s.add_argument("--dry-run", "--ensayo", dest="dry_run", action="store_true",
