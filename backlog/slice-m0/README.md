@@ -66,7 +66,7 @@ ZIP de la ENDES 2024 (registrados uno por uno y respaldados en el repo privado d
 | M0-08 | [Ejecutor: pool y adaptador de `svy`](M0-08-ejecutor.md) | M0-07 | hecha en el Mac: equivalencia con dif 0, p95 medido ([ejecutor](evidencia/m0-08_ejecutor.md), [tiempos](evidencia/m0-08_tiempos.md)); falta correr el pool en Linux |
 | M0-09 | [Compuertas y verificador en R](M0-09-compuertas-verificador-r.md) | M0-08 | hecha: compuertas y 90 filas iguales al oráculo ([compuertas](evidencia/m0-09_compuertas.md)); `svy` 0.35.0 = R `survey` 4.5 en los 50 dominios del sintético, máx. 1,3e-15 ([R](evidencia/m0-09_r.md)) |
 | M0-10 | [Recetas 2024 que igualan al cubo](M0-10-recetas-2024.md) | M0-08 y las compuertas de M0-09 (los esperados de R no la bloquean) | hecha salvo `verificado`: 90 filas con 0 diferencias, 21 de 21 doradas ([recetas](evidencia/m0-10_recetas.md), [90 filas](evidencia/m0-10_recetas_vs_cubo.csv), [revisión](evidencia/m0-10_revision.md)); `verificado` espera el visto del dueño (K-03) |
-| M0-11 | [Medición, espacio local, documentación y cierre](M0-11-medicion-cierre.md) | todas | en curso: restaurar y liberar ([restauración](evidencia/m0-11_restauracion.txt), [simulación](evidencia/m0-11_liberar_simulacion.txt)), medición ([medición](evidencia/m0-11_medicion.md)), documentación y revisión por partes ([revisión](evidencia/revision_por_partes.md)) |
+| M0-11 | [Medición, espacio local, documentación y cierre](M0-11-medicion-cierre.md) | todas | hecha ([cierre](evidencia/cierre.md)): restauración probada, liberar en simulación, medición, documentación y revisión por partes ([revisión](evidencia/revision_por_partes.md)); PR a `main` espera «fusiona» |
 
 **Pueden ir en paralelo:**
 - M0-00b con M0-01 y M0-02;
