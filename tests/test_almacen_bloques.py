@@ -323,3 +323,71 @@ def test_comprimir_conserva_los_bloques_del_registro(bloque, tmp_path):
     assert cli.main(["almacen", "comprimir", "--min-mb", "0", "--solo", h[:12]]) == 0
     reg = json.loads(almacen.ruta_registro(rutas).read_text())
     assert h in reg["objetos"] and reg["bloques"]["endes-2024"]["estado"] == "respaldado"
+
+
+# ------------------------------------------------------------------ revisión por partes (M0-11): nombres y formatos del release
+
+def _sin(bloque, archivo):
+    (bloque["release"] / archivo).unlink()
+    s = bloque["release"] / "SHA256SUMS"
+    s.write_text("".join(l + "\n" for l in s.read_text().splitlines() if archivo not in l))
+
+
+def test_restaurar_no_acepta_original_filename_con_ruta(bloque, capsys):
+    """Un datapackage editado con una ruta no puede hacer pasar por respaldado un ZIP que no está en el release."""
+    rutas = bloque["rutas"]
+    dp = rutas.capturas / "INEI-ENDES" / "2026-11-09" / "datapackage.json"
+    d = json.loads(dp.read_text())
+    d["resources"][1]["original_filename"] = str(bloque["mujer"])
+    dp.write_text(json.dumps(d))
+    _sin(bloque, "968-Modulo1631.zip")
+    assert cli.main(["almacen", "restaurar", "--bloque", "endes-2024"]) == 1
+    assert "nombre de archivo no permitido" in capsys.readouterr().err
+    assert "endes-2024" not in _bloques(rutas)
+    assert cli.main(["almacen", "liberar", "--bloque", "endes-2024", "--ejecutar", "--si"]) == 1
+    assert bloque["mujer"].exists()
+
+
+def test_restaurar_rechaza_nombres_con_ruta_en_sha256sums(bloque, capsys, tmp_path):
+    f = tmp_path / "fuera.txt"
+    f.write_bytes(b"x")
+    s = bloque["release"] / "SHA256SUMS"
+    s.write_text(s.read_text() + f"{hashlib.sha256(b'x').hexdigest()}  {f}\n")
+    assert cli.main(["almacen", "restaurar", "--bloque", "endes-2024"]) == 1
+    assert "SHA256SUMS, línea 4: nombre de archivo no permitido" in capsys.readouterr().err
+    assert "endes-2024" not in _bloques(bloque["rutas"])
+
+
+def test_restaurar_sha256sums_mal_formado_falla_con_mensaje(bloque, capsys):
+    s = bloque["release"] / "SHA256SUMS"
+    s.write_text(s.read_text() + "solounhash\n")
+    assert cli.main(["almacen", "restaurar", "--bloque", "endes-2024"]) == 1
+    assert "SHA256SUMS, línea 4: no tiene la forma" in capsys.readouterr().err
+    assert _bitacora(bloque["rutas"])[-1]["resultado"] == "fallo"
+
+
+def test_restaurar_no_imprime_token_si_gh_falla(bloque, capsys, tmp_path):
+    (tmp_path / "bin" / "gh").write_text('#!/usr/bin/env bash\nif [ "$1 $2" = "repo view" ]; then echo PRIVATE; exit 0; fi\n'
+                                         'echo "fallo token=$GH_TOKEN" >&2; exit 1\n')
+    assert cli.main(["almacen", "restaurar", "--bloque", "endes-2024"]) == 1
+    out, err = capsys.readouterr()
+    assert SECRETO not in out + err and SECRETO not in bloque["rutas"].verificaciones.read_text()
+
+
+def test_liberar_no_borra_un_objeto_que_comparte_huella_con_un_protegido(bloque, capsys):
+    """Si un ZIP liberable tuviera la huella del de hogar (protegido), el objeto es uno solo y no se borra."""
+    rutas = bloque["rutas"]
+    dp = rutas.capturas / "INEI-ENDES" / "2026-11-09" / "datapackage.json"
+    d = json.loads(dp.read_text())
+    hogar = d["resources"][0]
+    d["resources"].append({**hogar, "name": "endes-2024-vivienda", "original_filename": "968-Modulo1630.zip"})
+    dp.write_text(json.dumps(d))
+    (bloque["release"] / "968-Modulo1630.zip").write_bytes((bloque["release"] / "968-Modulo1629.zip").read_bytes())
+    s = bloque["release"] / "SHA256SUMS"
+    s.write_text(s.read_text() + f"{hogar['hash'].split(':')[1]}  968-Modulo1630.zip\n")
+    assert cli.main(["almacen", "restaurar", "--bloque", "endes-2024"]) == 0
+    capsys.readouterr()
+    assert cli.main(["almacen", "liberar", "--bloque", "endes-2024", "--ejecutar", "--si"]) == 0
+    out = capsys.readouterr().out
+    assert "se queda   endes-2024-vivienda" in out and "(lo usa otro recurso)" in out
+    assert (rutas.cruda / hogar["path"]).exists()

@@ -165,17 +165,29 @@ def _sha256_partes(rutas_: list[Path]) -> str:
     return h.hexdigest()
 
 
+def nombre_simple(nombre: str, origen: str) -> str:
+    """Un nombre de archivo sin carpetas: nunca se confía en una ruta que venga del release o de un datapackage."""
+    if not nombre or nombre in (".", "..") or Path(nombre).name != nombre or "\\" in nombre or "\x00" in nombre:
+        raise PapError(f"{origen}: nombre de archivo no permitido {nombre!r} (debe ser un nombre sin carpetas)")
+    return nombre
+
+
+_LINEA_SUMA = re.compile(r"^([0-9a-f]{64}) [ *](.+)$")
+
+
 def _comprobar_sumas(d: Path) -> list[str]:
     sumas = d / "SHA256SUMS"
     if not sumas.exists():
         raise PapError("el release no trae SHA256SUMS")
     malos = []
     listados = set()
-    for linea in sumas.read_text(encoding="utf-8").splitlines():
+    for i, linea in enumerate(sumas.read_text(encoding="utf-8").splitlines(), 1):
         if not linea.strip():
             continue
-        h, nombre = linea.split(None, 1)
-        nombre = nombre.lstrip("*")
+        m = _LINEA_SUMA.match(linea)
+        if not m:
+            raise PapError(f"SHA256SUMS, línea {i}: no tiene la forma «<sha256>  <archivo>»")
+        h, nombre = m.group(1), nombre_simple(m.group(2), f"SHA256SUMS, línea {i}")
         listados.add(nombre)
         f = d / nombre
         if not f.exists() or _sha256_partes([f]) != h:
@@ -185,8 +197,9 @@ def _comprobar_sumas(d: Path) -> list[str]:
 
 
 def _archivos_del_recurso(d: Path, rec: dict) -> list[Path]:
-    f = d / rec["original_filename"]
-    return [f] if f.exists() else sorted(d.glob(glob_escape(rec["original_filename"]) + ".parte-*"))
+    nombre = nombre_simple(rec.get("original_filename") or "", f"datapackage de {rec.get('name')}")
+    f = d / nombre
+    return [f] if f.exists() else sorted(d.glob(glob_escape(nombre) + ".parte-*"))
 
 
 def glob_escape(s: str) -> str:
@@ -203,14 +216,19 @@ def _reponer_liberados(rutas: Rutas, d: Path, recs: list[dict]) -> list[dict]:
         destino = rutas.cruda / almacen.ruta_relativa(h)
         destino.parent.mkdir(parents=True, exist_ok=True)
         tmp = destino.with_name(destino.name + ".tmp")
-        with open(tmp, "wb") as out:
-            for parte in _archivos_del_recurso(d, rec):
-                with open(parte, "rb") as f:
-                    shutil.copyfileobj(f, out)
-        if _sha256_partes([tmp]) != h:
-            tmp.unlink()
-            raise PapError(f"{rec['name']}: el archivo repuesto no da su huella")
-        os.replace(tmp, destino)
+        try:
+            with open(tmp, "wb") as out:
+                for parte in _archivos_del_recurso(d, rec):
+                    with open(parte, "rb") as f:
+                        shutil.copyfileobj(f, out)
+                out.flush()
+                os.fsync(out.fileno())
+            if _sha256_partes([tmp]) != h:
+                raise PapError(f"{rec['name']}: el archivo repuesto no da su huella")
+            os.replace(tmp, destino)
+        finally:
+            tmp.unlink(missing_ok=True)
+        almacen._solo_lectura(destino)
         repuestos.append(rec)
     return repuestos
 
@@ -295,6 +313,9 @@ def restaurar(rutas: Rutas, bloque: str, repo_pedido: str | None = None, emitir=
     except PapError as e:
         bitacora.anotar(rutas, b.fuente, "restaurar", "fallo", detalle=f"{b.id}: {e}")
         raise
+    except Exception as e:                      # noqa: BLE001 — se anota y se muestra como error controlado
+        bitacora.anotar(rutas, b.fuente, "restaurar", "fallo", detalle=f"{b.id}: {type(e).__name__}: {e}")
+        raise PapError(f"la restauración falló: {type(e).__name__}: {e}") from e
     datos = {"estado": "respaldado", "fecha": ahora(), "release": url, "etiqueta": b.etiqueta, "repo": repo,
              "huellas": sorted(por_hash),
              "reconvertido": {"archivo": nombre, "huella_contenido_v1": h}}
@@ -328,9 +349,12 @@ def planear_liberacion(rutas: Rutas, bloque: str) -> tuple[Bloque, Plan]:
                        f"corra antes `pap almacen restaurar --bloque {b.id}`")
     comprobadas = set(estado.get("huellas") or [])
     recs = recursos_bloque(rutas, b)
-    # Huellas que usa cualquier recurso de fuera del bloque (otra fuente u otro año): ese objeto no se borra.
-    otros = {_hex(rec) for _, rec in capturas.recursos(rutas)
-             if not (rec.get("name", "").startswith(b.prefijo) and rec.get("source_id") == b.fuente)}
+    # Huellas que usa cualquier recurso que no se va a liberar (otra fuente, otro año, o uno protegido del mismo
+    # bloque, en cualquier captura): ese objeto no se borra.
+    def liberable_por_nombre(rec):
+        return (rec.get("name", "").startswith(b.prefijo) and rec.get("source_id") == b.fuente
+                and (rec.get("format") or "").lower() == "zip" and not protegido_por_calcular(rec["name"]))
+    otros = {_hex(rec) for _, rec in capturas.recursos(rutas) if not liberable_por_nombre(rec)}
     plan = Plan([], [])
     for rec in recs:
         h = _hex(rec)
