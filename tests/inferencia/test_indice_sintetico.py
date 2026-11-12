@@ -42,6 +42,23 @@ def test_etiqueta_con_mojibake_de_dos_cp850_se_relee_como_cp850():
     assert tiene_mojibake("Ni¤o")
 
 
+def test_reparar_dos_no_corrompe_signos_del_espanol_ni_otros_caracteres_H05_1():
+    # H05-1: releer todo el texto como cp850 convertía «¿» en «┐» y «¡» en «í»
+    assert reparar_dos("¿Ni¤o?") == "¿Niño?"
+    assert reparar_dos("¡A¤o nuevo!") == "¡Año nuevo!"
+    assert reparar_dos("Educaci¢n f¡sica") == "Educación física"      # «¡» dentro de la palabra sí es «í» de DOS
+    assert reparar_dos("Beb‚ ¿ni¤o?") == "Bebé ¿niño?"
+    assert reparar_dos("N£mero: 50 %") == "Número: 50 %"
+    assert reparar_dos("Precio ¢ 5") == "Precio ¢ 5"                  # suelto, sin letra al lado: no se toca
+    curada, hechas = curar_etiqueta("¿Cu ntos ni¤os?")
+    assert "┐" not in curada and curada.startswith("¿") and "niños" in curada and "mojibake" in hechas
+
+
+def test_control_de_mojibake_ve_los_dibujos_de_caja_de_una_relectura_cp850_H05_1():
+    assert tiene_mojibake("┐Niño?") and tiene_mojibake("Educaci│n") and tiene_mojibake("Ni░o")
+    assert not tiene_mojibake("¿Niño?")
+
+
 def test_etiqueta_normaliza_espacios_nbsp_y_nfc_sin_tocar_comillas_ni_acentos():
     assert curar_etiqueta("\xa0Otro") == ("Otro", ("espacios",))
     assert curar_etiqueta("Día - Control  1") == ("Día - Control 1", ("espacios",))

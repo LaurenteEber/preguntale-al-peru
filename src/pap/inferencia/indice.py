@@ -110,19 +110,34 @@ def normalizar_texto(t: str | None) -> str:
 
 _DOS = "¤¥¢£"     # ñ, Ñ, ó y ú de cp850 leídas como cp1252 (en español no se usan solas)
 _BIEN = "áéíóúñÁÉÍÓÚÑü"
+# Carácter cp1252 → letra cp850 que representa. «¡» (í) solo se cambia detrás de una letra: delante de una palabra es el
+# signo de exclamación. «¿», «¡» de apertura y lo demás quedan como están (H05-1: releer todo el texto como cp850
+# convertía «¿» en «┐»).
+_DOS_LETRA = {"¤": "ñ", "¥": "Ñ", "¢": "ó", "£": "ú", "‚": "é"}
+_DOS_TRAS_LETRA = {"¡": "í"}
 
 
 def reparar_dos(texto: str) -> str:
-    """El mojibake de DOS (cp850: «Ni¤o», «Educaci¢n») no lo repara ftfy: se relee el texto como cp850 si trae alguno de
-    ¤ ¥ ¢ £ y la relectura los quita. Un texto que ya trae vocales con tilde bien escritas es ambiguo y no se toca (el
-    control de mojibake lo marca); tampoco uno que no se puede releer así."""
+    """El mojibake de DOS (cp850: «Ni¤o», «Educaci¢n») no lo repara ftfy. Si el texto trae alguno de ¤ ¥ ¢ £, se
+    cambia cada carácter de DOS pegado a una letra por la letra que representa (¤ ¥ ¢ £ ‚ a cualquier lado, ¡ solo
+    detrás); el resto del texto no se toca. Un texto que ya trae vocales con tilde bien escritas es ambiguo y no se toca
+    (el control de mojibake lo marca); tampoco uno que no es cp1252."""
     if not any(c in texto for c in _DOS) or any(c in texto for c in _BIEN):
         return texto
     try:
-        r = texto.encode("cp1252").decode("cp850")
+        texto.encode("cp1252")
     except UnicodeError:
         return texto
-    return r if not any(c in r for c in _DOS) else texto
+    letra = lambda i: 0 <= i < len(texto) and (texto[i].isalpha() and texto[i] not in _DOS_LETRA)
+    salida = []
+    for i, c in enumerate(texto):
+        if c in _DOS_LETRA and (letra(i - 1) or letra(i + 1)):
+            salida.append(_DOS_LETRA[c])
+        elif c in _DOS_TRAS_LETRA and letra(i - 1):
+            salida.append(_DOS_TRAS_LETRA[c])
+        else:
+            salida.append(c)
+    return "".join(salida)
 
 
 def curar_etiqueta(original: str | None) -> tuple[str, tuple[str, ...]]:
@@ -149,7 +164,7 @@ def curar_etiqueta(original: str | None) -> tuple[str, tuple[str, ...]]:
     return limpio, tuple(dict.fromkeys(hechas))
 
 
-_MOJIBAKE = re.compile("[¤¥¢£�\u0080-\u009f]|Ã[\u0080-¿]|Â[ -¿]|â€|Ã©|Ã±")
+_MOJIBAKE = re.compile("[¤¥¢£�\u0080-\u009f─-▟]|Ã[\u0080-¿]|Â[ -¿]|â€|Ã©|Ã±")
 
 
 def tiene_mojibake(texto: str) -> bool:
