@@ -1,0 +1,60 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "hf-multilingual-e5-small-2026-11-12-2",
+  "title": "multilingual-e5-small (embeddings multilingües, ONNX)",
+  "created": "2026-11-12T14:53:14-05:00",
+  "keywords": [
+    "HF-MULTILINGUAL-E5-SMALL"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "e5-small-onnx-tokenizer",
+      "title": "multilingual-e5-small (embeddings multilingües, ONNX)",
+      "original_filename": "tokenizer.json",
+      "path": "almacen/sha256/0b/44/0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39",
+      "hash": "sha256:0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39",
+      "bytes": 17082730,
+      "format": "json",
+      "mediatype": "application/json",
+      "source_id": "HF-MULTILINGUAL-E5-SMALL",
+      "publisher": "intfloat (Liang Wang et al.; Microsoft)",
+      "dataset_title": "multilingual-e5-small (embeddings multilingües, ONNX)",
+      "access_url": "https://huggingface.co/intfloat/multilingual-e5-small/tree/614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "download_url": "https://huggingface.co/intfloat/multilingual-e5-small/resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/onnx/tokenizer.json",
+      "source_version": "614241f622f53c4eeff9890bdc4f31cfecc418b3",
+      "source_version_basis": "declarada",
+      "temporal": "desconocido",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-11-12",
+      "method": "archivo_propio",
+      "recipe": "HF-MULTILINGUAL-E5-SMALL@6521fdc",
+      "attributed_to": "Eber (descarga manual)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "MIT",
+          "title": "MIT (declarada en la ficha del modelo)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "nacional"
+      },
+      "known_issues": [
+        "Línea base del recuperador (M1-09; tecnologias §7).",
+        "Modelo de terceros, no produce cifras. Si cambia el commit o una huella, se recalculan todos los vectores del índice.",
+        "Sin código remoto: no se usa from_pretrained ni trust_remote_code; solo se cargan los archivos de la lista, verificados por SHA-256."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

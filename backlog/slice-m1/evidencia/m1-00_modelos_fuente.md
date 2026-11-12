@@ -63,3 +63,7 @@ El bloque `catalogo:` de las recetas copia `compuerta_ingesta` del catálogo, y 
 - Estado actual: `uv run pytest -q tests/test_recetas_modelos_hf.py` → 7 pasan, 4 fallan solo por el esquema descrito arriba. Con ese campo aceptando `null` (simulado en memoria con un plugin temporal): 11 passed.
 - `uv run pytest -q tests/ -k "receta or catalogo or registrar or validacion"` → 5 failed (los 4 de arriba + `test_recetas_reales::test_todas_las_recetas_pasan_su_esquema`, mismo motivo), 105 passed.
 - `test_catalogo.py` sobre el catálogo regenerado: pasa salvo `test_ingesta_verificada_al_dia`, que en la copia temporal no encuentra `biblioteca/`.
+
+## Registro hecho (12/11/2026, agente principal)
+
+Los 26 archivos que bajó el dueño dieron OK contra `SHA256SUMS` (`shasum -a 256 -c` en cada carpeta). Se registraron con los 26 comandos de arriba, sin `--mover`: 8 capturas de e5-small, 9 de granite-97m-r2 y 9 de granite-311m-r2. `uv run pap verificar <fuente>` da «Todo en orden» en las tres. El `.DS_Store` de la carpeta de granite-97m no se registró. Las copias de la bandeja (2,2 GB) siguen ahí: el dueño puede borrarlas, porque los archivos ya están en el almacén con su huella.

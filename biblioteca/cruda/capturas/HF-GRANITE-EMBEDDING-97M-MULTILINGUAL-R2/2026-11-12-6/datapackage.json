@@ -1,0 +1,60 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "hf-granite-embedding-97m-multilingual-r2-2026-11-12-6",
+  "title": "granite-embedding-97m-multilingual-r2 (embeddings multilingües, ONNX)",
+  "created": "2026-11-12T14:53:25-05:00",
+  "keywords": [
+    "HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "granite-97m-1-pooling-config",
+      "title": "granite-embedding-97m-multilingual-r2 (embeddings multilingües, ONNX)",
+      "original_filename": "config.json",
+      "path": "almacen/sha256/8b/c5/8bc5c9a40814fcf48d2fbe7cfeff4bee6736c3c2a823ba0ce098985c59d12ab7",
+      "hash": "sha256:8bc5c9a40814fcf48d2fbe7cfeff4bee6736c3c2a823ba0ce098985c59d12ab7",
+      "bytes": 313,
+      "format": "json",
+      "mediatype": "application/json",
+      "source_id": "HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2",
+      "publisher": "IBM (ibm-granite)",
+      "dataset_title": "granite-embedding-97m-multilingual-r2 (embeddings multilingües, ONNX)",
+      "access_url": "https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2",
+      "download_url": "https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/1_Pooling/config.json",
+      "source_version": "835ad14087e140460703cf0fae09f97d469d65c2",
+      "source_version_basis": "declarada",
+      "temporal": "desconocido",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-11-12",
+      "method": "archivo_propio",
+      "recipe": "HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2@6521fdc",
+      "attributed_to": "Eber (descarga manual)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "Apache-2.0",
+          "title": "Apache-2.0 (declarada en la ficha del modelo)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "nacional"
+      },
+      "known_issues": [
+        "Candidato a reemplazo en el banco del recuperador (M1-09b; tecnologias §7.1).",
+        "Modelo de terceros, no produce cifras. Si cambia el commit o una huella, se recalculan todos los vectores del índice.",
+        "Sin código remoto: no se usa from_pretrained ni trust_remote_code; solo se cargan los archivos de la lista, verificados por SHA-256."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

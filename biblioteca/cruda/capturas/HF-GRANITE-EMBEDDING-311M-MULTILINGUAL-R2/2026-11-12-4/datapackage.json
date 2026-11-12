@@ -1,0 +1,60 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "hf-granite-embedding-311m-multilingual-r2-2026-11-12-4",
+  "title": "granite-embedding-311m-multilingual-r2 (embeddings multilingües, ONNX)",
+  "created": "2026-11-12T14:53:33-05:00",
+  "keywords": [
+    "HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "granite-311m-special-tokens-map",
+      "title": "granite-embedding-311m-multilingual-r2 (embeddings multilingües, ONNX)",
+      "original_filename": "special_tokens_map.json",
+      "path": "almacen/sha256/cb/9e/cb9e60dcf4d8d314315cb3e761fe4c2e664fda8dbf66d7815372b2639e381182",
+      "hash": "sha256:cb9e60dcf4d8d314315cb3e761fe4c2e664fda8dbf66d7815372b2639e381182",
+      "bytes": 694,
+      "format": "json",
+      "mediatype": "application/json",
+      "source_id": "HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2",
+      "publisher": "IBM (ibm-granite)",
+      "dataset_title": "granite-embedding-311m-multilingual-r2 (embeddings multilingües, ONNX)",
+      "access_url": "https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2/tree/44399559930365213510b1ee2eb15ded83374f0e",
+      "download_url": "https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2/resolve/44399559930365213510b1ee2eb15ded83374f0e/special_tokens_map.json",
+      "source_version": "44399559930365213510b1ee2eb15ded83374f0e",
+      "source_version_basis": "declarada",
+      "temporal": "desconocido",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-11-12",
+      "method": "archivo_propio",
+      "recipe": "HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2@6521fdc",
+      "attributed_to": "Eber (descarga manual)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "Apache-2.0",
+          "title": "Apache-2.0 (declarada en la ficha del modelo)"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "nacional"
+      },
+      "known_issues": [
+        "Techo de calidad del banco del recuperador (M1-09b; tecnologias §7.1). Pesa 1,25 GB.",
+        "Modelo de terceros, no produce cifras. Si cambia el commit o una huella, se recalculan todos los vectores del índice.",
+        "Sin código remoto: no se usa from_pretrained ni trust_remote_code; solo se cargan los archivos de la lista, verificados por SHA-256."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}
