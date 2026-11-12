@@ -11,8 +11,8 @@
 | 4 | Piloto de punta a punta (anemia, desnutrición, gasto ex-PAN, pobreza): cubo, validador de 68 reglas, respuesta por capas | cerrado (13/10/2026) |
 | 5a | Motor por intenciones (slice 1) | hecho (3/11/2026); adenda cerrada (4/11/2026) |
 | 5b | Intérprete de preguntas en lenguaje natural (slice 2) | cerrado (5/11/2026, PR #2) |
-| 5c | API y web mínima (slice 3) | en curso |
-| M0–M5 | Motor de inferencia (`diseno/motor_inferencia.md`, `backlog/slice-m0/`): es el siguiente trabajo | en curso (M0) |
+| 5c | API y web mínima (slice 3) | hecha (7/11/2026, `slice-3-cerrado`) |
+| M0–M5 | Motor de inferencia (`diseno/motor_inferencia.md`, `backlog/slice-m0/`): es el siguiente trabajo | M0 hecho (12/11/2026, `slice-m0-cerrado`); M1 en curso |
 | — | Beta cerrada (slice 4, pasa a M4) y Ola 1 de datos (slice 5) | pendiente |
 
 El detalle de cada slice: [../backlog/plan_slices.md](../backlog/plan_slices.md). El estado al día: [estado.md](estado.md).

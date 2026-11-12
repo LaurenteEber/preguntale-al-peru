@@ -19,13 +19,14 @@ La **beta cerrada** (antes slice 4) queda en pausa y su contenido pasa al slice 
 | **M5. Panel ENAHO** | Preguntar por transiciones: cuántos hogares salieron de la pobreza y cuántos cayeron | 5 | M4; F-02 y X-23 |
 | Ola 1 | Temas nuevos de otras fuentes (antes slice 5) | después de la beta | M4; GA-13; X-06 |
 
-## Slices 1 a 3 (hechos)
+## Slices hechos
 
 | Slice | Etiqueta | Cierre |
 |---|---|---|
 | 1 | `slice-1-cerrado`, `slice-1-adenda-cerrada` | `slice-1/evidencia/cierre.md` |
 | 2 | `slice-2-cerrado` | `slice-2/evidencia/cierre.md` |
 | 3 | `slice-3-cerrado` | `slice-3/evidencia/cierre.md` |
+| M0 | `slice-m0-cerrado` (12/11/2026) | `slice-m0/evidencia/cierre.md` |
 
 ## M0 — Cimientos del motor
 
@@ -57,7 +58,8 @@ La **beta cerrada** (antes slice 4) queda en pausa y su contenido pasa al slice 
 
 ## M1 — Planificador (spike)
 
-- **Backlog:** `slice-m1/` (borrador; se detalla al cerrar M0).
+- **Backlog:** `slice-m1/` (detallado el 12/11/2026; **en curso** en la rama `slice-m1`).
+- **Frente de datos en paralelo:** backlog aparte, pendiente; no entra en M1.
 - **Entrega:**
   - enriquecimiento del índice (texto de las preguntas, universos, ventanas, sujetos);
   - intérprete en modo motor;

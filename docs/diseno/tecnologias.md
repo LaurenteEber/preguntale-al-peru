@@ -58,12 +58,14 @@ Las mediciones se hicieron en un contenedor Linux con 2 núcleos y 7 GB de RAM. 
   - las tres coinciden con R `survey` en un microdato sintético, con una diferencia máxima de 4,6e-14.
 - **Tiempos** (`prop(by=, where=)`, Korn-Graubard, `endes_nino`):
 
-  | Caso | 0.32.1 | 0.35.0 |
-  |---|---|---|
-  | 1 año, 98 dominios | 291 ms | 117 ms |
-  | 2 años apilados, 196 dominios | 1 345 ms | 333 ms |
-  | 4 años apilados, 392 dominios | 8 690 ms | 848 ms |
-  | 11 años, 275 dominios en 1 llamada | 15,4 s | 5,9 s |
+
+| Caso                               | 0.32.1   | 0.35.0 |
+| ---------------------------------- | -------- | ------ |
+| 1 año, 98 dominios                 | 291 ms   | 117 ms |
+| 2 años apilados, 196 dominios      | 1 345 ms | 333 ms |
+| 4 años apilados, 392 dominios      | 8 690 ms | 848 ms |
+| 11 años, 275 dominios en 1 llamada | 15,4 s   | 5,9 s  |
+
 
 - **Lo que se verificó de 0.35.0:**
   - `ci_method="korn-graubard"` es la variante NCHS: trunca el n efectivo en n y acota en p = 0 o 1;
@@ -180,10 +182,10 @@ Más una tabla de sinónimos peruanos («chispitas», «posta»), que ningún mo
   - **Calidad publicada en español** (MIRACL es, nDCG@10): small 51,2, base 51,5, BGE-M3 55,5–56,1 (según la tabla citada).
   - **Costo medido:**
 
-    | Precisión | Consulta | 100 000 textos | Memoria |
-    |---|---|---|---|
-    | fp32 | 7–12 ms | 29–37 min (64–96 tokens); 58–85 min (128 tokens) | ~690–870 MB |
-    | int8 | 4 ms | 11–16 min (64–96 tokens); ~32 min (128 tokens) | ~280–510 MB |
+| Precisión | Consulta | 100 000 textos                                   | Memoria     |
+| --------- | -------- | ------------------------------------------------ | ----------- |
+| fp32      | 7–12 ms  | 29–37 min (64–96 tokens); 58–85 min (128 tokens) | ~690–870 MB |
+| int8      | 4 ms     | 11–16 min (64–96 tokens); ~32 min (128 tokens)   | ~280–510 MB |
 
   - **Por defecto fp32.** int8 solo si, cuantizado por nosotros con `quantize_dynamic`, pierde ≤ 1 punto de recall. El int8 publicado es para x86.
   - **Un vector por texto distinto**, no por variable × año.
@@ -199,11 +201,37 @@ Más una tabla de sinónimos peruanos («chispitas», «posta»), que ningún mo
   - recall@20 ≥ 0,95 en el total y ≥ 0,90 en vocabulario popular y en pares casi iguales;
   - p95 del recuperador ≤ 0,3 s. Un reordenador, por sí solo, ya rompe este tope.
 
-  Si no se cumple, se prueba en este orden:
-  1. más sinónimos;
-  2. e5-base int8 (o `granite-embedding-107m-multilingual` en A/B);
+  Si no se cumple, se prueba en este orden (actualizado el 12/11/2026, §7.1):
+  1. más sinónimos y texto enriquecido de cada variable;
+  2. el modelo que gane el banco de pruebas (§7.1);
   3. BGE-M3;
   4. el reordenador.
+
+### 7.1 Revisión del 12/11/2026 y banco de pruebas
+
+**En sencillo.** El modelo de búsqueda por significado se había elegido con cifras publicadas, sin medirlo en nuestros datos. Se revisó lo publicado a noviembre de 2026: la búsqueda por palabras sigue siendo buena elección, pero ya hay un modelo del mismo tamaño que e5-small con mejor cifra publicada. Como nadie ha medido la búsqueda de preguntas de encuestas en español, se decide con un banco de pruebas propio (historia M1-09b). Mientras tanto, e5-small es la línea base, no la elección final.
+
+**Detalle técnico.**
+- **Por palabras: se mantiene `bm25s` con Snowball.** Las cinco variantes de BM25 rinden casi igual en BEIR (nDCG@10 medio de 39,5 a 39,9) y el stemming suma alrededor de 1,3 puntos (en inglés; no hay comparación moderna de stemming frente a lematización en español). DuckDB FTS sería la alternativa sin dependencias nuevas.
+- **Por significado: candidatos a medir contra e5-small.**
+
+| Modelo                                                       | Parámetros | Dimensiones                 | Licencia   | ONNX oficial | Prefijos              | Recuperación multilingüe (MTEB v2) |
+| ------------------------------------------------------------ | ---------- | --------------------------- | ---------- | ------------ | --------------------- | ---------------------------------- |
+| `intfloat/multilingual-e5-small` (línea base)                | 118 M      | 384                         | MIT        | sí           | `query:` / `passage:` | 50,9                               |
+| `ibm-granite/granite-embedding-97m-multilingual-r2`          | 97 M       | 384                         | Apache 2.0 | sí           | ninguno               | 60,3                               |
+| `ibm-granite/granite-embedding-311m-multilingual-r2` (techo) | 311 M      | 768 (truncable a 256 o 128) | Apache 2.0 | sí           | ninguno               | 65,2                               |
+| `hotchpotch/bekko-embedding-v1-a25m` (opcional)              | 123 M      | 384                         | MIT        | sí           | ninguno               | 57,5                               |
+
+  - **Estas cifras son promedios multilingües informados por los autores de cada modelo, no cifras en español.** En español (MIRACL es) solo hay cifras publicadas para la familia e5 (51,2 a 52,9) y BGE-M3 (55,5).
+  - Los modelos Granite R2 salieron el 14/5/2026. El español está entre sus 52 idiomas de entrenamiento.
+  - Bekko es de un solo autor (julio de 2026): entra solo si su auditoría de seguridad lo aprueba.
+- **Descartados:** Jina v3 y v5 (licencia no comercial); gte-multilingual-base, nomic-embed-text-v2 y snowflake-arctic-embed v2 (exigen o usan código remoto y rinden menos que granite-97m-r2); Qwen3-Embedding-0.6B y harrier (decodificadores con instrucciones, pesados para CPU); e5-base y e5-large (ganancia mínima en español); modelos estáticos (recuperación muy baja).
+- **El texto que se indexa pesa tanto como el modelo.** En un estudio de portales de datos abiertos, una descripción generada por un LLM subió el MRR de 0,820 a 0,925; las palabras clave solas dieron 0,379. Por eso el banco mide el texto original frente a un texto enriquecido (descripción y términos coloquiales), que se usa **solo para buscar**.
+- **Fusión:** se mantiene RRF con k = 60 mientras no haya preguntas etiquetadas. Con 50 a 100, el banco prueba la combinación ponderada de puntajes normalizados, que supera a RRF en el estudio de Bruch et al. y necesita pocos datos para ajustar su único peso.
+- **Reordenador:** sigue fuera. No se encontró ninguno multilingüe con latencia publicada de 150 ms o menos en CPU, y el planificador ya elige entre 20 candidatos.
+- **El modelo se elige por parámetro** (`recuperador.modelo`): cambiarlo no toca código y los vectores se recalculan en minutos.
+- **Regla para cambiar el modelo por defecto:** mejora de 3 puntos o más en recall@20 en el total, sin empeorar en ningún estrato y con p95 ≤ 0,3 s; el modelo de 311 M necesita 5 puntos sobre el mejor pequeño. La decisión firme se toma con el conjunto de evaluación completo (M1-19).
+- **Límites de esta revisión:** las fichas y los artículos se leyeron por resumen; no se encontró la cifra de Granite R2 en español (podría estar en el apéndice de su informe técnico); no hay cifras de latencia en CPU para los modelos de unos 300 M.
 
 ## 8. LLM: cliente, paralelo, costo y pruebas (fase 1)
 
@@ -297,7 +325,8 @@ Los valores entran en el anexo B del diseño, que dice en qué archivo vive cada
 - **R `survey`:** r-observatory (versiones); NEWS en r-forge.r-universe.dev/survey.
 - **`pyreadstat`:** https://pypi.org/project/pyreadstat/; DuckDB COPY/Parquet en duckdb.org/docs.
 - **Modelo e5:** https://huggingface.co/intfloat/multilingual-e5-small; arXiv 2402.05672 (mE5); arXiv 2402.03216 (BGE-M3).
-- **`bm25s`:** https://github.com/xhluca/bm25s.
+- **`bm25s`:** https://github.com/xhluca/bm25s; arXiv 2407.03618 (BM25S).
+- **Revisión del 12/11/2026 (§7.1):** IBM, «Granite Embedding Multilingual R2», https://huggingface.co/blog/ibm-granite/granite-embedding-multilingual-r2 y arXiv 2605.13521; Bekko Embedding, https://huggingface.co/hotchpotch/bekko-embedding-v1-a25m y arXiv 2607.25180; Bruch et al., «An Analysis of Fusion Functions for Hybrid Retrieval», arXiv 2210.11934; «Keywords are not always the key», arXiv 2509.14457; Weller et al., arXiv 2309.08541 (expansión con LLM); MessIRve (recuperación en español), EMNLP 2025.
 - **Extensiones de DuckDB:** duckdb.org/docs (FTS y VSS).
 - **Anthropic:** documentación oficial de prompt caching, Batch API y precios.
 - **Pool de procesos:** CPython issue 142317 (macOS y `RLIMIT`).

@@ -1,0 +1,4 @@
+# Base del slice M1: uv run pytest -q en slice-m1 (dd3d8b3 = main f76b7eb + documentos), 12/11/2026, Mac
+...................                                                      [100%]
+1818 passed, 1 skipped in 1008.76s (0:16:48)
+exit=0

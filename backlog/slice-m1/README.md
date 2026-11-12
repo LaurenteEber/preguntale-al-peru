@@ -48,32 +48,33 @@ Para eso hacen falta antes cuatro cosas que M0 no tenía: la clase de cada varia
 
 Orden: las etapas A y B pueden avanzar en paralelo; la etapa C depende de ambas. (En este slice, «bloque» a secas es el **bloque temático** de `fichas.md`; no es `curados/motor/textos/bloques.yaml` ni el bloque de respaldo `endes-2024`.)
 
-| ID | Historia | Depende de |
-|---|---|---|
-| **Etapa A. Base** | | |
-| M1-00 | [Preparación, descargas y auditoría de dependencias](M1-00-preparacion.md) | — |
-| M1-01 | [Decisiones del 12/11, reglas y tablas curadas](M1-01-decisiones.md) | M1-00 |
-| M1-02 | [Deuda de M0 que conviene pagar antes de crecer](M1-02-deuda-m0.md) | M1-00 |
-| M1-03 | [Uniones entre tablas hermanas, universo por medición y cortes nuevos](M1-03-uniones-universo.md) | M1-00; M1-01 para los valores decididos |
-| **Etapa B. Índice y fichas** | | |
-| M1-04 | [Texto de los cuestionarios y vínculo con las variables](M1-04-cuestionarios.md) | M1-00 |
-| M1-05 | [Enriquecimiento del índice](M1-05-enriquecimiento.md) | M1-01, M1-04 |
-| M1-06 | [Fichas de tabla, bloques y temas](M1-06-fichas-bloques.md) | M1-04; M1-05 (tarea 0) |
-| M1-07 | [Diseño muestral y universos de niño, mujer y hogar; lote a `revisado`](M1-07-diseno-lote.md) | M1-05, M1-06 |
-| **Etapa C. Motor** | | |
-| M1-08 | [Intérprete en modo motor](M1-08-interprete.md) | M1-05 (sinónimos y cortes) |
-| M1-09 | [Recuperador](M1-09-recuperador.md) | M1-05, M1-06; modelo bajado por el dueño |
-| M1-10 | [Planificador](M1-10-planificador.md) | M1-09 |
-| M1-11 | [Verificador completo, huellas y decisión 1](M1-11-verificador-decision.md) | M1-03, M1-07, M1-10 |
-| M1-12 | [Aclaraciones](M1-12-aclaraciones.md) | M1-11 |
-| M1-13 | [Sustitución y alternativas](M1-13-sustitucion.md) | M1-11 |
-| M1-14 | [Comparaciones entre grupos](M1-14-comparaciones.md) | M1-11 |
-| M1-15 | [Contraste, sellos y confianza](M1-15-sellos.md) | M1-11 |
-| M1-16 | [Contrato v2 y respuesta](M1-16-contrato-respuesta.md) | M1-12 a M1-15 |
-| M1-17 | [Caché, costo y concurrencia](M1-17-cache-costo.md) | M1-16 |
-| M1-18 | [Modo sombra](M1-18-sombra.md) | M1-16 |
-| M1-19 | [Conjunto de evaluación y medición](M1-19-evaluacion.md) | M1-18; preguntas del dueño |
-| M1-20 | [Revisión independiente y cierre](M1-20-cierre.md) | todas |
+| ID | Historia | Depende de | Estado |
+|---|---|---|---|
+| **Etapa A. Base** | | | |
+| M1-00 | [Preparación, descargas y auditoría de dependencias](M1-00-preparacion.md) | — | en curso |
+| M1-01 | [Decisiones del 12/11, reglas y tablas curadas](M1-01-decisiones.md) | M1-00 | pendiente |
+| M1-02 | [Deuda de M0 que conviene pagar antes de crecer](M1-02-deuda-m0.md) | M1-00 | en curso |
+| M1-03 | [Uniones entre tablas hermanas, universo por medición y cortes nuevos](M1-03-uniones-universo.md) | M1-00; M1-01 para los valores decididos | pendiente |
+| **Etapa B. Índice y fichas** | | | |
+| M1-04 | [Texto de los cuestionarios y vínculo con las variables](M1-04-cuestionarios.md) | M1-00 | pendiente |
+| M1-05 | [Enriquecimiento del índice](M1-05-enriquecimiento.md) | M1-01, M1-04 | pendiente |
+| M1-06 | [Fichas de tabla, bloques y temas](M1-06-fichas-bloques.md) | M1-04; M1-05 (tarea 0) | pendiente |
+| M1-07 | [Diseño muestral y universos de niño, mujer y hogar; lote a `revisado`](M1-07-diseno-lote.md) | M1-05, M1-06 | pendiente |
+| **Etapa C. Motor** | | | |
+| M1-08 | [Intérprete en modo motor](M1-08-interprete.md) | M1-05 (sinónimos y cortes) | pendiente |
+| M1-09 | [Recuperador](M1-09-recuperador.md) | M1-05, M1-06; modelo bajado por el dueño | pendiente |
+| M1-09b | [Banco de pruebas del recuperador](M1-09b-banco-recuperador.md) | M1-09; conjunto semilla (M1-00); modelos bajados por el dueño | pendiente |
+| M1-10 | [Planificador](M1-10-planificador.md) | M1-09 | pendiente |
+| M1-11 | [Verificador completo, huellas y decisión 1](M1-11-verificador-decision.md) | M1-03, M1-07, M1-10 | pendiente |
+| M1-12 | [Aclaraciones](M1-12-aclaraciones.md) | M1-11 | pendiente |
+| M1-13 | [Sustitución y alternativas](M1-13-sustitucion.md) | M1-11 | pendiente |
+| M1-14 | [Comparaciones entre grupos](M1-14-comparaciones.md) | M1-11 | pendiente |
+| M1-15 | [Contraste, sellos y confianza](M1-15-sellos.md) | M1-11 | pendiente |
+| M1-16 | [Contrato v2 y respuesta](M1-16-contrato-respuesta.md) | M1-12 a M1-15 | pendiente |
+| M1-17 | [Caché, costo y concurrencia](M1-17-cache-costo.md) | M1-16 | pendiente |
+| M1-18 | [Modo sombra](M1-18-sombra.md) | M1-16 | pendiente |
+| M1-19 | [Conjunto de evaluación y medición](M1-19-evaluacion.md) | M1-18; preguntas del dueño | pendiente |
+| M1-20 | [Revisión independiente y cierre](M1-20-cierre.md) | todas | pendiente |
 
 ## Lote de tablas de M1
 
@@ -85,7 +86,12 @@ Las demás tablas tienen ficha (M1-06), pero no entran al planificador en M1.
 
 ## Del dueño (no bloquea empezar)
 
-1. **Bajar el modelo** `intfloat/multilingual-e5-small` (ONNX y tokenizer, en el commit que fija `backlog/slice-m0/evidencia/auditoria_seguridad_previa.md`) y dejarlo en `biblioteca/cruda/bandeja/`. Se necesita en M1-09.
+1. **Bajar tres modelos** de Hugging Face y dejarlos en `biblioteca/cruda/bandeja/`, en la carpeta de cada modelo, con los archivos y el commit exactos que entrega el agente con las auditorías (ONNX, `tokenizer.json` y los JSON de configuración):
+   - `intfloat/multilingual-e5-small` (se necesita en M1-09);
+   - `ibm-granite/granite-embedding-97m-multilingual-r2` (M1-09b);
+   - `ibm-granite/granite-embedding-311m-multilingual-r2` (M1-09b).
+
+   Si falta alguno, el banco de M1-09b corre con los que haya.
 2. **Escribir de 40 a 60 preguntas** del conjunto de evaluación (M1-19, tarea 2). Puede hacerlo desde ya.
 3. **Vistos por lote:** tablas curadas nuevas (M1-07), fichas y bloques (M1-06) e índice (M1-07). Mientras no lleguen, el agente sigue con lo que no depende de ellos.
 4. **Aprobar** la lista de cambios de estado por las compuertas nuevas (M1-01), `no_cubre.yaml` (M1-05) y los textos de las aclaraciones (M1-12).
