@@ -138,3 +138,32 @@ recetas:
   cubo_decimales: {valor: 8, supuesto: M0-10}               # el cubo guarda 8 decimales (calculo.DECIMALES)
   cubo_tolerancia_unidades: {valor: 1, supuesto: M0-10}     # |dif| ≤ 1 unidad del último decimal = 1e-8, ya redondeado
   oraculo_tolerancia: {valor: 1.0e-12, supuesto: M0-10}     # sin redondear, contra calculo._svy_niveles
+
+# M1-00 (tarea 10): parámetros de las etapas nuevas de M1, con el valor inicial del diseño (§26, tabla de parámetros).
+# Los que dicen «se mide en la fase 1» se ajustan con lo que midan M1-10, M1-17 y M1-19.
+recuperador:
+  candidatos_max: {valor: 20, supuesto: "diseño §26 (agente, tipo B)"}
+
+planificador:
+  muestras: {valor: 3, supuesto: "diseño §26; se mide en M1-19"}
+  modelo: {valor: claude-sonnet-5-5, decision: P-07}
+  esfuerzo: {valor: bajo, decision: P-07}
+  max_tokens: {valor: 800, supuesto: "diseño §26; se mide en M1-10"}
+  plazo_s: {valor: 9, supuesto: "diseño §26; se mide en M1-10"}
+
+aclaracion:
+  rondas_max: {valor: 2, supuesto: "diseño §26 (lo fija el dueño)"}
+  plan_max_opciones: {valor: 3, supuesto: "diseño §26 (lo fija el dueño)"}
+
+comparacion:
+  diferencia_material_pp: {valor: 2, supuesto: "diseño §26 (lo fija el dueño)"}
+  diferencia_material_rel: {valor: 0.10, supuesto: "diseño §26 (lo fija el dueño)"}
+
+alternativas:
+  anio_max_distancia: {valor: 3, supuesto: "diseño §26 (lo fija el dueño)"}
+
+cache:
+  planes_horas: {valor: 24, decision: P-03}
+
+batch:
+  tope_lote_usd: {valor: 20, decision: "K-05 (dueño, 12/11/2026: US$ 20 por lote de enriquecimiento)"}

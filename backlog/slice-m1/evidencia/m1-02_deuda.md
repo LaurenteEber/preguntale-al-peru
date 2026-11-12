@@ -12,3 +12,7 @@ Se completa a medida que avanzan las tareas.
 - **Pruebas** (`tests/inferencia/test_indice_sintetico.py`): `test_reparar_dos_no_corrompe_signos_del_espanol_ni_otros_caracteres_H05_1` y `test_control_de_mojibake_ve_los_dibujos_de_caja_de_una_relectura_cp850_H05_1`. Fallaban antes del cambio y pasan después.
 - **El índice de 2024 no cambia:** las 4 263 etiquetas distintas de `biblioteca/variables/*.parquet` dan la misma `etiqueta_curada`, los mismos arreglos y el mismo resultado del control con el código anterior y con el nuevo (0 diferencias).
 - **Suite completa:** 1 820 pasan y 1 se salta (la base del slice: 1 818 y 1; las 2 nuevas son estas).
+
+## Nota para la tarea 1 (pool)
+
+El 12/11/2026, con el Mac ocupado por otro proceso (registro de documentos de M1-00), falló una vez `test_el_exceso_de_memoria_lo_corta_el_vigia_y_la_tarea_siguiente_funciona` en una corrida de `tests/inferencia/`; sola pasó 3 de 3. Es la misma familia que H08-1: el plazo cuenta el arranque del trabajador nuevo. Se revisa con la tarea 1.

@@ -75,6 +75,17 @@ periodo:
     valor: {evolucion: serie}     # las demás intenciones usan por_defecto (último)
     supuesto: S1-03
 
+motor:
+  version:                        # M1-00: qué motor responde cada tema (diseño §24). actual = el motor por intenciones;
+                                  # sombra = responde el actual y el nuevo calcula a la sombra; nuevo = responde el nuevo (fase 4).
+                                  # Lo cambia el dueño, por fase. En M1 ningún tema pasa a nuevo (backlog/slice-m1/README.md).
+    valor: {anemia: actual, desnutricion_cronica: actual, pobreza_monetaria: actual, gasto_publico: actual}
+    valores_posibles: [actual, sombra, nuevo]
+    fuente: "docs/diseno/motor_inferencia.md §24; backlog/slice-m1/README.md, Reglas del slice"
+
+inferencia:
+  modo_interprete: {valor: actual, valores_posibles: [actual, motor], fuente: "docs/diseno/motor_inferencia.md §26; M1-08 agrega el modo motor"}
+
 temas:
   vocabulario:                    # = valores de dim_indicador.tema (si se agrega un tema allí, se agrega aquí)
     valor: [anemia, desnutricion_cronica, pobreza_monetaria, gasto_publico]

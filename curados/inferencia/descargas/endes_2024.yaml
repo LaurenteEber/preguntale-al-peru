@@ -2,106 +2,158 @@
 # módulos 1629 a 1641) y el url_patron de curados/recetas/INEI-ENDES.yaml. Solo URL https://proyectos.inei.gob.pe.
 # Aprobada por el dueño el 9/11/2026 («ok con k-01», consultas_al_dueno.md K-01).
 # Formato: Stata (K-06 a: Stata donde exista, SPSS en 2015–2020). 1629 y 1638 ya están registrados en Stata: no se vuelven a bajar.
+# 0.2.0 (12/11/2026, M1-00 tareas 4 a 6; docs/diseno/fichas.md §4): `tablas` = los .dta de cada ZIP sin el sufijo _2024 (leídos de los
+# ZIP el 12/11/2026; 34 en total; una prueba los compara con el almacén); `codigo_documento` = número del listado oficial del INEI
+# (códigos 1 a 11; el 10 «Manual de la Supervisora Local» no se baja, decisión del dueño del 12/11/2026); documentos 8, 9 y 11 nuevos;
+# `documentos_adicionales` = lo que no es del listado de 2024 (ficha de la ENDES 2025 y el informe de las doradas).
 # Documentos: DocumentosMetodologicos/2024-5/<nombre>.pdf (listado oficial de «Consulta por Documentos», portal INEI, 9/11/2026).
-version: 0.1.0
-fecha: "2026-11-09"
+version: 0.2.0
+fecha: "2026-11-12"
 fuente: INEI-ENDES
-encuesta: {anio: 2024, codigo: 968, periodo: "5 Unico"}
+encuesta: {anio: 2024, codigo: 968, periodo_codigo: 5, periodo_nombre: "Unico"}
 modulos:
   - codigo: 1629
     nombre: "Caracteristicas del Hogar"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1629.zip
     recurso: endes-2024-hogar
+    tablas: [RECH0, RECH1, RECH4, RECHM]
     ya_registrado: true
   - codigo: 1630
     nombre: "Caracteristicas de la Vivienda"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1630.zip
     recurso: endes-2024-vivienda
+    tablas: [RECH23]
   - codigo: 1631
     nombre: "Datos Basicos de MEF"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1631.zip
     recurso: endes-2024-datos-basicos-mef
+    tablas: [REC0111, REC91]
   - codigo: 1632
     nombre: "Historia de Nacimiento - Tabla de Conocimiento de Metodo"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1632.zip
     recurso: endes-2024-historia-nacimiento
+    tablas: [RE223132, REC21]
   - codigo: 1633
     nombre: "Embarazo, Parto, Puerperio y Lactancia"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1633.zip
     recurso: endes-2024-embarazo-parto
+    tablas: [REC41, REC94]
   - codigo: 1634
     nombre: "Inmunización y Salud"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1634.zip
     recurso: endes-2024-inmunizacion-salud
+    tablas: [DIT, REC42, REC43, REC95]
   - codigo: 1635
     nombre: "Nupcialidad - Fecundidad - Cónyugue y Mujer"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1635.zip
     recurso: endes-2024-nupcialidad-fecundidad
+    tablas: [RE516171]
   - codigo: 1636
     nombre: "Conocimiento de Sida y uso del condón"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1636.zip
     recurso: endes-2024-sida-condon
+    tablas: [RE758081, REC82]
   - codigo: 1637
     nombre: "Mortalidad Materna - Violencia Familiar"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1637.zip
     recurso: endes-2024-mortalidad-materna-violencia
+    tablas: [REC83, REC84DV]
   - codigo: 1638
     nombre: "Peso y talla - Anemia"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1638.zip
     recurso: endes-2024-anemia
+    tablas: [REC44, RECH5, RECH6]
     ya_registrado: true
   - codigo: 1639
     nombre: "Disciplina Infantil"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1639.zip
     recurso: endes-2024-disciplina-infantil
+    tablas: [REC93DVdisciplina]
   - codigo: 1640
     nombre: "Encuesta de salud"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1640.zip
     recurso: endes-2024-salud
+    tablas: [CSALUD01, CSALUD08]
   - codigo: 1641
     nombre: "Programas Sociales"
     formato: STATA
     url: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1641.zip
     recurso: endes-2024-programas-sociales
+    tablas: [PS_BECA18, PS_COMEDOR, PS_PENSION65, PS_QALIWARMA, PS_TRABAJA, PS_VL, PS_WAWAWASI, "Programas Sociales x Hogar"]
 documentos:
-  - nombre: "Ficha técnica"
+  - codigo_documento: 7
+    nombre: "Ficha técnica"
     formato: PDF
     url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/FichaTecnica.pdf
     recurso: endes-2024-ficha-tecnica
-  - nombre: "Cuestionario del Hogar"
+  - codigo_documento: 1
+    nombre: "Cuestionario del Hogar"
     formato: PDF
     url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/CuestionarioHogar.pdf
     recurso: endes-2024-cuestionario-hogar
-  - nombre: "Cuestionario Individual"
+  - codigo_documento: 2
+    nombre: "Cuestionario Individual"
     formato: PDF
     url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/CuestionarioIndividual.pdf
     recurso: endes-2024-cuestionario-individual
-  - nombre: "Cuestionario de Salud"
+  - codigo_documento: 3
+    nombre: "Cuestionario de Salud"
     formato: PDF
     url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/CuestionarioSalud.pdf
     recurso: endes-2024-cuestionario-salud
-  - nombre: "Diccionario Hogar"
+  - codigo_documento: 4
+    nombre: "Diccionario Hogar"
     formato: PDF
     url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/DiccionarioHogar.pdf
     recurso: endes-2024-diccionario-hogar
-  - nombre: "Diccionario Individual"
+  - codigo_documento: 5
+    nombre: "Diccionario Individual"
     formato: PDF
     url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/DiccionarioIndividual.pdf
     recurso: endes-2024-diccionario-individual
-  - nombre: "Diccionario Salud"
+  - codigo_documento: 6
+    nombre: "Diccionario Salud"
     formato: PDF
     url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/DiccionarioSalud.pdf
     recurso: endes-2024-diccionario-salud
+  - codigo_documento: 8
+    nombre: "Manual de la Entrevistadora"
+    formato: PDF
+    url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/ManualEntrevistadora.pdf
+    recurso: endes-2024-manual-entrevistadora
+  - codigo_documento: 9
+    nombre: "Manual del Antropometrista"
+    formato: PDF
+    url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/ManualAntropometrista.pdf
+    recurso: endes-2024-manual-antropometrista
+  - codigo_documento: 11
+    nombre: "Identificadores de las bases de datos"
+    formato: PDF
+    url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/DocumentosMetodologicos/2024-5/Ident-de-las-bd.pdf
+    recurso: endes-2024-identificadores-bd
+# No son del listado «Consulta por Documentos» de 2024. Aprobados en M1-00 (fichas.md §4; tarea 5).
+documentos_adicionales:
+  - nombre: "Ficha técnica de la ENDES 2025"
+    formato: PDF
+    encuesta_codigo: 1038
+    url: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1038-Ficha.pdf
+    recurso: endes-2025-ficha-tecnica
+  - nombre: "Perú: Indicadores de Resultados de los Programas Presupuestales, ENDES 2024 (informe)"
+    formato: PDF
+    # Aportado por el dueño (fuente de las doradas; biblioteca/cruda/bandeja/validacion_doradas/pap_endes2024_ppr.pdf).
+    # Sin URL oficial conocida: supuesto, ver backlog/slice-m1/consultas_al_dueno.md. Sin download_url al registrar.
+    url: null
+    recurso: endes-2024-informe-ppr
 pendientes: []
