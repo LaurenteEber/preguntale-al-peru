@@ -64,6 +64,10 @@ El dueño puede comprobar una receta con `uv run pap inferencia receta endes_dci
 - **No commitear mientras otro (el dueño o un trabajador) edita archivos versionados.** `d89db55` se llevó la mitad de M0-10 con un mensaje de M0-09.
 - **El ciclo por bloque funciona y es barato:** respaldar y restaurar la ENDES 2024 tomó menos de 20 s. Para cada año nuevo: registrar, convertir, indexar, respaldar, restaurar y, si el dueño lo decide, liberar.
 
-## Entrega
+## Fusión y cierre (12/11/2026)
 
-Rama `slice-m0`. El PR a `main` y la etiqueta `slice-m0-cerrado` esperan a que el dueño escriba «fusiona».
+- El dueño pidió hacer el merge a `main` para cerrar M0.
+- El PR #4 se fusionó en `main` con un commit de merge (`0ac8c7b`).
+- La etiqueta `slice-m0-cerrado` se creó sobre ese commit y se subió a GitHub.
+- La suite completa en `main` después de la fusión: 1818 pasan y 1 se salta (la de capturas).
+- La rama `slice-m0` se conserva.
