@@ -19,10 +19,9 @@ source_version:
 data_cutoff:
   basis: desconocida
 licenses:
-- name: uso-libre-con-cita
-  title: uso libre con cita
-license_basis: norma_general
-terms_note: Información pública (TUO Ley 27806); citar a la entidad
+- name: ODbL-1.0
+  title: ODbL (datosabiertos.gob.pe)
+license_basis: declarada_en_pagina
 known_issues:
 - 'Representativa solo a nivel departamental (24 dptos + Callao + Lima Metropolitana) y región natural/área; NO
   por provincia ni distrito aunque la base trae UBIGEO distrital. Estimados trimestrales solo nacional y urbano/rural.

@@ -2,7 +2,7 @@
 
 Versión 2.0 · 8 de octubre de 2026 · **421 fuentes** · esquema v2 (`esquema_registro.md`) · corregido tras la auditoría (`03_auditoria/auditoria.md`, `03_auditoria/auditoria_estado.csv`).
 
-**Verificación de enlaces:** 80 abiertos en navegador, 334 confirmados por búsqueda, 7 no responden. **Prueba de humo de datos:** 38 con muestra descargada ✅, 10 con enlace confirmado 🔗, 1 fallidos ❌, 5 sin descarga pública 🔒, 367 sin probar.
+**Verificación de enlaces:** 80 abiertos en navegador, 334 confirmados por búsqueda, 7 no responden. **Prueba de humo de datos:** 41 con muestra descargada ✅, 10 con enlace confirmado 🔗, 1 fallidos ❌, 5 sin descarga pública 🔒, 364 sin probar.
 
 Los mismos registros están en `catalogo_fuentes.csv` y `catalogo_fuentes.json` (fuente de verdad). Cada registro guarda en `correcciones` el hallazgo de auditoría que lo modificó y cómo se validó. `estado_ingesta` y `evidencia_ingesta` (solo JSON: capturas, huellas y fecha) dicen si la fuente tiene captura completa verificada. La representatividad verificada de las encuestas por año y módulo (R-ENC-08) está en `inferencia_verificada.csv`, con la cita de la ficha técnica.
 
@@ -556,9 +556,9 @@ Territorio: nivel más fino publicado / **nivel con representatividad** (solo en
 | [`CONCYTEC-RENACYT`](#concytec-renacyt) | [Registro Nacional Científico, Tecnológico y de Innovación Tecnológica (RENACYT)](https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-investigadores-renacyt) | Consejo Nacional de Ciencia, Tecnología e Innovación Tecnológica (CONCYTEC) | registro_administrativo | departamento | — | — | descarga_directa_url | 2 · Expansión | · |
 | [`CONCYTEC-CENSO-ID-2016`](#concytec-censo-id-2016) | [I Censo Nacional de Investigación y Desarrollo a Centros de Investigación 2016](https://repositorio.concytec.gob.pe/entities/publication/4e9e204b-28ac-41c0-9017-3d7cae16057b) | CONCYTEC / INEI | censo | departamento | residencia | 2014–2015 | descarga_directa_url | 3 · Complementaria | · |
 | [`CONCYTEC-ALICIA`](#concytec-alicia) | [ALICIA – Acceso Libre a Información Científica para la Innovación (Repositorio Nacional Digital)](https://alicia.concytec.gob.pe/vufind/) | Consejo Nacional de Ciencia, Tecnología e Innovación Tecnológica (CONCYTEC) | catalogo_portal | nacional | no_aplica | — | api_rest | Infraestructura de acceso | · |
-| [`HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2`](#hf-granite-embedding-311m-multilingual-r2) | [granite-embedding-311m-multilingual-r2 (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2/tree/44399559930365213510b1ee2eb15ded83374f0e) | IBM Granite (ibm-granite) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | · |
-| [`HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2`](#hf-granite-embedding-97m-multilingual-r2) | [granite-embedding-97m-multilingual-r2 (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2) | IBM Granite (ibm-granite) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | · |
-| [`HF-MULTILINGUAL-E5-SMALL`](#hf-multilingual-e5-small) | [multilingual-e5-small (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/intfloat/multilingual-e5-small/tree/614241f622f53c4eeff9890bdc4f31cfecc418b3) | intfloat (Liang Wang et al., Microsoft) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | · |
+| [`HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2`](#hf-granite-embedding-311m-multilingual-r2) | [granite-embedding-311m-multilingual-r2 (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2/tree/44399559930365213510b1ee2eb15ded83374f0e) | IBM Granite (ibm-granite) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | ✅ |
+| [`HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2`](#hf-granite-embedding-97m-multilingual-r2) | [granite-embedding-97m-multilingual-r2 (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2) | IBM Granite (ibm-granite) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | ✅ |
+| [`HF-MULTILINGUAL-E5-SMALL`](#hf-multilingual-e5-small) | [multilingual-e5-small (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/intfloat/multilingual-e5-small/tree/614241f622f53c4eeff9890bdc4f31cfecc418b3) | intfloat (Liang Wang et al., Microsoft) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | ✅ |
 
 ### Turismo
 
@@ -2164,11 +2164,11 @@ Encuesta continua de hogares que mide pobreza monetaria (gasto/ingreso), condici
 | Formatos | DTA, SAV, CSV, DBF, PDF |
 | Enlaces | [portal](https://proyectos.inei.gob.pe/microdatos/) · [datos](https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/966-Modulo01.zip) · [documentación](https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/842-Ficha.pdf) |
 | Descarga | **descarga_directa_url** — Códigos de encuesta-año confirmados: 2019=687 (ficha técnica 687), 2023=906, 2024=966 (resto: obtener de cambiaPeriodo.asp o tablas de enahodata/PeruData); 1997–2003 en DBF. Módulos corte transversal: 01 vivienda/hogar, 02 miembros, 03 educación, 04 salud, 05 empleo e ingresos, 34 sumarias (pobreza), 85 gobernabilidad, 37 programas sociales, etc. URL: .../descarga/{STATA\|SPSS\|CSV}/{cod}-Modulo{NN}.zip. Docs: .../DocumentosMetodologicos/{AÑO}-55/ (p.ej. 6_Calidad-ENAHO.pdf, 20_Diccionario_2024.pdf). Portal ASP clásico. Flujo AJAX: CambiaEnc.asp (encuesta→años) → CambiaAnio.asp (año→periodos) → cambiaPeriodo.asp (periodo→tabla de módulos con links). Descarga directa predecible: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{SPSS\|STATA\|CSV\|DBF}/{codigo_encuesta_anio}-Modulo{codigo_modulo}.zip (ej. ENAHO 2024 = 966-Modulo01.zip). Ficha técnica: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo_encuesta_anio}-Ficha.pdf. Documentos metodológicos: .../Descarga/DocumentosMetodologicos/{AÑO}-{codigo_tipo_encuesta}/{archivo}.pdf. Nombres de encuesta con caracteres Windows-1252 deben codificarse con escape() de JS (%96), no UTF-8. Sin captcha ni registro conocidos. Bash del entorno no tuvo salida a *.inei.gob.pe (proxy 403): probar desde otro entorno. |
-| Licencia | uso-libre-con-cita (uso libre con cita) · redistribución: sí · registro: no |
+| Licencia | ODbL-1.0 (ODbL (datosabiertos.gob.pe)) · redistribución: sí · registro: no |
 | Limitaciones | Representativa solo a nivel departamental (24 dptos + Callao + Lima Metropolitana) y región natural/área; NO por provincia ni distrito aunque la base trae UBIGEO distrital. Estimados trimestrales solo nacional y urbano/rural. 2020: 49% entrevistas telefónicas (16 mar–30 sep) con cuestionario reducido (se mantuvieron preguntas de pobreza), tasa de respuesta 73.1%. Factores de expansión (factor07 hogar; fac500a empleo) recalibrados a proyecciones de población: usar el factor publicado para cada año/versión. Muestra 2024: 36 594 viviendas. Según la ficha técnica (§ Niveles de inferencia), los dominios anuales son 24 departamentos (cada uno dominio de estudio) y el Área Metropolitana de Lima y Callao: el Callao no es un dominio propio. Ver catalogo/inferencia_verificada.csv. |
 | Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
 | Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
-| Trazabilidad | INF-17 (auditor) / R-ENC-08 (inferencia_verificada, 8/10/2026) (fuente) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
+| Trazabilidad | INF-17 (auditor) / R-ENC-08 (inferencia_verificada, 8/10/2026) (fuente) / K-08 (decisión del dueño, 12/11/2026): licencia ODbL-1.0 (fuente) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Pobreza monetaria 2025 = 25,7% (publicado 5 may 2026). Código 2025 no confirmado en esta sesión. La muestra integra componente panel; ver INEI-ENAHO-PANEL. [Prueba de humo 2026-10-05] Módulo 01 de la ENAHO 2024 (código 966) en STATA, SPSS y CSV (8–9 MB); módulo 34 (sumaria) 17,9 MB. |
 
 <a id="inei-mapa-pobreza"></a>
@@ -3356,7 +3356,7 @@ Microdatos de evaluaciones antropométricas y de hemoglobina de niños <5 años,
 | Limitaciones | Solo niños que acuden a EESS (sesgo de selección: no es prevalencia poblacional como ENDES); cobertura de tamizaje variable; cambio de puntos de corte de anemia OMS 2024 rompe serie. Mide niños tamizados en EESS: rotular "proporción de tamizados con anemia", no prevalencia. |
 | Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
 | Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 100 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
-| Trazabilidad | INF-08,INF-07 (auditor) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
+| Trazabilidad | INF-08,INF-07 (auditor) / url_portal (cambio manual del catálogo publicado, llevado a la fuente en M1-01) (fuente) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Fuente más fina (EESS) para anemia/DCI; contrastar con ENDES (departamento) para calibrar sesgo. Última actualización PNDA 8-sep-2026. [Prueba de humo 2026-10-05] ZIP semestrales por departamento (40 archivos; ej. BD SIEN Niños 2012, 62,6 MB; ficha modificada 05-08-2026). |
 
 <a id="inei-endes"></a>
@@ -3382,8 +3382,8 @@ Encuesta (programa DHS) sobre fecundidad, salud materno-infantil, nutrición inf
 | Descarga | **descarga_directa_url** — Módulos por cuestionario (RECH0, RECH1, REC0111, REC21, REC42, RECH6 antropometría/anemia, CSALUD01...). Código de tipo de encuesta en docs = 5 (.../DocumentosMetodologicos/2024-5/). También en datosabiertos.gob.pe (ZIP completo + diccionarios). Portal ASP clásico. Flujo AJAX: CambiaEnc.asp (encuesta→años) → CambiaAnio.asp (año→periodos) → cambiaPeriodo.asp (periodo→tabla de módulos con links). Descarga directa predecible: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{SPSS\|STATA\|CSV\|DBF}/{codigo_encuesta_anio}-Modulo{codigo_modulo}.zip (ej. ENAHO 2024 = 966-Modulo01.zip). Ficha técnica: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo_encuesta_anio}-Ficha.pdf. Documentos metodológicos: .../Descarga/DocumentosMetodologicos/{AÑO}-{codigo_tipo_encuesta}/{archivo}.pdf. Nombres de encuesta con caracteres Windows-1252 deben codificarse con escape() de JS (%96), no UTF-8. Sin captcha ni registro conocidos. Bash del entorno no tuvo salida a *.inei.gob.pe (proxy 403): probar desde otro entorno. |
 | Licencia | ODbL-1.0 (ODbL (en datosabiertos.gob.pe) / uso libre con cita) · redistribución: sí · registro: no |
 | Limitaciones | Muestra 2024: 36 760 viviendas; inferencia anual departamental (24 + Callao) y por área/región; no provincial/distrital. Algunos indicadores (anemia) con IC amplios en dptos pequeños. Cambio de umbral de anemia por altitud (OMS 2024) puede generar quiebre de serie; verificar en informe. Ubigeo y conglomerado presentes pero geo-desplazado en versiones DHS internacionales. |
-| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-04 |
-| Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-04) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-12 |
+| Priorización | **1 · Núcleo** · origen primaria · capa nucleo_social · puntaje 86 · compuerta aprobada por captura_verificada (capturada_verificada_capa0, 2026-11-12) — Primaria, vigente, del foco duro o su gasto, cruzable y descargable por API o URL estable. |
 | Trazabilidad | EXA-B-08,INF-08,INF-17,INT-06 (auditor) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Probables códigos ENDES (gist RRMaximiliano, módulos de 4 dígitos, no confirmado): 2015=506, 2016=579, 2017=615, 2018=650, 2019=701. Series 1986–2024 en https://proyectos.inei.gob.pe/files/publicaciones/2024/SERIES_ANUALES_1986_2024.pdf. Informes departamentales en proyectos.inei.gob.pe/endes/2024/departamentales/. [Prueba de humo 2026-10-05] ENDES 2025 disponible en el portal de microdatos (código de encuesta 1038, módulos 1629 en adelante; ZIP de 5,8 MB probado). |
 
@@ -11391,9 +11391,9 @@ Modelo de embeddings multilingüe ibm-granite/granite-embedding-311m-multilingua
 | Descarga | **descarga_manual** — Descarga manual del dueño por URL con el commit 44399559930365213510b1ee2eb15ded83374f0e (resolve/44399559930365213510b1ee2eb15ded83374f0e/<ruta>); luego pap registrar. Receta: curados/recetas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2.yaml. |
 | Licencia | Apache-2.0 (—) · redistribución: sí · registro: no |
 | Limitaciones | Modelo de terceros: no produce cifras ni se cita como fuente de datos (P-02). Se fija por commit y SHA-256; si cambia el commit, se recalculan los vectores. |
-| Verificación | portal: confirmado_busqueda · datos: · sin_probar · fecha: 2026-11-12 |
-| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 — Tema fuera del foco y sin dato primario cruzable. |
-| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-12 |
+| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 (capturada_verificada_piloto, 2026-11-12) — Tema fuera del foco y sin dato primario cruzable. |
+| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Agregada en M1-00 (tarea 9) / M1-09b (tarea 2). Auditoría: backlog/slice-m1/evidencia/auditoria_modelos_lista_dueno.md. |
 
 <a id="hf-granite-embedding-97m-multilingual-r2"></a>
@@ -11419,9 +11419,9 @@ Modelo de embeddings multilingüe ibm-granite/granite-embedding-97m-multilingual
 | Descarga | **descarga_manual** — Descarga manual del dueño por URL con el commit 835ad14087e140460703cf0fae09f97d469d65c2 (resolve/835ad14087e140460703cf0fae09f97d469d65c2/<ruta>); luego pap registrar. Receta: curados/recetas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2.yaml. |
 | Licencia | Apache-2.0 (—) · redistribución: sí · registro: no |
 | Limitaciones | Modelo de terceros: no produce cifras ni se cita como fuente de datos (P-02). Se fija por commit y SHA-256; si cambia el commit, se recalculan los vectores. |
-| Verificación | portal: confirmado_busqueda · datos: · sin_probar · fecha: 2026-11-12 |
-| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 — Tema fuera del foco y sin dato primario cruzable. |
-| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-12 |
+| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 (capturada_verificada_piloto, 2026-11-12) — Tema fuera del foco y sin dato primario cruzable. |
+| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Agregada en M1-00 (tarea 9) / M1-09b (tarea 2). Auditoría: backlog/slice-m1/evidencia/auditoria_modelos_lista_dueno.md. |
 
 <a id="hf-multilingual-e5-small"></a>
@@ -11447,9 +11447,9 @@ Modelo de embeddings multilingüe intfloat/multilingual-e5-small (ONNX + tokeniz
 | Descarga | **descarga_manual** — Descarga manual del dueño por URL con el commit 614241f622f53c4eeff9890bdc4f31cfecc418b3 (resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/<ruta>); luego pap registrar. Receta: curados/recetas/HF-MULTILINGUAL-E5-SMALL.yaml. |
 | Licencia | MIT (—) · redistribución: sí · registro: no |
 | Limitaciones | Modelo de terceros: no produce cifras ni se cita como fuente de datos (P-02). Se fija por commit y SHA-256; si cambia el commit, se recalculan los vectores. |
-| Verificación | portal: confirmado_busqueda · datos: · sin_probar · fecha: 2026-11-12 |
-| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 — Tema fuera del foco y sin dato primario cruzable. |
-| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) |
+| Verificación | portal: confirmado_busqueda · datos: ✅ descarga_ok · fecha: 2026-11-12 |
+| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 (capturada_verificada_piloto, 2026-11-12) — Tema fuera del foco y sin dato primario cruzable. |
+| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) / R-DEP-01 (compuerta por captura verificada, 8/10/2026) (captura) |
 | Notas | Agregada en M1-00 (tarea 9) / M1-09b (tarea 2). Auditoría: backlog/slice-m1/evidencia/auditoria_modelos_lista_dueno.md. |
 
 ### Turismo — fichas

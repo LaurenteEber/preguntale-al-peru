@@ -20,7 +20,7 @@ Owner reviews (3 h/week) never block: anything waiting for a visto stays `propue
 | T0 | M1-00 tarea 1: branch + supervisor documents | S1 | inline | done | dd3d8b3 |
 | T1 | M1-02 tarea 3: H05-1 reparar_dos | S1 S3 S5 | inline | in progress | |
 | T2 | M1-00 rest | S1 S3 | inline + workers | done | 1f0532f, 3bd4995, 87a63b4, 69b8662, 6521fdc |
-| T3 | M1-01 decisiones, reglas y tablas curadas | S1 S3 S4 | workers + inline | done except t5 | 93aaf8f |
+| T3 | M1-01 decisiones, reglas y tablas curadas | S1 S3 S4 | workers + inline | done | 93aaf8f, 64e7d29, catálogo |
 | T4 | M1-02 rest of the debt | S1 S3 | inline | pending | |
 | T5 | M1-03 uniones, universo, cortes | S1 S3 | tbd | pending | |
 | T6 | M1-04 cuestionarios | S1 | tbd | pending | |

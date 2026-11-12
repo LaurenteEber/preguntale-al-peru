@@ -201,6 +201,14 @@ C = [
  dict(id='INEI-ENAHO', hallazgos=['R-ENC-08 (inferencia_verificada, 8/10/2026)'], validacion='fuente',
       evidencia='Fichas técnicas ENAHO 2015–2025, §VII/§IX «Niveles de inferencia» (catalogo/inferencia_verificada.csv)',
       cambios={'_append_limitaciones': ' Según la ficha técnica (§ Niveles de inferencia), los dominios anuales son 24 departamentos (cada uno dominio de estudio) y el Área Metropolitana de Lima y Callao: el Callao no es un dominio propio. Ver catalogo/inferencia_verificada.csv.'}),
+ dict(id='INS-CENAN-SIEN', hallazgos=['url_portal (cambio manual del catálogo publicado, llevado a la fuente en M1-01)'], validacion='fuente',
+      evidencia='https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud',
+      cambios={'url_portal': 'https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud'}),
+ dict(id='INEI-ENAHO', hallazgos=['K-08 (decisión del dueño, 12/11/2026): licencia ODbL-1.0'], validacion='fuente',
+      evidencia=PNDA + 'dataset/encuesta-nacional-de-hogares-enaho-2023-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-%E2%80%93 ; '
+                + PNDA + 'dataset/encuesta-nacional-de-hogares-enaho-2024-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-%E2%80%93 '
+                + '(fichas de la Plataforma Nacional de Datos Abiertos: «Licencia: Open Data Commons Open Database License (ODbL)»)',
+      cambios={'licencia': 'ODbL-1.0', 'licencia_texto': 'ODbL (datosabiertos.gob.pe)', 'permite_redistribucion': True}),
 ]
 if __name__ == '__main__':
     json.dump(C, open('correcciones_auditoria.json', 'w'), ensure_ascii=False, indent=1)

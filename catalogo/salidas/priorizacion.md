@@ -1,6 +1,6 @@
 # Priorización de fuentes v2: embudo para la biblioteca de datos curados
 
-Versión 2.0 · 8 de octubre de 2026 · 418 fuentes · corrige la v1 según la auditoría (temas A-01 a A-04, C-01, C-04 a C-06). Código: `prioriza_v2.py`; las cifras de este documento se calculan del JSON y se verifican al generarlo.
+Versión 2.0 · 8 de octubre de 2026 · 421 fuentes · corrige la v1 según la auditoría (temas A-01 a A-04, C-01, C-04 a C-06). Código: `prioriza_v2.py`; las cifras de este documento se calculan del JSON y se verifican al generarlo.
 
 ## 1. Qué cambió frente a la v1
 
@@ -18,7 +18,7 @@ Versión 2.0 · 8 de octubre de 2026 · 418 fuentes · corrige la v1 según la a
 ## 2. El embudo
 
 ```
- 418  fuentes en el catálogo
+ 421  fuentes en el catálogo
   22  → rutas alternas (misma información por otra vía)
   19  → capa 0 · base de cruce (se construye primero)
   15  → infraestructura de acceso (portales y catálogos)
@@ -41,7 +41,7 @@ Versión 2.0 · 8 de octubre de 2026 · 418 fuentes · corrige la v1 según la a
 | Referencia | 86 | Cifras procesadas, secundarias y series cerradas: para validar y contexto |
 | Ruta alterna | 22 | Misma información que otra fuente preferida |
 | Infraestructura de acceso | 15 | Portales por los que se descargan otras fuentes: se monitorean |
-| Fuera de alcance | 81 | Otros temas sin dato primario cruzable |
+| Fuera de alcance | 84 | Otros temas sin dato primario cruzable |
 
 **Compuerta de ingesta (Olas 0 y 1):** 38 aprobadas (17 por captura completa verificada y 21 solo por la muestra de la prueba de humo; columna `base_aprobacion`), 10 con enlace confirmado sin descargar, 0 pendientes, 0 bloqueadas. Ninguna fuente entra a la biblioteca hasta estar "aprobada".
 
@@ -96,7 +96,7 @@ Versión 2.0 · 8 de octubre de 2026 · 418 fuentes · corrige la v1 según la a
 | ID | Fuente | Territorio | Base | Llaves | Años | Compuerta | Nota |
 |---|---|---|---|---|---|---|---|
 | `MINSA-CNV-NACIDOS-VIVOS` | [Registros de Nacidos Vivos en el Perú (2015–2025) – Certificado de Nacido Vivo](https://www.datosabiertos.gob.pe/dataset/registros-de-nacidos-vivos-en-el-per%C3%BA-2015%E2%80%932025) | establecimiento | establecimiento | ubigeo_inei, codigo_renipress_ipress | 2015–2025 | ✅ aprobada |  |
-| `INS-CENAN-SIEN` | [Sistema de Información del Estado Nutricional de niños y gestantes](https://web.ins.gob.pe/es/alimentacion-y-nutricion/vigilancia-alimentaria-y-nutricional/sala-nutricional) | establecimiento | establecimiento | codigo_renipress_ipress, ubigeo_inei | 2012–2026 | ✅ aprobada |  |
+| `INS-CENAN-SIEN` | [Sistema de Información del Estado Nutricional de niños y gestantes](https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud) | establecimiento | establecimiento | codigo_renipress_ipress, ubigeo_inei | 2012–2026 | ✅ aprobada |  |
 | `INEI-ENDES` | [Encuesta Demográfica y de Salud Familiar](https://proyectos.inei.gob.pe/microdatos/) | manzana_conglomerado / **departamento** | muestra | ubigeo_inei, conglomerado_vivienda | 1986–2025 | ✅ aprobada |  |
 | `INEI-MAPA-DCI-PROVINCIAL-2019` | [Aproximación al Mapa de Desnutrición Crónica Infantil a Nivel Provincial 2019](https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1848/libro.pdf) | provincia | residencia | — | 2019 | ✅ aprobada | Única desnutrición crónica oficial bajo el departamento (196 provincias, 2019, con IC). |
 
@@ -279,7 +279,7 @@ Versión 2.0 · 8 de octubre de 2026 · 418 fuentes · corrige la v1 según la a
 | `INEI-ANDA` | [Archivo Nacional de Datos – Sistema de Documentación Virtual (ANDA/NADA)](https://webinei.inei.gob.pe/anda_inei/index.php/catalog/) |
 | `PCM-GOBPE` | [Plataforma Digital Única del Estado Peruano (gob.pe) – Informes y publicaciones](https://www.gob.pe/) |
 
-**Referencia** (86), **Ola 3** (71) y **fuera de alcance** (81): filtrar por la columna `ola` en `catalogo_fuentes.csv`.
+**Referencia** (86), **Ola 3** (71) y **fuera de alcance** (84): filtrar por la columna `ola` en `catalogo_fuentes.csv`.
 
 ## 7. Vacíos sin fuente pública
 

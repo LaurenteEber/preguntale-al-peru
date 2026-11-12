@@ -4416,7 +4416,7 @@
   "estrategia_descarga": "descarga_directa_url",
   "detalle_descarga": "Códigos de encuesta-año confirmados: 2019=687 (ficha técnica 687), 2023=906, 2024=966 (resto: obtener de cambiaPeriodo.asp o tablas de enahodata/PeruData); 1997–2003 en DBF. Módulos corte transversal: 01 vivienda/hogar, 02 miembros, 03 educación, 04 salud, 05 empleo e ingresos, 34 sumarias (pobreza), 85 gobernabilidad, 37 programas sociales, etc. URL: .../descarga/{STATA|SPSS|CSV}/{cod}-Modulo{NN}.zip. Docs: .../DocumentosMetodologicos/{AÑO}-55/ (p.ej. 6_Calidad-ENAHO.pdf, 20_Diccionario_2024.pdf). Portal ASP clásico. Flujo AJAX: CambiaEnc.asp (encuesta→años) → CambiaAnio.asp (año→periodos) → cambiaPeriodo.asp (periodo→tabla de módulos con links). Descarga directa predecible: https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{SPSS|STATA|CSV|DBF}/{codigo_encuesta_anio}-Modulo{codigo_modulo}.zip (ej. ENAHO 2024 = 966-Modulo01.zip). Ficha técnica: https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/{codigo_encuesta_anio}-Ficha.pdf. Documentos metodológicos: .../Descarga/DocumentosMetodologicos/{AÑO}-{codigo_tipo_encuesta}/{archivo}.pdf. Nombres de encuesta con caracteres Windows-1252 deben codificarse con escape() de JS (%96), no UTF-8. Sin captcha ni registro conocidos. Bash del entorno no tuvo salida a *.inei.gob.pe (proxy 403): probar desde otro entorno.",
   "requiere_registro": false,
-  "licencia": "uso-libre-con-cita",
+  "licencia": "ODbL-1.0",
   "limitaciones": "Representativa solo a nivel departamental (24 dptos + Callao + Lima Metropolitana) y región natural/área; NO por provincia ni distrito aunque la base trae UBIGEO distrital. Estimados trimestrales solo nacional y urbano/rural. 2020: 49% entrevistas telefónicas (16 mar–30 sep) con cuestionario reducido (se mantuvieron preguntas de pobreza), tasa de respuesta 73.1%. Factores de expansión (factor07 hogar; fac500a empleo) recalibrados a proyecciones de población: usar el factor publicado para cada año/versión. Muestra 2024: 36 594 viviendas. Según la ficha técnica (§ Niveles de inferencia), los dominios anuales son 24 departamentos (cada uno dominio de estudio) y el Área Metropolitana de Lima y Callao: el Callao no es un dominio propio. Ver catalogo/inferencia_verificada.csv.",
   "prioridad_mvp": "alta",
   "notas": "Pobreza monetaria 2025 = 25,7% (publicado 5 may 2026). Código 2025 no confirmado en esta sesión. La muestra integra componente panel; ver INEI-ENAHO-PANEL. [Prueba de humo 2026-10-05] Módulo 01 de la ENAHO 2024 (código 966) en STATA, SPSS y CSV (8–9 MB); módulo 34 (sumaria) 17,9 MB.",
@@ -4430,7 +4430,7 @@
   "fecha_ultimo_dato": null,
   "serie_activa": true,
   "anios_con_quiebre": "2020: 49 % de entrevistas telefónicas (16 mar–30 sep), cuestionario reducido, tasa de respuesta 73,1 %.",
-  "licencia_texto": "uso libre con cita",
+  "licencia_texto": "ODbL (datosabiertos.gob.pe)",
   "permite_redistribucion": true,
   "base_geografica": "muestra",
   "tipo_medida": "prevalencia",
@@ -4450,6 +4450,13 @@
     ],
     "validacion": "fuente",
     "evidencia": "Fichas técnicas ENAHO 2015–2025, §VII/§IX «Niveles de inferencia» (catalogo/inferencia_verificada.csv)"
+   },
+   {
+    "hallazgos": [
+     "K-08 (decisión del dueño, 12/11/2026): licencia ODbL-1.0"
+    ],
+    "validacion": "fuente",
+    "evidencia": "https://www.datosabiertos.gob.pe/dataset/encuesta-nacional-de-hogares-enaho-2023-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-%E2%80%93 ; https://www.datosabiertos.gob.pe/dataset/encuesta-nacional-de-hogares-enaho-2024-instituto-nacional-de-estad%C3%ADstica-e-inform%C3%A1tica-%E2%80%93 (fichas de la Plataforma Nacional de Datos Abiertos: «Licencia: Open Data Commons Open Database License (ODbL)»)"
    },
    {
     "hallazgos": [
@@ -7938,6 +7945,13 @@
    },
    {
     "hallazgos": [
+     "url_portal (cambio manual del catálogo publicado, llevado a la fuente en M1-01)"
+    ],
+    "validacion": "fuente",
+    "evidencia": "https://www.gob.pe/institucion/ins/colecciones/19321-informes-de-vigilancia-del-sistema-de-informacion-del-estadonutricional-sien-en-establecimientos-de-salud"
+   },
+   {
+    "hallazgos": [
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
@@ -8042,7 +8056,7 @@
   "notas": "Probables códigos ENDES (gist RRMaximiliano, módulos de 4 dígitos, no confirmado): 2015=506, 2016=579, 2017=615, 2018=650, 2019=701. Series 1986–2024 en https://proyectos.inei.gob.pe/files/publicaciones/2024/SERIES_ANUALES_1986_2024.pdf. Informes departamentales en proyectos.inei.gob.pe/endes/2024/departamentales/. [Prueba de humo 2026-10-05] ENDES 2025 disponible en el portal de microdatos (código de encuesta 1038, módulos 1629 en adelante; ZIP de 5,8 MB probado).",
   "estado_portal": "confirmado_busqueda",
   "estado_datos": "descarga_ok",
-  "fecha_verificacion": "2026-11-04",
+  "fecha_verificacion": "2026-11-12",
   "url_patron": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/{formato}/{codigo}-Modulo{modulo}.zip",
   "anio_inicio": 1986,
   "anio_fin": 2025,
@@ -8072,12 +8086,12 @@
      "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
     ],
     "validacion": "captura",
-    "evidencia": "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-10; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-11; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-12; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-13; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-14; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-15; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-16; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-17; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-18; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-19; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-2; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-20; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-21; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-22; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-3; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-4; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-5; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-6; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-7; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-8; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-9 · 22 huella(s) verificada(s) el 2026-11-04"
+    "evidencia": "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-10; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-11; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-12; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-13; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-14; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-15; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-16; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-17; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-18; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-19; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-2; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-20; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-21; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-22; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-3; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-4; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-5; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-6; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-7; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-8; biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-9; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-10; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-11; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-2; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-3; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-4; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-5; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-6; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-7; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-8; biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-9 · 33 huella(s) verificada(s) el 2026-11-12"
    }
   ],
   "estado_ingesta": "capturada_verificada_capa0",
   "evidencia_ingesta": {
-   "fecha_verificacion": "2026-11-04",
+   "fecha_verificacion": "2026-11-12",
    "tipo_verificacion": "huella",
    "capturas": [
     "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07",
@@ -8101,7 +8115,18 @@
     "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-6",
     "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-7",
     "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-8",
-    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-9"
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-10-07-9",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-10",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-11",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-2",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-3",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-4",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-5",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-6",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-7",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-8",
+    "biblioteca/cruda/capturas/INEI-ENDES/2026-11-09-9"
    ],
    "huellas": [
     "sha256:0d022f82ea63f7dc6001de824e452850ddd9c47b6ed23ad2977383bca37c4419",
@@ -8109,21 +8134,32 @@
     "sha256:0f93549a141fda8cc9db5935a0011fcde024a398739ed45906fec213d5ad17cf",
     "sha256:0faf60166b7bbd3638c9b1d8443d4c014d04481fb6bed6b74558aecc8f269509",
     "sha256:14ccd50e8b663d1e689fbb06509bc8165fc05566cbcdc8a12594a5eddf31c0de",
+    "sha256:165b4b06f33e5b51adff85b73588e7afdb65c20240a62ad6ce538fda38b12e4e",
     "sha256:1dd766bf2d6dd65b8ec0f9463ea9718fa22e60cff1514488de3f448caf3a5508",
+    "sha256:2bbbbde6377a1c49e150799f36523284cfc77511929f5caee0408fb635a6d594",
     "sha256:2c53236b8ee41db677111ff221c4691b0dab3574900987e05ca8fb15550a7702",
     "sha256:371659e83fc4283fe591b2602a6807ff958b7303e0c7a8df99186b74fa354da1",
+    "sha256:3ba67f49104110cbbf5c221bf9e3415ef2a94a00bcd378a9b0f543dff42f40fa",
     "sha256:3f3404b444895da2def53d20bfabac7afc4563b5a87a14453cf41967ef6d9afd",
     "sha256:4555897dbdd29e86d303c828fbd57b04f611943327f2269347690ef4171dedc2",
+    "sha256:4beb0aefbe7445f4b5637ad606746fe0dfabe5187f363c9858bae1eff82a3e82",
     "sha256:4ca224d983f708c699a177acbb6cd29dea2197bff46ae33cf140c88f0891a4cc",
     "sha256:52e4848dc22800f767e477053d7daada3f7360f5d03d1cd022d6785319955a39",
     "sha256:5831d3326670c6eca5c9b53a0307630c2abed756b16ad693e29b3fc53a72d3f4",
     "sha256:5cbe2c9e249959b77b85c06aee2d37b55d8ef54b21b3128f9c3da39b81742975",
+    "sha256:63dc88121eefd105180f365c2049c554afc8f2fc0ee5c21154c0d76f4bf7a7aa",
     "sha256:6a0d3dd0aeb6a2d2c894264f1fa8f70c95e610523dd315fd149f09d2ded498e5",
     "sha256:744d22dbd27f91fbfe5975b6791a09573298f746401a66cf8e08f67d07023e8f",
     "sha256:8a348b2419759a86765ca7e05459a50d11c75113fe0fc31641cb70b44529ba5d",
+    "sha256:93b64e19f255e89f9ccf954096ba53430297fa941759760a9afd67d5b8a29761",
     "sha256:9a8877d0e9bf9cb097d3ffcbfa2574df2a9650268687c7263223f63b9d763453",
+    "sha256:b66d18dca7e8ebb2266d08b3077bc2e9711b2ec8374f784d41700cf4824eb42f",
     "sha256:bd6d3c4657712643657a66539466ca4b216664698af9e9273562a6b08274d19a",
+    "sha256:be07a9aa4226d7ab1adb6fab4c50ace0d1d6932d0811e1af3be885bcd8fc3bfa",
+    "sha256:c8c27d8dc4ce27dac8f2cf19ed83e71d8c73a6ea3b2a7a126b5d1f6e1c6fda42",
+    "sha256:c99b74b93486387bdfde7beb36504223933350ddb2cab981ea9718e668dccb9e",
     "sha256:d40ca096acd91aa296742820c872350006ea55e44354cefae6f6bbd24c27838c",
+    "sha256:e9940be9c0204fb09d461c565778b48bf830dae4d326b2b4a5d7fd193cba9822",
     "sha256:ee9fdc045a7670e3588074c5d7c02b5609140fd37b02d7292239f435f7096942",
     "sha256:f989759e441d8b993e0b38e1a1c1aaf141fb3d9c70fff402e20d80e1cf23fbea"
    ],
@@ -30036,7 +30072,7 @@
   "licencia_texto": null,
   "prioridad_mvp": null,
   "estado_portal": "confirmado_busqueda",
-  "estado_datos": "sin_probar",
+  "estado_datos": "descarga_ok",
   "fecha_verificacion": "2026-11-12",
   "ids_fusionados": [],
   "id_ruta_principal": null,
@@ -30090,9 +30126,43 @@
     ],
     "validacion": "investigacion",
     "evidencia": "https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2/tree/44399559930365213510b1ee2eb15ded83374f0e"
+   },
+   {
+    "hallazgos": [
+     "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
+    ],
+    "validacion": "captura",
+    "evidencia": "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-2; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-3; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-4; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-5; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-6; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-7; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-8; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-9 · 9 huella(s) verificada(s) el 2026-11-12"
    }
   ],
-  "estado_ingesta": null,
+  "estado_ingesta": "capturada_verificada_piloto",
+  "evidencia_ingesta": {
+   "fecha_verificacion": "2026-11-12",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-2",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-3",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-4",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-5",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-6",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-7",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-8",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2/2026-11-12-9"
+   ],
+   "huellas": [
+    "sha256:0087c868b33bad550a78a08d19798cfd7f713cde4f020803b8f51f405503e15f",
+    "sha256:75f9f258bf5013f5fe8a4dad61dd0fd16ac0cbaa7a106e3d3f41c2d04a42d541",
+    "sha256:781299da695e58439d70d491840da22ea0935d1d57d9646eb9725f1f19754e89",
+    "sha256:7947bdf0378520e69ca412b8c4dacd1cffa8aef099f851fdd5c65aa27c6b36a0",
+    "sha256:84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+    "sha256:967ef958285e4a7a37d8ff1832473d967edd913b4e48572f31c3d3ea361d5327",
+    "sha256:cb9e60dcf4d8d314315cb3e761fe4c2e664fda8dbf66d7815372b2639e381182",
+    "sha256:e1e3fc842a8e0537e25d6e4c93879698b92ae96722e8c162bef334b57978a3b0",
+    "sha256:f09adf93fcf868bb2fc3976a435d810b2ecdffa953d1da091d2a91168abab44b"
+   ],
+   "huellas_en_lock": false
+  },
   "base_aprobacion": null
  },
  {
@@ -30108,7 +30178,7 @@
   "licencia_texto": null,
   "prioridad_mvp": null,
   "estado_portal": "confirmado_busqueda",
-  "estado_datos": "sin_probar",
+  "estado_datos": "descarga_ok",
   "fecha_verificacion": "2026-11-12",
   "ids_fusionados": [],
   "id_ruta_principal": null,
@@ -30162,9 +30232,43 @@
     ],
     "validacion": "investigacion",
     "evidencia": "https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2"
+   },
+   {
+    "hallazgos": [
+     "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
+    ],
+    "validacion": "captura",
+    "evidencia": "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-2; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-3; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-4; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-5; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-6; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-7; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-8; biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-9 · 9 huella(s) verificada(s) el 2026-11-12"
    }
   ],
-  "estado_ingesta": null,
+  "estado_ingesta": "capturada_verificada_piloto",
+  "evidencia_ingesta": {
+   "fecha_verificacion": "2026-11-12",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-2",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-3",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-4",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-5",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-6",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-7",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-8",
+    "biblioteca/cruda/capturas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2/2026-11-12-9"
+   ],
+   "huellas": [
+    "sha256:013787ee251ff611722479197c00853b62113ad303cb0a36524231783c676c69",
+    "sha256:4f2842d568e2724370aec203652a42ac783c7937f8347a1a2cc7506d71f1582f",
+    "sha256:68e592b160673d30250824c1116bc6ab33f70efb22b97c9e1d7ce1e69c1c9d70",
+    "sha256:6ed69389e30a8ecabfce2f9ebcdf0c908b34056f24d994340f2f216521c057d5",
+    "sha256:84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf",
+    "sha256:8bc5c9a40814fcf48d2fbe7cfeff4bee6736c3c2a823ba0ce098985c59d12ab7",
+    "sha256:93a59cbc7d82a47a7148719d9b21c0f2f111121e495b3918143184f4cd0ea25e",
+    "sha256:967ef958285e4a7a37d8ff1832473d967edd913b4e48572f31c3d3ea361d5327",
+    "sha256:de948b0bdc6f356afad7a84b276d8dd7e7fe10fb9add1bb5e610621c28e41ebc"
+   ],
+   "huellas_en_lock": false
+  },
   "base_aprobacion": null
  },
  {
@@ -30180,7 +30284,7 @@
   "licencia_texto": null,
   "prioridad_mvp": null,
   "estado_portal": "confirmado_busqueda",
-  "estado_datos": "sin_probar",
+  "estado_datos": "descarga_ok",
   "fecha_verificacion": "2026-11-12",
   "ids_fusionados": [],
   "id_ruta_principal": null,
@@ -30234,9 +30338,41 @@
     ],
     "validacion": "investigacion",
     "evidencia": "https://huggingface.co/intfloat/multilingual-e5-small/tree/614241f622f53c4eeff9890bdc4f31cfecc418b3"
+   },
+   {
+    "hallazgos": [
+     "R-DEP-01 (compuerta por captura verificada, 8/10/2026)"
+    ],
+    "validacion": "captura",
+    "evidencia": "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12; biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-2; biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-3; biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-4; biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-5; biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-6; biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-7; biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-8 · 8 huella(s) verificada(s) el 2026-11-12"
    }
   ],
-  "estado_ingesta": null,
+  "estado_ingesta": "capturada_verificada_piloto",
+  "evidencia_ingesta": {
+   "fecha_verificacion": "2026-11-12",
+   "tipo_verificacion": "huella",
+   "capturas": [
+    "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12",
+    "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-2",
+    "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-3",
+    "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-4",
+    "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-5",
+    "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-6",
+    "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-7",
+    "biblioteca/cruda/capturas/HF-MULTILINGUAL-E5-SMALL/2026-11-12-8"
+   ],
+   "huellas": [
+    "sha256:0b44a9d7b51c3c62626640cda0e2c2f70fdacdc25bbbd68038369d14ebdf4c39",
+    "sha256:948201d8329907aae938fa62f9ceeed53f5694dacc2b87b9f3b78b37ee986529",
+    "sha256:987f7a67a38fa564c849bb5d277c52ab9088a84368fc0be31a354125aebb12a0",
+    "sha256:a1d6bc8734a6f635dc158508bef000f8e2e5a759c7d92f984b2c86e5ff53425b",
+    "sha256:bbb7c1333fc4b3e27fbc9cd5d2070aabcc1d4dfb99917c3633e772f97545a6b6",
+    "sha256:c6e29747481e8b5dd2b58401966aeac910de39092f90cda9a704b1545f902b04",
+    "sha256:ca456c06b3a9505ddfd9131408916dd79290368331e7d76bb621f1cba6bc8665",
+    "sha256:d05497f1da52c5e09554c0cd874037a083e1dc1b9cfd48034d1c717f1afc07a7"
+   ],
+   "huellas_en_lock": false
+  },
   "base_aprobacion": null
  },
  {
