@@ -1,6 +1,6 @@
 # Motor de inferencia a pedido sobre las encuestas del INEI
 
-Documento de diseño · Pregúntale al Perú · 8 de noviembre de 2026 · Ubicación: `docs/diseno/motor_inferencia.md`
+Documento de diseño · Pregúntale al Perú · 8 de noviembre de 2026 (actualizado el 12/11/2026 por M1-01) · Ubicación: `docs/diseno/motor_inferencia.md`
 
 Este documento describe el motor que responde preguntas sobre la ENDES y la ENAHO calculando en el momento, a partir de las preguntas de los cuestionarios. Es la referencia del slice de implementación del motor y de los que siguen. `docs/especificaciones/motor.md` describe el motor actual y se actualiza en cada fase a medida que el nuevo lo reemplaza.
 
@@ -316,11 +316,12 @@ Ubicación de los datos y archivos nuevos:
 | `tipo_origen` | `pregunta`, `construida_inei` (sumaria, pobreza, deflactores) o `recodificada` | revisión |
 | `universo_corto` | ≤ 12 palabras para la capa 1 | LLM fuera de línea + revisión |
 | `concepto_id` | concepto armonizado (§8.2) | propuesto por similitud, aprobado en revisión |
+| `bloque_id` | bloque temático de la tabla al que pertenece (cada variable de clase `categoria` o `medida` está en uno solo); el nombre y la descripción del bloque entran como campo de búsqueda (§10, `docs/diseno/fichas.md` §6) | `pap fichas generar`, desde `curados/inferencia/bloques/<encuesta>.yaml` |
 | `estado` | `propuesto` o `revisado` | flujo de curaduría (§26.4) |
 
 Reglas:
 - Las variables `construida_inei` solo se usan en recetas de indicador.
-- Las variables `propuesto` no se usan en respuestas públicas.
+- Las variables `propuesto` no se usan en respuestas públicas. Única excepción (K-04, dueño, 12/11/2026): con `inferencia.admitir_propuesto_en_sombra` el motor en modo `sombra` puede usarlas, porque lo que espera un visto no frena el trabajo. El parámetro solo es válido con `motor.version` distinto de `nuevo`; con `nuevo` el código lo rechaza.
 
 ### 7.3 Controles automáticos
 
@@ -461,15 +462,16 @@ Viven en `curados/inferencia/`, cada una con su cita a la ficha técnica. Los es
 
 **Detalle técnico.**
 - **Sin filtro previo** de año, lugar ni nivel. Esas dimensiones las aplica el verificador. Si se filtraran antes, una variable vecina que sí existe ese año ocuparía el lugar de la correcta.
-- **Búsqueda por palabras:** BM25 con `bm25s` y el stemmer de español (`PyStemmer`), sobre la etiqueta curada, el texto de la pregunta, las etiquetas de las categorías, el universo corto y los sinónimos expandidos. La razón está en `docs/diseno/tecnologias.md`.
+- **Búsqueda por palabras:** BM25 con `bm25s` y el stemmer de español (`PyStemmer`), sobre la etiqueta curada, el texto de la pregunta, las etiquetas de las categorías, el universo corto, el nombre y la descripción del bloque temático (`bloque_id`) y los sinónimos expandidos. La razón está en `docs/diseno/tecnologias.md`.
 - **Búsqueda por significado:** `intfloat/multilingual-e5-small` en ONNX, con `onnxruntime` y `tokenizers`. Lleva los prefijos `query:` y `passage:`, y se calcula un vector por texto distinto.
   - Los vectores del índice se calculan fuera de línea y se guardan con la huella del modelo; en línea solo se codifica la pregunta.
   - Si el recall no alcanza, se prueba un modelo mayor o un reordenador local.
 - **Fusión:**
   - se combinan las dos búsquedas con RRF;
-  - las baterías se agrupan por `grupo`;
-  - solo entran variables `revisado` de clase `categoria` o `medida`;
+  - las baterías se agrupan por `grupo`, y los candidatos también por bloque temático;
+  - solo entran variables `revisado` de clase `categoria` o `medida` (o `propuesto`, solo con `inferencia.admitir_propuesto_en_sombra` y nunca con `motor.version: nuevo`, §7.2);
   - salen de 10 a 20 candidatos con un ID corto (`c01`…`c20`).
+- **Búsqueda en dos pasos** (`recuperador.dos_pasos`, inicial `false`): el paso 1 busca sobre bloques, conceptos y recetas, y el paso 2 busca variables solo dentro de los bloques elegidos. Se mide contra el modo de un paso y se activa solo si mejora el recall@20 (`docs/diseno/fichas.md` §7; lo implementa M1-09).
 - **Filtros de significado:**
   - si la pregunta trae `sujeto` o `periodo_referencia` y el candidato tiene otro valor, se descarta;
   - si la pregunta no los trae, el candidato queda, y su valor se dice en la capa 1.
@@ -564,21 +566,21 @@ En un plan de varios años, `indicador` y `universo` se refieren a un `concepto_
 
 | Regla | Si falla |
 |---|---|
-| Las variables y categorías existen ese año y están en `revisado`. Dentro de una receta (en `revisado` o `verificado`) se aceptan variables `propuesto`, porque la receta se revisa entera | plan |
+| Las variables y categorías existen ese año y están en `revisado`. Dentro de una receta (en `revisado` o `verificado`) se aceptan variables `propuesto`, porque la receta se revisa entera. Fuera de una receta, solo con `inferencia.admitir_propuesto_en_sombra` y en modo `sombra`, porque el resultado no se muestra (§24); nunca con `motor.version: nuevo` | plan |
 | No usa una variable `construida_inei` fuera de una receta | plan |
 | El `sujeto` y la `ventana_referencia` coinciden con lo pedido | plan |
 | El universo del plan es compatible con el universo del cuestionario | plan |
-| Agrega el universo analítico según la unidad y la medición | — |
+| Agrega el universo analítico según la unidad y la medición. La medición de cada variable sale de `curados/inferencia/mediciones.yaml` (por tabla y batería), nunca del LLM: una variable de hemoglobina exige `nino_hecho_hb_medida`. El universo de la disciplina infantil exige además a la mujer en REC0111 y deja fuera las 341 filas de REC93DVdisciplina sin ella (C-M0-05-2) | — |
 | Agrega el diseño desde `diseno_muestral.csv` | — |
 | **Peso al unir archivos:** gana el de la submuestra más restrictiva que intervenga en `y`, `u` o los cortes (medición > entrevista individual > hogar) | — |
 | Submuestras no anidadas (por ejemplo, la ENDES 2020 por teléfono frente a la medición presencial) | **estructural** (`submuestras_incompatibles`) |
-| **Uniones:** *left join* hacia el archivo de la unidad; un corte sin dato pasa a la categoría «sin dato». Se controlan las filas de `u` antes y después (una pérdida mayor al 1 % es falla), la suma de pesos y los conglomerados y estratos | plan |
+| **Uniones:** *left join* hacia el archivo de la unidad; también se admite ir de un archivo a otro que cuelgue del mismo padre (**unión por el padre común**, D-M0-10-1: por ejemplo RECH6 y RECH23 por RECH0) cuando el segundo es 1:1 con el padre por la misma llave o `1:0..1`; se compila como dos uniones izquierdas. Las relaciones y su `cardinalidad` se declaran en `archivos_<encuesta>_<anio>.yaml` y se comprueban contra los datos, no se infieren al vuelo; una relación que no es 1:1 ni 1:0..1 rechaza el plan (lo implementa M1-03). Un corte sin dato pasa a la categoría «sin dato». Se controlan las filas de `u` antes y después (una pérdida mayor al 1 % es falla), la suma de pesos y los conglomerados y estratos | plan |
 | La medida existe en esta fase: hasta la fase 3, solo proporciones | **estructural** (`medida_no_disponible`) |
 | `medida = total` con `peso_normalizado`: se reemplaza por la receta derivada si la receta está `verificado` y la fase lo permite (§8.1); si no | **estructural** (`total_no_disponible`, X-24) |
 | El año tiene ronda y el concepto existe ese año | **estructural** (`anio`) |
 | Los años pedidos no cruzan un quiebre `corte` (`perfil_anual.csv`, E-07) ni un cambio de criterio (E-06) | **estructural** (`quiebre`) |
 | Nivel o lugar fuera de `inferencia_verificada` (E-02) o por debajo de `ubigeo_minimo` | **se sube de nivel** (R-ENC-06, §17.1) |
-| **Cortes:** como máximo una desagregación bajo el departamento (R-ENC-09) y como máximo `cortes_max` en total | plan (se recorta y se avisa) |
+| **Cortes:** como máximo una desagregación bajo el departamento (R-ENC-09) y como máximo `cortes_max` en total. El corte `grupo_edad` del niño solo se ofrece dentro de las recetas en M1: un plan compuesto que lo pida se recorta y se avisa. Sus tramos son los del INEI y dependen del indicador (anemia: 6–8, 9–11, 12–17, 18–23 y 24–35 meses; desnutrición crónica: menores de 36 y 36–59 meses; C-M0-06-2) | plan (se recorta y se avisa) |
 | Dominios del cálculo ≤ `dominios_max_llamada` | plan (se parte el cálculo, §14) |
 | **Conteo previo de n sin ponderar en `u` por dominio:** si n < 25, ese dominio se suprimirá con seguridad. Este conteo **solo descarta; nunca aprueba** | dominio marcado para sustitución |
 
@@ -670,7 +672,7 @@ El lugar **nunca** es un «no puedo»: si la encuesta no alcanza para ese lugar,
 ### 15.1 Proporciones
 
 **Detalle técnico.**
-- Se aplican **R-ENC-02, R-ENC-03 y R-ENC-04 tal como están en `reglas/reglas.json`**, con sus parámetros.
+- Se aplican **R-ENC-02, R-ENC-03 y R-ENC-04 tal como están en `reglas/reglas.json`**, con sus parámetros. Desde el 12/11/2026 (C-M0-11-2, dueño) R-ENC-03 y R-ENC-04 corren **desde 25 casos**, no desde 50: los umbrales de R-ENC-02 no cambian (menos de 25 suprime; de 25 a 49 marca referencial y la cifra sigue a los pasos 3 a 7). Medido antes de aplicar: ninguna fila de encuesta del cubo ni de las recetas tiene entre 25 y 49 casos, así que ningún estado cambió.
 - **Cómo se combinan:**
   - las condiciones de **suprimir** detienen el árbol;
   - las de **referencial** se acumulan;
@@ -680,15 +682,15 @@ El lugar **nunca** es un «no puedo»: si la encuesta no alcanza para ese lugar,
 | Paso | Regla | Condición | Efecto |
 |---|---|---|---|
 | 1 | R-ENC-02 | n sin ponderar < 25 | suprimir |
-| 2 | R-ENC-02 | 25 ≤ n ≤ 49 | referencial (sigue) |
+| 2 | R-ENC-02 | 25 ≤ n ≤ 49 | referencial (sigue a los pasos 3 a 7) |
 | 3 | R-ENC-04, si p < 10 % o p > 90 % | n efectivo < 30; o ancho ≥ 30 pp; o ancho relativo > 130 % con ancho > 5 pp | suprimir |
 | 4 | R-ENC-04 | (ancho relativo > 59 % con ancho > 5 pp), o n efectivo < 50, o gl < 8, o CV ref = ee/mín(p, 1−p) > 15 % (L9) | referencial |
 | 5 | R-ENC-04 | numerador 0 o igual a n | rotular «menos de {límite superior}» o «más de {límite inferior}» |
 | 6 | R-ENC-03, si 10 % ≤ p ≤ 90 % | CV > 30 % | suprimir |
 | 7 | R-ENC-03 | 15 % < CV ≤ 30 %, o gl < 8 | referencial |
-| 8 | Nueva (consolidador), si el dueño la aprueba (K-07) | tasa de no respuesta del ítem > 5 % / > 20 % (propuesta) | aviso en la capa 2 / referencial |
+| 8 | R-ENC-19 (aprobada, K-07) | tasa de no respuesta del ítem > 5 % / > 20 % | aviso en la capa 2 / referencial |
 
-El paso 8 es una regla nueva y sus umbrales son una propuesta: se agrega con el consolidador solo cuando el dueño la apruebe (K-07). Mientras tanto, la tasa de no respuesta se informa en la capa 3 sin efecto.
+El paso 8 es la regla R-ENC-19, agregada con el consolidador. Sus umbrales (5 % y 20 %) son valores iniciales aprobados por el dueño el 12/11/2026 y se ajustan con el consolidador. Se enciende con `compuertas.paso_no_respuesta_activo` (`curados/inferencia/parametros.yaml`, hoy `true`); apagado, la tasa solo se informa en la capa 3, sin efecto. La regla solo dispara si el cálculo trae la tasa.
 
 - **En una respuesta con cortes, cada grupo se evalúa por separado.** Un grupo suprimido aparece como «sin datos suficientes». Si se suprimen todos los grupos pedidos, se pasa a la decisión 2 (§17.1).
 
@@ -750,7 +752,7 @@ Cada nivel lleva su motivo en palabras sencillas.
   3. el territorio sin desagregar.
 - **Cada paso se calcula y pasa por las compuertas.** Se usa el primero que pasa. Si ninguno pasa, la salida es «no puedo» por precisión.
 - **Nunca automático:** cambiar a un año distinto del pedido, a otra población o a otro concepto.
-- **La respuesta lleva el bloque `sustitucion`** (§19). Ejemplo para «Huancavelica rural»: si no alcanza ni agrupando años ni con la región natural, «Pediste: Huancavelica, zona rural. Te mostramos: Huancavelica en total, rural y urbano». Además, el alcance real va dentro de la cifra clave.
+- **La respuesta lleva el bloque `sustitucion`** (§19; en el contrato con `partes[]` va dentro de cada parte, lo redacta M1-16). Ejemplo para «Huancavelica rural»: si no alcanza ni agrupando años ni con la región natural, «Pediste: Huancavelica, zona rural. Te mostramos: Huancavelica en total, rural y urbano». Además, el alcance real va dentro de la cifra clave.
 
 ### 17.2 Alternativas
 
@@ -827,9 +829,12 @@ Cada nivel lleva su motivo en palabras sencillas.
   - después, las alternativas.
 - **`indeterminado`:** «No pudimos confirmar si tenemos ese dato. Lo vamos a revisar. Mientras tanto, esto sí tenemos:», seguido de las alternativas.
 - **Validación:** el validador y el corrector actuales revisan todos los textos, y los números entran solo por marcadores (R-04).
+- **Variables `propuesto`:** una respuesta pública solo usa variables `revisado` o recetas. Con `inferencia.admitir_propuesto_en_sombra` el motor en modo `sombra` puede usar `propuesto`, y como en `sombra` la web responde con el motor actual (§24), esa respuesta no se muestra. Nunca con `motor.version: nuevo` (§7.2).
 - **Formulario guiado:** ofrece las recetas y los conceptos promovidos, con los cortes estándar. Es la vía cuando el LLM no está disponible o se llegó al tope de costo.
 
 ### 19.2 Contrato `respuesta.json` v2
+
+**Partes por fuente (decisión del dueño del 10/11/2026, niveles 1 y 2 con varias fuentes).** El contrato v2 llevará `partes[]`, una por fuente, y lo que el esquema de abajo pone suelto y es propio de cada fuente pasará a ir dentro de cada parte. En M1 siempre hay una parte. M1-16 redacta el esquema y su motivo (aquí, en `contrato_respuesta.md` y en la fila R-04); hasta entonces el JSON de abajo es el borrador anterior.
 
 El campo `tipo` toma uno de estos valores: `respuesta`, `aclaracion`, `no_se_puede`, `indeterminado` o `mensaje` (este último ya existe hoy). Los campos nuevos son opcionales para la web actual. Esquema:
 
@@ -1025,7 +1030,7 @@ El campo `tipo` toma uno de estos valores: `respuesta`, `aclaracion`, `no_se_pue
   - Con `sombra`, la web responde con el motor actual, calcula también con el nuevo y registra las diferencias (sin el texto de la pregunta).
   - Un tema pasa a `nuevo` en la fase 4, cuando sus recetas igualan el cubo y su evaluación cumple los umbrales.
 - **Vuelta atrás:** el cubo y su ruta se conservan hasta cerrar la fase 4 y un mes de operación sin incidentes.
-- **El contrato v2** (§19.2) se publica **antes** de tocar la web. La web lo admite sin romper el v1.
+- **El contrato v2** (§19.2, que nace con `partes[]`; lo redacta M1-16) se publica **antes** de tocar la web. La web lo admite sin romper el v1.
 
 ---
 
@@ -1055,7 +1060,7 @@ El campo `tipo` toma uno de estos valores: `respuesta`, `aclaracion`, `no_se_pue
 **En sencillo.** El motor nuevo cambia varias decisiones del proyecto. Se registran editando la fila de cada tema en `docs/decisiones.md`, con su motivo. Solo los temas nuevos llevan fila nueva. Las reglas se cambian con el consolidador, nunca a mano.
 
 **Detalle técnico.**
-- **Quién y cuándo:** lo aplica el agente implementador en la primera historia del slice (§27), con lo que decidió el dueño el 8/11/2026.
+- **Quién y cuándo:** lo aplica el agente implementador en la primera historia del slice (§27), con lo que decidió el dueño el 8/11/2026; las filas de M1-01 aplican las decisiones del 12/11/2026.
 - **Cómo se edita cada fila:** la columna «Qué se agrega o cambia» dice qué se modifica. **El resto del contenido de la fila se conserva.**
 
 | ID | Qué se agrega o cambia en la fila | Motivo |
@@ -1063,7 +1068,7 @@ El campo `tipo` toma uno de estos valores: `respuesta`, `aclaracion`, `no_se_pue
 | P-01 | Se agrega: «El LLM interpreta la pregunta y elige entre candidatos del índice por ID; todo número sale del ejecutor determinista o de la biblioteca» | El LLM elige la variable; no produce números |
 | P-03 | Se agrega: la caché de planes ofrecidos y el registro del motor se guardan sin el texto de la pregunta | Cubre los almacenes nuevos |
 | P-06 | Se agrega: los universos analíticos, el diseño muestral y las equivalencias los revisa un auditor-agente independiente, con el visto del dueño por lote | Definiciones estadísticas |
-| P-07 | Se agrega: llamadas = intérprete + planificador (3 muestras); salida del LLM validada en código; tope en US$ por día; el esfuerzo del planificador se mide en la fase 1 | Más llamadas por pregunta |
+| P-07 | Se agrega: llamadas = intérprete + planificador (3 muestras); salida del LLM validada en código; tope en US$ por día (US$ 5, K-05) y por lote de enriquecimiento (US$ 20); el esfuerzo del planificador se mide en la fase 1 | Más llamadas por pregunta |
 | F-01 | Se agrega: la unidad de construcción es encuesta × año × archivo, y se audita al pasar sus variables a `revisado` | Ya no se construye por indicador |
 | F-02 | Se agrega: la ENAHO Panel queda fuera hasta pasar su compuerta (fase 5) | Hoy está `sin_probar` |
 | F-03 | Se agrega: los ZIP de microdatos se registran con `pap registrar` y sus huellas entran en `insumos.lock.yaml` cuando `pap microdatos convertir` los usa | Reproducibilidad |
@@ -1076,7 +1081,7 @@ El campo `tipo` toma uno de estos valores: `respuesta`, `aclaracion`, `no_se_pue
 | E-09 | Se agrega: la mortalidad solo se responde por receta | No es una proporción de un archivo |
 | T-03 | Se agrega: «Lima» a secas cuenta como ronda del tope común. Un nombre de departamento se responde como departamento, con oferta de la provincia o el distrito (contenido de X-22, cuya fila se borra; se actualiza su cita en `parametros_motor.yaml`) | Se une con el tope de aclaraciones |
 | T-04 | Se agrega: el «¿cuántos?» con la ENDES es una estimación derivada (proporción × proyección del INEI), rotulada así (§8.1) | Pesos normalizados |
-| R-01 | Se agrega: con el consolidador, (a) R-LENGUAJE-05 pasa a `max_alternativas: 3` (dueño, 8/11); (b) R-ENC-11 admite familias de comparaciones con Benjamini-Hochberg (§16), aceptado por el dueño el 8/11; (c) regla nueva de no respuesta del ítem (§15.1, paso 8), **solo si el dueño aprueba sus umbrales (K-07)**. El validador valida respuestas que salen de planes | Decisiones del dueño del 8/11 |
+| R-01 | Se agrega: con el consolidador, (a) R-LENGUAJE-05 pasa a `max_alternativas: 3` (dueño, 8/11); (b) R-ENC-11 admite familias de comparaciones con Benjamini-Hochberg (§16), aceptado por el dueño el 8/11; (c) regla nueva R-ENC-19 de no respuesta del ítem (§15.1, paso 8), **aprobada por el dueño el 12/11/2026 (K-07)** con aviso sobre 5 % y «aproximada» sobre 20 %. El validador valida respuestas que salen de planes | Decisiones del dueño del 8/11 |
 | R-02 | Se agrega: `dim_indicador` lleva `receta` para los indicadores de encuesta; solo las recetas que reproducen su cifra oficial son `verificado` | Una sola vía de cálculo |
 | R-03 | Se agrega: la lista blanca rige los cruces **entre fuentes**; los cortes dentro de una encuesta los rigen el §12 y el §15 | Distinguir corte de cruce |
 | R-04 | Se agrega: bloques que nunca se pliegan, cifra clave por grupos y capa 3 en palabras (§19) | Trazabilidad |
@@ -1087,6 +1092,13 @@ El campo `tipo` toma uno de estos valores: `respuesta`, `aclaracion`, `no_se_pue
 | **X-24** (nueva, decidida el 8/11/2026) | Totales con la ENDES: estimación derivada que separa las fuentes (la ENDES da el porcentaje; el total se calcula con la población proyectada del INEI), solo para recetas `verificado`, desde la fase 2 (§8.1). Los totales con la ENAHO siguen R-ENC-17 | Decisión del dueño |
 | F-03 (además) | Respaldo de los crudos en el repo **privado** `LaurenteEber/preguntale-al-peru-crudos`, un release `crudos-{encuesta}-{anio}` con su `SHA256SUMS`. Los ZIP no van al repo público. Ciclo por bloque y liberación del espacio local con restauración probada (§6) | Decisión del dueño (9/11/2026) |
 | F-04 (además) | Toda dependencia, modelo, paquete de R o repo de terceros nuevo entra solo con auditoría de seguridad (§22, §26.5) | Decisión del dueño (9/11/2026) |
+| **Cambios del diseño por M1-01 (decisiones del dueño del 12/11/2026)** | | |
+| Diseño §15.1 (E-03, R-01) | Los pasos 3 a 7 corren desde 25 casos (R-ENC-03 y R-ENC-04 dejan de exigir 50; los umbrales de R-ENC-02 no cambian). El paso 8 pasa de propuesta a R-ENC-19 aprobada (5 % aviso, 20 % referencial). Anexo B: `no_respuesta_aviso` / `_referencial` y `compuertas.paso_no_respuesta_activo` | C-M0-11-2 y K-07. Medido: 0 filas cambian de estado |
+| Diseño §12.1 y anexo A (F-01) | Unión por el padre común con `cardinalidad` (`1:1`, `1:0..1`); `mediciones.yaml` decide el universo por medición; universo de disciplina infantil con la mujer en REC0111; tramos de edad por indicador, región natural agrupada y «quintil de bienestar» en `cortes_estandar.yaml`; `relacion_entre_anios.csv` con 2024–2025 `conglomerados_repetidos` (HV001 solo es estable desde 2021) | D-M0-10-1, C-M0-05-2, C-M0-06-1 a C-M0-06-4. Los lee el verificador desde M1-03 |
+| Diseño §7.2 y §10 (F-05) | Campo `bloque_id`; el texto del bloque temático entra a la búsqueda y los candidatos se agrupan por bloque; búsqueda en dos pasos detrás de `recuperador.dos_pasos` (inicial `false`) | Fichas de tabla, bloques y temas provisionales aprobados el 12/11/2026 (`fichas.md`); es la base para varias fuentes |
+| Diseño §7.2, §10, §12.1, §19.1 y §27 (K-04) | `propuesto` solo con `inferencia.admitir_propuesto_en_sombra`, nunca con `motor.version: nuevo`; el lote a `revisado` ya no es la primera historia de la fase 1 ni bloquea | Las 3 horas semanales del dueño no frenan el trabajo: lo que espera un visto queda en `propuesto` y se sigue |
+| Diseño §19.2, §17.1 y §24 (R-03, R-04, R-08) | El contrato v2 nace con `partes[]`, una por fuente (en M1 siempre una); el esquema lo redacta M1-16 | Niveles 1 y 2 con varias fuentes (10/11/2026); en M1 solo se prepara |
+| Diseño anexo B (P-07, F-04) | `batch.tope_lote_usd` 20 y `tope_llm_usd_dia` 5, ya decididos; topes de almacén de la ENDES 2015–2025 (2 GB en el Mac, 1,5 GB en el repo privado) | K-05 y C-M0-11-1 |
 
 - **Lo que sigue igual:** P-02, P-04, P-05, T-01, T-02, T-05, E-01, E-02, E-04, E-07, S-01, G-01 a G-10 y R-06. El motor las aplica.
 - **X-05** (revisión de lo provisional) sigue **pendiente**. Las filas R-02, R-03, E-03 y E-05 se editan ahora solo en lo que indica esta tabla. El resto de X-05 (V1–V6, CR-01, tolerancias de las doradas) se revisa antes de la fase 4.
@@ -1149,7 +1161,7 @@ El campo `tipo` toma uno de estos valores: `respuesta`, `aclaracion`, `no_se_pue
 | Fase | Requisito de entrada | Criterio para pasar |
 |---|---|---|
 | **0 · Cimientos** (ENDES 2024) | Lista de ZIP aprobada por el dueño | Las recetas 2024 igualan al cubo; completitud del índice al 100 %; tamaño y tiempo del ejecutor medidos |
-| **1 · Planificador** (spike) | Fase 0 cerrada. El lote del índice en `revisado` para los archivos de niño, mujer y hogar de la ENDES 2024 se hace **dentro** de la fase, en su primera historia | Métricas del §23.3 con su intervalo; p95 por etapa; error con consenso; decisión sobre el número de muestras |
+| **1 · Planificador** (spike) | Fase 0 cerrada. El lote del índice en `revisado` para los archivos de niño, mujer y hogar de la ENDES 2024 se arma **dentro** de la fase (M1-07), pero ya no es su primera historia ni bloquea a las demás (K-04, 12/11/2026): mientras espera el visto del dueño, todo sigue en `propuesto` y el motor se prueba en modo `sombra` con `inferencia.admitir_propuesto_en_sombra` | Métricas del §23.3 con su intervalo; p95 por etapa; error con consenso; decisión sobre el número de muestras |
 | **2 · ENDES completa** (2015–2025) | Descargas aprobadas; respaldo en el repo privado de crudos probado con una restauración (§6) | Umbrales exigibles del §23.3 (≥ 150 preguntas); regresión completa |
 | **3 · ENAHO** (corte transversal 2015–2025) | Fase 2 cerrada | Cifras oficiales de la ENAHO reproducidas; umbrales; tamaño medido |
 | **4 · Integración y beta** | Fase 3 cerrada; resto de X-05 revisado | Temas en `nuevo`; concurrencia medida; se retoma el slice 4 (despliegue, dominio, HTTPS); revisión con personas de fuera (P-05) con criterio medible: número de personas, porcentaje que entiende la cifra y 0 lecturas erróneas graves |
@@ -1185,10 +1197,12 @@ El campo `tipo` toma uno de estos valores: `respuesta`, `aclaracion`, `no_se_pue
 
 ## 29. Pendientes del dueño
 
-1. **Horas por semana** para las revisiones y los vistos.
-2. **Valor inicial de `tope_llm_usd_dia`**, y si se quiere un tope aparte para el enriquecimiento del índice fuera de línea.
-3. **X-23:** el panel ENAHO, antes de la fase 5.
-4. **Licencia de la ENAHO:** si sus Parquet pueden publicarse en el repo público, antes de la fase 3.
+1. **X-23:** el panel ENAHO, antes de la fase 5.
+
+Ya decididos (12/11/2026, tabla «Decisiones del dueño» de `backlog/slice-m1/README.md`):
+- **Horas por semana (K-04):** 3; no frenan el trabajo (lo que espera un visto queda en `propuesto` o `revisado`).
+- **Tope del LLM (K-05):** US$ 5 por día y US$ 20 por lote de enriquecimiento (anexo B).
+- **Licencia de la ENAHO (K-08):** Parquet publicados año por año solo si la ficha del año en la Plataforma Nacional de Datos Abiertos declara ODbL; si no, repo privado.
 
 Ya decididos (8/11/2026):
 - **X-24:** opción (b), separando las fuentes (§8.1).
@@ -1230,6 +1244,10 @@ peso_normalizado,nivel_submuestra,uniones_para_diseno,cita
 - Llave: `encuesta, anio, archivo, medicion`.
 - `nivel_submuestra` ∈ {hogar, individual, medicion}.
 
+**`curados/inferencia/archivos_<encuesta>_<anio>.yaml`:** entre otras cosas, las `relaciones` de cada archivo con su padre: `hijo`, `padre`, `por` (pares de columnas) y `cardinalidad` ∈ {`n:1`, `1:1`, `1:0..1`}. La unión por el padre común (§12.1) solo admite `1:1` y `1:0..1`; cada relación se comprueba contra los datos (M1-03).
+
+**`curados/inferencia/mediciones.yaml`:** la medición (por ejemplo, hemoglobina) de cada variable, declarada por tabla y batería; con ella el verificador elige el universo analítico. Lo escriben las personas, nunca el LLM. El esquema exacto lo fija M1-03.
+
 **`curados/inferencia/universos_analiticos.yaml`:**
 
 ```yaml
@@ -1241,6 +1259,8 @@ peso_normalizado,nivel_submuestra,uniones_para_diseno,cita
   anios: [2015, 2025]
   fuente: "curados/capa0/definiciones_endes.yaml (líneas exactas); INEI, informe ENDES"
 ```
+
+El universo de la disciplina infantil (REC93DVdisciplina) exige a la mujer en REC0111 y deja fuera las 341 filas que no la tienen (C-M0-05-2).
 
 **`curados/inferencia/recetas/<id>.yaml`:**
 
@@ -1254,7 +1274,7 @@ universo: {analitico: nino_hecho_hb_medida,
            restricciones: [{var: HC1, op: entre, valores: [6, 35]}, {var: HC57A, op: en, valores: [1, 2, 3, 4]}]}
 indicador: {combinar: una, condiciones: [{var: HC57A, op: en, valores: [1, 2, 3]}]}   # nivel de anemia ya ajustado por el INEI
 transformaciones: []
-cortes_permitidos: [area, sexo, region_natural, quintil]
+cortes_permitidos: [area, sexo, region_natural, quintil_riqueza, grupo_edad]   # los tres últimos se habilitan en M1-03
 anios: [2024, 2025]
 doradas: [ver cifras_doradas]
 estado: verificado
@@ -1271,7 +1291,10 @@ pesos_especiales,clase_cambio,cita
 
 ```
 encuesta,anio_a,anio_b,relacion,upm_estable_expr,cita
+ENDES,2024,2025,conglomerados_repetidos,HV001,"Ficha técnica ENDES 2025 (recurso endes-2025-ficha-tecnica), §3.1 y §IV"
 ```
+
+HV001 solo es identificador estable de conglomerado desde 2021: antes los números se reutilizan (lo midió el auditor en `endes_nino.parquet`). Qué pares anteriores a 2024–2025 se declaran `conglomerados_repetidos` se decide al incorporar esos años (M2); hoy solo está decidido 2024–2025 (C-M0-06-1).
 
 **`curados/inferencia/territorios.yaml`:**
 
@@ -1292,6 +1315,11 @@ encuesta,anio_a,anio_b,relacion,upm_estable_expr,cita
   por_encuesta: {ENDES: {variable_hogar: HV025, variable_mujer: V025}, ENAHO: {expr: "ESTRATO <= 5"}}
   categorias: {1: urbana, 2: rural}
 ```
+
+Valores decididos el 12/11/2026 (el esquema que los compila lo fija M1-03, tarea 1b):
+- `grupo_edad` del niño, solo dentro de las recetas: dos juegos de tramos según el indicador (anemia: 6–8, 9–11, 12–17, 18–23 y 24–35 meses; desnutrición crónica: menores de 36 y 36–59 meses), con la cita de los Cuadros 06B, 6.1B y 04 del informe de programas presupuestales de la ENDES 2024.
+- `region_natural`: Costa agrupa SHREGION 1 y 2 (nota: «verificado contra las cifras publicadas»); sola, la categoría 1 se rotula «Lima Metropolitana y Callao» y la 2 «resto de la Costa».
+- `quintil_riqueza` se rotula «quintil de bienestar» (HV270 y V190); la duda sobre las dos versiones de la ficha queda como nota.
 
 **`curados/inferencia/no_cubre.yaml`:**
 
@@ -1334,11 +1362,15 @@ Todos viven en archivos de datos, nunca fijos en el código.
 | `memoria_trabajador_mb` | `curados/inferencia/parametros.yaml` | 1 536 | se mide en la fase 0 |
 | `anio_alternativa_max_distancia` | `curados/inferencia/parametros.yaml` | 3 | dueño |
 | `cache_planes_horas` | `curados/inferencia/parametros.yaml` | 24 | P-03 |
-| Umbrales de las compuertas | `reglas/reglas.json` (R-ENC-02 a R-ENC-04) | vigentes | dueño (consolidador) |
-| `no_respuesta_aviso` / `_referencial` | `reglas/reglas.json` (regla nueva, si se aprueba K-07) | 5 % / 20 % (propuesta) | dueño (consolidador) |
+| Umbrales de las compuertas | `reglas/reglas.json` (R-ENC-02 a R-ENC-04) | vigentes; R-ENC-03 y R-ENC-04 desde 25 casos (C-M0-11-2) | dueño (consolidador) |
+| `no_respuesta_aviso` / `_referencial` | `reglas/reglas.json` (R-ENC-19) | 5 % / 20 % (valores iniciales aprobados, K-07) | dueño (consolidador) |
 | `planificador.max_tokens` / `plazo_s` | `curados/inferencia/parametros.yaml` | 800 / 9 | se mide en la fase 1 |
-| `batch.tope_lote_usd` | `curados/inferencia/parametros.yaml` | 50 (propuesta) | dueño |
-| `tope_llm_usd_dia` | `curados/web/parametros.yaml` | 5 (propuesto; confirma el dueño, §29) | dueño |
+| `batch.tope_lote_usd` | `curados/inferencia/parametros.yaml` | 20 (K-05, 12/11/2026) | dueño |
+| `tope_llm_usd_dia` | `curados/web/parametros.yaml` | 5 (K-05, 12/11/2026) | dueño |
+| `compuertas.paso_no_respuesta_activo` | `curados/inferencia/parametros.yaml` | `true` (K-07) | dueño |
+| `recuperador.dos_pasos` | `curados/inferencia/parametros.yaml` (lo agrega M1-09) | `false`; se activa si mejora el recall@20 | agente, con lo medido |
+| `inferencia.admitir_propuesto_en_sombra` | `curados/inferencia/parametros.yaml` | `true`; solo con `motor.version` distinto de `nuevo` (K-04) | dueño |
+| `almacen.tope_endes_mac_gb` / `tope_endes_repo_privado_gb` | `curados/inferencia/parametros.yaml` | 2 / 1,5 (F-04, C-M0-11-1); si un bloque lo pasa, se detiene y se consulta | dueño |
 | Presupuesto de tiempo por etapa | `curados/web/parametros.yaml` | §21 | se mide en la fase 1 |
 | `trabajadores` | `curados/web/parametros.yaml` | Mac: mín(núcleos − 1, 4); nube: máx(1, vCPU − 1) | agente (tipo B) |
 | `almacen.espacio_libre_min_gb` | `curados/inferencia/parametros.yaml` | 50 | dueño |

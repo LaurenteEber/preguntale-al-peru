@@ -20,6 +20,7 @@ Pregúntale al Perú responde preguntas sobre problemas del país con cifras de 
 | 8 | `curados/capa0/` (`dim_indicador.yaml`, `cruces_permitidos.yaml`, `nombres_mostrados.yaml`…) | Tablas curadas: la fuente de verdad de indicadores, cruces y nombres | Al planificar cifras |
 | 9 | `docs/estado.md` | Foto del proyecto y deuda conocida | Para contexto |
 | 10 | `docs/diseno/motor_inferencia.md` | Diseño del motor de inferencia (M0–M5): plan, recetas, ejecutor, gobierno (§26) | Al trabajar una historia de `backlog/slice-m*/` |
+| 11 | `docs/diseno/fichas.md` | Fichas de tabla, bloques temáticos y temas provisionales del motor | Al trabajar una historia de `backlog/slice-m*/` desde M1 |
 
 Las citas a documentos de trabajo anteriores al repositorio (`03_auditoria/`, `00_proyecto/`…) no están aquí ni hacen falta: ver `docs/historia.md`. La evidencia de cada slice (`backlog/slice-N/evidencia/`) es registro, no instrucción.
 
