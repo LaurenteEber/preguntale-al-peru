@@ -17,7 +17,7 @@ preguntas:
   coincidencia_parcial: "No encontramos «{texto}» tal cual. ¿Quisiste decir alguno de estos?"
   sugerencia: "No encontramos «{texto}». ¿Quisiste decir alguno de estos?"
   sin_coincidencia: "No encontramos ese lugar. Revisa cómo está escrito o dinos el departamento, la provincia o el distrito."
-oferta_otros_niveles:   # X-22: el nombre a secas de un departamento se responde como departamento; va en «Avisos» de la capa 2
+oferta_otros_niveles:   # T-03: el nombre a secas de un departamento se responde como departamento; va en «Avisos» de la capa 2
   ambos: "Respondimos por el departamento de {nombre}. Si buscabas la provincia o el distrito de {nombre}, pregúntalo así: «provincia de {nombre}» o «distrito de {nombre}»."
   provincia: "Respondimos por el departamento de {nombre}. Si buscabas la provincia de {nombre}, pregúntalo así: «provincia de {nombre}»."
   distrito: "Respondimos por el departamento de {nombre}. Si buscabas el distrito de {nombre}, pregúntalo así: «distrito de {nombre}»."

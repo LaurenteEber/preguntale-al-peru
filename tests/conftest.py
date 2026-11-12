@@ -9,6 +9,10 @@ import pytest
 
 from pap.config import Rutas
 
+# M0-00b (C5): ni los modelos ni svy buscan nada en internet durante las pruebas (se fijan antes de importar cualquier librería).
+os.environ["HF_HUB_OFFLINE"] = "1"
+os.environ["SVYLAB_OFFLINE"] = "1"
+
 RAIZ_REAL = Path(__file__).resolve().parents[1]
 
 MENSAJE_CUBO_DISTINTO = "el cubo local no es el del manifiesto: corre `pap calcular`"

@@ -1,0 +1,77 @@
+# Universos analíticos de la ENDES 2024 (M0-06, tarea 2; diseño §7.4 y anexo A).
+# Los copia una persona de curados/capa0/definiciones_endes.yaml y src/pap/capa0/encuestas.py (líneas exactas en `fuente`);
+# las pruebas (tests/inferencia/test_tablas_curadas.py) los aplican a los Parquet de 2024 y exigen 9 959 casos (anemia, los dos
+# criterios) y 19 511 (DCI) sobre 20 290 niños. El orden de `predicados` no cambia el resultado: todos se cumplen a la vez.
+# Vocabulario de `op`: `en` (el valor está en la lista) y `entre` (lista de dos valores, límites incluidos).
+# `aplica_a.archivos`: archivos de donde salen las variables; RECH6 se une a RECH1 por (HHID, HC0 = HVIDX), uno a uno
+# (relación declarada en curados/inferencia/archivos_endes_2024.yaml). Un valor nulo no cumple ningún predicado.
+# `anios`: M0 solo tiene 2024; M2 los extiende.
+version: 0.1.0
+fecha: "2026-11-09"
+universos:
+  - id: nino_hecho
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [RECH6, RECH1], mediciones: [hemoglobina, talla]}
+    predicados:
+      - {var: HV103, op: en, valores: [1]}
+    anios: [2024, 2024]
+    fuente: >-
+      Población de hecho (durmió en el hogar la noche anterior): curados/capa0/definiciones_endes.yaml:20 («pernocto: true»
+      = HV103 = 1), :27 y :34; src/pap/capa0/encuestas.py:146 («pernocto» = HV103 == 1) y :225-226 (se exige en el universo);
+      Ficha técnica ENDES 2024, §II p. 2 («…y aquellas que no siendo residentes pernoctaron en la vivienda la noche
+      anterior»). Ojo: §5.1 p. 8 define otra población (excluye a los visitantes que pernoctaron); HV103 = 1 los incluye,
+      como el cubo validado (revisión del auditor-agente, H-1)
+  - id: nino_hecho_hb_medida
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [RECH6, RECH1], mediciones: [hemoglobina]}
+    predicados:
+      - {var: HV103, op: en, valores: [1]}
+      - {var: HC55, op: en, valores: [0]}
+    anios: [2024, 2024]
+    fuente: >-
+      curados/capa0/definiciones_endes.yaml:18 («hb_medida: true», HC55 = 0) y :20; src/pap/capa0/encuestas.py:150
+      («hb_resultado» = HC55), :165 («hb_medida» = hb_resultado == 0), :146 y :219-220, :225-226
+  - id: nino_anemia_6_35m_rm363
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [RECH6, RECH1], mediciones: [hemoglobina]}
+    predicados:
+      - {var: HV103, op: en, valores: [1]}
+      - {var: HC1, op: entre, valores: [6, 35]}
+      - {var: HC55, op: en, valores: [0]}
+      - {var: HC57, op: en, valores: [1, 2, 3, 4]}
+    anios: [2024, 2024]
+    fuente: >-
+      Criterio vigente hasta 2023 (RM 363-2022-MINSA): curados/capa0/definiciones_endes.yaml:15-20 (edad_meses [6, 35],
+      hb_medida, «variable_no_nula: true  # HC57 en 1–4», pernocto); src/pap/capa0/encuestas.py:148 (HC1), :154 (HC57 en
+      1–4), :217-218, :221-222, :225-226; Ficha técnica ENDES 2024, punto 6 p. 16 (niños de 6 a 35 meses, RM 363-2022-MINSA)
+  - id: nino_anemia_6_35m_oms2024
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [RECH6, RECH1], mediciones: [hemoglobina]}
+    predicados:
+      - {var: HV103, op: en, valores: [1]}
+      - {var: HC1, op: entre, valores: [6, 35]}
+      - {var: HC55, op: en, valores: [0]}
+      - {var: HC57A, op: en, valores: [1, 2, 3, 4]}
+    anios: [2024, 2024]
+    fuente: >-
+      Criterio vigente (nueva directriz OMS 2024, RM 251-2024-MINSA): curados/capa0/definiciones_endes.yaml:23-27 («HC57A en
+      1–3; solo desde 2024», universo con los mismos filtros); src/pap/capa0/encuestas.py:148, :155 (HC57A en 1–4),
+      :217-218, :221-222, :225-226; Ficha técnica ENDES 2024, punto 7 p. 16 (niños de 6 a 35 meses, nueva directriz OMS 2024)
+  - id: nino_dci_0_59m
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [RECH6, RECH1], mediciones: [talla]}
+    predicados:
+      - {var: HV103, op: en, valores: [1]}
+      - {var: HC1, op: entre, valores: [0, 59]}
+      - {var: HC70, op: entre, valores: [-9989, 9989]}
+    anios: [2024, 2024]
+    fuente: >-
+      curados/capa0/definiciones_endes.yaml:28-34 (edad_meses [0, 59], «haz_valido: true  # HC70 < 9990», pernocto);
+      src/pap/capa0/encuestas.py:157 (HC70 válido entre −9989 y 9989; HC70 son centésimas de desviación estándar), :169
+      («haz_valido» = no nulo), :148, :217-218, :223-226; Ficha técnica ENDES 2024, punto 4 p. 15 (menores de cinco años,
+      talla para la edad a menos de dos desviaciones estándar)

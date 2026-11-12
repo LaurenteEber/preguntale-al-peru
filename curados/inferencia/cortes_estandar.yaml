@@ -1,0 +1,111 @@
+# Cortes estándar de la ENDES 2024 (M0-06, tarea 6; diseño §7.4 y anexo A): los cortes que se ofrecen, con la variable de cada
+# archivo y sus categorías en palabras. Los cortes no los elige el LLM: el intérprete los reconoce y el código los traduce.
+# Cada variable lleva su cita (la etiqueta del archivo DTA 2024, que es la del diccionario del INEI, y la ficha técnica donde
+# la nombra); las categorías salen de las etiquetas de valor del mismo archivo (biblioteca/variables/categorias.parquet).
+# Un corte de un archivo hijo (p. ej. el área o el quintil de un niño de RECH6) se toma del archivo que declara la variable,
+# unido por HHID (relaciones de curados/inferencia/archivos_endes_2024.yaml); la prueba comprueba que esa unión no pierde ni
+# repite filas de RECH6.
+# `categorias` de cada variable reemplaza a la del corte cuando existe. Un corte sin `categorias` en una variable continua
+# (grupo de edad de niños y personas) queda con `pendiente`: ningún documento define sus tramos (consulta C-M0-06-2).
+# Fuera de esta tabla, porque el diseño los nombra pero M0 no los necesita: educación de la madre y lengua materna (M1).
+version: 0.1.0
+fecha: "2026-11-09"
+cortes:
+  - id: area
+    nombre: "área (urbana o rural)"
+    por_encuesta:
+      ENDES:
+        - archivo: RECH0
+          variable: HV025
+          unidad: hogar
+          cita: "Etiqueta del archivo RECH0 2024: «Área de residencia»; src/pap/capa0/encuestas.py:142 (1 urbano, 2 rural)"
+        - archivo: REC0111
+          variable: V025
+          unidad: mujer
+          cita: "Etiqueta del archivo REC0111 2024: «Tipo de lugar de residencia» (1 Urbano, 2 Rural)"
+    categorias: {1: urbano, 2: rural}
+    cita: "Ficha técnica ENDES 2024, §3.7 p. 7 («Nacional Urbana», «Nacional Rural»); curados/capa0/dim_indicador.yaml:99-104 (dominio_subnacional)"
+  - id: sexo
+    nombre: "sexo"
+    por_encuesta:
+      ENDES:
+        - archivo: RECH6
+          variable: HC27
+          unidad: nino
+          cita: "Etiqueta del archivo RECH6 2024: «Sexo» (1 Hombre, 2 Mujer); src/pap/capa0/encuestas.py:149"
+        - archivo: RECH1
+          variable: HV104
+          unidad: persona_del_hogar
+          cita: "Etiqueta del archivo RECH1 2024: «Sexo» (1 Hombre, 2 Mujer)"
+        - archivo: REC21
+          variable: B4
+          unidad: hijo_de_mujer
+          cita: "Etiqueta del archivo REC21 2024: «Sexo del niño» (1 Masculino, 2 Femenino)"
+        - archivo: CSALUD01
+          variable: QSSEXO
+          unidad: persona_seleccionada
+          cita: "Etiqueta del archivo CSALUD01 2024: «Sexo de la persona seleccionada» (1 Hombre, 2 Mujer)"
+    categorias: {1: hombre, 2: mujer}
+    cita: "src/pap/capa0/encuestas.py:149 (sexo del niño: 1 hombre, 2 mujer); etiquetas de los cuatro archivos citadas en cada variable"
+  - id: grupo_edad
+    nombre: "grupo de edad"
+    por_encuesta:
+      ENDES:
+        - archivo: RECH6
+          variable: HC1
+          unidad: nino
+          pendiente: C-M0-06-2
+          cita: "Etiqueta del archivo RECH6 2024: «Edad en meses» (0 a 59); src/pap/capa0/encuestas.py:148"
+        - archivo: RECH1
+          variable: HV105
+          unidad: persona_del_hogar
+          pendiente: C-M0-06-2
+          cita: "Etiqueta del archivo RECH1 2024: «Edad» (años; 97 = «Mayores de 96», 98 = «No sabe»)"
+        - archivo: REC0111
+          variable: V013
+          unidad: mujer
+          cita: "Etiqueta del archivo REC0111 2024: «Edad actual por grupos de 5 años»"
+          categorias:
+            0: "12 a 14 años"
+            1: "15 a 19 años"
+            2: "20 a 24 años"
+            3: "25 a 29 años"
+            4: "30 a 34 años"
+            5: "35 a 39 años"
+            6: "40 a 44 años"
+            7: "45 a 49 años"
+    cita: "Ficha técnica ENDES 2024, §II p. 2 (mujeres de 12 a 49 años, niños menores de 5 años) y punto 6 p. 16 (6 a 35 meses); tramos de la mujer: etiquetas de valor de V013 en REC0111"
+  - id: region_natural
+    nombre: "región natural"
+    por_encuesta:
+      ENDES:
+        - archivo: RECH23
+          variable: SHREGION
+          unidad: hogar
+          cita: "Etiqueta del archivo RECH23 2024: «Región natural» (1 Lima metropolitana, 2 Resto Costa, 3 Sierra, 4 Selva)"
+        - archivo: REC91
+          variable: SREGION
+          unidad: mujer
+          cita: "Etiqueta del archivo REC91 2024: «Región natural» (1 Lima metropolitana, 2 Resto Costa, 3 Sierra, 4 Selva)"
+    categorias: {1: "Lima Metropolitana", 2: "resto de la Costa", 3: Sierra, 4: Selva}
+    cita: >-
+      Ficha técnica ENDES 2024, §3.7 p. 7 («Región Natural: Costa, Sierra y Selva» como dominio anual y semestral); las cuatro
+      categorías son las del archivo. Que Costa = Lima Metropolitana + resto de la Costa no lo declara ningún documento
+      registrado: consulta C-M0-06-3
+  - id: quintil_riqueza
+    nombre: "quintil de riqueza"
+    por_encuesta:
+      ENDES:
+        - archivo: RECH23
+          variable: HV270
+          unidad: hogar
+          cita: "Etiqueta del archivo RECH23 2024: «Índice de riqueza» (1 Los más pobres, 2 Pobre, 3 Medio, 4 Rico, 5 Más rico)"
+        - archivo: REC0111
+          variable: V190
+          unidad: mujer
+          cita: "Etiqueta del archivo REC0111 2024: «Índice de riqueza» (1 El más pobre, 2 «Pobrer» [sic], 3 Medio, 4 Rico, 5 Más rico)"
+    categorias: {1: "los más pobres", 2: pobre, 3: medio, 4: rico, 5: "más rico"}
+    cita: >-
+      Ficha técnica ENDES 2024, §1.6 y §1.7 p. 13-14 (Índice de Bienestar y Quintil de Riqueza, hogares en cinco partes
+      iguales). La ficha dice que el quintil se presenta en dos versiones (la que preserva el puntaje de la ENDES 2000 y la del
+      año de la encuesta) y ningún archivo dice cuál es HV270: consulta C-M0-06-4

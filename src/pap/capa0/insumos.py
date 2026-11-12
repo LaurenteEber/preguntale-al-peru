@@ -3,13 +3,13 @@ from __future__ import annotations
 
 import io
 import re
-import zipfile
 from dataclasses import dataclass
 from pathlib import Path
 
 from .. import almacen, capturas
 from ..config import Rutas
 from ..errores import PapError
+from ..zip_seguro import abrir_zip_seguro
 
 
 @dataclass(frozen=True)
@@ -98,16 +98,16 @@ def ultimo(rutas: Rutas, source_id: str, patron_archivo: str | None = None, recu
 
 
 def miembro_zip(insumo: Insumo, patron: str) -> tuple[str, bytes]:
-    with zipfile.ZipFile(insumo.ruta) as z:
-        nombres = [n for n in z.namelist() if re.search(patron, n, re.I) and not n.endswith("/")]
+    with abrir_zip_seguro(insumo.ruta) as z:
+        nombres = [n for n in z.miembros() if re.search(patron, n, re.I)]
         if len(nombres) != 1:
             raise PapError(f"{insumo.source_id}: se esperaba 1 miembro que cumpla {patron!r}, hay {len(nombres)}")
-        return nombres[0], z.read(nombres[0])
+        return nombres[0], z.leer(nombres[0])
 
 
 def miembros_zip(insumo: Insumo, patron: str) -> list[tuple[str, bytes]]:
-    with zipfile.ZipFile(insumo.ruta) as z:
-        return [(n, z.read(n)) for n in sorted(z.namelist()) if re.search(patron, n, re.I) and not n.endswith("/")]
+    with abrir_zip_seguro(insumo.ruta) as z:
+        return [(n, z.leer(n)) for n in sorted(z.miembros()) if re.search(patron, n, re.I)]
 
 
 def como_archivo(datos: bytes) -> io.BytesIO:

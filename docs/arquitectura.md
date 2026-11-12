@@ -268,6 +268,27 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 - **Semáforo:** el interno (verde, ámbar, rojo) se muestra como confianza alta, media o baja.
 - **Verificación:** la hizo un revisor independiente de usuario (anterior al repositorio; ver `docs/historia.md`).
 
+### 4.10 Motor de inferencia, cimientos (`src/pap/inferencia/`, slice M0)
+Diseño: `docs/diseno/motor_inferencia.md`; tecnologías: `docs/diseno/tecnologias.md`. M0 construye los cimientos: calcular una cifra de encuesta desde los microdatos, con un plan sin SQL y verificado, y reproducir las cifras del cubo. **Todavía no responde preguntas**: el motor por intenciones (§4.8) sigue siendo el que atiende, y el cubo no cambió.
+
+| Módulo | Qué hace |
+|---|---|
+| `almacen.py`, `lector_aislado.py` | Conversor de SAV/DTA a Parquet. Cada archivo se lee en un subproceso aislado (solo `pyreadstat`, con topes de memoria, procesador y tiempo); el Parquet sale de DuckDB `COPY` (zstd). Deja `biblioteca/microdatos/{encuesta}/{año}/{archivo}.parquet` y un `manifiesto.json` por año, con la `huella_contenido_v1` de cada archivo. No es `pap.almacen` (el de crudos) |
+| `indice.py` | Índice de variables en `biblioteca/variables/` (`archivos`, `variables` y `categorias`, en Parquet). Las variables nacen `propuesto` |
+| `tablas_curadas.py` | Esquemas y validación de las seis tablas de `curados/inferencia/` (diseño muestral, universos analíticos, territorios, perfil anual, relación entre años, cortes estándar), cada fila con su cita |
+| `plan.py`, `gramatica.py` | El plan (modelos cerrados, `id_plan` = huella del JSON canónico) no contiene SQL; la gramática es el único lugar que lo arma: nombres solo del índice, valores siempre como parámetros |
+| `verificador.py` | Comprueba el plan contra el índice y las tablas curadas, y le agrega el diseño muestral y el universo; devuelve el plan completo o una falla |
+| `duckdb_seguro.py` | Conexión DuckDB de solo lectura, con acceso únicamente a `biblioteca/microdatos` y `biblioteca/variables`, sin extensiones y con la configuración bloqueada |
+| `ejecutor.py`, `estimacion.py` | Cálculo (DuckDB → Arrow → polars → `svy`) y pool de procesos (`spawn`, precalentado): tiempo suave dentro del trabajador, tiempo duro con muerte y recreación del trabajador desde el padre, y un vigía de memoria; hilos fijados en 1. Todo fallo del pool es un error temporal y la tarea siguiente funciona |
+| `svy_adaptador.py` | Único módulo que importa `svy`; hace la misma llamada que el cubo (`calculo.py`, que sigue siendo el oráculo) |
+| `compuertas.py` | R-ENC-02, R-ENC-03 y R-ENC-04 con las funciones del validador y los parámetros de `reglas.json`; solo las ordena y le pone la confianza |
+| `recetas.py` | Definición de un indicador como dato (`curados/inferencia/recetas/*.yaml`); se vuelve un plan y corre el mismo camino. Compara con el cubo y con las doradas |
+| `verificador_r.py` y `verificador_r/` | Lanzador del verificador en R (`Rscript --vanilla`, entorno mínimo) y su proyecto `renv`. R no corre dentro de pytest: genera una vez los valores esperados y pytest solo compara |
+
+`src/pap/bloques.py` maneja el ciclo por bloque (una encuesta y un año) del almacén de crudos: `pap almacen restaurar --bloque endes-2024` baja el respaldo del repo privado de crudos (release `crudos-endes-2024`), comprueba las huellas, reconvierte un archivo y exige la misma `huella_contenido_v1`; solo entonces marca el bloque `respaldado`. `pap almacen liberar` borra del almacén solo los ZIP de un bloque respaldado y comprobado.
+
+**Medido en M0 (ENDES 2024):** 34 archivos convertidos, 22,7 MB de Parquet (`backlog/slice-m0/evidencia/m0-04_tamano.md`); 2 856 variables indexadas (`m0-05_conteos.md`); tres recetas igualan al cubo en 90 filas con diferencia 0 y reproducen 21 de 21 doradas (`m0-10_recetas.md`); `svy` y R coinciden en 50 de 50 casos, máxima diferencia 1,3e-15 (`m0-09_r.md`).
+
 ## 5. Mapa del repositorio
 
 | Carpeta | Contenido |
@@ -276,10 +297,12 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 | `catalogo/` | Catálogo de fuentes, embudo de priorización y auditoría del catálogo (`salidas/`) |
 | `curados/generadores/` | Scripts que generaron tablas curadas (gasto E3/P3, doradas del SIEN), con sus insumos de revisión |
 | `reglas/` | Reglas (generadas: `reglas.json`, `reglas.md`, ficha y especificaciones de capa 0), su generador y sus verificaciones (`consolidador/`, `consolidador/pruebas/`), propuestas y alcance del piloto |
-| `biblioteca/` | Datos: cruda, dimensiones, estandarizada, indicadores (los Parquet y los crudos no van a git) |
-| `src/pap/` | La CLI `pap`: `cli.py`, ingesta (`registrar`, `descargar`, `verificar`, `citar`, `almacen`, `indice`, `recetas`), `capa0/` (construcciones), `motor/` (cálculo, validador, respuesta), `interprete/` (texto libre) y `web/` (servicio y páginas) |
+| `biblioteca/` | Datos: cruda, dimensiones, estandarizada, indicadores, `microdatos/` (encuestas convertidas) y `variables/` (índice de variables) (los Parquet y los crudos no van a git) |
+| `src/pap/` | La CLI `pap`: `cli.py`, ingesta (`registrar`, `descargar`, `verificar`, `citar`, `almacen`, `indice`, `recetas`), `capa0/` (construcciones), `motor/` (cálculo, validador, respuesta), `inferencia/` (cimientos del motor de inferencia, §4.10), `bloques.py` (ciclo por bloque del almacén), `interprete/` (texto libre) y `web/` (servicio y páginas) |
 | `tests/` | Pruebas automáticas (pytest); cuántas son: [estado.md](estado.md) |
 | `curados/capa0/` | Tablas curadas editables (fuente de verdad) |
+| `curados/inferencia/` | Tablas curadas del motor de inferencia (diseño muestral, universos, territorios, perfil anual, relación entre años, cortes), parámetros, recetas de indicador y las descargas registradas |
+| `verificador_r/` | Verificador en R (`survey`), con su entorno `renv` fijado |
 | `curados/motor/` | Catálogo de intenciones, parámetros, consultas mínimas, esquemas y textos fijos (`textos/`); las consultas del piloto archivadas y los casos del validador están en `tests/fixtures/consultas_piloto/` y `tests/casos_validador/` |
 | `backlog/` | Plan por slices (`plan_slices.md`) y el slice 1 con su evidencia (`backlog/slice-1/evidencia/`) |
 | `salidas/` | Respuestas que escribe `pap preguntar` (no va a git) |
@@ -289,7 +312,7 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 
 - **Entorno:** uv + Python 3.12 (`uv.lock`).
 - **Datos:** Parquet (fuente de verdad) y DuckDB 1.5 como motor; el `.duckdb` es derivado.
-- **Librerías:** pandas y polars, **svy** para encuestas, pyreadstat (SPSS/Stata), zstandard.
+- **Librerías:** pandas y polars, **svy** para encuestas, pyreadstat (SPSS/Stata), zstandard. Motor de inferencia (M0): **svy 0.35.0** como estimador, **pyreadstat 1.3.7** en subproceso aislado y, como verificador, **R 4.6.2 + survey 4.5** con entorno `renv` fijado (`verificador_r/`).
 - **Metadatos:** Frictionless Data Package v2 con términos DCAT/PROV.
 - **Tareas:** justfile.
 - **Fundamentos:** `docs/especificaciones/stack.md`.
@@ -309,8 +332,9 @@ Especificación: `docs/especificaciones/contrato_respuesta.md` (incluye los tipo
 - **Series incompletas:**
   - el criterio vigente de anemia solo tiene 2024–2025 (el recálculo de años anteriores está decidido para después del MVP);
   - el SIEN solo tiene 2025. Está validado contra el INS, pero no es comparable con la ENDES y puede subestimar la anemia (lo dice el propio INS).
-- **Riesgo operativo:** el almacén de crudos (1,2 GB) no tiene respaldo externo; si se pierde, no se puede reconstruir sin volver a descargar.
+- **Riesgo operativo:** el respaldo externo es parcial. Los ZIP y PDF de la ENDES 2024 están respaldados en el repo privado de crudos (release `crudos-endes-2024`, restauración probada); el resto del almacén de crudos (1,2 GB) no, y si se pierde no se puede reconstruir sin volver a descargar.
+- **Motor de inferencia (M0):** solo ENDES 2024 y tres recetas; la corrida del pool en Linux está pendiente (solo se probó en el Mac) y la imagen Docker de la medida A6 no está construida.
 - **Pendientes del dueño:**
   - las decisiones X-01 a X-08 de `docs/decisiones.md` (entre ellas el texto de «¿Qué puedo hacer?»; X-02, conteo en Q2; X-03, gasto del mismo año en CR-01; X-04, un solo intervalo visible);
-  - respaldo del almacén.
+  - respaldo del resto del almacén.
 - Detalle en `docs/estado.md`.

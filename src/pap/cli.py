@@ -1,4 +1,4 @@
-"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | servir."""
+"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | microdatos | variables | servir."""
 from __future__ import annotations
 
 import json
@@ -112,6 +112,22 @@ def _gb(n: int | None) -> str:
 
 
 def cmd_almacen(a, rutas) -> int:
+    """pap almacen comprimir | restaurar | liberar."""
+    if a.accion in ("restaurar", "liberar"):
+        from . import bloques
+
+        if not a.bloque:
+            raise PapError(f"pap almacen {a.accion} necesita --bloque <encuesta>-<anio> (p. ej. endes-2024)")
+        if a.accion == "restaurar":
+            bloques.restaurar(rutas, a.bloque, repo_pedido=a.repo)
+        else:
+            bloques.liberar(rutas, a.bloque, ejecutar=a.ejecutar,
+                            confirmar=(lambda: True) if a.si else (lambda: bloques.confirmar_por_terminal(a.bloque)))
+        return 0
+    return _comprimir(a, rutas)
+
+
+def _comprimir(a, rutas) -> int:
     """pap almacen comprimir: CSV/TXT grandes del almacén → <huella>.zst verificado, uno por uno (reanudable)."""
     import time
 
@@ -158,6 +174,116 @@ def cmd_almacen(a, rutas) -> int:
     if errores:
         print(f"✘ {errores} objeto(s) con error: sus originales quedaron intactos.")
     return 1 if errores else 0
+
+
+def cmd_microdatos(a, rutas) -> int:
+    """pap microdatos convertir: ZIP registrados de una encuesta y año → Parquet + manifiesto (M0-04)."""
+    from .inferencia import almacen as microdatos     # importación diferida: trae polars, duckdb y pyreadstat
+
+    m = microdatos.convertir(rutas, a.encuesta, a.anio)
+    n = len(m["archivos"])
+    print(f"\n{n} archivo(s) de {a.encuesta} {a.anio} en {rutas.relativa(microdatos.carpeta_salida(rutas, a.encuesta, a.anio))}"
+          f" (manifiesto.json); huellas de los ZIP agregadas a curados/insumos.lock.yaml.")
+    return 0
+
+
+def cmd_variables(a, rutas) -> int:
+    """pap variables indexar: ZIP registrados de una encuesta y año → biblioteca/variables/*.parquet (M0-05)."""
+    from .inferencia import indice as indice_variables     # importación diferida: trae polars, duckdb y pyreadstat
+
+    ind, rutas_salida = indice_variables.indexar(rutas, a.encuesta, a.anio)
+    c = indice_variables.conteos(ind)
+    print(f"\n{c['filas']['archivos']} archivo(s), {c['filas']['variables']:,} variable(s) y {c['filas']['categorias']:,} categoría(s) "
+          f"de {a.encuesta} {a.anio} en {rutas.relativa(indice_variables.carpeta_indice(rutas))} "
+          f"({', '.join(p.name for p in rutas_salida.values())}); todas en estado propuesto.")
+    print(f"{c['especiales_propuestos']} código(s) especial(es) propuesto(s); {c['textos_distintos']:,} textos de etiqueta distintos; "
+          "controles que saltaron: " + (", ".join(f"{k} {n}" for k, n in c["controles"].items() if n) or "ninguno") + ".")
+    return 0
+
+
+def cmd_inferencia(a, rutas) -> int:
+    """pap inferencia validar-tablas | validar-recetas | receta <id> --anio AAAA [--comparar-cubo] (M0-06, M0-10)."""
+    if a.accion == "validar-recetas":
+        return _inferencia_validar_recetas(rutas)
+    if a.accion == "receta":
+        return _inferencia_receta(a, rutas)
+    from .inferencia import tablas_curadas
+
+    res = tablas_curadas.validar(rutas)
+    for nombre, (filas, errores) in res.items():
+        print(("✘ " if errores else "✔ ") + f"{tablas_curadas.ARCHIVOS_TABLAS[nombre]}: {filas} fila(s)"
+              + ("" if errores else ", todas con cita") + "".join(f"\n    - {e}" for e in errores))
+    return 1 if any(e for _, e in res.values()) else 0
+
+
+def _inferencia_validar_recetas(rutas) -> int:
+    """pap inferencia validar-recetas: las recetas de curados/inferencia/recetas/ contra su esquema, las tablas curadas, las doradas y dim_indicador."""
+    from .inferencia import recetas
+
+    res = recetas.validar(rutas)
+    for id_, (ok, errores) in res.items():
+        r = recetas.leer_receta(rutas.raiz, id_) if ok and not errores else None
+        print(("✘ " if errores or not ok else "✔ ") + f"{id_}" + (f": estado {r.estado}, pendiente {r.pendiente}, {len(r.doradas)} dorada(s)" if r else "")
+              + "".join(f"\n    - {e}" for e in errores))
+    return 1 if any(e or not ok for ok, e in res.values()) else 0
+
+
+def _inferencia_receta(a, rutas) -> int:
+    """pap inferencia receta <id> --anio AAAA [--comparar-cubo]: plan → verificador → ejecutor → compuertas para todos los territorios del año."""
+    from .inferencia import recetas
+    from .inferencia.ejecutor import Ejecutor, PoolEjecutor
+
+    if not a.id or a.anio is None:
+        raise PapError("Uso: pap inferencia receta <id> --anio AAAA [--comparar-cubo]")
+    receta = recetas.leer_receta(rutas.raiz, a.id)
+    with PoolEjecutor(raiz=rutas.raiz) as pool:
+        estimaciones = recetas.calcular(receta, a.anio, rutas.raiz, ejecutor=Ejecutor(pool, raiz=rutas.raiz))
+    doradas = recetas.reproducir_doradas(receta, estimaciones)
+    filas = recetas.compuertas_de(receta, estimaciones, doradas, rutas.raiz)
+    print(f"Receta {receta.id} ({receta.estado}, pendiente {receta.pendiente}) · {receta.encuesta} {a.anio} · {len(estimaciones)} territorio(s)")
+    if not a.comparar_cubo:
+        for f in filas:
+            e = f.estimacion
+            print(f"  {f.nivel:<20} {f.territorio_id:<20} {100 * e.valor:6.2f} % (IC {100 * e.ic_inf:.2f}–{100 * e.ic_sup:.2f})  n={e.n}  {f.compuerta.estado}")
+        _imprimir_doradas(doradas)
+        return 1 if any(not d["pasa"] for d in doradas) else 0
+
+    p = recetas.ParametrosRecetas.desde_yaml()
+    cubo = recetas.leer_csv(rutas.raiz / recetas.FILAS_CUBO_2024, ("indicador_id", "nivel", "territorio_id"))
+    estados = recetas.leer_csv(rutas.raiz / recetas.ESTADOS_CUBO_2024, ("indicador_id", "nivel", "territorio_id"))
+    if a.anio != 2024:
+        raise PapError("--comparar-cubo solo tiene las filas de 2024 (backlog/slice-m0/evidencia/m0-00_filas_cubo_2024.csv).")
+    maximos, fallan, sin_fila = dict.fromkeys(recetas.COLUMNAS, 0.0), [], []
+    for f in filas:
+        llave = (receta.indicador_id, f.nivel, f.territorio_id)
+        if llave not in cubo:
+            sin_fila.append(llave)
+            continue
+        for d in recetas.comparar_fila(f.estimacion, cubo[llave], p):
+            if d.dif is not None:
+                maximos[d.columna] = max(maximos[d.columna], abs(d.dif))
+            if not d.ok:
+                fallan.append(f"{'/'.join(llave)}: {d.columna} cubo {d.cubo} nuevo {d.nuevo}")
+    print(f"  Contra el cubo ({len(filas) - len(sin_fila)} de {len(cubo and [k for k in cubo if k[0] == receta.indicador_id])} filas), "
+          f"máxima |dif| redondeada a {p.cubo_decimales} decimales:")
+    print("    " + "  ".join(f"{c}={m:.2e}" for c, m in maximos.items()))
+    distintos = [f"{f.nivel}/{f.territorio_id}: cubo {estados[(receta.indicador_id, f.nivel, f.territorio_id)]['estado']} · nuevo {f.compuerta.estado}"
+                 for f in filas if (receta.indicador_id, f.nivel, f.territorio_id) in estados
+                 and (estados[(receta.indicador_id, f.nivel, f.territorio_id)]["estado"] != f.compuerta.estado
+                      or estados[(receta.indicador_id, f.nivel, f.territorio_id)]["reglas"] != recetas.firma_reglas(f.compuerta))]
+    print(f"  Compuertas: {len(distintos)} fila(s) con estado o reglas distintos de m0-00_estados_cubo.csv")
+    _imprimir_doradas(doradas)
+    for linea in [*(f"sin fila en el cubo: {'/'.join(k)}" for k in sin_fila), *fallan, *distintos]:
+        print(f"    ✘ {linea}")
+    return 1 if (sin_fila or fallan or distintos or any(not d["pasa"] for d in doradas)) else 0
+
+
+def _imprimir_doradas(doradas: list[dict]) -> None:
+    pasan = sum(d["pasa"] for d in doradas)
+    print(f"  Doradas (E-05): {pasan} de {len(doradas)} se reproducen")
+    for d in doradas:
+        if not d["pasa"]:
+            print(f"    ✘ {d['id_cifra']}: publicado {d['publicado']} · nuestro {d['nuestro']} (dif {d['dif_pp']} pp)")
 
 
 def cmd_citar(a, rutas) -> int:
@@ -633,8 +759,18 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--consultado", help="Momento de obtención, si no es ahora (ISO 8601)")
     s.set_defaults(fn=cmd_foto_pim)
 
-    s = sub.add_parser("almacen", help="Mantenimiento del almacén de crudos (comprimir con zstd)")
-    s.add_argument("accion", choices=["comprimir"])
+    s = sub.add_parser("almacen", help="Mantenimiento del almacén de crudos: comprimir con zstd, restaurar un bloque "
+                                       "desde su respaldo y liberar sus ZIP")
+    s.add_argument("accion", choices=["comprimir", "restaurar", "liberar"],
+                   help="comprimir: CSV/TXT grandes → .zst; restaurar: prueba el respaldo del bloque y lo marca "
+                        "«respaldado»; liberar: borra los ZIP de un bloque respaldado (simulación por defecto)")
+    s.add_argument("--bloque", help="restaurar/liberar: <encuesta>-<anio>, p. ej. endes-2024")
+    s.add_argument("--repo", help="restaurar: repo de respaldo; debe ser el configurado (almacen.repo_crudos)")
+    s.add_argument("--simular", dest="ejecutar", action="store_false", default=False,
+                   help="liberar: solo mostrar qué se borraría y cuánto (por defecto)")
+    s.add_argument("--ejecutar", dest="ejecutar", action="store_true",
+                   help="liberar: borrar de verdad, después de confirmar")
+    s.add_argument("--si", action="store_true", help="liberar --ejecutar: no preguntar (confirmación dada)")
     s.add_argument("--min-mb", type=float, default=almacen.COMPRIMIR_MIN_MB,
                    help=f"Solo archivos de texto de más de N MB (por defecto {almacen.COMPRIMIR_MIN_MB})")
     s.add_argument("--dry-run", "--ensayo", dest="dry_run", action="store_true",
@@ -644,6 +780,25 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--max-segundos", type=float, default=0,
                    help="No empezar un objeto nuevo pasado este tiempo (para correr por partes)")
     s.set_defaults(fn=cmd_almacen)
+
+    s = sub.add_parser("microdatos", help="Microdatos de las encuestas: convertir los ZIP registrados a Parquet (SAV/DTA aislados)")
+    s.add_argument("accion", choices=["convertir"])
+    s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta a convertir")
+    s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
+    s.set_defaults(fn=cmd_microdatos)
+
+    s = sub.add_parser("variables", help="Índice de variables de las encuestas: indexar los ZIP registrados (metadatos de SAV/DTA)")
+    s.add_argument("accion", choices=["indexar"])
+    s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta a indexar")
+    s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
+    s.set_defaults(fn=cmd_variables)
+
+    s = sub.add_parser("inferencia", help="Motor de inferencia: validar las tablas curadas y las recetas de curados/inferencia/, o calcular una receta")
+    s.add_argument("accion", choices=["validar-tablas", "validar-recetas", "receta"])
+    s.add_argument("id", nargs="?", help="receta: id de la receta (curados/inferencia/recetas/<id>.yaml)")
+    s.add_argument("--anio", type=int, help="receta: año de la encuesta (p. ej. 2024)")
+    s.add_argument("--comparar-cubo", action="store_true", help="receta: compara las filas con las 90 de 2024 del cubo y las compuertas con m0-00_estados_cubo.csv")
+    s.set_defaults(fn=cmd_inferencia)
 
     s = sub.add_parser("indice", help="Reconstruir el índice DuckDB")
     s.set_defaults(fn=cmd_indice)

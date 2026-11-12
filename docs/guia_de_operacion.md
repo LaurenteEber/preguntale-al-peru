@@ -9,11 +9,12 @@ Cómo preparar el entorno, mantener la biblioteca de datos, las tablas curadas y
 ```bash
 cd ~/Documents/SideProjects/preguntale-al-peru
 git checkout main
-uv sync                 # crea .venv con las versiones exactas de uv.lock
+uv sync --locked --no-build   # crea .venv con las versiones exactas de uv.lock, solo desde wheels; falla si el lock no está al día
 uv run pap --help       # lista de comandos
 ```
 
 **Importante:**
+- **Instalar siempre con `--locked --no-build`** (M0-00b): `--locked` se niega a cambiar `uv.lock` y `--no-build` no ejecuta código de instalación de paquetes fuente. `pyproject.toml` fija `exclude-newer = "2 weeks"`: ningún paquete con menos de dos semanas de publicado entra al lock. Para subir una dependencia: auditoría con `backlog/plantillas/auditoria_dependencia.md`, `uv lock`, `just auditar`.
 - Los **crudos** (`biblioteca/cruda/almacen/`) y los **Parquet** no están en git. Si clonas en otra máquina, hay que copiar el almacén desde un respaldo o volver a descargar las fuentes y reconstruir.
 - Todos los comandos se corren con `uv run …` desde la raíz del proyecto.
 
@@ -125,6 +126,51 @@ uv run pap calcular                   # cubo fact_indicador
 4. Si la regla está en el alcance del validador, ajusta su función en `src/pap/motor/validador/` y sus casos en `tests/casos_validador/casos*`.
 5. Corre `uv run pap validar-reglas` (y `--carpeta casos_implementador`) y las pruebas.
 
+### 3.5b Seguridad: `just auditar` y el gancho de secretos (M0-00b)
+
+```bash
+brew install osv-scanner gitleaks   # una vez (versiones auditadas: osv-scanner 2.7.0, gitleaks 8.30.1)
+just auditar                        # pip-audit + osv-scanner sobre uv.lock; sale con error si hay una vulnerabilidad abierta (necesita red)
+scripts/instalar_ganchos.sh         # una vez por clon: gitleaks revisa lo preparado antes de cada commit (core.hooksPath = scripts/ganchos)
+just secretos                       # gitleaks sobre todo el historial (secretos tapados en la salida)
+```
+
+- Correr `just auditar` en cada cambio de dependencias y al cerrar cada slice.
+- Si el gancho detiene un commit, el secreto aparece tapado: se saca del cambio (nunca se copia a la evidencia) y, si ya estuvo en el historial, se avisa al dueño para revocarlo.
+- Las pruebas no salen a internet (`pytest-socket` en `pyproject.toml`; solo el bucle local) y `tests/conftest.py` fija `HF_HUB_OFFLINE=1` y `SVYLAB_OFFLINE=1`. Una prueba revisa que `uv.lock` tenga hash en cada archivo, solo PyPI y nada con menos de 14 días, y otra prohíbe en `src/` las APIs peligrosas (C2, C6).
+- El paquete de la biblioteca se compara contra la huella versionada en `curados/releases.yaml`; un release nuevo se agrega ahí, con su huella, en el mismo commit que lo anuncia.
+
+### 3.5c Verificador en R y esperados (M0-09)
+
+```bash
+cd verificador_r && RENV_CONFIG_CACHE_ENABLED=FALSE Rscript -e 'options(pkgType = "binary"); source("renv/activate.R"); renv::restore(prompt = FALSE)'   # una vez; solo binarios, sin caché
+just esperados-r                                                                          # regenera tests/esperados/r_survey_sintetico.csv
+uv run python -m pap.inferencia.verificador_r esperados                                   # lo mismo, sin just
+```
+
+- R **no corre dentro de pytest**: se regenera en el Mac al subir `svy` o `survey`, y pytest solo compara (`tests/inferencia/test_esperados_r.py`, tolerancia 1e-9, nunca se afloja). Si el CSV falta, esas pruebas fallan.
+- Detalle y versiones fijadas: `verificador_r/README.md`.
+
+### 3.5d Microdatos por bloque: convertir, indexar, respaldar, restaurar y liberar (M0-04 a M0-11)
+
+Un bloque es una encuesta y un año (`endes-2024`). Todo corre en el Mac, donde están los ZIP.
+
+```bash
+uv run pap microdatos convertir --encuesta ENDES --anio 2024     # ZIP registrados → biblioteca/microdatos/ENDES/2024/*.parquet + manifiesto.json
+uv run pap variables indexar --encuesta ENDES --anio 2024        # índice de variables → biblioteca/variables/
+scripts/respaldar_crudos.sh --simular                            # qué se subiría al release crudos-endes-2024 (no sube nada)
+scripts/respaldar_crudos.sh                                      # sube los ZIP y PDF al repo PRIVADO de crudos
+uv run pap almacen restaurar --bloque endes-2024                 # prueba el respaldo y marca el bloque «respaldado»
+uv run pap almacen liberar --bloque endes-2024                   # simulación: qué ZIP se borrarían y cuánto
+uv run pap almacen liberar --bloque endes-2024 --ejecutar        # borra de verdad; pide escribir «liberar endes-2024»
+```
+
+- **Token de `gh`:** de grano fino, solo para `LaurenteEber/preguntale-al-peru-crudos` y con `contents: write`. Se toma de `GH_TOKEN` o del Llavero de macOS (servicio `pap-gh-crudos`) y nunca se imprime. El script y `restaurar` se niegan si el repo no es el configurado (`almacen.repo_crudos`) o no es privado.
+- **`restaurar`** baja el release a un directorio temporal, comprueba `SHA256SUMS` y la huella de cada recurso del bloque contra los `datapackage.json` (falla si falta uno), reconvierte el archivo más chico del manifiesto y exige la misma `huella_contenido_v1`. Si todo cuadra, anota el bloque en `biblioteca/cruda/almacen_zst.json` (clave `bloques`: fecha, URL del release y huellas comprobadas) y en `verificaciones.jsonl`. Si a un bloque liberado le faltan ZIP en el almacén, los vuelve a poner (ya comprobados); lo demás no lo toca.
+- **`liberar`** solo borra los ZIP de un bloque `respaldado` cuya huella se comprobó al restaurar. Nunca toca los PDF, los Parquet ni su manifiesto, los `datapackage.json`, `insumos.lock.yaml`, `indice.duckdb`, los crudos de otras fuentes, los objetos que comparte otro recurso ni los ZIP que lee `pap calcular` (hogar y anemia de la ENDES, sumaria de la ENAHO). Cada ZIP borrado queda en `verificaciones.jsonl`. Avisa si el espacio libre baja de `almacen.espacio_libre_min_gb` (50 GB).
+- **Cuándo liberar:** al cerrar cada fase o si el espacio libre baja del mínimo. Liberar el bloque de 2024 es decisión del dueño.
+- **Después de liberar:** para reconvertir o reindexar un bloque hay que reponer antes sus ZIP con `pap almacen restaurar --bloque <bloque>`. Las respuestas no cambian: el motor lee los Parquet.
+
 ### 3.6 Mantenimiento
 ```bash
 uv run pap almacen comprimir --dry-run   # qué se comprimiría (texto > 10 MB, zstd, verificado)
@@ -133,7 +179,7 @@ uv run pap recetas validar                # recetas contra el catálogo y R-DEP-
 just catalogo                             # recalcula la compuerta del catálogo (requiere just)
 ```
 
-**Respaldo:** copia `biblioteca/cruda/almacen/` (1,2 GB) a un disco o una nube. Es lo único que no se puede regenerar sin volver a descargar.
+**Respaldo:** los ZIP y PDF de cada bloque de microdatos van al repo privado de crudos (§3.5d). El resto de `biblioteca/cruda/almacen/` (1,2 GB) todavía no tiene respaldo externo: cópialo a un disco o una nube. Es lo único que no se puede regenerar sin volver a descargar.
 
 ### 3.7 Mapa de comandos de mantenimiento
 
@@ -147,6 +193,13 @@ just catalogo                             # recalcula la compuerta del catálogo
 | `pap construir {territorio,poblacion,puentes,gasto,endes,enaho,mapa_pobreza,indicadores}` | Reconstruye una tabla curada o estandarizada | Tras cambiar crudos o código (solo en el Mac) | `biblioteca` |
 | `pap calcular` | Reconstruye el cubo `fact_indicador.parquet` | Después de `construir`, o de bajar el release | `biblioteca` |
 | `pap almacen comprimir [--dry-run]` | Comprime con zstd los textos grandes; `--dry-run` solo lista | Mantenimiento | Almacén (sin `--dry-run`) |
+| `pap almacen restaurar --bloque ENC-AAAA` | Prueba el respaldo del bloque en el repo privado (huellas y una reconversión) y lo marca `respaldado` | Después de `scripts/respaldar_crudos.sh` | `almacen_zst.json`, `verificaciones.jsonl` |
+| `pap almacen liberar --bloque ENC-AAAA [--ejecutar] [--si]` | Lista (por defecto) o borra los ZIP liberables de un bloque respaldado | Al cerrar una fase o con poco espacio | Almacén, `almacen_zst.json`, `verificaciones.jsonl` (solo con `--ejecutar`) |
+| `pap variables indexar --encuesta ENDES --anio 2024` | Índice de variables, categorías y uniones de los Parquet | Tras convertir (solo en el Mac) | `biblioteca/variables/` |
+| `pap microdatos convertir --encuesta ENDES --anio 2024` | Convierte los DTA/SAV de los ZIP registrados a Parquet (uno por archivo) con manifiesto | Tras registrar los ZIP de una encuesta y año (solo en el Mac) | `biblioteca/microdatos/`, `curados/insumos.lock.yaml` |
+| `pap inferencia validar-tablas` | Valida las 6 tablas curadas de `curados/inferencia/` (esquema, citas, llaves y cruces) | Tras editar una tabla curada | No |
+| `pap inferencia validar-recetas` | Valida las recetas de indicador de `curados/inferencia/recetas/` (esquema, universo, cortes, doradas contra `cifras_doradas.csv`, campo `receta` de `dim_indicador`) | Tras editar una receta | No |
+| `pap inferencia receta ID --anio AAAA [--comparar-cubo]` | Calcula una receta por el camino nuevo (plan → verificador → ejecutor → compuertas) desde los microdatos, para todos los territorios del año. Con `--comparar-cubo` (solo 2024) la compara con las 90 filas del cubo y las compuertas con `m0-00_estados_cubo.csv`; sale con 1 si algo difiere | Para comprobar una receta (solo en el Mac, con `biblioteca/microdatos/` y `biblioteca/variables/`) | No |
 | `pap servir [--puerto N] [--red-local]` | Levanta la web en local (por defecto solo `127.0.0.1:8000`) | Para ver la web o probar la imagen | No |
 | `pap indice` | Reconstruye `indice.duckdb` | Tras registrar capturas | `biblioteca` |
 | `pap recetas {generar,validar,sincronizar}` | Recetas de descarga desde el catálogo; `validar` las contrasta con el catálogo y R-DEP-01 | Al tocar el catálogo | `validar`: no |
@@ -211,7 +264,7 @@ uv run pap servir --red-local        # 0.0.0.0: también desde otros equipos de 
 
 ### 6.2 Imagen Docker
 
-La receta es el `Dockerfile` de la raíz (Python 3.12 slim, usuario sin privilegios, dependencias desde `uv.lock`). Evidencia: `backlog/slice-3/evidencia/s3-09_imagen.md`.
+La receta es el `Dockerfile` de la raíz (Python 3.12.16 slim y `uv` 0.13.5 fijados por huella, usuario sin privilegios, dependencias con `uv sync --locked --no-build --no-dev`). Evidencia: `backlog/slice-3/evidencia/s3-09_imagen.md`.
 
 ```bash
 docker build -t pap-s3-09:local .
@@ -219,7 +272,7 @@ docker run --rm -p 8000:8000 -e PAP_ANTHROPIC_API_KEY pap-s3-09:local     # la c
 ```
 
 - **Con la biblioteca ya bajada**, móntala en solo lectura (`dimensiones`, `estandarizada` e `indicadores`, en `/app/biblioteca/…`) y no se baja nada.
-- **Sin ella**, `scripts/arranque_imagen.sh` la baja del release de GitHub (`biblioteca-010ea965`, o el que indique `PAP_BIBLIOTECA_ETIQUETA`) y comprueba las huellas con `SHA256SUMS` antes de descomprimir. Después compara la huella del cubo con la del manifiesto y, si no coincide, corre `pap calcular --permitir-sucio` (la imagen no lleva `.git`).
+- **Sin ella**, `scripts/arranque_imagen.sh` la baja del release de GitHub (`biblioteca-010ea965`, o el que indique `PAP_BIBLIOTECA_ETIQUETA`) y comprueba la huella del paquete contra `curados/releases.yaml` (versionada en el repo) antes de descomprimir. Después compara la huella del cubo con la del manifiesto y, si no coincide, corre `pap calcular --permitir-sucio` (la imagen no lleva `.git`).
 - Termina con `pap servir --red-local --puerto $PAP_PUERTO`: dentro de la imagen escucha en todas las interfaces (S3-09-a), y es `-p` el que decide qué se publica. Revísalo en el despliegue del slice 4.
 - `HEALTHCHECK` sobre `/salud`, con 180 s de gracia para el precalentamiento y la descarga.
 
@@ -276,6 +329,11 @@ Implementa [especificaciones/datos_crudos.md](especificaciones/datos_crudos.md).
 | `pap registrar ID [ARCHIVOS…]` | Registra los archivos indicados o los de `biblioteca/cruda/bandeja/ID/`. Opciones: `--issued`, `--edicion`, `--corte`, `--evidencia`, `--nota`, `--forzar` |
 | `pap verificar [ID] [--rapido]` | Recetas contra su esquema, cada `datapackage.json` contra Frictionless y el contrato, cada crudo contra su huella (los `.zst` se descomprimen en flujo; `--rapido`: solo tamaños) |
 | `pap almacen comprimir [--min-mb N] [--dry-run] [--solo HUELLA] [--max-segundos S]` | Comprime con zstd los CSV/TXT del almacén de más de N MB (10 por defecto): escribe `<huella>.zst.tmp`, verifica que al descomprimir dé la misma huella y tamaño, lo renombra y **solo entonces** borra el original. Idempotente y reanudable (si se corta, se vuelve a correr). Si una verificación falla (o el disco se llena), el original queda intacto y sale con código 1. Anota cada `.zst` en `biblioteca/cruda/almacen_zst.json` (tamaño y SHA-256 del `.zst`, para `--rapido`) y cada cambio en `verificaciones.jsonl` (`accion: comprimir`). `--dry-run` solo lista |
+| `pap microdatos convertir --encuesta ENDES --anio AAAA` | Convierte a Parquet los DTA/SAV de los ZIP registrados en `curados/inferencia/descargas/<encuesta>_<año>.yaml`. Cada ZIP se abre con `abrir_zip_seguro` y cada archivo se lee con `pyreadstat` en un subproceso con topes de memoria, procesador y tiempo (`conversion.*` en `curados/inferencia/parametros.yaml`; macOS no hace cumplir RLIMIT_AS, así que allí manda el vigilante de RSS y el manifiesto lo declara). Escribe `biblioteca/microdatos/<ENCUESTA>/<año>/<archivo>.parquet` (zstd 3, grupos de 122 880 filas, columna `anio`, nombres en MAYÚSCULAS, clases de `curados/inferencia/clases_columnas.yaml`) y `manifiesto.json` (origen, `huella_datos`, `huella_contenido_v1`, filas, columnas, perdidos de usuario con sus códigos, versiones, RSS y tiempos). Los perdidos extendidos de Stata y de usuario de SPSS quedan como nulo. Un ancho de llave distinto del declarado, una categoría con decimales o un HHID que no coincide con el de CASEID detienen la conversión; no se corta ni se redondea. Al terminar agrega las huellas de los ZIP a `curados/insumos.lock.yaml`. Los Parquet no van a git (`biblioteca/**/*.parquet`); el manifiesto sí |
+| `pap variables indexar --encuesta ENDES --anio AAAA` | Índice de variables de los ZIP registrados (M0-05): lee los metadatos de **todos** los DTA/SAV con `pyreadstat` (`metadataonly=True` y `user_missing=True`, sin tope de etiquetas) en el mismo subproceso aislado y con `abrir_zip_seguro` de `pap microdatos convertir`, y escribe `biblioteca/variables/{archivos,variables,categorias}.parquet` (esquemas en el anexo A del diseño y en la cabecera de `src/pap/inferencia/indice.py`). Todas las variables quedan en `propuesto`; los campos de M1 (texto de la pregunta, universo, ventana, sujeto, informante, modo, universo corto, `rol_faltante`, `tipo_origen`) quedan vacíos. Propone códigos especiales (`es_especial = propuesto`) por lo que declara el archivo y por la etiqueta («no sabe», «no responde», «no aplica», 98/99 con etiqueta), cura las etiquetas (ftfy + NFC; la original se conserva) y corre los controles de etiqueta vacía, mojibake y frecuencia de especiales (columna `controles`). Unidad, llave y uniones salen de `curados/inferencia/archivos_<encuesta>_<año>.yaml`; las clases, de `clases_columnas.yaml`; los umbrales, de `indice.*` en `curados/inferencia/parametros.yaml`. Necesita antes `pap microdatos convertir` (manifiesto y Parquet) y se detiene si el índice no coincide con las columnas de los Parquet. Los Parquet no van a git |
+| `pap inferencia validar-tablas` | Valida las seis tablas curadas del motor de inferencia (M0-06) con los esquemas pydantic de `src/pap/inferencia/tablas_curadas.py`: `diseno_muestral.csv`, `universos_analiticos.yaml`, `territorios.yaml`, `perfil_anual.csv`, `relacion_entre_anios.csv` y `cortes_estandar.yaml`. Una fila sin cita, o con una cita que no dice dónde (página `p. N`, `archivo:línea` o `Etiqueta del archivo X AAAA`), no valida. También comprueba que las llaves no se repitan; que los archivos y las uniones de `diseno_muestral` estén en `archivos_endes_2024.yaml`; que los niveles de `territorios` estén en `niveles_validos` de `dim_indicador.yaml`; que cada `archivo:línea` citado exista y llegue a esa línea; y, si está el índice de variables, que cada variable citada exista en su archivo. Las expresiones SQL solo admiten identificadores, números, comillas simples y operadores (nada de `;` ni comentarios). Sale con 1 si algo falla. Las pruebas con los Parquet de 2024 (`tests/inferencia/test_tablas_curadas_microdatos.py`, marcadas `regresion_microdatos` y `solo_mac`) comprueban los 9 959 / 19 511 casos sobre 20 290 niños, las 30 unidades por indicador y que cada cita a la ficha técnica diga lo que dice en esa página |
+| `pap inferencia validar-recetas` | Valida con `src/pap/inferencia/recetas.py` las recetas de `curados/inferencia/recetas/*.yaml` (M0-10): esquema (`transformaciones` vacío; `revisado` lleva `pendiente: visto_dueno`; `verificado` no lleva pendiente), que el universo analítico y los cortes estén en sus tablas, que cada dorada coincida con `curados/capa0/cifras_doradas.csv` (valor, casos, CV, tolerancias), que las variables estén en el índice, que las citas `archivo:línea` lleguen y que `dim_indicador.yaml` lleve `receta: <id>` en el indicador. Sale con 1 si algo falla |
+| `pap inferencia receta ID --anio AAAA [--comparar-cubo]` | Corre la receta por el camino nuevo para los territorios de `territorios.yaml` del año (30 en la ENDES 2024) con el pool del ejecutor, evalúa las compuertas (R-ENC-02 a 04) y reproduce las doradas de la receta (E-05: ±0,1 pp, casos exactos y CV donde el INEI los publica). `--comparar-cubo` (solo 2024) añade la comparación con `backlog/slice-m0/evidencia/m0-00_filas_cubo_2024.csv` con los criterios del punto 1 de la definición de hecho (valor, ee, CV, IC y deff redondeados a 8 decimales con |dif| ≤ 1e-8; n y gl idénticos; n efectivo contra mín(n, el del cubo)) y de las compuertas con `m0-00_estados_cubo.csv`. Una receta que el verificador no deja pasar, un año fuera de `anios` o un corte fuera de `cortes_permitidos` es un error, no un resultado. Evidencia de las 90 filas: `uv run python tests/inferencia/comparar_m10.py` (escribe `backlog/slice-m0/evidencia/m0-10_recetas_vs_cubo.csv`); prueba `tests/inferencia/test_recetas_microdatos.py` (`regresion_microdatos`, `solo_mac`) |
 | `pap construir territorio\|poblacion\|puentes\|gasto\|endes\|enaho\|mapa_pobreza` | Construye tablas curadas desde los crudos fijados en `curados/insumos.lock.yaml`: la capa 0 en `biblioteca/dimensiones/` y los insumos del piloto (S4: `endes`, `enaho`, `mapa_pobreza`) en `biblioteca/estandarizada/`. Parquet ordenado + manifiesto con huellas y pruebas; se niega si el código tiene cambios sin commit (salvo `--permitir-sucio`) o si falla una prueba bloqueante |
 | `pap citar HUELLA\|ID [--corta]` | Cita del archivo (formato DataCite/APA adaptado) o línea de ficha corta |
 | `pap indice` | Reconstruye `biblioteca/cruda/indice.duckdb` (tablas `recursos`, `verificaciones`, vista `fuentes_estado`) |
@@ -297,7 +355,10 @@ Implementa [especificaciones/datos_crudos.md](especificaciones/datos_crudos.md).
 | Metadatos de cada captura | `biblioteca/cruda/capturas/<ID>/<fecha>/datapackage.json` | sí |
 | Registro de verificaciones | `biblioteca/cruda/verificaciones.jsonl` | sí |
 | Índice | `biblioteca/cruda/indice.duckdb` (derivado) | no |
+| Microdatos convertidos | `biblioteca/microdatos/<ENCUESTA>/<año>/<archivo>.parquet` y `manifiesto.json` | Parquet no, manifiesto sí |
+| Índice de variables | `biblioteca/variables/{archivos,variables,categorias}.parquet` (derivado de los ZIP y del manifiesto) | no |
 | Recetas | `curados/recetas/<ID>.yaml` | sí |
+| Recetas de indicador (motor de inferencia) | `curados/inferencia/recetas/<ID>.yaml` | sí |
 | Esquema de recetas | `src/pap/esquemas/receta.schema.json` | sí |
 | Foto mensual del PIM (derivada) | `biblioteca/estandarizada/gasto/foto_pim/foto_pim_<año>_<mes_ref>_<huella12>.parquet` + `.json` | no |
 

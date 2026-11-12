@@ -1,0 +1,57 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-endes-2026-11-09-11",
+  "title": "Encuesta Demográfica y de Salud Familiar",
+  "created": "2026-11-09T11:46:24-05:00",
+  "keywords": [
+    "INEI-ENDES"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "endes-2024-programas-sociales",
+      "title": "Encuesta Demográfica y de Salud Familiar",
+      "original_filename": "968-Modulo1641.zip",
+      "path": "almacen/sha256/63/dc/63dc88121eefd105180f365c2049c554afc8f2fc0ee5c21154c0d76f4bf7a7aa",
+      "hash": "sha256:63dc88121eefd105180f365c2049c554afc8f2fc0ee5c21154c0d76f4bf7a7aa",
+      "bytes": 3066353,
+      "format": "zip",
+      "mediatype": "application/zip",
+      "source_id": "INEI-ENDES",
+      "publisher": "INEI",
+      "dataset_title": "Encuesta Demográfica y de Salud Familiar",
+      "access_url": "https://proyectos.inei.gob.pe/microdatos/",
+      "download_url": "https://proyectos.inei.gob.pe/iinei/srienaho/descarga/STATA/968-Modulo1641.zip",
+      "source_version_basis": "ninguna",
+      "temporal": "1986–2025",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-11-09T11:46:24-05:00",
+      "method": "http_patron",
+      "recipe": "INEI-ENDES@f98fb75",
+      "attributed_to": "Claude Code (curl, Mac del dueño; K-01 aprobada 9/11/2026)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "ODbL-1.0",
+          "title": "ODbL (en datosabiertos.gob.pe) / uso libre con cita"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "manzana_conglomerado"
+      },
+      "known_issues": [
+        "Muestra 2024: 36 760 viviendas; inferencia anual departamental (24 + Callao) y por área/región; no provincial/distrital. Algunos indicadores (anemia) con IC amplios en dptos pequeños. Cambio de umbral de anemia por altitud (OMS 2024) puede generar quiebre de serie; verificar en informe. Ubigeo y conglomerado presentes pero geo-desplazado en versiones DHS internacionales."
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

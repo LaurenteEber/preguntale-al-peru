@@ -14,10 +14,21 @@ RAIZ="$(cd "$(dirname "$0")/.." && pwd)"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
 
+# M0-00b (A8): la huella esperada del paquete está versionada en curados/releases.yaml, no se toma del release.
+# Un release sin huella registrada se rechaza: primero se audita y se agrega la huella en un commit.
+ESPERADA_PAQUETE="$(awk -v e="$ETIQUETA:" '$1 == e {dentro = 1; next} dentro && $1 == "sha256:" {print $2; exit} dentro && $0 !~ /^    / {exit}' "$RAIZ/curados/releases.yaml")"
+if ! printf '%s' "$ESPERADA_PAQUETE" | grep -Eq '^[0-9a-f]{64}$'; then
+  echo "ERROR: $ETIQUETA no tiene huella registrada en curados/releases.yaml; no se baja" >&2
+  exit 1
+fi
+
 echo "Bajando $ETIQUETA…"
-curl -fsSL --retry 3 -o "$TMP/SHA256SUMS" "$BASE/SHA256SUMS"
 curl -fsSL --retry 3 -o "$TMP/$ETIQUETA.tar.zst" "$BASE/$ETIQUETA.tar.zst"
-(cd "$TMP" && sha256sum -c SHA256SUMS)
+REAL_PAQUETE="$(sha256sum "$TMP/$ETIQUETA.tar.zst" | cut -d' ' -f1)"
+if [ "$REAL_PAQUETE" != "$ESPERADA_PAQUETE" ]; then
+  echo "ERROR: la huella de $ETIQUETA.tar.zst es $REAL_PAQUETE y curados/releases.yaml espera $ESPERADA_PAQUETE" >&2
+  exit 1
+fi
 
 echo "Descomprimiendo en $RAIZ/biblioteca…"
 # El paquete se armó en macOS: GNU tar avisa de sus atributos extendidos; se silencian solo esos avisos.

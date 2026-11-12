@@ -1,0 +1,26 @@
+# M0-11 — pap almacen liberar --bloque endes-2024 (simulación, 10/11/2026 18:55)
+
+liberaría  endes-2024-datos-basicos-mef       968-Modulo1631.zip                 9.7 MB
+liberaría  endes-2024-disciplina-infantil     968-Modulo1639.zip                 4.3 MB
+liberaría  endes-2024-embarazo-parto          968-Modulo1633.zip                 5.9 MB
+liberaría  endes-2024-historia-nacimiento     968-Modulo1632.zip                 7.9 MB
+liberaría  endes-2024-inmunizacion-salud      968-Modulo1634.zip                12.1 MB
+liberaría  endes-2024-mortalidad-materna-violencia 968-Modulo1637.zip                 6.3 MB
+liberaría  endes-2024-nupcialidad-fecundidad  968-Modulo1635.zip                 5.9 MB
+liberaría  endes-2024-programas-sociales      968-Modulo1641.zip                 3.1 MB
+liberaría  endes-2024-salud                   968-Modulo1640.zip                 7.1 MB
+liberaría  endes-2024-sida-condon             968-Modulo1636.zip                 7.2 MB
+liberaría  endes-2024-vivienda                968-Modulo1630.zip                 3.7 MB
+se queda   endes-2024-anemia                  968-Modulo1638.zip           (lo lee `pap calcular`)
+se queda   endes-2024-cuestionario-hogar      2024-5-CuestionarioHogar.pdf (no es un ZIP)
+se queda   endes-2024-cuestionario-individual 2024-5-CuestionarioIndividual.pdf (no es un ZIP)
+se queda   endes-2024-cuestionario-salud      2024-5-CuestionarioSalud.pdf (no es un ZIP)
+se queda   endes-2024-diccionario-hogar       2024-5-DiccionarioHogar.pdf  (no es un ZIP)
+se queda   endes-2024-diccionario-individual  2024-5-DiccionarioIndividual.pdf (no es un ZIP)
+se queda   endes-2024-diccionario-salud       2024-5-DiccionarioSalud.pdf  (no es un ZIP)
+se queda   endes-2024-ficha-tecnica           2024-5-FichaTecnica.pdf      (no es un ZIP)
+se queda   endes-2024-hogar                   968-Modulo1629.zip           (lo lee `pap calcular`)
+Total: 11 ZIP, 73.0 MB.
+Simulación: no se borró nada. Para liberar: --ejecutar.
+código de salida: 0
+/dev/disk3s5       460  332        99    77% 3945747 1046050440    0%   /System/Volumes/Data

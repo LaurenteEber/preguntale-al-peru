@@ -1,0 +1,7 @@
+# Exclusiones de gitleaks, por huella (fingerprint). Cada una dice qué es y quién la aprobó.
+#
+# D-M0-00b-1 (dueño, 9/11/2026): no es un secreto. Es el enlace público de Power BI «Publicar en la web» del tablero del
+# MEF (app.fabric.microsoft.com/view?r=…); `r=` es base64 de {"k": id_reporte, "t": id_inquilino, "c": n} y la regla
+# grafana-api-key lo confunde con una clave. Es el mismo enlace en los dos archivos del catálogo.
+f98fb7532c6c7c3d58c18f2e143b0ad5513ea96d:catalogo/scripts/catalogo_v03_base.json:grafana-api-key:1927
+f98fb7532c6c7c3d58c18f2e143b0ad5513ea96d:catalogo/catalogo_fuentes.json:grafana-api-key:3567

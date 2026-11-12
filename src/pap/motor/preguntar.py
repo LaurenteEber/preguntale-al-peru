@@ -541,7 +541,7 @@ def _resolver(motor, cm: dict, elegir, ofertas: list | None = None):
             r = r.opciones[n - 1]["territorio"]
             elegidos.append(r)
         elif ofertas is not None:
-            o = oferta_otros_niveles(motor.ctx, p, r)                          # X-22
+            o = oferta_otros_niveles(motor.ctx, p, r)                          # T-03
             if o and o not in ofertas:
                 ofertas.append(o)
         out.append(r)
@@ -550,7 +550,7 @@ def _resolver(motor, cm: dict, elegir, ofertas: list | None = None):
     return (out if len(out) > 1 else out[0]), None, numeros, elegidos
 
 
-# S3-10 (supuesto, reversible): intenciones donde la oferta de X-22 va en «Avisos» (capa 2) y no en «Ojo al leer»: una comparación
+# S3-10 (supuesto, reversible): intenciones donde la oferta de T-03 va en «Avisos» (capa 2) y no en «Ojo al leer»: una comparación
 # con dos departamentos a secas lleva dos ofertas, y la evolución de anemia ya llega a 3 «Ojo al leer»; en ambas la capa 1 pasaría de
 # `respuesta.capa1_palabras_max` (125 palabras) y se perdería una advertencia de la cifra.
 _OFERTA_EN_AVISOS = ("comparacion", "evolucion", "cruce", "efecto")   # cruce y efecto: S3-10 (W-10), la apertura del gasto ocupa la capa 1
@@ -600,7 +600,7 @@ def preguntar_minima(motor, entrada, *, elegir: int | None = None, solo_plan: bo
     if ofertas and "capas" in res:
         if cm["intencion"] in _OFERTA_EN_AVISOS:                               # S3-10: con dos departamentos a secas la capa 1 se pasaría del tope
             res["capas"]["capa2"]["avisos"] = list(dict.fromkeys(ofertas + res["capas"]["capa2"]["avisos"]))
-        else:                                                                  # X-22 (S3-10, H-01): PRIMERO en «Ojo al leer» (capa 1)
+        else:                                                                  # T-03 (S3-10, H-01): PRIMERO en «Ojo al leer» (capa 1)
             c1 = res["capas"]["capa1"]
             nuevas = [o for o in ofertas if o not in c1["ojo_al_leer"]]
             c1["ojo_al_leer"] = nuevas + c1["ojo_al_leer"]

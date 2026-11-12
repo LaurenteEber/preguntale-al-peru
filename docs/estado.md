@@ -1,6 +1,6 @@
 # Estado actual del proyecto
 
-Corte: 7 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas) al cerrar cada fase o cuando cambia el estado de una fuente. Las decisiones vigentes y las pendientes del dueño están solo en `decisiones.md`; la historia, en `historia.md`.
+Corte: 10 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas) al cerrar cada fase o cuando cambia el estado de una fuente. Las decisiones vigentes y las pendientes del dueño están solo en `decisiones.md`; la historia, en `historia.md`.
 
 ## Resumen
 
@@ -17,17 +17,19 @@ Corte: 7 de noviembre de 2026. Es una foto: se reescribe (no se le agregan capas
 | Fase 5a (motor por intenciones, slice 1) | **Hecha el 3/11/2026** (etiqueta `slice-1-cerrado`, de la carpeta de trabajo); **adenda cerrada el 4/11/2026** (S1-11 a S1-16: gasto en soles constantes y observaciones de la revisión; etiqueta `slice-1-adenda-cerrada`). Cierre en `backlog/slice-1/evidencia/cierre.md` |
 | Fase 5b (intérprete de preguntas, slice 2) | **Hecha el 5/11/2026** (etiqueta `slice-2-cerrado`): `pap preguntar --texto` con Claude Sonnet 5.5 (esfuerzo bajo, P-07); conjunto de 140 preguntas con todos los umbrales cumplidos en vivo (consulta exacta 98 %, 0 valores sin ancla, 0 números fuera de marcadores); US$ 0,0024 por pregunta. Cierre en `backlog/slice-2/evidencia/cierre.md` |
 | Fase 5c (API y web, slice 3) | **Hecha** el 7/11/2026 (`backlog/slice-3/`; evidencia en `backlog/slice-3/evidencia/`): API (`POST /api/preguntar`), web móvil con respuesta por capas, formulario guiado, límites por IP y tope diario del LLM, imagen Docker y `pap servir`. Medido: estructurada p95 0,27 s, texto en vivo p95 3,13 s; accesibilidad sin fallas de axe (`s3-06_accesibilidad.md`, `s3-08_rendimiento.md`). Corre en local o en la red de la casa; sin despliegue público. Prueba en celular hecha por el dueño. «¿Qué puedo hacer?» se oculta en la web hasta aprobar X-01 |
-| Almacén | 1,2 GB comprimidos (zstd). **Sin respaldo externo** |
+| Motor de inferencia, M0 | **En cierre** (`backlog/slice-m0/`; evidencia en `backlog/slice-m0/evidencia/`): ENDES 2024 convertida a Parquet (34 archivos) con índice de 2 856 variables (`m0-05_conteos.md`), plan verificado sin SQL, ejecutor con pool y compuertas. Tres recetas igualan al cubo: 90 filas con diferencia 0 y 21 de 21 doradas (`m0-10_recetas.md`); `svy` y R coinciden en 50 de 50 casos, máxima diferencia 1,3e-15 (`m0-09_r.md`). Las recetas quedan en `revisado` hasta el visto del dueño (K-03). Suite: 1 784 pruebas pasan, 1 se salta. Pendiente: corrida del pool en Linux e imagen Docker (A6) |
+| Almacén | 1,2 GB comprimidos (zstd). **Respaldo externo parcial:** los ZIP y PDF de la ENDES 2024 están en el repo privado de crudos (release `crudos-endes-2024`, restauración probada: `backlog/slice-m0/evidencia/m0-11_restauracion.txt`); el resto no |
 
 ## Qué falta, en orden
 
-1. **Del dueño:** las decisiones pendientes X-01 a X-08 (`decisiones.md`, sección final) y el **respaldo externo del almacén**. Las que tocan el motor por intenciones siguen abiertas en su valor de hoy: X-02 (conteo en «¿cuántos?» del SIEN), X-03 (CR-01 con el gasto del mismo año) y X-04 (un solo intervalo visible); cambiarlas es editar una línea de `parametros_motor.yaml`.
+1. **Del dueño:** las decisiones pendientes X-01 a X-08 y X-23 (`decisiones.md`, sección final) y el **respaldo externo del resto del almacén** (el de la ENDES 2024 ya está hecho). Las que tocan el motor por intenciones siguen abiertas en su valor de hoy: X-02 (conteo en «¿cuántos?» del SIEN), X-03 (CR-01 con el gasto del mismo año) y X-04 (un solo intervalo visible); cambiarlas es editar una línea de `parametros_motor.yaml`.
 2. **Adenda del slice 1** (`backlog/slice-1/adenda/`): gasto en soles constantes y observaciones medias de la revisión; AD-1 y AD-2 aprobadas el 4/11/2026. Empieza por reconstruir la biblioteca en el Mac (S1-11).
-3. **Slice 4 (beta cerrada):** despliegue, dominio y HTTPS, y lo que deja el slice 3 abierto (`backlog/plan_slices.md`, slice 4). Antes de abrir el servicio a gente de fuera: X-05 y X-07, y los dos altos del motor que encontraron las revisiones del slice 2 (consulta E-09 de `backlog/slice-2/consultas_al_dueno.md`).
-4. **Consultas abiertas del slice 1:** ver `backlog/slice-1/consultas_al_dueno.md` y `backlog/slice-1/evidencia/cierre.md`.
-5. **Antes de la Ola 1:** GA-13 (gasto en proyectos con códigos fuera del detalle de inversiones del MEF) y la separación por producto de las ejecutoras mixtas (X-06).
-6. **Deuda nueva del slice 2:** la salida estructurada del proveedor no acepta el esquema de la interpretación (E-03; el código valida); los nombres de personas en la pregunta no se detectan (P-03, E-07); la caché de interpretaciones no se borra a las 24 h, solo deja de usarse (E-07).
-7. **Deuda menor:**
+3. **Motor de inferencia (M0–M5)** (`docs/diseno/motor_inferencia.md`, `backlog/slice-m0/`): M0 (cimientos) está en cierre; el siguiente trabajo es M1. La beta cerrada pasa a M4; el slice 4 queda en pausa hasta entonces.
+4. **Slice 4 (beta cerrada, en pausa hasta M4):** despliegue, dominio y HTTPS, y lo que deja el slice 3 abierto (`backlog/plan_slices.md`, slice 4). Antes de abrir el servicio a gente de fuera: X-05 y X-07, y los dos altos del motor que encontraron las revisiones del slice 2 (consulta E-09 de `backlog/slice-2/consultas_al_dueno.md`).
+5. **Consultas abiertas del slice 1:** ver `backlog/slice-1/consultas_al_dueno.md` y `backlog/slice-1/evidencia/cierre.md`.
+6. **Antes de la Ola 1:** GA-13 (gasto en proyectos con códigos fuera del detalle de inversiones del MEF) y la separación por producto de las ejecutoras mixtas (X-06).
+7. **Deuda nueva del slice 2:** la salida estructurada del proveedor no acepta el esquema de la interpretación (E-03; el código valida); los nombres de personas en la pregunta no se detectan (P-03, E-07); la caché de interpretaciones no se borra a las 24 h, solo deja de usarse (E-07).
+8. **Deuda menor:**
    - validar con terceros los 3 patrones de aviso del corrector (corpus de ≥ 40 oraciones escrito por otra persona);
    - prueba automática de campos fuera del diccionario (por escribir; la auditoría de reglas la hizo a mano);
    - URL de la Declaración de la Comisión Consultiva sobre la pobreza 2021;

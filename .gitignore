@@ -33,3 +33,15 @@ catalogo/scripts/catalogo_fuentes_v2.json
 
 # Para apagar conf de MCP que se usa solo en cloud
 .claude/settings.local.json
+
+# M0-00: copias del cubo para la regresión (solo se registra su huella)
+backlog/**/evidencia/*.parquet
+
+# Secretos locales (M0-00b, A5)
+.env
+.env.*
+
+# Verificador en R (M0-09): la biblioteca de renv se reconstruye con renv::restore() desde verificador_r/renv.lock
+verificador_r/renv/library/
+verificador_r/renv/local/
+verificador_r/renv/staging/

@@ -59,7 +59,7 @@ Los alias viven en `curados/motor/parametros_motor.yaml` (`temas.alias_cli`). Un
 | Cómo escribirlo | Qué pasa |
 |---|---|
 | `"departamento de Puno"`, `"Perú"`, `"Ayaviri, Melgar"` | Se resuelve directo |
-| `Puno`, `Cusco`, `Huancavelica` (nombre de un departamento, a secas) | Responde por el departamento y, en «Avisos», ofrece la provincia o el distrito del mismo nombre (X-22). Para otro nivel: `"provincia de Puno"` |
+| `Puno`, `Cusco`, `Huancavelica` (nombre de un departamento, a secas) | Responde por el departamento y, en «Avisos», ofrece la provincia o el distrito del mismo nombre (T-03). Para otro nivel: `"provincia de Puno"` |
 | `Abancay` (provincia y distrito con el mismo nombre, sin departamento) | Pregunta cuál: provincia o distrito. Se responde con `--elegir N` |
 | `Lima` a secas (T-03) | Pregunta: Lima Metropolitana, Lima Región o Callao |
 | `San Juan` (homónimos entre distritos) | Pregunta con el distrito, la provincia y el departamento de cada opción |
@@ -239,7 +239,7 @@ Una respuesta trae tres capas, la confianza y, al final, el detalle técnico (co
 | `no_se_puede` | Los datos o las reglas no lo permiten | Empieza con «No…» o «Todavía no…», **nunca** trae una cifra, ofrece «lo más cercano» y da el motivo en la capa 2 |
 | `aclaracion` | El lugar es ambiguo o falta el tema | Solo pregunta y numera las opciones; exit 2 |
 
-Ejemplo real (`pap preguntar --intencion comparacion --tema pobreza --territorio Cusco --comparar-con Puno`, recortado; antes de X-22 pedía `--elegir 1,1`):
+Ejemplo real (`pap preguntar --intencion comparacion --tema pobreza --territorio Cusco --comparar-con Puno`, recortado; antes del cambio de T-03 pedía `--elegir 1,1`):
 
 ```text
 ===== comparacion__pobreza_monetaria__08__21 · semáforo: verde
@@ -278,7 +278,7 @@ Todos los ✅ se corrieron con `--salida` a una carpeta temporal. Se muestra el 
 | 3 ✅ | ¿Cuántos niños tienen anemia en Ayaviri? (distrito, **SIEN**) | `--intencion nivel_actual --tema anemia --territorio "Ayaviri, Melgar"` | «No se puede saber cuántos niños de Ayaviri tienen anemia…»; lo más cercano: ≈ 10 % (7 %–12 %) de 547 niños medidos en establecimientos. Confianza media |
 | 4 ✅ | ¿Cuánta desnutrición crónica hay en Ayaviri? (**no se puede**, desnutrición) | `--intencion nivel_actual --tema desnutrición --territorio "Ayaviri, Melgar"` | «No podemos mostrar cuánto hay de desnutrición crónica en Ayaviri por distrito. Sí tenemos la cifra para el departamento de Puno». Sin cifra, exit 0 |
 | 5 ✅ | ¿Qué departamento tiene más anemia? (**identificar_extremo**) | `--intencion identificar_extremo --tema anemia --nivel departamento` | «En 2025, Puno es el departamento con la anemia … más alta, con diferencia estadísticamente clara frente a los demás»: 56,1 % |
-| 6 ✅ | ¿Es mayor la pobreza en Puno que en Cusco? (**comparacion**, pobreza) | `--intencion comparacion --tema pobreza --territorio "Cusco" --comparar-con "Puno"` | «…mayor en Puno que en Cusco, con una diferencia estadísticamente clara»: 18,8 % frente a 37,5 % (2025). Desde X-22 (6/11/2026) responde sin aclaración: Cusco y Puno se leen como departamentos |
+| 6 ✅ | ¿Es mayor la pobreza en Puno que en Cusco? (**comparacion**, pobreza) | `--intencion comparacion --tema pobreza --territorio "Cusco" --comparar-con "Puno"` | «…mayor en Puno que en Cusco, con una diferencia estadísticamente clara»: 18,8 % frente a 37,5 % (2025). Desde T-03 (6/11/2026) responde sin aclaración: Cusco y Puno se leen como departamentos |
 | 7 ✅ | ¿Cuánto se gastó en salud y nutrición infantil en Puno? (**gasto**) | `--intencion nivel_actual --tema gasto --territorio "departamento de Puno"` | «S/ 132,1 millones … en 2025 … registrado por entidades con sede en Puno», con «No leas esta cifra como todo el gasto en Puno» |
 | 8 ✅ | ¿Cómo evolucionó el gasto del país? (gasto, **serie**) | `--intencion evolucion --tema gasto --territorio "Perú" --desde 2023 --hasta 2025` | «En Perú, el gasto … pasó de S/ 2 263,9 millones en 2023 a S/ 2 455,9 millones en 2025, en soles de 2025: aumentó.» El monto registrado de 2023 (S/ 2 179,2 millones) y el factor del IPC van en «Para citar» |
 | 9 ✅ | ¿Cuánta pobreza hay en Ayaviri? (**pobreza**, distrito) | `--intencion nivel_actual --tema pobreza --territorio "Ayaviri, Melgar"` | «Entre 23 % y 42 % … en Ayaviri en 2018» (estimación con modelo), confianza **baja** y «cuál es la situación hoy: el dato es de 2018» |

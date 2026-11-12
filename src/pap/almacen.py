@@ -211,11 +211,14 @@ def anotar_zst(rutas: Rutas, huella_hex: str, bytes_original: int, nombre: str |
     reg = leer_registro(rutas)
     reg[huella_hex] = {"original_filename": nombre, "bytes": bytes_original, "bytes_zst": n_zst,
                        "sha256_zst": h_zst, "compression": "zstd", "verificado": ahora()}
-    escribir_json(ruta_registro(rutas), {
+    p = ruta_registro(rutas)
+    otras = {k: v for k, v in (leer_json(p) if p.exists() else {}).items() if k not in ("nota", "objetos")}
+    escribir_json(p, {
         "nota": "Objetos del almacén guardados como <huella>.zst. La huella es la del original sin comprimir; "
                 "bytes_zst y sha256_zst son los del .zst (para `pap verificar --rapido` y para revisar respaldos). "
                 "Lo escribe `pap almacen comprimir` / `pap registrar`; no editar a mano.",
         "objetos": dict(sorted(reg.items())),
+        **otras,   # p. ej. `bloques` (pap almacen restaurar/liberar, M0-11)
     })
     return reg[huella_hex]
 

@@ -1,0 +1,97 @@
+# Receta de indicador (M0-10; diseño §8.1): la definición oficial que el motor ejecuta por el camino nuevo (plan → verificador → ejecutor →
+# compuertas). Las variables son las que el INEI ya entrega ajustadas, así que `transformaciones` va vacío. Cada `var` se escribe como
+# archivo + variable; el año lo pone `Receta.a_plan` (esta receta solo vale para `anios`). Esquema: src/pap/inferencia/recetas.py.
+# estado: revisado + pendiente: visto_dueno. «verificado» lo da el visto del dueño (K-03) sobre las tres comprobaciones de M0-10
+# (igualan al cubo, reproducen las doradas de 2024 y visto), no el agente.
+id: endes_anemia_6_35m
+version: 0.1.0
+fecha: "2026-11-09"
+descripcion: "Anemia en niñas y niños de 6 a 35 meses, criterio anterior (RM 363-2022-MINSA / OMS 2001): HC57 en {1, 2, 3} (grave, moderada, leve)."
+indicador_id: endes_anemia_6_35m
+encuesta: ENDES
+unidad: nino
+medida: proporcion
+anios: [2024, 2024]
+universo_analitico: nino_hecho_hb_medida
+indicador:
+  combinar: una
+  condiciones:
+    - {archivo: RECH6, variable: HC57, op: en, valores: [1, 2, 3]}
+universo:
+  restricciones:
+    - {archivo: RECH6, variable: HC1, op: entre, valores: [6, 35]}
+    - {archivo: RECH6, variable: HC57, op: en, valores: [1, 2, 3, 4]}
+transformaciones: []
+cortes_permitidos: [area, sexo]
+cortes_no_permitidos:
+  - {id: grupo_edad, motivo: "C-M0-06-2: ningún documento define los tramos de edad de los niños; el verificador lo rechaza mientras esté pendiente"}
+  - {id: region_natural, motivo: "C-M0-06-3: ¿Costa = Lima Metropolitana + resto de la Costa?; además no hay unión declarada RECH6 → RECH23 (las dos cuelgan de RECH0 por HHID)"}
+  - {id: quintil_riqueza, motivo: "C-M0-06-4: no se sabe si HV270 es el quintil de la ENDES 2000 o el del año; además no hay unión declarada RECH6 → RECH23 (las dos cuelgan de RECH0 por HHID)"}
+tolerancia_pp: 0.1        # E-05: las cifras de la ENDES se reproducen a ± 0,1 pp (R-ENC-18)
+fuente: "curados/capa0/definiciones_endes.yaml:13-22 (anemia_6_35m: variable anemia_hist = HC57 en 1–3; universo 6–35 meses, hb_medida HC55 = 0, HC57 en 1–4, pernocto HV103 = 1); src/pap/capa0/encuestas.py:148 (HC1), :150 y :165 (hb_medida = HC55 == 0), :154 (HC57 en 1–4) y :166-168 (anemia_hist = nivel ≤ 3); curados/inferencia/universos_analiticos.yaml (nino_hecho_hb_medida: HV103 = 1 y HC55 = 0)"
+doradas:
+  - id_cifra: DOR-ANE-2024-PE
+    nivel: nacional
+    territorio: PE
+    valor_publicado: 43.7
+    decimales: 1
+    bloqueante: true
+    cita: "INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024, Resumen ejecutivo p. 20 (PDF 22), gráfico p. 21 (PDF 23); Cuadro N.º 06 p. 53 (PDF 55); https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf"
+  - id_cifra: DOR-ANE-2024-09
+    nivel: departamento
+    territorio: "09"
+    valor_publicado: 55.1
+    decimales: 1
+    bloqueante: true
+    cita: "INEI, ENDES 2024 Departamento de Huancavelica, cap. 9 Nutrición, p. 66 (texto); Gráfico 9.1 p. 67; https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes09/pdf/Cap09.pdf"
+  - id_cifra: DOR-ANE-2024-21
+    nivel: departamento
+    territorio: "21"
+    valor_publicado: 76.0
+    decimales: 1
+    bloqueante: true
+    cita: "INEI, ENDES 2024 Departamento de Puno, cap. 9 Nutrición, p. 65; https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes21/pdf/Cap09.pdf"
+  - id_cifra: DOR-ANE-2024-LM1501
+    nivel: LIMA_METROPOLITANA
+    territorio: LIMA_METROPOLITANA
+    valor_publicado: 32.9
+    decimales: 1
+    bloqueante: true
+    cita: "INEI, ENDES 2024 Lima Metropolitana, cap. 9 Nutrición, p. 56 (texto); Gráfico 9.1 p. 57; https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes15/pdf/Cap09.pdf"
+  - id_cifra: DOR-ANE-2024-URBANO
+    nivel: dominio_subnacional
+    territorio: urbano
+    valor_publicado: 40.2
+    decimales: 1
+    bloqueante: false
+    cita: "INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024, p. 21; https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf"
+  - id_cifra: DOR-ANE-2024-RURAL
+    nivel: dominio_subnacional
+    territorio: rural
+    valor_publicado: 51.9
+    decimales: 1
+    bloqueante: false
+    cita: "INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024, p. 21; https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf"
+  - id_cifra: DOR-ANE-2024-16
+    nivel: departamento
+    territorio: "16"
+    valor_publicado: 62.0
+    decimales: 1
+    bloqueante: true
+    cita: "INEI, ENDES 2024 Departamento de Loreto, cap. 9 Nutrición, p. 65 (texto) (PDF 3); Gráfico 9.1 p. 66; https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes16/pdf/Cap09.pdf"
+  - id_cifra: DOR-ANE-2024-25
+    nivel: departamento
+    territorio: "25"
+    valor_publicado: 54.6
+    decimales: 1
+    bloqueante: false
+    cita: "INEI, ENDES 2024 Departamento de Ucayali, cap. 9 Nutrición, p. 65 (texto) (PDF 3); https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes25/pdf/Cap09.pdf"
+  - id_cifra: DOR-ANE-2024-06
+    nivel: departamento
+    territorio: "06"
+    valor_publicado: 38.4
+    decimales: 1
+    bloqueante: false
+    cita: "INEI, ENDES 2024 Departamento de Cajamarca, cap. 9 Nutrición, p. 65 (texto) (PDF 3); ojo errata INEI en el texto: «año anterior (25,8%)» es cifra 6-59 m; https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes06/pdf/Cap09.pdf"
+estado: revisado
+pendiente: visto_dueno

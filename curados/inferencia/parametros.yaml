@@ -1,0 +1,140 @@
+# Parámetros del motor de inferencia (docs/diseno/motor_inferencia.md, anexo B). Ningún valor se fija en el código
+# (agents.md §6). Cada valor dice de dónde viene, como en curados/motor/parametros_motor.yaml:
+#   decision: <ID de docs/decisiones.md>   → no se cambia sin decisión del dueño
+#   supuesto: <historia>                   → default de diseño, revisable; se lista en consultas_al_dueno.md
+version: 0.1.0
+fecha: "2026-11-09"
+
+almacen:
+  # Apertura segura de los ZIP (M0-00b, control C7; src/pap/zip_seguro.py). El margen es sobre lo más grande que hay
+  # registrado el 9/11/2026: un ZIP del SIEN de 89,6 MB con 732 MB descomprimidos, un miembro de 54 MB
+  # (RECH1_2024.dta) y una proporción de compresión máxima de 28,3 (RECH1 de la ENDES). Una bomba de compresión
+  # pasa de 1 000.
+  zip_max_miembro_mb: {valor: 1024, supuesto: M0-00b}
+  zip_max_total_mb: {valor: 2048, supuesto: M0-00b}
+  zip_proporcion_max: {valor: 100, supuesto: M0-00b}
+  zip_proporcion_desde_mb: {valor: 1, supuesto: M0-00b}   # la proporción solo se mira en miembros de 1 MB o más
+  zip_bloque_kb: {valor: 1024, supuesto: M0-00b}           # tamaño de cada bloque de lectura
+
+  # Respaldo de los crudos (M0-02, F-03; docs/diseno/motor_inferencia.md anexo B). El repo principal es público y nunca recibe crudos.
+  repo_crudos: {valor: "LaurenteEber/preguntale-al-peru-crudos", decision: F-03}
+  # Al cerrar cada fase, o antes si el espacio libre baja de este valor, se respalda y se liberan los crudos locales (§6).
+  espacio_libre_min_gb: {valor: 50, decision: F-03}
+
+seguridad:
+  # Prueba del lock (M0-00b, control C2; tests/test_lock_seguro.py): ningún paquete con menos de estos días de publicado.
+  lock_dias_min: {valor: 14, supuesto: M0-00b}
+  # Excepciones registradas a esa regla (paquete==versión, con motivo y fecha). Vacío: no hay ninguna.
+  lock_excepciones: []
+
+conversion:
+  # Conversor de microdatos (M0-04; diseño §6 y tecnologias.md §5). Cada SAV/DTA se lee en un subproceso con estos topes (C8).
+  # Límite de espacio de direcciones del subproceso (RLIMIT_AS). En macOS el sistema no lo hace cumplir: el conversor lo
+  # detecta (manifiesto: rlimit_as_aplicado) y el tope real de memoria allí es el vigilante de RSS de abajo.
+  lector_as_mb: {valor: 12288, supuesto: M0-04}
+  lector_cpu_s: {valor: 900, supuesto: M0-04}           # RLIMIT_CPU: segundos de procesador del subproceso
+  lector_tiempo_s: {valor: 1800, supuesto: M0-04}       # tiempo de pared por archivo; pasado esto se mata el subproceso
+  lector_rss_max_mb: {valor: 3072, supuesto: M0-04}     # vigilante de memoria residente (se sondea cada lector_sondeo_s)
+  lector_sondeo_s: {valor: 0.2, supuesto: M0-04}
+  # Criterios de aceptación de M0-04 (se miden y se informan; no frenan la conversión).
+  criterio_rss_max_mb: {valor: 1536, supuesto: M0-04}   # «RSS máximo por archivo < 1,5 GB»
+  criterio_huella_s: {valor: 5, supuesto: M0-04}        # «huella de contenido en < 5 s por archivo»
+  # Lectura por bloques (tecnologias.md §5): los archivos de más de 200 MB, de 25 000 en 25 000 filas.
+  bloques_desde_mb: {valor: 200, supuesto: M0-04}
+  bloques_filas: {valor: 25000, supuesto: M0-04}
+  # DTA anteriores al formato 118 no declaran su codificación (tecnologias.md §5).
+  dta_codificacion_sin_declarar: {valor: "WINDOWS-1252", supuesto: M0-04}
+  # Escritura Parquet (tecnologias.md §5): DuckDB COPY, un archivo por encuesta, año y archivo.
+  parquet_compresion: {valor: zstd, supuesto: M0-04}
+  parquet_nivel: {valor: 3, supuesto: M0-04}
+  parquet_grupo_filas: {valor: 122880, supuesto: M0-04}
+  duckdb_memoria_mb: {valor: 1024, supuesto: M0-04}     # memory_limit de DuckDB dentro del subproceso
+  # Nombre del archivo Parquet: miembro sin extensión, sin el sufijo _<año> y con «_» en vez de espacios (RECH0_2024.dta → RECH0).
+  nombre_parquet_espacio: {valor: "_", supuesto: M0-04}
+
+indice:
+  # Índice de variables (M0-05; diseño §7.1–7.3). Todo lo que se propone queda en `propuesto`/`revisión`: lo confirma M1.
+  # Códigos especiales propuestos por la etiqueta (además de los que declara el archivo): el texto normalizado de la
+  # etiqueta (minúsculas, sin acentos) contiene alguno de estos, o el código es uno de la lista y tiene etiqueta.
+  especiales_textos: {valor: ["no sabe", "no responde", "no aplica"], supuesto: M0-05}
+  # Historia: «98 y 99 con etiqueta». Diseño §7.2 agrega 9996–9999 (y 998/999 son los equivalentes de 3 dígitos).
+  especiales_codigos: {valor: [98, 99, 998, 999, 9996, 9997, 9998, 9999], supuesto: M0-05}
+  # Control del universo contra los datos (diseño §7.3): coincidencia mínima entre el universo declarado y las filas con valor.
+  universo_coincidencia_min: {valor: 0.995, supuesto: M0-05}
+  # Control de frecuencia de un código especial entre años: salta si la proporción de filas con ese código cambia por un
+  # factor de al menos `razon` Y por al menos `cambio_min_pp` puntos porcentuales (para no marcar códigos rarísimos).
+  frecuencia_especial_razon: {valor: 2.0, supuesto: M0-05}
+  frecuencia_especial_cambio_min_pp: {valor: 1.0, supuesto: M0-05}
+  # Etiquetas con vocal de acento grave (à è ì ò ù): no existen en español; en la ENDES 2024 son erratas del INEI («querìa», «màs»),
+  # no mojibake. No se corrigen solas: se marcan para revisión (`controles`).
+  vocales_acento_grave: {valor: "àèìòù", supuesto: M0-05}
+  # Stata corta las etiquetas de variable en 80 caracteres: una de exactamente ese largo puede estar cortada.
+  etiqueta_largo_posible_corte: {valor: 80, supuesto: M0-05}
+
+verificador:
+  # Verificador base (M0-07; diseño §12.1 y anexo B). El resto del §12.1 (sujeto, ventana, quiebres, cortes_max…) va en M1.
+  # Anexo B: «se mide en la fase 0» (M0-08 lo mide con el ejecutor); mientras tanto, el valor inicial del anexo.
+  dominios_max_llamada: {valor: 100, supuesto: M0-07}
+  anios_apilados_max_llamada: {valor: 4, supuesto: M0-07}
+  # §12.1: «una pérdida mayor al 1 % [de filas de u al unir] es falla».
+  union_perdida_max: {valor: 0.01, supuesto: M0-07}
+  # §12.1: «hasta la fase 3, solo proporciones».
+  medidas_disponibles: {valor: [proporcion], supuesto: M0-07}
+  # Un nivel fuera de inferencia_verificada sube al que lo contiene (R-ENC-06). Los dos ámbitos de Lima están dentro del
+  # departamento 15 (territorios.yaml: HV024 = 15); los demás niveles suben por NIVEL_RANK (provincia, departamento, nacional).
+  contencion_territorial:
+    valor:
+      LIMA_METROPOLITANA: {nivel: departamento, id: "15"}
+      LIMA_REGION: {nivel: departamento, id: "15"}
+    supuesto: M0-07
+  # Nombre de la fuente en catalogo/inferencia_verificada.csv.
+  fuente_inferencia_verificada: {valor: {ENDES: INEI-ENDES, ENAHO: INEI-ENAHO}, supuesto: M0-07}
+  # Categoría de un corte sin dato (§12.1: «un corte sin dato pasa a la categoría “sin dato”»).
+  corte_sin_dato: {valor: "sin dato", supuesto: M0-07}
+
+duckdb:
+  # Conexión endurecida (M0-07; diseño §22). Memoria = memoria_trabajador_mb del anexo B.
+  memoria_mb: {valor: 1536, supuesto: M0-07}
+  threads: {valor: 2, supuesto: M0-07}
+  # Carpetas desde las que DuckDB puede leer, relativas a la raíz del repositorio.
+  carpetas_permitidas: {valor: [biblioteca/microdatos, biblioteca/variables], supuesto: M0-07}
+
+ejecutor:
+  # Pool de procesos del ejecutor (M0-08; diseño §14 y tecnologias.md §4). Los cinco primeros son los valores iniciales del anexo B
+  # («se mide en la fase 0»); M0-08 los mide en backlog/slice-m0/evidencia/m0-08_tiempos.md. `dominios_max_llamada` y
+  # `anios_apilados_max_llamada` siguen en `verificador.*` (M0-07).
+  ejecutor_timeout_s: {valor: 5, supuesto: M0-08}          # tiempo suave: signal.alarm dentro del trabajador
+  ejecutor_gracia_s: {valor: 2, supuesto: M0-08}           # tiempo duro = timeout + gracia: el padre mata al trabajador y recrea el pool
+  memoria_trabajador_mb: {valor: 1536, supuesto: M0-08}    # vigía: os._exit(137) si ru_maxrss pasa de esto (bytes en macOS, KiB en Linux)
+  max_tareas_por_trabajador: {valor: 200, supuesto: M0-08} # tecnologias.md §4: max_tasks_per_child
+  trabajadores: {valor: 1, supuesto: M0-08}                # M0 no atiende concurrencia; el valor de la web (mín(núcleos − 1, 4)) es de curados/web
+  duckdb_threads: {valor: 1, supuesto: M0-08}              # tecnologias.md §4: threads=1 por trabajador; M0-11 midió 1 frente a 2 hilos sin diferencia (evidencia/m0-11_medicion.md)
+  duckdb_memoria_mb: {valor: 512, supuesto: M0-08}         # tecnologias.md §4: memory_limit=512MB por trabajador
+  vigia_sondeo_s: {valor: 0.05, supuesto: M0-08}           # cada cuánto el hilo vigía mira ru_maxrss
+  arranque_max_s: {valor: 60, supuesto: M0-08}             # tope del precalentamiento (importar svy y abrir DuckDB); no cuenta contra el tiempo del cálculo
+
+verificador_r:
+  # Verificador en R (M0-09; docs/diseno/tecnologias.md §3). Instantánea de CRAN en Posit Package Manager: la fecha más reciente con al menos
+  # 14 días de antigüedad (seguridad.lock_dias_min) el 9/11/2026 que trae renv 1.3.1, nanoparquet 0.5.2 y survey. Está en verificador_r/renv.lock.
+  cran_instantanea: {valor: "2026-10-26", supuesto: M0-09}
+  # R 4.6.2 salió el 29/10/2026: tenía 11 días el 9/11/2026, menos de los 14 de seguridad.lock_dias_min. Excepción decidida por el
+  # dueño (9/11/2026) para avanzar; se revisa al subir R.
+  r_version: {valor: "4.6.2", fecha_publicacion: "2026-10-29", excepcion_lock_dias_min: true, supuesto: M0-09}
+  # La última de CRAN a esa fecha. La 4.5-2 (corrección del ee sobreestimado) no está publicada; ver backlog/slice-m0/evidencia/m0-09_r.md.
+  survey_version: {valor: "4.5", supuesto: M0-09}
+  # M0-03/M0-09: svy debe coincidir con R en est, ee e IC; gl y n exactos. Nunca se afloja para que una prueba pase.
+  tolerancia_svy_vs_r: {valor: 1.0e-9, supuesto: M0-09}
+
+compuertas:
+  # Compuertas de proporciones (M0-09; diseño §15.1 y §15.2). Los umbrales viven en reglas/reglas.json (R-ENC-02, 03 y 04); aquí solo lo que el diseño deja abierto.
+  # Paso 8 (tasa de no respuesta del ítem): no se aplica hasta que el dueño apruebe K-07; la tasa solo se informa.
+  paso_no_respuesta_activo: {valor: false, pendiente: K-07}
+  # El §15.2 no dice qué confianza lleva una cifra publicable de una receta sin verificar: ante la duda, la más baja.
+  confianza_receta_no_verificada: {valor: baja, supuesto: M0-09}
+
+recetas:
+  # Recetas de indicador (M0-10; src/pap/inferencia/recetas.py). Son los criterios del punto 1 de la definición de hecho de M0
+  # (backlog/slice-m0/README.md) para comparar una receta con el cubo; nunca se aflojan para que una prueba pase.
+  cubo_decimales: {valor: 8, supuesto: M0-10}               # el cubo guarda 8 decimales (calculo.DECIMALES)
+  cubo_tolerancia_unidades: {valor: 1, supuesto: M0-10}     # |dif| ≤ 1 unidad del último decimal = 1e-8, ya redondeado
+  oraculo_tolerancia: {valor: 1.0e-12, supuesto: M0-10}     # sin redondear, contra calculo._svy_niveles

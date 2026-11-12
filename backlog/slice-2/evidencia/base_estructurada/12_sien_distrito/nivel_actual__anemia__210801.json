@@ -148,7 +148,7 @@
  "version_biblioteca": {
   "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
   "commit_cubo": "779357d",
-  "reglas": "0682897f4b70"
+  "reglas": "14b83c8814a7"
  },
  "cifras": {
   "sien_anemia_tamizados_6_35m__proporcion__distrito__210801__2025__principal": {
@@ -698,7 +698,7 @@
    "no_concluir": [
     "Cuántos niños del distrito tienen anemia: solo sabemos de los que se tamizaron en establecimientos."
    ],
-   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_anemia_6_35m_oms2024, sien_anemia_tamizados_6_35m, sien_cobertura_tamizaje_6_35m."
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 14b83c8814a7. Indicadores: endes_anemia_6_35m_oms2024, sien_anemia_tamizados_6_35m, sien_cobertura_tamizaje_6_35m."
   }
  },
  "comparaciones_bloqueadas": [],

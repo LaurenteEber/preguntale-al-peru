@@ -1,0 +1,18 @@
+== pip-audit sobre uv.lock ==
+Resolved 86 packages in 6ms
+Installed 29 packages in 67ms
+WARNING:pip_audit._cli:--no-deps is supported, but users are encouraged to fully hash their pinned dependencies
+WARNING:pip_audit._cli:Consider using a tool like `pip-compile`: https://pip-tools.readthedocs.io/en/latest/#using-hashes
+No known vulnerabilities found
+== osv-scanner sobre uv.lock ==
+Starting filesystem walk for root: /
+Scanned /Users/Eber/Documents/SideProjects/preguntale-al-peru/uv.lock file and found 86 packages
+End status: 0 dirs visited, 1 inodes visited, 1 Extract calls, 6.253583ms elapsed, 6.254ms wall time
+
+No issues found
+Auditoría limpia.
+auditar: 0
+7:36PM INF 95 commits scanned.
+7:36PM INF scanned ~21599848 bytes (21.60 MB) in 7.58s
+7:36PM INF no leaks found
+secretos: 0

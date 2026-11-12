@@ -101,7 +101,7 @@
  "version_biblioteca": {
   "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
   "commit_cubo": "779357d",
-  "reglas": "0682897f4b70"
+  "reglas": "14b83c8814a7"
  },
  "cifras": {
   "endes_anemia_6_35m_oms2024__proporcion__departamento__21__2025__principal": {
@@ -241,7 +241,7 @@
    "no_concluir": [
     "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
    ],
-   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 0682897f4b70. Indicadores: endes_anemia_6_35m_oms2024."
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 14b83c8814a7. Indicadores: endes_anemia_6_35m_oms2024."
   }
  },
  "comparaciones_bloqueadas": [],

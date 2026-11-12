@@ -49,5 +49,40 @@
       "compression": "zstd",
       "verificado": "2026-10-08T19:09:06-05:00"
     }
+  },
+  "bloques": {
+    "endes-2024": {
+      "estado": "respaldado",
+      "fecha": "2026-11-10T18:55:34-05:00",
+      "release": "https://github.com/LaurenteEber/preguntale-al-peru-crudos/releases/tag/crudos-endes-2024",
+      "etiqueta": "crudos-endes-2024",
+      "repo": "LaurenteEber/preguntale-al-peru-crudos",
+      "huellas": [
+        "0f5ead4cd363a48b72b45d78f7c7d8313e8ab2ad98ac6d3dc8f087b282e3fab5",
+        "1099fd34204ce1def7dcf84002ff87a6e93c906ef0afec3064024239121e483c",
+        "165b4b06f33e5b51adff85b73588e7afdb65c20240a62ad6ce538fda38b12e4e",
+        "2bbbbde6377a1c49e150799f36523284cfc77511929f5caee0408fb635a6d594",
+        "3ba67f49104110cbbf5c221bf9e3415ef2a94a00bcd378a9b0f543dff42f40fa",
+        "4beb0aefbe7445f4b5637ad606746fe0dfabe5187f363c9858bae1eff82a3e82",
+        "5d03f6592cb723c47b6c20abc5faa63ad7e3dbce038b8fc0a01111fe42635aee",
+        "63dc88121eefd105180f365c2049c554afc8f2fc0ee5c21154c0d76f4bf7a7aa",
+        "9189f36ee8093c3a23cb3d238105d95f7aaec30716de925043b5711d60dfa609",
+        "93b64e19f255e89f9ccf954096ba53430297fa941759760a9afd67d5b8a29761",
+        "a3016cafe624118c8d6231eb557039f6806e7b40d5318a752390ad39eb1c8e7e",
+        "a524711373f1778fab008a94824773820192b4d5fe3dbbff2b53f0d4e495e58a",
+        "a5af63169604e20ef754c4bf8ad6a0a66e8500f76b27630c277196b3e601f1b8",
+        "ad40972dc93a37980da5c7298d7ebfb6407749e184289201206d327f45556393",
+        "b66d18dca7e8ebb2266d08b3077bc2e9711b2ec8374f784d41700cf4824eb42f",
+        "be07a9aa4226d7ab1adb6fab4c50ace0d1d6932d0811e1af3be885bcd8fc3bfa",
+        "c8c27d8dc4ce27dac8f2cf19ed83e71d8c73a6ea3b2a7a126b5d1f6e1c6fda42",
+        "c99b74b93486387bdfde7beb36504223933350ddb2cab981ea9718e668dccb9e",
+        "d40ca096acd91aa296742820c872350006ea55e44354cefae6f6bbd24c27838c",
+        "e9940be9c0204fb09d461c565778b48bf830dae4d326b2b4a5d7fd193cba9822"
+      ],
+      "reconvertido": {
+        "archivo": "PS_BECA18",
+        "huella_contenido_v1": "639803dc2bbe1236cf22a585ef2db445c5a936bc576cc089d453a707a3a43e67"
+      }
+    }
   }
 }
