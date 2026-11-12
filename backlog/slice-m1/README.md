@@ -1,48 +1,115 @@
-# Slice M1 — Planificador (spike) · BORRADOR
+# Slice M1 — Planificador (spike), índice enriquecido y fichas
 
-> **Borrador.** Se divide en historias (un archivo por historia) al cerrar M0, con lo que se haya aprendido y medido allí: tamaños, conteos del índice y tiempos. Mientras tanto sirve para planificar y para que el dueño vea el alcance.
+- **Rama:** `slice-m1`, desde `main` (`f76b7eb` o posterior; la etiqueta `slice-m0-cerrado` está en `0ac8c7b`).
+- **Fase 1** del diseño. Plan general: `../plan_slices.md`.
+- **Escrito por el supervisor el 12/11/2026,** con lo medido en M0, la auditoría del supervisor del cierre de M0 y las respuestas del dueño de ese día. Lo validaron dos subagentes (uno como implementador contra el repo y otro de coherencia con el diseño); se corrigieron sus hallazgos.
 
-- **Rama:** `slice-m1`, desde `main` en `slice-m0-cerrado`.
-- **Fase 1** del diseño.
-- **Referencias:**
-  - `docs/diseno/motor_inferencia.md`, §4, §9–§13, §16–§21, §23 y §24;
-  - `docs/diseno/tecnologias.md`, §6–§8.
+## Documentos de referencia (leer antes de empezar)
+
+1. `docs/diseno/motor_inferencia.md`: §4, §7 a §21, §23, §24, §26 y los anexos A y B.
+2. `docs/diseno/fichas.md` (nuevo): fichas de tabla, bloques y temas provisionales.
+3. `docs/diseno/tecnologias.md`: §6 a §8b.
+4. `backlog/slice-m0/evidencia/cierre.md` y `revision_por_partes.md` (sección «Para M1 o después»).
+5. `agents.md`.
 
 ## Objetivo
 
-Que el motor responda **a la sombra** preguntas nuevas sobre la ENDES 2024 (archivos de niño, mujer y hogar):
-- elige el dato;
-- pregunta cuando duda;
-- dice «no puedo» con alternativas.
+Que el motor responda **a la sombra** preguntas nuevas sobre la ENDES 2024 (tablas de niño, mujer y hogar): elige el dato, pregunta cuando duda o dice «no puedo» con alternativas. Se mide con unas 100 preguntas. **La web sigue respondiendo con el motor actual.**
 
-Se mide con un conjunto de unas 100 preguntas. La web sigue respondiendo con el motor actual.
+```
+pregunta → intérprete (modo motor) → ¿receta? → recuperador (bloques y variables) → planificador (3 muestras, elige por ID)
+        → verificador → huellas u,y → decisión 1 → ejecutor → compuertas → decisión 2 → contraste y sello → respuesta v2 (sombra)
+```
 
-## Historias previstas
+Para eso hacen falta antes cuatro cosas que M0 no tenía: la clase de cada variable (hoy vacía en casi todo el índice), el índice enriquecido (qué pregunta cada variable y a quién), las fichas y bloques, y el diseño muestral de todas las tablas de niño, mujer y hogar.
 
-| ID | Historia | Tareas clave | Hecha cuando |
-|---|---|---|---|
-| M1-00 | Preparación | Base de pytest; latencias base del intérprete; conteos de M0; verificación en el lock de la auditoría de seguridad de `bm25s`, `PyStemmer`, `onnxruntime`, `tokenizers` y el modelo e5-small (plantilla de M0-00b; condiciones en `auditoria_seguridad_previa.md`: `tokenizers` sin `huggingface-hub` vía `override-dependencies`, solo `from_file`; `onnxruntime` solo con CPU; modelo por commit `614241f…` con SHA256SUMS; Batch API con Workspace y clave aparte, lotes borrados al bajar los resultados) | Base guardada; auditoría aprobada |
-| M1-01 | Enriquecimiento del índice (lote ENDES 2024) | Extraer el texto de los cuestionarios con `pdfplumber`; vincular cada pregunta con su variable (regex o Sonnet fuera de línea); redactar universo, ventana, sujeto, informante, modo, grupo, universo corto, `rol_faltante` y `tipo_origen` con la **Batch API** (reanudable, `custom_id`; tope por lote de US$ 50); confirmar los códigos especiales propuestos en M0-05; segunda llamada que verifica; correr el control del universo contra los datos (≥ 99,5 % de los casos con dato dentro del universo redactado, diseño §7.3); marcar las dudas; revisión del auditor-agente y visto del dueño por lote → `revisado` para los archivos de niño, mujer y hogar | ≥ 95 % de las variables del conjunto de evaluación con su texto vinculado y en `revisado`; costo dentro del tope del catálogo |
-| M1-02 | Intérprete en modo motor | `tema_texto` anclado; ranuras `poblacion`, `periodo_referencia`, `sujeto`, `medida` y `cortes`; sin `fuera_de_alcance` por tema; aviso de quechua; coincidencia con receta (§9) | Conjunto del slice 2 sin pérdidas; pruebas de las ranuras |
-| M1-03 | Recuperador | `bm25s` + PyStemmer; e5-small en ONNX (modelo bajado por el dueño y registrado con `pap registrar` como fuente `HF-MULTILINGUAL-E5-SMALL`, con su huella en `insumos.lock.yaml`); vectores por texto distinto; RRF k = 60; `sinonimos.yaml`; filtros de sujeto y ventana; `pap variables evaluar-recuperador` con las comparaciones de §7 de tecnologías | recall@20 informado por estrato; p95 ≤ 0,3 s en el Mac |
-| M1-04 | Planificador | Cliente propio ampliado; 3 muestras en paralelo (hilos, plazo de 9 s, cierre anticipado con 2 iguales); esquema fijo con IDs y pydantic; un reintento; semilla de la permutación; caché del proveedor con TTL de 1 h; corrección de `_de_cuerpo` | Pruebas con LLM falso y con grabaciones; el costo por pregunta medido |
-| M1-05 | Verificador completo, huellas y decisión 1 | Resto de las reglas del §12.1; `huella_uy`; diferencia material; tabla de decisión del §12.3; certezas del §12.4; `no_cubre.yaml` | Pruebas por fila de la tabla de decisión |
-| M1-06 | Aclaraciones | Tope común de 2; una dimensión por pregunta; opciones ya calculadas y que pasaron las compuertas; `elegir_plan` con `id_plan`; caché de planes ofrecidos (llave: la interpretación) | Prueba con LLM falso que cambia el orden: la cifra elegida no cambia |
-| M1-07 | Sustitución y alternativas | Decisión 2 (R-ENC-06, R-ENC-09, R-ENC-10, R-ENC-13); alternativas hasta 3, calculadas, con el texto de lo que cambia | Casos de Huancavelica rural, Ate y un año sin ronda |
-| M1-07b | Comparaciones entre grupos | Cortes de hasta 5 grupos con `contrast` de `svy`; prueba global Rao-Scott y luego pares con Benjamini-Hochberg al 5 % (R-ENC-11); textos «es mayor» / «no hay diferencia clara»; prueba contra R en el sintético | Las comparaciones del conjunto de evaluación salen con su prueba; coinciden con R (1e-9) |
-| M1-08 | Contraste, sellos y confianza | §18 y §15.2 | Las recetas salen con «Cifra oficial del INEI»; los planes compuestos, con su sello |
-| M1-09 | Contrato v2 y respuesta | `version_contrato: 2`; bloques que nunca se pliegan; cifra clave por grupos; capa 3 en palabras; validador y corrector | Q1–Q4 por las recetas con contrato v2 válido; la web actual no se rompe |
-| M1-10 | Caché, costo y concurrencia | Caché de estimaciones (§20); contador de US$ por petición y por día que se reconstruye desde `uso.jsonl`; registro por petición sin el texto de la pregunta (`id_plan`, `huella_datos`, versiones, costo y tiempos por etapa); LLM fuera del candado; pool con cola acotada; estado por petición (`ContextVar`); escritura atómica de la caché del intérprete | p95 medido con 5 y 10 clientes; 503 cuando la cola se llena |
-| M1-11 | Modo sombra | `motor.version: sombra` por tema; registro de diferencias sin el texto de la pregunta | Corre sobre Q1–Q4, la matriz y la evaluación sin errores |
-| M1-12 | Conjunto de evaluación y medición | `tests/inferencia/evaluacion.yaml` con unas 100 preguntas: el agente genera las que tienen cifra oficial (aprobadas si reproducen); el dueño escribe de 40 a 60; doble anotación del universo; 30 % no vista. Métricas del §23.3 con su intervalo de Wilson | Informe de métricas; decisión sobre el número de muestras y el esfuerzo del planificador |
-| M1-13 | Revisión independiente y cierre | Por partes; cierre; etiqueta | — |
+## Decisiones del dueño del 12/11/2026 (las aplica M1-01)
 
-## Del dueño, antes de M1
+| Consulta | Decisión |
+|---|---|
+| K-03 | **Visto** a las tablas curadas de M0-06 y a las 3 recetas: pasan a `verificado` |
+| K-01 | Lista de descargas **revisada**. Se amplía (fichas §4) y se agregan los documentos n.º 8, 9 y 11 del listado del INEI, y el informe de programas presupuestales de 2024 que ya está en la bandeja (fuente de las doradas) |
+| C-M0-06-1 | 2024–2025 pasa a `conglomerados_repetidos` (HV001). Cita: ficha técnica de la ENDES 2025, §3.1 y §IV. Se aprueba registrar esa ficha |
+| C-M0-06-2 | Tramos de edad del INEI. Anemia: 6–8, 9–11, 12–17, 18–23 y 24–35 meses. Desnutrición crónica: menores de 36 y 36–59 meses. No se ofrecen tramos más finos |
+| C-M0-06-3 | «Costa» = «Lima metropolitana» + «Resto Costa» de SHREGION, con la nota «verificado contra las cifras publicadas». La categoría 1 se rotula «Lima Metropolitana y Callao» |
+| C-M0-06-4 | HV270 (y V190) se aceptan con el rótulo del INEI, «quintil de bienestar». La duda sobre la versión queda como nota |
+| C-M0-05-2 | Las 341 filas de REC93DVdisciplina sin la mujer en REC0111 se **excluyen de todo cálculo** de disciplina infantil, con nota y prueba |
+| C-M0-11-1 | Tope de F-04 para la ENDES 2015–2025: **2 GB en el Mac y 1,5 GB en el repo privado**; si un bloque lo pasa, se detiene y se consulta |
+| C-M0-11-2 | Los límites de precisión (R-ENC-03 y R-ENC-04) **se aplican también con 25 a 49 casos** |
+| K-07 | Regla de no respuesta del ítem (R-ENC-19): aviso si pasa de 5 % y «aproximada» si pasa de 20 %, como valores iniciales |
+| K-05 | Tope del LLM: **US$ 5 por día** y **US$ 20 por lote** de enriquecimiento |
+| K-04 | 3 horas por semana del dueño para revisiones. **No es una restricción** para avanzar: lo que espera un visto queda en `propuesto` o `revisado` y el trabajo sigue |
+| K-08 | Parquet de la ENAHO: se publican año por año, solo si la ficha de ese año en la Plataforma Nacional de Datos Abiertos declara ODbL; si no, van al repo privado. El catálogo pasa INEI-ENAHO a `ODbL-1.0` |
+| D-M0-10-1, D-M0-03-1, D-M0-05-1 | Aceptadas. D-M0-10-1 se corrige en M1-03 |
+| Liberar los ZIP de 2024 | No por ahora |
+| Varias fuentes (10/11/2026) | El proyecto va por los niveles 1 (cada fuente responde su parte) y 2 (cruce por territorio común). En M1 solo se prepara: bloques (M1-06) y contrato con partes por fuente (M1-16) |
 
-- **Bajar el modelo `intfloat/multilingual-e5-small`** (ONNX y tokenizer) de Hugging Face, con su commit, para registrarlo.
-- **Confirmar el tope diario del LLM** (K-05) y el tope del enriquecimiento del índice (se estiman unos US$ 30 para unas 40 000 variables con la Batch API; el número real sale de M0).
-- **Escribir las 40 a 60 preguntas a mano** del conjunto de evaluación (M1-12).
+## Historias
 
-## Dependencias nuevas de M1
+Orden: las etapas A y B pueden avanzar en paralelo; la etapa C depende de ambas. (En este slice, «bloque» a secas es el **bloque temático** de `fichas.md`; no es `curados/motor/textos/bloques.yaml` ni el bloque de respaldo `endes-2024`.)
 
-`bm25s==0.3.15`, `PyStemmer==3.1.0`, `onnxruntime==1.31.1` y `tokenizers==0.23.3`. Cada versión se revisa al empezar, con al menos 2 semanas de antigüedad.
+| ID | Historia | Depende de |
+|---|---|---|
+| **Etapa A. Base** | | |
+| M1-00 | [Preparación, descargas y auditoría de dependencias](M1-00-preparacion.md) | — |
+| M1-01 | [Decisiones del 12/11, reglas y tablas curadas](M1-01-decisiones.md) | M1-00 |
+| M1-02 | [Deuda de M0 que conviene pagar antes de crecer](M1-02-deuda-m0.md) | M1-00 |
+| M1-03 | [Uniones entre tablas hermanas, universo por medición y cortes nuevos](M1-03-uniones-universo.md) | M1-00; M1-01 para los valores decididos |
+| **Etapa B. Índice y fichas** | | |
+| M1-04 | [Texto de los cuestionarios y vínculo con las variables](M1-04-cuestionarios.md) | M1-00 |
+| M1-05 | [Enriquecimiento del índice](M1-05-enriquecimiento.md) | M1-01, M1-04 |
+| M1-06 | [Fichas de tabla, bloques y temas](M1-06-fichas-bloques.md) | M1-04; M1-05 (tarea 0) |
+| M1-07 | [Diseño muestral y universos de niño, mujer y hogar; lote a `revisado`](M1-07-diseno-lote.md) | M1-05, M1-06 |
+| **Etapa C. Motor** | | |
+| M1-08 | [Intérprete en modo motor](M1-08-interprete.md) | M1-05 (sinónimos y cortes) |
+| M1-09 | [Recuperador](M1-09-recuperador.md) | M1-05, M1-06; modelo bajado por el dueño |
+| M1-10 | [Planificador](M1-10-planificador.md) | M1-09 |
+| M1-11 | [Verificador completo, huellas y decisión 1](M1-11-verificador-decision.md) | M1-03, M1-07, M1-10 |
+| M1-12 | [Aclaraciones](M1-12-aclaraciones.md) | M1-11 |
+| M1-13 | [Sustitución y alternativas](M1-13-sustitucion.md) | M1-11 |
+| M1-14 | [Comparaciones entre grupos](M1-14-comparaciones.md) | M1-11 |
+| M1-15 | [Contraste, sellos y confianza](M1-15-sellos.md) | M1-11 |
+| M1-16 | [Contrato v2 y respuesta](M1-16-contrato-respuesta.md) | M1-12 a M1-15 |
+| M1-17 | [Caché, costo y concurrencia](M1-17-cache-costo.md) | M1-16 |
+| M1-18 | [Modo sombra](M1-18-sombra.md) | M1-16 |
+| M1-19 | [Conjunto de evaluación y medición](M1-19-evaluacion.md) | M1-18; preguntas del dueño |
+| M1-20 | [Revisión independiente y cierre](M1-20-cierre.md) | todas |
+
+## Lote de tablas de M1
+
+- **Hogar:** RECH0, RECH23, RECH1, RECH4.
+- **Niño:** RECH6, REC21, REC41, REC43, REC44, REC94, REC95, DIT.
+- **Mujer:** REC0111, REC91, RE223132, REC42, RE516171, RE758081, RECH5.
+
+Las demás tablas tienen ficha (M1-06), pero no entran al planificador en M1.
+
+## Del dueño (no bloquea empezar)
+
+1. **Bajar el modelo** `intfloat/multilingual-e5-small` (ONNX y tokenizer, en el commit que fija `backlog/slice-m0/evidencia/auditoria_seguridad_previa.md`) y dejarlo en `biblioteca/cruda/bandeja/`. Se necesita en M1-09.
+2. **Escribir de 40 a 60 preguntas** del conjunto de evaluación (M1-19, tarea 2). Puede hacerlo desde ya.
+3. **Vistos por lote:** tablas curadas nuevas (M1-07), fichas y bloques (M1-06) e índice (M1-07). Mientras no lleguen, el agente sigue con lo que no depende de ellos.
+4. **Aprobar** la lista de cambios de estado por las compuertas nuevas (M1-01), `no_cubre.yaml` (M1-05) y los textos de las aclaraciones (M1-12).
+5. **Anotar el universo** de cada plan esperado del conjunto de evaluación, junto con el auditor-agente (M1-19).
+
+## Reglas del slice
+
+- **Ninguna historia cambia una cifra del cubo `010ea965` ni de las recetas.** La única excepción prevista es el **estado** de publicación por C-M0-11-2 (M1-01), que se mide y se informa antes de aplicar.
+- **Nada cambia en lo que responde la web,** con la misma excepción del estado por C-M0-11-2. Ningún tema pasa a `motor.version: nuevo`; el motor nuevo corre a la sombra (M1-18).
+- **El LLM elige por ID y no produce números** (P-01). Ningún camino nuevo ejecuta SQL fuera de `ejecutar_select`.
+- **Toda dependencia o modelo nuevo entra con su auditoría** (`plantillas/auditoria_dependencia.md`).
+- **No se hace commit mientras el dueño u otro proceso edita archivos versionados.**
+- Cada historia cierra con su evidencia en `evidencia/` y la suite en verde. Las consultas van a `consultas_al_dueno.md` de este slice.
+
+## Definición de hecho
+
+1. Las métricas del §23.3 del diseño están informadas con su intervalo de Wilson, en total y por estrato.
+2. El p95 por etapa está medido en el Mac y comparado con el §21.
+3. El número de muestras y el esfuerzo del planificador están decididos con datos.
+4. El modo sombra corre sin errores sobre Q1–Q4, la matriz y el conjunto de evaluación.
+5. Las 90 filas de 2024 siguen iguales al cubo; las doradas nuevas por región natural, quintil y tramo de edad se reproducen (±0,1 pp).
+6. `pap fichas validar`, `pap inferencia validar-tablas` y `validar-recetas` salen con 0.
+7. Suite completa en verde, gitleaks en 0, `pip-audit` en verde y auditorías de dependencias aprobadas.
+
+## Fuera de M1
+
+Otros años de la ENDES (M2), la ENAHO (M3), cambiar lo que ve el usuario (M4), el orquestador de varias fuentes y el cruce de nivel 2 (después de M3), y el frente de datos en paralelo (backlog aparte).
