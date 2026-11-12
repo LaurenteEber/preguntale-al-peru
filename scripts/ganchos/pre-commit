@@ -7,4 +7,7 @@ if ! command -v gitleaks >/dev/null 2>&1; then
   echo "ERROR: falta gitleaks (brew install gitleaks); el commit se detiene para no saltarse la revisión de secretos." >&2
   exit 1
 fi
+RAIZ="$(git rev-parse --show-toplevel)"
+VERSION_AUDITADA="$(sed -n 's/^GITLEAKS_VERSION="\([^"]*\)".*/\1/p' "$RAIZ/scripts/auditar.sh")"   # la fija scripts/auditar.sh (M1-02)
+[ "$(gitleaks version)" = "$VERSION_AUDITADA" ] || { echo "ERROR: gitleaks $(gitleaks version) no es la versión auditada ($VERSION_AUDITADA, scripts/auditar.sh)." >&2; exit 1; }
 exec gitleaks git --pre-commit --staged --redact --no-banner
