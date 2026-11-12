@@ -33,6 +33,7 @@ MEDIATYPES = {
     "parquet": "application/vnd.apache.parquet",
     "sav": "application/x-spss-sav",
     "dta": "application/x-stata-dta",
+    "onnx": "application/octet-stream",   # modelos ONNX (protobuf, sin firma fija): sin tipo registrado en IANA
 }
 
 # Firmas de los primeros bytes para confirmar que la extensión no miente.

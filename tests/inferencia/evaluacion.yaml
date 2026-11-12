@@ -1,0 +1,704 @@
+# Conjunto semilla de evaluación (M1-00 tarea 11; formato de M1-19 y diseño §23.2).
+# autor: agente · estado: propuesto (nadie lo ha revisado; el dueño y el auditor-agente anotan después el universo de cada plan).
+# particion: «no_vista» NO se usa para ajustar prompts, sinónimos ni umbrales; se corre una sola vez al final (M1-19).
+# cifra_oficial: copiada tal cual de curados/capa0/cifras_doradas.csv (id_cifra, valor, documento, cuadro/página); null si el proyecto no tiene
+#   una cifra oficial para esa pregunta. Una prueba compara cada cifra con el CSV. Ninguna cifra se calculó ni se inventó.
+# variables_esperadas: var_id del índice de variables 2024 (biblioteca/variables/variables.parquet); variables_apoyo: de universo o de control.
+# plan_esperado: null — lo completan M1-19 y los revisores del universo.
+version: 0.1.0
+encuesta: ENDES
+anio: 2024
+preguntas:
+- id: EV-001
+  pregunta: ¿Qué porcentaje de los niños de 6 a 35 meses tiene anemia en el Perú?
+  estrato: directa
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57
+  variables_apoyo:
+  - ENDES·2024·RECH6·HC1
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-ANE-2024-PE
+    valor: 43.7
+    unidad: '%'
+    documento: INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024
+    cuadro_pagina: Resumen ejecutivo p. 20 (PDF 22), gráfico p. 21 (PDF 23); Cuadro N.º 06 p. 53 (PDF 55)
+    url: https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: 'Sin decir la norma: se toma la de la receta endes_anemia_6_35m (RM 363-2022). Ver duda D1 en m1-00_semilla.md.'
+- id: EV-002
+  pregunta: ¿Cuántos wawas tienen anemia en el Perú?
+  estrato: vocabulario popular
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-ANE-2024-PE
+    valor: 43.7
+    unidad: '%'
+    documento: INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024
+    cuadro_pagina: Resumen ejecutivo p. 20 (PDF 22), gráfico p. 21 (PDF 23); Cuadro N.º 06 p. 53 (PDF 55)
+    url: https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: «wawa» = niño pequeño. La cifra oficial es el porcentaje de 6 a 35 meses, no un conteo.
+- id: EV-003
+  pregunta: ¿Qué porcentaje de niños tiene anemia en Puno?
+  estrato: directa
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57
+  territorio:
+    nivel: departamento
+    nombre: Puno
+    ubigeo: '21'
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-ANE-2024-21
+    valor: 76.0
+    unidad: '%'
+    documento: INEI, ENDES 2024 Departamento de Puno, cap. 9 Nutrición
+    cuadro_pagina: p. 65
+    url: https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes21/pdf/Cap09.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-004
+  pregunta: ¿Cómo está la anemia en los niños de Huancavelica?
+  estrato: directa
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57
+  territorio:
+    nivel: departamento
+    nombre: Huancavelica
+    ubigeo: 09
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-ANE-2024-09
+    valor: 55.1
+    unidad: '%'
+    documento: INEI, ENDES 2024 Departamento de Huancavelica, cap. 9 Nutrición
+    cuadro_pagina: p. 66 (texto); Gráfico 9.1 p. 67
+    url: https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes09/pdf/Cap09.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+- id: EV-005
+  pregunta: ¿Qué porcentaje de niños tiene anemia en Lima Metropolitana?
+  estrato: universo con convención
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57
+  territorio:
+    nivel: LIMA_METROPOLITANA
+    nombre: Lima Metropolitana
+    ubigeo: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-ANE-2024-LM1501
+    valor: 32.9
+    unidad: '%'
+    documento: INEI, ENDES 2024 Lima Metropolitana, cap. 9 Nutrición
+    cuadro_pagina: p. 56 (texto); Gráfico 9.1 p. 57
+    url: https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes15/pdf/Cap09.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: Lima Metropolitana = provincia 1501 en la ENDES (no el departamento de Lima).
+- id: EV-006
+  pregunta: ¿Hay más anemia infantil en el campo que en la ciudad?
+  estrato: directa
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57
+  territorio:
+    nivel: area
+    nombre: rural
+    ubigeo: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-ANE-2024-RURAL
+    valor: 51.9
+    unidad: '%'
+    documento: INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024
+    cuadro_pagina: p. 21
+    url: https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: Compara rural y urbano; cifra_oficial es la rural, la urbana es DOR-ANE-2024-URBANO (40.2).
+- id: EV-007
+  pregunta: ¿Qué porcentaje de niños tiene anemia según la nueva norma de la OMS 2024?
+  estrato: pares casi iguales
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57A
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-OMS-2024-PE
+    valor: 35.3
+    unidad: '%'
+    documento: INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024
+    cuadro_pagina: Resumen ejecutivo p. 22 (PDF 24); Cuadro N.º 6.1 p. 56 (PDF 58)
+    url: https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: 'Par con EV-001: HC57 (RM 363-2022) frente a HC57A (OMS 2024).'
+- id: EV-008
+  pregunta: ¿Cuántos niños de Puno tienen anemia con el nuevo criterio de hemoglobina?
+  estrato: pares casi iguales
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57A
+  territorio:
+    nivel: departamento
+    nombre: Puno
+    ubigeo: '21'
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-OMS-2024-21
+    valor: 53.1
+    unidad: '%'
+    documento: INEI, ENDES 2024 Departamento de Puno, cap. 9 Nutrición
+    cuadro_pagina: p. 69
+    url: https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes21/pdf/Cap09.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+- id: EV-009
+  pregunta: ¿Qué porcentaje de niños de Loreto tiene anemia con la directriz 2024 de la OMS?
+  estrato: pares casi iguales
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC57A
+  territorio:
+    nivel: departamento
+    nombre: Loreto
+    ubigeo: '16'
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-OMS-2024-16
+    valor: 50.9
+    unidad: '%'
+    documento: INEI, ENDES 2024 Departamento de Loreto, cap. 9 Nutrición
+    cuadro_pagina: p. 69 (texto) (PDF 7)
+    url: https://proyectos.inei.gob.pe/endes/2024/departamentales/Endes16/pdf/Cap09.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-010
+  pregunta: ¿Qué porcentaje de niños menores de 5 años tiene desnutrición crónica?
+  estrato: directa
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC70
+  variables_apoyo:
+  - ENDES·2024·RECH6·HC1
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-DCI-2024-PE
+    valor: 12.1
+    unidad: '%'
+    documento: INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024
+    cuadro_pagina: Cuadro 04 p. 49
+    url: https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-011
+  pregunta: ¿Cuántos chicos están chiquitos para su edad?
+  estrato: vocabulario popular
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC70
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-DCI-2024-PE
+    valor: 12.1
+    unidad: '%'
+    documento: INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024
+    cuadro_pagina: Cuadro 04 p. 49
+    url: https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: «Chiquito para su edad» = talla baja para la edad = desnutrición crónica. Si el motor duda, una aclaración también sería razonable (duda
+    D2).
+- id: EV-012
+  pregunta: ¿Qué porcentaje de niños del campo sufre desnutrición crónica?
+  estrato: directa
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC70
+  territorio:
+    nivel: area
+    nombre: rural
+    ubigeo: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-DCI-2024-RURAL
+    valor: 20.9
+    unidad: '%'
+    documento: INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024
+    cuadro_pagina: Cuadro 04 p. 49
+    url: https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-013
+  pregunta: ¿Y en la ciudad, qué porcentaje de niños tiene desnutrición crónica?
+  estrato: directa
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC70
+  territorio:
+    nivel: area
+    nombre: urbano
+    ubigeo: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial:
+    id_cifra: DOR-DCI-2024-URBANO
+    valor: 8.5
+    unidad: '%'
+    documento: INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024
+    cuadro_pagina: Cuadro 04 p. 49
+    url: https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf
+    fuente_en_proyecto: curados/capa0/cifras_doradas.csv
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-014
+  pregunta: ¿Qué porcentaje de niños tiene bajo peso para su edad?
+  estrato: pares casi iguales
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC71
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: 'Par con HC70 (talla/edad) y HC72 (peso/talla): el peso para la edad es HC71.'
+- id: EV-015
+  pregunta: ¿Cuántos niños sufren desnutrición aguda?
+  estrato: pares casi iguales
+  salida_esperada: respuesta
+  tabla_esperada: RECH6
+  variables_esperadas:
+  - ENDES·2024·RECH6·HC72
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: Desnutrición aguda = peso para la talla (HC72), no talla para la edad (HC70).
+- id: EV-016
+  pregunta: ¿Qué porcentaje de niños tuvo diarrea en la última semana?
+  estrato: pares casi iguales
+  salida_esperada: aclaracion
+  tabla_esperada: REC43
+  variables_esperadas:
+  - ENDES·2024·REC43·H11
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: 'La ENDES pregunta por los últimos 14 días, no 7: la respuesta debe decir la ventana real. Ver duda D3.'
+- id: EV-017
+  pregunta: ¿Cuántos niños tuvieron tos o fiebre en las últimas dos semanas?
+  estrato: respuesta múltiple
+  salida_esperada: respuesta
+  tabla_esperada: REC43
+  variables_esperadas:
+  - ENDES·2024·REC43·H31
+  - ENDES·2024·REC43·H22
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-018
+  pregunta: ¿Dónde llevaron a los niños con diarrea para curarlos?
+  estrato: respuesta múltiple
+  salida_esperada: respuesta
+  tabla_esperada: REC43
+  variables_esperadas:
+  - ENDES·2024·REC43·H12A
+  - ENDES·2024·REC43·H12B
+  - ENDES·2024·REC43·H12C
+  - ENDES·2024·REC43·H12K
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: 'Lugar de búsqueda de tratamiento: opciones múltiples H12A…H12Z.'
+- id: EV-019
+  pregunta: ¿Qué porcentaje de niños recibió la vacuna contra el sarampión?
+  estrato: universo con convención
+  salida_esperada: respuesta
+  tabla_esperada: REC43
+  variables_esperadas:
+  - ENDES·2024·REC43·H9
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: El universo (edad del niño) lo fija la convención del cuestionario.
+- id: EV-020
+  pregunta: ¿Cuántas mujeres tuvieron su último parto por cesárea?
+  estrato: pares casi iguales
+  salida_esperada: aclaracion
+  tabla_esperada: REC42
+  variables_esperadas:
+  - ENDES·2024·REC42·V401
+  - ENDES·2024·REC41·M17
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: 'Par: V401 (último parto, REC42) frente a M17 (cada nacimiento reciente, REC41).'
+- id: EV-021
+  pregunta: ¿Qué porcentaje de madres tomó hierro durante el embarazo?
+  estrato: pares casi iguales
+  salida_esperada: aclaracion
+  tabla_esperada: REC41
+  variables_esperadas:
+  - ENDES·2024·REC41·M45
+  - ENDES·2024·REC94·QI422A_D
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: '«Tomó» frente a «le dieron»: M45 es que le administraron tabletas; QI422A_D es que las consumió.'
+- id: EV-022
+  pregunta: ¿Quién atendió a las mamás en el parto?
+  estrato: respuesta múltiple
+  salida_esperada: respuesta
+  tabla_esperada: REC41
+  variables_esperadas:
+  - ENDES·2024·REC41·M3A
+  - ENDES·2024·REC41·M3B
+  - ENDES·2024·REC41·M3C
+  - ENDES·2024·REC41·M3G
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-023
+  pregunta: ¿Qué seguros de salud tiene la gente?
+  estrato: respuesta múltiple
+  salida_esperada: respuesta
+  tabla_esperada: RECH4
+  variables_esperadas:
+  - ENDES·2024·RECH4·SH11A
+  - ENDES·2024·RECH4·SH11C
+  - ENDES·2024·RECH4·SH11Z
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-024
+  pregunta: ¿Cómo purifican el agua en las casas?
+  estrato: respuesta múltiple
+  salida_esperada: respuesta
+  tabla_esperada: RECH23
+  variables_esperadas:
+  - ENDES·2024·RECH23·HV237A
+  - ENDES·2024·RECH23·HV237C
+  - ENDES·2024·RECH23·HV237Z
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: 'Tratamiento del agua: opciones múltiples HV237A…HV237Z.'
+- id: EV-025
+  pregunta: ¿Cuántas familias no tienen luz?
+  estrato: vocabulario popular
+  salida_esperada: respuesta
+  tabla_esperada: RECH23
+  variables_esperadas:
+  - ENDES·2024·RECH23·HV206
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-026
+  pregunta: ¿Cuántas casas tienen desagüe?
+  estrato: vocabulario popular
+  salida_esperada: respuesta
+  tabla_esperada: RECH23
+  variables_esperadas:
+  - ENDES·2024·RECH23·HV205
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: «Desagüe» = tipo de servicio higiénico (HV205); aclaración posible si la pregunta mezcla agua y desagüe.
+- id: EV-027
+  pregunta: ¿Cuántos hogares cocinan con leña?
+  estrato: vocabulario popular
+  salida_esperada: respuesta
+  tabla_esperada: RECH23
+  variables_esperadas:
+  - ENDES·2024·RECH23·HV226
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-028
+  pregunta: ¿Cuántas mamás dieron a luz en su casa?
+  estrato: vocabulario popular
+  salida_esperada: respuesta
+  tabla_esperada: REC41
+  variables_esperadas:
+  - ENDES·2024·REC41·M15
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-029
+  pregunta: ¿Cuántas mujeres tienen la sangre baja?
+  estrato: vocabulario popular
+  salida_esperada: respuesta
+  tabla_esperada: RECH5
+  variables_esperadas:
+  - ENDES·2024·RECH5·HA57
+  variables_apoyo:
+  - ENDES·2024·REC42·V457
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: «Sangre baja» = anemia en mujeres; par con niños (HC57) y con REC42.V457.
+- id: EV-030
+  pregunta: ¿Cuántos hogares tienen agua potable por red pública?
+  estrato: temas nuevos
+  salida_esperada: respuesta
+  tabla_esperada: RECH23
+  variables_esperadas:
+  - ENDES·2024·RECH23·HV201
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-031
+  pregunta: ¿Qué porcentaje de las mujeres de 15 a 49 años está embarazada?
+  estrato: universo con convención
+  salida_esperada: respuesta
+  tabla_esperada: RE223132
+  variables_esperadas:
+  - ENDES·2024·RE223132·V213
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-032
+  pregunta: ¿Cuántas mujeres usan pastillas o algún método para no tener hijos?
+  estrato: parecen no tener insumos
+  salida_esperada: respuesta
+  tabla_esperada: RE223132
+  variables_esperadas:
+  - ENDES·2024·RE223132·V312
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: Parece que no hay datos de «pastillas», pero la ENDES trae el método actual (V312).
+- id: EV-033
+  pregunta: ¿Cuántos hogares tienen una mujer como jefa?
+  estrato: parecen no tener insumos
+  salida_esperada: respuesta
+  tabla_esperada: RECH23
+  variables_esperadas:
+  - ENDES·2024·RECH23·HV219
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+- id: EV-034
+  pregunta: ¿Cuántos niños tienen alguna discapacidad?
+  estrato: parecen no tener insumos
+  salida_esperada: respuesta
+  tabla_esperada: REC21
+  variables_esperadas:
+  - ENDES·2024·REC21·QD333_1
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: Solo hay una pregunta de dificultad permanente por niño en la historia de nacimientos; ver duda D4.
+- id: EV-035
+  pregunta: ¿Qué porcentaje de niños del distrito de Yauli tiene anemia?
+  estrato: sin insumos
+  salida_esperada: no_se_puede
+  tabla_esperada: RECH6
+  variables_esperadas: []
+  territorio:
+    nivel: distrito
+    nombre: Yauli
+    ubigeo: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: La ENDES no es representativa a nivel de distrito.
+- id: EV-036
+  pregunta: ¿Cuántos niños murieron por neumonía en Piura en 2024?
+  estrato: sin insumos
+  salida_esperada: no_se_puede
+  tabla_esperada: null
+  variables_esperadas: []
+  territorio:
+    nivel: departamento
+    nombre: Piura
+    ubigeo: '20'
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto
+  nota: La ENDES no registra causa de muerte; no es parte del lote.
+- id: EV-037
+  pregunta: ¿Cómo están los niños de Loreto?
+  estrato: ambiguas
+  salida_esperada: aclaracion
+  tabla_esperada: null
+  variables_esperadas: []
+  territorio:
+    nivel: departamento
+    nombre: Loreto
+    ubigeo: '16'
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: no_vista
+  autor: agente
+  estado: propuesto
+  nota: 'Falta decir qué: anemia, desnutrición, vacunas, diarrea…'
+- id: EV-038
+  pregunta: ¿Qué tal la salud de las mujeres?
+  estrato: ambiguas
+  salida_esperada: aclaracion
+  tabla_esperada: null
+  variables_esperadas: []
+  territorio: null
+  periodo: 2024
+  plan_esperado: null
+  cifra_oficial: null
+  particion: desarrollo
+  autor: agente
+  estado: propuesto

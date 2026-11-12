@@ -1,0 +1,41 @@
+# Receta de un modelo de terceros (Hugging Face), fijado por commit y huella SHA-256 (M1-00 t9 / M1-09b t2).
+# El dueño descarga a mano; no es dato del país ni se cita como fuente de cifras (P-02). Auditoría: backlog/slice-m1/evidencia/.
+id: HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2
+strategy: owner_file
+publisher: IBM (ibm-granite)
+dataset_title: granite-embedding-97m-multilingual-r2 (embeddings multilingües, ONNX)
+access_url: https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2
+documentation_url: https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2
+temporal: {inicio: null, fin: null}
+spatial: {ambito: PE, nivel_minimo: nacional}
+source_version: {valor: "835ad14087e140460703cf0fae09f97d469d65c2", basis: declarada}
+data_cutoff: {basis: desconocida}
+retrieved_at: "2026-11-12"   # fecha de las auditorías que fijan commit y huellas; el dueño puede pasar --consultado con la fecha real de descarga
+attributed_to: Eber (descarga manual)
+licenses: [{name: Apache-2.0, title: "Apache-2.0 (declarada en la ficha del modelo)"}]
+license_basis: declarada_en_pagina
+known_issues:
+  - "Candidato a reemplazo en el banco del recuperador (M1-09b; tecnologias §7.1)."
+  - "Modelo de terceros, no produce cifras. Si cambia el commit o una huella, se recalculan todos los vectores del índice."
+  - "Sin código remoto: no se usa from_pretrained ni trust_remote_code; solo se cargan los archivos de la lista, verificados por SHA-256."
+manual:
+  pasos:
+  - "Abrir access_url (el modelo en Hugging Face, fijado al commit 835ad14087e140460703cf0fae09f97d469d65c2). Bajar SOLO estos archivos por su URL con el commit, a biblioteca/cruda/bandeja/hf-granite-embedding-97m-multilingual-r2/ conservando subcarpetas (onnx/, 1_Pooling/). Nunca pytorch_model.bin, model.safetensors, openvino* ni .onnx cuantizados."
+  - "Verificar con el bloque SHA256SUMS de backlog/slice-m1/evidencia/auditoria_modelos_lista_dueno.md (shasum -a 256 -c SHA256SUMS). Si una línea dice FAILED, no se registra."
+  - "onnx/model.onnx — 390004608 bytes — sha256 68e592b160673d30250824c1116bc6ab33f70efb22b97c9e1d7ce1e69c1c9d70 — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/onnx/model.onnx"
+  - "tokenizer.json — 25301672 bytes — sha256 4f2842d568e2724370aec203652a42ac783c7937f8347a1a2cc7506d71f1582f — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/tokenizer.json"
+  - "tokenizer_config.json — 12860 bytes — sha256 6ed69389e30a8ecabfce2f9ebcdf0c908b34056f24d994340f2f216521c057d5 — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/tokenizer_config.json"
+  - "special_tokens_map.json — 871 bytes — sha256 013787ee251ff611722479197c00853b62113ad303cb0a36524231783c676c69 — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/special_tokens_map.json"
+  - "config.json — 1216 bytes — sha256 de948b0bdc6f356afad7a84b276d8dd7e7fe10fb9add1bb5e610621c28e41ebc — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/config.json"
+  - "1_Pooling/config.json — 313 bytes — sha256 8bc5c9a40814fcf48d2fbe7cfeff4bee6736c3c2a823ba0ce098985c59d12ab7 — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/1_Pooling/config.json"
+  - "modules.json — 349 bytes — sha256 84e40c8e006c9b1d6c122e02cba9b02458120b5fb0c87b746c41e0207cf642cf — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/modules.json"
+  - "sentence_bert_config.json — 60 bytes — sha256 967ef958285e4a7a37d8ff1832473d967edd913b4e48572f31c3d3ea361d5327 — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/sentence_bert_config.json"
+  - "config_sentence_transformers.json — 283 bytes — sha256 93a59cbc7d82a47a7148719d9b21c0f2f111121e495b3918143184f4cd0ea25e — https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/resolve/835ad14087e140460703cf0fae09f97d469d65c2/config_sentence_transformers.json"
+  - "Registrar cada archivo con: uv run pap registrar HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2 biblioteca/cruda/bandeja/hf-granite-embedding-97m-multilingual-r2/<ruta> --recurso <nombre> --url-descarga <URL del archivo> (comandos exactos en backlog/slice-m1/evidencia/m1-00_modelos_fuente.md)."
+espera:
+  formato: [onnx, json]
+catalogo:
+  ola: fuera_de_alcance
+  estrategia_descarga: descarga_manual
+  compuerta_ingesta: null
+  bloquea_mvp: false

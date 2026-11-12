@@ -62,7 +62,7 @@
     },
     "catalogo": {
       "type": "object",
-      "properties": {"ola": {"type": "string"}, "estrategia_descarga": {"type": "string"}, "compuerta_ingesta": {"type": "string"}, "bloquea_mvp": {"type": "boolean"}}
+      "properties": {"ola": {"type": "string"}, "estrategia_descarga": {"type": "string"}, "compuerta_ingesta": {"type": ["string", "null"]}, "bloquea_mvp": {"type": "boolean"}}
     },
     "desactivada": {
       "type": "object",

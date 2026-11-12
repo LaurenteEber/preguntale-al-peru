@@ -1,8 +1,8 @@
 # Catálogo de fuentes de datos — Pregúntale al Perú
 
-Versión 2.0 · 8 de octubre de 2026 · **418 fuentes** · esquema v2 (`esquema_registro.md`) · corregido tras la auditoría (`03_auditoria/auditoria.md`, `03_auditoria/auditoria_estado.csv`).
+Versión 2.0 · 8 de octubre de 2026 · **421 fuentes** · esquema v2 (`esquema_registro.md`) · corregido tras la auditoría (`03_auditoria/auditoria.md`, `03_auditoria/auditoria_estado.csv`).
 
-**Verificación de enlaces:** 80 abiertos en navegador, 331 confirmados por búsqueda, 7 no responden. **Prueba de humo de datos:** 38 con muestra descargada ✅, 10 con enlace confirmado 🔗, 1 fallidos ❌, 5 sin descarga pública 🔒, 364 sin probar.
+**Verificación de enlaces:** 80 abiertos en navegador, 334 confirmados por búsqueda, 7 no responden. **Prueba de humo de datos:** 38 con muestra descargada ✅, 10 con enlace confirmado 🔗, 1 fallidos ❌, 5 sin descarga pública 🔒, 367 sin probar.
 
 Los mismos registros están en `catalogo_fuentes.csv` y `catalogo_fuentes.json` (fuente de verdad). Cada registro guarda en `correcciones` el hallazgo de auditoría que lo modificó y cómo se validó. `estado_ingesta` y `evidencia_ingesta` (solo JSON: capturas, huellas y fecha) dicen si la fuente tiene captura completa verificada. La representatividad verificada de las encuestas por año y módulo (R-ENC-08) está en `inferencia_verificada.csv`, con la cita de la ficha técnica.
 
@@ -35,12 +35,12 @@ Los mismos registros están en `catalogo_fuentes.csv` y `catalogo_fuentes.json` 
 | [Transporte e infraestructura](#transporte-e-infraestructura) | 13 | 0 | 0 | 1 |
 | [Territorio y cartografía](#territorio-y-cartografía) | 20 | 6 | 0 | 0 |
 | [Inclusión financiera](#inclusión-financiera) | 2 | 0 | 0 | 0 |
-| [Ciencia, tecnología y digital](#ciencia-tecnología-y-digital) | 3 | 0 | 0 | 1 |
+| [Ciencia, tecnología y digital](#ciencia-tecnología-y-digital) | 6 | 0 | 0 | 1 |
 | [Turismo](#turismo) | 7 | 0 | 0 | 2 |
 | [Identidad y migración](#identidad-y-migración) | 8 | 1 | 0 | 3 |
 | [Multitemática y catálogos](#multitemática-y-catálogos) | 22 | 0 | 0 | 0 |
 
-**Por ola:** 0 · Base 19 · 1 · Núcleo 29 · 2 · Expansión 95 · 3 · Complementaria 71 · Referencia 86 · Ruta alterna 22 · Infraestructura de acceso 15 · Fuera de alcance 81
+**Por ola:** 0 · Base 19 · 1 · Núcleo 29 · 2 · Expansión 95 · 3 · Complementaria 71 · Referencia 86 · Ruta alterna 22 · Infraestructura de acceso 15 · Fuera de alcance 84
 
 ## Índice por temática
 
@@ -556,6 +556,9 @@ Territorio: nivel más fino publicado / **nivel con representatividad** (solo en
 | [`CONCYTEC-RENACYT`](#concytec-renacyt) | [Registro Nacional Científico, Tecnológico y de Innovación Tecnológica (RENACYT)](https://www.datosabiertos.gob.pe/dataset/registro-nacional-de-investigadores-renacyt) | Consejo Nacional de Ciencia, Tecnología e Innovación Tecnológica (CONCYTEC) | registro_administrativo | departamento | — | — | descarga_directa_url | 2 · Expansión | · |
 | [`CONCYTEC-CENSO-ID-2016`](#concytec-censo-id-2016) | [I Censo Nacional de Investigación y Desarrollo a Centros de Investigación 2016](https://repositorio.concytec.gob.pe/entities/publication/4e9e204b-28ac-41c0-9017-3d7cae16057b) | CONCYTEC / INEI | censo | departamento | residencia | 2014–2015 | descarga_directa_url | 3 · Complementaria | · |
 | [`CONCYTEC-ALICIA`](#concytec-alicia) | [ALICIA – Acceso Libre a Información Científica para la Innovación (Repositorio Nacional Digital)](https://alicia.concytec.gob.pe/vufind/) | Consejo Nacional de Ciencia, Tecnología e Innovación Tecnológica (CONCYTEC) | catalogo_portal | nacional | no_aplica | — | api_rest | Infraestructura de acceso | · |
+| [`HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2`](#hf-granite-embedding-311m-multilingual-r2) | [granite-embedding-311m-multilingual-r2 (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2/tree/44399559930365213510b1ee2eb15ded83374f0e) | IBM Granite (ibm-granite) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | · |
+| [`HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2`](#hf-granite-embedding-97m-multilingual-r2) | [granite-embedding-97m-multilingual-r2 (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2) | IBM Granite (ibm-granite) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | · |
+| [`HF-MULTILINGUAL-E5-SMALL`](#hf-multilingual-e5-small) | [multilingual-e5-small (modelo de embeddings en ONNX) — Hugging Face](https://huggingface.co/intfloat/multilingual-e5-small/tree/614241f622f53c4eeff9890bdc4f31cfecc418b3) | intfloat (Liang Wang et al., Microsoft) | catalogo_portal | — | no_aplica | — | descarga_manual | Fuera de alcance | · |
 
 ### Turismo
 
@@ -11364,6 +11367,90 @@ Agregador nacional de producción científica (tesis, artículos, datos) cosecha
 | Priorización | **Infraestructura de acceso** · origen secundaria · capa infraestructura_acceso · puntaje 56 — Portal o catálogo por el que se descargan otras fuentes: se monitorea (fechas de actualización), no se ingiere como dato. |
 | Trazabilidad | — |
 | Notas | Útil para responder '¿qué se ha investigado sobre X en la región Y?' vía texto. |
+
+<a id="hf-granite-embedding-311m-multilingual-r2"></a>
+#### HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2 — granite-embedding-311m-multilingual-r2 (modelo de embeddings en ONNX) — Hugging Face
+
+Modelo de embeddings multilingüe ibm-granite/granite-embedding-311m-multilingual-r2 (ONNX + tokenizador) que usa el recuperador del índice de variables. No es un dato del país: se cataloga para trazabilidad (licencia, commit y huellas fijos). Techo de calidad en el banco del recuperador (M1-09b, tecnologias §7.1); pesa 1,25 GB.
+
+| Campo | Valor |
+|---|---|
+| Temáticas | ciencia_tecnologia_digital |
+| Subtemas | — |
+| Entidad / unidad orgánica | IBM Granite (ibm-granite) — — (Privado) |
+| Naturaleza · acceso | catalogo_portal · archivo_descargable |
+| Unidad de observación | modelo (archivos ONNX, tokenizador y configuración) |
+| Territorio | disponible: — · inferencia: — · base geográfica: no_aplica |
+| Qué mide | otro |
+| Desagregaciones | — |
+| Llaves de cruce | — |
+| Periodo | Commit fijado 443995599303 (18/5/2026) · años — · último dato — · única · serie activa: no |
+| Quiebres | — |
+| Formatos | ONNX, JSON |
+| Enlaces | [portal](https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2/tree/44399559930365213510b1ee2eb15ded83374f0e) · [documentación](https://huggingface.co/ibm-granite/granite-embedding-311m-multilingual-r2/tree/44399559930365213510b1ee2eb15ded83374f0e) |
+| Descarga | **descarga_manual** — Descarga manual del dueño por URL con el commit 44399559930365213510b1ee2eb15ded83374f0e (resolve/44399559930365213510b1ee2eb15ded83374f0e/<ruta>); luego pap registrar. Receta: curados/recetas/HF-GRANITE-EMBEDDING-311M-MULTILINGUAL-R2.yaml. |
+| Licencia | Apache-2.0 (—) · redistribución: sí · registro: no |
+| Limitaciones | Modelo de terceros: no produce cifras ni se cita como fuente de datos (P-02). Se fija por commit y SHA-256; si cambia el commit, se recalculan los vectores. |
+| Verificación | portal: confirmado_busqueda · datos: · sin_probar · fecha: 2026-11-12 |
+| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 — Tema fuera del foco y sin dato primario cruzable. |
+| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) |
+| Notas | Agregada en M1-00 (tarea 9) / M1-09b (tarea 2). Auditoría: backlog/slice-m1/evidencia/auditoria_modelos_lista_dueno.md. |
+
+<a id="hf-granite-embedding-97m-multilingual-r2"></a>
+#### HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2 — granite-embedding-97m-multilingual-r2 (modelo de embeddings en ONNX) — Hugging Face
+
+Modelo de embeddings multilingüe ibm-granite/granite-embedding-97m-multilingual-r2 (ONNX + tokenizador) que usa el recuperador del índice de variables. No es un dato del país: se cataloga para trazabilidad (licencia, commit y huellas fijos). Candidato a reemplazo en el banco del recuperador (M1-09b, tecnologias §7.1).
+
+| Campo | Valor |
+|---|---|
+| Temáticas | ciencia_tecnologia_digital |
+| Subtemas | — |
+| Entidad / unidad orgánica | IBM Granite (ibm-granite) — — (Privado) |
+| Naturaleza · acceso | catalogo_portal · archivo_descargable |
+| Unidad de observación | modelo (archivos ONNX, tokenizador y configuración) |
+| Territorio | disponible: — · inferencia: — · base geográfica: no_aplica |
+| Qué mide | otro |
+| Desagregaciones | — |
+| Llaves de cruce | — |
+| Periodo | Commit fijado 835ad14087e1 (18/5/2026) · años — · último dato — · única · serie activa: no |
+| Quiebres | — |
+| Formatos | ONNX, JSON |
+| Enlaces | [portal](https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2) · [documentación](https://huggingface.co/ibm-granite/granite-embedding-97m-multilingual-r2/tree/835ad14087e140460703cf0fae09f97d469d65c2) |
+| Descarga | **descarga_manual** — Descarga manual del dueño por URL con el commit 835ad14087e140460703cf0fae09f97d469d65c2 (resolve/835ad14087e140460703cf0fae09f97d469d65c2/<ruta>); luego pap registrar. Receta: curados/recetas/HF-GRANITE-EMBEDDING-97M-MULTILINGUAL-R2.yaml. |
+| Licencia | Apache-2.0 (—) · redistribución: sí · registro: no |
+| Limitaciones | Modelo de terceros: no produce cifras ni se cita como fuente de datos (P-02). Se fija por commit y SHA-256; si cambia el commit, se recalculan los vectores. |
+| Verificación | portal: confirmado_busqueda · datos: · sin_probar · fecha: 2026-11-12 |
+| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 — Tema fuera del foco y sin dato primario cruzable. |
+| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) |
+| Notas | Agregada en M1-00 (tarea 9) / M1-09b (tarea 2). Auditoría: backlog/slice-m1/evidencia/auditoria_modelos_lista_dueno.md. |
+
+<a id="hf-multilingual-e5-small"></a>
+#### HF-MULTILINGUAL-E5-SMALL — multilingual-e5-small (modelo de embeddings en ONNX) — Hugging Face
+
+Modelo de embeddings multilingüe intfloat/multilingual-e5-small (ONNX + tokenizador) que usa el recuperador del índice de variables. No es un dato del país: se cataloga para trazabilidad (licencia, commit y huellas fijos). Línea base del recuperador del índice de variables (M1-09, tecnologias §7).
+
+| Campo | Valor |
+|---|---|
+| Temáticas | ciencia_tecnologia_digital |
+| Subtemas | — |
+| Entidad / unidad orgánica | intfloat (Liang Wang et al., Microsoft) — — (Privado) |
+| Naturaleza · acceso | catalogo_portal · archivo_descargable |
+| Unidad de observación | modelo (archivos ONNX, tokenizador y configuración) |
+| Territorio | disponible: — · inferencia: — · base geográfica: no_aplica |
+| Qué mide | otro |
+| Desagregaciones | — |
+| Llaves de cruce | — |
+| Periodo | Commit fijado 614241f622f5 (2/4/2026) · años — · último dato — · única · serie activa: no |
+| Quiebres | — |
+| Formatos | ONNX, JSON |
+| Enlaces | [portal](https://huggingface.co/intfloat/multilingual-e5-small/tree/614241f622f53c4eeff9890bdc4f31cfecc418b3) · [documentación](https://huggingface.co/intfloat/multilingual-e5-small/tree/614241f622f53c4eeff9890bdc4f31cfecc418b3) |
+| Descarga | **descarga_manual** — Descarga manual del dueño por URL con el commit 614241f622f53c4eeff9890bdc4f31cfecc418b3 (resolve/614241f622f53c4eeff9890bdc4f31cfecc418b3/<ruta>); luego pap registrar. Receta: curados/recetas/HF-MULTILINGUAL-E5-SMALL.yaml. |
+| Licencia | MIT (—) · redistribución: sí · registro: no |
+| Limitaciones | Modelo de terceros: no produce cifras ni se cita como fuente de datos (P-02). Se fija por commit y SHA-256; si cambia el commit, se recalculan los vectores. |
+| Verificación | portal: confirmado_busqueda · datos: · sin_probar · fecha: 2026-11-12 |
+| Priorización | **Fuera de alcance** · origen secundaria · capa complementaria · puntaje 24 — Tema fuera del foco y sin dato primario cruzable. |
+| Trazabilidad | vacío M1-00 t9 / M1-09b t2 (modelos del recuperador) (investigacion) |
+| Notas | Agregada en M1-00 (tarea 9) / M1-09b (tarea 2). Auditoría: backlog/slice-m1/evidencia/auditoria_modelos_lista_dueno.md. |
 
 ### Turismo — fichas
 

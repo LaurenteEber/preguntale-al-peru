@@ -16,3 +16,5 @@ Se completa a medida que avanzan las tareas.
 ## Nota para la tarea 1 (pool)
 
 El 12/11/2026, con el Mac ocupado por otro proceso (registro de documentos de M1-00), falló una vez `test_el_exceso_de_memoria_lo_corta_el_vigia_y_la_tarea_siguiente_funciona` en una corrida de `tests/inferencia/`; sola pasó 3 de 3. Es la misma familia que H08-1: el plazo cuenta el arranque del trabajador nuevo. Se revisa con la tarea 1.
+
+Segunda vez (12/11/2026, suite completa mientras se calculaba el SHA-256 de 2,2 GB de modelos): la misma prueba falló con «DID NOT RAISE ErrorTemporal»: la tarea de 2 000 MB terminó sin que el vigía la cortara (tope de la prueba 1 100 MB). Sola pasa 5 de 5 y `tests/inferencia/test_pool_ejecutor.py` completo 10 de 10. Hipótesis: con presión de memoria, macOS comprime páginas y la memoria residente que mide el vigía no llega al tope. Se revisa en la tarea 1 (medir con la huella física del proceso o un tope del sistema, y una prueba que no dependa de la carga de la máquina).
