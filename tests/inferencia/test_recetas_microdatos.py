@@ -59,8 +59,14 @@ def test_las_compuertas_dan_el_estado_y_las_reglas_del_cubo_en_las_90_filas(fila
     for f in filas:
         estados[f["compuerta"].estado] = estados.get(f["compuerta"].estado, 0) + 1
     assert estados == {"publicable": 85, "referencial": 5}
-    # recetas «revisadas», no «verificadas»: la confianza de lo publicable es la más baja (supuesto M0-09), nunca «alta»
-    assert {f["compuerta"].confianza for f in filas if f["compuerta"].estado == "publicable"} == {"baja"}
+    # recetas «verificadas» (K-03, dueño, 12/11/2026): lo publicable deja de ser «baja» (§15.2). «alta» = coincide con su dorada de 2024
+    # (9 doradas por receta de anemia y 3 de DCI = 21 filas con cifra oficial); «media» = verificada sin cifra oficial para ese
+    # dominio. Lo referencial sigue en «baja».
+    confianza = {}
+    for f in filas:
+        k = (f["compuerta"].estado, f["compuerta"].confianza)
+        confianza[k] = confianza.get(k, 0) + 1
+    assert confianza == {("publicable", "alta"): 21, ("publicable", "media"): 64, ("referencial", "baja"): 5}
 
 
 @pytest.mark.parametrize("id_", IDS)

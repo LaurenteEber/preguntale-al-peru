@@ -6,10 +6,13 @@
 # unido por HHID (relaciones de curados/inferencia/archivos_endes_2024.yaml); la prueba comprueba que esa unión no pierde ni
 # repite filas de RECH6.
 # `categorias` de cada variable reemplaza a la del corte cuando existe. Un corte sin `categorias` en una variable continua
-# (grupo de edad de niños y personas) queda con `pendiente`: ningún documento define sus tramos (consulta C-M0-06-2).
+# (grupo de edad de niños y personas) lleva `pendiente` con el ID de lo que falta para poder usarlo.
+# M1-01 (dueño, 12/11/2026) escribe aquí los valores decididos: `juegos_de_tramos` (grupo de edad del niño, un juego por grupo de
+# recetas), `agrupa` (Costa = códigos 1 y 2 de SHREGION) y `nota`. **El verificador todavía no los compila** (M1-03, tarea 1b):
+# por eso el grupo de edad del niño sigue con `pendiente: M1-03` y las recetas siguen sin permitir estos tres cortes.
 # Fuera de esta tabla, porque el diseño los nombra pero M0 no los necesita: educación de la madre y lengua materna (M1).
-version: 0.1.0
-fecha: "2026-11-09"
+version: 0.2.0
+fecha: "2026-11-12"
 cortes:
   - id: area
     nombre: "área (urbana o rural)"
@@ -51,11 +54,35 @@ cortes:
     nombre: "grupo de edad"
     por_encuesta:
       ENDES:
+        # C-M0-06-2 (dueño, 12/11/2026): los tramos del INEI, solo para el niño y solo dentro de las recetas en M1 (un plan compuesto que
+        # pida este corte se recorta y se avisa). No se ofrecen tramos más finos. Los rótulos son los del informe del INEI.
         - archivo: RECH6
           variable: HC1
           unidad: nino
-          pendiente: C-M0-06-2
+          pendiente: M1-03       # valores decididos; falta que M1-03 los compile (el verificador rechaza el corte mientras tanto)
+          juegos_de_tramos:
+            - id: anemia
+              aplica_a_recetas: [endes_anemia_6_35m, endes_anemia_6_35m_oms2024]
+              tramos:
+                - {rotulo: "6 a 8 meses", desde: 6, hasta: 8}
+                - {rotulo: "9 a 11 meses", desde: 9, hasta: 11}
+                - {rotulo: "12 a 17 meses", desde: 12, hasta: 17}
+                - {rotulo: "18 a 23 meses", desde: 18, hasta: 23}
+                - {rotulo: "24 a 35 meses", desde: 24, hasta: 35}
+              cita: >-
+                INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr):
+                Cuadro N.º 06B p. 55 (PDF 57, criterio RM 363-2022-MINSA) y Cuadro N.º 6.1B p. 58 (PDF 60, nueva directriz OMS 2024 /
+                RM 251-2024-MINSA), filas «6 a 8 meses», «9 a 11 meses», «12 a 17 meses», «18 a 23 meses» y «24 a 35 meses»
+            - id: desnutricion_cronica
+              aplica_a_recetas: [endes_dci_menores_5]
+              tramos:
+                - {rotulo: "Menores de 36 meses", desde: 0, hasta: 35}
+                - {rotulo: "De 36 a 59 meses", desde: 36, hasta: 59}
+              cita: >-
+                INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr):
+                Cuadro N.º 04 p. 49 (PDF 51, patrón OMS), filas «Menores de 36 meses» y «De 36 a 59 meses»
           cita: "Etiqueta del archivo RECH6 2024: «Edad en meses» (0 a 59); src/pap/capa0/encuestas.py:148"
+        # La decisión del dueño no cubre a las personas del hogar (el INEI no publica tramos para ellas): sigue pendiente.
         - archivo: RECH1
           variable: HV105
           unidad: persona_del_hogar
@@ -74,7 +101,7 @@ cortes:
             5: "35 a 39 años"
             6: "40 a 44 años"
             7: "45 a 49 años"
-    cita: "Ficha técnica ENDES 2024, §II p. 2 (mujeres de 12 a 49 años, niños menores de 5 años) y punto 6 p. 16 (6 a 35 meses); tramos de la mujer: etiquetas de valor de V013 en REC0111"
+    cita: "Ficha técnica ENDES 2024, §II p. 2 (mujeres de 12 a 49 años, niños menores de 5 años) y punto 6 p. 16 (6 a 35 meses); tramos de la mujer: etiquetas de valor de V013 en REC0111; tramos del niño: informe del INEI, ver `juegos_de_tramos` de RECH6.HC1"
   - id: region_natural
     nombre: "región natural"
     por_encuesta:
@@ -87,13 +114,20 @@ cortes:
           variable: SREGION
           unidad: mujer
           cita: "Etiqueta del archivo REC91 2024: «Región natural» (1 Lima metropolitana, 2 Resto Costa, 3 Sierra, 4 Selva)"
-    categorias: {1: "Lima Metropolitana", 2: "resto de la Costa", 3: Sierra, 4: Selva}
+    # C-M0-06-3 (dueño, 12/11/2026): Costa = SHREGION 1 + 2. Por separado, la 1 se rotula «Lima Metropolitana y Callao» y la 2
+    # «resto de la Costa». Las rotula así la decisión del dueño aunque la etiqueta del archivo diga «Lima metropolitana».
+    categorias: {1: "Lima Metropolitana y Callao", 2: "resto de la Costa", 3: Sierra, 4: Selva}
+    agrupa: {Costa: [1, 2]}
+    nota: >-
+      Costa = Lima Metropolitana y Callao (SHREGION 1) + resto de la Costa (2): verificado contra las cifras publicadas (informe del INEI,
+      recurso endes-2024-informe-ppr: Costa 7,3 % en el Cuadro N.º 04 p. 49, 36,1 % en el N.º 06 p. 53 y 27,0 % en el N.º 6.1 p. 56,
+      que midió el auditor del supervisor el 12/11/2026; la receta los reproduce en M1-03). La categoría agrupada la compila M1-03.
     cita: >-
-      Ficha técnica ENDES 2024, §3.7 p. 7 («Región Natural: Costa, Sierra y Selva» como dominio anual y semestral); las cuatro
-      categorías son las del archivo. Que Costa = Lima Metropolitana + resto de la Costa no lo declara ningún documento
-      registrado: consulta C-M0-06-3
+      Ficha técnica ENDES 2024, §3.7 p. 7 y Ficha técnica ENDES 2025, §3.7 p. 8 («Región Natural: Costa, Sierra y Selva» como dominio
+      anual y semestral); las cuatro categorías son las del archivo. Que Costa = SHREGION 1 y 2 lo decidió el dueño el 12/11/2026
+      (C-M0-06-3), verificado contra las cifras publicadas
   - id: quintil_riqueza
-    nombre: "quintil de riqueza"
+    nombre: "quintil de bienestar"
     por_encuesta:
       ENDES:
         - archivo: RECH23
@@ -105,7 +139,10 @@ cortes:
           unidad: mujer
           cita: "Etiqueta del archivo REC0111 2024: «Índice de riqueza» (1 El más pobre, 2 «Pobrer» [sic], 3 Medio, 4 Rico, 5 Más rico)"
     categorias: {1: "los más pobres", 2: pobre, 3: medio, 4: rico, 5: "más rico"}
+    nota: >-
+      C-M0-06-4 (dueño, 12/11/2026): HV270 (hogar) y V190 (mujer) se aceptan con el rótulo del INEI, «quintil de bienestar». Queda
+      como duda: la ficha dice que el quintil se presenta en dos versiones (la que preserva el puntaje de la ENDES 2000 y la del año de
+      la encuesta) y ningún archivo dice cuál es HV270 ni V190.
     cita: >-
       Ficha técnica ENDES 2024, §1.6 y §1.7 p. 13-14 (Índice de Bienestar y Quintil de Riqueza, hogares en cinco partes
-      iguales). La ficha dice que el quintil se presenta en dos versiones (la que preserva el puntaje de la ENDES 2000 y la del
-      año de la encuesta) y ningún archivo dice cuál es HV270: consulta C-M0-06-4
+      iguales). Rótulo «quintil de bienestar» aceptado por el dueño el 12/11/2026 (C-M0-06-4)

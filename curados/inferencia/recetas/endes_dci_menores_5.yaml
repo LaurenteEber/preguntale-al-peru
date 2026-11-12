@@ -1,11 +1,11 @@
 # Receta de indicador (M0-10; diseño §8.1): la definición oficial que el motor ejecuta por el camino nuevo (plan → verificador → ejecutor →
 # compuertas). Las variables son las que el INEI ya entrega ajustadas, así que `transformaciones` va vacío. Cada `var` se escribe como
 # archivo + variable; el año lo pone `Receta.a_plan` (esta receta solo vale para `anios`). Esquema: src/pap/inferencia/recetas.py.
-# estado: revisado + pendiente: visto_dueno. «verificado» lo da el visto del dueño (K-03) sobre las tres comprobaciones de M0-10
-# (igualan al cubo, reproducen las doradas de 2024 y visto), no el agente.
+# estado: verificado. Lo dio el visto del dueño (K-03, 12/11/2026) sobre las tres comprobaciones de M0-10 (igualan al cubo, reproducen
+# las doradas de 2024 y visto); ya no lleva `pendiente`. Con esto la confianza de sus cifras publicables deja de ser «baja» (§15.2).
 id: endes_dci_menores_5
-version: 0.1.0
-fecha: "2026-11-09"
+version: 0.2.0
+fecha: "2026-11-12"
 descripcion: "Desnutrición crónica en menores de 5 años (patrón OMS 2006): talla para la edad a menos de 2 desviaciones estándar, HC70 < −200 (centésimas de DE)."
 indicador_id: endes_dci_menores_5
 encuesta: ENDES
@@ -24,9 +24,9 @@ universo:
 transformaciones: []
 cortes_permitidos: [area, sexo]
 cortes_no_permitidos:
-  - {id: grupo_edad, motivo: "C-M0-06-2: ningún documento define los tramos de edad de los niños; el verificador lo rechaza mientras esté pendiente"}
-  - {id: region_natural, motivo: "C-M0-06-3: ¿Costa = Lima Metropolitana + resto de la Costa?; además no hay unión declarada RECH6 → RECH23 (las dos cuelgan de RECH0 por HHID)"}
-  - {id: quintil_riqueza, motivo: "C-M0-06-4: no se sabe si HV270 es el quintil de la ENDES 2000 o el del año; además no hay unión declarada RECH6 → RECH23 (las dos cuelgan de RECH0 por HHID)"}
+  - {id: grupo_edad, motivo: "C-M0-06-2: tramos decididos el 12/11/2026 (cortes_estandar.yaml); el verificador aún no los compila: los habilita M1-03"}
+  - {id: region_natural, motivo: "C-M0-06-3: Costa = SHREGION 1 y 2, decidido el 12/11/2026; falta la unión RECH6 → RECH23 por el padre común (las dos cuelgan de RECH0 por HHID) y la categoría agrupada: los habilita M1-03"}
+  - {id: quintil_riqueza, motivo: "C-M0-06-4: «quintil de bienestar», aceptado el 12/11/2026; falta la unión RECH6 → RECH23 por el padre común (las dos cuelgan de RECH0 por HHID): lo habilita M1-03"}
 tolerancia_pp: 0.1        # E-05: las cifras de la ENDES se reproducen a ± 0,1 pp (R-ENC-18)
 tolerancia_cv: 0.1        # cifras_doradas.csv: el INEI publica también el CV de la DCI
 fuente: "curados/capa0/definiciones_endes.yaml:28-34 (dci_menores_5: variable dci = haz < −2; universo 0–59 meses, haz_valido HC70 < 9990, pernocto HV103 = 1); src/pap/capa0/encuestas.py:148 (HC1), :157 (HC70 válido de −9989 a 9989, en centésimas de DE) y :169-170 (haz_valido y dci = haz < −2); curados/inferencia/universos_analiticos.yaml (nino_hecho: HV103 = 1)"
@@ -58,5 +58,4 @@ doradas:
     casos_publicados: 5946
     cv_publicado: 3.9
     cita: "INEI, Indicadores de Resultados de los Programas Presupuestales, ENDES 2024, Cuadro 04 p. 49; https://proyectos.inei.gob.pe/endes/2024/ppr2/Indicadores_de_Resultados_de_los_Programas_Presupuestales_ENDES_2024.pdf"
-estado: revisado
-pendiente: visto_dueno
+estado: verificado

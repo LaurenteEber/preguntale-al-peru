@@ -29,10 +29,10 @@ def recetas():
 
 # ------------------------------------------------------------------ las tres recetas
 
-def test_estan_las_tres_recetas_revisadas_con_el_visto_del_dueno_pendiente(recetas):
+def test_estan_las_tres_recetas_verificadas_con_el_visto_del_dueno(recetas):
     assert tuple(sorted(recetas)) == tuple(sorted(IDS))
     for r in recetas.values():
-        assert (r.estado, r.pendiente) == ("revisado", "visto_dueno")      # «verificado» lo da el visto del dueño (K-03)
+        assert (r.estado, r.pendiente) == ("verificado", None)             # K-03: visto del dueño el 12/11/2026
         assert r.transformaciones == () and r.tolerancia_pp == 0.1 and r.anios == (2024, 2024) and r.indicador_id == r.id
 
 
@@ -90,8 +90,8 @@ def test_transformaciones_no_vacias_son_tipo_c():
 
 
 @pytest.mark.parametrize("cambio,mensaje", [
-    ({"pendiente": None}, "visto_dueno"),                          # revisado sin el visto pendiente
-    ({"estado": "verificado"}, "«verificado» no lleva pendiente"),
+    ({"estado": "revisado", "pendiente": None}, "visto_dueno"),    # revisado sin el visto pendiente
+    ({"pendiente": "visto_dueno"}, "«verificado» no lleva pendiente"),
     ({"campo_nuevo": 1}, "Extra inputs"),
     ({"anios": [2025, 2024]}, "primero no puede pasar"),
     ({"cortes_permitidos": ["area", "grupo_edad"]}, "permitidos y no permitidos"),
@@ -106,6 +106,12 @@ def test_el_esquema_rechaza(cambio, mensaje):
 def test_una_receta_verificada_no_lleva_pendiente():
     r = rc.Receta.model_validate(_datos("endes_dci_menores_5") | {"estado": "verificado", "pendiente": None})
     assert r.estado == "verificado"
+
+
+def test_el_estado_revisado_sigue_existiendo_con_su_visto_pendiente():
+    """Las tres recetas están verificadas (K-03), pero el esquema conserva la escalera propuesto < revisado < verificado."""
+    r = rc.Receta.model_validate(_datos("endes_dci_menores_5") | {"estado": "revisado", "pendiente": "visto_dueno"})
+    assert (r.estado, r.pendiente) == ("revisado", "visto_dueno")
 
 
 # ------------------------------------------------------------------ validar (cruces con las tablas curadas)
@@ -282,7 +288,7 @@ def test_cli_registra_pap_inferencia_receta():
 def test_cli_validar_recetas_sale_con_0_y_lista_las_tres(capsys):
     assert main(["inferencia", "validar-recetas"]) == 0
     salida = capsys.readouterr().out
-    assert salida.count("✔ ") == 3 and "estado revisado, pendiente visto_dueno" in salida and "✘" not in salida
+    assert salida.count("✔ ") == 3 and "estado verificado" in salida and "pendiente" not in salida and "✘" not in salida
 
 
 def test_cli_receta_sin_id_o_sin_anio_o_inexistente_falla_con_mensaje(capsys):

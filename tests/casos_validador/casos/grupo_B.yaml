@@ -97,7 +97,7 @@
   espera: {dispara: true, accion: publicar_referencial}
 - id: R-ENC-02-d
   regla: R-ENC-02
-  descripcion: 'borde «n_sin_ponderar >= 50 → pasa a R-ENC-03/R-ENC-04»: n = 50'
+  descripcion: 'borde de R-ENC-02 (ya no «>= 50 → pasa a R-ENC-03/R-ENC-04»: desde C-M0-11-2 esas pasan desde 25): n = 50 no dispara R-ENC-02'
   base:
     indicador: endes_anemia_6_35m_oms2024
     anio: 2025
@@ -215,14 +215,14 @@
   espera: {dispara: false}
 - id: R-ENC-03-h
   regla: R-ENC-03
-  descripcion: '«n_sin_ponderar >= 50» es falso (n = 40): la regla no aplica aunque cv_ref = 0,35 (lo decide R-ENC-02)'
+  descripcion: 'C-M0-11-2 (dueño, 12/11/2026): «n_sin_ponderar >= 25» se cumple con n = 40, así que rige el CV: cv_ref = 0,35 → suprimir (antes, con «>= 50», no aplicaba y quedaba referencial por R-ENC-02)'
   base:
     indicador: endes_anemia_6_35m_oms2024
     anio: 2025
     nivel: departamento
     territorio: "21"
   cifra: {valor: 40.0, ee: 14.0, cv: 35.0, n_muestra: 40, gl: 76}
-  espera: {dispara: false}
+  espera: {dispara: true, accion: suprimir, motivo: precision}
 - id: R-ENC-03-i
   regla: R-ENC-03
   descripcion: '«0.10 <= p <= 0.90»: p = 0,05 está fuera; rige R-ENC-04'
@@ -415,14 +415,14 @@
   espera: {dispara: false}
 - id: R-ENC-04-o
   regla: R-ENC-04
-  descripcion: '«n_sin_ponderar >= 50» es falso: n = 45 (lo decide R-ENC-02)'
+  descripcion: 'C-M0-11-2 (dueño, 12/11/2026): «n_sin_ponderar >= 25» se cumple con n = 45, así que rige el intervalo: ancho 14 pp y ancho relativo 2,8 → suprimir (antes, con «>= 50», no aplicaba)'
   base:
     indicador: endes_dci_menores_5
     anio: 2025
     nivel: departamento
     territorio: "23"
   cifra: {valor: 5.0, ee: 2.0, cv: 40.0, ic_inf: 1.0, ic_sup: 15.0, n_muestra: 45, n_efectivo: 40.0, gl: 108}
-  espera: {dispara: false}
+  espera: {dispara: true, accion: suprimir, motivo: precision}
 - id: R-ENC-04-p
   regla: R-ENC-04
   descripcion: 'aplica_a.fuentes: SIEN no es encuesta'

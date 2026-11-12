@@ -39,7 +39,7 @@ def test_los_parametros_salen_de_reglas_json(ctx):
     rj = json.loads((RAIZ_REAL / "reglas" / "reglas.json").read_text(encoding="utf-8"))
     por_id = {r["id"]: r["parametros"] for r in rj["reglas"]}
     p = cp.parametros(ctx)
-    assert set(p) == {"R-ENC-02", "R-ENC-03", "R-ENC-04"}
+    assert set(p) == {"R-ENC-02", "R-ENC-03", "R-ENC-04", "R-ENC-19"}
     for rid in p:
         assert p[rid] == por_id[rid]
     assert (p["R-ENC-02"]["n_min_suprimir"], p["R-ENC-02"]["n_min_publicar"]) == (25, 50)
@@ -70,10 +70,33 @@ def test_paso2_de_25_a_49_casos_es_referencial_y_sigue(ctx):
     assert _ev(est(n=50), ctx).estado == "publicable"           # 50 ya no es referencial
 
 
-def test_bajo_50_casos_rige_solo_r_enc_02(ctx):
-    for kw in ({"p": 0.3, "ee": 0.06}, {"p": 0.05, "ee": 0.01}, {"p": 0.0, "ee": 0.0, "lo": 0.0, "hi": 0.07, "eventos": 0}):
-        g = _ev(est(n=40, **kw), ctx)                            # R-ENC-03 y R-ENC-04 «rigen R-ENC-02» bajo 50 casos
-        assert g.estado == "referencial" and reglas(g) == [("R-ENC-02", "publicar_referencial")] and g.rotulo is None
+def test_de_25_a_49_casos_rigen_tambien_r_enc_03_y_r_enc_04(ctx):
+    """C-M0-11-2 (dueño, 12/11/2026): los límites de precisión se aplican desde 25 casos. Con 25 a 49 casos R-ENC-02 sigue marcando
+    referencial y R-ENC-03/04 se acumulan: pueden dejar la cifra referencial (con su motivo) o suprimirla."""
+    for n in (25, 40, 49):
+        g = _ev(est(n=n, p=0.3, ee=0.06), ctx)                  # cv_ref = 0,2
+        assert g.estado == "referencial" and reglas(g) == [("R-ENC-02", "publicar_referencial"), ("R-ENC-03", "publicar_referencial")]
+        g = _ev(est(n=n, p=0.3, ee=0.12), ctx)                  # cv_ref = 0,4: suprime
+        assert g.estado == "suprimida" and reglas(g) == [("R-ENC-02", "publicar_referencial"), ("R-ENC-03", "suprimir")]
+        assert g.confianza is None and not g.publicable
+    for n in (40, 49):
+        g = _ev(est(n=n, p=0.05, ee=0.01), ctx)                 # n efectivo = n, entre 30 y 49 → referencial por R-ENC-04
+        assert g.estado == "referencial" and reglas(g) == [("R-ENC-02", "publicar_referencial"), ("R-ENC-04", "publicar_referencial")]
+    g = _ev(est(n=25, p=0.05, ee=0.01), ctx)                    # n efectivo = 25 < 30 → suprime
+    assert g.estado == "suprimida" and reglas(g) == [("R-ENC-02", "publicar_referencial"), ("R-ENC-04", "suprimir")]
+    g = _ev(est(n=40, p=0.05, ee=0.04, n_ef=29.7, lo=0.0, hi=0.13), ctx)       # n efectivo < 30: suprime
+    assert g.estado == "suprimida" and reglas(g) == [("R-ENC-02", "publicar_referencial"), ("R-ENC-04", "suprimir")]
+
+
+def test_de_25_a_49_casos_con_p_cero_rotula_y_sigue_referencial(ctx):
+    g = _ev(est(n=40, p=0.0, ee=0.0, lo=0.0, hi=0.07, eventos=0), ctx)
+    assert g.estado == "referencial" and g.rotulo == "menos de 7,0 %"
+    assert reglas(g) == [("R-ENC-02", "publicar_referencial"), ("R-ENC-04", "publicar_referencial"), ("R-ENC-04", "rotular")]
+
+
+def test_bajo_25_casos_sigue_cortando_en_r_enc_02(ctx):
+    g = _ev(est(n=24, p=0.3, ee=0.12), ctx)
+    assert reglas(g) == [("R-ENC-02", "suprimir")]
 
 
 def test_el_rotulo_se_acumula_a_los_motivos_referenciales(ctx):
@@ -170,9 +193,48 @@ def test_el_cv_de_referencia_usa_el_menor_entre_p_y_1_menos_p(ctx):
 
 # ---------------------------------------------------------------------------------------------------- paso 8 y bordes del árbol
 
-def test_paso8_la_no_respuesta_no_cambia_el_estado_porque_k07_no_esta_aprobada(ctx):
+def test_paso8_sin_tasa_o_hasta_5_por_ciento_no_dispara(ctx):
+    for t in (None, 0.0, 0.05):                                                  # 5 % exacto no avisa
+        g = _ev(est(tasa_no_respuesta=t, tasa_no_respuesta_ponderada=t), ctx)
+        assert g.estado == "publicable" and g.motivos == () and g.tasa_no_respuesta == t
+
+
+def test_paso8_de_5_a_20_por_ciento_avisa_sin_cambiar_el_estado(ctx):
+    for t in (0.0501, 0.12, 0.20):                                               # 20 % exacto sigue siendo aviso
+        g = _ev(est(tasa_no_respuesta=t), ctx)
+        assert g.estado == "publicable" and reglas(g) == [("R-ENC-19", "advertir")] and g.confianza == "media"
+        assert g.motivos[0].codigo == "no_respuesta" and g.tasa_no_respuesta == t
+
+
+def test_paso8_mas_de_20_por_ciento_es_referencial_y_de_confianza_baja(ctx):
+    g = _ev(est(tasa_no_respuesta=0.2001), ctx)
+    assert g.estado == "referencial" and reglas(g) == [("R-ENC-19", "publicar_referencial")] and g.confianza == "baja" and g.publicable
     g = _ev(est(tasa_no_respuesta=0.6, tasa_no_respuesta_ponderada=0.6), ctx)
+    assert g.estado == "referencial" and g.tasa_no_respuesta == 0.6
+
+
+def test_paso8_se_acumula_a_los_pasos_anteriores_y_no_corre_si_el_arbol_se_corto(ctx):
+    g = _ev(est(p=0.3, ee=0.06, tasa_no_respuesta=0.1), ctx)                    # cv_ref 0,2 → referencial, y además el aviso
+    assert g.estado == "referencial" and reglas(g) == [("R-ENC-03", "publicar_referencial"), ("R-ENC-19", "advertir")]
+    g = _ev(est(n=24, tasa_no_respuesta=0.5), ctx)                              # suprimida en el paso 1: el árbol se corta
+    assert g.estado == "suprimida" and reglas(g) == [("R-ENC-02", "suprimir")]
+    g = _ev(est(p=0.3, ee=0.12, tasa_no_respuesta=0.5), ctx)                    # suprimida por CV: tampoco corre
+    assert reglas(g) == [("R-ENC-03", "suprimir")]
+
+
+def test_paso8_lee_compuertas_paso_no_respuesta_activo_de_parametros_yaml(ctx, monkeypatch):
+    """H09-3: el interruptor del YAML se lee (antes nadie lo leía). Apagado, la tasa solo se informa."""
+    assert cp.paso_no_respuesta_activo() is True                                 # K-07 aprobada el 12/11/2026
+    monkeypatch.setattr(cp, "paso_no_respuesta_activo", lambda: False)
+    g = _ev(est(tasa_no_respuesta=0.6), ctx)
     assert g.estado == "publicable" and g.motivos == () and g.tasa_no_respuesta == 0.6
+
+
+def test_r_enc_19_sale_de_reglas_json(ctx):
+    r = ctx.regla("R-ENC-19")
+    assert (r["parametros"]["tasa_aviso"], r["parametros"]["tasa_referencial"]) == (0.05, 0.20) and r["etapa"] == "4_precision"
+    otro = ctx.con_sobrescrituras({"reglas": {"R-ENC-19": {"parametros": {**r["parametros"], "tasa_aviso": 0.15}}}})
+    assert _ev(est(tasa_no_respuesta=0.10), otro).motivos == ()                  # el umbral viene de la regla, no del código
 
 
 def test_dominio_vacio_es_sin_datos(ctx):
@@ -270,8 +332,9 @@ def test_suprimida_no_deja_ningun_rotulo_en_los_motivos(ctx):
     assert g.rotulo is None and all(m.rotulo is None for m in g.motivos)
 
 
-def test_n_40_con_cv_alto_es_referencial_segun_reglas_json(ctx):
-    """C-M0-11-2: hoy R-ENC-03/04 exigen n ≥ 50, así que bajo 50 casos una cifra muy imprecisa queda referencial.
-    Fija el comportamiento vigente; si el dueño decide otra cosa, cambia la regla (consolidador) y esta prueba."""
+def test_n_40_con_cv_alto_se_suprime_desde_c_m0_11_2(ctx):
+    """C-M0-11-2 (dueño, 12/11/2026): antes R-ENC-03/04 exigían n ≥ 50 y una cifra de 40 casos con CV alto quedaba referencial;
+    ahora el CV > 30 % la suprime también con 25 a 49 casos."""
     g = _ev(est(p=0.3, ee=0.2, n=40, lo=0.0, hi=0.7), ctx)
-    assert g.estado == "referencial" and g.confianza == "baja"
+    assert g.estado == "suprimida" and g.confianza is None
+    assert reglas(g) == [("R-ENC-02", "publicar_referencial"), ("R-ENC-03", "suprimir")]

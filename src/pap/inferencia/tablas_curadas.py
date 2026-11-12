@@ -138,6 +138,23 @@ class AplicaA(_Fila):
     mediciones: list[str]
 
 
+class ExigePareja(_Fila):
+    """El registro de la unidad debe tener su pareja en `archivo` (por las columnas de `por`: (columna de la unidad, columna de `archivo`)).
+    Los que no la tienen quedan fuera del universo. C-M0-05-2: disciplina infantil exige a la mujer en REC0111."""
+    archivo: str
+    por: list[tuple[str, str]]
+
+    @field_validator("por")
+    @classmethod
+    def _por(cls, v):
+        if not v:
+            raise ValueError("`por` necesita al menos un par de columnas")
+        for a, b in v:
+            if not (_VAR.match(a) and _VAR.match(b)):
+                raise ValueError(f"nombre de columna no permitido: {a!r}, {b!r}")
+        return v
+
+
 class UniversoAnalitico(_Fila):
     id: str
     encuesta: Literal["ENDES", "ENAHO"]
@@ -146,15 +163,15 @@ class UniversoAnalitico(_Fila):
     predicados: list[Predicado]
     anios: tuple[int, int]
     fuente: str
+    exige_pareja: list[ExigePareja] = []      # M1-01: registros que deben tener su pareja en otro archivo (no es un predicado de valor)
 
     _v_cita = field_validator("fuente")(_cita)
 
-    @field_validator("predicados")
-    @classmethod
-    def _hay(cls, v):
-        if not v:
-            raise ValueError("un universo necesita al menos un predicado")
-        return v
+    @model_validator(mode="after")
+    def _hay(self):
+        if not self.predicados and not self.exige_pareja:
+            raise ValueError("un universo necesita al menos un predicado (o exigir su pareja en otro archivo)")
+        return self
 
     @field_validator("anios")
     @classmethod
@@ -250,15 +267,73 @@ class RelacionEntreAnios(_Fila):
 
 # ------------------------------------------------------------------ cortes estándar
 
+class Tramo(_Fila):
+    """Un rango de una variable numérica, con los límites incluidos (HC1 en meses: 6 a 8 = desde 6, hasta 8)."""
+    rotulo: str
+    desde: int
+    hasta: int
+
+    @field_validator("rotulo")
+    @classmethod
+    def _rotulo(cls, v):
+        if not v.strip():
+            raise ValueError("el tramo necesita su rótulo")
+        return v
+
+    @model_validator(mode="after")
+    def _orden(self):
+        if self.desde > self.hasta:
+            raise ValueError("desde no puede pasar de hasta")
+        return self
+
+
+class JuegoTramos(_Fila):
+    """Un juego de tramos para ciertas recetas (los de la anemia no son los de la desnutrición crónica). M1-01 solo los escribe; los
+    compila M1-03 (tarea 1b)."""
+    id: str
+    aplica_a_recetas: list[str]
+    tramos: list[Tramo]
+    cita: str
+
+    _v_cita = field_validator("cita")(_cita)
+
+    @model_validator(mode="after")
+    def _forma(self):
+        if not self.aplica_a_recetas:
+            raise ValueError(f"{self.id}: el juego necesita al menos una receta")
+        if not self.tramos:
+            raise ValueError(f"{self.id}: el juego necesita al menos un tramo")
+        for a, b in zip(self.tramos, self.tramos[1:]):
+            if b.desde <= a.hasta and b.desde > a.desde:
+                raise ValueError(f"{self.id}: los tramos «{a.rotulo}» y «{b.rotulo}» se traslapan")
+            if b.desde <= a.desde:
+                raise ValueError(f"{self.id}: los tramos van en orden creciente («{b.rotulo}» no sigue a «{a.rotulo}»)")
+        return self
+
+
 class VariableCorte(_Fila):
     archivo: str
     variable: str
     unidad: str
     categorias: dict[int, str] | None = None
-    pendiente: str | None = None         # ID de la consulta tipo C que define los tramos o categorías que faltan
+    juegos_de_tramos: list[JuegoTramos] | None = None     # variable numérica agrupada en tramos, un juego por grupo de recetas
+    pendiente: str | None = None         # ID de la consulta (tipo C) o de la historia que falta para poder usar el corte
     cita: str
 
     _v_cita = field_validator("cita")(_cita)
+
+    @model_validator(mode="after")
+    def _juegos(self):
+        vistos: dict[str, str] = {}
+        ids = [j.id for j in self.juegos_de_tramos or []]
+        for i in {i for i in ids if ids.count(i) > 1}:
+            raise ValueError(f"el juego «{i}» se repite")
+        for j in self.juegos_de_tramos or []:
+            for r in j.aplica_a_recetas:
+                if r in vistos:
+                    raise ValueError(f"la receta {r} está en más de un juego de tramos («{vistos[r]}» y «{j.id}»)")
+                vistos[r] = j.id
+        return self
 
 
 class CorteEstandar(_Fila):
@@ -266,6 +341,8 @@ class CorteEstandar(_Fila):
     nombre: str
     por_encuesta: dict[str, list[VariableCorte]]
     categorias: dict[int, str] | None = None
+    agrupa: dict[str, list[int]] | None = None       # categoría formada por varios códigos de `categorias` (Costa = 1 y 2); la compila M1-03
+    nota: str | None = None
     cita: str
 
     _v_cita = field_validator("cita")(_cita)
@@ -276,8 +353,18 @@ class CorteEstandar(_Fila):
             if not variables:
                 raise ValueError(f"{enc}: sin variables")
             for v in variables:
-                if not (v.categorias or self.categorias or v.pendiente):
+                if not (v.categorias or self.categorias or v.juegos_de_tramos or v.pendiente):
                     raise ValueError(f"{enc} {v.archivo}.{v.variable}: sin categorías ni consulta pendiente")
+        usados: dict[int, str] = {}
+        for grupo, codigos in (self.agrupa or {}).items():
+            if len(codigos) < 2:
+                raise ValueError(f"el grupo «{grupo}» necesita al menos dos códigos")
+            for k in codigos:
+                if k not in (self.categorias or {}):
+                    raise ValueError(f"el grupo «{grupo}» nombra el código {k}, que no está en las categorías del corte")
+                if k in usados:
+                    raise ValueError(f"el código {k} está en más de un grupo («{usados[k]}» y «{grupo}»)")
+                usados[k] = grupo
         return self
 
 
@@ -374,7 +461,8 @@ def _citas(nombre: str, filas: list) -> list[str]:
     if nombre == "universos_analiticos":
         return [f.fuente for f in filas]
     if nombre == "cortes_estandar":
-        return [c.cita for c in filas] + [v.cita for c in filas for vs in c.por_encuesta.values() for v in vs]
+        return ([c.cita for c in filas] + [v.cita for c in filas for vs in c.por_encuesta.values() for v in vs]
+                + [j.cita for c in filas for vs in c.por_encuesta.values() for v in vs for j in v.juegos_de_tramos or []])
     return [f.cita for f in filas]
 
 
@@ -430,6 +518,9 @@ def validar(rutas: Rutas) -> dict[str, tuple[int, list[str]]]:
                 for p in u.predicados:
                     if not any((a, p.var) in en_indice for a in u.aplica_a.archivos):
                         err("universos_analiticos", f"{u.id}: la variable {p.var} no está en {u.aplica_a.archivos} del índice")
+            for e in u.exige_pareja:
+                if e.archivo not in archivos:
+                    err("universos_analiticos", f"{u.id}: la pareja se exige en {e.archivo}, que no está en archivos_endes_2024.yaml")
     if "territorios" in datos:
         niveles = [t.nivel for t in datos["territorios"]]
         for n in {n for n in niveles if niveles.count(n) > 1}:

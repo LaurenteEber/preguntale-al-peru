@@ -223,7 +223,7 @@ def _inferencia_validar_recetas(rutas) -> int:
     res = recetas.validar(rutas)
     for id_, (ok, errores) in res.items():
         r = recetas.leer_receta(rutas.raiz, id_) if ok and not errores else None
-        print(("✘ " if errores or not ok else "✔ ") + f"{id_}" + (f": estado {r.estado}, pendiente {r.pendiente}, {len(r.doradas)} dorada(s)" if r else "")
+        print(("✘ " if errores or not ok else "✔ ") + f"{id_}" + (f": estado {r.estado}{f', pendiente {r.pendiente}' if r.pendiente else ''}, {len(r.doradas)} dorada(s)" if r else "")
               + "".join(f"\n    - {e}" for e in errores))
     return 1 if any(e or not ok for ok, e in res.values()) else 0
 

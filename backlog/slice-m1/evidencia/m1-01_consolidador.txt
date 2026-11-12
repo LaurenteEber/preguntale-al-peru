@@ -1,0 +1,10 @@
+pruebas: Counter()
+avisos del corrector (pendiente validación por terceros): 3 patrones · mensajes vigentes con aviso: []
+corpus ronda 4 (informativo): bloqueo 100/108 · con avisos 107/108 · FP 0 · no detectadas 1
+corpus del corrector (COM-07): 232 oraciones únicas (reserva + auditor + ronda 4; meta 200) · pruebas de consistencia: 0
+mensajes con jerga o muy largos (informativo): 0
+textos fijos que el corrector bloquearía si no fueran {{p:id}}: 14
+parches v1.1 aplicados: 243 · renombres: 30
+R-DEP-01: bloqueantes no aprobados hoy en el catálogo (informativo): []
+R-ENC-08: filas sin verificar en inferencia_verificada.csv (informativo): ['MINEDU-UMC-ENLA 2019', 'MINEDU-UMC-ENLA 2022', 'MINEDU-UMC-ENLA 2023', 'MINEDU-UMC-ENLA 2024', 'MINEDU-UMC-ENLA 2025']
+vigentes 97 absorbidas 3 mvp 94

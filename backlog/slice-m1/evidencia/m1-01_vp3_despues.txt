@@ -1,0 +1,1350 @@
+{
+ "parches_v3": [
+  {
+   "n": 1,
+   "regla": "R-REG-12",
+   "op": "set",
+   "campo": "aplica_a",
+   "hallazgo": "COM-01",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 2,
+   "regla": "R-REG-12",
+   "op": "replace",
+   "campo": "condicion",
+   "hallazgo": "COM-01",
+   "estado": "ausente",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 3,
+   "regla": "R-REG-12",
+   "op": "set",
+   "campo": "parametros.fuentes_sensibles_ola1",
+   "hallazgo": "COM-01",
+   "estado": "ausente",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 4,
+   "regla": "R-REG-12",
+   "op": "set",
+   "campo": "parametros.fuentes_sensibles_por_tema",
+   "hallazgo": "COM-01",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 5,
+   "regla": "R-REG-12",
+   "op": "set",
+   "campo": "parametros.fuentes_con_personas_celda_a_celda",
+   "hallazgo": "COM-01",
+   "estado": "ausente",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 6,
+   "regla": "R-REG-12",
+   "op": "replace",
+   "campo": "implementacion",
+   "hallazgo": "IMP-05",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 7,
+   "regla": "R-REG-12",
+   "op": "set",
+   "campo": "mensaje_usuario",
+   "hallazgo": "COM-13",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 8,
+   "regla": "R-MOTOR-01",
+   "op": "set",
+   "campo": "parametros.secuencia_degradacion.fuente_sensible",
+   "hallazgo": "COM-03",
+   "estado": "sobrescrito",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 9,
+   "regla": "R-MOTOR-01",
+   "op": "set",
+   "campo": "parametros.prioridad_secuencia",
+   "hallazgo": "COM-03",
+   "estado": "sobrescrito",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 10,
+   "regla": "R-ENC-13",
+   "op": "append",
+   "campo": "referencias",
+   "hallazgo": "HEC-12",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 11,
+   "regla": "R-CRUCES-03",
+   "op": "append",
+   "campo": "referencias",
+   "hallazgo": "HEC-12",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 12,
+   "regla": "R-CRUCES-09",
+   "op": "set",
+   "campo": "parametros.criterios.vigencia",
+   "hallazgo": "EST-07",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 13,
+   "regla": "R-GASTO-05",
+   "op": "set",
+   "campo": "mensaje_usuario",
+   "hallazgo": "COM-13",
+   "estado": "sobrescrito",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 14,
+   "regla": "R-CRUCES-06",
+   "op": "replace",
+   "campo": "mensaje_usuario",
+   "hallazgo": "COM-13",
+   "estado": "ausente",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 15,
+   "regla": "R-DENOMINADORES-03",
+   "op": "set",
+   "campo": "mensaje_usuario",
+   "hallazgo": "COM-13",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 16,
+   "regla": "R-LENGUAJE-02",
+   "op": "set",
+   "campo": "parametros.poblacion_censada",
+   "hallazgo": "HEC-01",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  },
+  {
+   "n": 17,
+   "regla": "R-LENGUAJE-02",
+   "op": "set",
+   "campo": "parametros.puerta_ci",
+   "hallazgo": "COM-07",
+   "estado": "aplicado",
+   "hallazgo_en_traza": true
+  }
+ ],
+ "chequeos": {
+  "ids_fuera_catalogo_REG12": [],
+  "naturaleza_por_tema": {
+   "MIMP-WARMINAN-BANCO-DATOS": "registro_administrativo",
+   "MININTER-VIOLENCIA-MUJER-PNP": "registro_administrativo",
+   "MINEDU-SISEVE": "registro_administrativo",
+   "CDC-SALA-MUERTE-MATERNA": "indicadores_derivados",
+   "CONADIS-RNPCD": "registro_administrativo"
+  },
+  "por_tema_fuera_de_aplica_a": [],
+  "temas_fuentes_completas_vs_por_tema": {
+   "solo_en_por_tema": [
+    "CDC-SALA-MUERTE-MATERNA",
+    "CONADIS-RNPCD",
+    "MIMP-WARMINAN-BANCO-DATOS",
+    "MINEDU-SISEVE",
+    "MININTER-VIOLENCIA-MUJER-PNP"
+   ],
+   "solo_en_fuentes_completas": []
+  },
+  "parametros_REG12_no_citados_en_condicion": [
+   "umbral_celda_min_normal",
+   "umbral_celda_min_sensible",
+   "max_desagregaciones_distrito",
+   "centro_poblado",
+   "presentacion_suprimida",
+   "nunca_publicar",
+   "desagregaciones_contables",
+   "umbral_poblacion_desagregacion",
+   "umbral_sensible_distrito",
+   "prueba_restas",
+   "alternativa"
+  ],
+  "REG12_usa_termino_fuentes_sensibles_sin_definir": {
+   "condicion": 0,
+   "enunciado": 0,
+   "casos_borde": 0
+  },
+  "REG12_param_residual_null": [],
+  "catalogo_sensibilidad_divulgacion": {
+   "None": 421
+  },
+  "MOTOR01": {
+   "fuente_sensible": [
+    "anio",
+    "provincia_anio",
+    "departamento_anio",
+    "departamento_ventana_fija_3_anios",
+    "suprimir"
+   ],
+   "divulgacion_no_degradable": true,
+   "condicion_cita_prioridad_secuencia": true,
+   "etapas_del_bucle": [
+    "etapas 2–4",
+    "etapas 2–6",
+    "etapas 2–6"
+   ],
+   "etapa_REG12": "6_divulgacion"
+  },
+  "ventanas": {
+   "cubo_protegido_mvp": "celdas sensibles solo en geografía vigente; años cerrados sueltos o ventanas fijas no superpuestas de 3 años (2017–2019, 2020–2022, 2023–2025) a nivel departamento; dentro de una ventana publicada no se publican años sueltos del mismo tema y departamento; sin GEO2017, sin ventanas móviles, sin acumulados mensuales",
+   "TERRITORIO04_fuentes_sensibles": "geografía vigente del último año; series con años sueltos o ventanas fijas no superpuestas de 3 años (2017–2019, 2020–2022, 2023–2025) a nivel departamento (R-REG-12 cubo protegido)"
+  },
+  "ENC13_referencias": [
+   [
+    "INEI – Declaración de la Comisión Consultiva para la estimac",
+    "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/pobreza2020/Declaracion_Estimacion_Pobreza_Monetaria_2020.pdf"
+   ],
+   [
+    "INEI – ENAHO 2021, Ficha técnica (dominios de inferencia; en",
+    "https://www.inei.gob.pe/media/encuestas/documentos/enaho/Ficha_tecnica_2021.pdf"
+   ],
+   [
+    "INEI – Perú: ENDES 2020, Presentación (entrevistas telefónic",
+    "https://www.inei.gob.pe/media/MenuRecursivo/publicaciones_digitales/Est/Lib1795/presenta.html"
+   ],
+   [
+    "INEI – Declaración de la Comisión Consultiva para la estimac",
+    "https://www.inei.gob.pe/media/cifras_de_pobreza/declaracion_estimacion_pobreza_monetaria_2021.pdf"
+   ]
+  ],
+  "CRUCES03_cita_declaracion_2020": true,
+  "diccionario_filas_anio_referencia": [
+   "anio_referencia / edad_dato"
+  ],
+  "residuo_fin_periodo": [],
+  "mensajes": {
+   "R-GASTO-05": {
+    "largo": 922,
+    "corrector": [],
+    "v3_vigente": false
+   },
+   "R-CRUCES-06": {
+    "largo": 274,
+    "corrector": [],
+    "v3_vigente": false
+   },
+   "R-DENOMINADORES-03": {
+    "largo": 164,
+    "corrector": [],
+    "v3_vigente": true
+   },
+   "R-REG-12": {
+    "largo": 114,
+    "corrector": [],
+    "v3_vigente": true
+   }
+  },
+  "mensajes_por_revisar": [],
+  "CRUCES06_niveles_condicion": [
+   "provincias o distritos dentro de un departamento",
+   "25 departamentos"
+  ],
+  "CRUCES06_enunciado_vs_param": [
+   [
+    "20"
+   ],
+   20
+  ],
+  "personas_censadas_definido_fuera_de_LENGUAJE02": [
+   "poblacion_objetivo"
+  ],
+  "lexico_tiene_patron_poblacion": [],
+  "corpus": {
+   "reserva": 45,
+   "auditor": 71,
+   "ronda4": 117,
+   "suma": 233,
+   "total": 232,
+   "duplicados": 1,
+   "pct_reserva": 0.194,
+   "meta": 200
+  },
+  "puerta_ci_assert": true,
+  "consolidador_assert_en_set_v2v3": false,
+  "pruebas_consistencia": []
+ },
+ "ronda3": {
+  "json": {
+   "R-GASTO-05": [
+    [
+     "campo titulo (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo enunciado (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo condicion (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo accion",
+     true
+    ],
+    [
+     "campo parametros (más parametros.recursos_recibidos)",
+     true
+    ],
+    [
+     "campo mensaje_usuario (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo implementacion",
+     true
+    ],
+    [
+     "campo casos_borde (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo referencias (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo mensaje_usuario",
+     true
+    ],
+    [
+     "campo titulo",
+     true
+    ],
+    [
+     "campo enunciado",
+     true
+    ],
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo parametros.recursos_recibidos",
+     true
+    ],
+    [
+     "campo casos_borde",
+     true
+    ],
+    [
+     "campo referencias",
+     true
+    ]
+   ],
+   "R-TERRITORIO-08": [
+    [
+     "campo parametros.sien_cobertura_tamizaje (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo parametros.sien_cobertura_tamizaje",
+     true
+    ],
+    [
+     "agregado enunciado",
+     false
+    ],
+    [
+     "agregado implementacion",
+     true
+    ],
+    [
+     "agregado condicion",
+     false
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-REG-07": [
+    [
+     "campo parametros.sien_cobertura_cotas (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo parametros.sien_ambitos_lima",
+     true
+    ],
+    [
+     "campo parametros.sien_cobertura_cotas",
+     true
+    ],
+    [
+     "agregado enunciado",
+     false
+    ],
+    [
+     "agregado condicion",
+     true
+    ],
+    [
+     "agregado mensaje_usuario",
+     true
+    ],
+    [
+     "reemplazo",
+     false
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     false
+    ],
+    [
+     "reemplazo",
+     false
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-GASTO-02": [
+    [
+     "campo enunciado",
+     true
+    ],
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo implementacion",
+     true
+    ],
+    [
+     "campo ejemplo",
+     true
+    ],
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-DENOMINADORES-01": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-DENOMINADORES-02": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-EST-04": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-GASTO-03": [
+    [
+     "campo mensaje_usuario (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo mensaje_usuario (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo parametros.lima (más parametros.lima.linea_aparte, parametros.lima.advertencia_mixtas, parametros.lima.funciones_advertencia_obligatoria, parametros.lima.aviso_sesgo_sede, parametros.lima.cifra, parametros.lima.control_cuenta_en_lima, parametros.lima.programas_mixtos_respaldo)",
+     false
+    ],
+    [
+     "campo parametros.lima.linea_aparte",
+     true
+    ],
+    [
+     "campo parametros.lima.advertencia_mixtas",
+     true
+    ],
+    [
+     "campo parametros.lima.funciones_advertencia_obligatoria",
+     true
+    ],
+    [
+     "campo parametros.lima.aviso_sesgo_sede",
+     true
+    ],
+    [
+     "campo mensaje_usuario (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo parametros.lima.cifra (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo parametros.lima.cifra (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo parametros.lima.control_cuenta_en_lima",
+     true
+    ],
+    [
+     "campo parametros.lima.programas_mixtos_respaldo",
+     true
+    ],
+    [
+     "campo mensaje_usuario (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo parametros.lima.cifra",
+     true
+    ],
+    [
+     "campo parametros.marca_sede",
+     true
+    ],
+    [
+     "campo parametros.callao",
+     true
+    ],
+    [
+     "campo mensaje_usuario",
+     true
+    ],
+    [
+     "agregado condicion",
+     false
+    ],
+    [
+     "agregado implementacion",
+     true
+    ],
+    [
+     "agregado condicion",
+     false
+    ],
+    [
+     "agregado condicion",
+     true
+    ],
+    [
+     "agregado implementacion",
+     true
+    ],
+    [
+     "reemplazo",
+     false
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-DENOMINADORES-04": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-ENC-08": [
+    [
+     "campo mensaje_usuario (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo enunciado",
+     true
+    ],
+    [
+     "campo aplica_a",
+     true
+    ],
+    [
+     "campo condicion (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo parametros (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo implementacion",
+     true
+    ],
+    [
+     "campo casos_borde",
+     true
+    ],
+    [
+     "campo ejemplo",
+     true
+    ],
+    [
+     "campo referencias",
+     true
+    ],
+    [
+     "campo condicion (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo parametros (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo mensaje_usuario (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo parametros",
+     true
+    ],
+    [
+     "campo mensaje_usuario",
+     true
+    ],
+    [
+     "agregado justificacion",
+     true
+    ],
+    [
+     "agregado justificacion",
+     true
+    ]
+   ],
+   "R-REG-15": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-GASTO-10": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-GASTO-15": [
+    [
+     "campo mensaje_usuario",
+     true
+    ],
+    [
+     "campo enunciado",
+     true
+    ],
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo parametros.lista_bloqueada",
+     true
+    ],
+    [
+     "campo parametros.corrector",
+     true
+    ],
+    [
+     "campo referencias",
+     true
+    ]
+   ],
+   "R-REG-01": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-REG-04": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-GASTO-14": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-REG-06": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-ENC-16": [
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-GASTO-07": [
+    [
+     "campo titulo",
+     true
+    ],
+    [
+     "campo enunciado (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo condicion (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo accion",
+     true
+    ],
+    [
+     "campo parametros (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo mensaje_usuario",
+     true
+    ],
+    [
+     "campo implementacion (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo ejemplo",
+     true
+    ],
+    [
+     "campo referencias",
+     true
+    ],
+    [
+     "campo enunciado",
+     true
+    ],
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo parametros",
+     true
+    ],
+    [
+     "campo implementacion",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-GASTO-08": [
+    [
+     "campo titulo",
+     true
+    ],
+    [
+     "campo enunciado",
+     true
+    ],
+    [
+     "campo condicion (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo parametros (más parametros.nombres, parametros.temas_ps)",
+     false
+    ],
+    [
+     "campo mensaje_usuario (entrada anterior)",
+     "conservada por la última"
+    ],
+    [
+     "campo justificacion",
+     true
+    ],
+    [
+     "campo ejemplo",
+     true
+    ],
+    [
+     "campo implementacion",
+     true
+    ],
+    [
+     "campo casos_borde",
+     true
+    ],
+    [
+     "campo referencias",
+     true
+    ],
+    [
+     "campo parametros.nombres",
+     true
+    ],
+    [
+     "campo parametros.temas_ps",
+     true
+    ],
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo mensaje_usuario",
+     true
+    ]
+   ],
+   "R-GASTO-09": [
+    [
+     "campo titulo",
+     true
+    ],
+    [
+     "campo enunciado",
+     true
+    ],
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo parametros",
+     true
+    ],
+    [
+     "campo mensaje_usuario",
+     true
+    ],
+    [
+     "campo justificacion",
+     true
+    ],
+    [
+     "campo ejemplo",
+     true
+    ],
+    [
+     "campo implementacion",
+     true
+    ],
+    [
+     "campo casos_borde",
+     true
+    ],
+    [
+     "campo referencias",
+     true
+    ]
+   ],
+   "R-GASTO-11": [
+    [
+     "campo parametros.grupos_objetivo",
+     true
+    ],
+    [
+     "agregado casos_borde",
+     true
+    ]
+   ],
+   "R-DEP-01": [
+    [
+     "campo enunciado",
+     true
+    ],
+    [
+     "campo parametros.insumos_bloqueantes_mvp (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo parametros.criterio_aprobada",
+     true
+    ],
+    [
+     "campo parametros.origen_bloqueantes (entrada anterior)",
+     "sustituida por la última"
+    ],
+    [
+     "campo parametros.retirados",
+     true
+    ],
+    [
+     "campo implementacion",
+     true
+    ],
+    [
+     "campo referencias",
+     true
+    ],
+    [
+     "campo parametros.insumos_bloqueantes_mvp",
+     true
+    ],
+    [
+     "campo parametros.origen_bloqueantes",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-GASTO-18": [
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo parametros.pim_usado",
+     true
+    ]
+   ],
+   "R-GASTO-19": [
+    [
+     "campo condicion",
+     true
+    ],
+    [
+     "campo parametros.fecha_de_llegada",
+     true
+    ],
+    [
+     "campo parametros.dato_mensual",
+     true
+    ]
+   ],
+   "R-ENC-06": [
+    [
+     "campo aplica_a.tipo_medida",
+     true
+    ],
+    [
+     "campo aplica_a.base_geografica",
+     true
+    ],
+    [
+     "agregado condicion",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-ENC-07": [
+    [
+     "campo aplica_a.tipo_medida",
+     true
+    ],
+    [
+     "campo aplica_a.base_geografica",
+     true
+    ],
+    [
+     "campo parametros.dominios_lima",
+     true
+    ],
+    [
+     "campo casos_borde",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-ENC-15": [
+    [
+     "campo aplica_a.tipo_medida",
+     true
+    ],
+    [
+     "campo aplica_a.base_geografica",
+     true
+    ],
+    [
+     "agregado casos_borde",
+     true
+    ]
+   ],
+   "R-CRUCES-01": [
+    [
+     "campo parametros.dominios_lima",
+     true
+    ],
+    [
+     "agregado condicion",
+     true
+    ],
+    [
+     "agregado implementacion",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-TERRITORIO-06": [
+    [
+     "campo ejemplo",
+     true
+    ],
+    [
+     "campo casos_borde",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     false
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-TERRITORIO-09": [
+    [
+     "campo parametros.ambiguos_conocidos",
+     true
+    ],
+    [
+     "campo parametros.sin_respuesta",
+     true
+    ],
+    [
+     "campo parametros.rotulos_lima",
+     true
+    ],
+    [
+     "agregado casos_borde",
+     true
+    ],
+    [
+     "agregado mensaje_usuario",
+     true
+    ]
+   ],
+   "R-ENC-12": [
+    [
+     "campo parametros.unidades_ranking_departamental",
+     true
+    ],
+    [
+     "agregado casos_borde",
+     true
+    ]
+   ],
+   "R-GASTO-13": [
+    [
+     "campo parametros.unidades_ranking_departamental",
+     true
+    ],
+    [
+     "agregado condicion",
+     true
+    ]
+   ],
+   "R-ENC-04": [
+    [
+     "campo parametros.cv_referencial_inei",
+     true
+    ],
+    [
+     "campo parametros.impacto_L9",
+     true
+    ],
+    [
+     "agregado justificacion",
+     true
+    ],
+    [
+     "agregado casos_borde",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-CRUCES-11": [
+    [
+     "campo parametros.campos_tabla",
+     true
+    ],
+    [
+     "agregado condicion",
+     true
+    ]
+   ],
+   "R-CRUCES-07": [
+    [
+     "campo mensaje_usuario",
+     false
+    ]
+   ],
+   "R-LENGUAJE-05": [
+    [
+     "campo parametros.max_alternativas",
+     true
+    ]
+   ],
+   "R-ENC-11": [
+    [
+     "campo parametros.comparaciones_multiples",
+     true
+    ]
+   ],
+   "R-GASTO-01": [
+    [
+     "agregado condicion",
+     false
+    ],
+    [
+     "agregado condicion",
+     true
+    ],
+    [
+     "reemplazo",
+     false
+    ],
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-EST-01": [
+    [
+     "agregado casos_borde",
+     true
+    ]
+   ],
+   "R-EST-05": [
+    [
+     "agregado casos_borde",
+     true
+    ]
+   ],
+   "R-CRUCES-06": [
+    [
+     "agregado casos_borde",
+     true
+    ],
+    [
+     "agregado implementacion",
+     true
+    ]
+   ],
+   "R-MOTOR-01": [
+    [
+     "agregado casos_borde",
+     true
+    ]
+   ],
+   "R-CRUCES-09": [
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-GASTO-06": [
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-ENC-02": [
+    [
+     "reemplazo",
+     true
+    ]
+   ],
+   "R-ENC-03": [
+    [
+     "reemplazo",
+     true
+    ],
+    [
+     "reemplazo",
+     true
+    ]
+   ]
+  },
+  "md_visible": {
+   "R-GASTO-05": true,
+   "R-GASTO-02": true,
+   "R-TERRITORIO-08": true,
+   "R-REG-07": true
+  },
+  "especificaciones_nuevas": [
+   "fact_sien_hb_ubigeo",
+   "dim_inversion_ubicacion",
+   "dim_establecimiento_salud"
+  ],
+  "GASTO02_condicion_conserva_texto_original": [
+   false,
+   false
+  ],
+  "TERR08_condicion_menciona_SIEN": true,
+  "REG07_condicion_menciona_cotas": true,
+  "campos_nuevos_GASTO05_en_diccionario": {
+   "categoria_transferencia": true,
+   "bloque_consolidado": true,
+   "es_transferencia_intergub": true,
+   "es_transferencia_intergubernamental": false
+  },
+  "GASTO05_hallazgos": [
+   "COM-13"
+  ],
+  "fecha_version": [
+   "2026-10-10",
+   "1.1-borrador"
+  ],
+  "reglas_gasto_ronda2_pendientes": []
+ },
+ "residuos_D_R4_1": [],
+ "M2_sin_personas_con_personas": [],
+ "cierres": {
+  "C-V3-3/N2 listas únicas (sin fuentes_completas, ola1 ni con_personas)": true,
+  "C-V3-3 IDs de R-REG-12 en el catálogo": true,
+  "C-V3-3/N2 mecanismo para ninguna (sin_personas citado y con MINEDU-CENSO-EDUCATIVO)": true,
+  "C-V3-3 sin el término «fuentes sensibles»": true,
+  "C-V3-2 la supresión por nivel pide degradación y el motor la atiende": true,
+  "C-V3-2 {alternativa} definida": true,
+  "P9 condición de R-MOTOR-01 cita prioridad_secuencia": true,
+  "N3 encuestas con su propia secuencia": true,
+  "C-V3-1/M4 (D-R4-1) ventanas coherentes en R-MOTOR-01, R-REG-12, R-TERRITORIO-04 y R-REG-04 (RMM, TMI, TMN)": true,
+  "HEC-12 todas las referencias de R-ENC-13 con URL": true,
+  "C-V3-4 mensaje de R-CRUCES-06 válido para cualquier nivel": true,
+  "C-V3-4 enunciado de R-CRUCES-06 = parámetro": true,
+  "C-V3-5/HEC-01 personas_censadas en la condición y en el diccionario": true,
+  "COM-07 prueba_corrector apunta a los corpus del consolidador": true,
+  "COM-07 corpus ≥ 200 oraciones únicas (reserva + auditor + ronda 4)": true,
+  "C-R3-4/COM-13 R-GASTO-05: cada texto ≤ 300 y sin bloqueo del corrector (lo reescribe l_mensajes)": true,
+  "C-R3-1 R-GASTO-02 sin cláusulas viejas y con GA-09": true,
+  "C-R3-2 condición de R-TERRITORIO-08 con la excepción SIEN": true,
+  "C-R3-3 condición de R-REG-07 con cotas, aviso del 50 % y bandas fuera del SIEN": true,
+  "C-R3-5 diccionario con los campos de R-GASTO-05 y sin el nombre viejo": true,
+  "C-R3-6 reglas.md muestra el cambio de R-REG-07": true,
+  "C-R3-6 traza, fecha y decisiones de la ronda 3": true,
+  "IMP-19 (parte) assert en los set de PARCHES_V2/V3/V4": true,
+  "pruebas_consistencia vacías": true,
+  "M1 «-MUL.DEP-» exceptuado en R-GASTO-01 (b) y en R-GASTO-02 (4)": true,
+  "M2 sin_personas no exime variables que cuentan personas u hogares": true,
+  "M3 guardia por comparación con la propuesta original (todas las capas)": true,
+  "HEC-01 regla de personas_censadas ejecutable y con casos": true,
+  "B1 enunciado de R-MOTOR-01 y secuencia sensible para censos": true,
+  "B2 R-GASTO-02 nombra *_inversion, ejemplo posible y nivel nacional_multidepartamental publicable": true,
+  "B4 es_transferencia no figura como reemplazado y vigente a la vez": true,
+  "F1 decisiones_pendientes legible y estado pendiente sin ventanas multianuales de RMM, TMI ni TMN": true,
+  "F2 la opción A incluye la supresión complementaria entre territorios": true,
+  "F3 ventanas de B y C desde 2017 (SINADEF), sin superponerse ni partir años": true,
+  "F4 R-REG-04 sin «hasta 5 años» ni rama de celdas no sensibles": true,
+  "F5 R-GASTO-03 y R-DENOMINADORES-04 sin las frases ambiguas": true,
+  "F6 D_R4_1 válido y la tabla dice la opción aplicada": true,
+  "F7/M4 comillas unificadas y MINSA citado para la RMM": true
+ },
+ "cierres_abiertos": []
+}

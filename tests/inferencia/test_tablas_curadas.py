@@ -89,11 +89,67 @@ def test_cita_con_linea_inexistente_se_detecta():
     assert len(mal) == 2 and "no existe" in mal[1] and "líneas" in mal[0]
 
 
-def test_la_relacion_2024_2025_no_inventa_el_panel():
-    """La ficha 2024 no declara qué conglomerados repite 2025 (consulta C-M0-06-1): la fila es `independiente`."""
+def test_la_relacion_2024_2025_es_conglomerados_repetidos_por_la_ficha_2025():
+    """C-M0-06-1 (dueño, 12/11/2026): la ficha técnica de la ENDES 2025 (§3.1 y §IV) declara paneles los conglomerados con el mismo HV001."""
     r = {(x.anio_a, x.anio_b): x for x in tc.leer_relacion_entre_anios(RAIZ_REAL)}
     assert r[(2023, 2024)].relacion == "conglomerados_repetidos" and r[(2023, 2024)].upm_estable_expr == "HV001"
-    assert r[(2024, 2025)].relacion == "independiente" and r[(2024, 2025)].upm_estable_expr == ""
+    x = r[(2024, 2025)]
+    assert x.relacion == "conglomerados_repetidos" and x.upm_estable_expr == "HV001"
+    for parte in ("endes-2025-ficha-tecnica", "§3.1", "§IV", "p. 4", "p. 8", "misma numeración en la variable HV001"):
+        assert parte in x.cita, parte
+
+
+# ------------------------------------------------------------------ valores decididos el 12/11/2026 (M1-01)
+
+def _corte(id_):
+    return {c.id: c for c in tc.leer_cortes(RAIZ_REAL)}[id_]
+
+
+def test_grupo_edad_del_nino_lleva_los_tramos_del_inei_en_dos_juegos_por_receta():
+    """C-M0-06-2: anemia 6–8, 9–11, 12–17, 18–23 y 24–35 meses; desnutrición crónica menores de 36 y 36–59 (Cuadros 06B, 6.1B y 04)."""
+    v = {(x.archivo, x.variable): x for x in _corte("grupo_edad").por_encuesta["ENDES"]}[("RECH6", "HC1")]
+    juegos = {j.id: j for j in v.juegos_de_tramos}
+    assert set(juegos) == {"anemia", "desnutricion_cronica"}
+    assert [(t.desde, t.hasta) for t in juegos["anemia"].tramos] == [(6, 8), (9, 11), (12, 17), (18, 23), (24, 35)]
+    assert [t.rotulo for t in juegos["anemia"].tramos] == ["6 a 8 meses", "9 a 11 meses", "12 a 17 meses", "18 a 23 meses", "24 a 35 meses"]
+    assert [(t.desde, t.hasta) for t in juegos["desnutricion_cronica"].tramos] == [(0, 35), (36, 59)]
+    assert [t.rotulo for t in juegos["desnutricion_cronica"].tramos] == ["Menores de 36 meses", "De 36 a 59 meses"]
+    assert juegos["anemia"].aplica_a_recetas == ["endes_anemia_6_35m", "endes_anemia_6_35m_oms2024"]
+    assert juegos["desnutricion_cronica"].aplica_a_recetas == ["endes_dci_menores_5"]
+    for parte in ("endes-2024-informe-ppr", "N.º 06B p. 55", "N.º 6.1B p. 58"):
+        assert parte in juegos["anemia"].cita, parte
+    for parte in ("endes-2024-informe-ppr", "N.º 04 p. 49"):
+        assert parte in juegos["desnutricion_cronica"].cita, parte
+
+
+def test_los_tramos_del_nino_siguen_sin_compilarse_hasta_m1_03():
+    """Los valores están decididos, pero el verificador no los compila todavía (M1-03, tarea 1b): el corte sigue marcado como pendiente
+    de esa historia y las recetas siguen sin permitirlo."""
+    v = {(x.archivo, x.variable): x for x in _corte("grupo_edad").por_encuesta["ENDES"]}
+    assert v[("RECH6", "HC1")].pendiente == "M1-03"
+    assert v[("RECH1", "HV105")].pendiente == "C-M0-06-2"          # la decisión del dueño solo cubre a los niños
+
+
+def test_region_natural_agrupa_costa_y_rotula_las_dos_categorias_por_separado():
+    """C-M0-06-3: Costa = SHREGION 1 y 2 (verificado contra las cifras publicadas); por separado, «Lima Metropolitana y Callao» y «resto de la Costa»."""
+    c = _corte("region_natural")
+    assert c.categorias == {1: "Lima Metropolitana y Callao", 2: "resto de la Costa", 3: "Sierra", 4: "Selva"}
+    assert c.agrupa == {"Costa": [1, 2]}
+    assert "verificado contra las cifras publicadas" in c.nota and "Cuadro N.º 04 p. 49" in c.nota
+
+
+def test_quintil_se_rotula_quintil_de_bienestar_y_guarda_la_duda_de_version_como_nota():
+    c = _corte("quintil_riqueza")
+    assert c.id == "quintil_riqueza" and c.nombre == "quintil de bienestar"
+    assert "dos versiones" in c.nota and "HV270" in c.nota and "V190" in c.nota
+
+
+def test_el_universo_de_disciplina_infantil_exige_a_la_mujer_en_rec0111():
+    """C-M0-05-2: las 341 filas de REC93DVdisciplina sin la mujer en REC0111 quedan fuera de todo cálculo de disciplina infantil."""
+    u = {x.id: x for x in tc.leer_universos(RAIZ_REAL)}["hijo_disciplina_con_madre"]
+    assert (u.encuesta, u.unidad, u.anios) == ("ENDES", "hijo_de_mujer", (2024, 2024))
+    assert [(e.archivo, e.por) for e in u.exige_pareja] == [("REC0111", [("CASEID", "CASEID")])]
+    assert "341" in u.fuente and "C-M0-05-2" in u.fuente
 
 
 # ------------------------------------------------------------------ el esquema rechaza lo que debe
@@ -171,6 +227,56 @@ def test_corte_sin_categorias_ni_consulta_pendiente_no_valida():
         tc.CorteEstandar(id="grupo_edad", nombre="grupo de edad", por_encuesta={"ENDES": [v]}, cita=CITA)
     assert tc.CorteEstandar(id="g", nombre="g", por_encuesta={"ENDES": [{**v, "pendiente": "C-M0-06-2"}]}, cita=CITA)
     assert tc.CorteEstandar(id="g", nombre="g", por_encuesta={"ENDES": [v]}, categorias={1: "a"}, cita=CITA)
+
+
+def _juego(**kw):
+    base = dict(id="j", aplica_a_recetas=["r"], tramos=[dict(rotulo="a", desde=0, hasta=5), dict(rotulo="b", desde=6, hasta=9)], cita=CITA)
+    return {**base, **kw}
+
+
+def test_tramos_que_se_traslapan_o_estan_al_reves_no_validan():
+    v = dict(archivo="RECH6", variable="HC1", unidad="nino", cita=CITA)
+    assert tc.VariableCorte(**v, juegos_de_tramos=[_juego()]).juegos_de_tramos[0].tramos[1].desde == 6
+    for tramos, msg in (([dict(rotulo="a", desde=0, hasta=6), dict(rotulo="b", desde=6, hasta=9)], "se traslapan"),
+                        ([dict(rotulo="a", desde=5, hasta=2)], "desde no puede pasar de hasta"),
+                        ([dict(rotulo="b", desde=6, hasta=9), dict(rotulo="a", desde=0, hasta=5)], "en orden"),
+                        ([dict(rotulo="", desde=0, hasta=5)], "rótulo")):
+        with pytest.raises(ValidationError, match=msg):
+            tc.VariableCorte(**v, juegos_de_tramos=[_juego(tramos=tramos)])
+    with pytest.raises(ValidationError, match="al menos una receta"):
+        tc.VariableCorte(**v, juegos_de_tramos=[_juego(aplica_a_recetas=[])])
+    with pytest.raises(ValidationError, match="se repite"):
+        tc.VariableCorte(**v, juegos_de_tramos=[_juego(), _juego()])
+
+
+def test_una_receta_no_puede_tener_dos_juegos_de_tramos():
+    v = dict(archivo="RECH6", variable="HC1", unidad="nino", cita=CITA)
+    with pytest.raises(ValidationError, match="más de un juego"):
+        tc.VariableCorte(**v, juegos_de_tramos=[_juego(id="a"), _juego(id="b")])
+
+
+def test_agrupa_solo_junta_codigos_que_existen_y_no_repite_ninguno():
+    v = dict(archivo="RECH23", variable="SHREGION", unidad="hogar", cita=CITA)
+    base = dict(id="r", nombre="r", por_encuesta={"ENDES": [v]}, categorias={1: "a", 2: "b", 3: "c"}, cita=CITA)
+    assert tc.CorteEstandar(**base, agrupa={"X": [1, 2]}).agrupa == {"X": [1, 2]}
+    with pytest.raises(ValidationError, match="código 9"):
+        tc.CorteEstandar(**base, agrupa={"X": [1, 9]})
+    with pytest.raises(ValidationError, match="más de un grupo"):
+        tc.CorteEstandar(**base, agrupa={"X": [1, 2], "Y": [2, 3]})
+    with pytest.raises(ValidationError, match="al menos dos códigos"):
+        tc.CorteEstandar(**base, agrupa={"X": [1]})
+
+
+def test_un_universo_sin_predicados_ni_pareja_exigida_no_valida_y_la_pareja_debe_existir(copia):
+    base = dict(id="u", encuesta="ENDES", unidad="hijo_de_mujer", aplica_a=dict(archivos=["REC93DVdisciplina"], mediciones=["m"]),
+                anios=(2024, 2024), fuente=CITA)
+    with pytest.raises(ValidationError, match="al menos un predicado"):
+        tc.UniversoAnalitico(**base, predicados=[])
+    u = tc.UniversoAnalitico(**base, predicados=[], exige_pareja=[dict(archivo="REC0111", por=[("CASEID", "CASEID")])])
+    assert u.exige_pareja[0].archivo == "REC0111"
+    y = copia / "curados" / "inferencia" / "universos_analiticos.yaml"
+    y.write_text(y.read_text(encoding="utf-8").replace("archivo: REC0111\n        por:", "archivo: REC9999\n        por:"), encoding="utf-8")
+    assert any("REC9999" in e for e in tc.validar(Rutas(copia))["universos_analiticos"][1])
 
 
 # ------------------------------------------------------------------ la validación cruzada

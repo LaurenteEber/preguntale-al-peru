@@ -6,8 +6,10 @@
 # `aplica_a.archivos`: archivos de donde salen las variables; RECH6 se une a RECH1 por (HHID, HC0 = HVIDX), uno a uno
 # (relación declarada en curados/inferencia/archivos_endes_2024.yaml). Un valor nulo no cumple ningún predicado.
 # `anios`: M0 solo tiene 2024; M2 los extiende.
-version: 0.1.0
-fecha: "2026-11-09"
+# `exige_pareja` (M1-01): el registro de la unidad debe tener su pareja en otro archivo; los que no la tienen quedan fuera. No es un
+# predicado de valor; lo compilará el verificador cuando M1-07 declare la unión (hijo_de_mujer → mujer).
+version: 0.2.0
+fecha: "2026-11-12"
 universos:
   - id: nino_hecho
     encuesta: ENDES
@@ -75,3 +77,16 @@ universos:
       src/pap/capa0/encuestas.py:157 (HC70 válido entre −9989 y 9989; HC70 son centésimas de desviación estándar), :169
       («haz_valido» = no nulo), :148, :217-218, :223-226; Ficha técnica ENDES 2024, punto 4 p. 15 (menores de cinco años,
       talla para la edad a menos de dos desviaciones estándar)
+  - id: hijo_disciplina_con_madre
+    encuesta: ENDES
+    unidad: hijo_de_mujer
+    aplica_a: {archivos: [REC93DVdisciplina, REC0111], mediciones: [disciplina]}
+    predicados: []
+    exige_pareja:
+      - archivo: REC0111
+        por: [[CASEID, CASEID]]
+    anios: [2024, 2024]
+    fuente: >-
+      C-M0-05-2 (dueño, 12/11/2026): las 341 filas de REC93DVdisciplina sin la mujer en REC0111 (15 462 filas del hijo, 15 121 con pareja)
+      se excluyen de todo cálculo de disciplina infantil; medido en backlog/slice-m0/evidencia/m0-05_conteos.md:135 y consultado en
+      backlog/slice-m0/consultas_al_dueno.md:98. La nota va también en la ficha de REC93DVdisciplina (M1-06)

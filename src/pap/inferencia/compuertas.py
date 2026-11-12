@@ -10,7 +10,11 @@ con las funciones de `pap.motor.validador.reglas_etapa4` (las mismas que usa el 
 5. R-ENC-04: numerador 0 o igual a n → rótulo «menos de {límite superior}» / «más de {límite inferior}»;
 6. R-ENC-03 si 10 % ≤ p ≤ 90 %: CV > 30 % → suprimir (corta);
 7. R-ENC-03: 15 % < CV ≤ 30 % o gl < 8 → referencial;
-8. no respuesta del ítem: **no se aplica** (K-07 sin aprobar; la tasa solo se informa, sin efecto).
+8. R-ENC-19, no respuesta del ítem (K-07, dueño, 12/11/2026): tasa > 5 % → aviso en la capa 2 (`advertir`, no cambia el estado);
+   tasa > 20 % → referencial. Solo si `compuertas.paso_no_respuesta_activo` (curados/inferencia/parametros.yaml) es verdadero y la
+   estimación trae la tasa; si no se midió, no dispara.
+Desde C-M0-11-2 (12/11/2026) los pasos 3 a 7 corren desde 25 casos (antes, desde 50): con 25 a 49 casos R-ENC-02 marca referencial y
+R-ENC-03/04 se acumulan, de modo que pueden suprimir.
 Las que suprimen cortan, las referenciales se acumulan y gana la más severa; se guardan todos los motivos. Un dominio sin casos
 (n = 0) es «sin datos». Un dato que la regla necesita y falta (por ejemplo un ee nulo) suprime con `metadato_faltante` (R-MOTOR-02).
 
@@ -32,7 +36,8 @@ from ..zip_seguro import RUTA_PARAMETROS
 from .estimacion import Estimacion
 
 RAIZ_REPO = Path(__file__).resolve().parents[3]
-REGLAS_PROPORCION = ("R-ENC-02", "R-ENC-03", "R-ENC-04")      # en el orden de la tabla del §15.1
+REGLAS_PROPORCION = ("R-ENC-02", "R-ENC-03", "R-ENC-04")      # en el orden de la tabla del §15.1 (pasos 1 a 7)
+REGLA_NO_RESPUESTA = "R-ENC-19"                                # paso 8; solo corre con `paso_no_respuesta_activo()`
 
 # Lo que `aplica_a` de R-ENC-02 a 04 exige de la cifra; las proporciones de encuesta del piloto lo cumplen por construcción.
 META_ENCUESTA = {"tipo_estimacion": "proporcion", "naturaleza_dato": "encuesta_muestral", "tipo_medida": "prevalencia",
@@ -49,8 +54,8 @@ MOTIVO_CONFIANZA = {
 @dataclass(frozen=True)
 class Motivo:
     regla: str
-    accion: str                  # suprimir | publicar_referencial | rotular (vocabulario de R-MOTOR-02)
-    codigo: str                  # pocos_casos | precision | metadato_faltante | sin_datos
+    accion: str                  # suprimir | publicar_referencial | rotular | advertir (vocabulario de R-MOTOR-02)
+    codigo: str                  # pocos_casos | precision | no_respuesta | metadato_faltante | sin_datos
     clausula: str | None = None
     rotulo: str | None = None
 
@@ -62,7 +67,7 @@ class Compuerta:
     confianza: str | None = None                 # alta | media | baja; None si la cifra no se publica
     motivo_confianza: str | None = None
     rotulo: str | None = None                    # «menos de X %» / «más de X %» cuando p = 0 o p = 1
-    tasa_no_respuesta: float | None = None       # solo informativa (paso 8 sin aprobar, K-07)
+    tasa_no_respuesta: float | None = None       # la del ítem, sin ponderar; el paso 8 (R-ENC-19) la compara con 5 % y 20 %
     resultados: tuple[Resultado, ...] = field(default=(), repr=False)
 
     @property
@@ -81,18 +86,25 @@ def contexto_compuertas(raiz: Path = RAIZ_REPO) -> Contexto:
 
 
 def parametros(ctx: Contexto | None = None) -> dict[str, dict]:
-    """Los parámetros de R-ENC-02, 03 y 04 tal como están en `reglas.json` (para mostrarlos o probarlos)."""
+    """Los parámetros de R-ENC-02, 03, 04 y 19 tal como están en `reglas.json` (para mostrarlos o probarlos)."""
     ctx = ctx or contexto_compuertas()
-    return {rid: dict(ctx.regla(rid).get("parametros") or {}) for rid in REGLAS_PROPORCION}
+    return {rid: dict(ctx.regla(rid).get("parametros") or {}) for rid in (*REGLAS_PROPORCION, REGLA_NO_RESPUESTA)}
 
 
 def cifra_desde_estimacion(est: Estimacion, meta: dict | None = None) -> Cifra:
     """`Estimacion` (0–1) → `Cifra` (cubo en %). Numerador = casos con y = 1 y denominador = n, para el rótulo de p = 0 o p = 1."""
     pct = lambda x: None if x is None else x * 100  # noqa: E731
-    fila = {**META_ENCUESTA, **(meta or {}), "n_muestra": est.n, "valor": pct(est.valor), "ee": pct(est.ee), "ic_inf": pct(est.ic_inf),
+    fila = {**META_ENCUESTA, **(meta or {}), "tasa_no_respuesta_item": est.tasa_no_respuesta, "n_muestra": est.n, "valor": pct(est.valor), "ee": pct(est.ee), "ic_inf": pct(est.ic_inf),
             "ic_sup": pct(est.ic_sup), "gl": est.gl, "n_efectivo": est.n_efectivo, "numerador": est.eventos if est.n else None,
             "denominador": est.n if est.n else None}
     return Cifra.desde({k: v for k, v in fila.items() if v is not None}, None)
+
+
+@functools.lru_cache(maxsize=1)
+def paso_no_respuesta_activo() -> bool:
+    """`compuertas.paso_no_respuesta_activo` de curados/inferencia/parametros.yaml: si el paso 8 (R-ENC-19) corre (K-07, 12/11/2026)."""
+    c = yaml.safe_load(Path(RUTA_PARAMETROS).read_text(encoding="utf-8"))["compuertas"]
+    return bool(c["paso_no_respuesta_activo"]["valor"])
 
 
 @functools.lru_cache(maxsize=1)
@@ -124,7 +136,7 @@ def evaluar_cifra(c: Cifra, ctx: Contexto | None = None, *, verificada: bool, co
         m = Motivo("R-ENC-02", "suprimir", "sin_datos", "n_sin_ponderar == 0")
         return Compuerta("sin_datos", (m,), tasa_no_respuesta=tasa_no_respuesta)
     resultados: list[Resultado] = []
-    for rid in REGLAS_PROPORCION:
+    for rid in (*REGLAS_PROPORCION, *((REGLA_NO_RESPUESTA,) if paso_no_respuesta_activo() else ())):
         resultados += correr_regla(rid, c, ctx)
         if any(r.accion == "suprimir" for r in resultados):          # lo que suprime corta el árbol
             break

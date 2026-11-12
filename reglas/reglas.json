@@ -377,6 +377,7 @@
     "R-ENC-10",
     "R-ENC-17",
     "R-ENC-18",
+    "R-ENC-19",
     "R-ENC-16",
     "R-REG-01",
     "R-REG-03",
@@ -2896,7 +2897,7 @@
      "OSIPTEL-ERESTEL"
     ]
    },
-   "condicion": "n_sin_ponderar < 25 → suprimir; 25 <= n_sin_ponderar <= 49 → publicar_referencial; n_sin_ponderar >= 50 → pasa a R-ENC-03/R-ENC-04",
+   "condicion": "n_sin_ponderar < 25 → suprimir; 25 <= n_sin_ponderar <= 49 → publicar_referencial; n_sin_ponderar >= 25 → además se evalúan R-ENC-03 y R-ENC-04 (desde 25 casos, C-M0-11-2, dueño, 12/11/2026)",
    "accion": "suprimir",
    "parametros": {
     "n_min_suprimir": 25,
@@ -2924,6 +2925,9 @@
    "hallazgos_auditoria_v11": [
     "COM-11"
    ],
+   "decisiones_dueno_2026_11_12": [
+    "C-M0-11-2: los umbrales no cambian; R-ENC-03 y R-ENC-04 corren desde 25 casos"
+   ],
    "etapa": "4_precision",
    "ambito_origen": "encuestas",
    "estado": "vigente",
@@ -2934,7 +2938,7 @@
    "id": "R-ENC-03",
    "ambito": "encuestas",
    "titulo": "Umbrales de coeficiente de variación",
-   "enunciado": "Con 50 casos o más, una cifra con CV ≤ 15 % se publica; con 15 % < CV ≤ 30 % se publica como referencial con su intervalo; con CV > 30 % se suprime (y se intenta agrupar años o subir de nivel). Para proporciones fuera de 10 %–90 % rige R-ENC-04 en lugar del CV.",
+   "enunciado": "Desde 25 casos (C-M0-11-2, dueño, 12/11/2026; con 25 a 49 casos la cifra además es referencial por R-ENC-02), una cifra con CV ≤ 15 % se publica; con 15 % < CV ≤ 30 % se publica como referencial con su intervalo; con CV > 30 % se suprime (y se intenta agrupar años o subir de nivel). Para proporciones fuera de 10 %–90 % rige R-ENC-04 en lugar del CV.",
    "aplica_a": {
     "naturaleza_dato": [
      "encuesta_muestral"
@@ -2957,7 +2961,7 @@
      "OSIPTEL-ERESTEL"
     ]
    },
-   "condicion": "n_sin_ponderar >= 50 AND (tipo_estimacion IN ('media','total','razon') → cv_ref = ee/|estimacion|; tipo_estimacion = 'proporcion' AND 0.10 <= p <= 0.90 → cv_ref = ee/min(p, 1−p)): cv_ref <= 0.15 → publicar; 0.15 < cv_ref <= 0.30 → publicar_referencial; cv_ref > 0.30 → suprimir. Modificador: si la acción resultante es publicar y gl < 8 → publicar_referencial",
+   "condicion": "n_sin_ponderar >= 25 AND (tipo_estimacion IN ('media','total','razon') → cv_ref = ee/|estimacion|; tipo_estimacion = 'proporcion' AND 0.10 <= p <= 0.90 → cv_ref = ee/min(p, 1−p)): cv_ref <= 0.15 → publicar; 0.15 < cv_ref <= 0.30 → publicar_referencial; cv_ref > 0.30 → suprimir. Modificador: si la acción resultante es publicar y gl < 8 → publicar_referencial",
    "accion": "publicar_referencial",
    "parametros": {
     "cv_publicar": 0.15,
@@ -2992,6 +2996,9 @@
     "COM-13",
     "IMP-05"
    ],
+   "decisiones_dueno_2026_11_12": [
+    "C-M0-11-2: se aplica desde 25 casos (antes, desde 50)"
+   ],
    "etapa": "4_precision",
    "ambito_origen": "encuestas",
    "estado": "vigente",
@@ -3025,7 +3032,7 @@
      "OSIPTEL-ERESTEL"
     ]
    },
-   "condicion": "tipo_estimacion = 'proporcion' AND (p < 0.10 OR p > 0.90) AND n_sin_ponderar >= 50: n_efectivo < 30 → suprimir; ancho_abs >= 0.30 → suprimir; ancho_rel(p) > 1.30 AND ancho_abs > 0.05 → suprimir; (ancho_rel(p) > 0.59 AND ancho_abs > 0.05) OR n_efectivo < 50 OR gl < 8 → publicar_referencial; resto → publicar, salvo cv_ref = ee/min(p, 1−p) > cv_referencial_inei (0.15) → publicar_referencial (convención del INEI; decisión del dueño, 9/10/2026, L9), aunque ancho_abs ≤ 0.05. Además (no en lugar de): numerador == 0 → rotular 'menos de {ic_sup}'; numerador == n → rotular 'más de {ic_inf}'. ancho_rel se calcula sobre p solo si 0 < p < 1",
+   "condicion": "tipo_estimacion = 'proporcion' AND (p < 0.10 OR p > 0.90) AND n_sin_ponderar >= 25: n_efectivo < 30 → suprimir; ancho_abs >= 0.30 → suprimir; ancho_rel(p) > 1.30 AND ancho_abs > 0.05 → suprimir; (ancho_rel(p) > 0.59 AND ancho_abs > 0.05) OR n_efectivo < 50 OR gl < 8 → publicar_referencial; resto → publicar, salvo cv_ref = ee/min(p, 1−p) > cv_referencial_inei (0.15) → publicar_referencial (convención del INEI; decisión del dueño, 9/10/2026, L9), aunque ancho_abs ≤ 0.05. Además (no en lugar de): numerador == 0 → rotular 'menos de {ic_sup}'; numerador == n → rotular 'más de {ic_inf}'. ancho_rel se calcula sobre p solo si 0 < p < 1",
    "accion": "publicar_referencial",
    "parametros": {
     "metodo_ic": "beta (Korn-Graubard) con n_efectivo; alternativa logit",
@@ -3081,6 +3088,9 @@
    ],
    "decisiones_dueno_2026_10_10": [
     "P2 (auditoría N-7): n_efectivo_suprimir = 30 en parametros (estaba solo en el texto)"
+   ],
+   "decisiones_dueno_2026_11_12": [
+    "C-M0-11-2: se aplica desde 25 casos (antes, desde 50)"
    ],
    "etapa": "4_precision",
    "ambito_origen": "encuestas",
@@ -3330,6 +3340,64 @@
    "estado": "vigente",
    "absorbe": [],
    "origen_regla": "propuesta"
+  },
+  {
+   "id": "R-ENC-19",
+   "ambito": "encuestas",
+   "titulo": "No respuesta del ítem",
+   "enunciado": "Cuando la pregunta que define el indicador no se pudo medir en una parte de las personas del universo, la cifra lleva un aviso en el detalle si esa parte pasa de 5 % y se publica como referencial si pasa de 20 %. La cifra no se corrige ni se completa: solo se advierte.",
+   "aplica_a": {
+    "naturaleza_dato": [
+     "encuesta_muestral"
+    ],
+    "tipo_medida": [
+     "prevalencia"
+    ],
+    "base_geografica": [
+     "muestra"
+    ],
+    "fuentes": [
+     "INEI-ENAHO",
+     "INEI-ENDES",
+     "INEI-ENAPRES",
+     "MINEDU-UMC-ENLA",
+     "INEI-EPEN",
+     "INEI-ENEDU",
+     "INEI-ENARES",
+     "DEVIDA-OPD",
+     "OSIPTEL-ERESTEL"
+    ]
+   },
+   "condicion": "tasa_no_respuesta_item > 0.20 → publicar_referencial; 0.05 < tasa_no_respuesta_item <= 0.20 → advertir (aviso en la capa 2); tasa_no_respuesta_item <= 0.05 o no medida → no dispara. tasa_no_respuesta_item = filas con el ítem faltante / filas que serían del universo, sin ponderar",
+   "accion": "publicar_referencial",
+   "parametros": {
+    "tasa_aviso": 0.05,
+    "tasa_referencial": 0.2,
+    "valores_iniciales": "decisión del dueño, 12/11/2026 (K-07); se revisan con lo que mida M1"
+   },
+   "mensaje_usuario": "(5–20 %) «Una parte de las personas encuestadas no contestó esta pregunta; la cifra se calculó con quienes sí la contestaron.» (>20 %) «Cifra aproximada: muchas personas encuestadas no contestaron esta pregunta.»",
+   "justificacion": "Una cifra calculada solo con quienes contestaron puede alejarse de la de todo el universo cuando muchos no contestan. El diseño del motor (§15.1, paso 8) propuso avisar desde 5 % y marcar como aproximada desde 20 %; el dueño aprobó esos valores el 12/11/2026 como valores iniciales (K-07).",
+   "referencias": [
+    {
+     "titulo": "Pregúntale al Perú – Motor de inferencia, §15.1 (paso 8) y decisión K-07 del dueño (12/11/2026)",
+     "url": null,
+     "ruta": "docs/diseno/motor_inferencia.md"
+    }
+   ],
+   "hallazgos_auditoria": [],
+   "hallazgos_prueba": [],
+   "ejemplo": "Anemia en niños de 6 a 35 meses, ENDES: si la hemoglobina no se midió en 8 % de los niños que cumplen el universo, la cifra sale con el aviso; si no se midió en 25 %, sale como referencial (cifras ilustrativas).",
+   "implementacion": "La tasa sale del ejecutor (Estimacion.tasa_no_respuesta, sin ponderar; la ponderada se informa pero no decide). Es el paso 8 del árbol de compuertas: lo corre pap.inferencia.compuertas solo si compuertas.paso_no_respuesta_activo (curados/inferencia/parametros.yaml) es verdadero. El aviso va a la capa 2 del contrato de respuesta; el referencial se acumula con los pasos anteriores y no corre si un paso anterior suprimió la cifra.",
+   "casos_borde": "Exactamente 5 % no avisa; exactamente 20 % avisa pero no hace referencial. Si la tasa no se midió, la regla no dispara: no se inventa una tasa. El cubo no trae esta tasa, así que sus filas no cambian.",
+   "prioridad": "mvp",
+   "decisiones_dueno_2026_11_12": [
+    "K-07: umbrales de no respuesta del ítem, 5 % (aviso) y 20 % (referencial)"
+   ],
+   "etapa": "4_precision",
+   "ambito_origen": "decisiones_m1",
+   "estado": "vigente",
+   "absorbe": [],
+   "origen_regla": "decisiones_m1"
   },
   {
    "id": "R-ENC-16",

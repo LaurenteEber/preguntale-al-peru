@@ -164,6 +164,8 @@ def _pisa(rid, ruta):  # True si el campo ya no es el de la propuesta original (
     return o != a
 for _r in getattr(AD, 'NUEVAS_GASTO_R2', []):  # decisiones del gasto, rondas 1–2: reglas nuevas
     assert _r['id'] not in by, _r['id']; by[_r['id']] = dict(copy.deepcopy(_r), _origen='decisiones_gasto_r2'); _ORIG[_r['id']] = copy.deepcopy(by[_r['id']])
+for _r in (AD.nuevas_m1(by) if hasattr(AD, 'nuevas_m1') else []):  # slice M1, M1-01 (12/11/2026): reglas nuevas
+    assert _r['id'] not in by, _r['id']; by[_r['id']] = dict(copy.deepcopy(_r), _origen='decisiones_m1'); _ORIG[_r['id']] = copy.deepcopy(by[_r['id']])
 for _rid, _ruta, _val in getattr(AD, 'CAMPOS_REGLAS', []):  # guardia: no pisar sin querer un campo ya corregido
     assert not _pisa(_rid, _ruta) or (_rid, _ruta) in getattr(AD, 'SOBRESCRITURAS_CONSCIENTES', set()), ('CAMPOS_REGLAS pisa un campo corregido', _rid, _ruta)
 for _rid, _ruta, _val in getattr(AD, 'CAMPOS_REGLAS', []):
@@ -177,6 +179,7 @@ for _rid, _hs in getattr(AD, 'HALLAZGOS_GASTO_R2', {}).items(): by[_rid]['decisi
 for _rid, _hs in getattr(AD, 'HALLAZGOS_D8', {}).items(): by[_rid]['decisiones_dueno_2026_10_08'] = list(_hs)  # decisiones del 8/10/2026
 for _rid, _hs in getattr(AD, 'HALLAZGOS_L', {}).items(): by[_rid]['decisiones_dueno_2026_10_09'] = list(_hs)  # Lima en tres ámbitos, 9/10/2026
 for _rid, _hs in getattr(AD, 'HALLAZGOS_P0', {}).items(): by[_rid]['decisiones_dueno_2026_10_10'] = list(_hs)  # piloto P0, 10/10/2026
+for _rid, _hs in getattr(AD, 'HALLAZGOS_M1', {}).items(): by[_rid]['decisiones_dueno_2026_11_12'] = list(_hs)  # slice M1, M1-01, 12/11/2026
 for _n, _spec in getattr(AD, 'ESPECIFICACIONES_R3', {}).items():
     assert _n not in _E, _n; _E[_n] = _spec
 _fs = json.dumps(P['cruces_lenguaje']['ficha_limites'], ensure_ascii=False)
@@ -217,6 +220,8 @@ ETAPAS = collections.OrderedDict([
    ['R-LENGUAJE-01', 'R-LENGUAJE-03', 'R-LENGUAJE-06', 'R-LENGUAJE-02', 'R-LENGUAJE-05', 'R-LENGUAJE-07', 'R-LENGUAJE-08'])),
 ])
 for _rid, _et, _tras in getattr(AD, 'ETAPAS_GASTO_R2', []):  # decisiones del gasto, rondas 1–2
+    _ids = ETAPAS[_et][2]; assert _rid not in _ids and _tras in _ids, (_rid, _tras); _ids.insert(_ids.index(_tras) + 1, _rid)
+for _rid, _et, _tras in getattr(AD, 'ETAPAS_M1', []):  # slice M1, M1-01 (12/11/2026)
     _ids = ETAPAS[_et][2]; assert _rid not in _ids and _tras in _ids, (_rid, _tras); _ids.insert(_ids.index(_tras) + 1, _rid)
 ABSORBIDAS = {  # regla duplicada -> regla canónica (conflictos K1, K2, K5)
  'R-REG-11': ('R-ENC-14', 'Mismo contenido (criterio de anemia). La canónica aplica también a SIEN y REUNIS.'),
@@ -613,7 +618,7 @@ for et, (tit, _, ids) in ETAPAS.items():
         r['etapa'] = et; r['ambito_origen'] = by[i]['_origen']; r['estado'] = 'vigente'
         r['absorbe'] = [k for k, (v, _) in ABSORBIDAS.items() if v == i]
         if i in AJUSTES: r['ajuste_consolidacion'] = AJUSTES[i]
-        r['origen_regla'] = by[i]['_origen'] if by[i]['_origen'] in ('prueba', 'auditoria', 'decisiones_gasto_r2') else 'propuesta'
+        r['origen_regla'] = by[i]['_origen'] if by[i]['_origen'] in ('prueba', 'auditoria', 'decisiones_gasto_r2', 'decisiones_m1') else 'propuesta'
         reglas.append(r)
 for k, (v, mot) in ABSORBIDAS.items():
     r = {kk: vv for kk, vv in by[k].items() if not kk.startswith('_')}; r.update(estado='absorbida', absorbida_por=v, motivo_absorcion=mot, ambito_origen=by[k]['_origen'])

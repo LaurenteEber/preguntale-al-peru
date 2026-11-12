@@ -261,7 +261,7 @@
    "no_concluir": [
     "Nada sobre provincias o distritos concretos: la fuente solo da cifras con suficiente precisión para el departamento."
    ],
-   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas 14b83c8814a7. Indicadores: endes_dci_menores_5."
+   "reproducibilidad": "Cálculo con el cubo sha256:010ea965381c… (commit 779357d) y reglas f4233fd56056. Indicadores: endes_dci_menores_5."
   }
  },
  "interpretacion": {
@@ -376,6 +376,6 @@
  "version_biblioteca": {
   "commit_cubo": "779357d",
   "cubo": "sha256:010ea965381c28c374f31692748204ea5f4e82e1ebf97ff46bc757d947ace66f",
-  "reglas": "14b83c8814a7"
+  "reglas": "f4233fd56056"
  }
 }

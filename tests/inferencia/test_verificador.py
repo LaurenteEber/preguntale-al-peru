@@ -148,7 +148,7 @@ def test_peso_de_la_submuestra_mas_restrictiva(sint):
 def test_cortes_pendientes_o_desconocidos(sint):
     ctx, _ = sint
     f = verificar(plan_anemia(cortes=("grupo_edad",)), ctx)
-    assert (f.tipo, f.dimension) == ("plan", "cortes") and "C-M0-06-2" in f.motivo
+    assert (f.tipo, f.dimension) == ("plan", "cortes") and "M1-03" in f.motivo        # tramos decididos (C-M0-06-2); los compila M1-03
     f = verificar(plan_anemia(cortes=("no_existe",)), ctx)
     assert (f.tipo, f.dimension) == ("plan", "cortes")
     pc = verificar(plan_anemia(cortes=("area",)), ctx)

@@ -262,8 +262,8 @@ def _cv_ref_proporcion(c):
 def r_enc_03(c, ctx):
     rid = "R-ENC-03"
     n = _req_num(c, "n_sin_ponderar")
-    if n < ctx.param("R-ENC-02", "n_min_publicar"):
-        return None  # rige R-ENC-02
+    if n < ctx.param("R-ENC-02", "n_min_suprimir"):
+        return None  # menos de 25 casos: R-ENC-02 suprime. Desde 25 casos rige también el CV (C-M0-11-2, dueño, 12/11/2026)
     te = c.req("tipo_estimacion")
     if te == "proporcion":
         p, _, cv_ref = _cv_ref_proporcion(c)
@@ -307,8 +307,8 @@ def r_enc_04(c, ctx):
     p, ee, cv_ref = _cv_ref_proporcion(c)
     if not (p < ctx.param("R-ENC-03", "p_min_regla_cv") or p > ctx.param("R-ENC-03", "p_max_regla_cv")):
         return None
-    if n < ctx.param("R-ENC-02", "n_min_publicar"):
-        return None
+    if n < ctx.param("R-ENC-02", "n_min_suprimir"):
+        return None  # menos de 25 casos: R-ENC-02 suprime. Desde 25 casos rige también el intervalo (C-M0-11-2, 12/11/2026)
     ic_inf, ic_sup = _req_num(c, "ic_inf"), _req_num(c, "ic_sup")
     gl = _req_num(c, "gl")
     n_ef = _f(c.n_efectivo)
@@ -350,6 +350,26 @@ def r_enc_04(c, ctx):
         out.append(Resultado(rid, "rotular", "precision", clausula="Además: numerador == n", modificador=True,
                              rotulo=f"más de {fmt_num(ic_inf)} %", detalle={"ic_inf": ic_inf}))
     return out or None
+
+
+@regla("R-ENC-19")
+def r_enc_19(c, ctx):
+    """No respuesta del ítem (K-07, dueño, 12/11/2026): más de `tasa_referencial` → referencial; más de `tasa_aviso` → aviso en la
+    capa 2 (`advertir`, no cambia el estado). La tasa (0–1) viene de la estimación; si no se midió, la regla no dispara: no se
+    inventa una tasa. El interruptor `compuertas.paso_no_respuesta_activo` lo lee `inferencia/compuertas.py`, no esta función."""
+    rid = "R-ENC-19"
+    t = _f(c.tasa_no_respuesta_item)
+    if t is None:
+        return None
+    t_aviso, t_ref = ctx.param(rid, "tasa_aviso"), ctx.param(rid, "tasa_referencial")
+    det = {"tasa_no_respuesta_item": t}
+    if t > t_ref:
+        return Resultado(rid, "publicar_referencial", "no_respuesta", clausula=f"tasa_no_respuesta_item > {t_ref}", detalle=det,
+                         mensaje=mensaje(ctx, rid, ">20"), rotulo=ctx.param("R-ENC-05", "formato_referencial"))
+    if t > t_aviso:
+        return Resultado(rid, "advertir", "no_respuesta", clausula=f"{t_aviso} < tasa_no_respuesta_item <= {t_ref}", detalle=det,
+                         mensaje=mensaje(ctx, rid, "5–20"), aviso="no_respuesta_item")
+    return None
 
 
 @regla("R-ENC-05")

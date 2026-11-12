@@ -106,10 +106,10 @@
   espera: {dispara: false}
 - id: B-ENC-03-i
   regla: R-ENC-03
-  descripcion: n = 49 → rige R-ENC-02, R-ENC-03 no dispara aunque el CV sea alto
+  descripcion: C-M0-11-2 (dueño, 12/11/2026) n = 49 → R-ENC-03 también rige y el CV alto (0,5) suprime (antes no disparaba)
   base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
   cifra: {valor: 40.0, ee: 20.0, n_muestra: 49}
-  espera: {dispara: false}
+  espera: {dispara: true, accion: suprimir, motivo: precision}
 - id: B-ENC-03-j
   regla: R-ENC-03
   descripcion: media con cv_ref = ee/|estimación| = 0,20 → referencial

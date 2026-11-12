@@ -1,0 +1,61 @@
+# M1-01 (dueño, 12/11/2026): C-M0-11-2 (R-ENC-03 y R-ENC-04 desde 25 casos) y K-07 (R-ENC-19, no respuesta del ítem).
+# Mismo formato que grupo_B.yaml; unidades del cubo (valor, ee, cv e IC en %). `tasa_no_respuesta_item` va en proporción (0–1).
+- id: M1-01-ENC-03-a
+  regla: R-ENC-03
+  descripcion: borde n = 25 (el piso de R-ENC-02) → R-ENC-03 ya rige; cv_ref 0,35 suprime
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 14.0, gl: 40, n_muestra: 25}
+  espera: {dispara: true, accion: suprimir, motivo: precision}
+- id: M1-01-ENC-03-b
+  regla: R-ENC-03
+  descripcion: n = 24 → R-ENC-02 suprime y R-ENC-03 no dispara, aunque el CV sea alto
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 14.0, gl: 40, n_muestra: 24}
+  espera: {dispara: false}
+- id: M1-01-ENC-03-c
+  regla: R-ENC-03
+  descripcion: n = 30 con cv_ref 0,20 → referencial por precisión (además de R-ENC-02)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {valor: 40.0, ee: 8.0, gl: 40, n_muestra: 30}
+  espera: {dispara: true, accion: publicar_referencial, motivo: precision}
+- id: M1-01-ENC-04-a
+  regla: R-ENC-04
+  descripcion: borde n = 25 con p = 0,05 y n efectivo 40 (ancho 14 pp, relativo 2,8) → R-ENC-04 ya rige y suprime
+  base: {indicador: endes_dci_menores_5, anio: 2025, nivel: departamento, territorio: "23"}
+  cifra: {valor: 5.0, ee: 2.0, cv: 40.0, ic_inf: 1.0, ic_sup: 15.0, n_muestra: 25, n_efectivo: 40.0, gl: 108}
+  espera: {dispara: true, accion: suprimir, motivo: precision}
+- id: M1-01-ENC-04-b
+  regla: R-ENC-04
+  descripcion: n = 24 → no dispara (R-ENC-02 suprime)
+  base: {indicador: endes_dci_menores_5, anio: 2025, nivel: departamento, territorio: "23"}
+  cifra: {valor: 5.0, ee: 2.0, cv: 40.0, ic_inf: 1.0, ic_sup: 15.0, n_muestra: 24, n_efectivo: 24.0, gl: 108}
+  espera: {dispara: false}
+- id: M1-01-ENC-19-a
+  regla: R-ENC-19
+  descripcion: tasa 20 % exacta → aviso (advertir), no referencial
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {tasa_no_respuesta_item: 0.20}
+  espera: {dispara: true, accion: advertir, motivo: no_respuesta}
+- id: M1-01-ENC-19-b
+  regla: R-ENC-19
+  descripcion: tasa mayor de 20 % → referencial
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {tasa_no_respuesta_item: 0.21}
+  espera: {dispara: true, accion: publicar_referencial, motivo: no_respuesta}
+- id: M1-01-ENC-19-c
+  regla: R-ENC-19
+  descripcion: tasa 5 % exacta → no dispara
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  cifra: {tasa_no_respuesta_item: 0.05}
+  espera: {dispara: false}
+- id: M1-01-ENC-19-d
+  regla: R-ENC-19
+  descripcion: tasa no medida → no dispara (no se inventa una tasa)
+  base: {indicador: endes_anemia_6_35m, anio: 2024, nivel: departamento, territorio: "09"}
+  espera: {dispara: false}
+- id: M1-01-ENC-19-e
+  regla: R-ENC-19
+  descripcion: aplica_a.fuentes — un distrito del SIEN no se juzga con esta regla
+  base: {indicador: sien_anemia_tamizados_6_35m, anio: 2025, nivel: distrito, territorio: "010102"}
+  cifra: {tasa_no_respuesta_item: 0.5}
+  espera: {dispara: false}

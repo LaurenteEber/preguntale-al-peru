@@ -36,18 +36,19 @@ def _igual(a, b, tol=1e-12):
 def test_los_anios_se_agrupan_segun_relacion_entre_anios():
     assert grupos_de_anios("ENDES", [2024], RELACIONES) == [(2024,)]
     assert grupos_de_anios("ENDES", [2023, 2024], RELACIONES) == [(2023, 2024)]                  # conglomerados_repetidos
-    assert grupos_de_anios("ENDES", [2024, 2025], RELACIONES) == [(2024,), (2025,)]               # independiente
-    assert grupos_de_anios("ENDES", [2025, 2023, 2024], RELACIONES) == [(2023, 2024), (2025,)]
+    assert grupos_de_anios("ENDES", [2024, 2025], RELACIONES) == [(2024, 2025)]                   # conglomerados_repetidos (C-M0-06-1, 12/11/2026)
+    assert grupos_de_anios("ENDES", [2025, 2023, 2024], RELACIONES) == [(2023, 2024, 2025)]
+    assert grupos_de_anios("ENDES", [2021, 2022], RELACIONES) == [(2021,), (2022,)]               # sin fila: independiente
     assert grupos_de_anios("ENDES", [2021, 2022, 2023], RELACIONES) == [(2021,), (2022,), (2023,)]     # sin fila: independiente (§7.4)
     assert grupos_de_anios("ENAHO", [2023, 2024], RELACIONES) == [(2023,), (2024,)]
 
 
 def test_anios_independientes_dan_lo_mismo_que_cada_anio_por_separado():
-    marcos = {2024: _marco(1), 2025: _marco(2)}
+    marcos = {2021: _marco(1), 2022: _marco(2)}                 # 2024–2025 ya no es independiente (C-M0-06-1)
     ex = Ejecutor(relaciones=RELACIONES)
-    juntos = ex.estimar(FuenteMemoria(marcos), "ENDES", [2024, 2025])
-    por_separado = [e for a in (2024, 2025) for e in estimar_proporciones(marcos[a], ["territorio"], [(f"d{i:03d}",) for i in range(5)], anio=a)]
-    assert len(juntos) == len(por_separado) == 10 and {e.anio for e in juntos} == {2024, 2025}
+    juntos = ex.estimar(FuenteMemoria(marcos), "ENDES", [2021, 2022])
+    por_separado = [e for a in (2021, 2022) for e in estimar_proporciones(marcos[a], ["territorio"], [(f"d{i:03d}",) for i in range(5)], anio=a)]
+    assert len(juntos) == len(por_separado) == 10 and {e.anio for e in juntos} == {2021, 2022}
     for a, b in zip(juntos, por_separado):
         _igual(a, b, 0)
 
@@ -75,12 +76,12 @@ def test_el_ejecutor_pide_la_upm_estable_solo_al_apilar():
             Espia.pedidos.append((anio, upm_estable))
             return super().cargar(anio, upm_estable=upm_estable)
 
-    marcos = {a: _marco(a) for a in (2023, 2024, 2025)}
+    marcos = {a: _marco(a) for a in (2021, 2022, 2023, 2024)}
     Ejecutor(relaciones=RELACIONES).estimar(Espia(marcos), "ENDES", [2023, 2024])
     assert Espia.pedidos == [(2023, True), (2024, True)]
     Espia.pedidos = []
-    Ejecutor(relaciones=RELACIONES).estimar(Espia(marcos), "ENDES", [2024, 2025])
-    assert Espia.pedidos == [(2024, False), (2025, False)]
+    Ejecutor(relaciones=RELACIONES).estimar(Espia(marcos), "ENDES", [2021, 2022])             # sin fila: independiente (2024–2025 ya no lo es)
+    assert Espia.pedidos == [(2021, False), (2022, False)]
 
 
 def test_dominios_pedidos_de_un_anio_que_no_los_tiene_salen_sin_datos_en_el_apilado():
@@ -135,14 +136,14 @@ def test_con_anios_independientes_la_llamada_partida_es_la_de_un_anio():
     class PoolAnio2025(PoolFalso):
         def ejecutar(self, trabajo):
             self.llamadas.append((trabajo.anios, trabajo.bloque))
-            if trabajo.anios == (2025,) and trabajo.bloque is None:
+            if trabajo.anios == (2022,) and trabajo.bloque is None:
                 raise ErrorTemporal("tiempo", "simulado")
             return trabajo()
 
     pool = PoolAnio2025()
-    marcos = {2024: _marco(1), 2025: _marco(2)}
-    res = Ejecutor(pool, relaciones=RELACIONES).estimar(FuenteMemoria(marcos), "ENDES", [2024, 2025])
-    assert pool.llamadas == [((2024,), None), ((2025,), None), ((2025,), (0, 2)), ((2025,), (1, 2))] and len(res) == 10
+    marcos = {2021: _marco(1), 2022: _marco(2)}
+    res = Ejecutor(pool, relaciones=RELACIONES).estimar(FuenteMemoria(marcos), "ENDES", [2021, 2022])
+    assert pool.llamadas == [((2021,), None), ((2022,), None), ((2022,), (0, 2)), ((2022,), (1, 2))] and len(res) == 10
 
 
 def test_los_bloques_cubren_cada_dominio_exactamente_una_vez():

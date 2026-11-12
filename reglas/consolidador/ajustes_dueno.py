@@ -2471,6 +2471,7 @@ FRASES_ESTANDAR = {   # AD-2: lo aplica consolida_reglas.py sobre lenguaje.frase
 #  (b) R-ENC-11: familias de comparaciones con Benjamini-Hochberg (§16), aceptado por el dueño el 8/11/2026. Se conserva el
 #      texto anterior de comparaciones_multiples y se le suma la cláusula.
 #  (c) R-ENC-19 (no respuesta del ítem, §15.1 paso 8) NO se agrega: el dueño aún no aprueba sus umbrales (K-07).
+#      → Se agregó el 12/11/2026, cuando el dueño aprobó K-07: ver el bloque «M1-01» al final de este archivo.
 SOBRESCRITURAS_CONSCIENTES = globals().get('SOBRESCRITURAS_CONSCIENTES', set()) | {('R-ENC-11', 'parametros.comparaciones_multiples')}   # PR-33 lo fijó; el dueño lo amplía
 CAMPOS_REGLAS += [
  ('R-LENGUAJE-05', 'parametros.max_alternativas', 3),
@@ -2478,3 +2479,61 @@ CAMPOS_REGLAS += [
   'máx. 1 comparación por par de cifras; tendencias: primer vs último año del tramo sin quiebre; '
   'con más de 4 grupos: prueba global y luego pares con BH al 5 % sobre todos los pares de la consulta'),
 ]
+
+
+# ================================================================ Slice M1, M1-01 (dueño, 12/11/2026)
+# docs/diseno/motor_inferencia.md §15.1 y §26.1; docs/decisiones.md filas E-03 y R-01. Dos decisiones del dueño:
+#  C-M0-11-2: R-ENC-03 y R-ENC-04 se aplican también con 25 a 49 casos (antes exigían n_sin_ponderar >= 50 y bajo 50 casos regía
+#             solo R-ENC-02). Los umbrales de R-ENC-02 NO cambian (menos de 25 suprime; 25 a 49 marca referencial); el código lee
+#             `n_min_suprimir` de R-ENC-02 como piso de R-ENC-03 y R-ENC-04. Antes de aplicarlo se midió qué filas cambian de
+#             estado: backlog/slice-m1/evidencia/m1-01_cambios_de_estado.csv (ninguna: el cubo y las 90 filas tienen n >= 139).
+#  K-07:      regla nueva R-ENC-19, no respuesta del ítem: > 5 % aviso en la capa 2 (`advertir`), > 20 % referencial. Valores
+#             iniciales; se revisan con lo que mida M1.
+_M1 = 'dueño, 12/11/2026'
+PARCHES_REGLAS_R3 += [
+ ('R-ENC-02', 'n_sin_ponderar >= 50 → pasa a R-ENC-03/R-ENC-04',
+  'n_sin_ponderar >= 25 → además se evalúan R-ENC-03 y R-ENC-04 (desde 25 casos, C-M0-11-2, ' + _M1 + ')'),
+ ('R-ENC-03', 'Con 50 casos o más, una cifra con CV',
+  'Desde 25 casos (C-M0-11-2, ' + _M1 + '; con 25 a 49 casos la cifra además es referencial por R-ENC-02), una cifra con CV'),
+ ('R-ENC-03', 'n_sin_ponderar >= 50 AND (', 'n_sin_ponderar >= 25 AND ('),
+ ('R-ENC-04', 'AND n_sin_ponderar >= 50:', 'AND n_sin_ponderar >= 25:'),
+]
+HALLAZGOS_M1 = {   # clave `decisiones_dueno_2026_11_12` de cada regla
+ 'R-ENC-02': ['C-M0-11-2: los umbrales no cambian; R-ENC-03 y R-ENC-04 corren desde 25 casos'],
+ 'R-ENC-03': ['C-M0-11-2: se aplica desde 25 casos (antes, desde 50)'],
+ 'R-ENC-04': ['C-M0-11-2: se aplica desde 25 casos (antes, desde 50)'],
+ 'R-ENC-19': ['K-07: umbrales de no respuesta del ítem, 5 % (aviso) y 20 % (referencial)'],
+}
+ETAPAS_M1 = [('R-ENC-19', '4_precision', 'R-ENC-18')]   # (regla, etapa, insertar después de)
+
+
+def nuevas_m1(by):
+    """Reglas nuevas del slice M1. `aplica_a` es el de R-ENC-02 (las mismas encuestas muestrales)."""
+    return [dict(id='R-ENC-19', ambito='encuestas', titulo='No respuesta del ítem',
+      enunciado=('Cuando la pregunta que define el indicador no se pudo medir en una parte de las personas del universo, la cifra '
+                 'lleva un aviso en el detalle si esa parte pasa de 5 % y se publica como referencial si pasa de 20 %. La cifra no se '
+                 'corrige ni se completa: solo se advierte.'),
+      aplica_a=_copy.deepcopy(by['R-ENC-02']['aplica_a']),
+      condicion=('tasa_no_respuesta_item > 0.20 → publicar_referencial; 0.05 < tasa_no_respuesta_item <= 0.20 → advertir (aviso en la '
+                 'capa 2); tasa_no_respuesta_item <= 0.05 o no medida → no dispara. tasa_no_respuesta_item = filas con el ítem faltante / '
+                 'filas que serían del universo, sin ponderar'),
+      accion='publicar_referencial',
+      parametros={'tasa_aviso': 0.05, 'tasa_referencial': 0.20,
+                  'valores_iniciales': 'decisión del dueño, 12/11/2026 (K-07); se revisan con lo que mida M1'},
+      mensaje_usuario=('(5–20 %) «Una parte de las personas encuestadas no contestó esta pregunta; la cifra se calculó con quienes sí la '
+                       'contestaron.» (>20 %) «Cifra aproximada: muchas personas encuestadas no contestaron esta pregunta.»'),
+      justificacion=('Una cifra calculada solo con quienes contestaron puede alejarse de la de todo el universo cuando muchos no '
+                     'contestan. El diseño del motor (§15.1, paso 8) propuso avisar desde 5 % y marcar como aproximada desde 20 %; el dueño '
+                     'aprobó esos valores el 12/11/2026 como valores iniciales (K-07).'),
+      referencias=[{'titulo': 'Pregúntale al Perú – Motor de inferencia, §15.1 (paso 8) y decisión K-07 del dueño (12/11/2026)',
+                    'url': None, 'ruta': 'docs/diseno/motor_inferencia.md'}],
+      hallazgos_auditoria=[], hallazgos_prueba=[],
+      ejemplo=('Anemia en niños de 6 a 35 meses, ENDES: si la hemoglobina no se midió en 8 % de los niños que cumplen el universo, la cifra '
+               'sale con el aviso; si no se midió en 25 %, sale como referencial (cifras ilustrativas).'),
+      implementacion=('La tasa sale del ejecutor (Estimacion.tasa_no_respuesta, sin ponderar; la ponderada se informa pero no decide). '
+                      'Es el paso 8 del árbol de compuertas: lo corre pap.inferencia.compuertas solo si '
+                      'compuertas.paso_no_respuesta_activo (curados/inferencia/parametros.yaml) es verdadero. El aviso va a la capa 2 del '
+                      'contrato de respuesta; el referencial se acumula con los pasos anteriores y no corre si un paso anterior suprimió la cifra.'),
+      casos_borde=('Exactamente 5 % no avisa; exactamente 20 % avisa pero no hace referencial. Si la tasa no se midió, la regla no '
+                   'dispara: no se inventa una tasa. El cubo no trae esta tasa, así que sus filas no cambian.'),
+      prioridad='mvp')]
