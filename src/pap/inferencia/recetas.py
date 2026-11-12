@@ -204,8 +204,9 @@ def _errores_de_doradas(r: Receta, doradas: dict[str, dict]) -> list[str]:
     return errores
 
 
-def validar(rutas: Rutas) -> dict[str, tuple[int, list[str]]]:
-    """Valida cada receta: esquema, cruces con las tablas curadas, doradas, `dim_indicador` y citas. {id: (1 o 0, errores)}."""
+def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int, list[str]]]:
+    """Valida cada receta: esquema, cruces con las tablas curadas, doradas, `dim_indicador` y citas. {id: (1 o 0, errores)}.
+    Con `exigir_indice` (lo pasa `pap inferencia validar-recetas`), la falta del índice de variables es un error de cada receta (H10-2)."""
     raiz = rutas.raiz
     res: dict[str, tuple[int, list[str]]] = {}
     recetas: list[Receta] = []
@@ -230,6 +231,8 @@ def validar(rutas: Rutas) -> dict[str, tuple[int, list[str]]]:
             errores.append(f"universo_analitico «{r.universo_analitico}» no está en universos_analiticos.yaml")
         errores += [f"corte «{c}» no está en cortes_estandar.yaml" for c in (*r.cortes_permitidos, *(x.id for x in r.cortes_no_permitidos))
                     if c not in cortes]
+        if en_indice is None and exigir_indice:
+            errores.append(tc.ERROR_SIN_INDICE)
         if en_indice is not None:
             errores += [f"la variable {c.variable} no está en {c.archivo} del índice"
                         for c in (*r.indicador.condiciones, *r.universo.restricciones) if (c.archivo, c.variable) not in en_indice]

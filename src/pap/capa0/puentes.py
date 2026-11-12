@@ -3,16 +3,16 @@ establecimientos del SIEN. La parte de gasto (dim_unidad_ejecutora, dim_tema_gas
 queda pendiente de los archivos del MEF (certificado vencido en fs.datosabiertos.mef.gob.pe, 6/10/2026)."""
 from __future__ import annotations
 
-import io
 import json
 import re
-import zipfile
+import tempfile
 from dataclasses import dataclass, field
 from datetime import date
 
 import pandas as pd
 
 from ..config import Rutas
+from ..zip_seguro import abrir_zip_seguro
 from . import insumos
 from . import lectores as L
 from . import territorio as T
@@ -259,19 +259,21 @@ def establecimientos_sien(rutas: Rutas, res: Resultado, alguna_vez: set[str],
     partes, conteos, agregados, chequeos_hb, ren_eess, pn_635 = [], [], [], [], [], []
     archivos = {"Hb": [], "Pt": [], "otro": []}
     filas_hb_crudo, anios = 0, set()
-    with zipfile.ZipFile(ins.ruta) as z:
-        for n in z.namelist():
+    with abrir_zip_seguro(ins.ruta) as z:          # C7: rutas, enlaces, tamaños y proporciones revisados antes de leer (M1-02, H00b-7)
+        for n in z.miembros():
             if not n.lower().endswith(".csv"):
                 continue
             base = _base_sien(n)
             archivos[base].append(n.rsplit("/", 1)[-1])
             anios.update(re.findall(r"(20\d\d)", n))
-            with z.open(n) as f:
-                cab = pd.read_csv(io.TextIOWrapper(f, encoding="utf-8-sig"), nrows=0).columns
-            extra = [c for c in COLS_HB if c in cab] if base == "Hb" else []
-            cols = ["Renipress", "EESS"] + [c for c in UBIGEOS_SIEN if c in cab] + extra
-            with z.open(n) as f:
-                d = pd.read_csv(io.TextIOWrapper(f, encoding="utf-8-sig"), usecols=cols, dtype=str)
+            with tempfile.TemporaryFile() as f:      # el miembro se copia por bloques con tope y se lee del disco, no de memoria
+                z.copiar(n, f)
+                f.seek(0)
+                cab = pd.read_csv(f, encoding="utf-8-sig", nrows=0).columns
+                extra = [c for c in COLS_HB if c in cab] if base == "Hb" else []
+                cols = ["Renipress", "EESS"] + [c for c in UBIGEOS_SIEN if c in cab] + extra
+                f.seek(0)
+                d = pd.read_csv(f, encoding="utf-8-sig", usecols=cols, dtype=str)
             crudo_5 = {c: int(d[c].str.strip().str.fullmatch(r"\d{5}").fillna(False).sum()) for c in UBIGEOS_SIEN if c in d}
             for c in UBIGEOS_SIEN:
                 if c in d:

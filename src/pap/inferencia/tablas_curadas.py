@@ -474,8 +474,15 @@ def _variables_indice(raiz: Path) -> set[tuple[str, str]] | None:
     return set(duckdb.sql(f"SELECT archivo, variable FROM read_parquet('{ruta}') WHERE encuesta = 'ENDES' AND anio = 2024").fetchall())
 
 
-def validar(rutas: Rutas) -> dict[str, tuple[int, list[str]]]:
-    """Valida las seis tablas: {tabla: (filas, errores)}. Sin errores = la tabla cumple su esquema y todas sus filas llevan cita."""
+RUTA_INDICE = "biblioteca/variables/variables.parquet"
+ERROR_SIN_INDICE = (f"falta el índice de variables ({RUTA_INDICE}): no se pudo comprobar que las variables citadas existan "
+                    "(`pap indice` lo genera)")
+
+
+def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int, list[str]]]:
+    """Valida las seis tablas: {tabla: (filas, errores)}. Sin errores = la tabla cumple su esquema y todas sus filas llevan cita.
+    Con `exigir_indice` (lo pasa `pap inferencia validar-tablas`), la falta del índice de variables es un error de las tablas que
+    citan variables y no una comprobación que se salta en silencio (M1-02, H06-3)."""
     raiz = rutas.raiz
     res: dict[str, tuple[int, list[str]]] = {}
     datos: dict[str, list] = {}
@@ -491,6 +498,9 @@ def validar(rutas: Rutas) -> dict[str, tuple[int, list[str]]]:
     archivos = set(archivos_yaml["archivos"])
     relaciones = {(r["hijo"], c[0], r["padre"], c[1]) for r in archivos_yaml["relaciones"] for c in r["por"]}
     en_indice = _variables_indice(raiz)
+    if exigir_indice and en_indice is None:
+        for nombre in ("universos_analiticos", "territorios", "cortes_estandar"):
+            err(nombre, ERROR_SIN_INDICE)
 
     for nombre, filas in datos.items():
         for c in citas_sin_linea(raiz, _citas(nombre, filas)):

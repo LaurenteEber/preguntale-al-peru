@@ -20,11 +20,16 @@ Sin pool corre en el mismo proceso (para pruebas y desarrollo; sin aislamiento).
 """
 from __future__ import annotations
 
+import ctypes
+import ctypes.util
+import functools
 import itertools
 import logging
 import math
 import os
+import queue
 import signal
+import sys
 import threading
 import time
 from concurrent.futures import ProcessPoolExecutor, TimeoutError as TiempoAgotado
@@ -225,14 +230,67 @@ class ConfigTrabajador:
     duckdb_threads: int
     sondeo_s: float
     calentar: bool = True
+    listo: object = None                  # arreglo compartido con el padre: la ranura de la tarea se marca cuando el trabajador la empieza
+    retraso_arranque_s: float = 0.0       # solo pruebas: hace lento el arranque del trabajador sin depender de la máquina
 
 
-def _vigia(limite_bytes: int, sondeo_s: float) -> None:
+# El trabajador marca aquí (ranura = 1) que ya empezó su tarea: el plazo del padre cuenta desde ese momento (M1-02, tarea 1).
+_LISTO: dict = {"arreglo": None}
+
+
+class _InfoRusage(ctypes.Structure):      # `rusage_info_v0` de <libproc.h>
+    _fields_ = [("ri_uuid", ctypes.c_uint8 * 16)] + [
+        (n, ctypes.c_uint64) for n in ("ri_user_time", "ri_system_time", "ri_pkg_idle_wkups", "ri_interrupt_wkups",
+                                                        "ri_pageins", "ri_wired_size", "ri_resident_size", "ri_phys_footprint",
+                                                        "ri_proc_start_abstime", "ri_proc_exit_abstime")]
+
+
+@functools.lru_cache(maxsize=1)
+def _libproc():
+    return ctypes.CDLL(ctypes.util.find_library("proc") or "/usr/lib/libproc.dylib")
+
+
+def _huella_fisica_macos() -> int:
+    """Memoria que macOS le carga al proceso (`ri_phys_footprint`): cuenta también las páginas comprimidas o enviadas al disco,
+    que `ru_maxrss` deja de ver cuando el sistema está bajo presión de memoria. 0 si no se pudo leer."""
+    try:
+        lib = _libproc()
+        info = _InfoRusage()
+        if lib.proc_pid_rusage(os.getpid(), 0, ctypes.byref(info)) != 0:          # 0 = RUSAGE_INFO_V0
+            return 0
+        return int(info.ri_phys_footprint)
+    except (OSError, AttributeError):
+        return 0
+
+
+def _memoria_en_uso_linux() -> int:
+    """VmRSS + VmSwap de /proc/self/status: lo residente más lo que el sistema ya mandó al swap. 0 si no se pudo leer."""
+    try:
+        kb = {}
+        for linea in Path("/proc/self/status").read_text().splitlines():
+            clave, _, resto = linea.partition(":")
+            if clave in ("VmRSS", "VmSwap"):
+                kb[clave] = int(resto.split()[0])
+        return (kb.get("VmRSS", 0) + kb.get("VmSwap", 0)) * 1024
+    except (OSError, ValueError, IndexError):
+        return 0
+
+
+def _memoria_bytes() -> int:
+    """Lo que mide el vigía: el mayor entre el pico de memoria residente (`ru_maxrss`) y la memoria que el sistema le carga al proceso
+    ahora (macOS: huella física; Linux: residente + swap). Así una presión de memoria que comprima o envíe páginas al disco no le
+    esconde el exceso al vigía (observación del 12/11/2026, M1-02)."""
     from .lector_aislado import _rss_max_bytes          # ru_maxrss normalizado a bytes (macOS: bytes; Linux: KiB)
 
+    ahora = _huella_fisica_macos() if sys.platform == "darwin" else _memoria_en_uso_linux() if sys.platform.startswith("linux") else 0
+    return max(_rss_max_bytes(), ahora)
+
+
+def _vigia(limite_bytes: int, sondeo_s: float, medir=None) -> None:
+    medir = medir or _memoria_bytes
     while True:
         time.sleep(sondeo_s)
-        if _rss_max_bytes() > limite_bytes:
+        if medir() > limite_bytes:
             os._exit(SALIDA_MEMORIA)
 
 
@@ -240,6 +298,9 @@ def _iniciar_trabajador(cfg: ConfigTrabajador) -> None:
     """`initializer` del pool: hilos, vigía de memoria y precalentamiento (importar `svy` y abrir DuckDB)."""
     for v in VARIABLES_HILOS:
         os.environ[v] = "1"                              # antes de importar polars, duckdb y svy
+    _LISTO["arreglo"] = cfg.listo
+    if cfg.retraso_arranque_s:
+        time.sleep(cfg.retraso_arranque_s)
     threading.Thread(target=_vigia, args=(cfg.memoria_mb * 1024 * 1024, cfg.sondeo_s), daemon=True, name="vigia-memoria").start()
     if not cfg.calentar:
         return
@@ -258,16 +319,27 @@ def _iniciar_trabajador(cfg: ConfigTrabajador) -> None:
     estimar_proporciones(marco, ["t"], [("x",)])
 
 
-def _correr(trabajo, timeout_s: float):
-    """Corre `trabajo()` con el tiempo suave. Devuelve (etiqueta, valor): los errores viajan como datos, no como excepciones."""
-    def alarma(_signum, _frame):
-        raise _AlarmaSuave()
+def _correr(trabajo, timeout_s: float, ranura: int | None = None):
+    """Corre `trabajo()` con el tiempo suave. Devuelve (etiqueta, valor): los errores viajan como datos, no como excepciones.
+    `ranura`: avisa al padre (arreglo compartido) que el trabajador ya está listo y empieza la tarea: desde ahí cuentan los plazos."""
+    activa = [True]                                       # la alarma solo corta mientras la tarea corre (H08-3)
 
+    def alarma(_signum, _frame):
+        if activa[0]:
+            raise _AlarmaSuave()
+
+    if ranura is not None and _LISTO["arreglo"] is not None:
+        _LISTO["arreglo"][ranura] = 1
     signal.signal(signal.SIGALRM, alarma)
     signal.alarm(max(1, math.ceil(timeout_s)))
     try:
-        return ("ok", trabajo())
+        resultado = trabajo()
+        activa[0] = False                                 # una alarma que llega después ya no puede escaparse de esta función
+        return ("ok", resultado)
     except _AlarmaSuave:
+        activa[0] = False
+        # La alarma cortó código a medias (puede ser una consulta de DuckDB): la conexión se descarta y la tarea siguiente abre otra (H08-4).
+        _ESTADO["con"] = _ESTADO["clave"] = None
         return ("tiempo", None)
     except ErrorInterno as e:
         return ("interno", e.detalle)
@@ -275,6 +347,7 @@ def _correr(trabajo, timeout_s: float):
         LOG.exception("error inesperado en el trabajador")
         return ("interno", f"{type(e).__name__}: {e}")
     finally:
+        activa[0] = False
         signal.alarm(0)
 
 
@@ -287,10 +360,17 @@ def _ping() -> int:
 class PoolEjecutor:
     """Pool de procesos trabajadores con tiempo suave y duro, vigía de memoria y recreación tras cada fallo."""
 
-    def __init__(self, p: ParametrosEjecutor | None = None, raiz: Path = RAIZ_REPO, *, calentar: bool = True):
+    def __init__(self, p: ParametrosEjecutor | None = None, raiz: Path = RAIZ_REPO, *, calentar: bool = True,
+                 retraso_arranque_s: float = 0.0):
+        import multiprocessing
+
         self.p = p or ParametrosEjecutor.desde_yaml()
+        self._ranuras = multiprocessing.get_context("spawn").RawArray("b", self.p.trabajadores)       # una por tarea en curso
+        self._libres = queue.SimpleQueue()
+        for i in range(self.p.trabajadores):
+            self._libres.put(i)
         self.cfg = ConfigTrabajador(Path(raiz), self.p.memoria_trabajador_mb, self.p.duckdb_memoria_mb, self.p.duckdb_threads,
-                                    self.p.vigia_sondeo_s, calentar)
+                                    self.p.vigia_sondeo_s, calentar, self._ranuras, retraso_arranque_s)
         self._lock = threading.Lock()
         self._cupo = threading.BoundedSemaphore(self.p.trabajadores)     # el tiempo duro cuenta desde que hay un trabajador libre
         self._generacion = 0
@@ -365,29 +445,43 @@ class PoolEjecutor:
                 except ErrorTemporal:
                     self._retirar(generacion)
                     raise
-                inicio = time.monotonic()
+                ranura = self._libres.get()
                 try:
-                    futuro = pool.submit(_correr, trabajo, self.p.timeout_s)
-                    etiqueta, valor = futuro.result(timeout=self.p.timeout_s + self.p.gracia_s)
-                except TiempoAgotado:
-                    self._retirar(generacion)
-                    raise ErrorTemporal("tiempo", f"sin resultado en {time.monotonic() - inicio:.1f} s: trabajador terminado") from None
-                except BrokenProcessPool:
-                    procesos = self._retirar(generacion)
-                    if procesos is None:                 # otro hilo mató el pool (su tiempo duro): esta tarea no tuvo la culpa
-                        if intento == 0:
-                            continue
-                        raise ErrorTemporal("caida", "el pool se recreó dos veces seguidas") from None
-                    codigos = [pr.exitcode for pr in procesos]
-                    if SALIDA_MEMORIA in codigos:
-                        raise ErrorTemporal("memoria", f"el trabajador pasó {self.p.memoria_trabajador_mb} MB (salida {SALIDA_MEMORIA})") from None
-                    raise ErrorTemporal("caida", f"el trabajador cayó (códigos de salida {codigos})") from None
-                if etiqueta == "ok":
-                    return valor
-                if etiqueta == "tiempo":
-                    raise ErrorTemporal("tiempo", f"excedió {self.p.timeout_s:g} s (tiempo suave)")
-                LOG.error("error interno en el trabajador: %s", valor)
-                raise ErrorInterno(str(valor))
+                    self._ranuras[ranura] = 0
+                    inicio = time.monotonic()
+                    try:
+                        futuro = pool.submit(_correr, trabajo, self.p.timeout_s, ranura)
+                        # El plazo cuenta desde que el trabajador empieza la tarea: un trabajador nuevo (por max_tasks_per_child o tras
+                        # un fallo) puede tardar en arrancar y eso no es tiempo de la tarea (M1-02, tarea 1). El arranque tiene su tope.
+                        arranque = time.monotonic()
+                        while not futuro.done() and not self._ranuras[ranura]:
+                            if time.monotonic() - arranque > self.p.arranque_max_s:
+                                self._retirar(generacion)
+                                raise ErrorTemporal("caida", f"el trabajador no empezó la tarea en {self.p.arranque_max_s:g} s") from None
+                            time.sleep(0.005)
+                        inicio = time.monotonic()
+                        etiqueta, valor = futuro.result(timeout=self.p.timeout_s + self.p.gracia_s)
+                    except TiempoAgotado:
+                        self._retirar(generacion)
+                        raise ErrorTemporal("tiempo", f"sin resultado en {time.monotonic() - inicio:.1f} s: trabajador terminado") from None
+                    except BrokenProcessPool:
+                        procesos = self._retirar(generacion)
+                        if procesos is None:                 # otro hilo mató el pool (su tiempo duro): esta tarea no tuvo la culpa
+                            if intento == 0:
+                                continue
+                            raise ErrorTemporal("caida", "el pool se recreó dos veces seguidas") from None
+                        codigos = [pr.exitcode for pr in procesos]
+                        if SALIDA_MEMORIA in codigos:
+                            raise ErrorTemporal("memoria", f"el trabajador pasó {self.p.memoria_trabajador_mb} MB (salida {SALIDA_MEMORIA})") from None
+                        raise ErrorTemporal("caida", f"el trabajador cayó (códigos de salida {codigos})") from None
+                    if etiqueta == "ok":
+                        return valor
+                    if etiqueta == "tiempo":
+                        raise ErrorTemporal("tiempo", f"excedió {self.p.timeout_s:g} s (tiempo suave)")
+                    LOG.error("error interno en el trabajador: %s", valor)
+                    raise ErrorInterno(str(valor))
+                finally:
+                    self._libres.put(ranura)
 
 
 # ------------------------------------------------------------------ el ejecutor

@@ -24,6 +24,7 @@ import hashlib
 import json
 import os
 import re
+import shutil
 import signal
 import subprocess
 import sys
@@ -164,6 +165,10 @@ def ejecutar_aislado(cmd: list[str], p: Parametros, *, cwd: Path) -> Ejecucion:
 
     El vigilante sondea el RSS del subproceso con `ps` (RLIMIT_AS no se hace cumplir en macOS). Si algún tope se pasa,
     mata el subproceso y lanza `LectorAbortado`."""
+    import resource
+
+    hijos = resource.getrusage(resource.RUSAGE_CHILDREN)
+    cpu_hijos_antes = hijos.ru_utime + hijos.ru_stime
     with tempfile.TemporaryFile() as err:
         inicio = time.monotonic()
         proc = subprocess.Popen(cmd, cwd=cwd, env=_entorno(), stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
@@ -186,8 +191,19 @@ def ejecutar_aislado(cmd: list[str], p: Parametros, *, cwd: Path) -> Ejecucion:
                 raise LectorAbortado(f"lector abortado: {motivo}")
         err.seek(0)
         stderr = err.read().decode("utf-8", "replace")
-    if proc.returncode == -signal.SIGXCPU or proc.returncode == -signal.SIGKILL:
+    if proc.returncode == -signal.SIGXCPU:
         raise LectorAbortado(f"lector abortado: pasó el tope de {p.cpu_s} s de procesador (señal {-proc.returncode})")
+    if proc.returncode == -signal.SIGKILL:
+        # No todo SIGKILL es el límite de procesador (H04-5): también lo manda el sistema por falta de memoria, o alguien. Se atribuye
+        # a la CPU solo si el subproceso gastó al menos el tope; si no, se dice que no se sabe la causa.
+        import resource
+
+        cpu = resource.getrusage(resource.RUSAGE_CHILDREN)
+        gastada = cpu.ru_utime + cpu.ru_stime - cpu_hijos_antes
+        if gastada >= p.cpu_s:
+            raise LectorAbortado(f"lector abortado: pasó el tope de {p.cpu_s} s de procesador (señal {-proc.returncode})")
+        raise LectorAbortado(f"lector abortado: el sistema lo mató con SIGKILL tras {gastada:.1f} s de procesador, no por el tope de "
+                             f"procesador ({p.cpu_s} s); puede ser falta de memoria del sistema")
     return Ejecucion(proc.returncode, stderr, rss_max, time.monotonic() - inicio)
 
 
@@ -261,8 +277,37 @@ def carpeta_salida(rutas: Rutas, encuesta: str, anio: int) -> Path:
     return rutas.raiz / "biblioteca" / "microdatos" / encuesta / str(anio)
 
 
+def _recuperar_carpeta_apartada(destino: Path) -> None:
+    """Si un corte dejó la carpeta anterior apartada y la nueva sin poner, vuelve a poner la anterior."""
+    apartada = destino.with_name(f".{destino.name}.anterior")
+    if apartada.exists() and not destino.exists():
+        os.rename(apartada, destino)
+
+
+def _cambiar_carpeta(nueva: Path, destino: Path) -> None:
+    """Pone `nueva` en lugar de `destino` de una sola vez (H04-2): Parquet y manifiesto cambian juntos. Lo que había en `destino` y la
+    conversión no escribió (otros archivos) se conserva. Si algo falla, `destino` queda como estaba."""
+    for otro in (destino.iterdir() if destino.exists() else ()):
+        if not (nueva / otro.name).exists():
+            shutil.copy2(otro, nueva / otro.name) if otro.is_file() else shutil.copytree(otro, nueva / otro.name)
+    apartada = destino.with_name(f".{destino.name}.anterior")
+    if apartada.exists():
+        shutil.rmtree(apartada)
+    if destino.exists():
+        os.rename(destino, apartada)
+    try:
+        os.rename(nueva, destino)
+    except BaseException:
+        if apartada.exists():
+            os.rename(apartada, destino)
+        raise
+    shutil.rmtree(apartada, ignore_errors=True)
+
+
 def convertir(rutas: Rutas, encuesta: str, anio: int, *, p: Parametros | None = None, log=print) -> dict:
-    """Convierte todos los archivos de datos de los ZIP registrados de la encuesta y el año. Devuelve el manifiesto."""
+    """Convierte todos los archivos de datos de los ZIP registrados de la encuesta y el año. Devuelve el manifiesto.
+    Escribe en una carpeta de preparación junto a la de salida y la cambia de una sola vez al final (M1-02, H04-2): una falla a
+    mitad de camino deja la carpeta anterior intacta y sin restos."""
     from ..capa0 import insumos
 
     p = p or Parametros.desde_yaml()
@@ -270,8 +315,21 @@ def convertir(rutas: Rutas, encuesta: str, anio: int, *, p: Parametros | None = 
     if not lista.exists():
         raise PapError(f"No hay lista de descargas para {encuesta} {anio}: falta {rutas.relativa(lista)}")
     cfg = yaml.safe_load(lista.read_text(encoding="utf-8"))
-    fuente, destino = cfg["fuente"], carpeta_salida(rutas, encuesta, anio)
-    destino.mkdir(parents=True, exist_ok=True)
+    fuente, final = cfg["fuente"], carpeta_salida(rutas, encuesta, anio)
+    _recuperar_carpeta_apartada(final)
+    final.parent.mkdir(parents=True, exist_ok=True)
+    destino = final.with_name(f".{final.name}.preparacion")
+    shutil.rmtree(destino, ignore_errors=True)               # resto de una corrida cortada: es nuestro, nunca la carpeta buena
+    destino.mkdir()
+    try:
+        return _convertir_en(rutas, encuesta, anio, p, log, cfg, fuente, destino, final)
+    finally:
+        shutil.rmtree(destino, ignore_errors=True)
+
+
+def _convertir_en(rutas, encuesta, anio, p, log, cfg, fuente, destino, final) -> dict:
+    from ..capa0 import insumos
+
     manifiesto = {"encuesta": encuesta, "anio": anio, "version_conversor": VERSION_CONVERSOR,
                   "generado": ahora(), "rlimit_as_aplicado": rlimit_as_se_aplica(), "archivos": {}}
     if not manifiesto["rlimit_as_aplicado"]:
@@ -318,5 +376,6 @@ def convertir(rutas: Rutas, encuesta: str, anio: int, *, p: Parametros | None = 
     ruta_manifiesto = destino / "manifiesto.json"
     ruta_manifiesto.write_text(json.dumps(manifiesto, ensure_ascii=False, indent=1, sort_keys=True) + "\n",
                                encoding="utf-8")
+    _cambiar_carpeta(destino, final)
     insumos.escribir_lock(rutas, usados)
     return manifiesto

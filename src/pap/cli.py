@@ -209,7 +209,7 @@ def cmd_inferencia(a, rutas) -> int:
         return _inferencia_receta(a, rutas)
     from .inferencia import tablas_curadas
 
-    res = tablas_curadas.validar(rutas)
+    res = tablas_curadas.validar(rutas, exigir_indice=True)
     for nombre, (filas, errores) in res.items():
         print(("✘ " if errores else "✔ ") + f"{tablas_curadas.ARCHIVOS_TABLAS[nombre]}: {filas} fila(s)"
               + ("" if errores else ", todas con cita") + "".join(f"\n    - {e}" for e in errores))
@@ -220,7 +220,7 @@ def _inferencia_validar_recetas(rutas) -> int:
     """pap inferencia validar-recetas: las recetas de curados/inferencia/recetas/ contra su esquema, las tablas curadas, las doradas y dim_indicador."""
     from .inferencia import recetas
 
-    res = recetas.validar(rutas)
+    res = recetas.validar(rutas, exigir_indice=True)
     for id_, (ok, errores) in res.items():
         r = recetas.leer_receta(rutas.raiz, id_) if ok and not errores else None
         print(("✘ " if errores or not ok else "✔ ") + f"{id_}" + (f": estado {r.estado}{f', pendiente {r.pendiente}' if r.pendiente else ''}, {len(r.doradas)} dorada(s)" if r else "")

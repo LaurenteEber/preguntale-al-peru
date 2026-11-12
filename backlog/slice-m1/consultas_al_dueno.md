@@ -2,7 +2,15 @@
 
 ## Consultas que bloquean
 
-(ninguna hasta ahora)
+Ninguna bloquea el slice; las tres esperan una decisión del dueño.
+
+| ID | Qué pasa | Por qué importa | Propuesta |
+|---|---|---|---|
+| C-M1-02-1 | `osv-scanner` 2.7.1 se publicó el 9/11/2026: hoy tiene 3 días y no cumple la regla de 14 días de las auditorías. Es la versión instalada y la última. `scripts/auditar.sh` la acepta como excepción temporal hasta el 23/11/2026 y avisa mientras tanto. | Es la herramienta que busca vulnerabilidades en el lock; la regla de antigüedad protege contra versiones recién publicadas y comprometidas. | Aceptar la excepción hasta el 23/11 (la herramienta solo lee el lock y no se instala en el proyecto); si no, volver a 2.7.0 hasta esa fecha. |
+| C-M1-02-2 (H06-4) | La unidad de `CSALUD01.QSSEXO` no coincide entre `curados/inferencia/cortes_estandar.yaml` y `curados/inferencia/archivos_endes_2024.yaml`. | Son tablas curadas: corregir una unidad puede cambiar qué filas entran a un corte por sexo. Hoy ninguna receta usa ese corte. | Que el auditor-agente proponga cuál unidad es la correcta contra el cuestionario de salud, y el dueño lo apruebe en el lote de M1-07. |
+| C-M1-02-3 (H04-4) | `huella_contenido_v1` puede confundir el separador `\x1f` o un NULL con el texto `"\x00"`. Arreglarlo (`huella_contenido_v2`) obliga a regrabar los manifiestos. | La huella es la que prueba que un Parquet no cambió; una colisión es muy improbable pero no imposible. | Definir `huella_contenido_v2` y adoptarla en la próxima reconversión (M2), conservando la v1 en los manifiestos de 2024. |
+
+Nota: H08-5 (quitar `\.0$` de los cortes) tampoco se hizo: hoy no ocurre y cambiaría cómo llegan los cortes numéricos; queda para cuando un corte lo necesite.
 
 ## Supuestos aplicados
 

@@ -14,9 +14,9 @@ catalogo:
 # Seguridad (M0-00b, C3): vulnerabilidades conocidas en uv.lock con pip-audit y osv-scanner (necesita red)
 auditar:
     scripts/auditar.sh
-# Seguridad (M0-00b, C9): gitleaks sobre todo el historial; el gancho antes de cada commit se instala con scripts/instalar_ganchos.sh
+# Seguridad (M0-00b, C9; M1-02): gitleaks (versión fijada) sobre todo el historial; el gancho antes de cada commit se instala con scripts/instalar_ganchos.sh
 secretos:
-    gitleaks git --redact --no-banner --log-opts=--all .
+    scripts/auditar.sh --secretos
 # Verificador en R (M0-09; tecnologias.md §3): regenera los esperados de R survey que usa pytest. Corre en el Mac, nunca en pytest.
 # Primero, una sola vez: cd verificador_r && Rscript -e 'source("renv/activate.R"); renv::restore()'
 # Equivale a: uv run python -m pap.inferencia.verificador_r esperados

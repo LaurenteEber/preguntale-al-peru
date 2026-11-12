@@ -1,0 +1,21 @@
+# Pool en el Mac, 20 corridas seguidas de tests/inferencia/test_pool_ejecutor.py (12/11/2026, macOS arm64)
+corrida 1: 15 passed in 45.62s
+corrida 2: 15 passed in 44.94s
+corrida 3: 15 passed in 45.07s
+corrida 4: 15 passed in 43.88s
+corrida 5: 15 passed in 43.92s
+corrida 6: 15 passed in 43.84s
+corrida 7: 15 passed in 45.35s
+corrida 8: 15 passed in 47.39s
+corrida 9: 15 passed in 45.96s
+corrida 10: 15 passed in 46.13s
+corrida 11: 15 passed in 44.93s
+corrida 12: 15 passed in 45.08s
+corrida 13: 15 passed in 44.58s
+corrida 14: 15 passed in 44.93s
+corrida 15: 15 passed in 45.05s
+corrida 16: 15 passed in 44.65s
+corrida 17: 15 passed in 45.12s
+corrida 18: 15 passed in 45.47s
+corrida 19: 15 passed in 45.93s
+corrida 20: 15 passed in 46.25s

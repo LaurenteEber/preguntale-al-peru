@@ -53,7 +53,7 @@ Orden: las etapas A y B pueden avanzar en paralelo; la etapa C depende de ambas.
 | **Etapa A. Base** | | | |
 | M1-00 | [Preparación, descargas y auditoría de dependencias](M1-00-preparacion.md) | — | hecha ([documentos](evidencia/m1-00_documentos.md), [respaldo](evidencia/m1-00_respaldo.txt), [modelos](evidencia/auditoria_modelos_lista_dueno.md), [fuentes](evidencia/m1-00_modelos_fuente.md), [semilla](evidencia/m1-00_semilla.md)); cubo sigue en `010ea965` |
 | M1-01 | [Decisiones del 12/11, reglas y tablas curadas](M1-01-decisiones.md) | M1-00 | hecha ([cambios de estado](evidencia/m1-01_cambios_de_estado.md), [catálogo](evidencia/m1-01_catalogo.md)) |
-| M1-02 | [Deuda de M0 que conviene pagar antes de crecer](M1-02-deuda-m0.md) | M1-00 | en curso |
+| M1-02 | [Deuda de M0 que conviene pagar antes de crecer](M1-02-deuda-m0.md) | M1-00 | hecha ([deuda](evidencia/m1-02_deuda.md), [pool Mac](evidencia/m1-02_pool_mac.txt), [pool Linux](evidencia/m1-02_pool_linux.txt)); consultas C-M1-02-1 a 3 |
 | M1-03 | [Uniones entre tablas hermanas, universo por medición y cortes nuevos](M1-03-uniones-universo.md) | M1-00; M1-01 para los valores decididos | pendiente |
 | **Etapa B. Índice y fichas** | | | |
 | M1-04 | [Texto de los cuestionarios y vínculo con las variables](M1-04-cuestionarios.md) | M1-00 | pendiente |

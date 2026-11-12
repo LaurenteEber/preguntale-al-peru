@@ -18,10 +18,10 @@ Owner reviews (3 h/week) never block: anything waiting for a visto stays `propue
 | ID | Story | Specs | Route | Status | Commits |
 |---|---|---|---|---|---|
 | T0 | M1-00 tarea 1: branch + supervisor documents | S1 | inline | done | dd3d8b3 |
-| T1 | M1-02 tarea 3: H05-1 reparar_dos | S1 S3 S5 | inline | in progress | |
+| T1 | M1-02 tarea 3: H05-1 reparar_dos | S1 S3 S5 | inline | done | 4b3eeb8 |
 | T2 | M1-00 rest | S1 S3 | inline + workers | done | 1f0532f, 3bd4995, 87a63b4, 69b8662, 6521fdc |
 | T3 | M1-01 decisiones, reglas y tablas curadas | S1 S3 S4 | workers + inline | done | 93aaf8f, 64e7d29, catálogo |
-| T4 | M1-02 rest of the debt | S1 S3 | inline | pending | |
+| T4 | M1-02 rest of the debt | S1 S3 | worker | done | M1-02 commit |
 | T5 | M1-03 uniones, universo, cortes | S1 S3 | tbd | pending | |
 | T6 | M1-04 cuestionarios | S1 | tbd | pending | |
 | T7 | M1-05 enriquecimiento | S1 S3 | tbd | pending | |
@@ -40,3 +40,4 @@ Owner reviews (3 h/week) never block: anything waiting for a visto stays `propue
 - L5 (12/11/2026): owner: "esos 2 últimos archivos también los ignoramos, no deben pasar a git." → bajar_modelos_busqueda.sh and supervision_seguridad_paquetes_m1.md added to .git/info/exclude.
 - L6 (12/11/2026): owner: "por otro lado, estaré fuera por 2 horas, hazme todas las consultas que requieras. ya descargué los modelos por si acaso, están en la bandeja". Models verified: 26/26 SHA-256 OK in biblioteca/cruda/bandeja/hf-*. Answers: (1) C-M0-11-2 when only the publication state changes: "Medir, informar y aplicar"; (2) Docker: "Sí, con colima. Solo requiere start"; (3) live LLM while away: "Sí, dentro de los topes" (US$ 5/día, US$ 20/lote, K-05); (4) "Sí, push sin PR" to origin/slice-m1.
 - L7 (12/11/2026): M1-01 worker: tasks 1–4 and 6 done; C-M0-11-2 measured on 782 survey rows + 90 recipe rows: 0 state changes (min n 139), applied; reglas fingerprint 14b83c8814a7 → f4233fd56056 (238 recorded bases changed only that fingerprint, checked); recipes verificado (K-03) → shadow confidence of 85 publishable rows from baja to 21 alta / 64 media (design §15.2, shadow only). Parent: applied test_ejecutor patch (2024–2025 now conglomerados_repetidos), t7 AGENTS.md, t8 via worker + parent fixes (§29, date, §26.1, "desde 2021" sentence reworded to only decided 2024–2025). Full suite 1862 passed 1 skipped. Commit 93aaf8f + docs commit. Pending t5 catálogo.
+- L8 (12/11/2026): owner: "continua" after quota stop; workers resumed. M1-01 t5 catalog done (5d6b927; push failed with GitHub 500). M1-02 worker: tasks 1,2,4–9 + 4 minors; pool 20/20 Mac and 20/20 Linux (colima); cube, 34 Parquet, 90 recipe rows, SIEN tables unchanged. Consultas C-M1-02-1 (osv-scanner 3 days old), C-M1-02-2 (H06-4 QSSEXO unit), C-M1-02-3 (H04-4 huella v2). Full suite 1897 passed 1 skipped (2 expected socket-block warnings). Owner asked "cómo va el agente?".

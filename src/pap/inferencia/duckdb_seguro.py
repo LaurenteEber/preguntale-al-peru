@@ -7,8 +7,12 @@ Orden obligatorio (si se invierte, DuckDB da error: con el acceso externo apagad
 4. `memory_limit` y `threads` (de `curados/inferencia/parametros.yaml`, sección `duckdb`);
 5. `SET lock_configuration=true`: desde aquí nada de lo anterior se puede volver a cambiar.
 
-Con esto `read_text('/etc/hosts')`, `COPY … TO` y la lectura fuera de las carpetas permitidas fallan; la lectura de los Parquet
-de esas carpetas sí funciona. `.arrow()` devuelve un `pyarrow.RecordBatchReader` (DuckDB 1.5), que `polars.from_arrow` acepta.
+Con esto `read_text('/etc/hosts')`, la lectura y la escritura fuera de las carpetas permitidas fallan; la lectura de los Parquet
+de esas carpetas sí funciona. **Ojo: `COPY … TO` no falla dentro de las carpetas permitidas** (sobrescribiría un Parquet existente):
+la barrera contra la escritura es `ejecutar_select`, que solo deja pasar una sentencia SELECT, y todo SQL armado a partir de un plan
+pasa por ella. Para M4 (servidor): esas carpetas deben ser de solo lectura en el sistema de archivos del servidor (volumen montado
+con `:ro`, usuario sin permiso de escritura); no se confía solo en esta conexión (M1-02).
+`.arrow()` devuelve un `pyarrow.RecordBatchReader` (DuckDB 1.5), que `polars.from_arrow` acepta.
 """
 from __future__ import annotations
 

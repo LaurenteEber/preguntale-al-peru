@@ -337,8 +337,25 @@ class Plan:
     se_quedan: list[tuple[dict, str]]
 
     @property
+    def objetos(self) -> dict[Path, int]:
+        """Archivos del almacén que se borrarían, una sola vez cada uno: dos ZIP con la misma huella son un mismo objeto."""
+        return {p: n for _, p, n in self.liberar}
+
+    @property
     def bytes(self) -> int:
-        return sum(t[2] for t in self.liberar)
+        return sum(self.objetos.values())
+
+
+def _contrastar_con_bitacora(rutas: Rutas, b: Bloque, estado: dict) -> None:
+    """El registro (`almacen_zst.json`) dice «respaldado»; la bitácora (`verificaciones.jsonl`) debe tener la restauración que lo probó:
+    una línea `restaurar`/`ok` de la fuente del bloque, con el id del bloque y el mismo release (M1-02, H11-6). Si no, no se borra nada."""
+    release = estado.get("release")
+    for x in bitacora.leer(rutas):
+        if (x.get("accion") == "restaurar" and x.get("resultado") == "ok" and x.get("source_id") == b.fuente
+                and (x.get("detalle") or "").startswith(f"{b.id}:") and release and release in (x.get("detalle") or "")):
+            return
+    raise PapError(f"el registro dice que el bloque {b.id} está respaldado, pero la bitácora no tiene una restauración correcta con "
+                   f"ese release: no se borra nada. Corra de nuevo `pap almacen restaurar --bloque {b.id}`")
 
 
 def planear_liberacion(rutas: Rutas, bloque: str) -> tuple[Bloque, Plan]:
@@ -347,6 +364,7 @@ def planear_liberacion(rutas: Rutas, bloque: str) -> tuple[Bloque, Plan]:
     if estado.get("estado") != "respaldado" or not (estado.get("reconvertido") or {}).get("huella_contenido_v1"):
         raise PapError(f"el bloque {b.id} no está respaldado con la restauración probada: "
                        f"corra antes `pap almacen restaurar --bloque {b.id}`")
+    _contrastar_con_bitacora(rutas, b, estado)
     comprobadas = set(estado.get("huellas") or [])
     recs = recursos_bloque(rutas, b)
     # Huellas que usa cualquier recurso que no se va a liberar (otra fuente, otro año, o uno protegido del mismo
@@ -385,7 +403,7 @@ def liberar(rutas: Rutas, bloque: str, *, ejecutar: bool = False, confirmar=None
         emitir(f"liberaría  {rec['name']:<34} {rec['original_filename']:<28} {n / 1e6:9.1f} MB")
     for rec, motivo in plan.se_quedan:
         emitir(f"se queda   {rec['name']:<34} {rec['original_filename']:<28} ({motivo})")
-    emitir(f"Total: {len(plan.liberar)} ZIP, {plan.bytes / 1e6:.1f} MB.")
+    emitir(f"Total: {len(plan.objetos)} ZIP, {plan.bytes / 1e6:.1f} MB.")
     if not ejecutar:
         emitir("Simulación: no se borró nada. Para liberar: --ejecutar.")
     elif not plan.liberar:
@@ -393,17 +411,19 @@ def liberar(rutas: Rutas, bloque: str, *, ejecutar: bool = False, confirmar=None
     elif not (confirmar and confirmar()):
         raise PapError("liberación no confirmada: no se borró nada")
     else:
-        borrados = 0
+        borrados, quitados = 0, set()
         for rec, p, n in plan.liberar:
-            p.unlink()
-            borrados += n
+            if p not in quitados:                       # dos ZIP con la misma huella son un solo objeto: se borra una vez
+                p.unlink(missing_ok=True)
+                quitados.add(p)
+                borrados += n
             bitacora.anotar(rutas, rec.get("source_id"), "liberar", "ok", hash=rec["hash"],
                             detalle=f"{b.id}: {rec['original_filename']} ({n} bytes); respaldo en "
                                     f"{leer_bloques(rutas)[b.id].get('release')}")
         estado = leer_bloques(rutas)[b.id]
-        estado["liberado"] = {"fecha": ahora(), "archivos": len(plan.liberar), "bytes": borrados}
+        estado["liberado"] = {"fecha": ahora(), "archivos": len(quitados), "bytes": borrados}
         _escribir_bloque(rutas, b.id, estado)
-        emitir(f"Liberados {len(plan.liberar)} ZIP ({borrados / 1e6:.1f} MB). Para volver a convertir el bloque: "
+        emitir(f"Liberados {len(quitados)} ZIP ({borrados / 1e6:.1f} MB). Para volver a convertir el bloque: "
                f"pap almacen restaurar --bloque {b.id}.")
     aviso = aviso_espacio(rutas)
     if aviso:

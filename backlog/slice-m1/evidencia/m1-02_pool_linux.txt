@@ -1,0 +1,28 @@
+# Pool en Linux (imagen del proyecto, Linux 6.8 aarch64 en colima, Python 3.12.16), 20 corridas seguidas (12/11/2026)
+Linux 6.8.0-117-generic aarch64
+== 4 años, 192 dominios ==
+
+4 años, 192 dominios: 0.977 s dentro del trabajador, pico 616 MB
+.
+1 passed in 5.88s
+== pool, 20 corridas seguidas ==
+corrida 1: 14 passed, 1 skipped in 85.12s (0:01:25)
+corrida 2: 14 passed, 1 skipped in 86.01s (0:01:26)
+corrida 3: 14 passed, 1 skipped in 89.47s (0:01:29)
+corrida 4: 14 passed, 1 skipped in 87.07s (0:01:27)
+corrida 5: 14 passed, 1 skipped in 90.42s (0:01:30)
+corrida 6: 14 passed, 1 skipped in 85.10s (0:01:25)
+corrida 7: 14 passed, 1 skipped in 84.75s (0:01:24)
+corrida 8: 14 passed, 1 skipped in 85.09s (0:01:25)
+corrida 9: 14 passed, 1 skipped in 87.80s (0:01:27)
+corrida 10: 14 passed, 1 skipped in 88.07s (0:01:28)
+corrida 11: 14 passed, 1 skipped in 86.57s (0:01:26)
+corrida 12: 14 passed, 1 skipped in 88.52s (0:01:28)
+corrida 13: 14 passed, 1 skipped in 87.55s (0:01:27)
+corrida 14: 14 passed, 1 skipped in 86.15s (0:01:26)
+corrida 15: 14 passed, 1 skipped in 86.79s (0:01:26)
+corrida 16: 14 passed, 1 skipped in 85.77s (0:01:25)
+corrida 17: 14 passed, 1 skipped in 84.08s (0:01:24)
+corrida 18: 14 passed, 1 skipped in 84.18s (0:01:24)
+corrida 19: 14 passed, 1 skipped in 84.40s (0:01:24)
+corrida 20: 14 passed, 1 skipped in 84.92s (0:01:24)

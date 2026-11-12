@@ -391,3 +391,59 @@ def test_liberar_no_borra_un_objeto_que_comparte_huella_con_un_protegido(bloque,
     out = capsys.readouterr().out
     assert "se queda   endes-2024-vivienda" in out and "(lo usa otro recurso)" in out
     assert (rutas.cruda / hogar["path"]).exists()
+
+
+# ------------------------------------------------------------------ M1-02, tarea 8 (H11-6)
+
+def _quitar_de_la_bitacora(rutas, accion):
+    p = rutas.verificaciones
+    lineas = [x for x in p.read_text(encoding="utf-8").splitlines() if json.loads(x)["accion"] != accion]
+    p.write_text("".join(x + "\n" for x in lineas), encoding="utf-8")
+
+
+def test_liberar_no_borra_si_la_bitacora_no_tiene_la_restauracion_que_dice_el_registro(bloque, capsys):
+    rutas = bloque["rutas"]
+    assert cli.main(["almacen", "restaurar", "--bloque", "endes-2024"]) == 0
+    _quitar_de_la_bitacora(rutas, "restaurar")
+    capsys.readouterr()
+    antes = _huellas(bloque["protegidos"] + [bloque["mujer"]])
+    for args in ([], ["--ejecutar", "--si"]):
+        assert cli.main(["almacen", "liberar", "--bloque", "endes-2024", *args]) == 1
+        assert "bitácora" in capsys.readouterr().err
+    assert _huellas(bloque["protegidos"] + [bloque["mujer"]]) == antes
+    assert not [x for x in _bitacora(rutas) if x["accion"] == "liberar"]
+
+
+def test_liberar_no_borra_si_el_release_del_registro_no_es_el_de_la_bitacora(bloque, capsys):
+    rutas = bloque["rutas"]
+    assert cli.main(["almacen", "restaurar", "--bloque", "endes-2024"]) == 0
+    reg = json.loads(almacen.ruta_registro(rutas).read_text())
+    reg["bloques"]["endes-2024"]["release"] = "https://github.com/otro/repo/releases/tag/crudos-endes-2024"
+    almacen.ruta_registro(rutas).write_text(json.dumps(reg))
+    capsys.readouterr()
+    assert cli.main(["almacen", "liberar", "--bloque", "endes-2024", "--ejecutar", "--si"]) == 1
+    assert "bitácora" in capsys.readouterr().err
+    assert bloque["mujer"].exists()
+
+
+def test_liberar_con_dos_zip_de_la_misma_huella_borra_el_objeto_una_vez_y_registra_los_dos(bloque, capsys):
+    rutas = bloque["rutas"]
+    dp = rutas.capturas / "INEI-ENDES" / "2026-11-09" / "datapackage.json"
+    d = json.loads(dp.read_text())
+    mujer = next(r for r in d["resources"] if r["name"] == "endes-2024-mujer")
+    d["resources"].append({**mujer, "name": "endes-2024-mujer-copia", "original_filename": "968-Modulo1631-copia.zip"})
+    dp.write_text(json.dumps(d))
+    contenido = (bloque["release"] / "968-Modulo1631.zip").read_bytes()
+    (bloque["release"] / "968-Modulo1631-copia.zip").write_bytes(contenido)
+    s = bloque["release"] / "SHA256SUMS"
+    s.write_text(s.read_text() + f"{bloque['h_mujer']}  968-Modulo1631-copia.zip\n")
+    assert cli.main(["almacen", "restaurar", "--bloque", "endes-2024"]) == 0
+    capsys.readouterr()
+    n = bloque["mujer"].stat().st_size
+    assert cli.main(["almacen", "liberar", "--bloque", "endes-2024", "--ejecutar", "--si"]) == 0
+    out = capsys.readouterr().out
+    assert "Total: 1 ZIP" in out and "Liberados 1 ZIP" in out
+    assert not bloque["mujer"].exists()
+    registradas = [x for x in _bitacora(rutas) if x["accion"] == "liberar"]
+    assert len(registradas) == 2 and all(x["resultado"] == "ok" for x in registradas)
+    assert _bloques(rutas)["endes-2024"]["liberado"] == {**_bloques(rutas)["endes-2024"]["liberado"], "archivos": 1, "bytes": n}
