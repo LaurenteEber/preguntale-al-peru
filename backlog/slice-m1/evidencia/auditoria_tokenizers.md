@@ -32,7 +32,7 @@ Plantilla de M0-00b. **Historia:** M1-00 (tarea 8) · **Fecha:** 12/11/2026 · *
 | Si aparece algo: ¿se alcanza? | Ver abajo | |
 
 **CVE-2026-85670** («BpeBuilder: desborde de búfer al cargar un `tokenizer.json` manipulado»; solo denegación de servicio por aborto del proceso, más un desborde secundario si hay `continuing_subword_prefix`).
-- El registro dice «último afectado: 0.23.2». La 0.23.3 sale del rango, **pero** el reporte upstream (huggingface/tokenizers#2094) se cerró el 31/10/2026, posterior a la 0.23.3 (9/10/2026): **no pude comprobar que 0.23.3 lleve la corrección.** Trato la 0.23.3 como posiblemente afectada.
+- El registro dice «último afectado: 0.23.2». La 0.23.3 sale del rango, **pero** el reporte upstream (huggingface/tokenizers#2094) se cerró el 31/10/2026, posterior a la 0.23.3 (9/10/2026): **no pude comprobar que 0.23.3 lleve la corrección.** Trato la 0.23.3 como **afectada, sin alcance con los archivos verificados** (el supervisor leyó el código fuente: la parte con el fallo es idéntica a la de la 0.23.2, y no existe una 0.23.x corregida).
 - Solo se alcanza con un `tokenizer.json` **manipulado y de tipo BPE**. Medí los que vamos a cargar, en el commit fijado y con el SHA-256 verificado:
   - e5-small: tipo **Unigram** (no se alcanza);
   - granite-97m-r2: BPE, 413 540 reglas de fusión; **ninguna** regla supera el largo de la clave más larga del vocabulario; sin `continuing_subword_prefix`;

@@ -136,3 +136,69 @@ def test_el_estado_de_otra_corrida_no_se_mezcla_con_esta(tmp_path):
         _correr(tmp_path, ProveedorFalso(srv, corta_en_estado=True))
     with pytest.raises(PapError, match="otra corrida"):
         vincular_con_llm(VARS[:1], PREGUNTAS, CUESTS, ProveedorFalso(srv), tmp_path, _pl(), dormir=lambda s: None)
+
+
+def test_un_vinculo_rechazado_por_la_verificacion_guarda_la_pregunta_que_eligio_el_modelo(tmp_path):
+    """Hallazgo 6: sin la pregunta elegida los rechazos no se pueden auditar."""
+    vin = _correr(tmp_path, ProveedorFalso(ServidorFalso(_responder())))
+    por = {v.codigo: v for v in vin}
+    assert por["S413"].motivo == "rechazada_por_verificacion" and por["S413"].pregunta_id is None
+    assert "individual:413" in por["S413"].evidencia and "rechaz" in por["S413"].evidencia
+    import polars as pl
+    from pap.inferencia.cuestionarios import tabla_de_vinculos
+    df = tabla_de_vinculos(vin, PREGUNTAS)
+    assert "individual:413" in df.filter(pl.col("codigo") == "S413")["evidencia"][0]
+
+
+def test_si_la_verificacion_viene_ilegible_se_guarda_igual_la_pregunta_elegida(tmp_path):
+    def f(p):
+        if p.custom_id.startswith("ver"):
+            return "no es json"
+        return _responder()(p)
+    por = {v.codigo: v for v in _correr(tmp_path, ProveedorFalso(ServidorFalso(f)))}
+    assert por["S412"].motivo == "error_del_lote" and "individual:412" in por["S412"].evidencia
+
+
+def test_una_respuesta_invalida_guarda_lo_que_dijo_el_modelo(tmp_path):
+    srv = ServidorFalso(responder_con({"S412": {"id": "c99"}}))
+    por = {v.codigo: v for v in _correr(tmp_path, ProveedorFalso(srv))}
+    assert por["S412"].motivo == "respuesta_invalida" and "c99" in por["S412"].evidencia
+
+
+def _pl_ver(**kw):
+    return replace(_pl(), **kw)
+
+
+def _peticion_de_verificar(pregunta, pl):
+    from pap.inferencia.cuestionarios_lote import peticiones_verificar
+    v = VariableDic("REC43", "H37M", "Tomó ibuprofeno")
+    [p], _ = peticiones_verificar({("REC43", "H37M"): pregunta.id}, {("REC43", "H37M"): v}, {pregunta.id: pregunta}, pl)
+    return p
+
+
+def test_la_verificacion_muestra_todas_las_opciones_de_la_pregunta_hasta_opciones_max(tmp_path):
+    ops = [f"{chr(65 + i)} OPCION{i:02d}" for i in range(15)]
+    q = Pregunta("salud", "471B", "¿Qué le dieron para la fiebre? CIRCULE TODO LO MENCIONADO", "S", 3, ops)
+    p = _peticion_de_verificar(q, _pl_ver(opciones_en_prompt=8))
+    assert all(f"OPCION{i:02d}" in p.usuario for i in range(15))               # no se corta en opciones_en_prompt (8)
+    from pap.inferencia.cuestionarios import _config
+    tope = int(_config()["opciones_max"]["valor"])
+    q2 = Pregunta("salud", "9", "¿Cuál?", "S", 3, [f"OP{i:03d}X" for i in range(tope + 10)])
+    p2 = _peticion_de_verificar(q2, _pl())
+    assert f"OP{tope - 1:03d}X" in p2.usuario and f"OP{tope:03d}X" not in p2.usuario
+
+
+def test_la_instruccion_de_verificar_admite_una_opcion_de_respuesta_multiple_y_sigue_diciendo_false_si_dudas():
+    from pap.inferencia.cuestionarios_lote import SISTEMA_VERIFICAR
+    t = SISTEMA_VERIFICAR.lower()
+    assert "respuesta múltiple" in t and "una de las opciones" in t and "sí coincide" in t
+    assert "si dudas, responde false" in t
+
+
+def test_la_pasada_de_vincular_sigue_cortando_las_opciones_en_prompt():
+    from pap.inferencia.cuestionarios import Candidatos
+    from pap.inferencia.cuestionarios_lote import peticiones_vincular
+    ops = [f"{i} OPCION{i:02d}" for i in range(15)]
+    q = Pregunta("individual", "412", "¿Le hicieron la prueba?", "S", 3, ops)
+    [p], _ = peticiones_vincular([VARS[0]], Candidatos([q]), CUESTS, _pl_ver(opciones_en_prompt=8))
+    assert "OPCION07" in p.usuario and "OPCION08" not in p.usuario

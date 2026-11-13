@@ -126,7 +126,9 @@ def test_la_upm_estable_de_2024_es_la_misma_que_la_del_diseno(ctx):
     pc = verificar(RECETAS["anemia"]("nacional"), ctx, con)
     fuente, *_ = Ejecutor(relaciones=leer_relacion_entre_anios(RAIZ_REAL)).preparar({2024: pc, 2025: pc}, ctx)
     a, b = fuente.cargar(2024), fuente.cargar(2024, upm_estable=True)
-    assert a["upm"].cast(str).to_list() == b["upm"].cast(str).to_list() and a["u"].sum() == b["u"].sum() == 9959
+    # Dos cargas tienen las mismas filas pero no garantizan el mismo orden (Parquet con hilos: hallazgo 1 del supervisor): se comparan ordenadas.
+    par = lambda d: sorted(zip(d["upm"].cast(str).to_list(), d["u"].to_list()))
+    assert par(a) == par(b) and a["u"].sum() == b["u"].sum() == 9959
 
 
 def test_el_cubo_no_topa_el_n_efectivo_y_el_ejecutor_si(cubo_2024):

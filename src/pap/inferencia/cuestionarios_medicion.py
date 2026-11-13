@@ -114,6 +114,25 @@ def recall_de_candidatos(variables: list[VariableDic], vinculos: dict[tuple[str,
             "porcentaje": round(100 * aciertos / total, 1) if total else None}
 
 
+def recall_de_muestra(variables: list[VariableDic], conocidas: dict[tuple[str, str], str], candidatos: Candidatos,
+                      cuests: dict[str, list[str]], k: int) -> dict:
+    """Como `recall_de_candidatos`, pero con una muestra de variables cuya pregunta se conoce por otra vía (`conocidas`: (tabla, código) →
+    id de pregunta), y con el puesto de la pregunta correcta en el orden completo de candidatas (1 = la más parecida; None si no es del
+    cuestionario de esa tabla). Solo mide el recorte; no decide ningún vínculo."""
+    filas = []
+    por_clave = {(v.tabla, v.codigo): v for v in variables}
+    for clave, pid in sorted(conocidas.items()):
+        v = por_clave.get(clave)
+        if v is None:
+            continue
+        orden = [q.id for q in candidatos.de(v, cuests.get(v.tabla, []), len(candidatos.preguntas))]
+        puesto = orden.index(pid) + 1 if pid in orden else None
+        filas.append({"variable": f"{clave[0]}.{clave[1]}", "etiqueta": v.etiqueta, "pregunta": pid, "puesto": puesto,
+                      "entre_los_candidatos": puesto is not None and puesto <= k})
+    n = sum(f["entre_los_candidatos"] for f in filas)
+    return {"k": k, "total": len(filas), "entre_los_candidatos": n, "porcentaje": round(100 * n / len(filas), 1) if filas else None, "filas": filas}
+
+
 # ------------------------------------------------------------------ informes en Markdown (evidencia)
 
 def _tabla_md(cab: list[str], filas: list[list]) -> str:

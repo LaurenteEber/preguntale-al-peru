@@ -47,3 +47,18 @@ def test_recall_de_candidatos_se_mide_con_las_variables_de_respuesta_conocida():
     vin = vincular_por_regla(vs, preg)
     r = recall_de_candidatos(vs, vin, Candidatos(preg), {"CSALUD01": ["salud"]}, k=1)
     assert r == {"k": 1, "variables_con_respuesta_conocida": 2, "con_la_pregunta_entre_los_candidatos": 2, "porcentaje": 100.0}
+
+
+def test_recall_de_una_muestra_con_pregunta_conocida_da_el_puesto_de_la_correcta():
+    from pap.inferencia.cuestionarios_medicion import recall_de_muestra
+    preg = [Pregunta("individual", "105", "¿En qué día, mes y año nació Ud.?", "S", 1), Pregunta("individual", "106", "¿Cuántos años cumplidos tiene?", "S", 1),
+            Pregunta("individual", "107", "¿Alguna vez asistió a la escuela?", "S", 1)]
+    vs = [_v("T", "V009", "Mes de nacimiento de la entrevistada"), _v("T", "V012", "Edad actual"), _v("T", "V999", "Nada que ver zzz")]
+    conocidas = {("T", "V009"): "individual:105", ("T", "V012"): "individual:106", ("T", "V999"): "individual:107"}
+    r = recall_de_muestra(vs, conocidas, Candidatos(preg), {"T": ["individual"]}, k=2)
+    assert r["k"] == 2 and r["total"] == 3
+    por = {f["variable"]: f for f in r["filas"]}
+    assert por["T.V009"]["puesto"] == 1 and por["T.V009"]["entre_los_candidatos"] is True
+    assert por["T.V012"]["entre_los_candidatos"] is True
+    assert por["T.V999"]["puesto"] is not None                    # el puesto se informa aunque quede fuera de k
+    assert r["entre_los_candidatos"] == sum(f["entre_los_candidatos"] for f in r["filas"])

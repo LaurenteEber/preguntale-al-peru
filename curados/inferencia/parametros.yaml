@@ -183,7 +183,7 @@ batch:
   max_tokens_vincular: {valor: 60, supuesto: M1-04}
   max_tokens_verificar: {valor: 120, supuesto: M1-04}
   salida_estructurada: {valor: true, supuesto: M1-04, nota: "activada el 13/11/2026 con el visto del dueño: en el lote de prueba sin ella, 207 de 271 respuestas (76 %) vinieron en prosa y se descartaron (evidencia/m1-04_lote.md §0). Con true, `output_config.format` (json_schema) obliga al formato de un solo campo"}
-  opciones_en_prompt: {valor: 8, supuesto: M1-04}        # opciones de respuesta de cada pregunta candidata que se muestran al LLM
+  opciones_en_prompt: {valor: 8, supuesto: M1-04, nota: "solo para la pasada de vincular (candidatas). La pasada de verificar muestra todas las opciones de la pregunta, hasta `cuestionarios.opciones_max` (propuesta del dueño del 13/11/2026, supuesto M1-04)"}        # opciones de respuesta de cada pregunta candidata que se muestran al LLM
 
 inferencia:
   # Variables en estado `propuesto` (M1-01; se deriva de K-04). Con `true`, el motor en sombra admite variables `propuesto` mientras el visto del

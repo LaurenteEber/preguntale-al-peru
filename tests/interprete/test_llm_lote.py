@@ -125,3 +125,24 @@ def test_por_defecto_se_pide_salida_estructurada_con_el_esquema_de_la_peticion(m
     salidas = [r["params"]["output_config"] for r in visto["cuerpo"]["requests"]]
     assert salidas[0]["format"] == {"type": "json_schema", "schema": ESQUEMA_VINCULAR}
     assert "format" not in salidas[1]                                    # sin esquema no se pide formato
+
+
+@pytest.mark.parametrize("url_ajena", ["https://evil.example.com/v1/messages/batches/m/results",
+                                       "http://api.anthropic.com/v1/messages/batches/m/results",
+                                       "https://api.anthropic.com.evil.example/results",
+                                       "https://api.anthropic.com@evil.example/results",
+                                       "//evil.example/results", "file:///etc/passwd"])
+def test_la_results_url_ajena_no_recibe_la_clave_ni_se_llama(monkeypatch, url_ajena):
+    """Hallazgo 2 del supervisor: la clave solo viaja al dominio de `batch.api_url` y por https."""
+    llamadas = []
+
+    def handler(req: httpx.Request):
+        llamadas.append((req.method, str(req.url)))
+        return httpx.Response(200, json={"id": "m", "processing_status": "ended", "results_url": url_ajena})
+
+    c = _cliente(handler, monkeypatch)
+    with pytest.raises(NoDisponible) as e:
+        list(c.resultados("m"))
+    assert e.value.motivo == "url_de_resultados_ajena"
+    assert [u for _, u in llamadas] == ["https://api.anthropic.com/v1/messages/batches/m"]       # solo la consulta del lote; nada a la URL ajena
+    assert CLAVE_DE_PRUEBA not in str(e.value) and CLAVE_DE_PRUEBA not in repr(e.value) and "evil" not in str(e.value)

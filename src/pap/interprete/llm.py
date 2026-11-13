@@ -422,10 +422,25 @@ class ClienteLote:
         e = self._lote(batch_id).get("processing_status")
         return "en_proceso" if e == "in_progress" else "terminado" if e == "ended" else f"otro:{e}"
 
+    def _comprobar_url_de_resultados(self, url) -> None:
+        """La clave solo viaja a https y al mismo servidor que `batch.api_url` (hallazgo 2 del supervisor): la `results_url` la devuelve
+        la API y no se le cree. Si no coincide, falla antes de llamar y el error no lleva la URL ni la clave."""
+        from urllib.parse import urlsplit
+
+        try:
+            u, base = urlsplit(str(url)), urlsplit(self.par_lote.api_url)
+            ok = (u.scheme == "https" and u.username is None and u.password is None and bool(u.hostname)
+                  and u.hostname == base.hostname and u.port == base.port)
+        except ValueError:
+            ok = False
+        if not ok:
+            raise NoDisponible("url_de_resultados_ajena")
+
     def resultados(self, batch_id: str):
         from ..inferencia.cuestionarios_lote import ResultadoPeticion
 
         url = self._lote(batch_id).get("results_url") or f"{self.par_lote.api_url}/{batch_id}/results"
+        self._comprobar_url_de_resultados(url)
         for linea in self._llamar("GET", url).text.splitlines():
             if not linea.strip():
                 continue

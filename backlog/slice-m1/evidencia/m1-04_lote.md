@@ -34,6 +34,49 @@ Comando (la clave se carga solo en el comando, desde el Llavero; nunca se imprim
 - **Las rechazadas son, en buena parte, vínculos correctos:** en una muestra de 14, la mayoría eran respuestas de opción múltiple bien elegidas (H37M «Tomó ibuprofeno» → 471B «¿Qué le dieron para tratar la fiebre o la tos?»; H32T «curandero» → 469D «¿Dónde buscó consejo o tratamiento?»; H15J → 473D). Causa probable: la pasada de verificación muestra solo las primeras 8 opciones (`batch.opciones_en_prompt`) y su instrucción pide «mismo ítem»; si la opción de la variable (ibuprofeno, curandero) no está entre esas 8, el revisor dice que no. Es un error del lado seguro (nunca un vínculo falso), pero deja sin vincular casi todas las variables de opción múltiple.
 - **Propuesta antes del lote completo:** en la verificación, mostrar todas las opciones de la pregunta (hasta `cuestionarios.opciones_max`) y decir que una variable que es una opción de una pregunta de respuesta múltiple sí coincide con esa pregunta; repetir REC43 (≈ US$ 0,6) para medir. Nada se aplicó como `revisado`: todo sigue en `propuesto`.
 
+## 0.2 Antes del lote completo (13/11/2026)
+
+Medido sin LLM ni red (`m1-04_recall.py`; funciones `recall_de_candidatos` y `recall_de_muestra` de `cuestionarios_medicion.py`).
+
+**Cambios hechos antes de correr nada más en vivo** (con prueba cada uno):
+
+- *Hallazgo 2:* `ClienteLote.resultados` exige que la `results_url` que devuelve la API sea https y del mismo servidor que `batch.api_url` (sin usuario ni puerto distinto); si no, falla con `url_de_resultados_ajena` **antes** de llamar, sin la URL ni la clave en el error. Pruebas con 6 URL ajenas (`tests/interprete/test_llm_lote.py`).
+- *Hallazgo 6:* un vínculo rechazado por la verificación guarda en `evidencia` la pregunta que eligió el modelo («pregunta elegida por el modelo y rechazada en la verificación: individual:413»); una verificación ilegible guarda también la pregunta elegida, y una respuesta inválida guarda lo que dijo el modelo (`vinculos_llm.parquet`).
+- *Propuesta del dueño para la verificación:* `peticiones_verificar` muestra **todas** las opciones de la pregunta (hasta `cuestionarios.opciones_max`, 60) y `SISTEMA_VERIFICAR` dice que una variable que es una opción o ítem de una pregunta de respuesta múltiple sí coincide con ella; sigue «si dudas, responde false». `batch.opciones_en_prompt` (8) queda solo para las candidatas de la pasada de vincular (supuesto M1-04, anotado en el YAML). **No se repitió REC43 en vivo**: el efecto sobre los 104 rechazos solo se mide corriendo el lote.
+
+**Hallazgo 7 — ¿está la pregunta correcta entre las 20 candidatas?**
+
+| Conjunto | Variables | Con la pregunta entre las 20 | % |
+|---|---|---|---|
+| Vinculadas por la regla del código (pregunta conocida por el número del código) | 319 | 289 | **90,6 %** (con 30 candidatas, 293 = 91,8 %; con 40, igual) |
+| Muestra de REC0111 con pregunta conocida por etiqueta y texto (lista abajo) | 14 | 11 | **78,6 %** |
+
+La muestra de REC0111 son las V1xx y V009, V010, V012 cuya etiqueta del diccionario y cuya pregunta del cuestionario individual dicen lo mismo (se compararon a mano; no se agregó ninguna dudosa; se dejaron fuera las del hogar —V113 a V129—, las construidas —V011, V013, V133, V149— y V130, religión, sin pregunta en el cuestionario individual extraído). Puesto = lugar de la pregunta correcta entre todas las del cuestionario individual (1 = la más parecida):
+
+| Variable | Pregunta | Puesto | ¿Entre las 20? |
+|---|---|---|---|
+| V009 (mes de nacimiento) | 105 | 48 | **no** |
+| V010 (año de nacimiento) | 105 | 46 | **no** |
+| V012 (edad actual) | 106 | 21 | **no** (por uno) |
+| V103 | 102 | 2 | sí |
+| V104 | 103 | 1 | sí |
+| V105 | 104 | 1 | sí |
+| V106 | 108 | 2 | sí |
+| V107 | 108 | 1 | sí |
+| V131 (etnicidad) | 119D | 5 | sí |
+| V155 | 114 | 1 | sí |
+| V156 | 114A | 1 | sí |
+| V157, V158, V159 | 115, 116, 117 | 1 | sí |
+
+**Por qué V009, V010 y V012 no llegan:** el recorte compara palabras (las primeras 5 letras). La etiqueta «Mes de nacimiento de la entrevistada» no comparte palabras con «¿En qué día, mes y año nació Ud.?» (solo «mes», que es de las más comunes), ni «Edad actual» con «¿Cuántos años cumplidos tiene?». Las dos preguntas existen y se extrajeron bien; falta el parecido de palabras. **El 90,6 % de la regla puede ser optimista:** esas 319 variables se vincularon porque su código lleva el número de pregunta; las que quedan para el LLM no lo llevan, y la muestra de REC0111 (sin número en el código) da 78,6 %. Con 14 variables la muestra es pequeña: es una señal, no una cifra. Con k = 30 o 40 no mejora gran cosa en el conjunto de la regla (91,8 %).
+
+**Antes del lote completo, el dueño decide** si se acepta ese techo (las variables como V009/V010/V012 salen «ninguna» y quedan `no_encontrada`, el lado seguro) o si se mejora el recorte (por ejemplo, un sinónimo de «edad» y «nacimiento» o más candidatas, p. ej. 30). No se cambió `batch.candidatos_k`.
+
+**Hallazgo 8 — costo real contra lo facturado.** El «costo real» de las tablas de arriba se calcula con los precios configurados (`interprete.precios_usd_por_millon` con el 50 % de descuento) y los tokens que devuelve la API; no es lo facturado.
+- Primera corrida: calculado **US$ 1,14** (tabla de §0). Gasto facturado según la consola: (lo anota el dueño)
+- Segunda corrida: calculado **US$ 1,25** (tabla de §0.1). Gasto facturado según la consola: (lo anota el dueño)
+- Dónde mirarlo: consola de Anthropic, Workspace `pap-lotes`, gasto del mes. Si difiere de US$ 2,39 de forma apreciable, se corrigen los precios o el descuento antes del lote completo.
+
 ## 1. Por qué no se llamó a la Batch API
 
 La auditoría (`auditoria_batch_api.md`, condición 1) exige una **clave y un Workspace aparte** del servicio web, solo para los lotes. Se revisó, sin mostrar ningún valor:
