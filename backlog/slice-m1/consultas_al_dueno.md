@@ -46,6 +46,11 @@ Detalle para el dueño en los informes del supervisor. Cada uno se cierra con su
 | 8 | El «costo real» del lote se calcula con el precio configurado, no con lo facturado | Anotar en la evidencia el gasto que muestra la consola del Workspace `pap-lotes` (lo mira el dueño) junto al calculado ✅ **Hecho (13/11):** en `m1-04_lote.md` hay una línea «Gasto facturado según la consola» junto a cada corrida, para que la llene el dueño. |
 | 9 | Los universos de REC44 no exigen el pernocte | Resuelto con C-M1-07-3 (a) |
 
+| 10 | Vínculos de REC43 por revisar (dueño, 13/11/2026) | H44A → 474C a mano; revisar H46A → 469F; informe sin LLM de coherencia entre variables hermanas (H12*, H32*, H37*…). Antes del lote completo |
+| 11 | La batería `nino_vivo` incluye variables que son de todos los nacimientos (dueño, 13/11/2026) | `nino_vivo` queda solo con la alimentación actual (M35, M36, M38, M39, S447 y similares); M4, M34, S436C, S431A, M6–M9, M27–M29, S441 y S442 vuelven a todos los nacimientos. Agregar el control «lactó alguna vez 98,9 %» (informe principal ENDES 2024, p. 209). Condición del visto a M1-07 |
+| 12 | `docs/estado.md` al día | Actualizarlo con lo hecho el 13/11 |
+| 13 | La evidencia del lote no dice que los vínculos de RECH6 y REC0111 vienen de la verificación anterior | Anotarlo en `m1-04_lote.md` §0.3 |
+
 (El hallazgo 3, la extracción de la sección 10 y del calendario, quedó corregido en `f1a81d3`.)
 
 
