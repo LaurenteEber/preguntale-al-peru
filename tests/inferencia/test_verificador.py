@@ -13,6 +13,10 @@ from .recetas_m0 import RECETAS, plan_anemia, plan_dci
 from .sintetico_m0 import VERIFICADA_2024, contexto_sintetico
 
 
+def plan_de_la_receta(nombre: str) -> Plan:
+    return RECETAS[nombre]("nacional")
+
+
 def con_cambios(plan: Plan, **cambios) -> Plan:
     return Plan.model_validate({**json.loads(plan.model_dump_json()), **cambios})
 
@@ -29,7 +33,9 @@ def test_las_tres_recetas_se_completan_con_universo_diseno_y_territorio(sint):
     for nombre, receta in RECETAS.items():
         pc = verificar(receta("nacional"), ctx, con)
         assert not isinstance(pc, Falla), pc
-        assert pc.universo_analitico.id == "nino_hecho" and pc.archivo_unidad == "RECH6"
+        # M1-03: la receta nombra su universo y el verificador lo aplica (anemia: hemoglobina medida; DCI: la base común)
+        assert pc.universo_analitico.id == plan_de_la_receta(nombre).universo_analitico and pc.archivo_unidad == "RECH6"
+        assert pc.universo_analitico.id == {"anemia": "nino_hecho_hb_medida", "anemia_oms2024": "nino_hecho_hb_medida", "dci": "nino_hecho"}[nombre]
         assert (pc.diseno.archivo, pc.diseno.nivel_submuestra) == ("RECH6", "medicion")
         assert (pc.diseno.peso_expr, pc.diseno.psu_expr) == ("HV005/1e6", "HV021")
         assert pc.territorio.nivel == "nacional" and pc.ajustes == ()
@@ -51,7 +57,7 @@ def test_el_verificador_sin_conexion_no_corre_controles(sint):
 
 def test_dentro_de_una_receta_se_acepta_propuesto_y_fuera_hace_falta_revisado(sint, tmp_path):
     ctx, _ = sint
-    compuesto = con_cambios(plan_anemia(), origen="compuesto", receta_id=None)
+    compuesto = con_cambios(plan_anemia(), origen="compuesto", receta_id=None, universo_analitico=None)
     f = verificar(compuesto, ctx)
     assert isinstance(f, Falla) and (f.tipo, f.dimension) == ("plan", "variable") and "propuesto" in f.motivo
     ctx_rev, _ = contexto_sintetico(tmp_path, estado="revisado")
@@ -65,7 +71,7 @@ def test_una_variable_construida_inei_solo_va_en_una_receta(tmp_path):
     variables[vid]["tipo_origen"] = "construida_inei"
     ctx2 = replace(ctx, esquema=replace(ctx.esquema, variables=variables))
     assert not isinstance(verificar(plan_anemia(), ctx2), Falla)
-    f = verificar(con_cambios(plan_anemia(), origen="compuesto", receta_id=None), ctx2)
+    f = verificar(con_cambios(plan_anemia(), origen="compuesto", receta_id=None, universo_analitico=None), ctx2)
     assert isinstance(f, Falla) and "construida_inei" in f.motivo
 
 
@@ -147,8 +153,9 @@ def test_peso_de_la_submuestra_mas_restrictiva(sint):
 
 def test_cortes_pendientes_o_desconocidos(sint):
     ctx, _ = sint
-    f = verificar(plan_anemia(cortes=("grupo_edad",)), ctx)
-    assert (f.tipo, f.dimension) == ("plan", "cortes") and "M1-03" in f.motivo        # tramos decididos (C-M0-06-2); los compila M1-03
+    # grupo_edad: los tramos del niño (C-M0-06-2) los compila M1-03, pero solo dentro de una receta que tenga juego de tramos
+    pc = verificar(plan_anemia(cortes=("grupo_edad",)), ctx)
+    assert len(pc.cortes[0].categorias) == 5
     f = verificar(plan_anemia(cortes=("no_existe",)), ctx)
     assert (f.tipo, f.dimension) == ("plan", "cortes")
     pc = verificar(plan_anemia(cortes=("area",)), ctx)

@@ -17,7 +17,11 @@ la lista corta, y cada texto entre comillas simples pasa a ser un parámetro.
   ni cuenta como «no», así que `y` es nulo únicamente fuera del universo; un nulo **dentro** de `u` es un error y lo cuenta el
   verificador. Por eso el universo de la receta debe excluir los códigos no válidos (HC57 en 1–4);
 - `territorio`: el identificador de la unidad del nivel (nulo si la fila no entra al nivel);
-- `peso`, `estrato`, `upm`: el diseño de la submuestra.
+- `peso`, `estrato`, `upm`: el diseño de la submuestra;
+- `sin_pareja` (solo si el plan trae un hermano 1:0..1 del padre común, M1-03): la fila de la unidad no tiene su pareja en ese archivo.
+
+Los cortes con tramos o categorías agrupadas (M1-03) se compilan como `CASE WHEN … THEN CAST(? AS VARCHAR) … ELSE ? END`: los rótulos y los
+códigos van como parámetros, nunca como texto del SQL.
 """
 from __future__ import annotations
 
@@ -197,12 +201,28 @@ def _ruta_parquet(carpeta: Path, encuesta: str, anio: int, archivo: str) -> str:
 
 
 def _desde(b: _Constructor, archivo_unidad: str, uniones: tuple[UnionPlan, ...], carpeta: Path) -> str:
-    """`FROM` con la unidad y las uniones izquierdas hacia sus padres (n:1: no repiten ni quitan filas de la unidad)."""
+    """`FROM` con la unidad y las uniones izquierdas: hacia el padre (n:1) o, desde el padre común, hacia un hijo 1:1 o 1:0..1.
+    Ninguna repite ni quita filas de la unidad."""
     partes = [f"FROM read_parquet({b.par(_ruta_parquet(carpeta, b.encuesta, b.anio, archivo_unidad))}) AS {citar(archivo_unidad)}"]
     for u in uniones:
         on = " AND ".join(f"{b.col(u.hijo, ch)} = {b.col(u.padre, cp)}" for ch, cp in u.pares)
-        partes.append(f"LEFT JOIN read_parquet({b.par(_ruta_parquet(carpeta, b.encuesta, b.anio, u.padre))}) AS {citar(u.padre)} ON {on}")
+        partes.append(f"LEFT JOIN read_parquet({b.par(_ruta_parquet(carpeta, b.encuesta, b.anio, u.unido))}) AS {citar(u.unido)} ON {on}")
     return "\n".join(partes)
+
+
+def _corte_case(b: _Constructor, c, sin_dato: str) -> str:
+    """El corte con tramos o categorías agrupadas como `CASE` con parámetros (nada del rótulo ni de los códigos entra como texto)."""
+    x = b.col(c.archivo, c.variable)
+    cuando = []
+    for r in c.reglas:
+        if r.rango is not None:
+            condicion = f"{x} BETWEEN {b.par(r.rango[0])} AND {b.par(r.rango[1])}"
+        elif r.codigos:
+            condicion = f"{x} IN ({', '.join(b.par(k) for k in r.codigos)})"
+        else:
+            raise ErrorGramatica(f"la categoría {r.rotulo!r} del corte {c.id} no tiene códigos ni rango")
+        cuando.append(f"WHEN {condicion} THEN CAST({b.par(r.rotulo)} AS VARCHAR)")
+    return f"CASE {' '.join(cuando)} ELSE CAST({b.par(sin_dato)} AS VARCHAR) END"
 
 
 def _resolver_diseno(pc: PlanCompleto, b: _Constructor, archivos_union: set[str]) -> Callable[[str], str]:
@@ -233,7 +253,7 @@ def compilar(pc: PlanCompleto, esquema: Esquema, carpeta_microdatos: Path, *, so
     anio = plan.anios[0]
     b = _Constructor(esquema, plan.encuesta, anio)
     uniones = pc.uniones_u_y if solo_u_y else pc.uniones
-    archivos_union = {pc.archivo_unidad} | {u.padre for u in uniones}
+    archivos_union = {pc.archivo_unidad} | {u.unido for u in uniones}
 
     # SELECT interior, en el orden en que se escribe: u, ind, cortes, territorio, peso, estrato, upm.
     ua = pc.universo_analitico
@@ -261,7 +281,10 @@ def compilar(pc: PlanCompleto, esquema: Esquema, carpeta_microdatos: Path, *, so
     else:
         cols_ext = ["u", "CASE WHEN u THEN CAST(ind AS INTEGER) END AS y"]
         for c in pc.cortes:
-            cols_int.append(f"COALESCE(CAST({b.col(c.archivo, c.variable)} AS VARCHAR), {b.par(sin_dato)}) AS {citar('corte_' + c.id)}")
+            if c.reglas:
+                cols_int.append(f"{_corte_case(b, c, sin_dato)} AS {citar('corte_' + c.id)}")
+            else:
+                cols_int.append(f"COALESCE(CAST({b.col(c.archivo, c.variable)} AS VARCHAR), {b.par(sin_dato)}) AS {citar('corte_' + c.id)}")
             cols_ext.append(citar("corte_" + c.id))
         t = pc.territorio
         res_t = _resolver_territorio(b, archivos_union)
@@ -275,8 +298,12 @@ def compilar(pc: PlanCompleto, esquema: Esquema, carpeta_microdatos: Path, *, so
         cols_int.append(f"{b.expresion(pc.diseno.estrato_expr, rd)} AS estrato")
         cols_int.append(f"{b.expresion(pc.diseno.psu_expr, rd)} AS upm")
         cols_ext += ["territorio", "peso", "estrato", "upm"]
+        sin_pareja = [u for u in uniones if u.hacia == "hijo" and u.cardinalidad == "1:0..1"]
+        if sin_pareja:                                   # 1:0..1: qué filas de la unidad no encontraron su pareja
+            cols_int.append("(" + " OR ".join(f"{b.col(u.hijo, u.pares[0][0])} IS NULL" for u in sin_pareja) + ") AS sin_pareja")
+            cols_ext.append("sin_pareja")
 
     desde = _desde(b, pc.archivo_unidad, uniones, carpeta_microdatos)
     sql = "SELECT " + ", ".join(cols_ext) + "\nFROM (SELECT " + ",\n  ".join(cols_int) + "\n" + desde + ")"
-    return Compilado(sql, b.parametros, frozenset(b.usados), (pc.archivo_unidad, *(u.padre for u in uniones)))
+    return Compilado(sql, b.parametros, frozenset(b.usados), (pc.archivo_unidad, *(u.unido for u in uniones)))
 

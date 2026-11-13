@@ -1,0 +1,25 @@
+___________ ERROR collecting tests/inferencia/test_m103_sintetico.py ___________
+ImportError while importing test module '/Users/Eber/Documents/SideProjects/preguntale-al-peru/tests/inferencia/test_m103_sintetico.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../../.local/share/uv/python/cpython-3.12.16-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/inferencia/test_m103_sintetico.py:17: in <module>
+    from pap.inferencia.verificador import (Contexto, Falla, comprobar_cardinalidades, relaciones_desde_yaml, ruta_de_uniones,
+E   ImportError: cannot import name 'comprobar_cardinalidades' from 'pap.inferencia.verificador' (/Users/Eber/Documents/SideProjects/preguntale-al-peru/src/pap/inferencia/verificador.py)
+__________ ERROR collecting tests/inferencia/test_m103_microdatos.py ___________
+ImportError while importing test module '/Users/Eber/Documents/SideProjects/preguntale-al-peru/tests/inferencia/test_m103_microdatos.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+../../../.local/share/uv/python/cpython-3.12.16-macos-aarch64-none/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/inferencia/test_m103_microdatos.py:10: in <module>
+    from pap.inferencia.verificador import Contexto, Falla, comprobar_cardinalidades, verificar
+E   ImportError: cannot import name 'comprobar_cardinalidades' from 'pap.inferencia.verificador' (/Users/Eber/Documents/SideProjects/preguntale-al-peru/src/pap/inferencia/verificador.py)
+=========================== short test summary info ============================
+ERROR tests/inferencia/test_m103_sintetico.py
+ERROR tests/inferencia/test_m103_microdatos.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 2 errors during collection !!!!!!!!!!!!!!!!!!!!
+2 errors in 0.41s

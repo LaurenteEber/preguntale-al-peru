@@ -51,7 +51,8 @@ def test_el_verificador_completa_las_recetas_con_diseno_universo_y_los_30_territ
         pc = verificar(RECETAS[receta](nivel), ctx, con)
         assert not isinstance(pc, Falla), (nivel, pc)
         assert pc.ajustes == () and pc.plan.territorio.nivel == nivel                      # los 6 niveles están verificados en 2024
-        assert pc.universo_analitico.id == "nino_hecho" and pc.archivo_unidad == "RECH6"
+        # M1-03: la receta nombra su universo (anemia: hemoglobina medida; DCI: la base común) y el verificador lo aplica
+        assert pc.universo_analitico.id == ("nino_hecho" if receta == "dci" else "nino_hecho_hb_medida") and pc.archivo_unidad == "RECH6"
         assert (pc.diseno.archivo, pc.diseno.nivel_submuestra, pc.diseno.peso_expr) == ("RECH6", "medicion", "HV005/1e6")
         c = pc.controles
         assert c["u_antes"] == c["u_despues"] == CASOS_U[receta] and c["perdida_u"] == 0

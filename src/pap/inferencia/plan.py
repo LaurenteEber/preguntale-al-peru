@@ -2,7 +2,9 @@
 
 El plan **no contiene SQL ni texto libre**: solo identificadores del índice (`var_id`), operadores de la gramática (§11.3),
 números e identificadores de las tablas curadas. Todos los modelos son `extra="forbid"`: un campo que no existe no pasa.
-El diseño muestral y el universo analítico **no van en el plan**: los agrega el verificador (`PlanCompleto`).
+El diseño muestral **no va en el plan**: lo agrega el verificador (`PlanCompleto`). El universo analítico tampoco, salvo en una receta,
+que lo nombra (`universo_analitico`, M1-03): ahí el verificador aplica ese universo completo; en un plan compuesto lo elige el verificador por
+la medición de las variables que intervienen.
 
 `id_plan` = sha256 del JSON canónico (claves ordenadas, sin espacios): el mismo plan da siempre el mismo id.
 """
@@ -17,7 +19,7 @@ from typing import Annotated, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, StrictFloat, StrictInt, field_validator, model_validator
 
-from .tablas_curadas import DisenoMuestral, Territorio as TerritorioCurado, UniversoAnalitico, leer_territorios
+from .tablas_curadas import CategoriaCorte, DisenoMuestral, Territorio as TerritorioCurado, UniversoAnalitico, leer_territorios
 
 RAIZ_REPO = Path(__file__).resolve().parents[3]
 OPERADORES = ("en", "entre", "<", "≥", "es_nulo", "no_es_nulo")
@@ -106,6 +108,7 @@ class Plan(_Modelo):
     anios: tuple[int, ...] = Field(min_length=1, max_length=32)
     unidad: str = Field(pattern=_ID)
     medida: str = Field(pattern=_ID)
+    universo_analitico: str | None = Field(default=None, pattern=_ID)       # solo una receta lo nombra (M1-03, tarea 2)
     indicador: Indicador
     universo: Universo = Universo()
     cortes: tuple[Annotated[str, Field(pattern=_ID)], ...] = Field(default=(), max_length=8)
@@ -122,10 +125,15 @@ class Plan(_Modelo):
     def _receta(self):
         if (self.origen == "receta") != (self.receta_id is not None):
             raise ValueError("receta_id va si y solo si el origen es «receta»")
+        if self.universo_analitico is not None and self.origen != "receta":
+            raise ValueError("universo_analitico lo nombra solo una receta: en un plan compuesto lo elige el verificador por la medición")
         return self
 
     def canonico(self) -> str:
-        return json.dumps(self.model_dump(mode="json"), sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+        d = self.model_dump(mode="json")
+        if d["universo_analitico"] is None:                 # los planes que no lo nombran conservan el id_plan que tenían antes de M1-03
+            del d["universo_analitico"]
+        return json.dumps(d, sort_keys=True, separators=(",", ":"), ensure_ascii=False)
 
     @property
     def id_plan(self) -> str:
@@ -136,18 +144,40 @@ class Plan(_Modelo):
 
 @dataclass(frozen=True)
 class UnionPlan:
-    """Una unión izquierda del hijo hacia su padre (relaciones de archivos_<encuesta>_<año>.yaml)."""
+    """Una unión izquierda de una relación de archivos_<encuesta>_<año>.yaml. `hacia="padre"` (la de siempre): se trae el padre y cuelga
+    del hijo, que ya está en la consulta. `hacia="hijo"` (M1-03): se trae el hijo —que es 1:1 o 1:0..1 con su padre— y cuelga del padre,
+    que ya está en la consulta; así se llega de un hijo a su hermano por el padre común."""
     hijo: str
     padre: str
     pares: tuple[tuple[str, str], ...]          # (columna del hijo, columna del padre)
+    cardinalidad: str = "n:1"
+    hacia: str = "padre"
+
+    @property
+    def unido(self) -> str:
+        """El archivo que esta unión agrega a la consulta."""
+        return self.padre if self.hacia == "padre" else self.hijo
+
+    @property
+    def ancla(self) -> str:
+        """El archivo que ya debe estar en la consulta."""
+        return self.hijo if self.hacia == "padre" else self.padre
+
+    @property
+    def texto(self) -> str:
+        return f"{self.ancla}→{self.unido}"
 
 
 @dataclass(frozen=True)
 class CorteResuelto:
+    """Un corte ya ubicado en un archivo. `categorias`: lo que devuelve la columna del dominio → su rótulo (el código si la columna se usa
+    tal cual; el propio rótulo si hay `reglas`). `reglas` (M1-03): categorías por tramos o agrupadas; el SQL arma un `CASE` con los
+    rótulos como parámetros."""
     id: str
     archivo: str
     variable: str
-    categorias: dict[int, str]
+    categorias: dict[int | str, str]
+    reglas: tuple[CategoriaCorte, ...] = ()
 
 
 @dataclass(frozen=True)

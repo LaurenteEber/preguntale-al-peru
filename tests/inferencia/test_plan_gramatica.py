@@ -80,7 +80,7 @@ def test_receta_id_va_solo_con_el_origen_receta():
         Plan.model_validate(plan_json(receta_id=None))
     with pytest.raises(ValidationError):
         Plan.model_validate(plan_json(origen="compuesto"))
-    assert Plan.model_validate(plan_json(origen="compuesto", receta_id=None)).receta_id is None
+    assert Plan.model_validate(plan_json(origen="compuesto", receta_id=None, universo_analitico=None)).receta_id is None
 
 
 def test_id_plan_es_el_sha256_del_json_canonico():

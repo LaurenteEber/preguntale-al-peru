@@ -1,4 +1,4 @@
-"""M0-06: las 6 tablas curadas de curados/inferencia/ contra su esquema, sus citas y sus cruces (sin microdatos).
+"""M0-06 (y M1-03): las 7 tablas curadas de curados/inferencia/ contra su esquema, sus citas y sus cruces (sin microdatos).
 
 Las pruebas con los Parquet de 2024 (9 959 / 19 511 / 20 290, 30 unidades, HV001 = HV021) están en
 test_tablas_curadas_microdatos.py."""
@@ -38,7 +38,7 @@ def _sin_lineas(errores):
 
 # ------------------------------------------------------------------ las tablas reales
 
-def test_las_seis_tablas_validan_y_cada_fila_tiene_su_cita():
+def test_las_siete_tablas_validan_y_cada_fila_tiene_su_cita():
     res = tc.validar(Rutas(RAIZ_REAL))
     assert set(res) == set(tc.ARCHIVOS_TABLAS)
     for nombre, (filas, errores) in res.items():
@@ -122,11 +122,10 @@ def test_grupo_edad_del_nino_lleva_los_tramos_del_inei_en_dos_juegos_por_receta(
         assert parte in juegos["desnutricion_cronica"].cita, parte
 
 
-def test_los_tramos_del_nino_siguen_sin_compilarse_hasta_m1_03():
-    """Los valores están decididos, pero el verificador no los compila todavía (M1-03, tarea 1b): el corte sigue marcado como pendiente
-    de esa historia y las recetas siguen sin permitirlo."""
+def test_los_tramos_del_nino_ya_se_compilan_y_los_de_las_personas_siguen_pendientes():
+    """M1-03 (tarea 1b) compila los tramos del niño (`pendiente: M1-03` se quitó); la decisión del dueño no cubre a las personas del hogar."""
     v = {(x.archivo, x.variable): x for x in _corte("grupo_edad").por_encuesta["ENDES"]}
-    assert v[("RECH6", "HC1")].pendiente == "M1-03"
+    assert v[("RECH6", "HC1")].pendiente is None
     assert v[("RECH1", "HV105")].pendiente == "C-M0-06-2"          # la decisión del dueño solo cubre a los niños
 
 

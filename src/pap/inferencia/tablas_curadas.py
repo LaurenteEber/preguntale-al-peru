@@ -1,6 +1,6 @@
 """Tablas curadas del motor de inferencia (M0-06; diseño §7.4 y anexo A): esquemas y validación.
 
-Las seis tablas viven en `curados/inferencia/` y cada fila lleva su cita (documento + página, o archivo:línea):
+Las siete tablas viven en `curados/inferencia/` y cada fila lleva su cita (documento + página, o archivo:línea):
 
 | Tabla | Archivo | Una fila es |
 |---|---|---|
@@ -10,6 +10,7 @@ Las seis tablas viven en `curados/inferencia/` y cada fila lleva su cita (docume
 | `perfil_anual` | `perfil_anual.csv` | encuesta × año |
 | `relacion_entre_anios` | `relacion_entre_anios.csv` | encuesta × par de años |
 | `cortes_estandar` | `cortes_estandar.yaml` | un corte, con su variable por archivo |
+| `mediciones` | `mediciones.yaml` | una medición de un archivo (M1-03): las variables de su batería |
 
 Una fila sin cita, o con una cita que no dice dónde (página o línea), no valida: es tipo C (AGENTS.md §5). Las expresiones SQL
 (`peso_expr`, `estrato_expr`, `expr`…) solo admiten un alfabeto corto de identificadores, números, comillas simples y operadores;
@@ -22,6 +23,7 @@ from __future__ import annotations
 
 import csv
 import re
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Literal
 
@@ -38,7 +40,12 @@ ARCHIVOS_TABLAS = {
     "perfil_anual": "perfil_anual.csv",
     "relacion_entre_anios": "relacion_entre_anios.csv",
     "cortes_estandar": "cortes_estandar.yaml",
+    "mediciones": "mediciones.yaml",
 }
+# Cardinalidades de `relaciones` en archivos_<encuesta>_<año>.yaml (M1-03): `n:1` = varias filas del hijo por cada una del padre (siempre se
+# une hacia el padre); `1:1` = el hijo tiene exactamente una fila por cada una del padre; `1:0..1` = como máximo una (no todas). Las dos
+# últimas permiten ir de un hijo a su hermano por el padre común sin repetir filas de la unidad.
+CARDINALIDADES = ("n:1", "1:1", "1:0..1")
 
 # Una cita dice dónde: página de un documento («p. 11», «pp. 10-11»), archivo:línea o la etiqueta de un archivo de datos.
 _DONDE = re.compile(r"\bpp?\. ?\d|\.(?:py|ya?ml|md|csv|json|parquet):\d|[Ee]tiqueta del archivo [A-Za-z0-9_]+ \d{4}")
@@ -288,8 +295,8 @@ class Tramo(_Fila):
 
 
 class JuegoTramos(_Fila):
-    """Un juego de tramos para ciertas recetas (los de la anemia no son los de la desnutrición crónica). M1-01 solo los escribe; los
-    compila M1-03 (tarea 1b)."""
+    """Un juego de tramos para ciertas recetas (los de la anemia no son los de la desnutrición crónica). M1-01 los escribió; los
+    compila `definir_corte` (M1-03, tarea 1b) y los usa el verificador."""
     id: str
     aplica_a_recetas: list[str]
     tramos: list[Tramo]
@@ -341,7 +348,7 @@ class CorteEstandar(_Fila):
     nombre: str
     por_encuesta: dict[str, list[VariableCorte]]
     categorias: dict[int, str] | None = None
-    agrupa: dict[str, list[int]] | None = None       # categoría formada por varios códigos de `categorias` (Costa = 1 y 2); la compila M1-03
+    agrupa: dict[str, list[int]] | None = None       # categoría formada por varios códigos de `categorias` (Costa = 1 y 2); la compila `definir_corte` (M1-03)
     nota: str | None = None
     cita: str
 
@@ -372,6 +379,114 @@ class TablaCortes(_Fila):
     version: str
     fecha: str
     cortes: list[CorteEstandar]
+
+
+class CorteNoCompilable(ValueError):
+    """El corte no se puede traducir a categorías para ese plan (pendiente, o tramos que ninguna receta del plan tiene)."""
+
+
+@dataclass(frozen=True)
+class CategoriaCorte:
+    """Una categoría de un corte que se compila como `CASE`: el rótulo (siempre un parámetro del SQL, nunca texto) y lo que la define,
+    sea una lista de códigos de la columna o un rango (`desde`, `hasta`) de una variable numérica."""
+    rotulo: str
+    codigos: tuple[int, ...] = ()
+    rango: tuple[int, int] | None = None
+
+
+@dataclass(frozen=True)
+class DefinicionCorte:
+    """Lo que el verificador necesita de un corte. `reglas` vacío = la columna se usa tal cual (su valor es el código, `categorias` es
+    código → rótulo). Con `reglas`, el dominio lleva el rótulo (`categorias` es rótulo → rótulo) y el SQL arma un `CASE`."""
+    categorias: dict
+    reglas: tuple[CategoriaCorte, ...] = ()
+
+
+def definir_corte(corte: CorteEstandar, variable: VariableCorte, receta_id: str | None) -> DefinicionCorte:
+    """Las categorías de `corte` para la variable de un archivo, según la receta (M1-03, tarea 1b).
+    - tramos (`juegos_de_tramos`): solo dentro de una receta que algún juego nombre (C-M0-06-2); el juego se elige por `receta_id`;
+    - categorías agrupadas (`agrupa`): los códigos de un grupo pasan a una sola categoría con el rótulo del grupo; el orden es el de
+      la primera aparición en `categorias`;
+    - si no, los códigos y sus rótulos tal cual (`variable.categorias` reemplaza a las del corte)."""
+    if variable.pendiente:
+        raise CorteNoCompilable(f"el corte «{corte.id}» tiene sus categorías pendientes ({variable.pendiente})")
+    if variable.juegos_de_tramos:
+        juego = next((j for j in variable.juegos_de_tramos if receta_id in j.aplica_a_recetas), None)
+        if juego is None:
+            raise CorteNoCompilable(f"el corte «{corte.id}» con tramos solo se ofrece dentro de una receta que tenga juego de tramos "
+                                    f"(recetas con juego: {sorted(r for j in variable.juegos_de_tramos for r in j.aplica_a_recetas)}; "
+                                    f"receta del plan: {receta_id!r})")
+        reglas = tuple(CategoriaCorte(t.rotulo, rango=(t.desde, t.hasta)) for t in juego.tramos)
+        return DefinicionCorte({r.rotulo: r.rotulo for r in reglas}, reglas)
+    cats = variable.categorias or corte.categorias or {}
+    if not corte.agrupa:
+        return DefinicionCorte(dict(cats))
+    de_grupo = {k: g for g, codigos in corte.agrupa.items() for k in codigos}
+    reglas: list[CategoriaCorte] = []
+    for k, rotulo in cats.items():
+        grupo = de_grupo.get(k)
+        if grupo is None:
+            reglas.append(CategoriaCorte(rotulo, (k,)))
+        elif all(r.rotulo != grupo for r in reglas):
+            reglas.append(CategoriaCorte(grupo, tuple(corte.agrupa[grupo])))
+    return DefinicionCorte({r.rotulo: r.rotulo for r in reglas}, tuple(reglas))
+
+
+# ------------------------------------------------------------------ mediciones (M1-03, tarea 2)
+
+class Medicion(_Fila):
+    """Una medición de un archivo y la batería de variables que la componen (p. ej. la hemoglobina de RECH6: HC53, HC55, HC56…). El
+    verificador elige el universo analítico de un plan compuesto por la medición de las variables que intervienen
+    (`aplica_a.mediciones` de universos_analiticos.yaml). La declara una persona; nunca el LLM."""
+    id: str
+    encuesta: Literal["ENDES", "ENAHO"]
+    anios: tuple[int, int]
+    archivo: str
+    bateria: str
+    variables: list[str]
+    cita: str
+
+    _v_cita = field_validator("cita")(_cita)
+
+    @field_validator("bateria")
+    @classmethod
+    def _bateria(cls, v):
+        if not v.strip():
+            raise ValueError("falta la batería (el nombre del grupo de preguntas o mediciones)")
+        return v
+
+    @field_validator("anios")
+    @classmethod
+    def _orden(cls, v):
+        if v[0] > v[1]:
+            raise ValueError("anios: el primero no puede pasar del segundo")
+        return v
+
+    @field_validator("variables")
+    @classmethod
+    def _variables(cls, v):
+        if not v:
+            raise ValueError("la medición necesita al menos una variable")
+        for x in v:
+            if not _VAR.match(x):
+                raise ValueError(f"nombre de variable no permitido: {x!r}")
+        if len(set(v)) != len(v):
+            raise ValueError("una variable se repite en la batería")
+        return v
+
+
+class TablaMediciones(_Fila):
+    version: str
+    fecha: str
+    mediciones: list[Medicion]
+
+
+def medicion_de(mediciones: list[Medicion], encuesta: str, anio: int, archivo: str, variable: str) -> str | None:
+    """El id de la medición a la que pertenece la variable (None si ninguna la declara)."""
+    for m in mediciones:
+        if m.encuesta == encuesta and m.archivo == archivo and m.anios[0] <= anio <= m.anios[1] and variable in m.variables:
+            return m.id
+    return None
 
 
 # ------------------------------------------------------------------ lectura
@@ -414,8 +529,13 @@ def leer_cortes(raiz: Path) -> list[CorteEstandar]:
     return _leer_yaml(raiz, "cortes_estandar", TablaCortes).cortes
 
 
+def leer_mediciones(raiz: Path) -> list[Medicion]:
+    return _leer_yaml(raiz, "mediciones", TablaMediciones).mediciones
+
+
 LECTORES = {"diseno_muestral": leer_diseno_muestral, "universos_analiticos": leer_universos, "territorios": leer_territorios,
-            "perfil_anual": leer_perfil_anual, "relacion_entre_anios": leer_relacion_entre_anios, "cortes_estandar": leer_cortes}
+            "perfil_anual": leer_perfil_anual, "relacion_entre_anios": leer_relacion_entre_anios, "cortes_estandar": leer_cortes,
+            "mediciones": leer_mediciones}
 
 
 # ------------------------------------------------------------------ ayudas para aplicar las tablas
@@ -480,7 +600,7 @@ ERROR_SIN_INDICE = (f"falta el índice de variables ({RUTA_INDICE}): no se pudo 
 
 
 def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int, list[str]]]:
-    """Valida las seis tablas: {tabla: (filas, errores)}. Sin errores = la tabla cumple su esquema y todas sus filas llevan cita.
+    """Valida las siete tablas: {tabla: (filas, errores)}. Sin errores = la tabla cumple su esquema y todas sus filas llevan cita.
     Con `exigir_indice` (lo pasa `pap inferencia validar-tablas`), la falta del índice de variables es un error de las tablas que
     citan variables y no una comprobación que se salta en silencio (M1-02, H06-3)."""
     raiz = rutas.raiz
@@ -497,9 +617,13 @@ def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int
     archivos_yaml = yaml.safe_load((raiz / CARPETA / "archivos_endes_2024.yaml").read_text(encoding="utf-8"))
     archivos = set(archivos_yaml["archivos"])
     relaciones = {(r["hijo"], c[0], r["padre"], c[1]) for r in archivos_yaml["relaciones"] for c in r["por"]}
+    for r in archivos_yaml["relaciones"]:
+        if r.get("cardinalidad") not in CARDINALIDADES:
+            err("diseno_muestral", f"archivos_endes_2024.yaml: la relación {r['hijo']}→{r['padre']} declara la cardinalidad "
+                                   f"{r.get('cardinalidad')!r}; las válidas son {list(CARDINALIDADES)}")
     en_indice = _variables_indice(raiz)
     if exigir_indice and en_indice is None:
-        for nombre in ("universos_analiticos", "territorios", "cortes_estandar"):
+        for nombre in ("universos_analiticos", "territorios", "cortes_estandar", "mediciones"):
             err(nombre, ERROR_SIN_INDICE)
 
     for nombre, filas in datos.items():
@@ -531,6 +655,26 @@ def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int
             for e in u.exige_pareja:
                 if e.archivo not in archivos:
                     err("universos_analiticos", f"{u.id}: la pareja se exige en {e.archivo}, que no está en archivos_endes_2024.yaml")
+    if "mediciones" in datos:
+        usadas = {m for u in datos.get("universos_analiticos", []) for m in u.aplica_a.mediciones}
+        ids_dup = [(m.id, m.encuesta, m.archivo) for m in datos["mediciones"]]
+        vistas: dict[tuple, list] = {}
+        for m in datos["mediciones"]:
+            if m.archivo not in archivos:
+                err("mediciones", f"{m.id}: el archivo {m.archivo} no está en archivos_endes_2024.yaml")
+            if datos.get("universos_analiticos") is not None and m.id not in usadas:
+                err("mediciones", f"{m.id}: ningún universo de universos_analiticos.yaml la nombra en aplica_a.mediciones")
+            if en_indice is not None:
+                for v in m.variables:
+                    if (m.archivo, v) not in en_indice:
+                        err("mediciones", f"{m.id}: la variable {v} no está en {m.archivo} del índice")
+            for v in m.variables:
+                for otra_id, otros_anios in vistas.get((m.encuesta, m.archivo, v), []):
+                    if otra_id != m.id and m.anios[0] <= otros_anios[1] and otros_anios[0] <= m.anios[1]:
+                        err("mediciones", f"la variable {m.archivo}.{v} está en dos mediciones: «{otra_id}» y «{m.id}»")
+                vistas.setdefault((m.encuesta, m.archivo, v), []).append((m.id, m.anios))
+        for i in {i for i in ids_dup if ids_dup.count(i) > 1}:
+            err("mediciones", f"id repetido {i[0]} en {i[2]}")
     if "territorios" in datos:
         niveles = [t.nivel for t in datos["territorios"]]
         for n in {n for n in niveles if niveles.count(n) > 1}:

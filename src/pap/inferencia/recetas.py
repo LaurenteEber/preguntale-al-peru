@@ -11,13 +11,17 @@ solo se lee la receta, se pasa por ese camino y se compara con el cubo y con las
   cubo y reproduce sus doradas; mientras falte, `revisado` lleva `pendiente: visto_dueno`.
 - Las doradas se copian de `curados/capa0/cifras_doradas.csv` con su cita; `validar` exige que coincidan con esa tabla, que es la
   fuente de verdad (valor, indicador, año, nivel, territorio, casos, CV y tolerancias).
+- Las doradas **por corte** (M1-03) van aparte, en `curados/inferencia/doradas_cortes.csv` (`DoradaCorte`): `cifras_doradas.csv` solo
+  identifica una cifra por nivel y territorio y lo leen también la capa 0 y el motor actual, así que no se toca. Cada una lleva el cuadro y
+  la página del informe del INEI; `calcular_cortes` y `reproducir_doradas_cortes` las reproducen con la misma tolerancia de la receta.
+- `universo_analitico` de la receta pasa al plan (`Receta.a_plan`): el verificador lo aplica completo.
 """
 from __future__ import annotations
 
 import csv
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Literal
+from typing import Literal, Mapping, Sequence
 
 import yaml
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -35,6 +39,7 @@ EVIDENCIA_M0 = Path("backlog") / "slice-m0" / "evidencia"
 FILAS_CUBO_2024 = EVIDENCIA_M0 / "m0-00_filas_cubo_2024.csv"
 ESTADOS_CUBO_2024 = EVIDENCIA_M0 / "m0-00_estados_cubo.csv"
 DORADAS = Path("curados") / "capa0" / "cifras_doradas.csv"
+DORADAS_CORTES = tc.CARPETA / "doradas_cortes.csv"
 DIM_INDICADOR = Path("curados") / "capa0" / "dim_indicador.yaml"
 
 # Columnas del cubo que se comparan, en las unidades del cubo (valor, ee, cv e IC en porcentaje).
@@ -82,6 +87,32 @@ class Dorada(_M):
     cita: str
 
     _v_cita = field_validator("cita")(tc._cita)
+
+
+class DoradaCorte(_M):
+    """Una cifra oficial publicada para una categoría de un corte (región natural, quintil, tramo de edad). `categoria` es el rótulo de
+    `cortes_estandar.yaml` (el del tramo o el de la categoría agrupada; para el quintil, el rótulo del código). `casos_publicados` son los
+    «casos sin ponderar» del cuadro: tienen que coincidir exactos con los de u en esa categoría."""
+    id_cifra: str = Field(pattern=r"^[A-Za-z0-9_-]{3,80}$")
+    receta_id: str = Field(pattern=r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
+    anio: int
+    nivel: str
+    territorio: str
+    corte: str = Field(pattern=r"^[A-Za-z][A-Za-z0-9_]{0,63}$")
+    categoria: str
+    valor_publicado: float
+    decimales: int = Field(ge=0, le=3)
+    casos_publicados: int | None = Field(default=None, gt=0)
+    cita: str
+
+    _v_cita = field_validator("cita")(tc._cita)
+
+    @field_validator("categoria")
+    @classmethod
+    def _categoria(cls, v):
+        if not v.strip():
+            raise ValueError("falta la categoría")
+        return v
 
 
 class Receta(_M):
@@ -148,7 +179,7 @@ class Receta(_M):
 
         return Plan.model_validate({
             "origen": "receta", "receta_id": self.id, "encuesta": self.encuesta, "anios": [anio], "unidad": self.unidad,
-            "medida": self.medida,
+            "medida": self.medida, "universo_analitico": self.universo_analitico,
             "indicador": {"combinar": self.indicador.combinar, "condiciones": [condicion(c) for c in self.indicador.condiciones]},
             "universo": {"restricciones": [condicion(c) for c in self.universo.restricciones]},
             "cortes": list(cortes), "territorio": {"nivel": nivel, "id": id_}})
@@ -169,6 +200,17 @@ def leer_receta(raiz: Path, id_: str) -> Receta:
 
 def leer_recetas(raiz: Path) -> list[Receta]:
     return [leer_receta(raiz, i) for i in ids_de_recetas(raiz)]
+
+
+def leer_doradas_cortes(raiz: Path) -> list[DoradaCorte]:
+    """`curados/inferencia/doradas_cortes.csv`: las doradas por corte. Un `casos_publicados` vacío es None."""
+    ruta = Path(raiz) / DORADAS_CORTES
+    campos = ["id_cifra", "receta_id", "anio", "nivel", "territorio", "corte", "categoria", "valor_publicado", "decimales", "casos_publicados", "cita"]
+    with open(ruta, encoding="utf-8", newline="") as f:
+        lector = csv.DictReader(f)
+        if lector.fieldnames != campos:
+            raise PapError(f"{DORADAS_CORTES}: las columnas son {lector.fieldnames}; se esperaban {campos}")
+        return [DoradaCorte.model_validate({**fila, "casos_publicados": fila["casos_publicados"] or None}) for fila in lector]
 
 
 def _doradas_csv(raiz: Path) -> dict[str, dict]:
@@ -243,7 +285,57 @@ def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int
             errores.append(f"indicador_id «{r.indicador_id}» no está en dim_indicador.yaml")
         elif ind.get("receta") != r.id:
             errores.append(f"dim_indicador.yaml: el indicador {r.indicador_id} debe llevar `receta: {r.id}` (lleva {ind.get('receta')!r})")
+    por_receta, del_archivo = _errores_de_doradas_cortes(raiz, recetas, doradas)
+    for r in recetas:
+        res[r.id][1].extend(por_receta.get(r.id, []))
+    if del_archivo:
+        res["doradas_cortes"] = (0, [f"{DORADAS_CORTES.name}: {e}" for e in del_archivo])
     return res
+
+
+def _errores_de_doradas_cortes(raiz: Path, recetas: list[Receta], doradas: dict[str, dict]) -> tuple[dict[str, list[str]], list[str]]:
+    """Errores de `doradas_cortes.csv`: ({receta: errores de sus filas}, errores del archivo o de filas de una receta que no existe)."""
+    por_receta: dict[str, list[str]] = {}
+    del_archivo: list[str] = []
+    try:
+        filas = leer_doradas_cortes(raiz)
+    except Exception as e:                                         # pydantic o csv: el mensaje se lleva tal cual
+        return {}, [str(e)]
+    cortes = {c.id: c for c in tc.leer_cortes(raiz)}
+    por_id = {r.id: r for r in recetas}
+    niveles = {t.nivel for t in tc.leer_territorios(raiz)}
+    ids = [d.id_cifra for d in filas]
+    del_archivo += [f"id_cifra repetido {i}" for i in sorted({i for i in ids if ids.count(i) > 1})]
+    del_archivo += [f"{d.id_cifra}: el id_cifra ya es de cifras_doradas.csv (las doradas por corte no se mezclan con las de nivel y territorio)"
+                    for d in filas if d.id_cifra in doradas]
+    vistas: dict[tuple, str] = {}
+    for d in filas:
+        r = por_id.get(d.receta_id)
+        if r is None:
+            del_archivo.append(f"{d.id_cifra}: la receta {d.receta_id} no existe en {CARPETA}")
+            continue
+        err = por_receta.setdefault(r.id, []).append
+        llave = (d.receta_id, d.anio, d.nivel, d.territorio, d.corte, d.categoria)
+        if llave in vistas:
+            err(f"dorada por corte {d.id_cifra}: repite la cifra de {vistas[llave]} (misma receta, año, dominio, corte y categoría)")
+        vistas.setdefault(llave, d.id_cifra)
+        if not r.anios[0] <= d.anio <= r.anios[1]:
+            err(f"dorada por corte {d.id_cifra}: el año {d.anio} está fuera de los años de la receta ({r.anios[0]}–{r.anios[1]})")
+        if d.nivel not in niveles:
+            err(f"dorada por corte {d.id_cifra}: el nivel «{d.nivel}» no está en territorios.yaml")
+        if d.corte not in r.cortes_permitidos:
+            err(f"dorada por corte {d.id_cifra}: el corte «{d.corte}» no está entre los cortes permitidos de {r.id}")
+            continue
+        corte = cortes[d.corte]
+        categorias: set[str] = set()
+        for opcion in corte.por_encuesta.get(r.encuesta, []):
+            try:
+                categorias |= set(tc.definir_corte(corte, opcion, r.id).categorias.values())
+            except tc.CorteNoCompilable:
+                continue
+        if d.categoria not in categorias:
+            err(f"dorada por corte {d.id_cifra}: la categoría «{d.categoria}» no es una de las del corte {d.corte} para {r.id} ({sorted(categorias)})")
+    return por_receta, del_archivo
 
 
 # ------------------------------------------------------------------ parámetros
@@ -380,3 +472,49 @@ def compuertas_de(receta: Receta, estimaciones: list[tuple[str, Estimacion]], do
 def firma_reglas(c: Compuerta) -> str:
     """Las reglas disparadas como en `m0-00_estados_cubo.csv`: «regla:acción:motivo;…»."""
     return ";".join(f"{x.regla}:{x.accion}:{x.motivo}" for x in c.resultados)
+
+
+def calcular_cortes(receta: Receta, doradas: Sequence[DoradaCorte], raiz: Path, *, ctx=None, ejecutor=None, con=None):
+    """Plan → verificador → ejecutor para cada (año, nivel, corte) de `doradas` (todas de la receta). Devuelve
+    (`estimaciones`: corte → [(nivel, estimación)], `valores`: corte → {rótulo de la categoría: valor que devuelve el dominio}).
+    Una `Falla` del verificador se vuelve error. Solo el territorio de cada dorada (los niveles con `id` vacío traen todas sus unidades)."""
+    from .duckdb_seguro import conexion_segura
+    from .ejecutor import Ejecutor
+    from .verificador import Contexto, Falla, verificar
+
+    raiz = Path(raiz)
+    ctx = ctx or Contexto.cargar(raiz)
+    ejecutor = ejecutor or Ejecutor(raiz=raiz)
+    con = con or conexion_segura(raiz)
+    estimaciones: dict[str, list[tuple[str, Estimacion]]] = {}
+    valores: dict[str, dict[str, str]] = {}
+    for anio, nivel, corte in sorted({(d.anio, d.nivel, d.corte) for d in doradas if d.receta_id == receta.id}):
+        pc = verificar(receta.a_plan(anio, nivel, None, (corte,)), ctx, con)
+        if isinstance(pc, Falla):
+            raise PapError(f"El verificador no deja pasar la receta {receta.id} con el corte {corte} en {nivel}: {pc.dimension}: {pc.motivo}")
+        (c,) = pc.cortes
+        valores[corte] = {rotulo: str(valor) for valor, rotulo in c.categorias.items()} if not c.reglas else {r: r for r in c.categorias}
+        estimaciones.setdefault(corte, []).extend((nivel, e) for e in ejecutor.ejecutar({anio: pc}, ctx))
+    return estimaciones, valores
+
+
+def reproducir_doradas_cortes(receta: Receta, doradas: Sequence[DoradaCorte], estimaciones: Mapping[str, list[tuple[str, Estimacion]]],
+                              valores: Mapping[str, Mapping[str, str]]) -> list[dict]:
+    """E-05 para las doradas por corte, con el mismo criterio de `reproducir_doradas`: el valor redondeado a sus decimales difiere del
+    publicado en ≤ `tolerancia_pp` (+1e-9) y los casos sin ponderar son exactos. El dominio de la estimación es (territorio, valor del corte);
+    `valores[corte][categoría]` traduce el rótulo de la dorada al valor que devuelve el dominio (el código del quintil, o el propio rótulo)."""
+    filas = []
+    for d in (d for d in doradas if d.receta_id == receta.id):
+        valor_dominio = valores.get(d.corte, {}).get(d.categoria)
+        e = next((e for nivel, e in estimaciones.get(d.corte, []) if nivel == d.nivel and e.anio in (d.anio, None)
+                  and e.dominio == (d.territorio, valor_dominio)), None)
+        fila = {"id_cifra": d.id_cifra, "nivel": d.nivel, "territorio": d.territorio, "corte": d.corte, "categoria": d.categoria,
+                "publicado": d.valor_publicado, "nuestro": None, "dif_pp": None, "n": None, "casos_publicados": d.casos_publicados,
+                "pasa": False}
+        if e is not None and not e.sin_datos:
+            nuestro = round(100 * e.valor, d.decimales)
+            dif = round(nuestro - d.valor_publicado, 6)
+            pasa = abs(dif) <= receta.tolerancia_pp + 1e-9 and (d.casos_publicados is None or d.casos_publicados == e.n)
+            fila.update(nuestro=nuestro, dif_pp=dif, n=e.n, pasa=bool(pasa))
+        filas.append(fila)
+    return filas

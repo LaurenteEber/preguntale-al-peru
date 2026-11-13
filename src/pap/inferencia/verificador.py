@@ -8,25 +8,29 @@ Qué comprueba y qué agrega, en este orden:
 2. cada variable del plan existe en el índice de ese año; `en` solo con códigos que existen en las categorías; dentro de una
    receta se aceptan variables `propuesto` (§12.1: «la receta se revisa entera»), fuera de ella hace falta `revisado`; una
    variable `construida_inei` solo va en una receta; un `rol_faltante` no vacío no se resuelve en M0;
-3. **agrega el universo analítico** de `universos_analiticos.yaml`: entre los de la unidad y el año, el que está contenido en
-   todos los demás (la base común: población de hecho). Las restricciones del plan se suman a él;
+3. **agrega el universo analítico** de `universos_analiticos.yaml` (M1-03): si el plan es de una receta, el que ella nombra
+   (`universo_analitico`), aplicado completo (si no existe, no es de la unidad o no cubre la medición de sus variables, es falla del plan);
+   si es compuesto, según la **medición** de las variables que intervienen (`mediciones.yaml`): entre los universos de la unidad y el año
+   cuyas `aplica_a.mediciones` cubren a todas, los de menos mediciones, y de ellos el contenido en todos los demás (hemoglobina →
+   `nino_hecho_hb_medida`). Sin ninguna medición, la base común (población de hecho). Las restricciones del plan se suman a él;
 4. **uniones:** *left join* de la unidad (el primer archivo del universo) hacia los archivos que necesitan `u`, `y`, los cortes,
-   el territorio y el diseño, siguiendo solo las relaciones n:1 declaradas en `archivos_<encuesta>_<año>.yaml`;
+   el territorio y el diseño, siguiendo las relaciones n:1 declaradas en `archivos_<encuesta>_<año>.yaml` hacia el padre y, desde el
+   padre común, hacia un hermano que sea 1:1 o 1:0..1 con él (M1-03: región natural y quintil de un niño, que cuelgan de RECH23);
 5. **agrega el diseño** de `diseno_muestral.csv`: gana la submuestra más restrictiva que interviene en `y`, `u` o los cortes
    (medición > individual > hogar); si dos del mismo nivel traen pesos distintos, es falla;
 6. **agrega el territorio** de `territorios.yaml`; un nivel que `catalogo/inferencia_verificada.csv` no verifica (o que está
    bajo el `ubigeo_minimo`) **sube al que lo contiene** (R-ENC-06; mismo orden `NIVEL_RANK` que el validador de reglas);
 7. **cortes** de `cortes_estandar.yaml`, con la variable del archivo de la unidad (o de uno al que se une);
 8. con una conexión: **controles de la unión** (filas de `u` antes y después —una pérdida mayor a `union_perdida_max` es
-   falla—, filas de la unidad sin repetir, suma de pesos, conglomerados y estratos, nulos de `y` y del diseño dentro de `u`)
-   y `dominios_max_llamada`.
+   falla—, filas de la unidad sin repetir, suma de pesos, conglomerados y estratos, nulos de `y` y del diseño dentro de `u`;
+   las filas de `u` sin pareja en un hermano 1:0..1 cuentan como pérdida) y `dominios_max_llamada`.
 """
 from __future__ import annotations
 
 import csv
 import json
 from collections import deque
-from dataclasses import dataclass, replace
+from dataclasses import dataclass, field, replace
 from math import prod
 from pathlib import Path
 from types import SimpleNamespace
@@ -34,10 +38,11 @@ from typing import Literal
 
 import yaml
 
+from ..errores import PapError
 from ..zip_seguro import RUTA_PARAMETROS
 from . import tablas_curadas as tc
 from .duckdb_seguro import ejecutar_select
-from .gramatica import Esquema, ErrorGramatica, ARCHIVO_TERRITORIO, compilar
+from .gramatica import Esquema, ErrorGramatica, ARCHIVO_TERRITORIO, citar, compilar
 from .indice import ruta_curada_archivos
 from .plan import Condicion, CorteResuelto, Plan, PlanCompleto, UnionPlan
 
@@ -88,6 +93,7 @@ class Contexto:
     nivel_rank: dict[str, float]
     p: ParametrosVerificador
     carpeta_microdatos: Path
+    mediciones: list = field(default_factory=list)               # mediciones.yaml (M1-03): vacío = ninguna variable es una medición
 
     @classmethod
     def cargar(cls, raiz: Path = RAIZ_REPO) -> "Contexto":
@@ -95,15 +101,24 @@ class Contexto:
         relaciones = {}
         for ruta in sorted((raiz / tc.CARPETA).glob("archivos_*_*.yaml")):
             d = yaml.safe_load(ruta.read_text(encoding="utf-8"))
-            relaciones[(d["encuesta"], int(d["anio"]))] = [
-                UnionPlan(r["hijo"], r["padre"], tuple((a, b) for a, b in r["por"])) for r in d["relaciones"]]
+            relaciones[(d["encuesta"], int(d["anio"]))] = relaciones_desde_yaml(d)
         with open(raiz / "catalogo" / "inferencia_verificada.csv", encoding="utf-8", newline="") as f:
             verificada = {(r["fuente"], int(r["anio"]), r["modulo"]): r for r in csv.DictReader(f)}
         rank = json.loads((raiz / "reglas" / "reglas.json").read_text(encoding="utf-8"))["parametros_globales"]["NIVEL_RANK"]
         return cls(Esquema.desde_parquet(raiz / "biblioteca" / "variables"), tc.leer_universos(raiz), tc.leer_diseno_muestral(raiz),
                    tc.leer_territorios(raiz), tc.leer_cortes(raiz), tc.leer_perfil_anual(raiz), relaciones, verificada,
                    {k: v for k, v in rank.items() if isinstance(v, (int, float))}, ParametrosVerificador.desde_yaml(),
-                   raiz / "biblioteca" / "microdatos")
+                   raiz / "biblioteca" / "microdatos", tc.leer_mediciones(raiz))
+
+
+def relaciones_desde_yaml(d: dict) -> list[UnionPlan]:
+    """Las relaciones de `archivos_<encuesta>_<año>.yaml` como uniones; una cardinalidad fuera de `tc.CARDINALIDADES` es un error."""
+    out = []
+    for r in d["relaciones"]:
+        if r.get("cardinalidad") not in tc.CARDINALIDADES:
+            raise PapError(f"la relación {r['hijo']}→{r['padre']} declara la cardinalidad {r.get('cardinalidad')!r}; las válidas son {list(tc.CARDINALIDADES)}")
+        out.append(UnionPlan(r["hijo"], r["padre"], tuple((a, b) for a, b in r["por"]), r["cardinalidad"]))
+    return out
 
 
 # ------------------------------------------------------------------ variables y categorías
@@ -149,16 +164,55 @@ def _revisar_variables(ctx: Contexto, plan: Plan) -> Falla | None:
 
 # ------------------------------------------------------------------ universo, uniones, diseño, territorio, cortes
 
-def _universo_analitico(ctx: Contexto, plan: Plan):
-    anio = plan.anios[0]
-    cand = [u for u in ctx.universos if u.encuesta == plan.encuesta and u.unidad == plan.unidad and u.anios[0] <= anio <= u.anios[1]]
-    if not cand:
-        return Falla("plan", "universo", f"no hay universo analítico de {plan.encuesta} {anio} para la unidad «{plan.unidad}»")
+def _mediciones_del_plan(ctx: Contexto, plan: Plan) -> set[str]:
+    """Las mediciones (mediciones.yaml) de las variables que intervienen en el indicador y en las restricciones."""
+    out = set()
+    for c in _condiciones(plan):
+        v = ctx.esquema.variables[c.var]
+        m = tc.medicion_de(ctx.mediciones, plan.encuesta, plan.anios[0], v["archivo"], v["variable"])
+        if m is not None:
+            out.add(m)
+    return out
+
+
+def _base_comun(cand: list):
+    """El universo contenido en todos los demás (sus predicados son un subconjunto de los de cada uno), o None."""
     conjuntos = [frozenset((p.var, p.op, tuple(p.valores)) for p in u.predicados) for u in cand]
     for u, s in zip(cand, conjuntos):
         if all(s <= o for o in conjuntos):
             return u
-    return Falla("plan", "universo", f"los universos de la unidad «{plan.unidad}» no tienen una base común: {[u.id for u in cand]}")
+    return None
+
+
+def _universo_analitico(ctx: Contexto, plan: Plan):
+    anio = plan.anios[0]
+    de_la_unidad = [u for u in ctx.universos if u.encuesta == plan.encuesta and u.unidad == plan.unidad and u.anios[0] <= anio <= u.anios[1]]
+    medidas = _mediciones_del_plan(ctx, plan)
+    if plan.universo_analitico is not None:                     # la receta nombra su universo y se aplica completo
+        nombrado = next((u for u in ctx.universos if u.id == plan.universo_analitico), None)
+        if nombrado is None:
+            return Falla("plan", "universo", f"el universo analítico «{plan.universo_analitico}» no existe en universos_analiticos.yaml")
+        if nombrado not in de_la_unidad:
+            return Falla("plan", "universo", f"el universo «{nombrado.id}» no es de {plan.encuesta} {anio} para la unidad «{plan.unidad}» "
+                         f"(es de {nombrado.encuesta} {nombrado.anios[0]}–{nombrado.anios[1]}, unidad «{nombrado.unidad}»)")
+        falta = sorted(medidas - set(nombrado.aplica_a.mediciones))
+        if falta:
+            return Falla("plan", "universo", f"el universo «{nombrado.id}» no cubre la medición {falta} de las variables del plan "
+                         f"(cubre {nombrado.aplica_a.mediciones})")
+        return nombrado
+    if not de_la_unidad:
+        return Falla("plan", "universo", f"no hay universo analítico de {plan.encuesta} {anio} para la unidad «{plan.unidad}»")
+    cand = de_la_unidad
+    if medidas:                                                 # según la medición: los que la cubren, los más específicos
+        cubren = [u for u in de_la_unidad if medidas <= set(u.aplica_a.mediciones)]
+        if not cubren:
+            return Falla("plan", "universo", f"ningún universo de la unidad «{plan.unidad}» cubre a la vez las mediciones {sorted(medidas)}")
+        menos = min(len(u.aplica_a.mediciones) for u in cubren)
+        cand = [u for u in cubren if len(u.aplica_a.mediciones) == menos]
+    u = _base_comun(cand)
+    if u is None:
+        return Falla("plan", "universo", f"los universos de la unidad «{plan.unidad}» no tienen una base común: {[x.id for x in cand]}")
+    return u
 
 
 def _archivo_de(ctx: Contexto, plan: Plan, nombre: str, archivos: list[str]) -> str | None:
@@ -166,18 +220,29 @@ def _archivo_de(ctx: Contexto, plan: Plan, nombre: str, archivos: list[str]) -> 
 
 
 def ruta_de_uniones(relaciones: list[UnionPlan], origen: str, destinos: set[str]) -> tuple[UnionPlan, ...] | None:
-    """Uniones izquierdas (hijo → padre, n:1) que llevan de `origen` a cada destino, padre antes que dependientes. None si alguno no se alcanza."""
-    padres: dict[str, list[UnionPlan]] = {}
+    """Uniones izquierdas que llevan de `origen` a cada destino, la que trae un archivo después de la que trae de lo que cuelga. None si
+    alguno no se alcanza. Dos tipos de paso (M1-03):
+    - hacia el padre (hijo → padre, de cualquier cardinalidad): el de siempre;
+    - hacia un hermano: desde un archivo al que se llegó hacia el padre (o desde el origen), a un hijo suyo con cardinalidad `1:1` o `1:0..1`
+      por su llave (el hijo no repite filas del padre). Se baja un solo nivel desde el padre común: el hermano no es punto de partida de otros."""
+    sube: dict[str, list[UnionPlan]] = {}
+    baja: dict[str, list[UnionPlan]] = {}
     for r in relaciones:
-        padres.setdefault(r.hijo, []).append(r)
+        sube.setdefault(r.hijo, []).append(r)
+        if r.cardinalidad in ("1:1", "1:0..1"):
+            baja.setdefault(r.padre, []).append(replace(r, hacia="hijo"))
     llegada: dict[str, UnionPlan | None] = {origen: None}
     cola = deque([origen])
     while cola:
         a = cola.popleft()
-        for r in padres.get(a, []):
+        for r in sube.get(a, []):
             if r.padre not in llegada:
                 llegada[r.padre] = r
                 cola.append(r.padre)
+    for a in list(llegada):                                     # hermanos: solo desde lo alcanzado hacia el padre
+        for r in baja.get(a, []):
+            if r.hijo not in llegada:
+                llegada[r.hijo] = r
     salida: list[UnionPlan] = []
     for d in sorted(destinos):
         if d not in llegada:
@@ -185,7 +250,7 @@ def ruta_de_uniones(relaciones: list[UnionPlan], origen: str, destinos: set[str]
         cadena = []
         while llegada[d] is not None:
             cadena.append(llegada[d])
-            d = llegada[d].hijo
+            d = llegada[d].ancla
         for r in reversed(cadena):
             if r not in salida:
                 salida.append(r)
@@ -251,12 +316,13 @@ def _resolver_cortes(ctx: Contexto, plan: Plan, archivo_unidad: str, relaciones:
             (o for o in opciones if ruta_de_uniones(relaciones, archivo_unidad, {o.archivo}) is not None), None)
         if elegida is None:
             return Falla("plan", "cortes", f"el corte «{cid}» no tiene variable en un archivo al que se una {archivo_unidad}")
-        if elegida.pendiente:
-            return Falla("plan", "cortes", f"el corte «{cid}» tiene sus categorías pendientes ({elegida.pendiente})")
-        cats = elegida.categorias or c.categorias or {}
+        try:
+            definicion = tc.definir_corte(c, elegida, plan.receta_id)
+        except tc.CorteNoCompilable as e:
+            return Falla("plan", "cortes", str(e))
         if not ctx.esquema.tiene(plan.encuesta, plan.anios[0], elegida.archivo, elegida.variable):
             return Falla("plan", "cortes", f"{elegida.archivo}.{elegida.variable} no está en el índice")
-        out.append(CorteResuelto(cid, elegida.archivo, elegida.variable, dict(cats)))
+        out.append(CorteResuelto(cid, elegida.archivo, elegida.variable, definicion.categorias, definicion.reglas))
     return tuple(out)
 
 
@@ -347,24 +413,30 @@ def _controles(ctx: Contexto, pc: PlanCompleto, con) -> PlanCompleto | Falla:
     antes = compilar(pc, ctx.esquema, ctx.carpeta_microdatos, solo_u_y=True, sin_dato=ctx.p.corte_sin_dato)
     n_antes = ejecutar_select(con, f"SELECT count(*) FILTER (WHERE u) FROM ({antes.sql})", antes.parametros).fetchone()[0]
     d = compilar(pc, ctx.esquema, ctx.carpeta_microdatos, sin_dato=ctx.p.corte_sin_dato)
+    hay_sin_pareja = any(u.hacia == "hijo" and u.cardinalidad == "1:0..1" for u in pc.uniones)
     r = ejecutar_select(
         con, "SELECT count(*), count(*) FILTER (WHERE u), sum(peso) FILTER (WHERE u), count(DISTINCT upm) FILTER (WHERE u), "
         "count(DISTINCT estrato) FILTER (WHERE u), count(*) FILTER (WHERE u AND y IS NULL), "
         "count(*) FILTER (WHERE u AND (peso IS NULL OR estrato IS NULL OR upm IS NULL)), "
-        f"count(DISTINCT territorio) FILTER (WHERE u) FROM ({d.sql})", d.parametros).fetchone()
-    filas_union, n_despues, suma_pesos, n_upm, n_estratos, y_nulos, diseno_nulos, n_unidades = r
+        "count(DISTINCT territorio) FILTER (WHERE u), "
+        + ("count(*) FILTER (WHERE u AND sin_pareja)" if hay_sin_pareja else "0")
+        + f" FROM ({d.sql})", d.parametros).fetchone()
+    filas_union, n_despues, suma_pesos, n_upm, n_estratos, y_nulos, diseno_nulos, n_unidades, n_sin_pareja = r
     c = {"filas_unidad": filas_unidad, "filas_tras_uniones": filas_union, "u_antes": n_antes, "u_despues": n_despues,
          "suma_pesos_u": float(suma_pesos) if suma_pesos is not None else None, "conglomerados_u": n_upm, "estratos_u": n_estratos,
          "y_nulos_en_u": y_nulos, "diseno_nulo_en_u": diseno_nulos, "unidades_territorio": n_unidades,
-         "uniones": [f"{u.hijo}→{u.padre}" for u in pc.uniones]}
+         "uniones": [u.texto for u in pc.uniones]}
+    if hay_sin_pareja:
+        c["u_sin_pareja"] = n_sin_pareja
     if filas_union != filas_unidad:
         return Falla("plan", "uniones", f"las uniones cambian las filas de {pc.archivo_unidad}: {filas_unidad} → {filas_union}")
     if n_antes == 0:
         return Falla("plan", "universo", "u queda vacío")
-    perdida = (n_antes - n_despues) / n_antes
+    perdida = (n_antes - n_despues + n_sin_pareja) / n_antes           # las filas de u sin pareja en un hermano 1:0..1 cuentan como perdidas
     c["perdida_u"] = perdida
     if perdida > ctx.p.union_perdida_max:
-        return Falla("plan", "uniones", f"las uniones pierden {perdida:.2%} de las filas de u (máximo {ctx.p.union_perdida_max:.2%})")
+        sin = f", de ellas {n_sin_pareja} sin pareja en el archivo hermano" if n_sin_pareja else ""
+        return Falla("plan", "uniones", f"las uniones pierden {perdida:.2%} de las filas de u{sin} (máximo {ctx.p.union_perdida_max:.2%})")
     if y_nulos:
         return Falla("plan", "y", f"{y_nulos} filas de u con y nulo (un nulo dentro de u es un error)")
     if diseno_nulos:
@@ -372,3 +444,25 @@ def _controles(ctx: Contexto, pc: PlanCompleto, con) -> PlanCompleto | Falla:
     c["dominios"] = (1 if plan.territorio.id is not None else n_unidades) * _celdas_de_cortes(pc)
     out = _con_dominios(ctx, replace(pc, controles=c), n_unidades)
     return replace(out, controles=c | {"dominios": c["dominios"]}) if isinstance(out, PlanCompleto) else out
+
+
+def comprobar_cardinalidades(relaciones: list[UnionPlan], carpeta_microdatos: Path, encuesta: str, anio: int, con) -> list[str]:
+    """Comprueba contra los Parquet las relaciones declaradas `1:1` y `1:0..1` (las que permiten ir de hermano a hermano por el padre
+    común): el hijo no repite su llave (`pares`), y si es `1:1` toda fila del padre tiene su pareja. Devuelve los problemas ([] = todo
+    en orden). Las `n:1` no se comprueban aquí: son la dirección de siempre (los controles de la unión miran las filas de la unidad)."""
+    problemas = []
+    for r in relaciones:
+        if r.cardinalidad not in ("1:1", "1:0..1"):
+            continue
+        ruta = lambda a: str(Path(carpeta_microdatos) / encuesta / str(anio) / f"{a}.parquet")
+        cols_h = ", ".join(citar(ch) for ch, _ in r.pares)
+        cols_p = " AND ".join(f"h.{citar(ch)} = p.{citar(cp)}" for ch, cp in r.pares)
+        n_h, n_h_dist = ejecutar_select(con, f"SELECT count(*), count(DISTINCT ({cols_h})) FROM read_parquet(?)", [ruta(r.hijo)]).fetchone()
+        n_p, sin_pareja = ejecutar_select(
+            con, f"SELECT count(*), count(*) FILTER (WHERE h.{citar(r.pares[0][0])} IS NULL) FROM read_parquet(?) p "
+                 f"LEFT JOIN read_parquet(?) h ON {cols_p}", [ruta(r.padre), ruta(r.hijo)]).fetchone()
+        if n_h != n_h_dist:
+            problemas.append(f"{r.hijo}→{r.padre} ({r.cardinalidad}): {r.hijo} repite su llave ({n_h} filas, {n_h_dist} distintas)")
+        if r.cardinalidad == "1:1" and sin_pareja:
+            problemas.append(f"{r.hijo}→{r.padre} (1:1): {sin_pareja} de {n_p} filas de {r.padre} quedan sin pareja en {r.hijo}")
+    return problemas

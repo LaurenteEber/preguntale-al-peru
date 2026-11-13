@@ -7,11 +7,13 @@
 # repite filas de RECH6.
 # `categorias` de cada variable reemplaza a la del corte cuando existe. Un corte sin `categorias` en una variable continua
 # (grupo de edad de niños y personas) lleva `pendiente` con el ID de lo que falta para poder usarlo.
-# M1-01 (dueño, 12/11/2026) escribe aquí los valores decididos: `juegos_de_tramos` (grupo de edad del niño, un juego por grupo de
-# recetas), `agrupa` (Costa = códigos 1 y 2 de SHREGION) y `nota`. **El verificador todavía no los compila** (M1-03, tarea 1b):
-# por eso el grupo de edad del niño sigue con `pendiente: M1-03` y las recetas siguen sin permitir estos tres cortes.
+# M1-01 (dueño, 12/11/2026) escribió aquí los valores decididos: `juegos_de_tramos` (grupo de edad del niño, un juego por grupo de
+# recetas), `agrupa` (Costa = códigos 1 y 2 de SHREGION) y `nota`. M1-03 (tarea 1b) los compila: `tablas_curadas.definir_corte` los
+# traduce y la gramática arma un `CASE` con los rótulos como parámetros (ningún rótulo entra al SQL como texto). Con `agrupa`, el
+# dominio devuelve «Costa», «Sierra» y «Selva» (los de las cifras publicadas); con `juegos_de_tramos`, el rótulo del tramo, y solo
+# dentro de una receta que algún juego nombre.
 # Fuera de esta tabla, porque el diseño los nombra pero M0 no los necesita: educación de la madre y lengua materna (M1).
-version: 0.2.0
+version: 0.3.0
 fecha: "2026-11-12"
 cortes:
   - id: area
@@ -59,7 +61,6 @@ cortes:
         - archivo: RECH6
           variable: HC1
           unidad: nino
-          pendiente: M1-03       # valores decididos; falta que M1-03 los compile (el verificador rechaza el corte mientras tanto)
           juegos_de_tramos:
             - id: anemia
               aplica_a_recetas: [endes_anemia_6_35m, endes_anemia_6_35m_oms2024]
@@ -121,7 +122,7 @@ cortes:
     nota: >-
       Costa = Lima Metropolitana y Callao (SHREGION 1) + resto de la Costa (2): verificado contra las cifras publicadas (informe del INEI,
       recurso endes-2024-informe-ppr: Costa 7,3 % en el Cuadro N.º 04 p. 49, 36,1 % en el N.º 06 p. 53 y 27,0 % en el N.º 6.1 p. 56,
-      que midió el auditor del supervisor el 12/11/2026; la receta los reproduce en M1-03). La categoría agrupada la compila M1-03.
+      que midió el auditor del supervisor el 12/11/2026; las tres recetas los reproducen en M1-03: curados/inferencia/doradas_cortes.csv). La categoría agrupada la compila `definir_corte` (M1-03).
     cita: >-
       Ficha técnica ENDES 2024, §3.7 p. 7 y Ficha técnica ENDES 2025, §3.7 p. 8 («Región Natural: Costa, Sierra y Selva» como dominio
       anual y semestral); las cuatro categorías son las del archivo. Que Costa = SHREGION 1 y 2 lo decidió el dueño el 12/11/2026

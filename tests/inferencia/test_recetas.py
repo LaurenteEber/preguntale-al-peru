@@ -36,11 +36,11 @@ def test_estan_las_tres_recetas_verificadas_con_el_visto_del_dueno(recetas):
         assert r.transformaciones == () and r.tolerancia_pp == 0.1 and r.anios == (2024, 2024) and r.indicador_id == r.id
 
 
-def test_los_cortes_con_tramos_pendientes_no_estan_permitidos(recetas):
+def test_los_cinco_cortes_estan_permitidos_desde_m1_03(recetas):
+    """M1-03 pasa grupo_edad, región natural y quintil de bienestar (con los tramos y rótulos de M1-01) de «no permitidos» a «permitidos»."""
     for r in recetas.values():
-        assert r.cortes_permitidos == ("area", "sexo")
-        assert {c.id: c.motivo.split(":")[0] for c in r.cortes_no_permitidos} == {
-            "grupo_edad": "C-M0-06-2", "region_natural": "C-M0-06-3", "quintil_riqueza": "C-M0-06-4"}
+        assert r.cortes_permitidos == ("area", "sexo", "grupo_edad", "region_natural", "quintil_riqueza")
+        assert r.cortes_no_permitidos == ()
 
 
 def test_los_universos_y_las_doradas_de_cada_receta(recetas):
@@ -69,7 +69,7 @@ def test_una_receta_no_arma_planes_de_otro_anio_ni_con_cortes_no_permitidos(rece
     r = recetas["endes_anemia_6_35m"]
     with pytest.raises(PapError, match="2024–2024, no para 2023"):
         r.a_plan(2023)
-    for corte in ("grupo_edad", "region_natural", "quintil_riqueza", "no_existe"):
+    for corte in ("lengua_materna", "no_existe"):
         with pytest.raises(PapError, match="no permite los cortes"):
             r.a_plan(2024, cortes=(corte,))
 
@@ -94,7 +94,7 @@ def test_transformaciones_no_vacias_son_tipo_c():
     ({"pendiente": "visto_dueno"}, "«verificado» no lleva pendiente"),
     ({"campo_nuevo": 1}, "Extra inputs"),
     ({"anios": [2025, 2024]}, "primero no puede pasar"),
-    ({"cortes_permitidos": ["area", "grupo_edad"]}, "permitidos y no permitidos"),
+    ({"cortes_no_permitidos": [{"id": "area", "motivo": "x"}]}, "permitidos y no permitidos"),
     ({"fuente": "sin dónde"}, "no dice dónde"),
     ({"tolerancia_pp": 0}, "greater than 0"),
 ])

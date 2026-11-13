@@ -1,0 +1,6 @@
+E            +        where <function read_parquet at 0x10f622de0> = pl.read_parquet
+
+tests/inferencia/test_indice_regresion.py:168: AssertionError
+=========================== short test summary info ============================
+FAILED tests/inferencia/test_indice_regresion.py::test_los_archivos_escritos_son_los_del_indice_calculado
+1 failed, 89 passed, 563 deselected in 48.59s

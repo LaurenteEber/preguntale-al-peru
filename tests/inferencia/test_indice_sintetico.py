@@ -1,4 +1,5 @@
 """M0-05: índice de variables con archivos sintéticos (sin los datos reales del INEI)."""
+from pap.inferencia.tablas_curadas import CARDINALIDADES
 import json
 import subprocess
 from pathlib import Path
@@ -413,7 +414,7 @@ def test_archivos_endes_2024_declara_unidad_llave_y_uniones_de_cada_archivo():
     y = yaml.safe_load((RAIZ_REAL / "curados" / "inferencia" / "archivos_endes_2024.yaml").read_text(encoding="utf-8"))
     assert len(y["archivos"]) == 34 and all(set(a) == {"unidad", "llave"} for a in y["archivos"].values())
     for r in y["relaciones"]:
-        assert r["hijo"] in y["archivos"] and r["padre"] in y["archivos"] and r["cardinalidad"] == "n:1"
+        assert r["hijo"] in y["archivos"] and r["padre"] in y["archivos"] and r["cardinalidad"] in CARDINALIDADES          # M1-03: también 1:1 y 1:0..1, medidas contra los datos
     pares = {(r["hijo"], r["padre"]): r["por"] for r in y["relaciones"]}
     assert pares[("RECH1", "RECH0")] == [["HHID", "HHID"]]
     assert pares[("RECH6", "RECH1")] == [["HHID", "HHID"], ["HC0", "HVIDX"]]

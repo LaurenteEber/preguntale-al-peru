@@ -1,0 +1,5 @@
+
+tests/inferencia/test_indice_sintetico.py:416: AssertionError
+=========================== short test summary info ============================
+FAILED tests/inferencia/test_indice_sintetico.py::test_archivos_endes_2024_declara_unidad_llave_y_uniones_de_cada_archivo
+1 failed, 565 passed, 90 deselected in 91.17s (0:01:31)
