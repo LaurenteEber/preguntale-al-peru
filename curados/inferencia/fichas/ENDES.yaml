@@ -66,7 +66,8 @@ tablas:
     quien_tiene_fila: cada persona que vivía en el hogar y falleció desde enero de 2019 (hasta 4 por hogar)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): muertes ocurridas en el hogar desde enero de 2019; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-hogar
       miembro: Diccionario - RECHM.pdf
@@ -181,7 +182,8 @@ tablas:
     quien_tiene_fila: cada mujer de 12 a 49 años listada en el hogar, con o sin medición
     informante: personal de campo (medición)
     modo: medido
-    avisos: []
+    avisos:
+    - 'No entra al lote de M1 (consulta C-M1-07-1): es del cuestionario del hogar y la ficha técnica no dice qué peso le corresponde. La p. 11 asigna el factor hogar (HV005) a «desnutrición y anemia en menores de 5 años» y el factor mujer (V005) a planificación familiar, parto y control prenatal; no nombra la talla, el peso ni la hemoglobina de las mujeres. Sin peso decidido no tiene fila en diseno_muestral.csv ni en unidades.yaml.'
     documentos:
     - recurso: endes-2024-anemia
       miembro: Diccionario - RECH5.pdf
@@ -243,7 +245,8 @@ tablas:
     quien_tiene_fila: cada hogar de la muestra con la sección de programas sociales (34 018 de 37 390)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): programas sociales; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-programas-sociales
       miembro: Diccionario - Programas Sociales x Hogar.pdf
@@ -269,7 +272,8 @@ tablas:
     quien_tiene_fila: cada persona del hogar que recibe Beca 18 (puede haber varias por hogar)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): programas sociales; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-programas-sociales
       miembro: Diccionario - PS_BECA18.pdf
@@ -295,7 +299,8 @@ tablas:
     quien_tiene_fila: cada persona del hogar que recibe comedor popular (puede haber varias por hogar)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): programas sociales; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-programas-sociales
       miembro: Diccionario - PS_COMEDOR.pdf
@@ -321,7 +326,8 @@ tablas:
     quien_tiene_fila: cada persona del hogar que recibe Pensión 65 (puede haber varias por hogar)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): programas sociales; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-programas-sociales
       miembro: Diccionario - PS_PENSION65.pdf
@@ -347,7 +353,8 @@ tablas:
     quien_tiene_fila: cada persona del hogar que recibe Qali Warma (puede haber varias por hogar)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): programas sociales; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-programas-sociales
       miembro: Diccionario - PS_QALIWARMA.pdf
@@ -373,7 +380,8 @@ tablas:
     quien_tiene_fila: cada persona del hogar que recibe Trabaja Perú (puede haber varias por hogar)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): programas sociales; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-programas-sociales
       miembro: Diccionario - PS_TRABAJA.pdf
@@ -399,7 +407,8 @@ tablas:
     quien_tiene_fila: cada persona del hogar que recibe Vaso de Leche (puede haber varias por hogar)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): programas sociales; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-programas-sociales
       miembro: Diccionario - PS_VL.pdf
@@ -425,7 +434,8 @@ tablas:
     quien_tiene_fila: cada persona del hogar que recibe Wawa Wasi / Cuna Más (puede haber varias por hogar)
     informante: persona adulta del hogar
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): programas sociales; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-programas-sociales
       miembro: Diccionario - PS_WAWAWASI.pdf
@@ -645,6 +655,7 @@ tablas:
     modo: declarado
     avisos:
     - La columna VCAL junta todo el calendario en un solo texto; no se separa mes a mes en el índice.
+    - 'No entra al planificador en M1 (M1-07, tarea 1): es el calendario de la mujer (una fila por columna del calendario); sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-sida-condon
       miembro: Diccionario - REC82.pdf
@@ -671,7 +682,8 @@ tablas:
     quien_tiene_fila: cada hermana o hermano nacido de la misma madre que la mujer (141 805 de 33 276 mujeres)
     informante: la mujer entrevistada
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): es la historia de hermanos de la mujer; sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-mortalidad-materna-violencia
       miembro: Diccionario - REC83.pdf
@@ -704,6 +716,7 @@ tablas:
     avisos:
     - 'La tabla trae 34 252 filas pero solo 20 398 tienen respuestas de violencia: las demás no fueron seleccionadas para el módulo.'
     - Las mujeres seleccionadas para el módulo tienen de 15 a 49 años (observado en los datos), aunque la tabla describe a las de 12 a 49.
+    - 'No entra al planificador en M1 (M1-07, tarea 1): violencia doméstica, con submuestra y reglas propias (solo las mujeres seleccionadas para el módulo); sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-mortalidad-materna-violencia
       miembro: Diccionario - REC84DV.pdf
@@ -763,6 +776,7 @@ tablas:
     avisos:
     - '341 filas no tienen a la mujer en REC0111 (C-M0-05-2): se excluyen de todo cálculo de disciplina infantil, con nota (decisión del dueño,
       12/11/2026).'
+    - 'No entra al planificador en M1 (M1-07, tarea 1): disciplina infantil, con submuestra y reglas propias (el universo exige a la madre en REC0111, C-M0-05-2); sin fila en diseno_muestral.csv ni en unidades.yaml el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-disciplina-infantil
       miembro: Diccionario - REC93DVdisciplina.pdf
@@ -979,7 +993,8 @@ tablas:
     quien_tiene_fila: cada hogar con persona seleccionada (34 018 de 37 390)
     informante: la persona seleccionada
     modo: mixto
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): cuestionario de salud (persona de 15 años a más). Tiene diseño muestral declarado (salud_15_mas, PESO15_AMAS) pero no fila en unidades.yaml, y el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-salud
       miembro: Diccionario - CSALUD01.pdf
@@ -1012,7 +1027,8 @@ tablas:
     quien_tiene_fila: cada niña o niño menor de 12 años seleccionado (41 309 en 24 172 hogares)
     informante: la persona responsable de la niña o el niño
     modo: declarado
-    avisos: []
+    avisos:
+    - 'No entra al planificador en M1 (M1-07, tarea 1): cuestionario de salud (menores de 12 años). Tiene diseño muestral declarado (salud_menores_12, PESOMEN12) pero no fila en unidades.yaml, y el verificador no deja pasar planes con esta tabla.'
     documentos:
     - recurso: endes-2024-salud
       miembro: Diccionario - CSALUD08.pdf

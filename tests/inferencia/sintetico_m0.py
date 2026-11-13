@@ -78,5 +78,5 @@ def contexto_sintetico(carpeta: Path, estado: str = "propuesto", variante: str =
     ctx = Contexto(Esquema.desde_frames(v, c, a), tc.leer_universos(RAIZ_REAL), tc.leer_diseno_muestral(RAIZ_REAL),
                    tc.leer_territorios(RAIZ_REAL), tc.leer_cortes(RAIZ_REAL), tc.leer_perfil_anual(RAIZ_REAL),
                    {("ENDES", 2024): RELACIONES}, {("INEI-ENDES", 2024, "*"): VERIFICADA_2024}, RANK,
-                   ParametrosVerificador.desde_yaml(), micro)
+                   ParametrosVerificador.desde_yaml(), micro, tc.leer_mediciones(RAIZ_REAL), tc.leer_unidades(RAIZ_REAL))
     return ctx, micro

@@ -1,0 +1,10 @@
+· CSALUD01: edad observada 15–97 anios (QS23, 31,484 valores); declarada 15–None
+· CSALUD08: edad observada 0–11 anios (QS802D, 38,090 valores); declarada 0–11
+· DIT: edad observada 9–71 meses (QI478, 19,245 valores); declarada 9–71
+· REC0111: edad observada 12–49 anios (V012, 34,252 valores); declarada 12–49
+· REC42: edad observada 12–49 anios (V447A, 34,252 valores); declarada 12–49
+· REC44: edad observada 0–59 meses (HW1, 19,234 valores); declarada 0–59
+· RECH1: edad observada 0–97 anios (HV105, 135,045 valores); declarada 0–None
+· RECH5: edad observada 12–49 anios (HA1, 38,488 valores); declarada 12–49
+· RECH6: edad observada 0–59 meses (HC1, 20,290 valores); declarada 0–59
+✔ 34 ficha(s) y 227 bloque(s) cumplen las 8 reglas de fichas.md §9.

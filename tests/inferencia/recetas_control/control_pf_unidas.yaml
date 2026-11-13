@@ -1,0 +1,59 @@
+# CONTROL DE PRUEBA (M1-07, tarea 6) — no es un indicador: no está en dim_indicador.yaml, no responde preguntas, no se marca `verificado` y no pasa por
+# `pap inferencia validar-recetas` (vive aquí, no en curados/inferencia/recetas/). Comprueba el diseño de «mujer» contra una cifra oficial de 2024:
+# Mujeres actualmente unidas de 15 a 49 años que usan algún método de planificación familiar (V313 = folclórico, tradicional o moderno). Convertirlo en indicador es una consulta al dueño. Lo carga tests/inferencia/test_m107_controles.py con el esquema de recetas.Receta.
+# Las cifras por área (`doradas_area`, esquema recetas.DoradaCorte) van en este mismo archivo; la prueba las separa antes de validar la receta.
+id: control_pf_unidas
+version: 0.1.0
+fecha: "2026-11-13"
+descripcion: "Mujeres actualmente unidas de 15 a 49 años que usan algún método de planificación familiar (V313 = folclórico, tradicional o moderno)"
+indicador_id: control_pf_unidas
+encuesta: ENDES
+unidad: mujer
+medida: proporcion
+anios: [2024, 2024]
+universo_analitico: mujer_15_49_entrevistada
+indicador:
+  combinar: una
+  condiciones:
+    - {archivo: RE223132, variable: V313, op: en, valores: [1, 2, 3]}
+universo:
+  restricciones:
+    - {archivo: RE516171, variable: V502, op: en, valores: [1]}
+transformaciones: []
+cortes_permitidos: [area]
+cortes_no_permitidos: []
+tolerancia_pp: 0.1        # E-05: las cifras de la ENDES se reproducen a ± 0,1 pp (R-ENC-18)
+fuente: "Ficha técnica ENDES 2024, p. 20 (#21: mujeres de 15 a 49 años que usan algún método de planificación familiar); V502 = 1 «Actualmente casada» (unida) en RE516171 y V313 en RE223132 (etiquetas de valor de los archivos 2024); universo curados/inferencia/universos_analiticos.yaml:1 (mujer_15_49_entrevistada)"
+doradas:
+  - id_cifra: CTL-CONTROL_PF_UNIDAS-2024-PE
+    nivel: nacional
+    territorio: PE
+    valor_publicado: 77.5
+    decimales: 1
+    bloqueante: true
+    casos_publicados: 19764
+    cita: "INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 23 p. 91 (PDF 93), fila «Total», columnas «Valor estimado 2024» y «Número de casos sin ponderar»"
+doradas_area:
+  - id_cifra: CTL-CONTROL_PF_UNIDAS-2024-PE-URBANO
+    receta_id: control_pf_unidas
+    anio: 2024
+    nivel: nacional
+    territorio: PE
+    corte: area
+    categoria: urbano
+    valor_publicado: 77.0
+    decimales: 1
+    casos_publicados: 13115
+    cita: "INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 23 p. 91 (PDF 93), fila «Urbana», columnas «Valor estimado 2024» y «Número de casos sin ponderar»"
+  - id_cifra: CTL-CONTROL_PF_UNIDAS-2024-PE-RURAL
+    receta_id: control_pf_unidas
+    anio: 2024
+    nivel: nacional
+    territorio: PE
+    corte: area
+    categoria: rural
+    valor_publicado: 79.5
+    decimales: 1
+    casos_publicados: 6649
+    cita: "INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 23 p. 91 (PDF 93), fila «Rural», columnas «Valor estimado 2024» y «Número de casos sin ponderar»"
+estado: propuesto

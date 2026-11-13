@@ -8,8 +8,16 @@
 # `anios`: M0 solo tiene 2024; M2 los extiende.
 # `exige_pareja` (M1-01): el registro de la unidad debe tener su pareja en otro archivo; los que no la tienen quedan fuera. No es un
 # predicado de valor; lo compilará el verificador cuando M1-07 declare la unión (hijo_de_mujer → mujer).
-version: 0.2.0
-fecha: "2026-11-12"
+# M1-07 (tarea 3, versión 0.3.0): universos de las demás unidades del lote (hogar, persona, mujer y el hijo de la entrevistada). El verificador solo
+# considera los universos cuyos `aplica_a.archivos` incluyen las tablas del plan que son de la unidad (curados/inferencia/unidades.yaml). Entre
+# varios, vale la regla de siempre: el contenido en todos los demás (aquí, el de 12 a 49 años antes que el de 15 a 49: sus predicados son un subconjunto);
+# una receta puede nombrar el de 15 a 49. «Entrevistada» = entrevista individual completa (V015 = 1, 34 252 de 37 117 mujeres).
+# «Nacidos en los últimos 5 años» no es un predicado: REC41, REC43, REC44, REC94 y REC95 ya son solo esos nacimientos (19 751), **vivos o
+# fallecidos** (169 tienen B5 = 0 en REC21; la cesárea del INEI los cuenta). Un universo de niños vivos (B5 = 1) y qué hacer con REC21, que
+# trae todos los nacimientos de la mujer (60 693), están en consulta C-M1-07-2; la edad o el índice del nacimiento se piden como restricción
+# del plan (p. ej. MIDX = 1 para el último nacimiento).
+version: 0.3.0
+fecha: "2026-11-13"
 universos:
   - id: nino_hecho
     encuesta: ENDES
@@ -90,3 +98,107 @@ universos:
       C-M0-05-2 (dueño, 12/11/2026): las 341 filas de REC93DVdisciplina sin la mujer en REC0111 (15 462 filas del hijo, 15 121 con pareja)
       se excluyen de todo cálculo de disciplina infantil; medido en backlog/slice-m0/evidencia/m0-05_conteos.md:135 y consultado en
       backlog/slice-m0/consultas_al_dueno.md:98. La nota va también en la ficha de REC93DVdisciplina (M1-06)
+  - id: hogar
+    encuesta: ENDES
+    unidad: hogar
+    aplica_a: {archivos: [RECH0, RECH23], mediciones: []}
+    predicados:
+      - {var: HV015, op: en, valores: [1]}
+    anios: [2024, 2024]
+    fuente: >-
+      Hogares con entrevista completa (HV015 = 1, «Completo»): INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 1 p. 41 y Cuadro N.º 2 p. 43, «Número de casos sin
+      ponderar» 34 018 (urbana 22 099, rural 11 919), que son los hogares de RECH0 con HV015 = 1 (de 37 390; medido el 13/11/2026 en
+      tests/inferencia/test_m107_microdatos.py); Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §II p. 2 («Los hogares particulares y sus miembros»); referencia de método: DHS-Indicators-R
+      (hogares con HV015 = 1)
+  - id: persona_de_hecho
+    encuesta: ENDES
+    unidad: persona
+    aplica_a: {archivos: [RECH1, RECH4], mediciones: []}
+    predicados:
+      - {var: HV103, op: en, valores: [1]}
+    anios: [2024, 2024]
+    fuente: >-
+      Población de hecho (durmió en el hogar la noche anterior, HV103 = 1): Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §II p. 2 («…y aquellas que no siendo residentes
+      pernoctaron en la vivienda la noche anterior»); curados/capa0/definiciones_endes.yaml:20 («pernocto: true» = HV103 = 1);
+      src/pap/capa0/encuestas.py:146. HV103 está en RECH1; RECH4 se une a RECH1 por HHID e IDXH4 = HVIDX (archivos_endes_2024.yaml)
+  - id: mujer_12_49_entrevistada
+    encuesta: ENDES
+    unidad: mujer
+    aplica_a: {archivos: [REC0111, REC91, RE223132, REC42, RE516171, RE758081], mediciones: []}
+    predicados:
+      - {var: V015, op: en, valores: [1]}
+      - {var: V012, op: entre, valores: [12, 49]}
+    anios: [2024, 2024]
+    fuente: >-
+      Mujeres de 12 a 49 años con entrevista individual completa: Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §II p. 2 («Todas las mujeres de 12 a 49 años de edad») y §5.2 p. 8
+      («a todas las mujeres elegibles, es decir, de 12 a 49 años de edad»); V015 = 1 «Completa» (etiqueta de valor de V015 en REC0111 2024: 34 252 de
+      las 37 117 elegibles, las mismas de REC42, RE223132, RE516171 y RE758081 según sus fichas); referencia de método: DHS-Indicators-R (mujeres
+      entrevistadas)
+  - id: mujer_15_49_entrevistada
+    encuesta: ENDES
+    unidad: mujer
+    aplica_a: {archivos: [REC0111, REC91, RE223132, REC42, RE516171, RE758081], mediciones: []}
+    predicados:
+      - {var: V015, op: en, valores: [1]}
+      - {var: V012, op: entre, valores: [12, 49]}
+      - {var: V012, op: entre, valores: [15, 49]}
+    anios: [2024, 2024]
+    fuente: >-
+      Mujeres de 15 a 49 años con entrevista individual completa, la población de los indicadores de planificación familiar del informe del INEI:
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 20 («21. Porcentaje de mujeres que usa algún método de planificación familiar … mujeres de 15 a 49 años de edad»);
+      INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 23 p. 91, «Número de casos sin ponderar» 19 764 (mujeres actualmente unidas de 15 a 49 años; reproducido por la receta de
+      control tests/inferencia/recetas_control/control_pf_unidas.yaml). Contiene los predicados de mujer_12_49_entrevistada más la edad de 15 a 49
+  - id: nino_hijo_de_entrevistada
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [REC21, REC41, REC43, REC44, REC94, REC95, DIT, REC0111], mediciones: [hemoglobina, talla]}
+    predicados:
+      - {var: V015, op: en, valores: [1]}
+      - {var: V012, op: entre, valores: [12, 49]}
+    anios: [2024, 2024]
+    fuente: >-
+      Hijos de las mujeres de 12 a 49 años con entrevista individual completa: Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §II p. 2 («Todas las mujeres de 12 a 49 años de edad y niños
+      menores de 5 años») y §5.2 p. 9 («B. Cuestionario Individual de la Mujer y niño»); la madre se toma de REC0111 (V015, V012) por CASEID; los
+      60 693 nacimientos de REC21, los 19 751 de REC41, REC43, REC44, REC94 y REC95 y los 19 245 de DIT son todos de madres con V015 = 1 (medido el
+      13/11/2026). Cubre las dos mediciones de REC44 (hemoglobina y talla) como `nino_hecho` las de RECH6
+  - id: nino_hijo_de_entrevistada_15_49
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [REC21, REC41, REC43, REC44, REC94, REC95, DIT, REC0111], mediciones: []}
+    predicados:
+      - {var: V015, op: en, valores: [1]}
+      - {var: V012, op: entre, valores: [12, 49]}
+      - {var: V012, op: entre, valores: [15, 49]}
+    anios: [2024, 2024]
+    fuente: >-
+      Hijos de las mujeres de 15 a 49 años con entrevista completa, la población de los indicadores del informe del INEI sobre nacimientos de los
+      últimos cinco años: INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 29 p. 105 (nacimientos por cesárea), «Número de casos sin ponderar» 19 737 = los 19 751 de REC41
+      menos 14 de madres de 14 años (V012 de REC0111); Cuadro N.º 27 p. 101, 17 594 = el último nacimiento (MIDX = 1) de madres de 15 a 49 años. Lo
+      reproduce la receta de control tests/inferencia/recetas_control/control_cesarea.yaml
+  - id: nino_hijo_de_entrevistada_hb_medida
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [REC44, REC21, REC41, REC43, REC94, REC95, DIT, REC0111], mediciones: [hemoglobina]}
+    predicados:
+      - {var: V015, op: en, valores: [1]}
+      - {var: V012, op: entre, valores: [12, 49]}
+      - {var: HW55, op: en, valores: [0]}
+    anios: [2024, 2024]
+    fuente: >-
+      Hijos de entrevistadas con hemoglobina medida (HW55 = 0, «Medido»): etiquetas de valor de HW55 en REC44 2024; mismo criterio que
+      `nino_hecho_hb_medida` para RECH6 (curados/capa0/definiciones_endes.yaml:18, HC55 = 0). No lleva el pernocte (HV103): hoy no se declara la unión de REC44 con
+      la fila del niño en RECH1 (posible por REC21.B16 = HVIDX, con la salvedad de B16 = 0, M1-06-s8); por eso no reproduce las cifras del informe, que salen de RECH6 (M1-07-s2)
+  - id: nino_hijo_de_entrevistada_talla
+    encuesta: ENDES
+    unidad: nino
+    aplica_a: {archivos: [REC44, REC21, REC41, REC43, REC94, REC95, DIT, REC0111], mediciones: [talla]}
+    predicados:
+      - {var: V015, op: en, valores: [1]}
+      - {var: V012, op: entre, valores: [12, 49]}
+      - {var: HW1, op: entre, valores: [0, 59]}
+      - {var: HW70, op: entre, valores: [-9989, 9989]}
+    anios: [2024, 2024]
+    fuente: >-
+      Hijos de entrevistadas de 0 a 59 meses con talla para la edad válida: etiquetas de HW1 («Edad en meses», 0 a 59) y HW70 («Talla/Edad de la
+      Desviación Estándar … según la OMS») en REC44 2024; mismo criterio que `nino_dci_0_59m` para RECH6 (curados/capa0/definiciones_endes.yaml:28-34;
+      HW70 válido entre −9989 y 9989, centésimas de DE). Sin pernocte, igual que `nino_hijo_de_entrevistada_hb_medida`

@@ -146,8 +146,8 @@ def test_peso_de_la_submuestra_mas_restrictiva(sint):
     diseno = [d.model_copy(update={"peso_expr": "HV005/3e6"}) if (d.archivo, d.medicion) == ("RECH6", "talla") else d for d in ctx.diseno]
     f = verificar(plan_anemia(), replace(ctx, diseno=diseno))
     assert (f.tipo, f.dimension) == ("plan", "peso")
-    # sin ninguna fila de diseño para los archivos que intervienen
-    f = verificar(plan_anemia(), replace(ctx, diseno=[d for d in ctx.diseno if d.archivo != "RECH6"]))
+    # sin ninguna fila de diseño para los archivos que intervienen (RECH6 y RECH1, que trae HV103; M1-07 le dio fila a RECH1)
+    f = verificar(plan_anemia(), replace(ctx, diseno=[d for d in ctx.diseno if d.archivo not in ("RECH6", "RECH1")]))
     assert (f.tipo, f.dimension) == ("plan", "diseno")
 
 

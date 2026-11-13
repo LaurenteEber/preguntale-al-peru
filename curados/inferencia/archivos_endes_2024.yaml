@@ -16,7 +16,7 @@
 #     REC0111: 34 252 de 37 117). Las filas del padre sin pareja quedan con el corte «sin dato» y cuentan para el control de pérdida de u.
 #   Solo 1:1 y 1:0..1 permiten ir de un hijo a otro hijo del mismo padre (el verificador baja un solo nivel desde el padre común y arma
 #   dos uniones izquierdas: A → padre → B). `verificador.comprobar_cardinalidades` lo comprueba contra los Parquet.
-#   Medido el 12/11/2026 y no declarado (no hace falta todavía): REC91–REC0111 es 1:1 (37 117); REC84DV, CSALUD01 y
+#   Medido el 12/11/2026 y no declarado (no hace falta todavía): REC84DV, CSALUD01 y
 #   Programas_Sociales_x_Hogar son 1:0..1 (34 252 de 37 117; 34 018 de 37 390 las dos últimas). CSALUD01 → RECH1 se declara n:1 por
 #   decisión del dueño (C-M1-06-1); en los datos cada persona de RECH1 tiene a lo sumo una fila en CSALUD01.
 # Una unión que dejaría filas sin pareja NO se declara: REC93DVdisciplina no se une a REC0111 por CASEID (341 de sus
@@ -28,7 +28,9 @@
 # las 34 tablas coinciden con el documento salvo la unión REC0111 → RECH1 por V003, que el documento no menciona (queda `solo_datos`).
 # Versión 0.4.0 (C-M1-06-1 y C-M1-02-2, dueño, 13/11/2026): CSALUD01 es una persona (la de 15 años a más seleccionada), con la llave del
 # documento (HHID + QSNUMERO) y la unión a su fila de RECH1 (QSNUMERO = HVIDX); antes se declaraba hogar con llave HHID.
-version: 0.4.0
+# Versión 0.5.0 (M1-07, tarea 4): REC91–REC0111 pasa a `1:1` (37 117 en ambas); REC41, REC43, REC44, REC94, REC95 y DIT con REC21 (`1:0..1`) y
+# RECH4 con RECH1 (`1:1`), medidas el 13/11/2026 sin pérdidas ni duplicados.
+version: 0.5.0
 fecha: "2026-11-13"
 encuesta: ENDES
 anio: 2024
@@ -147,10 +149,23 @@ relaciones:
   - {hijo: REC82, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
   - {hijo: REC83, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
   - {hijo: REC84DV, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
-  - {hijo: REC91, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC91, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:1", cita: doc11_caseid}       # M1-07: 37 117 en ambas; permite ir de REC0111 a REC91
   - {hijo: REC94, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
   - {hijo: REC95, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
   - {hijo: RE223132, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1", cita: doc11_caseid}
   - {hijo: RE516171, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1", cita: doc11_caseid}
   - {hijo: RE758081, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1", cita: doc11_caseid}
   - {hijo: DIT, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  # M1-07 (tarea 4): el hijo de una entrevistada con su fila de REC21 (sexo y edad del niño), por la mujer y el índice del nacimiento
+  # (BIDX = MIDX = HIDX = HWIDX = IDX94 = IDX95, documento n.º 11). Cada fila de estas tablas encuentra su nacimiento en REC21 y ninguna
+  # repite su llave (19 751 de 19 751; DIT, 19 245 de 19 245), así que se declaran `1:0..1`: REC21 tiene a lo más una por nacimiento, y por
+  # el padre común REC21 se llega de una a otra (REC41 con REC44, por ejemplo). Van después de las uniones con REC0111 para que el camino
+  # corto de cada una hacia la mujer y el hogar siga siendo el de antes.
+  - {hijo: REC41, padre: REC21, por: [[CASEID, CASEID], [MIDX, BIDX]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: REC43, padre: REC21, por: [[CASEID, CASEID], [HIDX, BIDX]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: REC44, padre: REC21, por: [[CASEID, CASEID], [HWIDX, BIDX]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: REC94, padre: REC21, por: [[CASEID, CASEID], [IDX94, BIDX]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: REC95, padre: REC21, por: [[CASEID, CASEID], [IDX95, BIDX]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: DIT, padre: REC21, por: [[CASEID, CASEID], [BIDX, BIDX]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  # M1-07: RECH4 es la misma persona que RECH1 (HVIDX = IDXH4, documento n.º 11): 135 045 en ambas, 1:1
+  - {hijo: RECH4, padre: RECH1, por: [[HHID, HHID], [IDXH4, HVIDX]], cardinalidad: "1:1", cita: doc11_hvidx}

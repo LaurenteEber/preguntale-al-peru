@@ -1,6 +1,6 @@
 """Tablas curadas del motor de inferencia (M0-06; diseño §7.4 y anexo A): esquemas y validación.
 
-Las siete tablas viven en `curados/inferencia/` y cada fila lleva su cita (documento + página, o archivo:línea):
+Las ocho tablas viven en `curados/inferencia/` y cada fila lleva su cita (documento + página, o archivo:línea):
 
 | Tabla | Archivo | Una fila es |
 |---|---|---|
@@ -11,6 +11,7 @@ Las siete tablas viven en `curados/inferencia/` y cada fila lleva su cita (docum
 | `relacion_entre_anios` | `relacion_entre_anios.csv` | encuesta × par de años |
 | `cortes_estandar` | `cortes_estandar.yaml` | un corte, con su variable por archivo |
 | `mediciones` | `mediciones.yaml` | una medición de un archivo (M1-03): las variables de su batería |
+| `unidades` | `unidades.yaml` | una tabla del lote (M1-07): su unidad del plan, su tabla base y de dónde sale su peso |
 
 Una fila sin cita, o con una cita que no dice dónde (página o línea), no valida: es tipo C (AGENTS.md §5). Las expresiones SQL
 (`peso_expr`, `estrato_expr`, `expr`…) solo admiten un alfabeto corto de identificadores, números, comillas simples y operadores;
@@ -41,6 +42,7 @@ ARCHIVOS_TABLAS = {
     "relacion_entre_anios": "relacion_entre_anios.csv",
     "cortes_estandar": "cortes_estandar.yaml",
     "mediciones": "mediciones.yaml",
+    "unidades": "unidades.yaml",
 }
 # Cardinalidades de `relaciones` en archivos_<encuesta>_<año>.yaml (M1-03): `n:1` = varias filas del hijo por cada una del padre (siempre se
 # une hacia el padre); `1:1` = el hijo tiene exactamente una fila por cada una del padre; `1:0..1` = como máximo una (no todas). Las dos
@@ -489,6 +491,80 @@ def medicion_de(mediciones: list[Medicion], encuesta: str, anio: int, archivo: s
     return None
 
 
+# ------------------------------------------------------------------ unidades (M1-07, tarea 2)
+
+# Vocabulario de la unidad del plan (`Plan.unidad`). Las del índice (`archivos_<encuesta>_<año>.yaml`: persona_del_hogar, hijo_de_mujer…)
+# describen la fila de cada archivo y no coinciden con estas: `unidades.yaml` las empareja tabla por tabla.
+UNIDADES_PLAN = ("nino", "mujer", "hogar", "persona")
+
+
+class PesoDeTabla(_Fila):
+    """De dónde sale el peso de una tabla: `variable` (HV005, V005…) está en el archivo `en`, que es la propia tabla o un padre declarado."""
+    variable: str
+    en: str
+
+    @field_validator("variable")
+    @classmethod
+    def _variable(cls, v):
+        if not _VAR.match(v):
+            raise ValueError(f"nombre de variable no permitido: {v!r}")
+        return v
+
+
+class UnidadTabla(_Fila):
+    """Una tabla del lote de M1: la unidad del plan que sus filas representan, la unidad que el índice le declara, la tabla de la que
+    parte un plan cuando la tabla interviene y de dónde sale su peso. El verificador elige el universo, la tabla base y el diseño por la
+    tabla que interviene en el plan (no por el primer archivo de la unidad)."""
+    archivo: str
+    encuesta: Literal["ENDES", "ENAHO"]
+    anios: tuple[int, int]
+    unidad_plan: str
+    unidad_archivo: str
+    tabla_base: str
+    peso: PesoDeTabla
+    cita: str
+
+    _v_cita = field_validator("cita")(_cita)
+
+    @field_validator("unidad_plan")
+    @classmethod
+    def _unidad_plan(cls, v):
+        if v not in UNIDADES_PLAN:
+            raise ValueError(f"unidad_plan {v!r} fuera del vocabulario {list(UNIDADES_PLAN)}")
+        return v
+
+    @field_validator("anios")
+    @classmethod
+    def _orden(cls, v):
+        if v[0] > v[1]:
+            raise ValueError("anios: el primero no puede pasar del segundo")
+        return v
+
+
+class TablaUnidades(_Fila):
+    version: str
+    fecha: str
+    unidades: list[UnidadTabla]
+
+
+def unidad_de(unidades: list[UnidadTabla], encuesta: str, anio: int, archivo: str) -> UnidadTabla | None:
+    """La fila de `unidades.yaml` de la tabla (None si no está en el lote)."""
+    for u in unidades:
+        if u.encuesta == encuesta and u.archivo == archivo and u.anios[0] <= anio <= u.anios[1]:
+            return u
+    return None
+
+
+def corte_aplica(unidades: list[UnidadTabla], encuesta: str, anio: int, unidad_plan: str, variable: "VariableCorte") -> bool:
+    """¿Esta variable de un corte describe a la unidad del plan? Sí si su `unidad` es la del plan o `hogar` (el contexto del hogar sirve a
+    cualquier unidad), o si su tabla es de la unidad del plan según `unidades.yaml` (RECH6 declara `persona_del_hogar` y su corte, `nino`).
+    Evita, por ejemplo, ofrecer el grupo de edad de la madre como el del hijo."""
+    if variable.unidad in (unidad_plan, "hogar"):
+        return True
+    fila = unidad_de(unidades, encuesta, anio, variable.archivo)
+    return fila is not None and fila.unidad_plan == unidad_plan
+
+
 # ------------------------------------------------------------------ lectura
 
 def _leer_csv(ruta: Path, modelo: type[BaseModel]) -> list:
@@ -533,9 +609,13 @@ def leer_mediciones(raiz: Path) -> list[Medicion]:
     return _leer_yaml(raiz, "mediciones", TablaMediciones).mediciones
 
 
+def leer_unidades(raiz: Path) -> list[UnidadTabla]:
+    return _leer_yaml(raiz, "unidades", TablaUnidades).unidades
+
+
 LECTORES = {"diseno_muestral": leer_diseno_muestral, "universos_analiticos": leer_universos, "territorios": leer_territorios,
             "perfil_anual": leer_perfil_anual, "relacion_entre_anios": leer_relacion_entre_anios, "cortes_estandar": leer_cortes,
-            "mediciones": leer_mediciones}
+            "mediciones": leer_mediciones, "unidades": leer_unidades}
 
 
 # ------------------------------------------------------------------ ayudas para aplicar las tablas
@@ -623,7 +703,7 @@ def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int
                                    f"{r.get('cardinalidad')!r}; las válidas son {list(CARDINALIDADES)}")
     en_indice = _variables_indice(raiz)
     if exigir_indice and en_indice is None:
-        for nombre in ("universos_analiticos", "territorios", "cortes_estandar", "mediciones"):
+        for nombre in ("universos_analiticos", "territorios", "cortes_estandar", "mediciones", "unidades"):
             err(nombre, ERROR_SIN_INDICE)
 
     for nombre, filas in datos.items():
@@ -675,6 +755,44 @@ def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int
                 vistas.setdefault((m.encuesta, m.archivo, v), []).append((m.id, m.anios))
         for i in {i for i in ids_dup if ids_dup.count(i) > 1}:
             err("mediciones", f"id repetido {i[0]} en {i[2]}")
+    if "unidades" in datos:
+        filas_u = datos["unidades"]
+        claves = [(u.encuesta, u.archivo, u.anios) for u in filas_u]
+        for k in {k for k in claves if claves.count(k) > 1}:
+            err("unidades", f"fila repetida {k}")
+        disenos = datos.get("diseno_muestral", [])
+        for u in filas_u:
+            if u.archivo not in archivos:
+                err("unidades", f"{u.archivo}: el archivo no está en archivos_endes_2024.yaml")
+                continue
+            declarada = archivos_yaml["archivos"][u.archivo]["unidad"]
+            if declarada != u.unidad_archivo:
+                err("unidades", f"{u.archivo}: unidad_archivo «{u.unidad_archivo}», pero archivos_endes_2024.yaml declara «{declarada}»")
+            base = next((x for x in filas_u if x.archivo == u.tabla_base and x.encuesta == u.encuesta), None)
+            if u.tabla_base not in archivos:
+                err("unidades", f"{u.archivo}: la tabla base {u.tabla_base} no está en archivos_endes_2024.yaml")
+            elif base is None:
+                err("unidades", f"{u.archivo}: la tabla base {u.tabla_base} no tiene fila en unidades.yaml")
+            elif base.unidad_plan != u.unidad_plan:
+                err("unidades", f"{u.archivo}: la tabla base {u.tabla_base} es de la unidad «{base.unidad_plan}», no de «{u.unidad_plan}»")
+            if "diseno_muestral" in datos:
+                propias = [f for f in disenos if f.encuesta == u.encuesta and f.archivo == u.archivo and u.anios[0] <= f.anio <= u.anios[1]]
+                if not propias:
+                    err("unidades", f"{u.archivo}: no tiene fila en diseno_muestral.csv")
+                for f in propias:
+                    if f.peso_expr != f"{u.peso.variable}/1e6":
+                        err("unidades", f"{u.archivo}: el peso declarado es {u.peso.variable}, pero diseno_muestral.csv ({f.llave}) usa {f.peso_expr}")
+                    if u.peso.en != u.archivo and u.peso.en not in {p for _, _, p, _ in f.uniones}:
+                        err("unidades", f"{u.archivo}: el peso viene de {u.peso.en}, que no es la tabla ni un padre de sus uniones para el diseño ({f.llave})")
+            if en_indice is not None and (u.peso.en, u.peso.variable) not in en_indice:
+                err("unidades", f"{u.archivo}: la variable de peso {u.peso.variable} no está en {u.peso.en} del índice")
+        for c in datos.get("cortes_estandar", []):
+            for enc, variables in c.por_encuesta.items():
+                for v in variables:
+                    fila = unidad_de(filas_u, enc, 2024, v.archivo)
+                    if fila is not None and v.unidad not in (fila.unidad_plan, fila.unidad_archivo, "hogar"):
+                        err("unidades", f"{c.id}: la unidad «{v.unidad}» de {v.archivo}.{v.variable} no es ni la del plan («{fila.unidad_plan}») "
+                                        f"ni la del índice («{fila.unidad_archivo}») de unidades.yaml")
     if "territorios" in datos:
         niveles = [t.nivel for t in datos["territorios"]]
         for n in {n for n in niveles if niveles.count(n) > 1}:

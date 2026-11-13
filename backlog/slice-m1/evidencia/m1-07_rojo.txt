@@ -1,0 +1,106 @@
+# RED 1 (antes de implementar): la API tc.leer_unidades / unidades.yaml no existe
+>       assert {u.archivo for u in tc.leer_unidades(RAIZ_REAL)} >= {"RECH6", "REC41", "REC0111"}
+                                   ^^^^^^^^^^^^^^^^
+E       AttributeError: module 'pap.inferencia.tablas_curadas' has no attribute 'leer_unidades'. Did you mean: 'leer_universos'?
+
+tests/inferencia/test_m107_verificador.py:202: AttributeError
+=========================== short test summary info ============================
+FAILED tests/inferencia/test_m107_verificador.py::test_los_datos_reales_de_las_tablas_curadas_cargan
+ERROR tests/inferencia/test_m107_verificador.py::test_un_plan_de_nino_sobre_rec41_usa_el_universo_del_hijo_de_la_entrevistada_y_parte_de_rec41
+ERROR tests/inferencia/test_m107_verificador.py::test_un_plan_de_nino_sobre_rech6_sigue_usando_el_universo_del_nino_medido
+ERROR tests/inferencia/test_m107_verificador.py::test_el_universo_nombrado_por_una_receta_debe_cubrir_la_tabla_del_plan
+ERROR tests/inferencia/test_m107_verificador.py::test_la_madre_de_14_anos_entra_al_universo_12_49_y_no_al_15_49
+ERROR tests/inferencia/test_m107_verificador.py::test_la_medicion_de_rec44_elige_su_universo_y_su_peso_de_medicion
+ERROR tests/inferencia/test_m107_verificador.py::test_un_plan_de_mujer_parte_de_la_tabla_que_interviene_y_baja_a_su_hermana_por_rec0111
+ERROR tests/inferencia/test_m107_verificador.py::test_el_hogar_y_la_persona_tambien_se_eligen_por_la_tabla
+ERROR tests/inferencia/test_m107_verificador.py::test_la_tabla_base_viene_de_unidades_yaml_y_no_del_primer_archivo
+ERROR tests/inferencia/test_m107_verificador.py::test_dos_tablas_de_la_unidad_con_bases_que_no_se_unen_son_falla_del_plan
+ERROR tests/inferencia/test_m107_verificador.py::test_una_unidad_que_no_es_la_de_las_variables_es_falla_del_plan
+ERROR tests/inferencia/test_m107_verificador.py::test_nino_madre_hogar_gana_la_medicion_sobre_la_entrevista_individual_y_el_hogar
+ERROR tests/inferencia/test_m107_verificador.py::test_nino_madre_hogar_sin_medicion_gana_la_entrevista_individual
+ERROR tests/inferencia/test_m107_verificador.py::test_dos_submuestras_individuales_con_pesos_distintos_son_falla_del_plan
+ERROR tests/inferencia/test_m107_verificador.py::test_una_tabla_sin_fila_de_diseno_es_falla_del_plan
+ERROR tests/inferencia/test_m107_verificador.py::test_los_cortes_del_hogar_y_el_sexo_llegan_a_la_tabla_del_hijo_por_rec0111_y_rec21
+ERROR tests/inferencia/test_m107_verificador.py::test_el_grupo_de_edad_de_la_madre_no_se_ofrece_como_el_del_nino
+ERROR tests/inferencia/test_m107_verificador.py::test_el_corte_de_unidad_nino_de_rech6_sigue_valiendo_para_el_plan_nino
+1 failed, 17 errors in 0.56s
+# RED 2: verificador anterior (solo con el campo Contexto.unidades), tablas curadas ya escritas
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb_medida', 'n
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_hecho_hb_medida', 'nino_anemia_6_35m_rm363', 'nino_anemia_6_35m_oms2024', 'nino_hijo_de_en
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_hecho_hb_medida', 'nino_anemia_6_35m_rm363', 'nino_anemia_6_35m_oms2024', 'nin
+E       assert (True and ('plan', 'uniones') == ('plan', 'universo')
+E        +  where True = isinstance(Falla(tipo='plan', dimension='uniones', motivo="no hay unión declarada de RECH6 hacia ['REC41', 'RECH1', 'RECH6']"), Falla)
+E         
+E         At index 1 diff: 'uniones' != 'universo'
+E         Use -v to get more diff)
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb_medida', 'n
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_hecho_hb_medida', 'nino_anemia_6_35m_rm363', 'nino_anemia_6_35m_oms2024', 'nino_hijo_de_en
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_hecho_hb_medida', 'nino_anemia_6_35m_rm363', 'nino_anemia_6_35m_oms2024', 'nin
+E       AssertionError: assert ('mujer_12_49_entrevistada' == 'mujer_12_49_entrevistada'
+E         
+E           mujer_12_49_entrevistada and 'REC0111' == 'RE223132'
+E         
+E         - RE223132
+E         + REC0111)
+E       AssertionError: assert ('persona_de_hecho' == 'persona_de_hecho'
+E         
+E           persona_de_hecho and 'RECH1' == 'RECH4'
+E         
+E         - RECH4
+E         ?     ^
+E         + RECH1
+E         ?     ^)
+E       AssertionError: assert 'RECH0' == 'RECH23'
+E         
+E         - RECH23
+E         + RECH0
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_hecho_hb_medida', 'nino_anemia_6_35m_rm363', 'nino_anemia_6_35m_oms2024', 'nino_hijo_de_en
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_hecho_hb_medida', 'nino_anemia_6_35m_rm363', 'nino_anemia_6_35m_oms2024', 'nin
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb_medida', 'n
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb
+E       assert (True and ('plan', 'universo') == ('plan', 'peso')
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb
+E         
+E         At index 1 diff: 'universo' != 'peso'
+E         Use -v to get more diff)
+E       assert (True and ('plan', 'universo') == ('plan', 'diseno')
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb
+E         
+E         At index 1 diff: 'universo' != 'diseno'
+E         Use -v to get more diff)
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb_medida', 'n
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb
+E       assert (True and ('plan', 'universo') == ('plan', 'cortes')
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo="los universos de la unidad «nino» no tienen una base común: ['nino_he...istada', 'nino_hijo_de_entrevistada_15_49', 'nino_hijo_de_entrevistada_hb
+E         
+E         At index 1 diff: 'universo' != 'cortes'
+E         Use -v to get more diff)
+FAILED tests/inferencia/test_m107_verificador.py::test_un_plan_de_nino_sobre_rec41_usa_el_universo_del_hijo_de_la_entrevistada_y_parte_de_rec41
+FAILED tests/inferencia/test_m107_verificador.py::test_un_plan_de_nino_sobre_rech6_sigue_usando_el_universo_del_nino_medido
+FAILED tests/inferencia/test_m107_verificador.py::test_el_universo_nombrado_por_una_receta_debe_cubrir_la_tabla_del_plan
+FAILED tests/inferencia/test_m107_verificador.py::test_la_madre_de_14_anos_entra_al_universo_12_49_y_no_al_15_49
+FAILED tests/inferencia/test_m107_verificador.py::test_la_medicion_de_rec44_elige_su_universo_y_su_peso_de_medicion
+FAILED tests/inferencia/test_m107_verificador.py::test_un_plan_de_mujer_parte_de_la_tabla_que_interviene_y_baja_a_su_hermana_por_rec0111
+FAILED tests/inferencia/test_m107_verificador.py::test_el_hogar_y_la_persona_tambien_se_eligen_por_la_tabla
+FAILED tests/inferencia/test_m107_verificador.py::test_la_tabla_base_viene_de_unidades_yaml_y_no_del_primer_archivo
+FAILED tests/inferencia/test_m107_verificador.py::test_nino_madre_hogar_gana_la_medicion_sobre_la_entrevista_individual_y_el_hogar
+FAILED tests/inferencia/test_m107_verificador.py::test_nino_madre_hogar_sin_medicion_gana_la_entrevista_individual
+FAILED tests/inferencia/test_m107_verificador.py::test_dos_submuestras_individuales_con_pesos_distintos_son_falla_del_plan
+FAILED tests/inferencia/test_m107_verificador.py::test_una_tabla_sin_fila_de_diseno_es_falla_del_plan
+FAILED tests/inferencia/test_m107_verificador.py::test_los_cortes_del_hogar_y_el_sexo_llegan_a_la_tabla_del_hijo_por_rec0111_y_rec21
+FAILED tests/inferencia/test_m107_verificador.py::test_el_grupo_de_edad_de_la_madre_no_se_ofrece_como_el_del_nino
+14 failed, 4 passed in 1.04s
+# RED (hallazgo 5): aplica_a de hb_medida sin ampliar
+E       AssertionError: Falla(tipo='plan', dimension='uniones', motivo='las uniones pierden 20.00% de las filas de u, de ellas 1 sin pareja en el archivo hermano (máximo 1.00%)')
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='uniones', motivo='las uniones pierden 20.00% de las filas de u, de ellas 1 sin pareja en el archivo hermano (máximo 1.00%)'), Falla)
+1 failed, 19 deselected in 0.46s

@@ -1,0 +1,181 @@
+# Unidades de las tablas del lote de M1 (M1-07, tarea 2; diseño §7.4 y §12.1): por cada tabla, la unidad del plan que sus filas representan,
+# la unidad que le declara el índice, su tabla base y de dónde sale su peso. El verificador elige el universo analítico, la tabla de la que
+# parte el plan y el diseño por la **tabla que interviene** en el plan (no por el primer archivo de la unidad).
+# - `unidad_plan`: el vocabulario de `Plan.unidad` (nino, mujer, hogar, persona; `tablas_curadas.UNIDADES_PLAN`).
+# - `unidad_archivo`: la de `archivos_endes_2024.yaml` (persona_del_hogar, hijo_de_mujer, mujer, hogar); `pap inferencia validar-tablas` comprueba
+#   que coincida. Las dos no son la misma cosa: RECH6 es una persona del hogar para el índice y un niño para el plan, y los cortes del niño
+#   (cortes_estandar.yaml: sexo, grupo de edad) llevan `unidad: nino`; ese desajuste (nota de C-M1-06-1) se resuelve aquí y no renombrando
+#   la unidad del corte, que es la que se empareja con la unidad de la receta. Un corte vale para un plan si su unidad es la del plan, la del
+#   hogar o la de la tabla del corte según este archivo (`tablas_curadas.corte_aplica`).
+# - `tabla_base`: la tabla de la que parte un plan cuando esta tabla interviene (debe ser de la misma unidad del plan). Hoy cada tabla del lote
+#   parte de sí misma: sus filas son la unidad (una por niño, mujer, hogar o persona de su cuestionario) y las demás se le unen. Si un plan junta
+#   dos tablas de la unidad, parte de la primera (por nombre) desde la que se alcanza a la otra por una unión declarada; si ninguna, el plan falla.
+# - `peso`: la variable (se divide entre 1e6) y el archivo donde está; tiene que ser la propia tabla o un padre de las uniones para el diseño de
+#   su fila de diseno_muestral.csv, y esa fila tiene que usar la misma variable (lo comprueba `validar-tablas`).
+# Quedan fuera del lote (sin fila aquí ni en la lista del planificador): REC82, REC83, REC84DV, REC93DVdisciplina, RECHM, CSALUD01, CSALUD08 y los programas
+# sociales (cada ficha dice por qué), y RECH5, cuyo peso la ficha técnica no dice (consulta C-M1-07-1).
+version: 0.1.0
+fecha: "2026-11-13"
+unidades:
+  - archivo: RECH0
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: hogar
+    unidad_archivo: hogar
+    tabla_base: RECH0
+    peso: {variable: HV005, en: RECH0}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Hogar (HV005) … se utiliza para el cálculo de los indicadores que están relacionados al hogar» y «se encuentra en el módulo RECH0»; §5.2 p. 9 «A. Cuestionario del Hogar»
+  - archivo: RECH23
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: hogar
+    unidad_archivo: hogar
+    tabla_base: RECH23
+    peso: {variable: HV005, en: RECH0}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Hogar (HV005) … se utiliza para el cálculo de los indicadores que están relacionados al hogar» y «se encuentra en el módulo RECH0»; §5.2 p. 9 «A. Cuestionario del Hogar»; RECH23 (riqueza y región natural) es de la misma unidad que RECH0 (1:1)
+  - archivo: RECH1
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: persona
+    unidad_archivo: persona_del_hogar
+    tabla_base: RECH1
+    peso: {variable: HV005, en: RECH0}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Hogar (HV005) … se utiliza para el cálculo de los indicadores que están relacionados al hogar» y «se encuentra en el módulo RECH0»; §5.2 p. 9 «A. Cuestionario del Hogar»; los miembros del hogar son del cuestionario del hogar (supuesto M1-07-s1: la ficha no los nombra y el factor hogar es el único que asocia a ese cuestionario)
+  - archivo: RECH4
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: persona
+    unidad_archivo: persona_del_hogar
+    tabla_base: RECH4
+    peso: {variable: HV005, en: RECH0}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Hogar (HV005) … se utiliza para el cálculo de los indicadores que están relacionados al hogar» y «se encuentra en el módulo RECH0»; §5.2 p. 9 «A. Cuestionario del Hogar»; mismo supuesto M1-07-s1 que RECH1 (RECH4 es la misma persona, HVIDX = IDXH4)
+  - archivo: RECH6
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: nino
+    unidad_archivo: persona_del_hogar
+    tabla_base: RECH6
+    peso: {variable: HV005, en: RECH0}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «Registro de la medición antropométrica (peso y talla) en niños menores de 6 años» y «Registro de los niveles de hemoglobina niños de 4 meses a menores de 6 años»; §VI p. 11 «Factor Hogar (HV005) … se utiliza para … desnutrición y anemia en menores de 5 años». El índice declara la fila como persona del hogar (archivos_endes_2024.yaml) y los cortes del niño (sexo, grupo de edad) llevan `unidad: nino`: ambas unidades se emparejan aquí, sin renombrar la del corte
+  - archivo: REC0111
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: mujer
+    unidad_archivo: mujer
+    tabla_base: REC0111
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»
+  - archivo: REC91
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: mujer
+    unidad_archivo: mujer
+    tabla_base: REC91
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»
+  - archivo: RE223132
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: mujer
+    unidad_archivo: mujer
+    tabla_base: RE223132
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»
+  - archivo: REC42
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: mujer
+    unidad_archivo: mujer
+    tabla_base: REC42
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»
+  - archivo: RE516171
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: mujer
+    unidad_archivo: mujer
+    tabla_base: RE516171
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»
+  - archivo: RE758081
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: mujer
+    unidad_archivo: mujer
+    tabla_base: RE758081
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»
+  - archivo: REC21
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: nino
+    unidad_archivo: hijo_de_mujer
+    tabla_base: REC21
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»; el hijo de la entrevistada usa el factor de su madre (§II p. 2 «Todas las mujeres de 12 a 49 años de edad y niños menores de 5 años»)
+  - archivo: REC41
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: nino
+    unidad_archivo: hijo_de_mujer
+    tabla_base: REC41
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»; el hijo de la entrevistada usa el factor de su madre (§II p. 2 «Todas las mujeres de 12 a 49 años de edad y niños menores de 5 años»)
+  - archivo: REC43
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: nino
+    unidad_archivo: hijo_de_mujer
+    tabla_base: REC43
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»; el hijo de la entrevistada usa el factor de su madre (§II p. 2 «Todas las mujeres de 12 a 49 años de edad y niños menores de 5 años»)
+  - archivo: REC94
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: nino
+    unidad_archivo: hijo_de_mujer
+    tabla_base: REC94
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»; el hijo de la entrevistada usa el factor de su madre (§II p. 2 «Todas las mujeres de 12 a 49 años de edad y niños menores de 5 años»)
+  - archivo: REC95
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: nino
+    unidad_archivo: hijo_de_mujer
+    tabla_base: REC95
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»; el hijo de la entrevistada usa el factor de su madre (§II p. 2 «Todas las mujeres de 12 a 49 años de edad y niños menores de 5 años»)
+  - archivo: DIT
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: nino
+    unidad_archivo: hijo_de_mujer
+    tabla_base: DIT
+    peso: {variable: V005, en: REC0111}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»; Desarrollo Infantil Temprano de 9 a 71 meses es del cuestionario individual (p. 9)
+  - archivo: REC44
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: nino
+    unidad_archivo: hijo_de_mujer
+    tabla_base: REC44
+    peso: {variable: HV005, en: RECH0}
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Hogar (HV005) … se utiliza para el cálculo de los indicadores que están relacionados al hogar, desnutrición y anemia en menores de 5 años»; REC44 repite las mediciones (talla, peso, hemoglobina) de los hijos de las mujeres entrevistadas, así que lleva el factor de la medición y no el de la madre (supuesto M1-07-s2, comprobado con la desnutrición crónica: 12,12 % con HV005 y 11,67 % con V005 frente al 12,1 % del informe del INEI, Cuadro N.º 04 p. 49)

@@ -1,0 +1,58 @@
+# CONTROL DE PRUEBA (M1-07, tarea 6) — no es un indicador: no está en dim_indicador.yaml, no responde preguntas, no se marca `verificado` y no pasa por
+# `pap inferencia validar-recetas` (vive aquí, no en curados/inferencia/recetas/). Comprueba el diseño de «nino» contra una cifra oficial de 2024:
+# Nacimientos de los últimos cinco años por cesárea (M17 = 1) de las mujeres de 15 a 49 años; el hijo de la entrevistada con el peso de su madre. Convertirlo en indicador es una consulta al dueño. Lo carga tests/inferencia/test_m107_controles.py con el esquema de recetas.Receta.
+# Las cifras por área (`doradas_area`, esquema recetas.DoradaCorte) van en este mismo archivo; la prueba las separa antes de validar la receta.
+id: control_cesarea
+version: 0.1.0
+fecha: "2026-11-13"
+descripcion: "Nacimientos de los últimos cinco años por cesárea (M17 = 1) de las mujeres de 15 a 49 años; el hijo de la entrevistada con el peso de su madre"
+indicador_id: control_cesarea
+encuesta: ENDES
+unidad: nino
+medida: proporcion
+anios: [2024, 2024]
+universo_analitico: nino_hijo_de_entrevistada_15_49
+indicador:
+  combinar: una
+  condiciones:
+    - {archivo: REC41, variable: M17, op: en, valores: [1]}
+universo:
+  restricciones: []
+transformaciones: []
+cortes_permitidos: [area]
+cortes_no_permitidos: []
+tolerancia_pp: 0.1        # E-05: las cifras de la ENDES se reproducen a ± 0,1 pp (R-ENC-18)
+fuente: "INEI, informe de programas presupuestales 2024, Cuadro N.º 29 p. 105 (nacimientos por cesárea de los últimos 5 años anteriores a la encuesta); M17 «Parto por cesárea» (0 No, 1 Sí) en REC41 2024; universo curados/inferencia/universos_analiticos.yaml:1 (nino_hijo_de_entrevistada_15_49)"
+doradas:
+  - id_cifra: CTL-CONTROL_CESAREA-2024-PE
+    nivel: nacional
+    territorio: PE
+    valor_publicado: 38.2
+    decimales: 1
+    bloqueante: true
+    casos_publicados: 19737
+    cita: "INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 29 p. 105 (PDF 107), fila «Total», columnas «Valor estimado 2024» y «Número de casos sin ponderar»"
+doradas_area:
+  - id_cifra: CTL-CONTROL_CESAREA-2024-PE-URBANO
+    receta_id: control_cesarea
+    anio: 2024
+    nivel: nacional
+    territorio: PE
+    corte: area
+    categoria: urbano
+    valor_publicado: 44.4
+    decimales: 1
+    casos_publicados: 13845
+    cita: "INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 29 p. 105 (PDF 107), fila «Urbana», columnas «Valor estimado 2024» y «Número de casos sin ponderar»"
+  - id_cifra: CTL-CONTROL_CESAREA-2024-PE-RURAL
+    receta_id: control_cesarea
+    anio: 2024
+    nivel: nacional
+    territorio: PE
+    corte: area
+    categoria: rural
+    valor_publicado: 21.0
+    decimales: 1
+    casos_publicados: 5892
+    cita: "INEI, «Perú: Indicadores de Resultados de los Programas Presupuestales, 2024 (ENDES)» (recurso endes-2024-informe-ppr), Cuadro N.º 29 p. 105 (PDF 107), fila «Rural», columnas «Valor estimado 2024» y «Número de casos sin ponderar»"
+estado: propuesto

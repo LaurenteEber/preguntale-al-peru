@@ -1,0 +1,25 @@
+Tablas del lote: 18  ·  variables del índice en esas tablas: 2141  ·  estado: {'propuesto': 2141}
+Por clase: {'categoria': 1492, 'medida': 510, 'llave': 57, 'diseno': 55, 'geo': 17, 'peso': 8, 'texto': 2}
+Bloques temáticos de esas tablas: 219
+
+tabla      unidad    vars categoría  pasan  controles que decidieron en las demás
+RECH0      hogar       44         6      6  
+RECH23     hogar      130        97     50  plan/y: 47
+RECH1      persona     36        21     13  plan/y: 8
+RECH4      persona     22        16      7  plan/y: 9
+RECH6      nino        43        11      8  plan/y: 3
+REC0111    mujer      104        48     36  plan/y: 9, sin_dos_codigos: 3
+REC91      mujer      344       320     37  plan/y: 283
+RE223132   mujer      150       108     30  plan/y: 77, sin_dos_codigos: 1
+REC42      mujer      170       142     37  plan/y: 103, sin_dos_codigos: 2
+RE516171   mujer       85        60     24  plan/y: 36
+RE758081   mujer      199       185     27  plan/y: 158
+REC21      nino        35        14      5  plan/y: 9
+REC41      nino       148       124     27  plan/y: 97
+REC43      nino       169       129      0  plan/y: 129
+REC94      nino        62        47      3  plan/y: 44
+REC95      nino       301        99      0  plan/y: 99
+DIT        nino        64        58      1  plan/y: 57
+REC44      nino        35         7      5  plan/y: 2
+
+Total de variables categoría probadas: 1492 · {'plan/y': 1170, 'pasa': 316, 'sin_dos_codigos': 6}

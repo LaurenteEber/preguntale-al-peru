@@ -142,7 +142,7 @@ def test_las_llaves_declaradas_no_se_repiten_en_ningun_archivo(curado):
 
 def test_uniones_declaradas_sin_perdida_ni_duplicacion(curado):
     uniones = verificar_relaciones(curado, PARQUET)
-    assert len(uniones) == len(curado["relaciones"]) == 45   # 44 + CSALUD01 → RECH1 (C-M1-06-1)
+    assert len(uniones) == len(curado["relaciones"]) == 52   # 44 + CSALUD01 → RECH1 (C-M1-06-1) + 6 hijos → REC21 y RECH4 → RECH1 (M1-07)
     malas = [u for u in uniones if not u.sin_perdida_ni_duplicacion]
     assert not malas, malas
     por = {(u.hijo, u.padre): u for u in uniones}

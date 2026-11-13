@@ -9,7 +9,9 @@ Qué comprueba y qué agrega, en este orden:
    receta se aceptan variables `propuesto` (§12.1: «la receta se revisa entera»), fuera de ella hace falta `revisado`; una
    variable `construida_inei` solo va en una receta; un `rol_faltante` no vacío no se resuelve en M0;
 3. **agrega el universo analítico** de `universos_analiticos.yaml` (M1-03): si el plan es de una receta, el que ella nombra
-   (`universo_analitico`), aplicado completo (si no existe, no es de la unidad o no cubre la medición de sus variables, es falla del plan);
+   (`universo_analitico`), aplicado completo (si no existe, no es de la unidad, no cubre la tabla o no cubre la medición de sus variables,
+   es falla del plan). **Por la tabla que interviene** (M1-07, `unidades.yaml`): solo cuentan los universos cuyos `aplica_a.archivos`
+   incluyen las tablas del plan que son de la unidad, y el plan parte de su **tabla base** (no del primer archivo del universo);
    si es compuesto, según la **medición** de las variables que intervienen (`mediciones.yaml`): entre los universos de la unidad y el año
    cuyas `aplica_a.mediciones` cubren a todas, los de menos mediciones, y de ellos el contenido en todos los demás (hemoglobina →
    `nino_hecho_hb_medida`). Sin ninguna medición, la base común (población de hecho). Las restricciones del plan se suman a él;
@@ -17,10 +19,11 @@ Qué comprueba y qué agrega, en este orden:
    el territorio y el diseño, siguiendo las relaciones n:1 declaradas en `archivos_<encuesta>_<año>.yaml` hacia el padre y, desde el
    padre común, hacia un hermano que sea 1:1 o 1:0..1 con él (M1-03: región natural y quintil de un niño, que cuelgan de RECH23);
 5. **agrega el diseño** de `diseno_muestral.csv`: gana la submuestra más restrictiva que interviene en `y`, `u` o los cortes
-   (medición > individual > hogar); si dos del mismo nivel traen pesos distintos, es falla;
+   (medición > individual > hogar; niño × madre × hogar, M1-07); si dos del mismo nivel traen pesos distintos, es falla;
 6. **agrega el territorio** de `territorios.yaml`; un nivel que `catalogo/inferencia_verificada.csv` no verifica (o que está
    bajo el `ubigeo_minimo`) **sube al que lo contiene** (R-ENC-06; mismo orden `NIVEL_RANK` que el validador de reglas);
-7. **cortes** de `cortes_estandar.yaml`, con la variable del archivo de la unidad (o de uno al que se une);
+7. **cortes** de `cortes_estandar.yaml`, con la variable del archivo de la unidad (o de uno al que se une) y solo si describe a la
+   unidad del plan o al hogar (`tablas_curadas.corte_aplica`: el grupo de edad de la madre no es el del hijo);
 8. con una conexión: **controles de la unión** (filas de `u` antes y después —una pérdida mayor a `union_perdida_max` es
    falla—, filas de la unidad sin repetir, suma de pesos, conglomerados y estratos, nulos de `y` y del diseño dentro de `u`;
    las filas de `u` sin pareja en un hermano 1:0..1 cuentan como pérdida) y `dominios_max_llamada`.
@@ -94,6 +97,7 @@ class Contexto:
     p: ParametrosVerificador
     carpeta_microdatos: Path
     mediciones: list = field(default_factory=list)               # mediciones.yaml (M1-03): vacío = ninguna variable es una medición
+    unidades: list = field(default_factory=list)                 # unidades.yaml (M1-07): vacío = el verificador parte del primer archivo del universo
 
     @classmethod
     def cargar(cls, raiz: Path = RAIZ_REPO) -> "Contexto":
@@ -108,7 +112,7 @@ class Contexto:
         return cls(Esquema.desde_parquet(raiz / "biblioteca" / "variables"), tc.leer_universos(raiz), tc.leer_diseno_muestral(raiz),
                    tc.leer_territorios(raiz), tc.leer_cortes(raiz), tc.leer_perfil_anual(raiz), relaciones, verificada,
                    {k: v for k, v in rank.items() if isinstance(v, (int, float))}, ParametrosVerificador.desde_yaml(),
-                   raiz / "biblioteca" / "microdatos", tc.leer_mediciones(raiz))
+                   raiz / "biblioteca" / "microdatos", tc.leer_mediciones(raiz), tc.leer_unidades(raiz))
 
 
 def relaciones_desde_yaml(d: dict) -> list[UnionPlan]:
@@ -184,10 +188,29 @@ def _base_comun(cand: list):
     return None
 
 
-def _universo_analitico(ctx: Contexto, plan: Plan):
+def _tablas_de_la_unidad(ctx: Contexto, plan: Plan) -> set[str] | Falla:
+    """Las tablas de las variables del plan que son de la unidad del plan según `unidades.yaml` (M1-07). Vacío si ninguna tabla del plan
+    está en el lote (el verificador conserva entonces el comportamiento de M0/M1-03). Si hay tablas del lote y ninguna es de la unidad del
+    plan, el plan no es coherente: falla."""
+    anio = plan.anios[0]
+    filas = {}
+    for c in _condiciones(plan):
+        archivo = ctx.esquema.variables[c.var]["archivo"]
+        fila = tc.unidad_de(ctx.unidades, plan.encuesta, anio, archivo)
+        if fila is not None:
+            filas[archivo] = fila
+    propias = {a for a, f in filas.items() if f.unidad_plan == plan.unidad}
+    if filas and not propias:
+        return Falla("plan", "universo", f"las variables del plan son de tablas de la unidad {sorted({f.unidad_plan for f in filas.values()})} "
+                     f"({sorted(filas)}), no de «{plan.unidad}»")
+    return propias
+
+
+def _universo_analitico(ctx: Contexto, plan: Plan, tablas: set[str] = frozenset()):
     anio = plan.anios[0]
     de_la_unidad = [u for u in ctx.universos if u.encuesta == plan.encuesta and u.unidad == plan.unidad and u.anios[0] <= anio <= u.anios[1]]
     medidas = _mediciones_del_plan(ctx, plan)
+    cubre_tablas = lambda u: tablas <= set(u.aplica_a.archivos)             # por la tabla que interviene (M1-07)
     if plan.universo_analitico is not None:                     # la receta nombra su universo y se aplica completo
         nombrado = next((u for u in ctx.universos if u.id == plan.universo_analitico), None)
         if nombrado is None:
@@ -195,6 +218,9 @@ def _universo_analitico(ctx: Contexto, plan: Plan):
         if nombrado not in de_la_unidad:
             return Falla("plan", "universo", f"el universo «{nombrado.id}» no es de {plan.encuesta} {anio} para la unidad «{plan.unidad}» "
                          f"(es de {nombrado.encuesta} {nombrado.anios[0]}–{nombrado.anios[1]}, unidad «{nombrado.unidad}»)")
+        if not cubre_tablas(nombrado):
+            return Falla("plan", "universo", f"el universo «{nombrado.id}» no cubre las tablas {sorted(tablas - set(nombrado.aplica_a.archivos))} "
+                         f"del plan (cubre {nombrado.aplica_a.archivos})")
         falta = sorted(medidas - set(nombrado.aplica_a.mediciones))
         if falta:
             return Falla("plan", "universo", f"el universo «{nombrado.id}» no cubre la medición {falta} de las variables del plan "
@@ -202,6 +228,9 @@ def _universo_analitico(ctx: Contexto, plan: Plan):
         return nombrado
     if not de_la_unidad:
         return Falla("plan", "universo", f"no hay universo analítico de {plan.encuesta} {anio} para la unidad «{plan.unidad}»")
+    de_la_unidad = [u for u in de_la_unidad if cubre_tablas(u)]
+    if not de_la_unidad:
+        return Falla("plan", "universo", f"ningún universo de la unidad «{plan.unidad}» cubre a la vez las tablas {sorted(tablas)}")
     cand = de_la_unidad
     if medidas:                                                 # según la medición: los que la cubren, los más específicos
         cubren = [u for u in de_la_unidad if medidas <= set(u.aplica_a.mediciones)]
@@ -213,6 +242,20 @@ def _universo_analitico(ctx: Contexto, plan: Plan):
     if u is None:
         return Falla("plan", "universo", f"los universos de la unidad «{plan.unidad}» no tienen una base común: {[x.id for x in cand]}")
     return u
+
+
+def _tabla_base(ctx: Contexto, plan: Plan, tablas: set[str], relaciones: list[UnionPlan], universo) -> str | Falla:
+    """La tabla de la que parte el plan (M1-07): la `tabla_base` de `unidades.yaml` de las tablas del plan que son de la unidad. Si hay
+    varias bases, la primera (por nombre) desde la que las demás se alcanzan por uniones declaradas; si ninguna, falla del plan. Sin tablas
+    del lote, el primer archivo del universo (M0/M1-03)."""
+    if not tablas:
+        return universo.aplica_a.archivos[0]
+    bases = sorted({tc.unidad_de(ctx.unidades, plan.encuesta, plan.anios[0], a).tabla_base for a in tablas})
+    for b in bases:
+        if ruta_de_uniones(relaciones, b, set(bases) - {b}) is not None:
+            return b
+    return Falla("plan", "uniones", f"las tablas {sorted(tablas)} de la unidad «{plan.unidad}» parten de {bases}, y ninguna se une a las otras "
+                 "por una unión declarada")
 
 
 def _archivo_de(ctx: Contexto, plan: Plan, nombre: str, archivos: list[str]) -> str | None:
@@ -311,7 +354,8 @@ def _resolver_cortes(ctx: Contexto, plan: Plan, archivo_unidad: str, relaciones:
         c = por_id.get(cid)
         if c is None:
             return Falla("plan", "cortes", f"el corte «{cid}» no está en cortes_estandar.yaml")
-        opciones = c.por_encuesta.get(plan.encuesta, [])
+        opciones = [o for o in c.por_encuesta.get(plan.encuesta, [])
+                    if not ctx.unidades or tc.corte_aplica(ctx.unidades, plan.encuesta, plan.anios[0], plan.unidad, o)]
         elegida = next((o for o in opciones if o.archivo == archivo_unidad), None) or next(
             (o for o in opciones if ruta_de_uniones(relaciones, archivo_unidad, {o.archivo}) is not None), None)
         if elegida is None:
@@ -341,11 +385,16 @@ def verificar(plan: Plan, ctx: Contexto, con=None) -> PlanCompleto | Falla:
     if (f := _revisar_variables(ctx, plan)) is not None:
         return f
 
-    ua = _universo_analitico(ctx, plan)
+    tablas = _tablas_de_la_unidad(ctx, plan)
+    if isinstance(tablas, Falla):
+        return tablas
+    ua = _universo_analitico(ctx, plan, tablas)
     if isinstance(ua, Falla):
         return ua
     relaciones = ctx.relaciones[(plan.encuesta, anio)]
-    archivo_unidad = ua.aplica_a.archivos[0]
+    archivo_unidad = _tabla_base(ctx, plan, tablas, relaciones, ua)
+    if isinstance(archivo_unidad, Falla):
+        return archivo_unidad
     if (plan.encuesta, anio, archivo_unidad) not in ctx.esquema.archivos:
         return Falla("estructural", "anio", f"{archivo_unidad} no está en el índice de {plan.encuesta} {anio}")
 

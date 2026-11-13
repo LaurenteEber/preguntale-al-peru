@@ -1,0 +1,21 @@
+$ uv run pap inferencia receta endes_anemia_6_35m --anio 2024 --comparar-cubo
+Receta endes_anemia_6_35m (verificado, pendiente None) · ENDES 2024 · 30 territorio(s)
+  Contra el cubo (30 de 30 filas), máxima |dif| redondeada a 8 decimales:
+    valor=0.00e+00  ee=0.00e+00  cv=0.00e+00  ic_inf=0.00e+00  ic_sup=0.00e+00  gl=0.00e+00  n_muestra=0.00e+00  n_efectivo=0.00e+00  deff=0.00e+00
+  Compuertas: 0 fila(s) con estado o reglas distintos de m0-00_estados_cubo.csv
+  Doradas (E-05): 9 de 9 se reproducen
+exit=0
+$ uv run pap inferencia receta endes_anemia_6_35m_oms2024 --anio 2024 --comparar-cubo
+Receta endes_anemia_6_35m_oms2024 (verificado, pendiente None) · ENDES 2024 · 30 territorio(s)
+  Contra el cubo (30 de 30 filas), máxima |dif| redondeada a 8 decimales:
+    valor=0.00e+00  ee=0.00e+00  cv=0.00e+00  ic_inf=0.00e+00  ic_sup=0.00e+00  gl=0.00e+00  n_muestra=0.00e+00  n_efectivo=0.00e+00  deff=0.00e+00
+  Compuertas: 0 fila(s) con estado o reglas distintos de m0-00_estados_cubo.csv
+  Doradas (E-05): 9 de 9 se reproducen
+exit=0
+$ uv run pap inferencia receta endes_dci_menores_5 --anio 2024 --comparar-cubo
+Receta endes_dci_menores_5 (verificado, pendiente None) · ENDES 2024 · 30 territorio(s)
+  Contra el cubo (30 de 30 filas), máxima |dif| redondeada a 8 decimales:
+    valor=0.00e+00  ee=0.00e+00  cv=0.00e+00  ic_inf=0.00e+00  ic_sup=0.00e+00  gl=0.00e+00  n_muestra=0.00e+00  n_efectivo=0.00e+00  deff=0.00e+00
+  Compuertas: 0 fila(s) con estado o reglas distintos de m0-00_estados_cubo.csv
+  Doradas (E-05): 3 de 3 se reproducen
+exit=0

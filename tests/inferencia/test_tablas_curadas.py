@@ -51,14 +51,18 @@ def test_las_siete_tablas_validan_y_cada_fila_tiene_su_cita():
 
 def test_filas_esperadas_de_2024():
     d = tc.leer_diseno_muestral(RAIZ_REAL)
-    assert {(f.archivo, f.medicion) for f in d} == {
+    # M1-07 agregó las 15 filas del lote (RECH1, RECH4, la mujer, los hijos de la entrevistada y las dos mediciones de REC44):
+    # el detalle está en test_m107_tablas.py
+    assert {(f.archivo, f.medicion) for f in d} >= {
         ("RECH0", "hogar"), ("RECH23", "hogar"), ("RECH6", "hemoglobina"), ("RECH6", "talla"),
         ("REC0111", "individual_mujer"), ("CSALUD01", "salud_15_mas"), ("CSALUD08", "salud_menores_12")}
+    assert len(d) == 22
     assert all(f.encuesta == "ENDES" and f.anio == 2024 and f.peso_normalizado == "sí" for f in d)
     por = {(f.archivo, f.medicion): f for f in d}
     assert por[("RECH0", "hogar")].peso_expr == "HV005/1e6" and por[("RECH6", "hemoglobina")].peso_expr == "HV005/1e6"
     assert por[("REC0111", "individual_mujer")].peso_expr == "V005/1e6"
-    assert all(f.estrato_expr == "printf('%02d-%d', HV024, HV022)" for f in d if f.archivo != "REC0111")
+    assert all(f.estrato_expr == "printf('%02d-%d', HV024, HV022)" for f in d if f.peso_expr == "HV005/1e6" or f.archivo in ("CSALUD01", "CSALUD08"))
+    assert all(f.estrato_expr == "printf('%02d-%d', V024, V022)" for f in d if f.peso_expr == "V005/1e6")
     assert all(f.psu_expr == "HV021" for f in d if f.archivo in ("RECH0", "RECH23", "RECH6"))
     assert {f.nivel_submuestra for f in d} == {"hogar", "individual", "medicion"}
 

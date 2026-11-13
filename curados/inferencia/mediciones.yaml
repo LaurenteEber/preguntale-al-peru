@@ -5,8 +5,10 @@
 # no es una medición (p. ej. HC1, la edad en meses). Una variable no puede estar en dos mediciones del mismo año.
 # Los nombres de las mediciones son los de `diseno_muestral.csv` (columna `medicion`) y los de `aplica_a.mediciones` de los universos.
 # Lo revisa el auditor-agente en backlog/slice-m1/evidencia/m1-03_revision.md (propuesto hasta entonces).
-version: 0.1.0
-fecha: "2026-11-12"
+# M1-07 (versión 0.2.0): REC44 repite las dos mediciones de RECH6 para los hijos de las entrevistadas (HW en lugar de HC), con las mismas baterías y
+# las mismas exclusiones (HW1 edad; HW16–HW19 fechas de nacimiento y medición; HW51 y HW52, HW58 consentimiento, orden del responsable y envío a un especialista).
+version: 0.2.0
+fecha: "2026-11-13"
 mediciones:
   - id: hemoglobina
     encuesta: ENDES
@@ -34,3 +36,25 @@ mediciones:
       menores de 6 años»; etiquetas del archivo RECH6 2024: «Peso en kilogramos (1 dec.)» (HC2), «Altura en centímetros (1 dec.)» (HC3),
       «Talla/Edad Desviación Estándar de la mediana de referencia (según la OMS)» (HC70);
       src/pap/capa0/encuestas.py:157 (HC70 es la talla para la edad)
+  - id: hemoglobina
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: REC44
+    bateria: "Medición de la hemoglobina de las niñas y niños menores de 5 años de las mujeres entrevistadas (repetida de RECH6)"
+    # HW53 nivel observado; HW55 resultado de medir (0 = medida); HW56 y HW56A hemoglobina ajustada por altitud; HW57 y HW57A nivel de anemia.
+    variables: [HW53, HW55, HW56, HW56A, HW57, HW57A]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «Registro de los niveles de hemoglobina niños de 4 meses a menores de 6 años»; etiquetas del archivo REC44 2024: «Nivel de hemoglobina
+      (g /dl -1 decimal)» (HW53), «Resultado de la medición (Hemoglobina)» (HW55), «Nivel de hemoglobina ajustada por altitud…» (HW56 y HW56A),
+      «Nivel de anemia…» (HW57 y HW57A); curados/inferencia/universos_analiticos.yaml:1 (HW55 = 0 es la hemoglobina medida)
+  - id: talla
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: REC44
+    bateria: "Medición antropométrica (peso y talla) de las niñas y niños menores de 5 años de las mujeres entrevistadas (repetida de RECH6)"
+    # HW2 peso y HW3 talla; HW4–HW12 y HW70–HW73 sus índices; HW13 razón por la que no se midió y HW15 posición de la medición.
+    variables: [HW2, HW3, HW4, HW5, HW6, HW7, HW8, HW9, HW10, HW11, HW12, HW13, HW15, HW70, HW71, HW72, HW73]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «Registro de la medición antropométrica (peso y talla) en niños menores de 6 años»; etiquetas del archivo REC44 2024: «Peso en
+      kilogramos (1 decimal)» (HW2), «Talla en centímetros (1 decimal)» (HW3), «Talla/Edad de la Desviación Estándar de la mediana de referencia
+      (según la OMS)» (HW70)
