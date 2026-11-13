@@ -66,4 +66,4 @@ Total: 2832 variables; por diccionario 0; por regla 319 (11.3 %); sin pregunta 1
 
 ## ¿Están las preguntas correctas entre las candidatas que verá el LLM?
 
-Con las 319 variables vinculadas por regla (su pregunta se conoce) se probó el recorte a 20 candidatas por palabras en común: la pregunta correcta está entre ellas en 289 (90.6 %). Es un piso para el LLM: nunca podrá acertar una pregunta que no le llegue. No es una cifra de acierto del LLM.
+Con las 319 variables vinculadas por regla (su pregunta se conoce) se probó el recorte a 20 candidatas por palabras en común: la pregunta correcta está entre ellas en 290 (90.9 %). Es un piso para el LLM: nunca podrá acertar una pregunta que no le llegue. No es una cifra de acierto del LLM.

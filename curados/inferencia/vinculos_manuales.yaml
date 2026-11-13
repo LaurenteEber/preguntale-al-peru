@@ -6,6 +6,12 @@ vinculos:
   - tabla: REC43
     codigo: H44A
     pregunta: "individual:474C"
-    motivo: "H44A (primer lugar donde se buscó tratamiento para la diarrea) es la pregunta 474C «¿Dónde buscó usted primero consejo o tratamiento?»; el LLM la había enviado a 474A (todos los lugares). Fijado por el dueño al revisar los vínculos de REC43 (hallazgo 10)"
+    motivo: "H44A (primer lugar donde se buscó tratamiento para la diarrea) es la pregunta 474C «¿Dónde buscó usted primero consejo o tratamiento?»; el LLM la había enviado a 474A (todos los lugares). Fijado por el dueño al revisar los vínculos de REC43 (hallazgo 10). Derivada: con un solo lugar se copia el código de 474A (94 % de los casos); 474C solo se pregunta con 2 o más lugares. Para M1-05, su universo es «buscó tratamiento» (474 = 1 para diarrea), no el salto de 474C (dueño, 13/11/2026)"
+    quien: dueño
+    fecha: "2026-11-13"
+  - tabla: REC43
+    codigo: H46A
+    pregunta: "individual:469F"
+    motivo: "H46A (lugar donde se buscó tratamiento para la fiebre) es la pregunta 469F «¿Dónde buscó primero consejo o tratamiento? ANOTE CÓDIGO REGISTRADO EN 469D», el equivalente de 474C para fiebre o tos; el LLM la había enviado a 474A (diarrea) y la verificación la rechazó. Fijado por el dueño (hallazgo 10). Derivada: con un solo lugar se copia el código de 469D (94 % de los casos); 469F solo se pregunta con 2 o más lugares. Para M1-05, su universo es «buscó tratamiento» (469C = 1 para fiebre o tos), no el salto de 469F (dueño, 13/11/2026)"
     quien: dueño
     fecha: "2026-11-13"

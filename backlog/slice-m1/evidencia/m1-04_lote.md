@@ -113,6 +113,8 @@ Todo sin LLM ni red. Scripts: `m1-04_recall_sinonimos.py` (recall antes/después
 
 **Hallazgo 10 (b): H46A → 469F, revisado: el vínculo es correcto.** H46A «Lugar en el que se busca el tratamiento para la fiebre» (mismas 18 categorías de lugar que H44A); la 469F es «¿Dónde buscó primero consejo o tratamiento? ANOTE CÓDIGO REGISTRADO EN 469D» (fiebre o tos, el equivalente de 474C para la diarrea). Es coherente con la familia: H46B (días después) → 469G, igual que H44B → 474D. Hoy **H46A no está vinculada**: el LLM propuso 474A (una pregunta de diarrea, equivocada) y la verificación la rechazó, bien. Matiz: la 469F cubre fiebre *o tos*; la etiqueta del diccionario dice solo fiebre. **Propuesta:** el dueño la agrega a `vinculos_manuales.yaml` (una entrada igual a la de H44A); no la agregué porque la decisión fue solo para H44A.
 
+**Decisión del dueño (13/11/2026): H46A → 469F también a mano** (`vinculos_manuales.yaml`), igual que H44A → 474C. En las dos: «derivada: con un solo lugar se copia el código de 469D / 474A (94 % de los casos); 469F / 474C solo se pregunta con 2 o más lugares». **Para M1-05**, el universo de H44A y H46A es «buscó tratamiento» (469C = 1 para fiebre o tos; 474 = 1 para diarrea), no el salto de 469F / 474C. H44B → 474D y H46B → 469G quedan como están.
+
 **Hallazgo 10 (c): coherencia entre hermanas de REC43** (`m1-04_coherencia.md`): 18 familias de 3 o más variables; 8 marcadas. *Incompleta* (algunos miembros vinculados y otros no): **H12** (17 de 26 → 474A; 9 sin pregunta: H12D, E, N, R, S, U, X por rechazo; Y, Z), **H32** (16 de 26 → 469D; 10 sin pregunta, casi todas rechazadas), **H37** (13 de 19 → 471B; 6 rechazadas) y H2, H33, H40 (fechas de vacunas). *Mezcla* (preguntas distintas): H31 y H44, que son secuencias de preguntas distintas y están bien; **H33** (H33 → 465, H33D/H33Y → 456X, H33M rechazada) sí merece mirarse. Las familias **H12, H32 y H37 (y H15, que apunta entera a 473D)** son las que el lote completo de REC43 debería cerrar: sus miembros rechazados son opciones de la misma pregunta que sus hermanos. Ninguna se corrigió: es lista de trabajo para el dueño.
 
 **Costo máximo del lote completo pendiente** (`m1-04_costo_lote.py`: mismas peticiones y `costo_maximo_usd` que el lote, 0,65 tokens por carácter; excluye vinculadas por regla, diccionario, administrativas, construidas y la manual):
@@ -123,6 +125,25 @@ Todo sin LLM ni red. Scripts: `m1-04_recall_sinonimos.py` (recall antes/después
 | Sin esas 270 (lote con `--tablas` de las otras 31) | 2 054 | 2 054 | 2 054 | US$ 9,11 + US$ 3,87 = **US$ 12,98** |
 
 Cada lote queda bajo el tope de US$ 20. El real fue ~89 % del máximo en la pasada 1 y ~65–70 % en la 2 (en la pasada 2 solo se verifican las que el modelo eligió: 60 % en la 2.ª corrida). **Ojo:** `pap cuestionarios lote` sin `--tablas` vuelve a mandar las 270 ya hechas y reescribe `vinculos_llm.parquet`; además la carpeta `lote/` guarda el estado de la corrida de las 3 tablas y el código se niega a mezclarlo (`el estado guardado … es de otra corrida`). Para el lote completo hay que apartar `lote/` (como en las corridas anteriores) y decidir si se repiten esas 270 (≈ US$ 1,7 de máximo, y arreglaría lo del hallazgo 13) o se hace por tablas.
+
+## 0.5 Lote completo (13/11/2026, aprobado por el dueño)
+
+Después de los sinónimos y del hallazgo 10. Se mandaron las 2 323 variables pendientes (incluidas las 270 de las corridas de prueba, para que todo el lote pase por la misma verificación; H44A y H46A no, porque están fijadas a mano). Corrida anterior apartada en `lote_previos/20261113_rec43/` (fuera de git).
+
+| Pasada | Lote | Peticiones | Costo máximo estimado | **Costo real** | Borrado |
+|---|---|---|---|---|---|
+| vincular | `msgbatch_01Kx2gjd1GAjcxyTEjCtdCf5` | 2 323 | US$ 10,348 | **US$ 8,925** | sí |
+| verificar | `msgbatch_01E8CbkocLvHgGXRVxMf859L` | 1 670 | US$ 2,781 | **US$ 1,832** | sí |
+| **Total** | | | | **US$ 10,757** | |
+
+Gasto facturado según la consola: (lo anota el dueño).
+
+- **Borrado confirmado en Anthropic:** los dos lotes dan 404 `not_found_error`; el Workspace lista 0 lotes. Gasto calculado acumulado (cuatro corridas): **US$ 13,97**, bajo los US$ 30 del mes; cada lote bajo el tope de US$ 20.
+- **Resultado:** 1 177 vinculadas por el LLM; `no_encontrada` 644; `rechazada_por_verificacion` 487; `respuesta_invalida` 9; `error_del_lote` 6.
+- **Estabilidad:** de las 106 variables que la corrida anterior había vinculado (RECH6, REC0111, REC43), las 106 quedan con la misma pregunta; 9 más ganan vínculo.
+- **Muestra a ojo (20 vínculos al azar):** 18 correctos (p. ej. V634 → 619B, M3A → 426, H31C → 468B, SH61A → 61, D119Q → 1023). Dos dudosos: V541 («piensa esperar hasta casarse…») → 512 (inicio de la sección de actividad sexual, probablemente no es la pregunta exacta) y V305_08 → «11», que es la fila 11 de la tabla de métodos extraída como si fuera una pregunta (defecto de la extracción en las tablas de métodos; el vínculo es correcto en sentido pero la referencia no es una pregunta). SH11E → M3 es un vínculo a nivel de página de matriz, como se esperaba.
+- **En el índice** (`pap cuestionarios aplicar --sobre-indice`): 1 497 variables con texto de pregunta: regla 319, LLM 1 176, manual 2 (H44A → 474C, H46A → 469F); 1 333 sin pregunta (incluidas las administrativas y construidas); 26 sin diccionario. Todo en `propuesto`. Fichas regeneradas y `pap fichas validar` cumple las 8 reglas.
+- **Lo que quedó sin pregunta** se repasa después solo con esas variables, usando el buscador de M1-09 (decisión del dueño).
 
 ## 1. Por qué no se llamó a la Batch API
 

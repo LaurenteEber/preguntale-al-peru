@@ -86,6 +86,15 @@ def test_el_archivo_del_repo_trae_h44a_a_474c_por_el_dueno():
     assert len(h) == 1 and h[0].pregunta_id == "individual:474C" and h[0].metodo == "manual" and h[0].estado == "propuesto"
 
 
+def test_el_archivo_del_repo_trae_h46a_a_469f_por_el_dueno_y_las_dos_son_derivadas():
+    from pathlib import Path
+
+    es = {(e.tabla, e.codigo): e for e in c.leer_vinculos_manuales(Path(__file__).resolve().parents[2] / "curados/inferencia/vinculos_manuales.yaml")}
+    assert set(es) == {("REC43", "H44A"), ("REC43", "H46A")}
+    assert es[("REC43", "H46A")].pregunta_id == "individual:469F" and es[("REC43", "H46A")].metodo == "manual"
+    assert all("Derivada" in e.evidencia and "buscó tratamiento" in e.evidencia for e in es.values())
+
+
 def test_leer_vinculos_manuales_da_metodo_manual_y_guarda_motivo_y_quien(raiz):
     es = c.leer_vinculos_manuales(_yaml(raiz, [ENTRADA]))
     assert [(e.tabla, e.codigo, e.pregunta_id, e.metodo) for e in es] == [("REC43", "H44A", "individual:474C", "manual")]
