@@ -237,13 +237,18 @@ def test_los_universos_nuevos_con_sus_predicados_y_sus_tablas():
         assert any(a in v.aplica_a.archivos for v in u.values() if v.unidad == x.unidad_plan and not v.solo_por_nombre), a
 
 
-def test_la_bateria_del_nino_vivo_cubre_vacunas_diarrea_lactancia_suplementos_y_dit_y_no_el_parto():
+def test_la_bateria_del_nino_vivo_cubre_vacunas_diarrea_suplementos_dit_y_la_alimentacion_actual_y_no_el_parto_ni_la_lactancia_pasada():
+    """Hallazgo 11 (dueño, 13/11/2026): de la lactancia solo queda la alimentación actual (ayer, últimas 24 h); haber lactado, el inicio, la
+    duración, los motivos y la capacitación son de todos los nacimientos."""
     m = {(x.id, x.archivo): set(x.variables) for x in tc.leer_mediciones(RAIZ_REAL)}
     assert {a for (i, a) in m if i == "nino_vivo"} == {"REC43", "REC95", "DIT", "REC41", "REC94"}
     assert {"H1", "H11", "H22", "H42"} <= m[("nino_vivo", "REC43")]                                   # carné, diarrea, fiebre y tos, hierro
     assert {"S45B0", "S466", "S472AA", "S465EA"} <= m[("nino_vivo", "REC95")]                          # vacunas, control de crecimiento, diarrea, hierro
-    assert {"M4", "M34"} <= m[("nino_vivo", "REC41")] and not {"M17", "M15", "M19"} & m[("nino_vivo", "REC41")]   # lactancia sí; cesárea, lugar y peso del parto no
-    assert not {"S410B", "S426B"} & m[("nino_vivo", "REC94")]                                          # controles prenatales y complicaciones del parto, no
+    assert m[("nino_vivo", "REC41")] == {"M35", "M36", "M38", "M39"}                                  # pecho de ayer (noche, día), biberón de ayer, sólidos de ayer
+    assert m[("nino_vivo", "REC94")] == {"S446AA", "S446AB", "S446A", "S447", "S448A", "S448B"}
+    pasado41 = {"M4", "M5", "M6", "M7", "M8", "M9", "M27", "M28", "M29", "M34", "M17", "M15", "M19"}    # haber lactado, duración, inicio, amenorrea, abstinencia; parto
+    pasado94 = {"S431A", "S435", "S436C", "S440", "S441", "S442", "QI440B", "S410B", "S426B"}          # biberón en el EESS, motivos, piel a piel, capacitación, 6 meses; prenatal y parto
+    assert not pasado41 & m[("nino_vivo", "REC41")] and not pasado94 & m[("nino_vivo", "REC94")]
     assert len(m[("nino_vivo", "DIT")]) > 40
 
 

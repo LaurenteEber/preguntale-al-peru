@@ -11,3 +11,6 @@ control_cesarea        PE-RURAL                        21.0     21.0     0.0    
 control_anemia_mujeres PE                              26.0     26.0     0.0          —   30290  True
 control_anemia_mujeres PE-URBANO                       25.9     25.9     0.0          —   21012  True
 control_anemia_mujeres PE-RURAL                        26.3     26.3     0.0          —    9278  True
+control_lacto_alguna_vez PE                              98.9     98.9     0.0          —   19737  True
+control_lacto_alguna_vez PE-URBANO                       98.9     98.9     0.0          —   13845  True
+control_lacto_alguna_vez PE-RURAL                        98.7     98.6    -0.1          —    5892  True

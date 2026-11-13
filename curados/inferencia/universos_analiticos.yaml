@@ -20,8 +20,8 @@
 #   endes-2024-informe-principal), Presentación, p. 3 del PDF («el análisis … está basado principalmente en la población de mujeres de 15 a 49 años de edad,
 #   no obstante, en algunos indicadores principales se ha incluido a las mujeres de 12 a 14 años»).
 # - **El niño vivo** (C-M1-07-2): `nino_vivo_hijo_de_entrevistada` (B5 = 1, de REC21). Lo elige el verificador cuando el plan usa una variable de la batería
-#   `nino_vivo` de mediciones.yaml (vacunas, diarrea, fiebre y tos, suplementos, desarrollo infantil temprano y lactancia); la cesárea y lo demás del parto
-#   siguen con todos los nacimientos. REC21 solo sirve de puente (unidades.yaml, `solo_puente`).
+#   `nino_vivo` de mediciones.yaml (vacunas, diarrea, fiebre y tos, suplementos, desarrollo infantil temprano y alimentación actual); la cesárea, lo demás del parto y
+#   la lactancia pasada (haber lactado, inicio, duración, motivos, capacitación; hallazgo 11) siguen con todos los nacimientos. REC21 solo sirve de puente (unidades.yaml, `solo_puente`).
 # - **REC44 con el pernocte del niño** (C-M1-07-3 a): todo universo que cubre REC44 exige HV103 = 1 de la fila del niño en RECH1 (REC44 → REC21 → RECH1 por
 #   B16 = HVIDX). Los 251 niños de REC44 con B16 = 0 o nulo (82 y 169) no tienen pareja en RECH1 y quedan **fuera del universo**, no como pérdida de la unión;
 #   de los 19 751, 19 500 encuentran a su niño en RECH1 y 19 429 durmieron en el hogar (HV103 = 1).

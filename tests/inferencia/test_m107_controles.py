@@ -18,15 +18,16 @@ from conftest import RAIZ_REAL
 pytestmark = [pytest.mark.regresion_microdatos, pytest.mark.solo_mac]
 
 CARPETA = Path(__file__).parent / "recetas_control"
-CONTROLES = ["control_pf_unidas", "control_pf_moderno", "control_cesarea", "control_anemia_mujeres"]
+CONTROLES = ["control_pf_unidas", "control_pf_moderno", "control_cesarea", "control_anemia_mujeres", "control_lacto_alguna_vez"]
 CUADRO = {"control_pf_unidas": "Cuadro N.º 23 p. 91", "control_pf_moderno": "Cuadro N.º 24 p. 95", "control_cesarea": "Cuadro N.º 29 p. 105",
-          "control_anemia_mujeres": "Principales indicadores 2009–2024», p. 33"}
-DOCUMENTO = {"control_anemia_mujeres": "endes-2024-informe-principal"}           # los demás, del informe de programas presupuestales
-UNIDAD = {"control_pf_unidas": "mujer", "control_pf_moderno": "mujer", "control_cesarea": "nino", "control_anemia_mujeres": "mujer"}
+          "control_anemia_mujeres": "Principales indicadores 2009–2024», p. 33", "control_lacto_alguna_vez": "Gráfico N.º 9."}
+DOCUMENTO = {"control_anemia_mujeres": "endes-2024-informe-principal", "control_lacto_alguna_vez": "endes-2024-informe-principal"}           # los demás, del informe de programas presupuestales
+UNIDAD = {"control_pf_unidas": "mujer", "control_pf_moderno": "mujer", "control_cesarea": "nino", "control_anemia_mujeres": "mujer", "control_lacto_alguna_vez": "nino"}
 # (tabla base, submuestra, peso, conglomerado) que el control declara para su diseño
 DISENO = {"mujer": ("RE223132", "individual", "V005/1e6", "V021"), "nino": ("REC41", "individual", "V005/1e6", "V021"),
           "anemia": ("RECH5", "medicion", "HV005/1e6", "HV021")}
-CASOS_MEDIDOS = {"control_anemia_mujeres": 30290}              # sin casos publicados: los midió el supervisor (13/11/2026), no son una cifra del INEI
+CASOS_MEDIDOS = {"control_anemia_mujeres": 30290,              # sin casos publicados: los midió el supervisor (13/11/2026), no son una cifra del INEI
+                 "control_lacto_alguna_vez": 19737}            # el informe principal no los publica: son los nacimientos de madres de 15 a 49 (vivos o no), como la cesárea
 
 
 def cargar(id_: str):

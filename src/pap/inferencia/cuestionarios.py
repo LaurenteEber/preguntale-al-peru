@@ -327,7 +327,7 @@ class Vinculo:
     tabla: str
     codigo: str
     pregunta_id: str | None            # «salud:25C»; None si no hay
-    metodo: str                        # diccionario | regla | llm | sin_pregunta
+    metodo: str                        # diccionario | regla | llm | manual | sin_pregunta
     estado: str = "propuesto"          # nunca más que `propuesto` aquí (AGENTS.md §5.2; `revisado` lo decide M1-07)
     motivo: str = ""                   # sin_pregunta: administrativa | construida | no_encontrada; regla: de dónde sale el número
     evidencia: str = ""
@@ -392,6 +392,36 @@ def vincular_por_regla(variables: list[VariableDic], preguntas: list[Pregunta],
     return out
 
 
+RUTA_VINCULOS_MANUALES = Path("curados/inferencia/vinculos_manuales.yaml")      # relativa a la raíz del repo
+_PREGUNTA_ID = re.compile(r"^(hogar|individual|salud):[0-9][0-9A-Z]*$")
+
+
+def leer_vinculos_manuales(ruta: Path) -> list[Vinculo]:
+    """Los vínculos que el dueño fijó a mano (`curados/inferencia/vinculos_manuales.yaml`): una entrada por variable con tabla, código,
+    pregunta («cuestionario:número»), motivo, quien y fecha. Mandan sobre la regla y el LLM (`pap cuestionarios aplicar`) y el lote
+    no las manda al modelo. Método `manual`; siguen en `propuesto` (el visto de `revisado` es de M1-07). Sin archivo, no hay vínculos
+    manuales; una entrada incompleta o repetida es un error (no se adivina)."""
+    ruta = Path(ruta)
+    if not ruta.exists():
+        return []
+    entradas = (yaml.safe_load(ruta.read_text(encoding="utf-8")) or {}).get("vinculos") or []
+    out: list[Vinculo] = []
+    vistos: set[tuple[str, str]] = set()
+    for i, e in enumerate(entradas, 1):
+        faltan = [k for k in ("tabla", "codigo", "pregunta", "motivo", "quien", "fecha") if not str(e.get(k) or "").strip()]
+        if faltan:
+            raise PapError(f"{ruta.name}, entrada {i}: falta {', '.join(faltan)}")
+        if not _PREGUNTA_ID.match(str(e["pregunta"])):
+            raise PapError(f"{ruta.name}, entrada {i}: la pregunta debe ser «cuestionario:número» (p. ej. individual:474C), no «{e['pregunta']}»")
+        clave = (str(e["tabla"]), str(e["codigo"]).upper())
+        if clave in vistos:
+            raise PapError(f"{ruta.name}: {clave[0]}.{clave[1]} aparece dos veces")
+        vistos.add(clave)
+        out.append(Vinculo(clave[0], clave[1], str(e["pregunta"]), "manual", motivo="manual",
+                           evidencia=f"manual ({e['quien']}, {e['fecha']}): {str(e['motivo']).strip()}"))
+    return out
+
+
 def motivo_sin_pregunta(v: VariableDic, cfg: dict | None = None) -> str | None:
     """«administrativa» (identificador, peso, diseño de la muestra) o «construida» (la calcula el INEI) si el código o la etiqueta
     lo dicen; None si no se sabe (esa variable va al LLM; no se adivina)."""
@@ -430,9 +460,18 @@ class Candidatos:
             df.update(b.keys())
         n = max(len(self.preguntas), 1)
         self._idf = {w: math.log(1 + n / c) for w, c in df.items()}
+        # Sinónimos (dueño, 13/11/2026; `cuestionarios.sinonimos`): si la etiqueta de la variable dice «edad», también se buscan «años» y
+        # «cumplidos». Solo amplían la consulta; las preguntas no cambian y el número de candidatas tampoco.
+        self._sinonimos: dict[str, set[str]] = {}
+        for clave, otros in ((cfg.get("sinonimos") or {}).get("valor") or {}).items():
+            for k in _palabras(clave, self.stop, self.pref):
+                self._sinonimos.setdefault(k, set()).update(w for o in otros for w in _palabras(o, self.stop, self.pref))
 
     def _consulta(self, v: VariableDic) -> set[str]:
-        return set(_palabras(v.etiqueta + " " + " ".join(d for _, d in v.categorias), self.stop, self.pref))
+        base = set(_palabras(v.etiqueta + " " + " ".join(d for _, d in v.categorias), self.stop, self.pref))
+        for w in list(base):
+            base |= self._sinonimos.get(w, set())
+        return base
 
     def puntaje(self, v: VariableDic, i: int, consulta: set[str] | None = None) -> float:
         import math

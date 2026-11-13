@@ -9,7 +9,8 @@
 # las mismas exclusiones (HW1 edad; HW16–HW19 fechas de nacimiento y medición; HW51 y HW52, HW58 consentimiento, orden del responsable y envío a un especialista).
 # Versión 0.3.0 (13/11/2026, resoluciones del dueño): `nino_vivo` (C-M1-07-2: las variables del niño vivo) y la hemoglobina y la talla de RECH5 (C-M1-07-1).
 # `nino_vivo` no es una medición de campo sino una batería que obliga a un universo: lo nombran los universos de `universos_analiticos.yaml`.
-version: 0.3.0
+# Versión 0.3.1 (13/11/2026, dueño, hallazgo 11): de la lactancia, `nino_vivo` queda solo con la alimentación **actual** (ayer / últimas 24 h); haber lactado, inicio, duración, motivos y capacitación vuelven a todos los nacimientos.
+version: 0.3.1
 fecha: "2026-11-13"
 mediciones:
   - id: hemoglobina
@@ -61,9 +62,9 @@ mediciones:
       kilogramos (1 decimal)» (HW2), «Talla en centímetros (1 decimal)» (HW3), «Talla/Edad de la Desviación Estándar de la mediana de referencia
       (según la OMS)» (HW70)
   # C-M1-07-2 (dueño, 13/11/2026): la batería `nino_vivo` agrupa las variables que se calculan sobre el niño **vivo**: vacunas, diarrea, fiebre y tos
-  # (infecciones respiratorias), suplementos, desarrollo infantil temprano y lactancia. Un plan que usa una de ellas va al universo `nino_vivo_hijo_de_entrevistada`
+  # (infecciones respiratorias), suplementos, desarrollo infantil temprano y la alimentación actual (lo que el niño comió o tomó ayer). Un plan que usa una de ellas va al universo `nino_vivo_hijo_de_entrevistada`
   # (B5 = 1); la cesárea y lo demás del parto, que no figuran aquí, siguen con todos los nacimientos. REC43, REC95 y DIT entran enteras (todas las variables de
-  # sus bloques de M1-06); de REC41 y REC94 solo los bloques de lactancia. Salen de `backlog/slice-m1/evidencia/m1-07_generar_nino_vivo.py`; se editan a mano.
+  # sus bloques de M1-06: el niño vivo de hoy); de REC41 y REC94 solo la alimentación de ayer (hallazgo 11; las etiquetas, en evidencia/m1-07.md §Hallazgo 11). Salen de `backlog/slice-m1/evidencia/m1-07_generar_nino_vivo.py`; se editan a mano.
   - id: nino_vivo
     encuesta: ENDES
     anios: [2024, 2024]
@@ -125,8 +126,8 @@ mediciones:
     encuesta: ENDES
     anios: [2024, 2024]
     archivo: REC41
-    bateria: "Lactancia del último nacimiento: duración, inicio, tomas y biberón"
-    variables: [M4, M5, M6, M7, M8, M9, M27, M28, M29, M34, M35, M36, M38, M39]
+    bateria: "Alimentación actual: pecho, biberón y comidas del día y la noche de ayer"
+    variables: [M35, M36, M38, M39]
     cita: >-
       Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «B. Cuestionario Individual de la Mujer y niño» (inmunización, prevalencia de IRA y EDA, desarrollo infantil temprano, embarazo y lactancia); bloques de REC41 en
       curados/inferencia/bloques/ENDES.yaml:1; resolución C-M1-07-2 del dueño (backlog/slice-m1/consultas_al_dueno.md:15)
@@ -134,8 +135,8 @@ mediciones:
     encuesta: ENDES
     anios: [2024, 2024]
     archivo: REC94
-    bateria: "Lactancia y alimentación del niño: biberón, contacto piel a piel, motivos, capacitación y preparación de alimentos"
-    variables: [S431A, S435, S436C, S440, S441, S442, S446AA, S446AB, S446A, S447, S448A, S448B, QI440B]
+    bateria: "Alimentación actual: preparación del biberón y de los alimentos, azúcar y almacenamiento de lo que comió ayer"
+    variables: [S446AA, S446AB, S446A, S447, S448A, S448B]
     cita: >-
       Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «B. Cuestionario Individual de la Mujer y niño» (inmunización, prevalencia de IRA y EDA, desarrollo infantil temprano, embarazo y lactancia); bloques de REC94 en
       curados/inferencia/bloques/ENDES.yaml:1; resolución C-M1-07-2 del dueño (backlog/slice-m1/consultas_al_dueno.md:15)

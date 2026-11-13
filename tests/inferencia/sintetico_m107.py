@@ -32,7 +32,7 @@ COLUMNAS = {
     "RECH6": ["HHID", "HC0", "HC1", "HC27", "HC55", "HC57", "HC57A", "HC70"],
     "REC0111": ["CASEID", "HHID", "V003", "V005", "V012", "V015", "V021", "V022", "V024", "V025", "V190"],
     "REC21": ["CASEID", "HHID", "BIDX", "B4", "B5", "B16"],
-    "REC41": ["CASEID", "HHID", "MIDX", "M4", "M15", "M17"],
+    "REC41": ["CASEID", "HHID", "MIDX", "M4", "M15", "M17", "M35"],
     "REC43": ["CASEID", "HHID", "HIDX", "H11"],
     "RECH5": ["HHID", "HA0", "HA1", "HA55", "HA57A"],
     "REC44": ["CASEID", "HHID", "HWIDX", "HW1", "HW55", "HW57", "HW70"],
@@ -43,7 +43,7 @@ NUMERICAS = {"HA0", "HA1", "B16", "HIDX", "HV005", "V005", "V012", "HC1", "HC70"
              "IDXH4", "V003"}
 TEXTO = {"HHID", "CASEID", "UBIGEO"}
 CATEGORIAS = {"HC57": [1, 2, 3, 4], "HC57A": [1, 2, 3, 4], "HV103": [0, 1], "HC27": [1, 2], "HC55": [0, 1, 2], "HV015": [1, 2, 3], "HV104": [1, 2],
-              "SH11Z": [0, 1], "B4": [1, 2], "B5": [0, 1], "M17": [0, 1], "M4": [93, 94, 95], "H11": [0, 1, 2], "HA55": [0, 3, 4, 6], "HA57A": [1, 2, 3, 4, 9], "M15": [11, 21, 31], "HW55": [0, 1, 2], "HW57": [1, 2, 3, 4],
+              "SH11Z": [0, 1], "B4": [1, 2], "B5": [0, 1], "M17": [0, 1], "M4": [93, 94, 95], "M35": [0, 1, 2], "H11": [0, 1, 2], "HA55": [0, 3, 4, 6], "HA57A": [1, 2, 3, 4, 9], "M15": [11, 21, 31], "HW55": [0, 1, 2], "HW57": [1, 2, 3, 4],
               "V015": [1, 2, 3, 4, 5, 6, 7], "V502": [0, 1, 2], "V313": [0, 1, 2, 3], "V025": [1, 2], "HV025": [1, 2], "V190": [1, 2, 3, 4, 5], "HV270": [1, 2, 3, 4, 5],
               "SHREGION": [1, 2, 3, 4], "HV024": list(range(1, 26)), "HV022": [1, 2, 3], "V024": list(range(1, 26)), "V022": [1, 2, 3]}
 
@@ -98,7 +98,7 @@ def escribir_parquets(carpeta: Path) -> Path:
     ultimos = [("c1", 1, 1, 21, 95), ("c2", 1, 0, 11, 93), ("c3", 1, 1, 21, 94), ("c4", 1, 0, 31, 95), ("c5", 1, 1, 21, 93)]
     pl.DataFrame({"CASEID": [u[0] for u in ultimos], "HHID": ["h1", "h1", "h2", "h3", "h4"], "MIDX": [float(u[1]) for u in ultimos],
                   "M4": [float(u[4]) for u in ultimos], "M15": [float(u[3]) for u in ultimos],
-                  "M17": [float(u[2]) for u in ultimos]}).write_parquet(d / "REC41.parquet")
+                  "M17": [float(u[2]) for u in ultimos], "M35": [float(u[2]) for u in ultimos]}).write_parquet(d / "REC41.parquet")
     # (caso, hogar, índice, diarrea): los seis nacimientos de los últimos cinco años, con los dos fallecidos (c3 y el segundo de c5)
     diarrea = [("c1", "h1", 1, 1), ("c2", "h1", 1, 0), ("c3", "h2", 1, 0), ("c4", "h3", 1, 1), ("c5", "h4", 1, 0), ("c5", "h4", 2, 1)]
     pl.DataFrame({"CASEID": [x[0] for x in diarrea], "HHID": [x[1] for x in diarrea], "HIDX": [float(x[2]) for x in diarrea],

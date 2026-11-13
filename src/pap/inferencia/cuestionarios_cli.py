@@ -42,6 +42,16 @@ def _a_vinculos(df) -> list[c.Vinculo]:
             for f in df.iter_rows(named=True)]
 
 
+def _manuales(rutas, vs) -> list[c.Vinculo]:
+    """Vínculos fijados a mano por el dueño; la variable debe existir en los diccionarios."""
+    out = c.leer_vinculos_manuales(rutas.raiz / c.RUTA_VINCULOS_MANUALES)
+    existen = {(v.tabla, v.codigo) for v in vs}
+    for v in out:
+        if (v.tabla, v.codigo) not in existen:
+            raise PapError(f"vinculos_manuales.yaml: {v.tabla}.{v.codigo} no está en los diccionarios")
+    return out
+
+
 def _manual(a, rutas) -> int:
     from .almacen import _insumo
 
@@ -101,6 +111,7 @@ def ejecutar(a, rutas) -> int:
                            "condición 1 de backlog/slice-m1/evidencia/auditoria_batch_api.md). No se llamó a nada.")
         previos = _vinculos_previos(d, "vinculos.parquet")
         hechos = {(v.tabla, v.codigo) for v in _a_vinculos(previos)} if previos is not None else set()
+        hechos |= {(v.tabla, v.codigo) for v in _manuales(rutas, vs)}          # los fijados a mano no van al modelo
         tablas = set(a.tablas.split(",")) if a.tablas else None
         pendientes = [v for v in vs if (v.tabla, v.codigo) not in hechos and (tablas is None or v.tabla in tablas)]
         if a.max_variables:
@@ -120,6 +131,10 @@ def ejecutar(a, rutas) -> int:
             raise PapError("Falta vinculos.parquet: corre antes `pap cuestionarios vincular`")
         llm = _vinculos_previos(d, "vinculos_llm.parquet")
         todos = pl.concat([sin_llm] + ([llm] if llm is not None else []))
+        manuales = _manuales(rutas, vs)
+        if manuales:                                                           # mandan sobre la regla y el LLM (método `manual`)
+            quita = [c.var_id(v.tabla, v.codigo) for v in manuales]
+            todos = pl.concat([todos.filter(~pl.col("var_id").is_in(quita)), c.tabla_de_vinculos(manuales, qs)])
         ruta_ind = rutas.raiz / "biblioteca" / "variables" / "variables.parquet"
         df = indice.aplicar_vinculos(pl.read_parquet(ruta_ind), todos)
         destino = ruta_ind if a.sobre_indice else d / "variables_con_pregunta.parquet"

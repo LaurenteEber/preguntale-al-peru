@@ -1,0 +1,59 @@
+# CONTROL DE PRUEBA (M1-07, hallazgo 11 del dueño, 13/11/2026) — no es un indicador: no está en dim_indicador.yaml, no responde preguntas, no se marca `verificado` y no pasa por
+# `pap inferencia validar-recetas` (vive aquí, no en curados/inferencia/recetas/). Comprueba que la **lactancia pasada** (haber lactado alguna vez) se calcula sobre
+# **todos los nacimientos** de los últimos cinco años y no solo los vivos: «niños nacidos, de las mujeres de 15 a 49 años, en los cinco años que precedieron la encuesta
+# sin importar si estaban o no vivos al momento de la encuesta» (nota del Gráfico N.º 9.1). Convertirlo en indicador es una consulta al dueño.
+# Lo carga tests/inferencia/test_m107_controles.py con el esquema de recetas.Receta. Las cifras por área (`doradas_area`) van en este mismo archivo.
+# Definición: M4 «Duración de la lactancia» en REC41: 94 = nunca lactó; 98 = no sabe; 0–48 meses y 95 («sigue lactando») = lactó alguna vez.
+# El documento del INEI no publica los casos sin ponderar de esta cifra (cuadro base 10.2): no hay `casos_publicados`; la prueba compara los que midió este control.
+id: control_lacto_alguna_vez
+version: 0.1.0
+fecha: "2026-11-13"
+descripcion: "Niños nacidos en los cinco años anteriores a la encuesta, de mujeres de 15 a 49 años, que lactaron alguna vez (M4 distinto de 94; vivos o no)"
+indicador_id: control_lacto_alguna_vez
+encuesta: ENDES
+unidad: nino
+medida: proporcion
+anios: [2024, 2024]
+universo_analitico: nino_hijo_de_entrevistada
+indicador:
+  combinar: alguna_de
+  condiciones:
+    - {archivo: REC41, variable: M4, op: entre, valores: [0, 48]}
+    - {archivo: REC41, variable: M4, op: en, valores: [95]}
+universo:
+  restricciones: []
+transformaciones: []
+cortes_permitidos: [area]
+cortes_no_permitidos: []
+tolerancia_pp: 0.1        # E-05: las cifras de la ENDES se reproducen a ± 0,1 pp (R-ENC-18)
+fuente: "INEI, «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (recurso endes-2024-informe-principal), Capítulo 9, p. 209 (texto: 98,9 %), Gráfico N.º 9.1 y N.º 9.2 p. 210 (cuadro base 10.2); M4 en REC41 2024; universo curados/inferencia/universos_analiticos.yaml:1 (nino_hijo_de_entrevistada)"
+doradas:
+  - id_cifra: CTL-CONTROL_LACTO_ALGUNA_VEZ-2024-PE
+    nivel: nacional
+    territorio: PE
+    valor_publicado: 98.9
+    decimales: 1
+    bloqueante: true
+    cita: "INEI, «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (recurso endes-2024-informe-principal), Capítulo 9, Lactancia materna inicial: p. 209 (texto «El 98,9% de los niños que nacieron en los cinco años anteriores a la ENDES 2024, han lactado alguna vez»), Gráfico N.º 9.1 p. 210, «Lactó alguna vez», 2024"
+doradas_area:
+  - id_cifra: CTL-CONTROL_LACTO_ALGUNA_VEZ-2024-PE-URBANO
+    receta_id: control_lacto_alguna_vez
+    anio: 2024
+    nivel: nacional
+    territorio: PE
+    corte: area
+    categoria: urbano
+    valor_publicado: 98.9
+    decimales: 1
+    cita: "INEI, «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (recurso endes-2024-informe-principal), Capítulo 9, Gráfico N.º 9.2 p. 210, «Lactó alguna vez», urbana, 2024"
+  - id_cifra: CTL-CONTROL_LACTO_ALGUNA_VEZ-2024-PE-RURAL
+    receta_id: control_lacto_alguna_vez
+    anio: 2024
+    nivel: nacional
+    territorio: PE
+    corte: area
+    categoria: rural
+    valor_publicado: 98.7
+    decimales: 1
+    cita: "INEI, «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (recurso endes-2024-informe-principal), Capítulo 9, Gráfico N.º 9.2 p. 210, «Lactó alguna vez», rural, 2024"
+estado: propuesto

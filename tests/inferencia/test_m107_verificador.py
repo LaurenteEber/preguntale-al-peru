@@ -264,7 +264,9 @@ def test_el_universo_del_nino_vivo_es_el_de_vacunas_diarrea_lactancia_y_el_de_la
     ctx, con = mundo
     diarrea = ok(verificar(plan("nino", cond("REC43", "H11", "en", (1,))), ctx, con))
     assert diarrea.universo_analitico.id == "nino_vivo_hijo_de_entrevistada" and diarrea.controles["u_despues"] == 4
-    lactancia = ok(verificar(plan("nino", cond("REC41", "M4", "en", (95,))), ctx, con))
+    lactancia = ok(verificar(plan("nino", cond("REC41", "M35", "en", (0,))), ctx, con))
+    pasada = ok(verificar(plan("nino", cond("REC41", "M4", "en", (95,))), ctx, con))        # hallazgo 11: haber lactado es de todos los nacimientos
+    assert pasada.universo_analitico.id == "nino_hijo_de_entrevistada"
     assert lactancia.universo_analitico.id == "nino_vivo_hijo_de_entrevistada" and lactancia.archivo_unidad == "REC41"
     cesarea = ok(verificar(plan("nino", cond("REC41", "M17", "en", (1,))), ctx, con))
     assert cesarea.universo_analitico.id == "nino_hijo_de_entrevistada" and cesarea.controles["u_despues"] == 4

@@ -128,7 +128,7 @@ def test_rec21_es_solo_puente_en_los_datos_reales(ctx, con):
     assert pc.archivo_unidad == "REC41"
 
 
-def test_el_nino_vivo_para_vacunas_diarrea_y_lactancia_y_todos_los_nacimientos_para_la_cesarea(ctx, con):
+def test_el_nino_vivo_para_vacunas_diarrea_y_alimentacion_actual_y_todos_los_nacimientos_para_la_cesarea(ctx, con):
     """C-M1-07-2: de los 19 751 nacimientos, 169 están fallecidos (B5 = 0); con madres de 15 a 49: 19 737 todos y 19 568 vivos."""
     def plan(tabla, var, codigos):
         return Plan.model_validate({
@@ -137,7 +137,7 @@ def test_el_nino_vivo_para_vacunas_diarrea_y_lactancia_y_todos_los_nacimientos_p
             "territorio": {"nivel": "nacional", "id": None}})
     cesarea = verificar(plan("REC41", "M17", [1]), ctx, con)
     assert (cesarea.universo_analitico.id, cesarea.controles["filas_unidad"], cesarea.controles["u_despues"]) == ("nino_hijo_de_entrevistada", 19751, 19737)
-    for tabla, var, codigos in (("REC43", "H11", [1]), ("REC41", "M4", [95]), ("REC95", "S466", [1])):     # diarrea, lactancia, controles de crecimiento
+    for tabla, var, codigos in (("REC43", "H11", [1]), ("REC41", "M38", [1]), ("REC95", "S466", [1])):     # diarrea, biberón de ayer, controles de crecimiento
         pc = verificar(plan(tabla, var, codigos), ctx, con)
         assert not isinstance(pc, Falla), (tabla, pc)
         assert pc.universo_analitico.id == "nino_vivo_hijo_de_entrevistada" and pc.controles["u_despues"] == 19568, tabla

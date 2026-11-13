@@ -239,3 +239,13 @@ cuestionarios:
   candidatos_k: {valor: 20, supuesto: M1-04}                # preguntas candidatas por variable (IDs c01…c20, diseño §8)
   candidatos_stopwords: {valor: [de, la, el, los, las, un, una, en, y, o, a, que, del, al, se, su, sus, por, para, con, es, le, lo, no, si, ha, usted, nombre], supuesto: M1-04}
   candidatos_prefijo: {valor: 5, supuesto: M1-04}           # letras que se comparan de cada palabra (un stemmer simple, sin dependencias)
+  # Sinónimos solo para edad y fechas (dueño, 13/11/2026; evidencia/m1-04_lote.md §0.4): si la etiqueta de la variable lleva la palabra de la
+  # izquierda, el recorte busca también las de la derecha («Edad actual» → «¿Cuántos años cumplidos tiene?»; «Mes de nacimiento» →
+  # «¿En qué día, mes y año nació Ud.?»). Solo ordenan las candidatas; `candidatos_k` no cambia. Para agregar otros, el dueño decide.
+  sinonimos:
+    valor:
+      edad: [años, cumplidos]
+      nacimiento: [nació, nacido]
+      nació: [nacimiento]
+      fecha: [día, mes, año]
+    decision: "dueño 13/11/2026: sinónimos solo para edad ↔ años cumplidos, nacimiento ↔ nació y día/mes/año; las candidatas siguen en 20"

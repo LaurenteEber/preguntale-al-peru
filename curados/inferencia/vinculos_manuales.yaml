@@ -1,0 +1,11 @@
+# Vínculos variable ↔ pregunta fijados a mano por el dueño (M1-04; hallazgo 10, 13/11/2026).
+# `pap cuestionarios aplicar` los usa en lugar del vínculo de la regla o del LLM (método `manual`) y `pap cuestionarios lote` no manda estas
+# variables al modelo. Siguen en `propuesto` (el visto de `revisado` es de M1-07). Cada entrada lleva: tabla, codigo, pregunta
+# («cuestionario:número» de la pregunta extraída), motivo, quien y fecha. Una entrada incompleta o repetida falla.
+vinculos:
+  - tabla: REC43
+    codigo: H44A
+    pregunta: "individual:474C"
+    motivo: "H44A (primer lugar donde se buscó tratamiento para la diarrea) es la pregunta 474C «¿Dónde buscó usted primero consejo o tratamiento?»; el LLM la había enviado a 474A (todos los lugares). Fijado por el dueño al revisar los vínculos de REC43 (hallazgo 10)"
+    quien: dueño
+    fecha: "2026-11-13"
