@@ -1,6 +1,22 @@
 # M1-04 — Lote con el LLM (Batch API): estado, costo y cómo reanudarlo
 
-Fecha: 12/11/2026 · Quién: agente · **El lote real NO se corrió** (falta la clave de lotes). Todo lo demás está hecho y probado con un proveedor falso.
+Fecha: 12/11/2026, corrida en vivo el 13/11/2026 · Quién: agente · C-M1-04-1 resuelta por el dueño (Workspace `pap-lotes`, clave en el Llavero, servicio `pap-anthropic-batch`).
+
+## 0. Corrida en vivo de prueba (13/11/2026): RECH6, REC43 y REC0111
+
+Comando (la clave se carga solo en el comando, desde el Llavero; nunca se imprimió ni se escribió en un archivo):
+`PAP_ANTHROPIC_BATCH_KEY="$(security find-generic-password -s pap-anthropic-batch -w)" uv run pap cuestionarios lote --tablas RECH6,REC43,REC0111`
+
+| Pasada | Lote | Peticiones | Costo máximo estimado | **Costo real** | Borrado |
+|---|---|---|---|---|---|
+| vincular | `msgbatch_019hZZCKRYGisxYRPK9rBNPe` | 271 | US$ 0,887 | **US$ 1,104** | sí |
+| verificar | `msgbatch_01K4zpsXzbCKXvwo86fGWw41` | 42 | US$ 0,047 | **US$ 0,035** | sí |
+| **Total** | | | | **US$ 1,139** | |
+
+- **Borrado confirmado en Anthropic:** después de la corrida, `GET /v1/messages/batches/<id>` devuelve **404 `not_found_error`** para los dos lotes, y el listado del Workspace devuelve **0 lotes**.
+- **El máximo estimado no fue un techo:** se midieron 0,58 tokens de entrada por carácter (1 038 426 tokens para 1 791 145 caracteres), no 0,45. El tope (US$ 20) no cambió; se subió `batch.tokens_por_caracter` a **0,65**, para que la revisión del tope antes de crear un lote vuelva a ser conservadora. Con 0,65, el máximo de todo lo pendiente sube a unos US$ 14, todavía bajo los US$ 20 por lote.
+- **Resultado: solo 25 de 271 variables vinculadas por el LLM** (REC43 16, REC0111 9, RECH6 0). La causa principal no es el modelo eligiendo mal: **207 respuestas (76 %) vinieron en prosa** («La variable H37A … corresponde a la opción C…») en vez del JSON pedido, se cortaron en los 60 tokens de `max_tokens_vincular` y el código las descartó como `respuesta_invalida` (como debe: nunca se adivina un vínculo). Otras: `no_encontrada` 22, `error_del_lote` 12 (respuesta de verificación ilegible), `rechazada_por_verificacion` 5.
+- **Qué falta para seguir:** que el modelo responda siempre en JSON. La salida estructurada (`batch.salida_estructurada`, hoy `false` por no estar probada en vivo) ya está implementada en el cliente y obliga al formato. Propuesta: activarla y repetir las tres tablas (≈ US$ 1,1 real) antes de correr todo lo pendiente. Los resultados de esta corrida quedan en `biblioteca/variables/cuestionarios/ENDES/2024/lote/` (fuera de git) y `vinculos_llm.parquet`; nada se aplicó al índice (todo en `propuesto`).
 
 ## 1. Por qué no se llamó a la Batch API
 
@@ -25,14 +41,13 @@ Costo máximo calculado con los textos reales (precios de Sonnet 5.5 con el 50 %
 | RECH6, REC43 y REC0111 | 271 | US$ 0,88 | US$ 0,33 | **≈ US$ 1,2** |
 | Todas las pendientes de las 34 tablas | 2 339 | US$ 7,22 | US$ 2,83 | **≈ US$ 10** |
 
-Cada pasada es un lote y el tope `batch.tope_lote_usd` (US$ 20) se revisa **antes de crear** cada uno: si el máximo lo pasa, el lote no se crea (prueba `test_un_lote_que_pasa_el_tope_no_se_crea`). El costo real se guardará en `estado_lote.json` (campo `gasto_usd`) y se informará aquí cuando se corra. **Costo real: no hay (no se corrió).**
+Cada pasada es un lote y el tope `batch.tope_lote_usd` (US$ 20) se revisa **antes de crear** cada uno: si el máximo lo pasa, el lote no se crea (prueba `test_un_lote_que_pasa_el_tope_no_se_crea`). El costo real queda en `estado_lote.json` (campo `gasto_usd`): **US$ 1,139 en la corrida de prueba del 13/11/2026** (sección 0). Esta tabla es la estimación original con 0,45 tokens por carácter.
 
 ## 3. Cómo se corre cuando exista la clave
 
 ```
-export PAP_ANTHROPIC_BATCH_KEY=…            # clave del Workspace de lotes; no se escribe en ningún archivo
-uv run pap cuestionarios lote --tablas RECH6,REC43,REC0111     # primero las tres tablas de la medición (≈ US$ 1,2 máx.)
-uv run pap cuestionarios lote                                  # después, todo lo pendiente
+PAP_ANTHROPIC_BATCH_KEY="$(security find-generic-password -s pap-anthropic-batch -w)" uv run pap cuestionarios lote --tablas RECH6,REC43,REC0111
+PAP_ANTHROPIC_BATCH_KEY="$(security find-generic-password -s pap-anthropic-batch -w)" uv run pap cuestionarios lote   # después, todo lo pendiente
 uv run pap cuestionarios aplicar && uv run pap cuestionarios informe
 ```
 

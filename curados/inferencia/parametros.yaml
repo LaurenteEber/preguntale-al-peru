@@ -177,7 +177,7 @@ batch:
   variable_clave: {valor: PAP_ANTHROPIC_BATCH_KEY, supuesto: M1-04, nota: "nombre propio para la clave del Workspace de lotes (auditoría de la Batch API, condición 1). La crea el dueño en la consola de Anthropic; no existe en el repo ni en el entorno hasta que la ponga"}
   api_url: {valor: "https://api.anthropic.com/v1/messages/batches", supuesto: M1-04}
   descuento: {valor: 0.5, supuesto: M1-04, nota: "la Batch API cobra 50 % de los precios base (docs/diseno/tecnologias.md §8); se aplica a los precios de `interprete.precios_usd_por_millon`"}
-  tokens_por_caracter: {valor: 0.45, supuesto: M1-04, nota: "para estimar el costo máximo antes de crear el lote; el español rinde unos 3 caracteres por token, se usa un margen de seguridad"}
+  tokens_por_caracter: {valor: 0.65, supuesto: M1-04, nota: "para estimar el costo máximo antes de crear el lote. Medido en vivo el 13/11/2026 (lote de RECH6, REC43 y REC0111): 1 038 426 tokens de entrada para 1 791 145 caracteres = 0,58 tokens por carácter; con 0,45 el costo real de la pasada de vincular (US$ 1,10) pasó el máximo estimado (US$ 0,89). Se usa 0,65 para que el máximo vuelva a ser un techo"}
   sondeo_s: {valor: 60, supuesto: M1-04}                 # segundos entre dos consultas de estado
   espera_max_s: {valor: 90000, supuesto: M1-04}          # un lote vence a las 24 h; pasado esto se deja de esperar (el estado queda guardado)
   max_tokens_vincular: {valor: 60, supuesto: M1-04}
