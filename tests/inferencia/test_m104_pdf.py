@@ -141,3 +141,42 @@ def test_el_manual_solo_da_fragmentos_de_las_preguntas_pedidas_y_no_se_guarda_en
     [f] = r["412"]
     assert f["pagina"] == 1 and "pase a la pregunta 413" in f["texto"] and len(f["texto"]) <= 130
     assert "Otro asunto" not in f["texto"]
+
+
+def test_las_preguntas_de_cuatro_cifras_se_extraen(tmp_path):
+    """La sección 10 del cuestionario individual numera sus preguntas 1000 a 1043 (defecto de M1-04: el patrón solo aceptaba tres)."""
+    from pap.inferencia.cuestionarios import leer_pdf, preguntas_de_paginas
+
+    ruta = tmp_path / "violencia.pdf"
+    ruta.write_bytes(construir_pdf([pagina_de_preguntas("SECCIÓN 10. VIOLENCIA DOMÉSTICA", [
+        ("1000", "VEA EN LA PORTADA SI LA MUJER ESTÁ SELECCIONADA", [], ""),
+        ("1012A", "¿Alguna vez su esposo la empujó?", ["SI........ 1", "NO........ 2"], "1041"),
+        ("1041", "AGRADEZCA A LA ENTREVISTADA", [], "")])]))
+    qs = preguntas_de_paginas(leer_pdf(ruta, Parametros.desde_yaml()), "individual")
+    assert [(q.numero, q.seccion, q.pagina) for q in qs] == [
+        ("1000", "SECCIÓN 10. VIOLENCIA DOMÉSTICA", 1), ("1012A", "SECCIÓN 10. VIOLENCIA DOMÉSTICA", 1),
+        ("1041", "SECCIÓN 10. VIOLENCIA DOMÉSTICA", 1)]
+    assert qs[1].saltos == ["1041"]
+
+
+def test_las_paginas_especiales_fijan_su_seccion_y_el_calendario_da_una_entrada_por_pagina(tmp_path):
+    """Un anexo sin encabezado «SECCIÓN» no hereda la sección anterior (y la página que sigue al rango vuelve a la sección vigente) y el calendario (sin columna de números) no se pierde: cada página
+    del calendario es una sola entrada de tipo «calendario» (número `C<página>`), como las matrices."""
+    from pap.inferencia.cuestionarios import ParametrosCuestionarios, leer_pdf, preguntas_de_paginas
+
+    pc = replace(ParametrosCuestionarios.desde_yaml(), paginas_especiales=(
+        {"cuestionario": "individual", "desde": 2, "hasta": 2, "seccion": "ANEXO. CARNÉ", "tipo": "anexo"},
+        {"cuestionario": "individual", "desde": 3, "hasta": 3, "seccion": "CALENDARIO", "tipo": "calendario"},
+        {"cuestionario": "salud", "desde": 1, "hasta": 3, "seccion": "OTRO", "tipo": "anexo"}))
+    calendario = {"texto": [(37, 15, "CALENDARIO 2024"), (45, 40, "1"), (60, 40, "ENERO FEBRERO"), (45, 60, "14")]}
+    ruta = tmp_path / "anexos.pdf"
+    ruta.write_bytes(construir_pdf([
+        pagina_de_preguntas("SECCIÓN 10. VIOLENCIA DOMÉSTICA", [("1001", "¿Su esposo es celoso?", [], "")]),
+        pagina_de_preguntas(None, [("456", "COPIE DEL CARNÉ LAS FECHAS DE VACUNACIÓN", [], "")]),
+        calendario,
+        pagina_de_preguntas(None, [("1002", "¿Su esposo la insulta?", [], "")])]))
+    qs = preguntas_de_paginas(leer_pdf(ruta, Parametros.desde_yaml()), "individual", pc)
+    assert [(q.numero, q.seccion, q.pagina, q.tipo) for q in qs] == [
+        ("1001", "SECCIÓN 10. VIOLENCIA DOMÉSTICA", 1, "pregunta"), ("456", "ANEXO. CARNÉ", 2, "pregunta"),
+        ("C3", "CALENDARIO", 3, "calendario"), ("1002", "SECCIÓN 10. VIOLENCIA DOMÉSTICA", 4, "pregunta")]
+    assert "ENERO FEBRERO" in qs[2].texto and qs[2].cuestionario == "individual"

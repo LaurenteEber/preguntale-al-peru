@@ -1,6 +1,6 @@
 # M1-04 — Cuestionarios y diccionarios de la ENDES 2024 (extracción)
 
-Generado el 2026-11-12 por `pap cuestionarios informe`. Los textos salen de los PDF oficiales registrados (`endes-2024-cuestionario-*` y los «Diccionario - <tabla>.pdf» dentro de cada ZIP), leídos con `pdfplumber` en el lector aislado (tiempo y memoria acotados). Todo queda en `propuesto`.
+Generado el 2026-11-13 por `pap cuestionarios informe`. Los textos salen de los PDF oficiales registrados (`endes-2024-cuestionario-*` y los «Diccionario - <tabla>.pdf» dentro de cada ZIP), leídos con `pdfplumber` en el lector aislado (tiempo y memoria acotados). Todo queda en `propuesto`.
 
 ## Cuestionario hogar: 68 preguntas y 5 páginas de matriz (columnas del listado, no separables)
 
@@ -14,7 +14,7 @@ Generado el 2026-11-12 por `pap cuestionarios informe`. Los textos salen de los 
 | SECCIÓN 6. PRUEBA DE YODO EN LA SAL Y DE CLORO RESIDUAL EN EL AGUA | 10 |
 | SECCIÓN 8. ENTREGA DE INCENTIVOS | 4 |
 
-## Cuestionario individual: 500 preguntas y 2 páginas de matriz (columnas del listado, no separables)
+## Cuestionario individual: 549 preguntas y 2 páginas de matriz (columnas del listado, no separables) y 2 páginas del calendario
 
 | Sección | Preguntas |
 |---|---|
@@ -28,7 +28,8 @@ Generado el 2026-11-12 por `pap cuestionarios informe`. Los textos salen de los 
 | SECCIÓN 7. ANTECEDENTES DEL CÓNYUGE Y TRABAJO DE LA MUJER | 23 |
 | SECCIÓN 8. SIDA Y OTRAS I.T.S. | 40 |
 | SECCIÓN 9: MORTALIDAD MATERNA | 17 |
-| SECCIÓN 10. VIOLENCIA DOMÉSTICA | 2 |
+| SECCIÓN 10. VIOLENCIA DOMÉSTICA | 49 |
+| ANEXO. FECHAS DE VACUNACIÓN COPIADAS DEL CARNÉ (PREGUNTAS 456 A 466E) | 2 |
 
 ## Cuestionario salud: 190 preguntas
 
@@ -90,6 +91,7 @@ Total: 2856 variables en el índice, 2832 en los diccionarios, 26 del índice si
 
 - El diseño de los PDF cambia entre cuestionarios y páginas; el lector se guía por la posición de las palabras (valores en `cuestionarios.*` de `curados/inferencia/parametros.yaml`). Las **opciones** de respuesta pueden traer ruido (por ejemplo un «(PASE A 413)» como si fuera una opción) y los **saltos** solo valen si nombran una pregunta que existe en el mismo cuestionario.
 - Las **matrices** (las columnas «(1) (2) …» del listado del hogar y tablas parecidas) no se separan en preguntas: cada página es una sola entrada de tipo `matriz` con su encabezado. Los vínculos de esas variables serán a nivel de página.
+- Las páginas sin encabezado «SECCIÓN» que no son de la sección anterior se fijan en `cuestionarios.paginas_especiales`: el anexo del carné (pp. 82–84 del individual, preguntas 456 a 466E) y el **calendario** (pp. 89–90), que no tiene preguntas numeradas: cada página es una entrada de tipo `calendario` con su texto, y el vínculo de sus variables (REC82) será a nivel de página.
 - Si una pregunta aparece en varias páginas (la misma tabla para la 1.ª, 2.ª y 3.ª persona) queda una vez, con el texto más largo.
 - En el hogar, la sección 4 (peso y talla) y casi toda la 5 (hemoglobina) son formularios de tabla, sin el encabezado de preguntas: dan pocas o ninguna pregunta. Ahí están las mediciones de los niños (HC53 a HC57A, HC70…) que usan las recetas; su vínculo, si lo hay, será a las pocas preguntas extraídas o `sin_pregunta` con su motivo. No se corrigió a mano (AGENTS.md §7).
 - Todo queda en `propuesto`; el visto es de M1-07.

@@ -1,6 +1,6 @@
 # M1-04 — Cuántas variables se vinculan sin LLM (tarea 3)
 
-Generado el 2026-11-12 por `pap cuestionarios informe`. **Hipótesis de `tecnologias.md` §6:** en la ENDES los códigos no siguen el número de pregunta, así que el diccionario y las expresiones regulares vinculan poco y el resto lo propone Sonnet fuera de línea. Se midió antes de usar el LLM.
+Generado el 2026-11-13 por `pap cuestionarios informe`. **Hipótesis de `tecnologias.md` §6:** en la ENDES los códigos no siguen el número de pregunta, así que el diccionario y las expresiones regulares vinculan poco y el resto lo propone Sonnet fuera de línea. Se midió antes de usar el LLM.
 
 ## Las tres tablas pedidas
 
@@ -51,7 +51,7 @@ En conjunto: 14 variables; 0 vinculadas sin LLM; 6 sin pregunta por ser administ
 | REC83 | 19 | 0 (0.0 %) | 0 (0.0 %) | 4 | 15 | no corrido |
 | REC84DV | 218 | 0 (0.0 %) | 0 (0.0 %) | 2 | 216 | no corrido |
 | REC91 | 343 | 0 (0.0 %) | 4 (1.2 %) | 3 | 336 | no corrido |
-| REC93DVdisciplina | 18 | 0 (0.0 %) | 0 (0.0 %) | 3 | 15 | no corrido |
+| REC93DVdisciplina | 18 | 0 (0.0 %) | 15 (83.3 %) | 2 | 1 | no corrido |
 | REC94 | 61 | 0 (0.0 %) | 0 (0.0 %) | 2 | 59 | no corrido |
 | REC95 | 299 | 0 (0.0 %) | 22 (7.4 %) | 2 | 275 | no corrido |
 | RECH0 | 44 | 0 (0.0 %) | 0 (0.0 %) | 16 | 28 | no corrido |
@@ -62,8 +62,8 @@ En conjunto: 14 variables; 0 vinculadas sin LLM; 6 sin pregunta por ser administ
 | RECH6 | 43 | 0 (0.0 %) | 0 (0.0 %) | 7 | 36 | no corrido |
 | RECHM | 8 | 0 (0.0 %) | 0 (0.0 %) | 3 | 5 | no corrido |
 
-Total: 2832 variables; por diccionario 0; por regla 304 (10.7 %); sin pregunta 189; para el LLM 2339.
+Total: 2832 variables; por diccionario 0; por regla 319 (11.3 %); sin pregunta 188; para el LLM 2325.
 
 ## ¿Están las preguntas correctas entre las candidatas que verá el LLM?
 
-Con las 304 variables vinculadas por regla (su pregunta se conoce) se probó el recorte a 20 candidatas por palabras en común: la pregunta correcta está entre ellas en 274 (90.1 %). Es un piso para el LLM: nunca podrá acertar una pregunta que no le llegue. No es una cifra de acierto del LLM.
+Con las 319 variables vinculadas por regla (su pregunta se conoce) se probó el recorte a 20 candidatas por palabras en común: la pregunta correcta está entre ellas en 289 (90.6 %). Es un piso para el LLM: nunca podrá acertar una pregunta que no le llegue. No es una cifra de acierto del LLM.

@@ -62,6 +62,7 @@ class ParametrosCuestionarios:
     texto_max_caracteres: int
     opciones_max: int
     seccion: re.Pattern
+    paginas_especiales: tuple = ()   # rangos de páginas con sección fija: anexos sin encabezado «SECCIÓN» y el calendario
 
     @classmethod
     def desde_yaml(cls, ruta: Path = RUTA_PARAMETROS) -> "ParametrosCuestionarios":
@@ -72,7 +73,8 @@ class ParametrosCuestionarios:
                    linea_tolerancia_y=float(v("linea_tolerancia_y")),
                    categorias_x_defecto_prop=float(v("categorias_x_defecto_prop")), categorias_margen=float(v("categorias_margen")),
                    salto_x_defecto_prop=float(v("salto_x_defecto_prop")), texto_max_caracteres=int(v("texto_max_caracteres")),
-                   opciones_max=int(v("opciones_max")), seccion=re.compile(v("seccion_patron")))
+                   opciones_max=int(v("opciones_max")), seccion=re.compile(v("seccion_patron")),
+                   paginas_especiales=tuple(c.get("paginas_especiales", {}).get("valor") or ()))
 
 
 # ------------------------------------------------------------------ preguntas
@@ -87,7 +89,8 @@ class Pregunta:
     opciones: list[str] = field(default_factory=list)      # «03 PÍLDORA»
     saltos: list[str] = field(default_factory=list)        # números de pregunta a los que pasa
     cortada: bool = False                                  # el texto pasó de `texto_max_caracteres` y se cortó
-    tipo: str = "pregunta"                                 # «matriz»: página de columnas (1) (2)… del listado; el texto es el encabezado de toda la página
+    tipo: str = "pregunta"                                 # «matriz»: página de columnas (1) (2)… del listado; el texto es el encabezado de toda la página;
+                                                           # «calendario»: una página del calendario de la mujer, con su texto
 
     @property
     def id(self) -> str:
@@ -152,16 +155,28 @@ def preguntas_de_paginas(paginas: list[dict], cuestionario: str, pc: ParametrosC
     """Preguntas de un cuestionario a partir de la salida de `leer_pdf`. Una pregunta empieza donde hay un número de pregunta en la
     columna izquierda de la página; su texto es lo que sigue en la segunda columna, las opciones lo de la tercera (hasta la columna
     «PASE A») y los saltos lo de la última o un «PASE A <n>» del texto. La sección vigente es la última línea «SECCIÓN …» vista. Las
-    páginas sin números en columna (las matrices del listado del hogar) no dan preguntas."""
+    páginas sin números en columna (las matrices del listado del hogar) no dan preguntas. Las páginas de `paginas_especiales` llevan la
+    sección de su rango (un anexo sin encabezado no hereda la sección anterior, y la página siguiente vuelve a la vigente); las de tipo
+    «calendario» dan una sola entrada por página con su texto (número `C<página>`)."""
     pc = pc or ParametrosCuestionarios.desde_yaml()
     preguntas: list[Pregunta] = []
-    seccion = ""
+    especiales = {n: e for e in pc.paginas_especiales if e["cuestionario"] == cuestionario
+                  for n in range(int(e["desde"]), int(e["hasta"]) + 1)}
+    vigente = ""
     for pag in paginas:
         lineas = _lineas(pag["palabras"], pc.linea_tolerancia_y)
         for l in lineas:
             txt = " ".join(t for _, t in l)
             if pc.seccion.match(txt):
-                seccion = " ".join(txt.split())
+                vigente = " ".join(txt.split())
+        especial = especiales.get(pag["n"])
+        seccion = especial["seccion"] if especial else vigente
+        if especial and especial["tipo"] == "calendario":
+            texto = " ".join(" ".join(t for _, t in l) for l in lineas)
+            texto = " ".join(texto.split())
+            preguntas.append(Pregunta(cuestionario, f"C{pag['n']}", texto[:pc.texto_max_caracteres], seccion, pag["n"], [], [],
+                                      len(texto) > pc.texto_max_caracteres, "calendario"))
+            continue
         # columna de los números: los candidatos (primera palabra de línea, a la izquierda, con texto de más de 2 letras a su derecha)
         cand = []
         for i, l in enumerate(lineas):

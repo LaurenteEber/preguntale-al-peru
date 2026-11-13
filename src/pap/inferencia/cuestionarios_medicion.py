@@ -124,9 +124,12 @@ def informe_cuestionarios(preguntas: list, variables: list[VariableDic], vars_in
     """Conteo de preguntas por cuestionario y sección, y de variables del diccionario frente al índice (criterio 1 de M1-04)."""
     por_c: dict[str, Counter] = {}
     matrices: Counter = Counter()
+    calendario: Counter = Counter()
     for q in preguntas:
         if q.tipo == "matriz":
             matrices[q.cuestionario] += 1
+        elif q.tipo == "calendario":
+            calendario[q.cuestionario] += 1
         else:
             por_c.setdefault(q.cuestionario, Counter())[q.seccion] += 1
     out = [f"# M1-04 — Cuestionarios y diccionarios de la ENDES 2024 (extracción)\n\nGenerado el {fecha} por `pap cuestionarios informe`. "
@@ -134,7 +137,8 @@ def informe_cuestionarios(preguntas: list, variables: list[VariableDic], vars_in
            "cada ZIP), leídos con `pdfplumber` en el lector aislado (tiempo y memoria acotados). Todo queda en `propuesto`.\n"]
     for c in ("hogar", "individual", "salud"):
         n = sum(por_c.get(c, {}).values())
-        out.append(f"## Cuestionario {c}: {n} preguntas" + (f" y {matrices[c]} páginas de matriz (columnas del listado, no separables)" if matrices[c] else "") + "\n")
+        out.append(f"## Cuestionario {c}: {n} preguntas" + (f" y {matrices[c]} páginas de matriz (columnas del listado, no separables)" if matrices[c] else "")
+                   + (f" y {calendario[c]} páginas del calendario" if calendario[c] else "") + "\n")
         out.append(_tabla_md(["Sección", "Preguntas"], [[s or "(sin sección)", k] for s, k in por_c.get(c, Counter()).items()]) + "\n")
     out.append("## Diccionarios por tabla frente al índice de variables\n")
     por_t: Counter = Counter(v.tabla for v in variables)
@@ -153,6 +157,9 @@ def informe_cuestionarios(preguntas: list, variables: list[VariableDic], vars_in
                "como si fuera una opción) y los **saltos** solo valen si nombran una pregunta que existe en el mismo cuestionario.\n"
                "- Las **matrices** (las columnas «(1) (2) …» del listado del hogar y tablas parecidas) no se separan en preguntas: cada página es una "
                "sola entrada de tipo `matriz` con su encabezado. Los vínculos de esas variables serán a nivel de página.\n"
+               "- Las páginas sin encabezado «SECCIÓN» que no son de la sección anterior se fijan en `cuestionarios.paginas_especiales`: el anexo "
+               "del carné (pp. 82–84 del individual, preguntas 456 a 466E) y el **calendario** (pp. 89–90), que no tiene preguntas numeradas: cada "
+               "página es una entrada de tipo `calendario` con su texto, y el vínculo de sus variables (REC82) será a nivel de página.\n"
                "- Si una pregunta aparece en varias páginas (la misma tabla para la 1.ª, 2.ª y 3.ª persona) queda una vez, con el texto más largo.\n"
                "- En el hogar, la sección 4 (peso y talla) y casi toda la 5 (hemoglobina) son formularios de tabla, sin el encabezado de preguntas: "
                "dan pocas o ninguna pregunta. Ahí están las mediciones de los niños (HC53 a HC57A, HC70…) que usan las recetas; su vínculo, si lo "

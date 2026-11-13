@@ -171,7 +171,7 @@ cache:
   planes_horas: {valor: 24, decision: P-03}
 
 batch:
-  tope_lote_usd: {valor: 20, decision: "K-05 (dueño, 12/11/2026: US$ 20 por lote de enriquecimiento)"}
+  tope_lote_usd: {valor: 20, decision: "K-05 (dueño, 12/11/2026: US$ 20 por lote de enriquecimiento)", nota: "tope propio de los lotes: no cuenta contra el de US$ 5 por día de las llamadas del servicio web (curados/web/parametros.yaml, limites.tope_llm_usd_dia; aclarado por el dueño el 13/11/2026, supuesto M1-04-s1)"}
   # Batch API (M1-04; auditoría backlog/slice-m1/evidencia/auditoria_batch_api.md: clave y Workspace aparte, lotes borrados al bajar los resultados).
   # La clave NUNCA es la del servicio web (`interprete.variable_clave`): el cliente de lotes se niega a correr si las dos variables se llaman igual.
   variable_clave: {valor: PAP_ANTHROPIC_BATCH_KEY, supuesto: M1-04, nota: "nombre propio para la clave del Workspace de lotes (auditoría de la Batch API, condición 1). La crea el dueño en la consola de Anthropic; no existe en el repo ni en el entorno hasta que la ponga"}
@@ -195,7 +195,7 @@ cuestionarios:
   # Texto de los cuestionarios y diccionarios de la ENDES (M1-04; diseño §7.2, tecnologias.md §6). El diseño de los PDF del INEI
   # varía entre cuestionarios y páginas, así que el lector se guía por la posición de las palabras; estos valores son los de los
   # PDF de 2024 (medidos el 12/11/2026) y se cambian aquí, no en el código.
-  numero_patron: {valor: '^[1-9]\d{0,2}([A-Z]\d?)?$', supuesto: M1-04}   # 325, 325B, 478F1; sin ceros a la izquierda (las filas de las matrices son 01, 02…)
+  numero_patron: {valor: '^[1-9]\d{0,3}([A-Z]\d?)?$', supuesto: M1-04}   # 325, 325B, 478F1, 1012A (la sección 10 del individual va de 1000 a 1043); sin ceros a la izquierda (las filas de las matrices son 01, 02…)
   numero_x_max: {valor: 70, supuesto: M1-04}                # el número de pregunta está en la columna izquierda (puntos desde el borde)
   numero_tolerancia: {valor: 9, supuesto: M1-04}            # cuánto puede alejarse un número de la columna de su página
   texto_margen: {valor: 8, supuesto: M1-04}                 # el texto empieza al menos esto a la derecha del número
@@ -206,6 +206,14 @@ cuestionarios:
   texto_max_caracteres: {valor: 1500, supuesto: M1-04}      # tope del texto de una pregunta (una matriz larga se corta, con aviso)
   opciones_max: {valor: 60, supuesto: M1-04}
   seccion_patron: {valor: '^SECCI[ÓO]N\b', supuesto: M1-04}
+  # Páginas sin encabezado «SECCIÓN» que no son de la sección anterior (medidas en los PDF de 2024 el 13/11/2026; corrección de M1-04
+  # tras la revisión de M1-06, supuesto M1-06-s7). Tipo «anexo»: sus preguntas se extraen con esta sección. Tipo «calendario»: una
+  # entrada por página con su texto, para vincular el calendario de la mujer (REC82) a nivel de página.
+  paginas_especiales:
+    valor:
+      - {cuestionario: individual, desde: 82, hasta: 84, tipo: anexo, seccion: "ANEXO. FECHAS DE VACUNACIÓN COPIADAS DEL CARNÉ (PREGUNTAS 456 A 466E)"}
+      - {cuestionario: individual, desde: 89, hasta: 90, tipo: calendario, seccion: "CALENDARIO"}
+    supuesto: M1-04
   # Vínculo variable ↔ pregunta sin LLM (M1-04, tarea 3). Una regla dice en qué cuestionario está la pregunta y cómo sacar su
   # número del código de la variable (QS25C1 → 25C1, 25C, 25: se usa el más largo que exista). Solo valen los números que existen en
   # ese cuestionario. Son hechos del esquema de nombres de 2024 (medidos el 12/11/2026), revisables aquí.
