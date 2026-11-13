@@ -23,10 +23,10 @@ Owner reviews (3 h/week) never block: anything waiting for a visto stays `propue
 | T3 | M1-01 decisiones, reglas y tablas curadas | S1 S3 S4 | workers + inline | done | 93aaf8f, 64e7d29, catálogo |
 | T4 | M1-02 rest of the debt | S1 S3 | worker | done | M1-02 commit |
 | T5 | M1-03 uniones, universo, cortes | S1 S3 | worker + auditor | done | d5ba492 |
-| T6 | M1-04 cuestionarios | S1 | worker | blocked (live batch, C-M1-04-1) | 09da75b |
-| T7 | M1-05 enriquecimiento | S1 S3 | worker | t0 done; rest blocked (C-M1-04-1) | M1-05 t0 + M1-06 commit |
+| T6 | M1-04 cuestionarios | S1 | worker + inline | live test lote done twice (US$ 2,39); verify-pass fix + full lote await owner | 09da75b, f1a81d3, 028f410, ce531a5 |
+| T7 | M1-05 enriquecimiento | S1 S3 | worker | t0 done; rest blocked (full lote awaits owner) | M1-05 t0 + M1-06 commit |
 | T8 | M1-06 fichas, bloques, temas | S1 | worker + auditor x2 | done (aprobado con observaciones) | M1-05 t0 + M1-06 commit |
-| T9 | M1-07 diseño muestral y lote | S1 S6 | tbd | pending | |
+| T9 | M1-07 diseño muestral y lote | S1 S6 | worker + auditor | done (aprobado con observaciones, atendidas); C-M1-07-1..3 + visto del lote al dueño | 4f3a61e |
 | T10 | M1-08 … M1-18 motor (sombra), including M1-09b banco del recuperador (after M1-09) | S1 S3 S7 | tbd | pending | |
 | T11 | M1-19 evaluación y medición | S1 S2 | tbd | pending | |
 | T12 | M1-20 revisión independiente y cierre | S1 S2 | tbd | pending | |
@@ -43,3 +43,4 @@ Owner reviews (3 h/week) never block: anything waiting for a visto stays `propue
 - L8 (12/11/2026): owner: "continua" after quota stop; workers resumed. M1-01 t5 catalog done (5d6b927; push failed with GitHub 500). M1-02 worker: tasks 1,2,4–9 + 4 minors; pool 20/20 Mac and 20/20 Linux (colima); cube, 34 Parquet, 90 recipe rows, SIEN tables unchanged. Consultas C-M1-02-1 (osv-scanner 3 days old), C-M1-02-2 (H06-4 QSSEXO unit), C-M1-02-3 (H04-4 huella v2). Full suite 1897 passed 1 skipped (2 expected socket-block warnings). Owner asked "cómo va el agente?".
 - L9 (12/11/2026): M1-03 done (d5ba492): 36 doradas por corte 0,0 pp, 90 rows diff 0, auditor-agent "aprobado con observaciones"; index regenerated (only archivos.parquet changed). M1-04 (09da75b): questionnaires/dictionaries extracted, no-LLM measurement (dictionaries carry no question numbers), resumable batch with fake provider; live batch blocked: no separate batch key/Workspace (C-M1-04-1). Full suite 2016 passed 1 skipped. New untracked supervisor file backlog/slice-m1/guia_dueno_clave_lotes.md not committed (ask owner).
 - L10 (12/11/2026): M1-05 t0 + M1-06 done (uncommitted at session end, full suite job-13 running): auditor 1st round «hallazgos abiertos», correction round (11 auditor tests red→green), 2nd round «aprobado con observaciones» (minor: V139/SHREGION → geo; SHSEMES/SSEMES/SHVER/V017/V019A → diseno; castigo_15_dias población). C-M1-06-1 (CSALUD01 llave HHID+QSNUMERO) waits owner. Owner: "ok, vayamos guardando todo en egram para continuar en la siguiente sesión".
+- L11 (13/11/2026): owner resolved C-M1-04-1 (Keychain pap-anthropic-batch), C-M1-02-1/2/3, C-M1-06-1 (column «Resolución del dueño»). Fixed M1-04 extraction (f1a81d3: section 10 pp. 72–81, anexo, calendario). Live lote RECH6/REC43/REC0111 twice (US$ 1,14 prose; US$ 1,25 structured, 59 links; batches deleted, 404). C-M1-06-1+C-M1-02-2 applied (6bedec4). M1-07 done (4f3a61e, suite 2155 passed). Owner: no full lote yet; pending OK for verify-pass fix + REC43 rerun (~US$ 0,6). M1-05 rest, M1-08, M1-09 depend on enrichment (full lote).
