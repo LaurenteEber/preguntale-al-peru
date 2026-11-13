@@ -11,7 +11,7 @@ encuesta: ENDES
 unidad: nino
 medida: proporcion
 anios: [2024, 2024]
-universo_analitico: nino_hijo_de_entrevistada_15_49
+universo_analitico: nino_hijo_de_entrevistada
 indicador:
   combinar: una
   condiciones:
@@ -22,7 +22,7 @@ transformaciones: []
 cortes_permitidos: [area]
 cortes_no_permitidos: []
 tolerancia_pp: 0.1        # E-05: las cifras de la ENDES se reproducen a ± 0,1 pp (R-ENC-18)
-fuente: "INEI, informe de programas presupuestales 2024, Cuadro N.º 29 p. 105 (nacimientos por cesárea de los últimos 5 años anteriores a la encuesta); M17 «Parto por cesárea» (0 No, 1 Sí) en REC41 2024; universo curados/inferencia/universos_analiticos.yaml:1 (nino_hijo_de_entrevistada_15_49)"
+fuente: "INEI, informe de programas presupuestales 2024, Cuadro N.º 29 p. 105 (nacimientos por cesárea de los últimos 5 años anteriores a la encuesta); M17 «Parto por cesárea» (0 No, 1 Sí) en REC41 2024; universo curados/inferencia/universos_analiticos.yaml:1 (nino_hijo_de_entrevistada)"
 doradas:
   - id_cifra: CTL-CONTROL_CESAREA-2024-PE
     nivel: nacional

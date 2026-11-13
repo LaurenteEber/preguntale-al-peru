@@ -8,3 +8,6 @@ control_pf_moderno     PE-RURAL                        54.7     54.7     0.0    
 control_cesarea        PE                              38.2     38.2     0.0      19737   19737  True
 control_cesarea        PE-URBANO                       44.4     44.4     0.0      13845   13845  True
 control_cesarea        PE-RURAL                        21.0     21.0     0.0       5892    5892  True
+control_anemia_mujeres PE                              26.0     26.0     0.0          —   30290  True
+control_anemia_mujeres PE-URBANO                       25.9     25.9     0.0          —   21012  True
+control_anemia_mujeres PE-RURAL                        26.3     26.3     0.0          —    9278  True

@@ -19,11 +19,11 @@
 
 ## Criterios de aceptación
 
-- [ ] 34 fichas; `pap fichas validar` sale con 0.
-- [ ] Cobertura de bloques: 100 % de las variables `categoria` y `medida` de las tablas del lote; el número de bloques por tabla informado.
-- [ ] `pap fichas ver RECH6` muestra la ficha completa en texto legible.
-- [ ] La columna `bloque_id` no cambia ninguna otra columna del índice (comparación antes y después).
-- [ ] Revisión del auditor-agente sin hallazgos abiertos, o con sus consultas anotadas.
+- [x] 34 fichas; `pap fichas validar` sale con 0.
+- [x] Cobertura de bloques: 100 % de las variables `categoria` y `medida` de las tablas del lote; el número de bloques por tabla informado.
+- [x] `pap fichas ver RECH6` muestra la ficha completa en texto legible.
+- [x] La columna `bloque_id` no cambia ninguna otra columna del índice (comparación antes y después).
+- [x] Revisión del auditor-agente sin hallazgos abiertos, o con sus consultas anotadas.
 
 ## Fuera
 

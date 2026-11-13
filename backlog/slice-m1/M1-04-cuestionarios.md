@@ -17,11 +17,11 @@
 
 ## Criterios de aceptación
 
-- [ ] Los tres cuestionarios extraídos; conteo de preguntas por sección en `evidencia/m1-04_cuestionarios.md`.
-- [ ] Porcentaje de variables vinculadas por tabla, separando «por diccionario» y «por LLM». Meta de `tecnologias.md` §6: ≥ 95 % de las variables de las recetas (y, en M1-19, de las del conjunto de evaluación) con su texto vinculado.
-- [ ] Costo real del lote informado y dentro del tope.
-- [ ] El lote se puede reanudar: prueba con un proveedor falso que corta a la mitad.
-- [ ] Ningún texto de pregunta entra a una respuesta pública mientras esté en `propuesto`.
+- [x] Los tres cuestionarios extraídos; conteo de preguntas por sección en `evidencia/m1-04_cuestionarios.md`.
+- [ ] Porcentaje de variables vinculadas por tabla, separando «por diccionario» y «por LLM». Meta de `tecnologias.md` §6: ≥ 95 % de las variables de las recetas (y, en M1-19, de las del conjunto de evaluación) con su texto vinculado. — pendiente: el lote completo no se corrió; la meta de ≥ 95 % queda sin medir (`evidencia/m1-04_vinculos.md`, `m1-04_lote.md` §0.2)
+- [ ] Costo real del lote informado y dentro del tope. — pendiente: solo hay el costo real de las dos corridas de prueba (US$ 2,39 calculado con el precio configurado; falta el gasto facturado de la consola y el lote completo)
+- [x] El lote se puede reanudar: prueba con un proveedor falso que corta a la mitad.
+- [x] Ningún texto de pregunta entra a una respuesta pública mientras esté en `propuesto`.
 
 ## Fuera
 

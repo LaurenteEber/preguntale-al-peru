@@ -51,12 +51,12 @@ def test_las_siete_tablas_validan_y_cada_fila_tiene_su_cita():
 
 def test_filas_esperadas_de_2024():
     d = tc.leer_diseno_muestral(RAIZ_REAL)
-    # M1-07 agregó las 15 filas del lote (RECH1, RECH4, la mujer, los hijos de la entrevistada y las dos mediciones de REC44):
-    # el detalle está en test_m107_tablas.py
+    # M1-07 agregó las 15 filas del lote (RECH1, RECH4, la mujer, los hijos de la entrevistada y las dos mediciones de REC44) y
+    # C-M1-07-1 las dos de RECH5 (hemoglobina y talla de las mujeres): el detalle está en test_m107_tablas.py
     assert {(f.archivo, f.medicion) for f in d} >= {
         ("RECH0", "hogar"), ("RECH23", "hogar"), ("RECH6", "hemoglobina"), ("RECH6", "talla"),
         ("REC0111", "individual_mujer"), ("CSALUD01", "salud_15_mas"), ("CSALUD08", "salud_menores_12")}
-    assert len(d) == 22
+    assert len(d) == 24
     assert all(f.encuesta == "ENDES" and f.anio == 2024 and f.peso_normalizado == "sí" for f in d)
     por = {(f.archivo, f.medicion): f for f in d}
     assert por[("RECH0", "hogar")].peso_expr == "HV005/1e6" and por[("RECH6", "hemoglobina")].peso_expr == "HV005/1e6"

@@ -24,11 +24,11 @@ Hoy `diseno_muestral.csv` tiene 7 filas, de 6 tablas. Sin esa fila, el verificad
 
 ## Criterios de aceptación
 
-- [ ] `pap inferencia validar-tablas` sale con 0; cada fila nueva con su cita y su página.
-- [ ] Un plan de prueba por cada tabla del lote pasa el verificador y calcula.
-- [ ] Los 3 controles reproducen su cifra oficial; si alguno no reproduce, es consulta.
-- [ ] El peso al unir tablas sigue la regla de la submuestra más restrictiva (prueba con niño × madre × hogar).
-- [ ] Lote entregado al dueño con un resumen en sencillo: cuántas variables, qué controles saltaron y qué dudas quedan.
+- [x] `pap inferencia validar-tablas` sale con 0; cada fila nueva con su cita y su página.
+- [x] Un plan de prueba por cada tabla del lote pasa el verificador y calcula.
+- [x] Los 3 controles reproducen su cifra oficial; si alguno no reproduce, es consulta.
+- [x] El peso al unir tablas sigue la regla de la submuestra más restrictiva (prueba con niño × madre × hogar).
+- [ ] Lote entregado al dueño con un resumen en sencillo: cuántas variables, qué controles saltaron y qué dudas quedan. — pendiente: el resumen está en `evidencia/m1-07_lote.txt`, pero falta el visto del dueño al lote (y C-M1-07-1)
 
 ## Fuera
 

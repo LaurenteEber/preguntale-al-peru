@@ -15,9 +15,9 @@ from conftest import RAIZ_REAL
 
 LOTE = {"hogar": ["RECH0", "RECH23", "RECH1", "RECH4"],
         "nino": ["RECH6", "REC21", "REC41", "REC43", "REC44", "REC94", "REC95", "DIT"],
-        "mujer": ["REC0111", "REC91", "RE223132", "REC42", "RE516171", "RE758081"]}
-# README del slice: «Mujer: REC0111, REC91, RE223132, REC42, RE516171, RE758081, RECH5». RECH5 sale: la ficha técnica no dice su peso (C-M1-07-1).
-FUERA = {"REC82", "REC83", "REC84DV", "REC93DVdisciplina", "RECHM", "RECH5", "CSALUD01", "CSALUD08", "Programas_Sociales_x_Hogar", "PS_BECA18",
+        "mujer": ["REC0111", "REC91", "RE223132", "REC42", "RE516171", "RE758081", "RECH5"]}
+# README del slice: «Mujer: REC0111, REC91, RE223132, REC42, RE516171, RE758081, RECH5». RECH5 entró con el factor hogar por decisión del dueño (C-M1-07-1).
+FUERA = {"REC82", "REC83", "REC84DV", "REC93DVdisciplina", "RECHM", "CSALUD01", "CSALUD08", "Programas_Sociales_x_Hogar", "PS_BECA18",
          "PS_COMEDOR", "PS_PENSION65", "PS_QALIWARMA", "PS_TRABAJA", "PS_VL", "PS_WAWAWASI"}
 
 
@@ -39,9 +39,9 @@ def _sin_lineas(errores):
 
 # ------------------------------------------------------------------ unidades.yaml
 
-def test_unidades_cubre_las_18_tablas_del_lote_y_no_a_las_que_quedan_fuera():
+def test_unidades_cubre_las_19_tablas_del_lote_y_no_a_las_que_quedan_fuera():
     u = {x.archivo: x for x in tc.leer_unidades(RAIZ_REAL)}
-    assert set(u) == {a for tablas in LOTE.values() for a in tablas} and len(u) == 18
+    assert set(u) == {a for tablas in LOTE.values() for a in tablas} and len(u) == 19
     assert not set(u) & FUERA
     # el «Hogar» del README incluye a las personas del hogar (RECH1, RECH4), que son la unidad `persona` del plan
     assert {a: u[a].unidad_plan for a in LOTE["hogar"]} == {"RECH0": "hogar", "RECH23": "hogar", "RECH1": "persona", "RECH4": "persona"}
@@ -54,9 +54,32 @@ def test_cada_tabla_dice_su_unidad_su_base_y_de_donde_sale_su_peso_con_cita_y_pa
         assert tc._DONDE.search(x.cita) and "Ficha técnica ENDES 2024" in x.cita, x.archivo
         assert x.tabla_base in u and u[x.tabla_base].unidad_plan == x.unidad_plan
     pesos = {a: (x.peso.variable, x.peso.en) for a, x in u.items()}
-    assert {a for a, p in pesos.items() if p == ("HV005", "RECH0")} == {"RECH0", "RECH23", "RECH1", "RECH4", "RECH6", "REC44"}
+    assert {a for a, p in pesos.items() if p == ("HV005", "RECH0")} == {"RECH0", "RECH23", "RECH1", "RECH4", "RECH6", "REC44", "RECH5"}
     assert {a for a, p in pesos.items() if p == ("V005", "REC0111")} == {
         "REC0111", "REC91", "RE223132", "REC42", "RE516171", "RE758081", "REC21", "REC41", "REC43", "REC94", "REC95", "DIT"}
+
+
+def test_rech5_es_una_mujer_del_plan_con_el_factor_hogar_y_la_unidad_persona_del_hogar_del_indice():
+    """C-M1-07-1 (dueño, 13/11/2026): RECH5 entra con HV005 de RECH0, como la medición del niño."""
+    u = {x.archivo: x for x in tc.leer_unidades(RAIZ_REAL)}["RECH5"]
+    assert (u.unidad_plan, u.unidad_archivo, u.tabla_base, u.peso.variable, u.peso.en) == ("mujer", "persona_del_hogar", "RECH5", "HV005", "RECH0")
+    assert "C-M1-07-1" in u.cita and "p. 9" in u.cita and "p. 11" in u.cita
+    d = {f.medicion: f for f in tc.leer_diseno_muestral(RAIZ_REAL) if f.archivo == "RECH5"}
+    assert set(d) == {"hemoglobina", "talla"}
+    for f in d.values():
+        assert (f.nivel_submuestra, f.peso_expr, f.estrato_expr, f.psu_expr, f.upm_estable_expr) == (
+            "medicion", "HV005/1e6", "printf('%02d-%d', HV024, HV022)", "HV021", "HV001")
+        assert f.uniones == [("RECH5", "HHID", "RECH0", "HHID")] and "p. 9" in f.cita and "p. 11" in f.cita
+    m = {(x.id, x.archivo): x for x in tc.leer_mediciones(RAIZ_REAL)}
+    assert {"HA57A", "HA55"} <= set(m[("hemoglobina", "RECH5")].variables) and {"HA2", "HA3"} <= set(m[("talla", "RECH5")].variables)
+    assert not {"HA52", "HA58", "HA61", "HA63", "HA69"} & {v for x in m.values() if x.archivo == "RECH5" for v in x.variables}      # consentimiento y VIH, fuera
+
+
+def test_rec21_solo_es_puente_y_rec44_tiene_a_rech6_como_alternativa_de_medicion():
+    u = {x.archivo: x for x in tc.leer_unidades(RAIZ_REAL)}
+    assert [a for a, x in u.items() if x.solo_puente] == ["REC21"]
+    assert {a: (x.alternativa_medicion.tabla, x.alternativa_medicion.desde, x.alternativa_medicion.hacia) for a, x in u.items() if x.alternativa_medicion} == {
+        "REC44": ("RECH6", "HW", "HC")}
 
 
 def test_rech6_es_persona_del_hogar_para_el_indice_y_nino_para_el_plan():
@@ -81,7 +104,7 @@ def test_el_esquema_de_unidades_rechaza_lo_que_debe():
 
 def test_validar_tablas_con_las_unidades_reales_sale_sin_errores():
     res = tc.validar(Rutas(RAIZ_REAL))
-    assert res["unidades"] == (18, []) and "unidades" in tc.ARCHIVOS_TABLAS
+    assert res["unidades"] == (19, []) and "unidades" in tc.ARCHIVOS_TABLAS
     assert all(errores == [] for _, errores in res.values())
 
 
@@ -123,6 +146,24 @@ def test_validar_detecta_una_tabla_sin_fila_de_diseno(copia):
     assert any("RE223132" in e and "no tiene fila en diseno_muestral.csv" in e for e in errores), errores
 
 
+def test_validar_detecta_una_alternativa_de_medicion_mal_declarada(copia):
+    def cambio(us):
+        fila = us[[u["archivo"] for u in us].index("REC44")]
+        fila["alternativa_medicion"]["tabla"] = "REC0111"
+    errores = _romper_unidades(copia, cambio)
+    assert any("REC44" in e and "REC0111" in e and "no es de la unidad" in e for e in errores), errores
+
+    def sin_fila(us):
+        us[[u["archivo"] for u in us].index("REC44")]["alternativa_medicion"]["tabla"] = "RECXX"
+    errores = _romper_unidades(copia, sin_fila)
+    assert any("REC44" in e and "RECXX" in e and "no tiene fila" in e for e in errores), errores
+
+    def puente_con_alternativa(us):
+        us[[u["archivo"] for u in us].index("REC21")]["alternativa_medicion"] = {"tabla": "RECH6", "desde": "B", "hacia": "HC"}
+    errores = _romper_unidades(copia, puente_con_alternativa)
+    assert any("REC21" in e and "puente" in e for e in errores), errores
+
+
 def test_validar_detecta_una_unidad_de_corte_que_no_es_la_de_su_tabla(copia):
     ruta = copia / "curados/inferencia/cortes_estandar.yaml"
     ruta.write_text(ruta.read_text(encoding="utf-8").replace("variable: HC27\n          unidad: nino", "variable: HC27\n          unidad: mujer"),
@@ -153,7 +194,7 @@ def test_el_diseno_tiene_una_fila_por_tabla_y_medicion_del_lote_con_su_peso():
         assert (f.peso_expr, f.psu_expr) == ("HV005/1e6", "HV021")
         assert f.uniones == [("REC44", "CASEID", "REC0111", "CASEID"), ("REC0111", "HHID", "RECH0", "HHID")]
     assert d[("RECH1", "miembros_del_hogar")].uniones == [("RECH1", "HHID", "RECH0", "HHID")]
-    assert not {a for a, _ in d} & {"RECH5", "REC82", "REC83", "REC84DV", "REC93DVdisciplina", "RECHM"}
+    assert not {a for a, _ in d} & {"REC82", "REC83", "REC84DV", "REC93DVdisciplina", "RECHM"}
     for f in d.values():
         assert "p. " in f.cita and "Ficha técnica ENDES 2024" in f.cita
 
@@ -164,22 +205,46 @@ def test_los_universos_nuevos_con_sus_predicados_y_sus_tablas():
     u = {x.id: x for x in tc.leer_universos(RAIZ_REAL)}
     assert tc.sql_predicados(u["hogar"].predicados) == "HV015 IN (1)" and u["hogar"].unidad == "hogar"
     assert tc.sql_predicados(u["persona_de_hecho"].predicados) == "HV103 IN (1)" and u["persona_de_hecho"].unidad == "persona"
-    assert tc.sql_predicados(u["mujer_12_49_entrevistada"].predicados) == "V015 IN (1) AND V012 BETWEEN 12 AND 49"
-    assert tc.sql_predicados(u["mujer_15_49_entrevistada"].predicados) == "V015 IN (1) AND V012 BETWEEN 12 AND 49 AND V012 BETWEEN 15 AND 49"
-    assert tc.sql_predicados(u["nino_hijo_de_entrevistada"].predicados) == "V015 IN (1) AND V012 BETWEEN 12 AND 49"
+    # C-M1-07-3 (b): 15 a 49 años por defecto; 12 a 49 solo cuando se nombra
+    assert tc.sql_predicados(u["mujer_15_49_entrevistada"].predicados) == "V015 IN (1) AND V012 BETWEEN 15 AND 49" and not u["mujer_15_49_entrevistada"].solo_por_nombre
+    assert tc.sql_predicados(u["mujer_12_49_entrevistada"].predicados) == "V015 IN (1) AND V012 BETWEEN 12 AND 49" and u["mujer_12_49_entrevistada"].solo_por_nombre
+    assert tc.sql_predicados(u["nino_hijo_de_entrevistada"].predicados) == "V015 IN (1) AND V012 BETWEEN 15 AND 49" and not u["nino_hijo_de_entrevistada"].solo_por_nombre
+    assert tc.sql_predicados(u["nino_hijo_de_entrevistada_12_49"].predicados) == "V015 IN (1) AND V012 BETWEEN 12 AND 49" and u["nino_hijo_de_entrevistada_12_49"].solo_por_nombre
+    assert sorted(x.id for x in u.values() if x.solo_por_nombre) == ["mujer_12_49_entrevistada", "nino_hijo_de_entrevistada_12_49"]
+    assert "nino_hijo_de_entrevistada_15_49" not in u
+    # C-M1-07-2: el niño vivo (B5 = 1) y su batería
+    assert tc.sql_predicados(u["nino_vivo_hijo_de_entrevistada"].predicados) == "V015 IN (1) AND V012 BETWEEN 15 AND 49 AND B5 IN (1)"
+    assert u["nino_vivo_hijo_de_entrevistada"].aplica_a.mediciones == ["nino_vivo"] and u["nino_hijo_de_entrevistada"].aplica_a.mediciones == []
+    assert "REC44" not in u["nino_hijo_de_entrevistada"].aplica_a.archivos and "REC44" not in u["nino_vivo_hijo_de_entrevistada"].aplica_a.archivos
+    # C-M1-07-3 (a): todo universo que cubre REC44 exige el pernocte del niño (HV103 de RECH1)
+    de_rec44 = [x for x in u.values() if "REC44" in x.aplica_a.archivos]
+    assert sorted(x.id for x in de_rec44) == ["nino_hijo_de_entrevistada_de_hecho", "nino_hijo_de_entrevistada_hb_medida", "nino_hijo_de_entrevistada_talla"]
+    for x in de_rec44:
+        assert "RECH1" in x.aplica_a.archivos and "HV103 IN (1)" in tc.sql_predicados(x.predicados) and "V012 BETWEEN 15 AND 49" in tc.sql_predicados(x.predicados)
     assert tc.sql_predicados(u["nino_hijo_de_entrevistada_hb_medida"].predicados).endswith("HW55 IN (0)")
     assert tc.sql_predicados(u["nino_hijo_de_entrevistada_talla"].predicados).endswith("HW1 BETWEEN 0 AND 59 AND HW70 BETWEEN -9989 AND 9989")
-    # el de 12 a 49 está contenido en el de 15 a 49 (la regla de la base común elige el más amplio sin que nadie lo diga)
-    for ancho, angosto in (("mujer_12_49_entrevistada", "mujer_15_49_entrevistada"), ("nino_hijo_de_entrevistada", "nino_hijo_de_entrevistada_15_49")):
-        a = {(p.var, p.op, tuple(p.valores)) for p in u[ancho].predicados}
-        b = {(p.var, p.op, tuple(p.valores)) for p in u[angosto].predicados}
-        assert a < b
+    # C-M1-07-1: la mujer de hecho de 15 a 49 de RECH5 y, para la hemoglobina, medida
+    assert tc.sql_predicados(u["mujer_15_49_de_hecho"].predicados) == "HV103 IN (1) AND HA1 BETWEEN 15 AND 49"
+    assert tc.sql_predicados(u["mujer_15_49_de_hecho_hb_medida"].predicados) == "HV103 IN (1) AND HA1 BETWEEN 15 AND 49 AND HA55 IN (0)"
+    assert u["mujer_15_49_de_hecho"].aplica_a.archivos == ["RECH5", "RECH1"] and u["mujer_15_49_de_hecho_hb_medida"].aplica_a.mediciones == ["hemoglobina"]
     for x in u.values():
         assert tc._DONDE.search(x.fuente)
-    # cada tabla del lote la cubre al menos un universo de su unidad
+    # cada tabla del lote la cubre al menos un universo de su unidad que el verificador pueda elegir solo
     unidades = {x.archivo: x for x in tc.leer_unidades(RAIZ_REAL)}
     for a, x in unidades.items():
-        assert any(a in v.aplica_a.archivos for v in u.values() if v.unidad == x.unidad_plan), a
+        if x.solo_puente:
+            continue
+        assert any(a in v.aplica_a.archivos for v in u.values() if v.unidad == x.unidad_plan and not v.solo_por_nombre), a
+
+
+def test_la_bateria_del_nino_vivo_cubre_vacunas_diarrea_lactancia_suplementos_y_dit_y_no_el_parto():
+    m = {(x.id, x.archivo): set(x.variables) for x in tc.leer_mediciones(RAIZ_REAL)}
+    assert {a for (i, a) in m if i == "nino_vivo"} == {"REC43", "REC95", "DIT", "REC41", "REC94"}
+    assert {"H1", "H11", "H22", "H42"} <= m[("nino_vivo", "REC43")]                                   # carné, diarrea, fiebre y tos, hierro
+    assert {"S45B0", "S466", "S472AA", "S465EA"} <= m[("nino_vivo", "REC95")]                          # vacunas, control de crecimiento, diarrea, hierro
+    assert {"M4", "M34"} <= m[("nino_vivo", "REC41")] and not {"M17", "M15", "M19"} & m[("nino_vivo", "REC41")]   # lactancia sí; cesárea, lugar y peso del parto no
+    assert not {"S410B", "S426B"} & m[("nino_vivo", "REC94")]                                          # controles prenatales y complicaciones del parto, no
+    assert len(m[("nino_vivo", "DIT")]) > 40
 
 
 def test_las_uniones_nuevas_estan_declaradas_con_su_cardinalidad():
@@ -190,8 +255,28 @@ def test_las_uniones_nuevas_estan_declaradas_con_su_cardinalidad():
         assert r["por"] == [["CASEID", "CASEID"], [idx, "BIDX"]] and r["cardinalidad"] == "1:0..1" and r["cita"] == "doc11_caseid"
     assert rel[("RECH4", "RECH1")]["cardinalidad"] == "1:1" and rel[("RECH4", "RECH1")]["por"] == [["HHID", "HHID"], ["IDXH4", "HVIDX"]]
     assert rel[("REC91", "REC0111")]["cardinalidad"] == "1:1"
-    # las uniones de siempre hacia la mujer y el hogar siguen antes que las nuevas (el camino corto no cambia)
+    # C-M1-07-1 y -3: el pernocte de la mujer medida (HA0 = HVIDX) y el del niño (B16 = HVIDX), `n:1` hacia RECH1
+    assert rel[("RECH5", "RECH1")]["por"] == [["HHID", "HHID"], ["HA0", "HVIDX"]] and rel[("RECH5", "RECH1")]["cardinalidad"] == "n:1"
+    # la del niño tiene filas sin pareja (B16 = 0 o nulo): va en `relaciones_parciales`, que el índice no comprueba como «sin pérdida»
+    parcial = {(r["hijo"], r["padre"]): r for r in d["relaciones_parciales"]}
+    assert list(parcial) == [("REC21", "RECH1")] and ("REC21", "RECH1") not in rel
+    assert parcial[("REC21", "RECH1")]["por"] == [["HHID", "HHID"], ["B16", "HVIDX"]]
+    assert parcial[("REC21", "RECH1")]["cita"] == rel[("RECH5", "RECH1")]["cita"] == "doc11_hvidx"
+    # las uniones del hijo con REC21 van antes que las del hijo con REC0111: a RECH1 se llega por la línea del niño y no por la de la madre (V003)
     orden = [(r["hijo"], r["padre"]) for r in d["relaciones"]]
     for hijo in ("REC41", "REC43", "REC44", "REC94", "REC95", "DIT"):
-        assert orden.index((hijo, "REC0111")) < orden.index((hijo, "REC21"))
+        assert orden.index((hijo, "REC21")) < orden.index((hijo, "REC0111"))
     assert orden.index(("RECH4", "RECH0")) < orden.index(("RECH4", "RECH1"))
+
+
+def test_a_rech1_desde_las_tablas_del_nino_se_llega_por_la_linea_del_nino_y_no_por_la_de_la_madre():
+    """C-M1-07-3: REC0111 → RECH1 (V003) es la fila de la madre; HV103 del niño sale de REC21 → RECH1 (B16). Fija el orden de las relaciones."""
+    from pap.inferencia.verificador import relaciones_desde_yaml, ruta_de_uniones
+    d = yaml.safe_load((RAIZ_REAL / "curados/inferencia/archivos_endes_2024.yaml").read_text(encoding="utf-8"))
+    rels = relaciones_desde_yaml(d)
+    for hijo in ("REC41", "REC43", "REC44", "REC94", "REC95", "DIT"):
+        ruta = ruta_de_uniones(rels, hijo, {"RECH1"})
+        assert [(u.hijo, u.padre) for u in ruta] == [(hijo, "REC21"), ("REC21", "RECH1")], hijo
+    # la mujer medida y la mujer de REC0111 no cambian
+    assert {(u.hijo, u.padre) for u in ruta_de_uniones(rels, "RECH5", {"RECH1", "RECH0"})} == {("RECH5", "RECH1"), ("RECH5", "RECH0")}
+    assert [(u.hijo, u.padre) for u in ruta_de_uniones(rels, "REC41", {"RECH0", "REC0111"})] == [("REC41", "REC0111"), ("REC0111", "RECH0")]

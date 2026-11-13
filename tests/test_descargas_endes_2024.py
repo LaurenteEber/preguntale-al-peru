@@ -68,7 +68,7 @@ def test_codigo_documento_unico_de_1_a_11_sin_el_10():
 
 def test_documentos_adicionales_fuera_del_listado_2024():
     extra = {d["recurso"]: d for d in _lista()["documentos_adicionales"]}
-    assert set(extra) == {"endes-2025-ficha-tecnica", "endes-2024-informe-ppr"}
+    assert set(extra) == {"endes-2025-ficha-tecnica", "endes-2024-informe-ppr", "endes-2024-informe-principal"}   # el último: C-M1-07-1
     ficha = extra["endes-2025-ficha-tecnica"]
     assert ficha["url"] == "https://proyectos.inei.gob.pe/iinei/srienaho/Descarga/FichaTecnica/1038-Ficha.pdf"
     assert ficha["encuesta_codigo"] == 1038 and ficha["formato"] == "PDF"

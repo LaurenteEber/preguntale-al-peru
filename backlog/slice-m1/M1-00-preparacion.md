@@ -26,12 +26,12 @@
 
 ## Criterios de aceptación
 
-- [ ] Rama creada y primer commit con los documentos.
-- [ ] `descargas/endes_2024.yaml` validado: las tablas de cada módulo son exactamente los `.dta` de su ZIP (34 en total).
-- [ ] Los 4 documentos nuevos y el informe registrados, con su huella y su URL exacta.
-- [ ] Bloque `endes-2024` respaldado de nuevo y restauración probada.
-- [ ] Auditorías aprobadas en `evidencia/`; `pip-audit` en verde.
-- [ ] Suite en verde; el cubo sigue en `010ea965`.
+- [x] Rama creada y primer commit con los documentos.
+- [x] `descargas/endes_2024.yaml` validado: las tablas de cada módulo son exactamente los `.dta` de su ZIP (34 en total).
+- [x] Los 4 documentos nuevos y el informe registrados, con su huella y su URL exacta.
+- [x] Bloque `endes-2024` respaldado de nuevo y restauración probada.
+- [x] Auditorías aprobadas en `evidencia/`; `pip-audit` en verde.
+- [x] Suite en verde; el cubo sigue en `010ea965`.
 
 ## Fuera
 

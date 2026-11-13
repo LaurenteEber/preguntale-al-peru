@@ -42,9 +42,12 @@ def _variable(corte, archivo):
 # ------------------------------------------------------------------ mediciones.yaml
 
 def test_la_tabla_de_mediciones_declara_hemoglobina_y_talla_de_rech6_con_su_bateria():
-    """M1-07 agregó las mismas dos mediciones para REC44 (los hijos de las entrevistadas): aquí se mira la de RECH6."""
+    """M1-07 agregó las mismas dos mediciones para REC44 (los hijos de las entrevistadas) y, por C-M1-07-1, para RECH5 (las mujeres), y la batería
+    `nino_vivo` (C-M1-07-2): aquí se mira la de RECH6."""
     todas = tc.leer_mediciones(RAIZ_REAL)
-    assert {(x.id, x.archivo) for x in todas} == {("hemoglobina", "RECH6"), ("talla", "RECH6"), ("hemoglobina", "REC44"), ("talla", "REC44")}
+    assert {(x.id, x.archivo) for x in todas} == {("hemoglobina", "RECH6"), ("talla", "RECH6"), ("hemoglobina", "REC44"), ("talla", "REC44"),
+                                                  ("hemoglobina", "RECH5"), ("talla", "RECH5"), ("nino_vivo", "REC43"), ("nino_vivo", "REC95"),
+                                                  ("nino_vivo", "DIT"), ("nino_vivo", "REC41"), ("nino_vivo", "REC94")}
     m = {x.id: x for x in todas if x.archivo == "RECH6"}
     for x in todas:
         assert (x.encuesta, x.anios) == ("ENDES", (2024, 2024)) and x.bateria and tc._DONDE.search(x.cita)
@@ -65,7 +68,7 @@ def test_medicion_de_busca_por_encuesta_anio_archivo_y_variable():
 
 def test_las_siete_tablas_validan_con_mediciones():
     res = tc.validar(Rutas(RAIZ_REAL))
-    assert "mediciones" in res and res["mediciones"] == (4, [])
+    assert "mediciones" in res and res["mediciones"] == (11, [])
     assert tc.ARCHIVOS_TABLAS["mediciones"] == "mediciones.yaml" and "mediciones" in tc.LECTORES
 
 

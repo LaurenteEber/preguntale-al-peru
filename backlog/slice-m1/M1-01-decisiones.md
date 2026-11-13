@@ -40,12 +40,12 @@
 
 ## Criterios de aceptación
 
-- [ ] `decisiones.md` sin filas duplicadas ni contradictorias; cada cambio con su motivo y fecha.
-- [ ] `reglas.json` regenerado por el consolidador; la huella nueva de reglas anotada.
-- [ ] Lista de cambios de estado entregada. Las 90 filas de 2024 conservan sus valores (|dif| ≤ 1e-8).
-- [ ] `pap inferencia validar-tablas` y `validar-recetas` salen con 0.
-- [ ] Las 3 recetas en `verificado`.
-- [ ] Suite en verde, con las bases regrabadas solo si el dueño dio el visto.
+- [x] `decisiones.md` sin filas duplicadas ni contradictorias; cada cambio con su motivo y fecha.
+- [x] `reglas.json` regenerado por el consolidador; la huella nueva de reglas anotada.
+- [x] Lista de cambios de estado entregada. Las 90 filas de 2024 conservan sus valores (|dif| ≤ 1e-8).
+- [x] `pap inferencia validar-tablas` y `validar-recetas` salen con 0.
+- [x] Las 3 recetas en `verificado`.
+- [x] Suite en verde, con las bases regrabadas solo si el dueño dio el visto.
 
 ## Fuera
 

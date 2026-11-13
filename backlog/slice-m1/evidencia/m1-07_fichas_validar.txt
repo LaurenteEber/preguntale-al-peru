@@ -8,3 +8,4 @@
 · RECH5: edad observada 12–49 anios (HA1, 38,488 valores); declarada 12–49
 · RECH6: edad observada 0–59 meses (HC1, 20,290 valores); declarada 0–59
 ✔ 34 ficha(s) y 227 bloque(s) cumplen las 8 reglas de fichas.md §9.
+exit=0

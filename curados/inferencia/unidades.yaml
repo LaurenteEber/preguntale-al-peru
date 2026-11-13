@@ -12,9 +12,14 @@
 #   dos tablas de la unidad, parte de la primera (por nombre) desde la que se alcanza a la otra por una unión declarada; si ninguna, el plan falla.
 # - `peso`: la variable (se divide entre 1e6) y el archivo donde está; tiene que ser la propia tabla o un padre de las uniones para el diseño de
 #   su fila de diseno_muestral.csv, y esa fila tiene que usar la misma variable (lo comprueba `validar-tablas`).
+# - `solo_puente` (C-M1-07-2, dueño 13/11/2026): la tabla solo sirve de puente (sexo, edad, sobrevivencia y línea del niño hacia las demás tablas del hijo);
+#   un plan cuyas tablas de la unidad son todas puentes se rechaza, y el plan nunca parte de ella. REC21 trae los 60 693 hijos que la mujer tuvo alguna vez.
+# - `alternativa_medicion` (C-M1-07-3, dueño 13/11/2026): para un indicador de solo medición (talla, peso, hemoglobina) el motor prefiere `tabla`
+#   (RECH6) a esta; la tabla solo se usa si el plan necesita una variable de la madre o del hijo de la entrevistada. `desde` y `hacia` son los
+#   prefijos que emparejan las variables de las dos tablas (HW57 de REC44 = HC57 de RECH6).
 # Quedan fuera del lote (sin fila aquí ni en la lista del planificador): REC82, REC83, REC84DV, REC93DVdisciplina, RECHM, CSALUD01, CSALUD08 y los programas
-# sociales (cada ficha dice por qué), y RECH5, cuyo peso la ficha técnica no dice (consulta C-M1-07-1).
-version: 0.1.0
+# sociales (cada ficha dice por qué). RECH5 entró con el factor hogar por decisión del dueño (C-M1-07-1, 13/11/2026).
+version: 0.2.0
 fecha: "2026-11-13"
 unidades:
   - archivo: RECH0
@@ -62,6 +67,19 @@ unidades:
     peso: {variable: HV005, en: RECH0}
     cita: >-
       Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «Registro de la medición antropométrica (peso y talla) en niños menores de 6 años» y «Registro de los niveles de hemoglobina niños de 4 meses a menores de 6 años»; §VI p. 11 «Factor Hogar (HV005) … se utiliza para … desnutrición y anemia en menores de 5 años». El índice declara la fila como persona del hogar (archivos_endes_2024.yaml) y los cortes del niño (sexo, grupo de edad) llevan `unidad: nino`: ambas unidades se emparejan aquí, sin renombrar la del corte
+  - archivo: RECH5
+    encuesta: ENDES
+    anios: [2024, 2024]
+    unidad_plan: mujer
+    unidad_archivo: persona_del_hogar
+    tabla_base: RECH5
+    peso: {variable: HV005, en: RECH0}
+    cita: >-
+      Decisión del dueño C-M1-07-1 (13/11/2026): RECH5 es una medición del cuestionario del hogar, igual que la del niño. Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §5.2 p. 9
+      «A. Cuestionario del Hogar … Registro de la medición antropométrica (peso y talla) en niños menores de 6 años y mujeres de 12 a 49 años» y «Registro de los niveles de hemoglobina niños de 4
+      meses a menores de 6 años y mujeres de 12 a 49 años»; §VI p. 11 «Factor Hogar (HV005) … se encuentra en el módulo RECH0». La ficha no nombra el peso de las mujeres medidas: se comprobó con la anemia
+      de las mujeres de 15 a 49 años (OMS 2024), 26,02 % con HV005 (30 290 casos) frente al 26,0 % del INEI (informe principal ENDES 2024, p. 33; control tests/inferencia/recetas_control/control_anemia_mujeres.yaml).
+      La mujer medida es una persona del hogar para el índice (persona_del_hogar) y una mujer para el plan
   - archivo: REC0111
     encuesta: ENDES
     anios: [2024, 2024]
@@ -123,6 +141,7 @@ unidades:
     unidad_archivo: hijo_de_mujer
     tabla_base: REC21
     peso: {variable: V005, en: REC0111}
+    solo_puente: true             # C-M1-07-2: sexo, edad, sobrevivencia y línea del niño hacia las demás tablas; nunca la tabla base de un plan del niño
     cita: >-
       Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Mujer (V005) … se utiliza para el cálculo de indicadores relacionados con esta población, por ejemplo: Planificación familiar de mujeres, parto institucional … control prenatal» y «se encuentra en el módulo REC0111»; §5.2 p. 9 «B. Cuestionario Individual de la Mujer y niño»; el hijo de la entrevistada usa el factor de su madre (§II p. 2 «Todas las mujeres de 12 a 49 años de edad y niños menores de 5 años»)
   - archivo: REC41
@@ -177,5 +196,6 @@ unidades:
     unidad_archivo: hijo_de_mujer
     tabla_base: REC44
     peso: {variable: HV005, en: RECH0}
+    alternativa_medicion: {tabla: RECH6, desde: HW, hacia: HC}      # C-M1-07-3 (a): solo mediciones del niño → RECH6
     cita: >-
-      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Hogar (HV005) … se utiliza para el cálculo de los indicadores que están relacionados al hogar, desnutrición y anemia en menores de 5 años»; REC44 repite las mediciones (talla, peso, hemoglobina) de los hijos de las mujeres entrevistadas, así que lleva el factor de la medición y no el de la madre (supuesto M1-07-s2, comprobado con la desnutrición crónica: 12,12 % con HV005 y 11,67 % con V005 frente al 12,1 % del informe del INEI, Cuadro N.º 04 p. 49)
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), §VI p. 11 «Factor Hogar (HV005) … se utiliza para el cálculo de los indicadores que están relacionados al hogar, desnutrición y anemia en menores de 5 años»; REC44 repite las mediciones (talla, peso, hemoglobina) de los hijos de las mujeres entrevistadas, así que lleva el factor de la medición y no el de la madre. Decisión del dueño C-M1-07-3 (13/11/2026): se queda con HV005 (con los mismos niños que RECH6, 18 875 emparejados, la desnutrición crónica da 12,12 % con HV005 y 11,67 % con V005 frente al 12,1 % del informe del INEI, Cuadro N.º 04 p. 49); sus universos exigen el pernocte del niño (RECH1 por B16 = HVIDX) y, para un indicador de solo medición, el motor prefiere RECH6

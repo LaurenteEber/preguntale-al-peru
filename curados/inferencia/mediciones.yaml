@@ -7,7 +7,9 @@
 # Lo revisa el auditor-agente en backlog/slice-m1/evidencia/m1-03_revision.md (propuesto hasta entonces).
 # M1-07 (versión 0.2.0): REC44 repite las dos mediciones de RECH6 para los hijos de las entrevistadas (HW en lugar de HC), con las mismas baterías y
 # las mismas exclusiones (HW1 edad; HW16–HW19 fechas de nacimiento y medición; HW51 y HW52, HW58 consentimiento, orden del responsable y envío a un especialista).
-version: 0.2.0
+# Versión 0.3.0 (13/11/2026, resoluciones del dueño): `nino_vivo` (C-M1-07-2: las variables del niño vivo) y la hemoglobina y la talla de RECH5 (C-M1-07-1).
+# `nino_vivo` no es una medición de campo sino una batería que obliga a un universo: lo nombran los universos de `universos_analiticos.yaml`.
+version: 0.3.0
 fecha: "2026-11-13"
 mediciones:
   - id: hemoglobina
@@ -58,3 +60,105 @@ mediciones:
       Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «Registro de la medición antropométrica (peso y talla) en niños menores de 6 años»; etiquetas del archivo REC44 2024: «Peso en
       kilogramos (1 decimal)» (HW2), «Talla en centímetros (1 decimal)» (HW3), «Talla/Edad de la Desviación Estándar de la mediana de referencia
       (según la OMS)» (HW70)
+  # C-M1-07-2 (dueño, 13/11/2026): la batería `nino_vivo` agrupa las variables que se calculan sobre el niño **vivo**: vacunas, diarrea, fiebre y tos
+  # (infecciones respiratorias), suplementos, desarrollo infantil temprano y lactancia. Un plan que usa una de ellas va al universo `nino_vivo_hijo_de_entrevistada`
+  # (B5 = 1); la cesárea y lo demás del parto, que no figuran aquí, siguen con todos los nacimientos. REC43, REC95 y DIT entran enteras (todas las variables de
+  # sus bloques de M1-06); de REC41 y REC94 solo los bloques de lactancia. Salen de `backlog/slice-m1/evidencia/m1-07_generar_nino_vivo.py`; se editan a mano.
+  - id: nino_vivo
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: REC43
+    bateria: "Vacunas, diarrea, fiebre y tos, vitamina A, hierro y desparasitación del nacimiento (repetida de REC43)"
+    variables: [H1, H2, H2D, H2M, H2Y, H3, H3D, H3M, H3Y, H4, H4D, H4M, H4Y, H5, H5D, H5M, H5Y, H6, H6D, H6M, H6Y, H7, H7D, H7M, H7Y, H8, H8D, H8M, H8Y, H9,
+      H9D, H9M, H9Y, H0, H0D, H0M, H0Y, H10, H11, H11B, H12A, H12B, H12C, H12D, H12E, H12F, H12G, H12H, H12I, H12J, H12K, H12L, H12M, H12N, H12O,
+      H12P, H12Q, H12R, H12S, H12T, H12U, H12V, H12W, H12X, H12Y, H12Z, H13, H13B, H14, H15, H15A, H15B, H15C, H15D, H15E, H15F, H15G, H15H, H15I,
+      H15J, H15K, H15L, H15M, H20, H21A, H21, H22, H31, H31B, H31C, H31D, H31E, H32A, H32B, H32C, H32D, H32E, H32F, H32G, H32H, H32I, H32J, H32K,
+      H32L, H32M, H32N, H32O, H32P, H32Q, H32R, H32S, H32T, H32U, H32V, H32W, H32X, H32Y, H32Z, H33, H33D, H33M, H33Y, H34, H35, H36A, H36B, H36C,
+      H36D, H36E, H36F, H37A, H37B, H37C, H37D, H37E, H37F, H37G, H37H, H37I, H37J, H37K, H37L, H37M, H37N, H37O, H37P, H37X, H37Y, H37Z, H38,
+      H39, H40, H40D, H40M, H40Y, H41A, H41B, H42, H43, H44A, H44B, H44C, H45, H46A, H46B]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «B. Cuestionario Individual de la Mujer y niño» (inmunización, prevalencia de IRA y EDA, desarrollo infantil temprano, embarazo y lactancia); bloques de REC43 en
+      curados/inferencia/bloques/ENDES.yaml:1; resolución C-M1-07-2 del dueño (backlog/slice-m1/consultas_al_dueno.md:15)
+  - id: nino_vivo
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: REC95
+    bateria: "Vacunas con fechas, controles de crecimiento, anemia y suplementos del niño"
+    variables: [S45D4, S45D4D, S45D4M, S45D4Y, S45D5, S45D5D, S45D5M, S45D5Y, S45P4, S45P4D, S45P4M, S45P4Y, S45P5, S45P5D, S45P5M, S45P5Y, S45B0, S45B0D,
+      S45B0M, S45B0Y, S45B1, S45B1D, S45B1M, S45B1Y, S45B2, S45B2D, S45B2M, S45B2Y, S45B3, S45B3D, S45B3M, S45B3Y, S45F1, S45F1D, S45F1M, S45F1Y,
+      S45F2, S45F2D, S45F2M, S45F2Y, S45F3, S45F3D, S45F3M, S45F3Y, S45PV1, S45PV1D, S45PV1M, S45PV1Y, S45PV2, S45PV2D, S45PV2M, S45PV2Y, S45PV3,
+      S45PV3D, S45PV3M, S45PV3Y, S45TT, S45TTD, S45TTM, S45TTY, S45ML, S45MLD, S45MLM, S45MLY, S45SP1, S45SP1D, S45SP1M, S45SP1Y, S45SP2, S45SP2D,
+      S45SP2M, S45SP2Y, S45SR, S45SRD, S45SRM, S45SRY, S45NM1, S45NM1D, S45NM1M, S45NM1Y, S45NM2, S45NM2D, S45NM2M, S45NM2Y, S45NM3, S45NM3D,
+      S45NM3M, S45NM3Y, S45RT1, S45RT1D, S45RT1M, S45RT1Y, S45RT2, S45RT2D, S45RT2M, S45RT2Y, S45IF1, S45IF1D, S45IF1M, S45IF1Y, S45IF2, S45IF2D,
+      S45IF2M, S45IF2Y, S45VA3, S45VA3D, S45VA3M, S45VA3Y, S459B, S462E, S466, S466AA, S466AB, S466AC, S466AD, S466AE, S466AX, S466B, S466C,
+      S466GA, S466GB, S466GC, S470, S471, S471CA, S471CB, S471CC, S471CD, S471CE, S471CF, S472AA, S472AB, S472AC, S472AD, S472B, S473DA, S473DB,
+      S473F, S475, S476AN1, S476AS1, S476AT1, S476AR1, S476AN2, S476AS2, S476AT2, S476AR2, S476AN3, S476AS3, S476AT3, S476AR3, S476AN4, S476AS4,
+      S476AT4, S476AR4, S476AN5, S476AS5, S476AT5, S476AR5, S476AN6, S476AS6, S476AT6, S476AR6, S476AN7, S476AS7, S476AT7, S476AR7, S465EA,
+      S465EB, S465EC, S465ED, S465DB_A, S465DB_B, S465DB_C, S465DB_D, S465DD_AR, S465DD_AC, S465DD_BR, S465DD_BC, S465DD_CR, S465DD_CC, S465DD_DR,
+      S465DD_DC, Q465DF, Q465DH, Q465EB_A8, Q465EC_A9, Q465EC_D1, Q465EC_M1, Q465EC_Y1, Q465EC_D2, Q465EC_M2, Q645EC_Y2, Q465EC_D3, Q465EC_M3,
+      Q465EC_Y3, Q465EC_D4, Q465EC_M4, Q465EC_Y4, Q465EC_D5, Q465EC_M5, Q465EC_Y5, Q465EC_D6, Q465EC_M6, Q465EC_Y6, QI465ED_CC_A, QI465ED_CC_A1,
+      QI465ED_CC_A1_D, QI465ED_CC_A1_M, QI465ED_CC_B, QI465ED_CC_B1, QI465ED_CC_B1_1, QI465ED_CC_B1_2, QI465ED_CC_C, QI465ED_CC_D, QI_CTRL_DIA_01,
+      QI_CTRL_MES_01, QI_CTRL_ANIO_01, QI_CTRL_PESO_01, QI_CTRL_TALLA_01, QI_CTRL_DIA_02, QI_CTRL_MES_02, QI_CTRL_ANIO_02, QI_CTRL_PESO_02,
+      QI_CTRL_TALLA_02, QI_CTRL_DIA_03, QI_CTRL_MES_03, QI_CTRL_ANIO_03, QI_CTRL_PESO_03, QI_CTRL_TALLA_03, QI_CTRL_DIA_04, QI_CTRL_MES_04,
+      QI_CTRL_ANIO_04, QI_CTRL_PESO_04, QI_CTRL_TALLA_04, S466DC1, S466MC1, S466YC1, S466WC1, S466HC1, S466DC2, S466MC2, S466YC2, S466WC2,
+      S466HC2, S466DC3, S466MC3, S466YC3, S466WC3, S466HC3, S466DC4, S466MC4, S466YC4, S466WC4, S466HC4, S466DC5, S466MC5, S466YC5, S466WC5,
+      S466HC5, S466DC6, S466MC6, S466YC6, S466WC6, S466HC6, S466DC7, S466MC7, S466YC7, S466WC7, S466HC7, S466DC8, S466MC8, S466YC8, S466WC8,
+      S466HC8, S466DC9, S466MC9, S466YC9, S466WC9, S466HC9, S466DC10, S466MC10, S466YC10, S466WC10, S466HC10, S466DC11, S466MC11, S466YC11,
+      S466WC11, S466HC11, S466DC12, S466MC12, S466YC12, S466WC12, S466HC12]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «B. Cuestionario Individual de la Mujer y niño» (inmunización, prevalencia de IRA y EDA, desarrollo infantil temprano, embarazo y lactancia); bloques de REC95 en
+      curados/inferencia/bloques/ENDES.yaml:1; resolución C-M1-07-2 del dueño (backlog/slice-m1/consultas_al_dueno.md:15)
+  - id: nino_vivo
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: DIT
+    bateria: "Desarrollo infantil temprano de niñas y niños de 9 a 71 meses"
+    variables: [QI478, QI478A, QI478E1, QI478E2, QI478E3, QI478E4, QI478E5, QI478E6, QI478E7, QI478E8, QI478E9, QI478E10, QI478F1, QI478F2_A, QI478F2_B,
+      QI478F2_C, QI478F2_D, QI478F2_E, QI478F3, QI478F4, QI478F5, QI478F6, QI478G1, QI478G2_A, QI478G2_B, QI478G2_C, QI478G3, QI478G4, QI478H1,
+      QI478H2, QI478H3, QI478H4, QI478H5, QI478H6, QI478H7, QI478H8_A, QI478H8_B, QI478H9, QI478H10, QI478H11, QI478H12, QI478I1, QI478I2,
+      QI478I3, QI478I4_A, QI478I4_B, QI478I5, QI478I6, QI478I7, QI478I8, QI478J1, QI478J2, QI478J3, QI478J4_A, QI478J4_B, QI478J5, QI478J6,
+      QI478J7, QI478J8]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «B. Cuestionario Individual de la Mujer y niño» (inmunización, prevalencia de IRA y EDA, desarrollo infantil temprano, embarazo y lactancia); bloques de DIT en
+      curados/inferencia/bloques/ENDES.yaml:1; resolución C-M1-07-2 del dueño (backlog/slice-m1/consultas_al_dueno.md:15)
+  - id: nino_vivo
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: REC41
+    bateria: "Lactancia del último nacimiento: duración, inicio, tomas y biberón"
+    variables: [M4, M5, M6, M7, M8, M9, M27, M28, M29, M34, M35, M36, M38, M39]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «B. Cuestionario Individual de la Mujer y niño» (inmunización, prevalencia de IRA y EDA, desarrollo infantil temprano, embarazo y lactancia); bloques de REC41 en
+      curados/inferencia/bloques/ENDES.yaml:1; resolución C-M1-07-2 del dueño (backlog/slice-m1/consultas_al_dueno.md:15)
+  - id: nino_vivo
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: REC94
+    bateria: "Lactancia y alimentación del niño: biberón, contacto piel a piel, motivos, capacitación y preparación de alimentos"
+    variables: [S431A, S435, S436C, S440, S441, S442, S446AA, S446AB, S446A, S447, S448A, S448B, QI440B]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «B. Cuestionario Individual de la Mujer y niño» (inmunización, prevalencia de IRA y EDA, desarrollo infantil temprano, embarazo y lactancia); bloques de REC94 en
+      curados/inferencia/bloques/ENDES.yaml:1; resolución C-M1-07-2 del dueño (backlog/slice-m1/consultas_al_dueno.md:15)
+  # C-M1-07-1 (dueño, 13/11/2026): las mismas dos mediciones de RECH6 para las mujeres de 12 a 49 años del hogar (HA en lugar de HC), con las mismas baterías y las mismas exclusiones
+  # (HA52 y HA58, consentimiento y envío a un especialista; HA1 la edad; HA54, «actualmente embarazada», no es una medición). HA61–HA64 y HA69 (VIH, con su propio peso) no entran: el VIH queda fuera de M1.
+  - id: hemoglobina
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: RECH5
+    bateria: "Prueba de hemoglobina de las mujeres de 12 a 49 años del hogar (repetida de RECH6)"
+    # HA53 nivel observado; HA55 resultado de medir (0 = medida); HA56 y HA56A hemoglobina ajustada por altitud; HA57 y HA57A nivel de anemia (los dos criterios).
+    variables: [HA53, HA55, HA56, HA56A, HA57, HA57A]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «Registro de los niveles de hemoglobina niños de 4 meses a menores de 6 años y mujeres de 12 a 49 años»; etiquetas del archivo RECH5 2024: «Nivel de hemoglobina
+      (g/dl - 1 decimal)» (HA53), «Resultado de la medición (hemoglobina)» (HA55), «Nivel de hemoglobina ajustado por la altitud…» (HA56 y HA56A), «Nivel de anemia…» (HA57 y HA57A);
+      curados/inferencia/universos_analiticos.yaml:1 (HA55 = 0 es la hemoglobina medida)
+  - id: talla
+    encuesta: ENDES
+    anios: [2024, 2024]
+    archivo: RECH5
+    bateria: "Medición antropométrica (peso y talla) de las mujeres de 12 a 49 años del hogar (repetida de RECH6)"
+    # HA2 peso y HA3 talla; HA4–HA6 talla para la edad (percentil, desviación estándar, % de la mediana); HA11–HA12B peso para la talla; HA13 resultado de medir; HA40 y HA41 índices de masa corporal y de Rohrer.
+    variables: [HA2, HA3, HA4, HA5, HA6, HA11, HA12, HA12A, HA12B, HA13, HA40, HA41]
+    cita: >-
+      Ficha técnica ENDES 2024 (recurso endes-2024-ficha-tecnica), p. 9 «Registro de la medición antropométrica (peso y talla) en niños menores de 6 años y mujeres de 12 a 49 años»; etiquetas del archivo RECH5 2024: «Peso en kilogramos (1 decimal)» (HA2),
+      «Talla en centímetros (1 decimal)» (HA3), «Talla/Edad Desviación Estándar» (HA5), «Resultado de medición de la entrevistada» (HA13), «Índice de Masa Corporal para la entrevistada» (HA40)

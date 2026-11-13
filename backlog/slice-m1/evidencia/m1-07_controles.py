@@ -26,4 +26,4 @@ for id_ in CONTROLES:
     est, val = recetas.calcular_cortes(receta, por_area, RAIZ, ctx=ctx, ejecutor=ejecutor, con=con)
     filas += recetas.reproducir_doradas_cortes(receta, por_area, est, val)
     for f in filas:
-        print(f"{id_:22} {f['id_cifra'].replace('CTL-' + id_.upper() + '-2024-', ''):26} {f['publicado']:>9} {f['nuestro']:>8} {f['dif_pp']:>7} {f['casos_publicados']:>10} {f['n']:>7}  {f['pasa']}")
+        print(f"{id_:22} {f['id_cifra'].replace('CTL-' + id_.upper() + '-2024-', ''):26} {f['publicado']:>9} {f['nuestro']:>8} {f['dif_pp']:>7} {str(f['casos_publicados'] if f['casos_publicados'] is not None else '—'):>10} {f['n']:>7}  {f['pasa']}")

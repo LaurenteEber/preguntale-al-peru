@@ -173,6 +173,7 @@ class UniversoAnalitico(_Fila):
     anios: tuple[int, int]
     fuente: str
     exige_pareja: list[ExigePareja] = []      # M1-01: registros que deben tener su pareja en otro archivo (no es un predicado de valor)
+    solo_por_nombre: bool = False             # C-M1-07-3 (b): el verificador no lo elige solo; vale cuando una receta o la pregunta lo nombra (p. ej. 12 a 49 años)
 
     _v_cita = field_validator("fuente")(_cita)
 
@@ -511,6 +512,21 @@ class PesoDeTabla(_Fila):
         return v
 
 
+class AlternativaMedicion(_Fila):
+    """C-M1-07-3 (a): para un indicador de solo medición el motor prefiere `tabla` a la que declara esta alternativa. `desde` y `hacia` son los prefijos
+    que emparejan las variables de las dos tablas (HW57 de REC44 = HC57 de RECH6)."""
+    tabla: str
+    desde: str
+    hacia: str
+
+    @field_validator("desde", "hacia")
+    @classmethod
+    def _prefijo(cls, v):
+        if not _VAR.match(v):
+            raise ValueError(f"prefijo no permitido: {v!r}")
+        return v
+
+
 class UnidadTabla(_Fila):
     """Una tabla del lote de M1: la unidad del plan que sus filas representan, la unidad que el índice le declara, la tabla de la que
     parte un plan cuando la tabla interviene y de dónde sale su peso. El verificador elige el universo, la tabla base y el diseño por la
@@ -523,6 +539,8 @@ class UnidadTabla(_Fila):
     tabla_base: str
     peso: PesoDeTabla
     cita: str
+    solo_puente: bool = False                           # C-M1-07-2: sexo, edad, sobrevivencia y línea hacia las demás tablas; nunca la tabla base de un plan
+    alternativa_medicion: AlternativaMedicion | None = None     # C-M1-07-3 (a): REC44 → RECH6 para un indicador de solo medición
 
     _v_cita = field_validator("cita")(_cita)
 
@@ -702,6 +720,16 @@ def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int
             err("diseno_muestral", f"archivos_endes_2024.yaml: la relación {r['hijo']}→{r['padre']} declara la cardinalidad "
                                    f"{r.get('cardinalidad')!r}; las válidas son {list(CARDINALIDADES)}")
     en_indice = _variables_indice(raiz)
+    for r in archivos_yaml.get("relaciones_parciales") or []:             # C-M1-07-3: uniones con filas del hijo sin pareja (no entran a `relaciones`)
+        if r["hijo"] not in archivos or r["padre"] not in archivos:
+            err("diseno_muestral", f"archivos_endes_2024.yaml: la relación parcial {r['hijo']}→{r['padre']} nombra un archivo que no está en archivos")
+        if r.get("cita") not in archivos_yaml.get("citas", {}):
+            err("diseno_muestral", f"archivos_endes_2024.yaml: la relación parcial {r['hijo']}→{r['padre']} cita «{r.get('cita')}», que no está en `citas`")
+        if en_indice is not None:
+            for ch, cp in r["por"]:
+                for arch, col in ((r["hijo"], ch), (r["padre"], cp)):
+                    if (arch, col) not in en_indice:
+                        err("diseno_muestral", f"archivos_endes_2024.yaml: la relación parcial {r['hijo']}→{r['padre']} usa {arch}.{col}, que no está en el índice")
     if exigir_indice and en_indice is None:
         for nombre in ("universos_analiticos", "territorios", "cortes_estandar", "mediciones", "unidades"):
             err(nombre, ERROR_SIN_INDICE)
@@ -786,6 +814,16 @@ def validar(rutas: Rutas, *, exigir_indice: bool = False) -> dict[str, tuple[int
                         err("unidades", f"{u.archivo}: el peso viene de {u.peso.en}, que no es la tabla ni un padre de sus uniones para el diseño ({f.llave})")
             if en_indice is not None and (u.peso.en, u.peso.variable) not in en_indice:
                 err("unidades", f"{u.archivo}: la variable de peso {u.peso.variable} no está en {u.peso.en} del índice")
+            if u.solo_puente and u.alternativa_medicion is not None:
+                err("unidades", f"{u.archivo}: una tabla solo de puente no puede declarar una alternativa de medición")
+            alt = u.alternativa_medicion
+            if alt is not None:
+                destino = next((x for x in filas_u if x.archivo == alt.tabla and x.encuesta == u.encuesta), None)
+                if destino is None:
+                    err("unidades", f"{u.archivo}: la alternativa de medición {alt.tabla} no tiene fila en unidades.yaml")
+                elif destino.unidad_plan != u.unidad_plan or destino.solo_puente:
+                    err("unidades", f"{u.archivo}: la alternativa {alt.tabla} no es de la unidad «{u.unidad_plan}» o es solo un puente")
+
         for c in datos.get("cortes_estandar", []):
             for enc, variables in c.por_encuesta.items():
                 for v in variables:

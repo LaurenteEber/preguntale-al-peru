@@ -18,9 +18,15 @@ from conftest import RAIZ_REAL
 pytestmark = [pytest.mark.regresion_microdatos, pytest.mark.solo_mac]
 
 CARPETA = Path(__file__).parent / "recetas_control"
-CONTROLES = ["control_pf_unidas", "control_pf_moderno", "control_cesarea"]
-CUADRO = {"control_pf_unidas": "Cuadro N.º 23 p. 91", "control_pf_moderno": "Cuadro N.º 24 p. 95", "control_cesarea": "Cuadro N.º 29 p. 105"}
-UNIDAD = {"control_pf_unidas": "mujer", "control_pf_moderno": "mujer", "control_cesarea": "nino"}
+CONTROLES = ["control_pf_unidas", "control_pf_moderno", "control_cesarea", "control_anemia_mujeres"]
+CUADRO = {"control_pf_unidas": "Cuadro N.º 23 p. 91", "control_pf_moderno": "Cuadro N.º 24 p. 95", "control_cesarea": "Cuadro N.º 29 p. 105",
+          "control_anemia_mujeres": "Principales indicadores 2009–2024», p. 33"}
+DOCUMENTO = {"control_anemia_mujeres": "endes-2024-informe-principal"}           # los demás, del informe de programas presupuestales
+UNIDAD = {"control_pf_unidas": "mujer", "control_pf_moderno": "mujer", "control_cesarea": "nino", "control_anemia_mujeres": "mujer"}
+# (tabla base, submuestra, peso, conglomerado) que el control declara para su diseño
+DISENO = {"mujer": ("RE223132", "individual", "V005/1e6", "V021"), "nino": ("REC41", "individual", "V005/1e6", "V021"),
+          "anemia": ("RECH5", "medicion", "HV005/1e6", "HV021")}
+CASOS_MEDIDOS = {"control_anemia_mujeres": 30290}              # sin casos publicados: los midió el supervisor (13/11/2026), no son una cifra del INEI
 
 
 def cargar(id_: str):
@@ -62,16 +68,17 @@ def test_el_control_reproduce_la_cifra_oficial_nacional_y_por_area(mundo, id_):
     assert len(filas) == 1
     for f in filas:
         assert f["pasa"], f"{id_} {f['id_cifra']}: publicado {f['publicado']}, nuestro {f['nuestro']} (dif {f['dif_pp']} pp), casos {f['casos_publicados']} vs {f['n']}"
-        assert abs(f["dif_pp"]) <= 0.1 and f["casos_publicados"] == f["n"] and "Cuadro" in receta.doradas[0].cita
+        assert abs(f["dif_pp"]) <= 0.1 and (f["casos_publicados"] is None or f["casos_publicados"] == f["n"])
+        assert (f["n"] == CASOS_MEDIDOS[id_]) if id_ in CASOS_MEDIDOS else f["casos_publicados"] == f["n"]
     # 2. por área (urbana y rural)
     estimaciones, valores = recetas.calcular_cortes(receta, por_area, RAIZ_REAL, ctx=ctx, ejecutor=ejecutor, con=con)
     filas = recetas.reproducir_doradas_cortes(receta, por_area, estimaciones, valores)
     assert {f["categoria"] for f in filas} == {"urbano", "rural"}
     for f in filas:
         assert f["pasa"], f"{id_} {f['id_cifra']}: publicado {f['publicado']}, nuestro {f['nuestro']} (dif {f['dif_pp']} pp), casos {f['casos_publicados']} vs {f['n']}"
-        assert abs(f["dif_pp"]) <= 0.1 and f["casos_publicados"] == f["n"]
+        assert abs(f["dif_pp"]) <= 0.1 and (f["casos_publicados"] is None or f["casos_publicados"] == f["n"])
     for d in [*receta.doradas, *por_area]:
-        assert CUADRO[id_] in d.cita and "endes-2024-informe-ppr" in d.cita
+        assert CUADRO[id_] in d.cita and DOCUMENTO.get(id_, "endes-2024-informe-ppr") in d.cita
 
 
 @pytest.mark.parametrize("id_", CONTROLES)
@@ -80,5 +87,6 @@ def test_el_control_usa_el_diseno_de_su_unidad(mundo, id_):
     receta, _ = cargar(id_)
     pc = verificar(receta.a_plan(2024, "nacional", None, ("area",)), ctx, con)
     assert not isinstance(pc, Falla), pc
-    assert (pc.diseno.nivel_submuestra, pc.diseno.peso_expr, pc.diseno.psu_expr) == ("individual", "V005/1e6", "V021")
-    assert receta.unidad == UNIDAD[id_] and pc.archivo_unidad == {"mujer": "RE223132", "nino": "REC41"}[receta.unidad]
+    tabla, nivel, peso, psu = DISENO["anemia" if id_ == "control_anemia_mujeres" else receta.unidad]
+    assert (pc.diseno.nivel_submuestra, pc.diseno.peso_expr, pc.diseno.psu_expr) == (nivel, peso, psu)
+    assert receta.unidad == UNIDAD[id_] and pc.archivo_unidad == tabla

@@ -1,0 +1,50 @@
+# RED C-M1-07-1..3 (13/11/2026): pruebas nuevas del verificador contra las tablas y el código anteriores
+$ uv run pytest -q tests/inferencia/test_m107_verificador.py
+E       assert (5 == 5 and 5 == 4)
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo='el universo analítico «nino_hijo_de_entrevistada_12_49» no existe en universos_analiticos.yaml')
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo='el universo analítico «nino_hijo_de_entrevistada_12_49» no existe en universos_analiticos.yaml'), Falla)
+E       AssertionError: Falla(tipo='plan', dimension='universo', motivo='el universo analítico «nino_hijo_de_entrevistada_12_49» no existe en universos_analiticos.yaml')
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='universo', motivo='el universo analítico «nino_hijo_de_entrevistada_12_49» no existe en universos_analiticos.yaml'), Falla)
+E       AssertionError: assert ('nino_hijo_de...ada_hb_medida' == 'nino_hijo_de...ada_hb_medida'
+E         
+E           nino_hijo_de_entrevistada_hb_medida and 'REC41' == 'REC44'
+E         
+E         - REC44
+E         ?     ^
+E         + REC41
+E         ?     ^)
+E       AssertionError: assert ('mujer_12_49_entrevistada' == 'mujer_15_49_entrevistada'
+E         
+E         - mujer_15_49_entrevistada
+E         ?        ^
+E         + mujer_12_49_entrevistada
+E         ?        ^)
+E       AssertionError: Falla(tipo='plan', dimension='uniones', motivo="no hay unión declarada de REC0111 hacia ['REC0111', 'RECH5']")
+E       assert not True
+E        +  where True = isinstance(Falla(tipo='plan', dimension='uniones', motivo="no hay unión declarada de REC0111 hacia ['REC0111', 'RECH5']"), Falla)
+E       StopIteration
+E       AssertionError: assert ('nino_hijo_de_entrevistada' == 'nino_vivo_hi..._entrevistada'
+E         
+E         - nino_vivo_hijo_de_entrevistada
+E         ?    -----
+E         + nino_hijo_de_entrevistada)
+E       AssertionError: assert (False)
+E        +  where False = isinstance(PlanCompleto(plan=Plan(version_plan=1, origen='compuesto', receta_id=None, encuesta='ENDES', anios=(2024,), unidad='ni...lo_en_u': 0, 'unidades_territorio': 1, 'uniones': ['REC21→REC0111', 'REC0111→RECH0'], 'perdida_u': 0.0
+E       StopIteration
+E           AssertionError: PlanCompleto(plan=Plan(version_plan=1, origen='compuesto', receta_id=None, encuesta='ENDES', anios=(2024,), unidad='ni...lo_en_u': 0, 'unidades_territorio': 1, 'uniones': ['REC44→REC0111', 'REC0111→RECH0'], 'perdida_u': 0.0, 'domini
+E           assert (False)
+E            +  where False = isinstance(PlanCompleto(plan=Plan(version_plan=1, origen='compuesto', receta_id=None, encuesta='ENDES', anios=(2024,), unidad='ni...lo_en_u': 0, 'unidades_territorio': 1, 'uniones': ['REC44→REC0111', 'REC0111→RECH0'], 'perdida_u':
+FAILED tests/inferencia/test_m107_verificador.py::test_un_plan_de_nino_sobre_rec41_usa_el_universo_del_hijo_de_la_entrevistada_y_parte_de_rec41
+FAILED tests/inferencia/test_m107_verificador.py::test_el_universo_nombrado_por_una_receta_debe_cubrir_la_tabla_del_plan
+FAILED tests/inferencia/test_m107_verificador.py::test_la_madre_de_14_anos_entra_solo_al_universo_12_49_que_hay_que_nombrar
+FAILED tests/inferencia/test_m107_verificador.py::test_la_medicion_de_rec44_elige_su_universo_y_su_peso_de_medicion
+FAILED tests/inferencia/test_m107_verificador.py::test_un_plan_de_mujer_parte_de_la_tabla_que_interviene_y_baja_a_su_hermana_por_rec0111
+FAILED tests/inferencia/test_m107_verificador.py::test_rech5_pasa_el_verificador_con_el_peso_de_la_medicion_y_el_universo_de_hecho_de_15_a_49
+FAILED tests/inferencia/test_m107_verificador.py::test_la_unidad_de_rech5_es_la_mujer_y_no_se_mezcla_con_las_tablas_del_cuestionario_individual
+FAILED tests/inferencia/test_m107_verificador.py::test_el_universo_del_nino_vivo_es_el_de_vacunas_diarrea_lactancia_y_el_de_la_cesarea_cuenta_todos_los_nacimientos
+FAILED tests/inferencia/test_m107_verificador.py::test_rec21_es_solo_un_puente_y_no_puede_ser_la_tabla_base_de_un_plan_del_nino
+FAILED tests/inferencia/test_m107_verificador.py::test_los_universos_de_rec44_exigen_el_pernocte_por_la_linea_del_nino_sin_contarlo_como_perdida
+FAILED tests/inferencia/test_m107_verificador.py::test_un_plan_de_solo_medicion_sobre_rec44_se_rechaza_a_favor_de_rech6
+11 failed, 15 passed in 1.18s

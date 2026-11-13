@@ -7,8 +7,8 @@
 # (códigos 1 a 11; el 10 «Manual de la Supervisora Local» no se baja, decisión del dueño del 12/11/2026); documentos 8, 9 y 11 nuevos;
 # `documentos_adicionales` = lo que no es del listado de 2024 (ficha de la ENDES 2025 y el informe de las doradas).
 # Documentos: DocumentosMetodologicos/2024-5/<nombre>.pdf (listado oficial de «Consulta por Documentos», portal INEI, 9/11/2026).
-version: 0.2.0
-fecha: "2026-11-12"
+version: 0.3.0
+fecha: "2026-11-13"
 fuente: INEI-ENDES
 encuesta: {anio: 2024, codigo: 968, periodo_codigo: 5, periodo_nombre: "Unico"}
 modulos:
@@ -156,4 +156,11 @@ documentos_adicionales:
     # Sin URL oficial conocida: supuesto, ver backlog/slice-m1/consultas_al_dueno.md. Sin download_url al registrar.
     url: null
     recurso: endes-2024-informe-ppr
+  # M1-07 (C-M1-07-1, 13/11/2026): informe oficial del INEI que trae la anemia de las mujeres de 15 a 49 años (control de RECH5). Compilado
+  # «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (393 p.), bajado de proyectos.inei.gob.pe/endes/ (enlace
+  # «Informes principales»). Captura biblioteca/cruda/capturas/INEI-ENDES/2026-11-13; SHA-256 cecb4d87586b901cfb85b94ccb0f0cb0a6d318417255fa961e465e2f5507b8fc.
+  - nombre: "Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental (informe principal)"
+    formato: PDF
+    url: https://proyectos.inei.gob.pe/endes/2024/INFORME_PRINCIPAL/INFORMES_PRINCIPALES_2024.pdf
+    recurso: endes-2024-informe-principal
 pendientes: []

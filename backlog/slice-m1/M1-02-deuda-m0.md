@@ -19,9 +19,9 @@ Ninguna tarea cambia cifras. Cada una lleva su prueba.
 
 ## Criterios de aceptación
 
-- [ ] Las pruebas del pool pasan 20 veces seguidas en el Mac y, si hay Docker, en Linux.
-- [ ] Cada tarea 1 a 9 con su prueba; `evidencia/m1-02_deuda.md` dice qué se hizo y qué quedó.
-- [ ] El cubo sigue en `010ea965`, las 90 filas iguales y las huellas de contenido de los 34 Parquet sin cambios.
+- [x] Las pruebas del pool pasan 20 veces seguidas en el Mac y, si hay Docker, en Linux.
+- [x] Cada tarea 1 a 9 con su prueba; `evidencia/m1-02_deuda.md` dice qué se hizo y qué quedó.
+- [x] El cubo sigue en `010ea965`, las 90 filas iguales y las huellas de contenido de los 34 Parquet sin cambios.
 
 ## Fuera
 

@@ -1,0 +1,58 @@
+{
+  "$schema": "https://datapackage.org/profiles/2.0/datapackage.json",
+  "name": "inei-endes-2026-11-13",
+  "title": "Encuesta Demográfica y de Salud Familiar",
+  "created": "2026-11-13T16:29:21-05:00",
+  "keywords": [
+    "INEI-ENDES"
+  ],
+  "pap": {
+    "version": "0.1.0",
+    "nota": "Las rutas `path` de los recursos son relativas a biblioteca/cruda/."
+  },
+  "resources": [
+    {
+      "name": "endes-2024-informe-principal",
+      "title": "Encuesta Demográfica y de Salud Familiar",
+      "original_filename": "INFORMES_PRINCIPALES_2024.pdf",
+      "path": "almacen/sha256/ce/cb/cecb4d87586b901cfb85b94ccb0f0cb0a6d318417255fa961e465e2f5507b8fc",
+      "hash": "sha256:cecb4d87586b901cfb85b94ccb0f0cb0a6d318417255fa961e465e2f5507b8fc",
+      "bytes": 176639898,
+      "format": "pdf",
+      "mediatype": "application/pdf",
+      "source_id": "INEI-ENDES",
+      "publisher": "INEI",
+      "dataset_title": "Encuesta Demográfica y de Salud Familiar",
+      "access_url": "https://proyectos.inei.gob.pe/microdatos/",
+      "download_url": "https://proyectos.inei.gob.pe/endes/2024/INFORME_PRINCIPAL/INFORMES_PRINCIPALES_2024.pdf",
+      "source_version_basis": "ninguna",
+      "temporal": "1986–2025",
+      "data_cutoff_basis": "desconocida",
+      "retrieved_at": "2026-11-13T16:29:20-05:00",
+      "method": "http_patron",
+      "recipe": "INEI-ENDES@f98fb75",
+      "attributed_to": "Claude Code (curl, 13/11/2026; M1-07 C-M1-07-1: control de anemia en mujeres de 15 a 49 años)",
+      "tool": "pap 0.1.0",
+      "licenses": [
+        {
+          "name": "ODbL-1.0",
+          "title": "ODbL (en datosabiertos.gob.pe) / uso libre con cita"
+        }
+      ],
+      "license_basis": "declarada_en_pagina",
+      "previous": null,
+      "change": "nuevo",
+      "spatial": {
+        "ambito": "PE",
+        "nivel_minimo": "manzana_conglomerado"
+      },
+      "known_issues": [
+        "Muestra 2024: 36 760 viviendas; inferencia anual departamental (24 + Callao) y por área/región; no provincial/distrital. Algunos indicadores (anemia) con IC amplios en dptos pequeños. Cambio de umbral de anemia por altitud (OMS 2024) puede generar quiebre de serie; verificar en informe. Ubigeo y conglomerado presentes pero geo-desplazado en versiones DHS internacionales.",
+        "Compilado de 393 páginas «Nacional y Departamental»; el texto de la p. 237 invierte urbana (26,3) y rural (25,9) respecto de la tabla Principales Indicadores (p. 33) y del Resumen Ejecutivo (p. 51): se usa la tabla"
+      ],
+      "validation": {
+        "estado": "valido"
+      }
+    }
+  ]
+}

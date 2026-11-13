@@ -14,7 +14,9 @@ Qué comprueba y qué agrega, en este orden:
    incluyen las tablas del plan que son de la unidad, y el plan parte de su **tabla base** (no del primer archivo del universo);
    si es compuesto, según la **medición** de las variables que intervienen (`mediciones.yaml`): entre los universos de la unidad y el año
    cuyas `aplica_a.mediciones` cubren a todas, los de menos mediciones, y de ellos el contenido en todos los demás (hemoglobina →
-   `nino_hecho_hb_medida`). Sin ninguna medición, la base común (población de hecho). Las restricciones del plan se suman a él;
+   `nino_hecho_hb_medida`). Sin ninguna medición, la base común (población de hecho). Los universos `solo_por_nombre` (12 a 49 años, C-M1-07-3)
+   nunca se eligen solos. Una tabla `solo_puente` (REC21, C-M1-07-2) no es base de un plan, y para un indicador de solo medición el motor prefiere la
+   `alternativa_medicion` (RECH6 a REC44, C-M1-07-3). Las restricciones del plan se suman a él;
 4. **uniones:** *left join* de la unidad (el primer archivo del universo) hacia los archivos que necesitan `u`, `y`, los cortes,
    el territorio y el diseño, siguiendo las relaciones n:1 declaradas en `archivos_<encuesta>_<año>.yaml` hacia el padre y, desde el
    padre común, hacia un hermano que sea 1:1 o 1:0..1 con él (M1-03: región natural y quintil de un niño, que cuelgan de RECH23);
@@ -116,12 +118,15 @@ class Contexto:
 
 
 def relaciones_desde_yaml(d: dict) -> list[UnionPlan]:
-    """Las relaciones de `archivos_<encuesta>_<año>.yaml` como uniones; una cardinalidad fuera de `tc.CARDINALIDADES` es un error."""
+    """Las relaciones de `archivos_<encuesta>_<año>.yaml` como uniones; una cardinalidad fuera de `tc.CARDINALIDADES` es un error. Después de ellas van
+    las `relaciones_parciales` (C-M1-07-3: algunas filas del hijo sin pareja, p. ej. REC21 → RECH1 por la línea del niño), como uniones izquierdas `n:1`."""
     out = []
     for r in d["relaciones"]:
         if r.get("cardinalidad") not in tc.CARDINALIDADES:
             raise PapError(f"la relación {r['hijo']}→{r['padre']} declara la cardinalidad {r.get('cardinalidad')!r}; las válidas son {list(tc.CARDINALIDADES)}")
         out.append(UnionPlan(r["hijo"], r["padre"], tuple((a, b) for a, b in r["por"]), r["cardinalidad"]))
+    for r in d.get("relaciones_parciales") or []:
+        out.append(UnionPlan(r["hijo"], r["padre"], tuple((a, b) for a, b in r["por"]), "n:1"))
     return out
 
 
@@ -203,7 +208,40 @@ def _tablas_de_la_unidad(ctx: Contexto, plan: Plan) -> set[str] | Falla:
     if filas and not propias:
         return Falla("plan", "universo", f"las variables del plan son de tablas de la unidad {sorted({f.unidad_plan for f in filas.values()})} "
                      f"({sorted(filas)}), no de «{plan.unidad}»")
+    puentes = {a for a in propias if filas[a].solo_puente}
+    if propias and propias == puentes:                          # C-M1-07-2: REC21 solo es puente, nunca la tabla base
+        return Falla("plan", "tabla_base", f"{sorted(puentes)} solo sirve de puente (sexo, edad, sobrevivencia y línea del niño hacia las demás tablas "
+                     "del hijo) y no puede ser la tabla base de un plan del niño: el plan parte de otra tabla del hijo (REC41, REC43, REC44, REC94, REC95, DIT) "
+                     "y usa esa variable como condición o restricción (C-M1-07-2)")
     return propias
+
+
+def _prefiere_otra_tabla(ctx: Contexto, plan: Plan, tablas: set[str], relaciones: list[UnionPlan]) -> Falla | None:
+    """C-M1-07-3 (a): para un indicador de solo medición (talla, peso, hemoglobina del niño) el motor prefiere la `alternativa_medicion` de la tabla (RECH6 a
+    REC44). Falla si **todas** las variables del plan son de esa tabla y tienen su par en la alternativa (HW57 = HC57), las demás son del hogar (el contexto del
+    hogar llega igual por RECH6) y los cortes del plan también se resuelven desde la alternativa. Con una variable de la madre (REC0111) o de otra tabla del hijo
+    de la entrevistada (REC21, REC41…) el plan necesita a REC44 y sigue."""
+    anio = plan.anios[0]
+    for a in sorted(tablas):
+        fila = tc.unidad_de(ctx.unidades, plan.encuesta, anio, a)
+        alt = fila.alternativa_medicion if fila is not None else None
+        if alt is None or tablas != {a}:
+            continue
+        necesita = False
+        for c in _condiciones(plan):
+            v = ctx.esquema.variables[c.var]
+            if v["archivo"] == a:
+                par = alt.hacia + v["variable"][len(alt.desde):]
+                necesita |= not v["variable"].startswith(alt.desde) or not ctx.esquema.tiene(plan.encuesta, anio, alt.tabla, par)
+            else:
+                otra = tc.unidad_de(ctx.unidades, plan.encuesta, anio, v["archivo"])
+                necesita |= otra is None or otra.unidad_plan != "hogar"
+        if necesita or isinstance(_resolver_cortes(ctx, plan, alt.tabla, relaciones), Falla):
+            continue
+        return Falla("plan", "tabla_preferida", f"{a} repite las mediciones del niño de {alt.tabla} y el plan no usa ninguna variable de la madre ni del hijo "
+                     f"de la entrevistada: para un indicador de solo medición se usa {alt.tabla} (C-M1-07-3); {a} solo cuando el plan necesita una variable "
+                     "de la madre o del hijo de la entrevistada")
+    return None
 
 
 def _universo_analitico(ctx: Contexto, plan: Plan, tablas: set[str] = frozenset()):
@@ -226,6 +264,7 @@ def _universo_analitico(ctx: Contexto, plan: Plan, tablas: set[str] = frozenset(
             return Falla("plan", "universo", f"el universo «{nombrado.id}» no cubre la medición {falta} de las variables del plan "
                          f"(cubre {nombrado.aplica_a.mediciones})")
         return nombrado
+    de_la_unidad = [u for u in de_la_unidad if not u.solo_por_nombre]          # C-M1-07-3 (b): el de 12 a 49 años solo cuando se nombra
     if not de_la_unidad:
         return Falla("plan", "universo", f"no hay universo analítico de {plan.encuesta} {anio} para la unidad «{plan.unidad}»")
     de_la_unidad = [u for u in de_la_unidad if cubre_tablas(u)]
@@ -250,7 +289,8 @@ def _tabla_base(ctx: Contexto, plan: Plan, tablas: set[str], relaciones: list[Un
     del lote, el primer archivo del universo (M0/M1-03)."""
     if not tablas:
         return universo.aplica_a.archivos[0]
-    bases = sorted({tc.unidad_de(ctx.unidades, plan.encuesta, plan.anios[0], a).tabla_base for a in tablas})
+    filas = [tc.unidad_de(ctx.unidades, plan.encuesta, plan.anios[0], a) for a in tablas]
+    bases = sorted({f.tabla_base for f in filas if not f.solo_puente}) or sorted({f.tabla_base for f in filas})     # una tabla de puente nunca es base
     for b in bases:
         if ruta_de_uniones(relaciones, b, set(bases) - {b}) is not None:
             return b
@@ -388,10 +428,12 @@ def verificar(plan: Plan, ctx: Contexto, con=None) -> PlanCompleto | Falla:
     tablas = _tablas_de_la_unidad(ctx, plan)
     if isinstance(tablas, Falla):
         return tablas
+    relaciones = ctx.relaciones[(plan.encuesta, anio)]
+    if (f := _prefiere_otra_tabla(ctx, plan, tablas, relaciones)) is not None:
+        return f
     ua = _universo_analitico(ctx, plan, tablas)
     if isinstance(ua, Falla):
         return ua
-    relaciones = ctx.relaciones[(plan.encuesta, anio)]
     archivo_unidad = _tabla_base(ctx, plan, tablas, relaciones, ua)
     if isinstance(archivo_unidad, Falla):
         return archivo_unidad

@@ -183,7 +183,8 @@ tablas:
     informante: personal de campo (medición)
     modo: medido
     avisos:
-    - 'No entra al lote de M1 (consulta C-M1-07-1): es del cuestionario del hogar y la ficha técnica no dice qué peso le corresponde. La p. 11 asigna el factor hogar (HV005) a «desnutrición y anemia en menores de 5 años» y el factor mujer (V005) a planificación familiar, parto y control prenatal; no nombra la talla, el peso ni la hemoglobina de las mujeres. Sin peso decidido no tiene fila en diseno_muestral.csv ni en unidades.yaml.'
+    - 'Peso (C-M1-07-1, decisión del dueño del 13/11/2026): las mediciones de las mujeres llevan el factor hogar (HV005, RECH0) con la submuestra de medición, como las del niño de RECH6; la ficha técnica (p. 9 y p. 11) no nombra el peso de las mujeres medidas, y la anemia de las mujeres de 15 a 49 años (OMS 2024) da 26,02 % con HV005 frente al 26,0 % del INEI (informe principal ENDES 2024, p. 33). El universo por defecto es la mujer de 15 a 49 años que durmió en el hogar (HV103 = 1 de su fila en RECH1) y, para la hemoglobina, con la medición hecha (HA55 = 0).'
+    - 'Las variables de la prueba de VIH (HA61 a HA64) y su peso propio (HA69) no entran a M1: no se calculan con el factor hogar.'
     documentos:
     - recurso: endes-2024-anemia
       miembro: Diccionario - RECH5.pdf
@@ -495,7 +496,8 @@ tablas:
     quien_tiene_fila: cada hijo nacido vivo de cada mujer con historia de nacimientos
     informante: la mujer entrevistada
     modo: declarado
-    avisos: []
+    avisos:
+    - 'Solo de puente (C-M1-07-2, decisión del dueño del 13/11/2026): trae los 60 693 hijos que la mujer tuvo alguna vez (39 557 con 5 años o más, y los fallecidos). Sirve para llevar el sexo, la edad, la sobrevivencia (B5) y la línea del niño en el hogar (B16) a las demás tablas del hijo; no puede ser la tabla de la que parte un plan del niño, y el verificador lo rechaza. Las tasas de fecundidad y de mortalidad quedan fuera de M1.'
     documentos:
     - recurso: endes-2024-historia-nacimiento
       miembro: Diccionario - REC21.pdf
@@ -623,7 +625,9 @@ tablas:
     quien_tiene_fila: cada hijo menor de 5 años de cada mujer entrevistada, con o sin medición (19 751)
     informante: personal de campo (medición)
     modo: medido
-    avisos: []
+    avisos:
+    - 'Para un indicador de solo medición del niño (talla, peso, hemoglobina) se usa RECH6; REC44 solo cuando el plan necesita una variable de la madre o del hijo de la entrevistada (C-M1-07-3, decisión del dueño del 13/11/2026).'
+    - 'Peso: el factor hogar (HV005) con la submuestra de medición, no el de la madre; con los mismos niños que RECH6 (18 875 emparejados) la desnutrición crónica da 12,12 % con HV005 y 11,67 % con V005, frente al 12,1 % del INEI. Los universos exigen el pernocte del niño (HV103 = 1 de su fila en RECH1, por B16 = HVIDX): 19 500 de las 19 751 filas encuentran a su niño y 19 429 durmieron en el hogar; los que tienen B16 = 0 o nulo (251) quedan fuera del universo.'
     documentos:
     - recurso: endes-2024-anemia
       miembro: Diccionario - REC44.pdf

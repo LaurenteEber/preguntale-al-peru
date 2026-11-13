@@ -21,12 +21,12 @@
 
 ## Criterios de aceptación
 
-- [ ] Ninguna variable del índice queda sin clase; huellas de contenido de los Parquet sin cambios.
-- [ ] Los campos del §7.2 llenos en `propuesto` para el lote de tablas del README.
-- [ ] Informe del control del universo: cuántas variables pasan el 99,5 % y cuáles no (`evidencia/m1-05_universos.md`).
-- [ ] Una receta de prueba con `rol_faltante` da la misma cifra con y sin la columna `faltante` cuando no hay faltantes, y la tasa de no respuesta sale informada.
-- [ ] Las 90 filas siguen iguales.
-- [ ] Costo del lote informado y dentro del tope.
+- [x] Ninguna variable del índice queda sin clase; huellas de contenido de los Parquet sin cambios.
+- [ ] Los campos del §7.2 llenos en `propuesto` para el lote de tablas del README. — pendiente: los campos del §7.2 esperan el lote en vivo de M1-04
+- [ ] Informe del control del universo: cuántas variables pasan el 99,5 % y cuáles no (`evidencia/m1-05_universos.md`). — pendiente: tarea no empezada (espera M1-04)
+- [ ] Una receta de prueba con `rol_faltante` da la misma cifra con y sin la columna `faltante` cuando no hay faltantes, y la tasa de no respuesta sale informada. — pendiente: tarea no empezada (espera M1-04)
+- [ ] Las 90 filas siguen iguales. — pendiente: se comprueba al cerrar la historia; la tarea 0 no tocó el cubo
+- [ ] Costo del lote informado y dentro del tope. — pendiente: no hay lote de enriquecimiento todavía
 
 ## Fuera
 

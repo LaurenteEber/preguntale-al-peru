@@ -1,0 +1,59 @@
+# CONTROL DE PRUEBA (M1-07, C-M1-07-1) — no es un indicador: no está en dim_indicador.yaml, no responde preguntas, no se marca `verificado` y no pasa por
+# `pap inferencia validar-recetas` (vive aquí, no en curados/inferencia/recetas/). Comprueba el diseño de la **medición de las mujeres** (RECH5, factor hogar HV005)
+# contra la cifra oficial del INEI de 2024: anemia en mujeres de 15 a 49 años, criterio de la nueva directriz OMS 2024 (HA57A en 1, 2, 3 sobre 1 a 4; 26,0 %).
+# Convertirlo en indicador es una consulta al dueño. Lo carga tests/inferencia/test_m107_controles.py con el esquema de recetas.Receta.
+# Las cifras por área (`doradas_area`, esquema recetas.DoradaCorte) van en este mismo archivo; la prueba las separa antes de validar la receta.
+# El documento del INEI no publica los casos sin ponderar de esta cifra (el cuadro base 10.39 del informe principal no viene en el compilado): no hay `casos_publicados`;
+# la prueba compara los 30 290 que midió el supervisor el 13/11/2026 (HV005 y HV103 = 1, 15 a 49 años, HA55 = 0, HA57A en 1 a 4), que no son una cifra del INEI.
+id: control_anemia_mujeres
+version: 0.1.0
+fecha: "2026-11-13"
+descripcion: "Mujeres de 15 a 49 años con anemia (nueva directriz OMS 2024: HA57A en 1, 2, 3 sobre 1 a 4), con el factor hogar de la medición"
+indicador_id: control_anemia_mujeres
+encuesta: ENDES
+unidad: mujer
+medida: proporcion
+anios: [2024, 2024]
+universo_analitico: mujer_15_49_de_hecho_hb_medida
+indicador:
+  combinar: una
+  condiciones:
+    - {archivo: RECH5, variable: HA57A, op: en, valores: [1, 2, 3]}
+universo:
+  restricciones:
+    - {archivo: RECH5, variable: HA57A, op: en, valores: [1, 2, 3, 4]}
+transformaciones: []
+cortes_permitidos: [area]
+cortes_no_permitidos: []
+tolerancia_pp: 0.1        # E-05: las cifras de la ENDES se reproducen a ± 0,1 pp (R-ENC-18)
+fuente: "INEI, «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (recurso endes-2024-informe-principal), «Principales indicadores 2009–2024», p. 33, fila «Mujeres con anemia» de «Anemia (Nueva directriz OMS 2024 / RM 251-2024-MINSA)»; HA57A «Nivel de anemia NUEVA DIRECTRIZ OMS 2024/RM 251-2024-MINSA» y HA55 «Resultado de la medición (hemoglobina)» en RECH5 (etiquetas de valor del archivo 2024); universo curados/inferencia/universos_analiticos.yaml:1 (mujer_15_49_de_hecho_hb_medida)"
+doradas:
+  - id_cifra: CTL-CONTROL_ANEMIA_MUJERES-2024-PE
+    nivel: nacional
+    territorio: PE
+    valor_publicado: 26.0
+    decimales: 1
+    bloqueante: true
+    cita: "INEI, «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (recurso endes-2024-informe-principal), «Principales indicadores 2009–2024», p. 33 (PDF 33), fila «Mujeres con anemia», columna 2024 (26,0); también Resumen Ejecutivo p. 51 y Capítulo 9, Gráfico N.º 9.22 p. 237 (cuadro base 10.39: intervalo de confianza [24,9–27,1])"
+doradas_area:
+  - id_cifra: CTL-CONTROL_ANEMIA_MUJERES-2024-PE-URBANO
+    receta_id: control_anemia_mujeres
+    anio: 2024
+    nivel: nacional
+    territorio: PE
+    corte: area
+    categoria: urbano
+    valor_publicado: 25.9
+    decimales: 1
+    cita: "INEI, «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (recurso endes-2024-informe-principal), «Principales indicadores 2009–2024», p. 33 (PDF 33), fila «Área urbana» bajo «Mujeres con anemia», columna 2024 (25,9); lo mismo en el Resumen Ejecutivo p. 51. El texto de la p. 237 invierte las áreas (urbana 26,3 y rural 25,9) y contradice a su propia tabla y a la p. 51: se toma la tabla"
+  - id_cifra: CTL-CONTROL_ANEMIA_MUJERES-2024-PE-RURAL
+    receta_id: control_anemia_mujeres
+    anio: 2024
+    nivel: nacional
+    territorio: PE
+    corte: area
+    categoria: rural
+    valor_publicado: 26.3
+    decimales: 1
+    cita: "INEI, «Perú: Encuesta Demográfica y de Salud Familiar 2024. Nacional y Departamental» (recurso endes-2024-informe-principal), «Principales indicadores 2009–2024», p. 33 (PDF 33), fila «Área rural» bajo «Mujeres con anemia», columna 2024 (26,3); lo mismo en el Resumen Ejecutivo p. 51 y en la nota de prensa del INEI (gob.pe, noticia 1177027)"
+estado: propuesto

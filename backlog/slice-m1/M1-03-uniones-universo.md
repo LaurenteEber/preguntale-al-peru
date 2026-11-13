@@ -35,10 +35,10 @@
 
 ## Criterios de aceptación
 
-- [ ] Las 3 recetas calculan por región natural, quintil y tramo de edad, y reproducen todas las doradas nuevas.
-- [ ] 90 filas con diferencia 0 frente al cubo.
-- [ ] La unión por el padre común rechaza los casos que no son 1:1 (prueba).
-- [ ] Revisión del auditor-agente de las doradas nuevas y de la tabla de mediciones en `evidencia/m1-03_revision.md`.
+- [x] Las 3 recetas calculan por región natural, quintil y tramo de edad, y reproducen todas las doradas nuevas.
+- [x] 90 filas con diferencia 0 frente al cubo.
+- [x] La unión por el padre común rechaza los casos que no son 1:1 (prueba).
+- [x] Revisión del auditor-agente de las doradas nuevas y de la tabla de mediciones en `evidencia/m1-03_revision.md`.
 
 ## Fuera
 

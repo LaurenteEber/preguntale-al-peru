@@ -1,9 +1,8 @@
-✔ diseno_muestral.csv: 22 fila(s), todas con cita
-✔ universos_analiticos.yaml: 14 fila(s), todas con cita
+✔ diseno_muestral.csv: 24 fila(s), todas con cita
+✔ universos_analiticos.yaml: 18 fila(s), todas con cita
 ✔ territorios.yaml: 6 fila(s), todas con cita
 ✔ perfil_anual.csv: 1 fila(s), todas con cita
 ✔ relacion_entre_anios.csv: 2 fila(s), todas con cita
 ✔ cortes_estandar.yaml: 5 fila(s), todas con cita
-✔ mediciones.yaml: 4 fila(s), todas con cita
-✔ unidades.yaml: 18 fila(s), todas con cita
-exit=0
+✔ mediciones.yaml: 11 fila(s), todas con cita
+✔ unidades.yaml: 19 fila(s), todas con cita
