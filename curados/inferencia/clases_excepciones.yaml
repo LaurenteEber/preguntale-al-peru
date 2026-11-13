@@ -100,7 +100,7 @@ excepciones:
 - variables: [QSNUMERO]
   archivos: [CSALUD01]
   clase: llave
-  motivo: 'Documento n.º 11, fila 33 y «Precisiones» (HVIDX = QSNUMERO); el diccionario de CSALUD01 lo marca como llave. Solo el índice: la llave declarada en archivos_endes_2024.yaml no se cambia (consulta C-M1-06-1).'
+  motivo: 'Documento n.º 11, fila 33 y «Precisiones» (HVIDX = QSNUMERO); el diccionario de CSALUD01 lo marca como llave. Desde C-M1-06-1 (dueño, 13/11/2026) también es parte de la llave declarada en archivos_endes_2024.yaml.'
 - variables: [V003]
   archivos: [REC0111]
   clase: llave

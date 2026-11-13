@@ -142,7 +142,7 @@ def test_las_llaves_declaradas_no_se_repiten_en_ningun_archivo(curado):
 
 def test_uniones_declaradas_sin_perdida_ni_duplicacion(curado):
     uniones = verificar_relaciones(curado, PARQUET)
-    assert len(uniones) == len(curado["relaciones"]) == 44
+    assert len(uniones) == len(curado["relaciones"]) == 45   # 44 + CSALUD01 → RECH1 (C-M1-06-1)
     malas = [u for u in uniones if not u.sin_perdida_ni_duplicacion]
     assert not malas, malas
     por = {(u.hijo, u.padre): u for u in uniones}
@@ -172,4 +172,14 @@ def test_los_archivos_escritos_son_los_del_indice_calculado(indice):
         # `pap cuestionarios aplicar` (M1-04). Las demás, incluida `clase` (M1-05 tarea 0), son exactamente las que da la reindexación.
         extras = set(escrito.columns) - set(calculado.columns)
         assert extras <= {"bloque_id", "pregunta_ref", "vinculo_metodo", "sin_pregunta"}, extras
+        if "vinculo_metodo" in escrito.columns:
+            # `pap cuestionarios aplicar` además llena `texto_pregunta` en las variables vinculadas (M1-04); las demás quedan como
+            # las da la reindexación, y todas las otras columnas son idénticas
+            escrito = escrito.sort("var_id")
+            sin_vinculo = escrito["pregunta_ref"].is_null().to_list()
+            assert [t for t, s in zip(escrito["texto_pregunta"], sin_vinculo) if s] == \
+                [t for t, s in zip(calculado["texto_pregunta"], sin_vinculo) if s]
+            cols = [c for c in calculado.columns if c != "texto_pregunta"]
+            assert escrito.select(cols).equals(calculado.select(cols))
+            continue
         assert escrito.select(calculado.columns).equals(calculado)

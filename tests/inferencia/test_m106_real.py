@@ -25,6 +25,10 @@ def test_cada_union_declarada_cita_el_documento_n11_o_dice_que_solo_son_datos():
     filas = {t: d["fila"] for t, d in y["llaves_cita"].items()}
     assert set(filas) == set(y["archivos"]) and sorted(filas.values()) == list(range(1, 35))
     assert "C-M1-06-1" in y["llaves_cita"]["CSALUD01"]["nota"]
+    assert y["archivos"]["CSALUD01"] == {"unidad": "persona_de_15_a_mas", "llave": ["HHID", "QSNUMERO"]}      # C-M1-06-1
+    assert [r for r in y["relaciones"] if r["hijo"] == "CSALUD01"] == [
+        {"hijo": "CSALUD01", "padre": "RECH0", "por": [["HHID", "HHID"]], "cardinalidad": "n:1", "cita": "doc11_hhid"},
+        {"hijo": "CSALUD01", "padre": "RECH1", "por": [["HHID", "HHID"], ["QSNUMERO", "HVIDX"]], "cardinalidad": "n:1", "cita": "doc11_hvidx"}]
 
 
 @pytest.mark.regresion_microdatos

@@ -979,9 +979,7 @@ tablas:
     quien_tiene_fila: cada hogar con persona seleccionada (34 018 de 37 390)
     informante: la persona seleccionada
     modo: mixto
-    avisos:
-    - 'El documento «Identificadores de las bases de datos» (fila 33) da la llave HHID + QSNUMERO; el índice declara HHID y se comprobó que es
-      única (34 018 filas, 34 018 hogares): consulta C-M1-06-1.'
+    avisos: []
     documentos:
     - recurso: endes-2024-salud
       miembro: Diccionario - CSALUD01.pdf

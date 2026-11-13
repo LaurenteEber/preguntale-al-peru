@@ -13,8 +13,8 @@
 # dominio devuelve «Costa», «Sierra» y «Selva» (los de las cifras publicadas); con `juegos_de_tramos`, el rótulo del tramo, y solo
 # dentro de una receta que algún juego nombre.
 # Fuera de esta tabla, porque el diseño los nombra pero M0 no los necesita: educación de la madre y lengua materna (M1).
-version: 0.3.0
-fecha: "2026-11-12"
+version: 0.3.1
+fecha: "2026-11-13"
 cortes:
   - id: area
     nombre: "área (urbana o rural)"
@@ -48,7 +48,7 @@ cortes:
           cita: "Etiqueta del archivo REC21 2024: «Sexo del niño» (1 Masculino, 2 Femenino)"
         - archivo: CSALUD01
           variable: QSSEXO
-          unidad: persona_seleccionada
+          unidad: persona_de_15_a_mas   # C-M1-02-2 (dueño, 13/11/2026): el mismo identificador que archivos_endes_2024.yaml
           cita: "Etiqueta del archivo CSALUD01 2024: «Sexo de la persona seleccionada» (1 Hombre, 2 Mujer)"
     categorias: {1: hombre, 2: mujer}
     cita: "src/pap/capa0/encuestas.py:149 (sexo del niño: 1 hombre, 2 mujer); etiquetas de los cuatro archivos citadas en cada variable"

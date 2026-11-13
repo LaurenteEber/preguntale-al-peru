@@ -5,7 +5,8 @@
 # archivo (tests/inferencia/test_indice_regresion.py) y cada unión declarada, hecha como unión izquierda del hijo con el
 # padre, deja el mismo número de filas que el hijo (sin pérdida ni duplicación; el padre no repite la llave).
 # `unidad`: qué es una fila (vocabulario de este archivo, supuesto M0-05): hogar, persona_del_hogar, mujer, hijo_de_mujer,
-#   hermano_de_mujer, columna_de_calendario.
+#   hermano_de_mujer, columna_de_calendario, persona_de_15_a_mas (la persona de 15 años a más seleccionada para el cuestionario de
+#   salud: una por hogar; C-M1-06-1).
 # `llave`: columnas que identifican una fila. HHID de los módulos de la mujer es el derivado de CASEID (clases_columnas.yaml).
 # `relaciones`: hijo → padre, `por` = pares [columna del hijo, columna del padre], `cardinalidad` (M1-03; vocabulario en
 #   tablas_curadas.CARDINALIDADES, lo comprueba `pap inferencia validar-tablas`):
@@ -16,17 +17,19 @@
 #   Solo 1:1 y 1:0..1 permiten ir de un hijo a otro hijo del mismo padre (el verificador baja un solo nivel desde el padre común y arma
 #   dos uniones izquierdas: A → padre → B). `verificador.comprobar_cardinalidades` lo comprueba contra los Parquet.
 #   Medido el 12/11/2026 y no declarado (no hace falta todavía): REC91–REC0111 es 1:1 (37 117); REC84DV, CSALUD01 y
-#   Programas_Sociales_x_Hogar son 1:0..1 (34 252 de 37 117; 34 018 de 37 390 las dos últimas).
+#   Programas_Sociales_x_Hogar son 1:0..1 (34 252 de 37 117; 34 018 de 37 390 las dos últimas). CSALUD01 → RECH1 se declara n:1 por
+#   decisión del dueño (C-M1-06-1); en los datos cada persona de RECH1 tiene a lo sumo una fila en CSALUD01.
 # Una unión que dejaría filas sin pareja NO se declara: REC93DVdisciplina no se une a REC0111 por CASEID (341 de sus
 # 15 462 filas no tienen a esa mujer en REC0111; consultas_al_dueno.md, C-M0-05-2); sí a RECH0 por HHID.
 # M1-06 (tarea 5, versión 0.3.0): `citas` y `llaves_cita` citan el documento n.º 11 del INEI «Identificadores de las bases de datos» (recurso
 # endes-2024-identificadores-bd; PDF «2024-5-Ident-de-las-bd.pdf», 2 páginas: una tabla de 34 filas con los identificadores principales y
 # alternos, y las «Precisiones») para las llaves y las uniones; cada unión lleva en `cita` la clave de `citas` que la respalda. Las llaves y
 # uniones se siguen comprobando contra los datos (prueba de este archivo). Resultado de la lectura (evidencia/m1-06_identificadores.md):
-# las 34 tablas coinciden con el documento salvo CSALUD01 (el documento da HHID + QSNUMERO; aquí HHID, única en los datos: consulta
-# C-M1-06-1) y la unión REC0111 → RECH1 por V003, que el documento no menciona (queda `solo_datos`).
-version: 0.3.0
-fecha: "2026-11-12"
+# las 34 tablas coinciden con el documento salvo la unión REC0111 → RECH1 por V003, que el documento no menciona (queda `solo_datos`).
+# Versión 0.4.0 (C-M1-06-1 y C-M1-02-2, dueño, 13/11/2026): CSALUD01 es una persona (la de 15 años a más seleccionada), con la llave del
+# documento (HHID + QSNUMERO) y la unión a su fila de RECH1 (QSNUMERO = HVIDX); antes se declaraba hogar con llave HHID.
+version: 0.4.0
+fecha: "2026-11-13"
 encuesta: ENDES
 anio: 2024
 citas:
@@ -68,7 +71,7 @@ llaves_cita:
   REC94: {fila: 30}
   REC95: {fila: 31, alternas: ["CASEID + Q452 (única en los datos)"]}
   DIT: {fila: 32, alternas: ["CASEID + BORD (única en los datos)"]}
-  CSALUD01: {fila: 33, nota: "El documento da HHID + QSNUMERO; aquí la llave es HHID, única en los datos (34 018 filas, 34 018 hogares). Consulta C-M1-06-1."}
+  CSALUD01: {fila: 33, nota: "Llave del documento, HHID + QSNUMERO (C-M1-06-1, dueño, 13/11/2026); HHID sola también es única (una persona seleccionada por hogar)."}
   CSALUD08: {fila: 34}
 archivos:
   RECH0: {unidad: hogar, llave: [HHID]}
@@ -78,7 +81,7 @@ archivos:
   RECH5: {unidad: persona_del_hogar, llave: [HHID, HA0]}
   RECH6: {unidad: persona_del_hogar, llave: [HHID, HC0]}
   RECHM: {unidad: persona_del_hogar, llave: [HHID, NRO_ORDEN_ID]}
-  CSALUD01: {unidad: hogar, llave: [HHID]}
+  CSALUD01: {unidad: persona_de_15_a_mas, llave: [HHID, QSNUMERO]}
   CSALUD08: {unidad: persona_del_hogar, llave: [HHID, QS801]}
   Programas_Sociales_x_Hogar: {unidad: hogar, llave: [HHID]}
   PS_BECA18: {unidad: persona_del_hogar, llave: [HHID, HVIDX]}
@@ -113,6 +116,7 @@ relaciones:
   - {hijo: RECH6, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
   - {hijo: RECHM, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
   - {hijo: CSALUD01, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: CSALUD01, padre: RECH1, por: [[HHID, HHID], [QSNUMERO, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}   # C-M1-06-1; después de la de RECH0 para que la tabla base de la ficha siga siendo RECH0
   - {hijo: CSALUD08, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
   - {hijo: Programas_Sociales_x_Hogar, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
   - {hijo: PS_BECA18, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
