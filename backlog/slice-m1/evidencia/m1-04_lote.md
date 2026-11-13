@@ -77,6 +77,23 @@ La muestra de REC0111 son las V1xx y V009, V010, V012 cuya etiqueta del dicciona
 - Segunda corrida: calculado **US$ 1,25** (tabla de §0.1). Gasto facturado según la consola: (lo anota el dueño)
 - Dónde mirarlo: consola de Anthropic, Workspace `pap-lotes`, gasto del mes. Si difiere de US$ 2,39 de forma apreciable, se corrigen los precios o el descuento antes del lote completo.
 
+## 0.3 Tercera corrida: REC43 con la verificación arreglada (13/11/2026)
+
+La verificación ve todas las opciones de la pregunta y acepta una opción de una pregunta de respuesta múltiple (`0c2f70c`). Corrida previa apartada en `lote_previos/20261113_estructurada/` (fuera de git).
+
+| Pasada | Lote | Peticiones | Costo máximo estimado | **Costo real** | Borrado |
+|---|---|---|---|---|---|
+| vincular | `msgbatch_01CNazZFmvZ5a9yb14RgcNnx` | 165 | US$ 0,745 | **US$ 0,666** | sí |
+| verificar | `msgbatch_01RQfNg1nd4A5MMC9TwPeavD` | 131 | US$ 0,224 | **US$ 0,157** | sí |
+| **Total** | | | | **US$ 0,823** | |
+
+Gasto facturado según la consola: (lo anota el dueño).
+
+- **Borrado confirmado en Anthropic:** los dos lotes dan 404 `not_found_error`; el Workspace lista 0 lotes. Gasto calculado de las tres corridas: **US$ 3,21**.
+- **REC43: de 41 a 89 vínculos;** `rechazada_por_verificacion` baja de 91 a 41; `no_encontrada` 34; `error_del_lote` 1. De los 41 vínculos anteriores, 40 se repiten con la misma pregunta, 1 pasó a sin pregunta y ninguno cambió de pregunta.
+- **Muestra a ojo** (12 vínculos nuevos y 6 rechazos): los 12 vínculos son correctos (p. ej. H37A FanSIDAr → 471B; H12A hospital MINSA → 474A; H45 veces que le dieron zinc → 473F). Entre los rechazos quedan algunos que parecen correctos (H9 sarampión → 463; H13 sales de rehidratación → 473B) y otros razonables (H6D, día de la 2.ª dosis de polio → 457, una pregunta distinta del carné). El error sigue del lado seguro.
+- **Aplicado al índice (propuesto):** se unieron los vínculos del LLM de RECH6 y REC0111 (2.ª corrida) con los de REC43 (3.ª), se reindexó (`pap variables indexar`), se aplicaron (`pap cuestionarios aplicar --sobre-indice`: 426 variables con texto de pregunta) y se regeneraron las fichas (`pap fichas generar`; `pap fichas validar` cumple las 8 reglas).
+
 ## 1. Por qué no se llamó a la Batch API
 
 La auditoría (`auditoria_batch_api.md`, condición 1) exige una **clave y un Workspace aparte** del servicio web, solo para los lotes. Se revisó, sin mostrar ningún valor:
