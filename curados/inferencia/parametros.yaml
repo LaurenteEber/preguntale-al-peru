@@ -172,9 +172,62 @@ cache:
 
 batch:
   tope_lote_usd: {valor: 20, decision: "K-05 (dueño, 12/11/2026: US$ 20 por lote de enriquecimiento)"}
+  # Batch API (M1-04; auditoría backlog/slice-m1/evidencia/auditoria_batch_api.md: clave y Workspace aparte, lotes borrados al bajar los resultados).
+  # La clave NUNCA es la del servicio web (`interprete.variable_clave`): el cliente de lotes se niega a correr si las dos variables se llaman igual.
+  variable_clave: {valor: PAP_ANTHROPIC_BATCH_KEY, supuesto: M1-04, nota: "nombre propio para la clave del Workspace de lotes (auditoría de la Batch API, condición 1). La crea el dueño en la consola de Anthropic; no existe en el repo ni en el entorno hasta que la ponga"}
+  api_url: {valor: "https://api.anthropic.com/v1/messages/batches", supuesto: M1-04}
+  descuento: {valor: 0.5, supuesto: M1-04, nota: "la Batch API cobra 50 % de los precios base (docs/diseno/tecnologias.md §8); se aplica a los precios de `interprete.precios_usd_por_millon`"}
+  tokens_por_caracter: {valor: 0.45, supuesto: M1-04, nota: "para estimar el costo máximo antes de crear el lote; el español rinde unos 3 caracteres por token, se usa un margen de seguridad"}
+  sondeo_s: {valor: 60, supuesto: M1-04}                 # segundos entre dos consultas de estado
+  espera_max_s: {valor: 90000, supuesto: M1-04}          # un lote vence a las 24 h; pasado esto se deja de esperar (el estado queda guardado)
+  max_tokens_vincular: {valor: 60, supuesto: M1-04}
+  max_tokens_verificar: {valor: 120, supuesto: M1-04}
+  salida_estructurada: {valor: false, supuesto: M1-04, nota: "no probada en vivo con lotes (la del intérprete tampoco: interprete.salida_estructurada es false). Los esquemas de lote son de un solo campo; con false se pide el JSON en el texto y `leer_json` lo lee"}
+  opciones_en_prompt: {valor: 8, supuesto: M1-04}        # opciones de respuesta de cada pregunta candidata que se muestran al LLM
 
 inferencia:
   # Variables en estado `propuesto` (M1-01; se deriva de K-04). Con `true`, el motor en sombra admite variables `propuesto` mientras el visto del
   # dueño a las `revisado` espera (3 horas por semana: no frenan el trabajo). Nunca con `motor.version: nuevo` (curados/motor/parametros_motor.yaml):
   # la web no responde con variables sin revisar.
   admitir_propuesto_en_sombra: {valor: true, decision: "K-04 (dueño, 12/11/2026): lo que espera un visto queda en `propuesto` o `revisado` y el trabajo sigue; solo en modo sombra"}
+
+cuestionarios:
+  # Texto de los cuestionarios y diccionarios de la ENDES (M1-04; diseño §7.2, tecnologias.md §6). El diseño de los PDF del INEI
+  # varía entre cuestionarios y páginas, así que el lector se guía por la posición de las palabras; estos valores son los de los
+  # PDF de 2024 (medidos el 12/11/2026) y se cambian aquí, no en el código.
+  numero_patron: {valor: '^[1-9]\d{0,2}([A-Z]\d?)?$', supuesto: M1-04}   # 325, 325B, 478F1; sin ceros a la izquierda (las filas de las matrices son 01, 02…)
+  numero_x_max: {valor: 70, supuesto: M1-04}                # el número de pregunta está en la columna izquierda (puntos desde el borde)
+  numero_tolerancia: {valor: 9, supuesto: M1-04}            # cuánto puede alejarse un número de la columna de su página
+  texto_margen: {valor: 8, supuesto: M1-04}                 # el texto empieza al menos esto a la derecha del número
+  linea_tolerancia_y: {valor: 2.5, supuesto: M1-04}         # palabras a esta altura (puntos) son de la misma línea
+  categorias_x_defecto_prop: {valor: 0.5, supuesto: M1-04}  # sin guías en la página, las categorías empiezan a esta fracción del ancho
+  categorias_margen: {valor: 20, supuesto: M1-04}           # las categorías pueden empezar hasta esto antes de la primera guía
+  salto_x_defecto_prop: {valor: 0.9, supuesto: M1-04}       # columna «PASE A» sin encabezado en la página
+  texto_max_caracteres: {valor: 1500, supuesto: M1-04}      # tope del texto de una pregunta (una matriz larga se corta, con aviso)
+  opciones_max: {valor: 60, supuesto: M1-04}
+  seccion_patron: {valor: '^SECCI[ÓO]N\b', supuesto: M1-04}
+  # Vínculo variable ↔ pregunta sin LLM (M1-04, tarea 3). Una regla dice en qué cuestionario está la pregunta y cómo sacar su
+  # número del código de la variable (QS25C1 → 25C1, 25C, 25: se usa el más largo que exista). Solo valen los números que existen en
+  # ese cuestionario. Son hechos del esquema de nombres de 2024 (medidos el 12/11/2026), revisables aquí.
+  reglas_codigo:
+    valor:
+      - {id: salud, cuestionario: salud, tablas: [CSALUD01, CSALUD08], regex: '^QS(\d{1,3}[A-Z_0-9]*)'}
+      - {id: individual_q, cuestionario: individual, tablas: ["*"], regex: '^QD?(\d{3,4}[A-Z_0-9]*)'}
+    supuesto: M1-04
+  # Dónde se busca el número de pregunta en la etiqueta del diccionario («… (pregunta 105)»).
+  etiqueta_pregunta_patron: {valor: '\b(?:pregunta|preg\.?)\s*(\d{1,3}[A-Z]?\d?)\b', supuesto: M1-04}
+  # Variables sin pregunta y por qué (M1-04, tarea 6): administrativa (identificadores, pesos, diseño de la muestra) o construida
+  # (la calcula el INEI a partir de otras). Se reconocen por el código o por la etiqueta; el resto, si el LLM no encuentra pregunta,
+  # queda `no_encontrada`.
+  sin_pregunta:
+    valor:
+      administrativa:
+        codigos: ['^(ID\d*|HHID|CASEID|UBIGEO|NCONGLOME\d*|QHCLUSTER|QHNUMBER|HVIDX|HIDX|BIDX|BORD|V00[0-8]|V02[0-4]|V016|V017|V018|V019A?|V020|HV00[1-9]|HV02[1-4]|AWFACT[WU]|PESO\w*|FACTOR\w*|SHOGAR|NVIVIENDA)$']
+        etiquetas: ['^identificaci[oó]n\b', '^conglomerado$', '^n[uú]mero de (orden|vivienda|l[ií]nea|hogar)', 'factor (de )?pondera', '^factor\b', '^c[oó]digo y fase', '^unidad de [aá]rea', '^estrato\b', '^dominio\b', 'fecha de la entrevista']
+      construida:
+        codigos: []
+        etiquetas: ['\bcmc\b', 'codificaci[oó]n centenaria', '\bpor grupos?\b', '[ií]ndice de riqueza', 'quintil', 'regi[oó]n natural']
+    supuesto: M1-04
+  candidatos_k: {valor: 20, supuesto: M1-04}                # preguntas candidatas por variable (IDs c01…c20, diseño §8)
+  candidatos_stopwords: {valor: [de, la, el, los, las, un, una, en, y, o, a, que, del, al, se, su, sus, por, para, con, es, le, lo, no, si, ha, usted, nombre], supuesto: M1-04}
+  candidatos_prefijo: {valor: 5, supuesto: M1-04}           # letras que se comparan de cada palabra (un stemmer simple, sin dependencias)

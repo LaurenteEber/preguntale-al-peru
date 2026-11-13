@@ -1,4 +1,4 @@
-"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | microdatos | variables | servir."""
+"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | microdatos | variables | cuestionarios | servir."""
 from __future__ import annotations
 
 import json
@@ -199,6 +199,13 @@ def cmd_variables(a, rutas) -> int:
     print(f"{c['especiales_propuestos']} código(s) especial(es) propuesto(s); {c['textos_distintos']:,} textos de etiqueta distintos; "
           "controles que saltaron: " + (", ".join(f"{k} {n}" for k, n in c["controles"].items() if n) or "ninguno") + ".")
     return 0
+
+
+def cmd_cuestionarios(a, rutas) -> int:
+    """pap cuestionarios extraer | vincular | medir | informe | lote | aplicar (M1-04): texto de los cuestionarios y diccionarios de la ENDES."""
+    from .inferencia import cuestionarios_cli     # importación diferida: trae pdfplumber (en subproceso), polars y duckdb
+
+    return cuestionarios_cli.ejecutar(a, rutas)
 
 
 def cmd_inferencia(a, rutas) -> int:
@@ -792,6 +799,16 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta a indexar")
     s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
     s.set_defaults(fn=cmd_variables)
+
+    s = sub.add_parser("cuestionarios", help="Texto de los cuestionarios y diccionarios de la ENDES 2024 y su vínculo con las variables (M1-04)")
+    s.add_argument("accion", choices=["extraer", "vincular", "medir", "informe", "lote", "aplicar", "manual"],
+                   help="extraer: PDF → Parquet; vincular: lo que no necesita LLM; medir/informe: porcentajes; lote: Batch API (pide clave); "
+                        "aplicar: escribe el texto en una copia del índice; manual: fragmentos del Manual de la Entrevistadora para unas preguntas")
+    s.add_argument("--preguntas", help="manual: números de pregunta separados por comas (p. ej. 412,454)")
+    s.add_argument("--tablas", help="lote: solo estas tablas, separadas por comas (p. ej. RECH6,REC43,REC0111)")
+    s.add_argument("--max-variables", type=int, default=0, help="lote: tope de variables (0 = todas las pendientes)")
+    s.add_argument("--sobre-indice", action="store_true", help="aplicar: escribe sobre biblioteca/variables/variables.parquet en vez de una copia")
+    s.set_defaults(fn=cmd_cuestionarios)
 
     s = sub.add_parser("inferencia", help="Motor de inferencia: validar las tablas curadas y las recetas de curados/inferencia/, o calcular una receta")
     s.add_argument("accion", choices=["validar-tablas", "validar-recetas", "receta"])

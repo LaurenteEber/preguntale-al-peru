@@ -299,6 +299,31 @@ def leer_metadatos(spec: dict) -> dict:
             "release_dta": release, "versiones": versiones_lector()}
 
 
+# ------------------------------------------------------------------ texto de PDF (M1-04)
+
+def leer_pdf(spec: dict) -> dict:
+    """Palabras con su posición (y, si se pide, las tablas) de cada página de un PDF, solo con pdfplumber. Cada palabra es
+    [texto, x0, arriba]; las coordenadas van redondeadas a 0,1 punto. Las líneas y el diseño los interpreta quien llama."""
+    import pdfplumber
+
+    try:
+        with pdfplumber.open(spec["entrada"]) as pdf:
+            tope = int(spec.get("max_paginas") or 0)
+            paginas = []
+            for n, pag in enumerate(pdf.pages, start=1):
+                if tope and n > tope:
+                    break
+                palabras = [[w["text"], round(float(w["x0"]), 1), round(float(w["top"]), 1)] for w in pag.extract_words()]
+                tablas = pag.extract_tables() if spec.get("tablas") else []
+                paginas.append({"n": n, "ancho": round(float(pag.width), 1), "alto": round(float(pag.height), 1),
+                                "palabras": palabras, "tablas": tablas})
+    except MemoryError:
+        raise
+    except Exception as e:           # pdfminer lanza muchas clases distintas ante un PDF dañado
+        raise ErrorConversion(f"no se pudo leer el PDF ({type(e).__name__})") from None
+    return {"paginas": paginas, "versiones": {"pdfplumber": pdfplumber.__version__, "python": sys.version.split()[0]}}
+
+
 def versiones_lector() -> dict:
     from .almacen import versiones
 
@@ -311,7 +336,8 @@ def main(argv: list[str]) -> int:
     spec = json.loads(Path(argv[1]).read_text(encoding="utf-8"))
     resultado_ruta = Path(spec["resultado"])
     try:
-        res = leer_metadatos(spec) if spec.get("modo") == "metadatos" else leer_y_escribir(spec)
+        modo = spec.get("modo")
+        res = leer_metadatos(spec) if modo == "metadatos" else leer_pdf(spec) if modo == "pdf" else leer_y_escribir(spec)
     except ErrorConversion as e:
         resultado_ruta.write_text(json.dumps({"error": str(e)}, ensure_ascii=False), encoding="utf-8")
         return 3

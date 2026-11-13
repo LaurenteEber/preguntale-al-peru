@@ -348,6 +348,101 @@ class Cliente:
             return float(rp["espera_segundos"])
 
 
+# ---------------------------------------------------------------------------------------------- Batch API (M1-04)
+
+class ClienteLote:
+    """Cliente de la Batch API de Anthropic para el enriquecimiento del índice (fuera de línea; nunca en una respuesta). Mismo patrón que
+    `Cliente`: httpx, la clave solo se lee aquí y en el momento de la llamada, y ningún error la lleva.
+
+    Condiciones de la auditoría (backlog/slice-m1/evidencia/auditoria_batch_api.md): la clave es **otra** (`batch.variable_clave`, Workspace
+    aparte); si esa variable se llamara como la del servicio web, no corre. Cada lote se borra con `borrar` tras bajar los resultados.
+    Implementa la interfaz `ProveedorLote` de `inferencia/cuestionarios_lote.py`. Sin reintentos: crear un lote no es idempotente, y la
+    reanudación (`estado_lote.json`) hace de reintento."""
+
+    def __init__(self, raiz, transporte=None):
+        from ..inferencia.cuestionarios_lote import ParametrosLote
+
+        self.raiz, self.transporte = Path(raiz), transporte
+        self.par = parametros(raiz)
+        self.par_lote = ParametrosLote.desde_yaml(self.raiz / "curados/inferencia/parametros.yaml",
+                                                  self.raiz / "curados/motor/parametros_motor.yaml")
+
+    def _cabeceras(self) -> dict:
+        nombre = self.par_lote.variable_clave
+        if nombre == self.par["variable_clave"]["valor"]:
+            raise NoDisponible("clave_compartida")
+        clave = os.environ.get(nombre)
+        if not clave:
+            raise NoDisponible("sin_clave_lote")
+        cab = {CABECERA_CLAVE: clave, "anthropic-version": self.par_lote.version_api, "content-type": "application/json"}
+        del clave
+        return cab
+
+    def _llamar(self, metodo: str, url: str, **kw):
+        cab = self._cabeceras()
+        try:
+            with httpx.Client(transport=self.transporte, timeout=float(self.par["tiempo_max_segundos"]["valor"]) * 4) as h:
+                resp = h.request(metodo, url, headers=cab, **kw)
+        except httpx.TimeoutException:
+            raise NoDisponible("tiempo_agotado") from None
+        except httpx.HTTPError:
+            raise NoDisponible("caida") from None
+        finally:
+            cab.clear()
+        if resp.status_code < 400:
+            return resp
+        if resp.status_code in (401, 403):
+            raise NoDisponible("clave_rechazada")
+        if resp.status_code == 402:
+            raise NoDisponible("limite_agotado")
+        raise NoDisponible("caida" if resp.status_code >= 500 or resp.status_code == 429 else "rechazada")
+
+    def _cuerpo(self, p) -> dict:
+        salida = {"effort": self.par_lote.esfuerzo}
+        if p.esquema and self.par_lote.salida_estructurada:
+            salida["format"] = {"type": "json_schema", "schema": p.esquema}
+        return {"custom_id": p.custom_id, "params": {
+            "model": self.par_lote.modelo, "max_tokens": p.max_tokens, "system": p.sistema,
+            "messages": [{"role": "user", "content": p.usuario}], "output_config": salida}}
+
+    def crear_lote(self, peticiones) -> str:
+        r = self._llamar("POST", self.par_lote.api_url, json={"requests": [self._cuerpo(p) for p in peticiones]})
+        try:
+            return str(r.json()["id"])
+        except (ValueError, KeyError):
+            raise NoDisponible("caida") from None
+
+    def _lote(self, batch_id: str) -> dict:
+        try:
+            return self._llamar("GET", f"{self.par_lote.api_url}/{batch_id}").json()
+        except ValueError:
+            raise NoDisponible("caida") from None
+
+    def estado(self, batch_id: str) -> str:
+        e = self._lote(batch_id).get("processing_status")
+        return "en_proceso" if e == "in_progress" else "terminado" if e == "ended" else f"otro:{e}"
+
+    def resultados(self, batch_id: str):
+        from ..inferencia.cuestionarios_lote import ResultadoPeticion
+
+        url = self._lote(batch_id).get("results_url") or f"{self.par_lote.api_url}/{batch_id}/results"
+        for linea in self._llamar("GET", url).text.splitlines():
+            if not linea.strip():
+                continue
+            d = json.loads(linea)
+            res = d.get("result") or {}
+            if res.get("type") == "succeeded":
+                msg = res.get("message") or {}
+                u = msg.get("usage") or {}
+                texto = "".join(b.get("text", "") for b in msg.get("content") or [] if b.get("type") == "text")
+                yield ResultadoPeticion(d["custom_id"], texto, None, int(u.get("input_tokens") or 0), int(u.get("output_tokens") or 0))
+            else:
+                yield ResultadoPeticion(d["custom_id"], None, str(res.get("type") or "desconocido"))
+
+    def borrar(self, batch_id: str) -> None:
+        self._llamar("DELETE", f"{self.par_lote.api_url}/{batch_id}")
+
+
 def registrar_uso(raiz, pregunta_limpia: str, consulta: dict | None, resultado: str, r: RespuestaLLM | None,
                   ruta: Path | None = None) -> dict:
     """P-03: huella de la pregunta, la consulta sin textos de lugar, el resultado, el modelo, los tokens y el costo."""

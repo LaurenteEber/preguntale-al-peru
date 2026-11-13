@@ -706,3 +706,36 @@ def conteos(indice: Indice) -> dict:
             "variables_por_archivo": dict(sorted(zip(indice.archivos["archivo"].to_list(), indice.archivos["n_variables"].to_list()))),
             "especiales_propuestos": int((indice.categorias["es_especial"] == "propuesto").sum()),
             "controles": {k: sum(1 for h in indice.hallazgos if h.control == k) for k in CONTROLES}}
+
+
+# ------------------------------------------------------------------ texto de las preguntas (M1-04)
+
+ESTADOS_PUBLICABLES = ("revisado", "verificado")
+
+
+def texto_publicable(fila: dict) -> str | None:
+    """El texto de la pregunta de una variable, solo si la variable está `revisado` o `verificado` (AGENTS.md §5.2; criterio de M1-04:
+    ningún texto de pregunta entra a una respuesta pública mientras esté en `propuesto`). Toda ruta de respuesta que quiera mostrar
+    el texto pasa por aquí."""
+    return fila.get("texto_pregunta") if fila.get("estado") in ESTADOS_PUBLICABLES else None
+
+
+def aplicar_vinculos(variables: "pl.DataFrame", vinculos: "pl.DataFrame") -> "pl.DataFrame":
+    """Pone en la tabla de variables (la de `variables.parquet`) el texto de la pregunta y su referencia. `vinculos` trae, por `var_id`:
+    `pregunta_id`, `metodo`, `motivo`, `cuestionario`, `seccion`, `numero`, `pagina` y `texto_pregunta`. Agrega tres columnas:
+    - `pregunta_ref`: JSON con cuestionario, sección, número y página (None si no hay pregunta);
+    - `vinculo_metodo`: `diccionario`, `regla`, `llm` o `sin_pregunta` (None si nadie la ha mirado);
+    - `sin_pregunta`: el motivo (`administrativa`, `construida`, `no_encontrada`…), o `pendiente` si el LLM aún no la miró; None si tiene pregunta.
+    `estado` no se toca: sigue `propuesto`."""
+    import polars as pl
+
+    v = vinculos.select(["var_id", "metodo", "motivo", "cuestionario", "seccion", "numero", "pagina", "texto_pregunta", "pregunta_id"]) \
+        .rename({"texto_pregunta": "_texto", "metodo": "vinculo_metodo", "motivo": "_motivo"})
+    df = variables.drop([c for c in ("pregunta_ref", "vinculo_metodo", "sin_pregunta") if c in variables.columns]).join(v, on="var_id", how="left")
+    ref = [json.dumps({"cuestionario": c, "seccion": s, "numero": n, "pagina": p}, ensure_ascii=False) if pid else None
+           for c, s, n, p, pid in zip(df["cuestionario"], df["seccion"], df["numero"], df["pagina"], df["pregunta_id"])]
+    sin = [None if pid else ("pendiente" if meta is None else (m or "no_encontrada")) for pid, m, meta in zip(df["pregunta_id"], df["_motivo"], df["vinculo_metodo"])]
+    texto = pl.when(pl.col("_texto").is_not_null()).then(pl.col("_texto")).otherwise(pl.col("texto_pregunta"))
+    return df.with_columns(texto.alias("texto_pregunta"), pl.Series("pregunta_ref", ref, dtype=pl.String),
+                           pl.Series("sin_pregunta", sin, dtype=pl.String)) \
+        .drop(["_texto", "_motivo", "cuestionario", "seccion", "numero", "pagina", "pregunta_id"])
