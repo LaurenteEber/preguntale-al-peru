@@ -1,4 +1,4 @@
-"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | microdatos | variables | cuestionarios | servir."""
+"""CLI `pap`: revisar | descargar | registrar | verificar | citar | indice | recetas | construir | calcular | foto-pim | almacen | microdatos | variables | fichas | cuestionarios | servir."""
 from __future__ import annotations
 
 import json
@@ -188,7 +188,19 @@ def cmd_microdatos(a, rutas) -> int:
 
 
 def cmd_variables(a, rutas) -> int:
-    """pap variables indexar: ZIP registrados de una encuesta y año → biblioteca/variables/*.parquet (M0-05)."""
+    """pap variables indexar | clasificar: ZIP registrados → biblioteca/variables/*.parquet (M0-05); clase de cada variable (M1-05 tarea 0)."""
+    if a.accion == "clasificar":
+        from .inferencia import clases_indice, indice as indice_variables
+
+        informe = Path(a.informe) if a.informe else None
+        cur = rutas.raiz / "curados" / "inferencia"
+        c = clases_indice.aplicar_al_indice(indice_variables.carpeta_indice(rutas), indice_variables.cargar_clases(cur / "clases_columnas.yaml"),
+                                            clases_indice.cargar_excepciones(cur / "clases_excepciones.yaml"), informe,
+                                            microdatos=rutas.raiz / "biblioteca" / "microdatos" / a.encuesta / str(a.anio),
+                                            reglas=clases_indice.cargar_reglas(cur / "clases_excepciones.yaml"))
+        print("Variables por clase: " + ", ".join(f"{k} {n}" for k, n in c["total"].items()) + f" (total {sum(c['total'].values()):,}).")
+        print("Solo cambió la columna `clase` de variables.parquet." + (f" Informe: {informe}" if informe else ""))
+        return 0
     from .inferencia import indice as indice_variables     # importación diferida: trae polars, duckdb y pyreadstat
 
     ind, rutas_salida = indice_variables.indexar(rutas, a.encuesta, a.anio)
@@ -198,6 +210,38 @@ def cmd_variables(a, rutas) -> int:
           f"({', '.join(p.name for p in rutas_salida.values())}); todas en estado propuesto.")
     print(f"{c['especiales_propuestos']} código(s) especial(es) propuesto(s); {c['textos_distintos']:,} textos de etiqueta distintos; "
           "controles que saltaron: " + (", ".join(f"{k} {n}" for k, n in c["controles"].items() if n) or "ninguno") + ".")
+    return 0
+
+
+def cmd_fichas(a, rutas) -> int:
+    """pap fichas generar | validar | ver <tabla> (M1-06; docs/diseno/fichas.md): fichas de tabla y bloques temáticos."""
+    from .inferencia import fichas     # importación diferida: trae polars y duckdb
+
+    if a.accion == "ver":
+        if not a.tabla:
+            raise PapError("Uso: pap fichas ver <tabla> [--encuesta ENDES] [--anio 2024]")
+        print(fichas.ver(rutas.raiz, a.encuesta, a.anio, a.tabla), end="")
+        return 0
+    if a.accion == "generar":
+        r = fichas.generar(rutas.raiz, a.encuesta, a.anio)
+        print(f"{r['fichas']} ficha(s) y {r['bloques']} bloque(s) de {a.encuesta} {a.anio} en {rutas.relativa(r['carpeta'])} "
+              "(fichas_tabla.parquet, bloques.parquet; la columna bloque_id de variables.parquet).")
+        for t, n in r["bloques_por_tabla"].items():
+            c = r["cobertura"][t]
+            print(f"  {t}: {n} bloque(s), cobertura {c['con_bloque']}/{c['variables']} variables categoria o medida ({c['porcentaje']:.1f} %)")
+        return 0
+    probs, info = fichas.validar(rutas.raiz, a.encuesta, a.anio, con_microdatos=not a.sin_microdatos)
+    for linea in info["edades"]:
+        print("· " + linea)
+    for x in info["no_comprobado"]:
+        print("· NO COMPROBADO: " + x)
+    if probs:
+        print(f"✘ {len(probs)} problema(s):")
+        for p in probs:
+            print("  " + str(p))
+        return 1
+    print(f"✔ {info['fichas']} ficha(s) y {info['bloques']} bloque(s) cumplen las 8 reglas de fichas.md §9"
+          + (" (menos lo no comprobado)." if info["no_comprobado"] else "."))
     return 0
 
 
@@ -794,10 +838,12 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
     s.set_defaults(fn=cmd_microdatos)
 
-    s = sub.add_parser("variables", help="Índice de variables de las encuestas: indexar los ZIP registrados (metadatos de SAV/DTA)")
-    s.add_argument("accion", choices=["indexar"])
-    s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta a indexar")
+    s = sub.add_parser("variables", help="Índice de variables de las encuestas: indexar los ZIP registrados (metadatos de SAV/DTA) o clasificar sus variables")
+    s.add_argument("accion", choices=["indexar", "clasificar"],
+                   help="indexar: ZIP → índice; clasificar: llena la columna `clase` del índice con la regla y las excepciones de curados/inferencia/clases_excepciones.yaml (no toca otra columna ni los Parquet de microdatos)")
+    s.add_argument("--encuesta", required=True, choices=["ENDES"], help="Encuesta del índice")
     s.add_argument("--anio", required=True, type=int, help="Año de la encuesta (p. ej. 2024)")
+    s.add_argument("--informe", help="clasificar: ruta del informe en Markdown con los conteos por clase y por tabla")
     s.set_defaults(fn=cmd_variables)
 
     s = sub.add_parser("cuestionarios", help="Texto de los cuestionarios y diccionarios de la ENDES 2024 y su vínculo con las variables (M1-04)")
@@ -809,6 +855,15 @@ def construir_parser() -> argparse.ArgumentParser:
     s.add_argument("--max-variables", type=int, default=0, help="lote: tope de variables (0 = todas las pendientes)")
     s.add_argument("--sobre-indice", action="store_true", help="aplicar: escribe sobre biblioteca/variables/variables.parquet en vez de una copia")
     s.set_defaults(fn=cmd_cuestionarios)
+
+    s = sub.add_parser("fichas", help="Fichas de tabla y bloques temáticos de una encuesta: generar los Parquet, validarlos (8 reglas) o ver la ficha de una tabla (M1-06)")
+    s.add_argument("accion", choices=["generar", "validar", "ver"],
+                   help="generar: arma fichas_tabla.parquet, bloques.parquet y la columna bloque_id del índice; validar: las 8 reglas de docs/diseno/fichas.md §9 (sale con 1 si alguna falla); ver: la ficha de una tabla en texto")
+    s.add_argument("tabla", nargs="?", help="ver: nombre de la tabla (p. ej. RECH6)")
+    s.add_argument("--encuesta", default="ENDES", choices=["ENDES"], help="Encuesta (por defecto ENDES)")
+    s.add_argument("--anio", type=int, default=2024, help="Año de la encuesta (por defecto 2024)")
+    s.add_argument("--sin-microdatos", action="store_true", help="validar: no comparar la edad declarada con la de los microdatos (regla 6); lo dice en la salida")
+    s.set_defaults(fn=cmd_fichas)
 
     s = sub.add_parser("inferencia", help="Motor de inferencia: validar las tablas curadas y las recetas de curados/inferencia/, o calcular una receta")
     s.add_argument("accion", choices=["validar-tablas", "validar-recetas", "receta"])

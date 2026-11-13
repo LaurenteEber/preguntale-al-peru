@@ -165,5 +165,11 @@ def test_los_archivos_escritos_son_los_del_indice_calculado(indice):
     for nombre in ("archivos", "variables", "categorias"):
         ruta = INDICE / f"{nombre}.parquet"
         assert ruta.exists(), f"falta {ruta}: corre `pap variables indexar --encuesta ENDES --anio 2024`"
-        assert pl.read_parquet(ruta).equals(getattr(indice, nombre).sort("archivo") if nombre == "archivos" else
-                                            getattr(indice, nombre).sort("var_id") if nombre == "variables" else getattr(indice, nombre))
+        calculado = (getattr(indice, nombre).sort("archivo") if nombre == "archivos" else
+                     getattr(indice, nombre).sort("var_id") if nombre == "variables" else getattr(indice, nombre))
+        escrito = pl.read_parquet(ruta)
+        # Columnas que agregan otros comandos al índice ya escrito: `bloque_id` (pap fichas generar, M1-06) y las tres de
+        # `pap cuestionarios aplicar` (M1-04). Las demás, incluida `clase` (M1-05 tarea 0), son exactamente las que da la reindexación.
+        extras = set(escrito.columns) - set(calculado.columns)
+        assert extras <= {"bloque_id", "pregunta_ref", "vinculo_metodo", "sin_pregunta"}, extras
+        assert escrito.select(calculado.columns).equals(calculado)

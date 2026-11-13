@@ -19,10 +19,57 @@
 #   Programas_Sociales_x_Hogar son 1:0..1 (34 252 de 37 117; 34 018 de 37 390 las dos últimas).
 # Una unión que dejaría filas sin pareja NO se declara: REC93DVdisciplina no se une a REC0111 por CASEID (341 de sus
 # 15 462 filas no tienen a esa mujer en REC0111; consultas_al_dueno.md, C-M0-05-2); sí a RECH0 por HHID.
-version: 0.2.0
+# M1-06 (tarea 5, versión 0.3.0): `citas` y `llaves_cita` citan el documento n.º 11 del INEI «Identificadores de las bases de datos» (recurso
+# endes-2024-identificadores-bd; PDF «2024-5-Ident-de-las-bd.pdf», 2 páginas: una tabla de 34 filas con los identificadores principales y
+# alternos, y las «Precisiones») para las llaves y las uniones; cada unión lleva en `cita` la clave de `citas` que la respalda. Las llaves y
+# uniones se siguen comprobando contra los datos (prueba de este archivo). Resultado de la lectura (evidencia/m1-06_identificadores.md):
+# las 34 tablas coinciden con el documento salvo CSALUD01 (el documento da HHID + QSNUMERO; aquí HHID, única en los datos: consulta
+# C-M1-06-1) y la unión REC0111 → RECH1 por V003, que el documento no menciona (queda `solo_datos`).
+version: 0.3.0
 fecha: "2026-11-12"
 encuesta: ENDES
 anio: 2024
+citas:
+  doc11_hhid: "Documento n.º 11, «Precisiones»: «HHID: Identificación a nivel hogar. HHID = HV001 (conglomerado) + HV002 (vivienda) + HV002A (hogar)»; la tabla de identificadores da HHID como identificador principal de RECH0, RECH23 y Programas Sociales x Hogar, y como primer componente de las demás tablas de hogar."
+  doc11_hvidx: "Documento n.º 11, «Precisiones»: «HVIDX: Identificación de número de línea del entrevistado(a)» y HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801; la tabla da HHID + HVIDX para RECH1 y los PS_*."
+  doc11_caseid: "Documento n.º 11, «Precisiones»: «CASEID: Identificación a nivel mujer»; la tabla da CASEID como identificador principal de REC0111, RE223132, REC42, RE516171, RE758081, REC84DV y REC91, y CASEID + el índice del hijo (BIDX = MIDX = HIDX = HWIDX = IDX94 = IDX95 = QCOL93) para las tablas por hijo."
+  solo_datos: "El documento n.º 11 no menciona esta unión (V003, número de línea de la entrevistada); queda comprobada solo contra los datos (REC0111 → RECH1: todas las filas encuentran su pareja)."
+llaves_cita:
+  # tabla: fila del documento n.º 11 (tabla de identificadores) y las llaves alternas que da
+  RECH0: {fila: 1}
+  RECHM: {fila: 2}
+  RECH1: {fila: 3}
+  RECH4: {fila: 4}
+  RECH23: {fila: 5}
+  RECH5: {fila: 6}
+  RECH6: {fila: 7}
+  Programas_Sociales_x_Hogar: {fila: 8}
+  PS_BECA18: {fila: 9}
+  PS_COMEDOR: {fila: 10}
+  PS_PENSION65: {fila: 11}
+  PS_QALIWARMA: {fila: 12}
+  PS_WAWAWASI: {fila: 13}
+  PS_VL: {fila: 14}
+  PS_TRABAJA: {fila: 15}
+  REC0111: {fila: 16}
+  REC21: {fila: 17, alternas: ["CASEID + BORD (única en los datos)", "CASEID + B16 (no es única en los datos: B16 = 0 se repite)"]}
+  RE223132: {fila: 18}
+  REC41: {fila: 19}
+  REC42: {fila: 20}
+  REC43: {fila: 21}
+  REC44: {fila: 22}
+  RE516171: {fila: 23}
+  RE758081: {fila: 24}
+  REC82: {fila: 25}
+  REC83: {fila: 26}
+  REC84DV: {fila: 27}
+  REC91: {fila: 28}
+  REC93DVdisciplina: {fila: 29, alternas: ["CASEID + Q1035NO (única en los datos)"]}
+  REC94: {fila: 30}
+  REC95: {fila: 31, alternas: ["CASEID + Q452 (única en los datos)"]}
+  DIT: {fila: 32, alternas: ["CASEID + BORD (única en los datos)"]}
+  CSALUD01: {fila: 33, nota: "El documento da HHID + QSNUMERO; aquí la llave es HHID, única en los datos (34 018 filas, 34 018 hogares). Consulta C-M1-06-1."}
+  CSALUD08: {fila: 34}
 archivos:
   RECH0: {unidad: hogar, llave: [HHID]}
   RECH1: {unidad: persona_del_hogar, llave: [HHID, HVIDX]}
@@ -59,47 +106,47 @@ archivos:
   RE758081: {unidad: mujer, llave: [CASEID]}
   DIT: {unidad: hijo_de_mujer, llave: [CASEID, BIDX]}
 relaciones:
-  - {hijo: RECH1, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: RECH23, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "1:1"}
-  - {hijo: RECH4, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: RECH5, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: RECH6, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: RECHM, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: CSALUD01, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: CSALUD08, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: Programas_Sociales_x_Hogar, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: PS_BECA18, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: PS_COMEDOR, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: PS_PENSION65, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: PS_QALIWARMA, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: PS_TRABAJA, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: PS_VL, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: PS_WAWAWASI, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: REC0111, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: REC93DVdisciplina, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: RECH6, padre: RECH1, por: [[HHID, HHID], [HC0, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: PS_BECA18, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: PS_COMEDOR, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: PS_PENSION65, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: PS_QALIWARMA, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: PS_TRABAJA, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: PS_VL, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: PS_WAWAWASI, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: CSALUD08, padre: RECH1, por: [[HHID, HHID], [QS801, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: CSALUD08, padre: CSALUD01, por: [[HHID, HHID]], cardinalidad: "n:1"}
-  - {hijo: REC0111, padre: RECH1, por: [[HHID, HHID], [V003, HVIDX]], cardinalidad: "n:1"}
-  - {hijo: REC21, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC41, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC42, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1"}
-  - {hijo: REC43, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC44, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC82, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC83, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC84DV, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC91, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC94, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: REC95, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
-  - {hijo: RE223132, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1"}
-  - {hijo: RE516171, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1"}
-  - {hijo: RE758081, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1"}
-  - {hijo: DIT, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1"}
+  - {hijo: RECH1, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: RECH23, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "1:1", cita: doc11_hhid}
+  - {hijo: RECH4, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: RECH5, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: RECH6, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: RECHM, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: CSALUD01, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: CSALUD08, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: Programas_Sociales_x_Hogar, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: PS_BECA18, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: PS_COMEDOR, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: PS_PENSION65, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: PS_QALIWARMA, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: PS_TRABAJA, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: PS_VL, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: PS_WAWAWASI, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: REC0111, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: REC93DVdisciplina, padre: RECH0, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: RECH6, padre: RECH1, por: [[HHID, HHID], [HC0, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: PS_BECA18, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: PS_COMEDOR, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: PS_PENSION65, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: PS_QALIWARMA, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: PS_TRABAJA, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: PS_VL, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: PS_WAWAWASI, padre: RECH1, por: [[HHID, HHID], [HVIDX, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: CSALUD08, padre: RECH1, por: [[HHID, HHID], [QS801, HVIDX]], cardinalidad: "n:1", cita: doc11_hvidx}
+  - {hijo: CSALUD08, padre: CSALUD01, por: [[HHID, HHID]], cardinalidad: "n:1", cita: doc11_hhid}
+  - {hijo: REC0111, padre: RECH1, por: [[HHID, HHID], [V003, HVIDX]], cardinalidad: "n:1", cita: solo_datos}
+  - {hijo: REC21, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC41, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC42, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: REC43, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC44, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC82, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC83, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC84DV, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC91, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC94, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: REC95, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}
+  - {hijo: RE223132, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: RE516171, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: RE758081, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "1:0..1", cita: doc11_caseid}
+  - {hijo: DIT, padre: REC0111, por: [[CASEID, CASEID]], cardinalidad: "n:1", cita: doc11_caseid}

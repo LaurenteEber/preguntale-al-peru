@@ -1,0 +1,1025 @@
+# Fichas de tabla de la ENDES 2024: los campos a mano (M1-06, tarea 2; docs/diseno/fichas.md §5.1).
+# Las escribió el agente (estado `propuesto`) leyendo el diccionario de cada tabla, los cuestionarios (M1-04) y el documento n.º 11
+# «Identificadores de las bases de datos» (recurso endes-2024-identificadores-bd); la población (edad y sexo) se comprobó contra los datos
+# con `pap fichas validar` (regla 6). `variable_edad` (agregado, M1-06-s3) es la columna de edad con que se comprueba. Lo que no aplica va
+# vacío, nunca inventado. Los derivados (módulo, huella, llave, uniones, diseño, bloques…) los arma `pap fichas generar`. El auditor-agente
+# revisa cada ficha contra el diccionario (evidencia/m1-06_revision.md) y el dueño da el visto por lote.
+version: 0.1.0
+fecha: '2026-11-12'
+encuesta: ENDES
+tipo_fuente: muestra
+vocabularios:
+  cuestionario:
+  - hogar
+  - individual
+  - salud
+  sujeto:
+  - hogar
+  - persona
+  - adulto
+  - mujer
+  - madre
+  - embarazo
+  - nino
+  - hermano
+tablas:
+  RECH0:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Hogares de la muestra
+    descripcion: 'Un registro por hogar: identificación, tamaño, número de personas elegibles, resultado de la entrevista y datos de la muestra.'
+    cuestionario: hogar
+    secciones:
+    - Sección 1. Características de los miembros del hogar
+    tipo_tabla: base
+    poblacion:
+      texto: hogares particulares (residentes habituales y quienes pernoctaron la noche anterior)
+      sujeto: hogar
+    quien_tiene_fila: cada hogar de la muestra
+    informante: persona adulta del hogar que responde por todos
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-hogar
+      miembro: Diccionario - RECH0.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 1: pp. 2–6'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 1 de la tabla de identificadores
+    estado: propuesto
+  RECHM:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Muertes en el hogar desde enero de 2019
+    descripcion: 'Personas que vivían en el hogar y fallecieron: sexo, edad al morir, mes y año, y si fue por causas relacionadas con el embarazo.'
+    cuestionario: hogar
+    secciones:
+    - Sección 1. Características de los miembros del hogar
+    tipo_tabla: lista
+    poblacion:
+      texto: personas del hogar fallecidas (mortalidad general y materna)
+      sujeto: persona
+      sexo: ambos
+      condicion: fallecidas desde enero de 2019
+    quien_tiene_fila: cada persona que vivía en el hogar y falleció desde enero de 2019 (hasta 4 por hogar)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-hogar
+      miembro: Diccionario - RECHM.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 1: p. 6'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 2 de la tabla de identificadores
+    estado: propuesto
+  RECH1:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Personas del hogar
+    descripcion: 'Listado de las personas del hogar: parentesco, sexo, edad, educación, asistencia a la escuela, orden de la madre y del padre.'
+    cuestionario: hogar
+    secciones:
+    - Sección 1. Características de los miembros del hogar
+    tipo_tabla: lista
+    poblacion:
+      texto: todas las personas del listado del hogar
+      sujeto: persona
+      edad_min: 0
+      edad_unidad: anios
+      sexo: ambos
+      condicion: residentes habituales y visitantes que pernoctaron
+      variable_edad: HV105
+    quien_tiene_fila: cada persona del listado del hogar
+    informante: persona adulta del hogar que responde por todos
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-hogar
+      miembro: Diccionario - RECH1.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 1: pp. 2–6'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 3 de la tabla de identificadores
+    estado: propuesto
+  RECH4:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Seguro de salud, actividad y educación de las personas del hogar
+    descripcion: 'Por persona del hogar: qué seguros de salud tiene, actividad de la última semana, nivel de educación aprobado y al que asiste.'
+    cuestionario: hogar
+    secciones:
+    - Sección 1. Características de los miembros del hogar
+    tipo_tabla: detalle
+    poblacion:
+      texto: todas las personas del listado del hogar
+      sujeto: persona
+      sexo: ambos
+    quien_tiene_fila: cada persona del listado del hogar
+    informante: persona adulta del hogar que responde por todos
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-hogar
+      miembro: Diccionario - RECH4.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 1: pp. 2–6'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 4 de la tabla de identificadores
+    estado: propuesto
+  RECH23:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Vivienda, servicios y bienes del hogar
+    descripcion: Características de la vivienda (agua, saneamiento, materiales, combustible), bienes del hogar, índice de riqueza y región natural.
+    cuestionario: hogar
+    secciones:
+    - Sección 2. Características de la vivienda
+    - Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+    tipo_tabla: detalle
+    poblacion:
+      texto: hogares particulares (residentes habituales y quienes pernoctaron la noche anterior)
+      sujeto: hogar
+    quien_tiene_fila: cada hogar de la muestra
+    informante: persona adulta del hogar; la prueba de yodo y de cloro la hace el personal de campo
+    modo: mixto
+    avisos: []
+    documentos:
+    - recurso: endes-2024-vivienda
+      miembro: Diccionario - RECH23.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 2: pp. 7–10; Sección 6: pp. 15–16'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 5 de la tabla de identificadores
+    estado: propuesto
+  RECH5:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Peso, talla, hemoglobina y VIH de mujeres
+    descripcion: 'Mediciones de las mujeres del hogar: edad, peso, talla, hemoglobina (ajustada por altitud), nivel de anemia, resultado de la
+      prueba de VIH y educación.'
+    cuestionario: hogar
+    secciones:
+    - Sección 4. Peso y talla (formulario de tabla)
+    - Sección 5. Prueba de hemoglobina
+    tipo_tabla: medicion
+    poblacion:
+      texto: mujeres de 12 a 49 años del hogar
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: listadas en el hogar
+      variable_edad: HA1
+    quien_tiene_fila: cada mujer de 12 a 49 años listada en el hogar, con o sin medición
+    informante: personal de campo (medición)
+    modo: medido
+    avisos: []
+    documentos:
+    - recurso: endes-2024-anemia
+      miembro: Diccionario - RECH5.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 5: p. 14'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 6 de la tabla de identificadores
+    estado: propuesto
+  RECH6:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Peso, talla y hemoglobina de niñas y niños
+    descripcion: 'Mediciones de los menores del hogar: edad en meses, peso, talla, indicadores de talla y peso para la edad, hemoglobina (ajustada
+      por altitud) y nivel de anemia.'
+    cuestionario: hogar
+    secciones:
+    - Sección 4. Peso y talla (formulario de tabla)
+    - Sección 5. Prueba de hemoglobina
+    tipo_tabla: medicion
+    poblacion:
+      texto: niñas y niños menores de 5 años (0 a 59 meses)
+      sujeto: nino
+      edad_min: 0
+      edad_max: 59
+      edad_unidad: meses
+      sexo: ambos
+      condicion: listados en el hogar
+      variable_edad: HC1
+    quien_tiene_fila: todos los menores de 5 años listados, con o sin medición
+    informante: personal de campo (medición)
+    modo: medido
+    avisos:
+    - La ficha técnica (p. 9) describe el registro como «niños menores de 6 años»; en los datos de 2024 las edades van de 0 a 59 meses (menores
+      de 5 años).
+    documentos:
+    - recurso: endes-2024-anemia
+      miembro: Diccionario - RECH6.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 5: p. 14'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 7 de la tabla de identificadores
+    estado: propuesto
+  Programas_Sociales_x_Hogar:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Programas sociales del hogar
+    descripcion: Si algún miembro del hogar es beneficiario de Beca 18, Trabaja Perú, Juntos, Pensión 65, Vaso de Leche, comedor popular o Wawa
+      Wasi / Cuna Más.
+    cuestionario: hogar
+    secciones:
+    - Sección 3A. Programas sociales no alimentarios
+    - Sección 3.B Programas sociales alimentarios
+    tipo_tabla: detalle
+    poblacion:
+      texto: hogares particulares (residentes habituales y quienes pernoctaron la noche anterior)
+      sujeto: hogar
+    quien_tiene_fila: cada hogar de la muestra con la sección de programas sociales (34 018 de 37 390)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-programas-sociales
+      miembro: Diccionario - Programas Sociales x Hogar.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 3A: p. 11; Sección 3.B: p. 12'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 8 de la tabla de identificadores
+    estado: propuesto
+  PS_BECA18:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Beneficiarios de Beca 18
+    descripcion: 'Personas del hogar que son beneficiarias de Beca 18: desde cuándo y quién más del hogar lo es.'
+    cuestionario: hogar
+    secciones:
+    - Sección 3A. Programas sociales no alimentarios
+    tipo_tabla: detalle
+    poblacion:
+      texto: personas del hogar beneficiarias de Beca 18
+      sujeto: persona
+      sexo: ambos
+    quien_tiene_fila: cada persona del hogar que recibe Beca 18 (puede haber varias por hogar)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-programas-sociales
+      miembro: Diccionario - PS_BECA18.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 3A: p. 11'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 9 de la tabla de identificadores
+    estado: propuesto
+  PS_COMEDOR:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Beneficiarios de comedor popular
+    descripcion: 'Personas del hogar que son beneficiarias de comedor popular: desde cuándo y quién más del hogar lo es.'
+    cuestionario: hogar
+    secciones:
+    - Sección 3.B Programas sociales alimentarios
+    tipo_tabla: detalle
+    poblacion:
+      texto: personas del hogar beneficiarias de comedor popular
+      sujeto: persona
+      sexo: ambos
+    quien_tiene_fila: cada persona del hogar que recibe comedor popular (puede haber varias por hogar)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-programas-sociales
+      miembro: Diccionario - PS_COMEDOR.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 3.B: p. 12'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 10 de la tabla de identificadores
+    estado: propuesto
+  PS_PENSION65:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Beneficiarios de Pensión 65
+    descripcion: 'Personas del hogar que son beneficiarias de Pensión 65: desde cuándo y quién más del hogar lo es.'
+    cuestionario: hogar
+    secciones:
+    - Sección 3A. Programas sociales no alimentarios
+    tipo_tabla: detalle
+    poblacion:
+      texto: personas del hogar beneficiarias de Pensión 65
+      sujeto: persona
+      sexo: ambos
+    quien_tiene_fila: cada persona del hogar que recibe Pensión 65 (puede haber varias por hogar)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-programas-sociales
+      miembro: Diccionario - PS_PENSION65.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 3A: p. 11'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 11 de la tabla de identificadores
+    estado: propuesto
+  PS_QALIWARMA:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Beneficiarios de Qali Warma
+    descripcion: 'Personas del hogar que son beneficiarias de Qali Warma: desde cuándo y quién más del hogar lo es.'
+    cuestionario: hogar
+    secciones:
+    - Sección 3.B Programas sociales alimentarios
+    tipo_tabla: detalle
+    poblacion:
+      texto: personas del hogar beneficiarias de Qali Warma
+      sujeto: persona
+      sexo: ambos
+    quien_tiene_fila: cada persona del hogar que recibe Qali Warma (puede haber varias por hogar)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-programas-sociales
+      miembro: Diccionario - PS_QALIWARMA.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 3.B: p. 12'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 12 de la tabla de identificadores
+    estado: propuesto
+  PS_TRABAJA:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Beneficiarios de Trabaja Perú
+    descripcion: 'Personas del hogar que son beneficiarias de Trabaja Perú: desde cuándo y quién más del hogar lo es.'
+    cuestionario: hogar
+    secciones:
+    - Sección 3A. Programas sociales no alimentarios
+    tipo_tabla: detalle
+    poblacion:
+      texto: personas del hogar beneficiarias de Trabaja Perú
+      sujeto: persona
+      sexo: ambos
+    quien_tiene_fila: cada persona del hogar que recibe Trabaja Perú (puede haber varias por hogar)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-programas-sociales
+      miembro: Diccionario - PS_TRABAJA.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 3A: p. 11'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 15 de la tabla de identificadores
+    estado: propuesto
+  PS_VL:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Beneficiarios de Vaso de Leche
+    descripcion: 'Personas del hogar que son beneficiarias de Vaso de Leche: desde cuándo y quién más del hogar lo es.'
+    cuestionario: hogar
+    secciones:
+    - Sección 3.B Programas sociales alimentarios
+    tipo_tabla: detalle
+    poblacion:
+      texto: personas del hogar beneficiarias de Vaso de Leche
+      sujeto: persona
+      sexo: ambos
+    quien_tiene_fila: cada persona del hogar que recibe Vaso de Leche (puede haber varias por hogar)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-programas-sociales
+      miembro: Diccionario - PS_VL.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 3.B: p. 12'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 14 de la tabla de identificadores
+    estado: propuesto
+  PS_WAWAWASI:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Beneficiarios de Wawa Wasi / Cuna Más
+    descripcion: 'Personas del hogar que son beneficiarias de Wawa Wasi / Cuna Más: desde cuándo y quién más del hogar lo es.'
+    cuestionario: hogar
+    secciones:
+    - Sección 3.B Programas sociales alimentarios
+    tipo_tabla: detalle
+    poblacion:
+      texto: personas del hogar beneficiarias de Wawa Wasi / Cuna Más
+      sujeto: persona
+      sexo: ambos
+    quien_tiene_fila: cada persona del hogar que recibe Wawa Wasi / Cuna Más (puede haber varias por hogar)
+    informante: persona adulta del hogar
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-programas-sociales
+      miembro: Diccionario - PS_WAWAWASI.pdf
+    - recurso: endes-2024-cuestionario-hogar
+      paginas: 'Sección 3.B: p. 12'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 13 de la tabla de identificadores
+    estado: propuesto
+  REC0111:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: 'Mujeres de 12 a 49 años: datos básicos'
+    descripcion: 'Registro de cada mujer elegible: identificación, resultado de la entrevista individual, edad, educación, religión, etnicidad,
+      vivienda y riqueza del hogar.'
+    cuestionario: individual
+    secciones:
+    - Sección 1. Antecedentes de la entrevistada
+    tipo_tabla: base
+    poblacion:
+      texto: mujeres de 12 a 49 años (residentes habituales o visitantes que pernoctaron)
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: elegibles para la entrevista individual
+      variable_edad: V012
+    quien_tiene_fila: cada mujer elegible, haya completado o no la entrevista (la completaron 34 252 de 37 117)
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-datos-basicos-mef
+      miembro: Diccionario - REC0111.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 1: pp. 5–7'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 16 de la tabla de identificadores
+    estado: propuesto
+  REC21:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Historia de nacimientos de la mujer
+    descripcion: 'Un registro por cada hijo nacido vivo de la mujer: fecha de nacimiento, sexo, si vive, edad actual o a la muerte, intervalo
+      y si está listado en el hogar.'
+    cuestionario: individual
+    secciones:
+    - Sección 2. Reproducción
+    tipo_tabla: lista
+    poblacion:
+      texto: hijos nacidos vivos de las mujeres de 12 a 49 años
+      sujeto: nino
+      sexo: ambos
+      condicion: nacidos vivos de la mujer entrevistada, de cualquier año
+    quien_tiene_fila: cada hijo nacido vivo de cada mujer con historia de nacimientos
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-historia-nacimiento
+      miembro: Diccionario - REC21.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 2: pp. 8–14'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 17 de la tabla de identificadores
+    estado: propuesto
+  REC41:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Embarazo, parto y lactancia de los nacimientos de los últimos cinco años
+    descripcion: Control prenatal, atención del parto, lactancia, amenorrea y abstinencia, y control después del parto, de cada uno de los nacimientos
+      de los últimos cinco años (hasta cuatro por mujer; MIDX va de 1 a 4, empezando por el último nacimiento).
+    cuestionario: individual
+    secciones:
+    - Sección 4A. Embarazo, parto, puerperio y lactancia
+    tipo_tabla: detalle
+    poblacion:
+      texto: hijos nacidos vivos en los últimos cinco años
+      sujeto: nino
+      edad_min: 0
+      edad_max: 59
+      edad_unidad: meses
+      sexo: ambos
+      condicion: nacidos en los últimos cinco años de las mujeres entrevistadas
+    quien_tiene_fila: cada nacimiento de los últimos cinco años de cada mujer (19 751)
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-embarazo-parto
+      miembro: Diccionario - REC41.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 4A: pp. 22–30'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 19 de la tabla de identificadores
+    estado: propuesto
+  REC42:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: 'Mujer: lactancia actual, mediciones y conocimientos varios'
+    descripcion: 'Datos de la mujer: si amamanta ahora, alimentos que dio ayer al último hijo, peso y talla de la mujer, hemoglobina, mosquiteros,
+      tuberculosis, seguro de salud y otros.'
+    cuestionario: individual
+    secciones:
+    - Sección 4A. Embarazo, parto, puerperio y lactancia
+    - Sección 4B. Inmunización y salud
+    tipo_tabla: detalle
+    poblacion:
+      texto: mujeres de 12 a 49 años con entrevista individual completa
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: entrevista individual completa
+      variable_edad: V447A
+    quien_tiene_fila: cada mujer con entrevista individual completa (34 252)
+    informante: la mujer entrevistada; peso, talla y hemoglobina los mide el personal de campo
+    modo: mixto
+    avisos: []
+    documentos:
+    - recurso: endes-2024-inmunizacion-salud
+      miembro: Diccionario - REC42.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 4A: pp. 22–30; Sección 4B: pp. 31–55'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 20 de la tabla de identificadores
+    estado: propuesto
+  REC43:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Vacunas, diarrea, fiebre y tos de niñas y niños
+    descripcion: Carné y vacunas, diarrea en las dos últimas semanas y su tratamiento, fiebre y tos, vitamina A, hierro y desparasitación de cada
+      nacimiento de los últimos cinco años (HIDX va de 1 a 4, empezando por el último).
+    cuestionario: individual
+    secciones:
+    - Sección 4B. Inmunización y salud
+    tipo_tabla: detalle
+    poblacion:
+      texto: hijos menores de 5 años de las mujeres entrevistadas
+      sujeto: nino
+      edad_min: 0
+      edad_max: 59
+      edad_unidad: meses
+      sexo: ambos
+      condicion: nacidos en los últimos cinco años
+    quien_tiene_fila: cada hijo menor de 5 años de cada mujer entrevistada (19 751)
+    informante: la madre
+    modo: declarado
+    avisos:
+    - 'La etiqueta del archivo de H12A está dañada («Busco D97:D148 para la diarrea: hospital MINSA»; debería decir «Buscó tratamiento para la
+      diarrea: hospital MINSA»). Es la etiqueta original del INEI: no se corrige en el índice (etiqueta_original), solo se anota.'
+    documentos:
+    - recurso: endes-2024-inmunizacion-salud
+      miembro: Diccionario - REC43.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 4B: pp. 31–55'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 21 de la tabla de identificadores
+    estado: propuesto
+  REC44:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Peso, talla y hemoglobina de los hijos de la mujer
+    descripcion: 'Mediciones de los hijos menores de 5 años de las mujeres entrevistadas: edad, peso, talla, indicadores de crecimiento y hemoglobina.'
+    cuestionario: individual
+    secciones:
+    - Sección 4B. Inmunización y salud
+    tipo_tabla: medicion
+    poblacion:
+      texto: hijos menores de 5 años de las mujeres entrevistadas
+      sujeto: nino
+      edad_min: 0
+      edad_max: 59
+      edad_unidad: meses
+      sexo: ambos
+      condicion: nacidos en los últimos cinco años
+      variable_edad: HW1
+    quien_tiene_fila: cada hijo menor de 5 años de cada mujer entrevistada, con o sin medición (19 751)
+    informante: personal de campo (medición)
+    modo: medido
+    avisos: []
+    documentos:
+    - recurso: endes-2024-anemia
+      miembro: Diccionario - REC44.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 4B: pp. 31–55'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 22 de la tabla de identificadores
+    estado: propuesto
+  REC82:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Calendario mensual de la mujer
+    descripcion: 'Una fila por cada columna del calendario de la mujer (mes a mes): historia de embarazos, anticoncepción y otros hechos.'
+    cuestionario: individual
+    secciones:
+    - Calendario de la mujer
+    tipo_tabla: calendario
+    poblacion:
+      texto: mujeres de 12 a 49 años con entrevista individual completa
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: entrevista individual completa
+    quien_tiene_fila: cada columna del calendario de cada mujer entrevistada (171 260 filas de 34 252 mujeres)
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos:
+    - La columna VCAL junta todo el calendario en un solo texto; no se separa mes a mes en el índice.
+    documentos:
+    - recurso: endes-2024-sida-condon
+      miembro: Diccionario - REC82.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Calendario: pp. 89–90'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 25 de la tabla de identificadores
+    estado: propuesto
+  REC83:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Hermanas y hermanos de la mujer (mortalidad materna)
+    descripcion: 'Una fila por hermana u hermano de la mujer: sexo, si vive, edad actual o al morir, año de la muerte y si fue por embarazo o
+      parto.'
+    cuestionario: individual
+    secciones:
+    - Sección 9. Mortalidad materna
+    tipo_tabla: lista
+    poblacion:
+      texto: hermanas y hermanos de las mujeres entrevistadas
+      sujeto: hermano
+      sexo: ambos
+    quien_tiene_fila: cada hermana o hermano nacido de la misma madre que la mujer (141 805 de 33 276 mujeres)
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-mortalidad-materna-violencia
+      miembro: Diccionario - REC83.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 9: pp. 70–71'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 26 de la tabla de identificadores
+    estado: propuesto
+  REC84DV:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Violencia contra la mujer
+    descripcion: Violencia emocional, física y sexual de la pareja y de otras personas, consecuencias, búsqueda de ayuda y violencia en el embarazo.
+    cuestionario: individual
+    secciones:
+    - Sección 10. Violencia doméstica
+    tipo_tabla: detalle
+    poblacion:
+      texto: mujeres de 12 a 49 años con entrevista individual completa (se contesta en las seleccionadas para el módulo de violencia)
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: seleccionadas para el módulo de violencia familiar
+    quien_tiene_fila: cada mujer con entrevista individual completa (34 252); las preguntas de violencia las contestan 20 398
+    informante: la mujer entrevistada (a solas)
+    modo: declarado
+    avisos:
+    - 'La tabla trae 34 252 filas pero solo 20 398 tienen respuestas de violencia: las demás no fueron seleccionadas para el módulo.'
+    - Las mujeres seleccionadas para el módulo tienen de 15 a 49 años (observado en los datos), aunque la tabla describe a las de 12 a 49.
+    documentos:
+    - recurso: endes-2024-mortalidad-materna-violencia
+      miembro: Diccionario - REC84DV.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 10: pp. 72–81'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 27 de la tabla de identificadores
+    estado: propuesto
+  REC91:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: 'Mujer: módulo de preguntas adicionales'
+    descripcion: 'Preguntas propias de la ENDES 2024: educación, lengua materna y etnia, control del embarazo y seguro, anticoncepción, programas
+      sociales, lavado de manos, alimentación del niño, ITS, violencia y castigo infantil.'
+    cuestionario: individual
+    secciones:
+    - Varias secciones del cuestionario individual
+    tipo_tabla: detalle
+    poblacion:
+      texto: mujeres de 12 a 49 años (residentes habituales o visitantes que pernoctaron)
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: elegibles para la entrevista individual
+    quien_tiene_fila: cada mujer elegible (37 117), haya completado o no la entrevista
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos:
+    - El tema de la tabla era «por confirmar» en fichas.md §8; se reparte en bloques de salud, familia, violencia e identidad.
+    documentos:
+    - recurso: endes-2024-datos-basicos-mef
+      miembro: Diccionario - REC91.pdf
+    - recurso: endes-2024-cuestionario-individual
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 28 de la tabla de identificadores
+    estado: propuesto
+  REC93DVdisciplina:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Disciplina y castigo de los hijos
+    descripcion: Quién corrige a cada niño, cómo, y si el niño estuvo presente en situaciones de violencia en el hogar.
+    cuestionario: individual
+    secciones:
+    - Sección 10. Violencia doméstica
+    tipo_tabla: detalle
+    poblacion:
+      texto: hijos de las mujeres entrevistadas sobre los que se pregunta la disciplina
+      sujeto: nino
+      sexo: ambos
+    quien_tiene_fila: cada niño sobre el que se preguntó la disciplina (15 462 filas de 13 938 mujeres)
+    informante: la madre
+    modo: declarado
+    avisos:
+    - '341 filas no tienen a la mujer en REC0111 (C-M0-05-2): se excluyen de todo cálculo de disciplina infantil, con nota (decisión del dueño,
+      12/11/2026).'
+    documentos:
+    - recurso: endes-2024-disciplina-infantil
+      miembro: Diccionario - REC93DVdisciplina.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 10: pp. 72–81'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 29 de la tabla de identificadores
+    estado: propuesto
+  REC94:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Control prenatal, lactancia y alimentación de los nacimientos de los últimos cinco años
+    descripcion: 'De cada nacimiento de los últimos cinco años (IDX94 va de 1 a 4, empezando por el último): meses de embarazo en los controles
+      y pruebas, hierro, complicaciones del parto, seguro, inscripción del niño, lactancia y preparación de alimentos.'
+    cuestionario: individual
+    secciones:
+    - Sección 4A. Embarazo, parto, puerperio y lactancia
+    tipo_tabla: detalle
+    poblacion:
+      texto: hijos nacidos vivos en los últimos cinco años
+      sujeto: nino
+      edad_min: 0
+      edad_max: 59
+      edad_unidad: meses
+      sexo: ambos
+      condicion: nacidos en los últimos cinco años
+    quien_tiene_fila: cada nacimiento de los últimos cinco años de cada mujer (19 751)
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-embarazo-parto
+      miembro: Diccionario - REC94.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 4A: pp. 22–30'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 30 de la tabla de identificadores
+    estado: propuesto
+  REC95:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Vacunas con fechas, controles de crecimiento, anemia y suplementos
+    descripcion: Fechas de cada vacuna del carné, controles de crecimiento (CRED), diarrea día a día, hierro y micronutrientes y sus entregas.
+    cuestionario: individual
+    secciones:
+    - Sección 4B. Inmunización y salud
+    tipo_tabla: detalle
+    poblacion:
+      texto: hijos menores de 5 años de las mujeres entrevistadas
+      sujeto: nino
+      edad_min: 0
+      edad_max: 59
+      edad_unidad: meses
+      sexo: ambos
+      condicion: nacidos en los últimos cinco años
+    quien_tiene_fila: cada hijo menor de 5 años de cada mujer entrevistada (19 751)
+    informante: la madre; las fechas se copian del carné
+    modo: mixto
+    avisos: []
+    documentos:
+    - recurso: endes-2024-inmunizacion-salud
+      miembro: Diccionario - REC95.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 4B: pp. 31–55'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 31 de la tabla de identificadores
+    estado: propuesto
+  DIT:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Desarrollo infantil temprano
+    descripcion: Preguntas sobre juego, lenguaje, comportamiento y materiales de aprendizaje en casa para niñas y niños de 9 a 71 meses.
+    cuestionario: individual
+    secciones:
+    - Sección 4B. Inmunización y salud
+    tipo_tabla: detalle
+    poblacion:
+      texto: niñas y niños de 9 a 71 meses
+      sujeto: nino
+      edad_min: 9
+      edad_max: 71
+      edad_unidad: meses
+      sexo: ambos
+      condicion: hijos de las mujeres entrevistadas
+      variable_edad: QI478
+    quien_tiene_fila: cada niña o niño de 9 a 71 meses seleccionado (19 245)
+    informante: la madre o cuidadora
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-inmunizacion-salud
+      miembro: Diccionario - DIT.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 4B: pp. 31–55'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 32 de la tabla de identificadores
+    estado: propuesto
+  RE223132:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Fecundidad, embarazo actual y anticoncepción
+    descripcion: Hijos nacidos, embarazo actual y pérdidas, conocimiento y uso de métodos anticonceptivos, fuentes y razones para no usarlos.
+    cuestionario: individual
+    secciones:
+    - Sección 2. Reproducción
+    - Sección 3. Anticoncepción
+    tipo_tabla: detalle
+    poblacion:
+      texto: mujeres de 12 a 49 años con entrevista individual completa
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: entrevista individual completa
+    quien_tiene_fila: cada mujer con entrevista individual completa (34 252)
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-historia-nacimiento
+      miembro: Diccionario - RE223132.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 2: pp. 8–14; Sección 3: pp. 15–21'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 18 de la tabla de identificadores
+    estado: propuesto
+  RE516171:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Unión, preferencias de fecundidad y trabajo de la pareja
+    descripcion: Estado civil, primera relación sexual, deseo de hijos, necesidad insatisfecha de planificación, nivel educativo y trabajo del
+      esposo o compañero, decisiones en el hogar.
+    cuestionario: individual
+    secciones:
+    - Sección 5. Nupcialidad
+    - Sección 6. Preferencias de fecundidad
+    - Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+    tipo_tabla: detalle
+    poblacion:
+      texto: mujeres de 12 a 49 años con entrevista individual completa
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: entrevista individual completa
+    quien_tiene_fila: cada mujer con entrevista individual completa (34 252)
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-nupcialidad-fecundidad
+      miembro: Diccionario - RE516171.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 5: pp. 56–59; Sección 6: pp. 60–63; Sección 7: pp. 64–65'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 23 de la tabla de identificadores
+    estado: propuesto
+  RE758081:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: VIH/SIDA, otras ITS y conductas sexuales
+    descripcion: Conocimiento sobre el VIH y otras ITS, uso de condón, parejas sexuales, pruebas de VIH, estigma y actitudes.
+    cuestionario: individual
+    secciones:
+    - Sección 8. SIDA y otras I.T.S.
+    tipo_tabla: detalle
+    poblacion:
+      texto: mujeres de 12 a 49 años con entrevista individual completa
+      sujeto: mujer
+      edad_min: 12
+      edad_max: 49
+      edad_unidad: anios
+      sexo: mujer
+      condicion: entrevista individual completa
+    quien_tiene_fila: cada mujer con entrevista individual completa (34 252)
+    informante: la mujer entrevistada
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-sida-condon
+      miembro: Diccionario - RE758081.pdf
+    - recurso: endes-2024-cuestionario-individual
+      paginas: 'Sección 8: pp. 66–69'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 24 de la tabla de identificadores
+    estado: propuesto
+  CSALUD01:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Salud de una persona de 15 años a más por hogar
+    descripcion: Hipertensión y diabetes, factores de riesgo (tabaco, alcohol, frutas y verduras), salud ocular y bucal, prevención del cáncer,
+      tuberculosis, VIH, salud mental y mediciones.
+    cuestionario: salud
+    secciones:
+    - Secciones 1 a 7 y 9 del cuestionario de salud
+    tipo_tabla: detalle
+    poblacion:
+      texto: una persona de 15 años a más seleccionada por hogar
+      sujeto: adulto
+      edad_min: 15
+      edad_unidad: anios
+      sexo: ambos
+      condicion: seleccionada para el cuestionario de salud
+      variable_edad: QS23
+    quien_tiene_fila: cada hogar con persona seleccionada (34 018 de 37 390)
+    informante: la persona seleccionada
+    modo: mixto
+    avisos:
+    - 'El documento «Identificadores de las bases de datos» (fila 33) da la llave HHID + QSNUMERO; el índice declara HHID y se comprobó que es
+      única (34 018 filas, 34 018 hogares): consulta C-M1-06-1.'
+    documentos:
+    - recurso: endes-2024-salud
+      miembro: Diccionario - CSALUD01.pdf
+    - recurso: endes-2024-cuestionario-salud
+      paginas: 'Sección 1: pp. 4–5; Sección 2: pp. 6–7; Sección 3: pp. 8–9; Sección 4: pp. 10–11; Sección 5: p. 12; Sección 6: p. 13; Sección
+        7: pp. 14–18; Sección 9: p. 31'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 33 de la tabla de identificadores
+    estado: propuesto
+  CSALUD08:
+    anios:
+    - 2024
+    - 2024
+    nombre_corto: Salud bucal, ocular y mental de niñas y niños
+    descripcion: Atención y cuidado de los dientes, problemas de visión y uso de lentes, hábitos de pantalla y lectura, y asistencia a la escuela
+      y apoyo ante la violencia en el colegio (QS833 a QS838) de niñas y niños menores de 12 años.
+    cuestionario: salud
+    secciones:
+    - Sección 8. Salud bucal, ocular y mental en niñas y niños
+    tipo_tabla: detalle
+    poblacion:
+      texto: niñas y niños menores de 12 años
+      sujeto: nino
+      edad_min: 0
+      edad_max: 11
+      edad_unidad: anios
+      sexo: ambos
+      condicion: listados en el hogar
+      variable_edad: QS802D
+    quien_tiene_fila: cada niña o niño menor de 12 años seleccionado (41 309 en 24 172 hogares)
+    informante: la persona responsable de la niña o el niño
+    modo: declarado
+    avisos: []
+    documentos:
+    - recurso: endes-2024-salud
+      miembro: Diccionario - CSALUD08.pdf
+    - recurso: endes-2024-cuestionario-salud
+      paginas: 'Sección 8: pp. 19–29'
+    - recurso: endes-2024-identificadores-bd
+      paginas: fila 34 de la tabla de identificadores
+    estado: propuesto

@@ -254,7 +254,7 @@ def test_clases_y_grupos_y_tipo_de_valor(tmp_path):
     metas, man, curado = _sintetico(tmp_path)
     v = construir("ENDES", 2024, metas, man, CLASES, curado, PI, parquet_dir=tmp_path).variables
     por = {r["var_id"].split("·")[-1] + "@" + r["archivo"]: r for r in v.iter_rows(named=True)}
-    assert por["HV005@RECH0"]["clase"] == "peso" and por["HVIDX@RECH1"]["clase"] == "llave" and por["HV108@RECH1"]["clase"] is None
+    assert por["HV005@RECH0"]["clase"] == "peso" and por["HVIDX@RECH1"]["clase"] == "llave" and por["HV108@RECH1"]["clase"] == "categoria"        # M1-05 tarea 0: ya no queda ninguna variable sin clase (regla en clases_indice.py)
     assert por["SH61A@RECH0"]["grupo"] == "SH61" == por["SH61B@RECH0"]["grupo"] and por["HV005@RECH0"]["grupo"] is None
     assert por["HV108@RECH1"]["tipo_valor"] == "categorica" and por["HHID@RECH1"]["tipo_valor"] == "texto" and por["HV005@RECH0"]["tipo_valor"] == "numerica"
 

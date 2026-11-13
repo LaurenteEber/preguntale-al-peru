@@ -57,8 +57,8 @@ Orden: las etapas A y B pueden avanzar en paralelo; la etapa C depende de ambas.
 | M1-03 | [Uniones entre tablas hermanas, universo por medición y cortes nuevos](M1-03-uniones-universo.md) | M1-00; M1-01 para los valores decididos | hecha ([evidencia](evidencia/m1-03.md), [doradas](evidencia/m1-03_doradas_cortes.md), [revisión](evidencia/m1-03_revision.md): aprobado con observaciones) |
 | **Etapa B. Índice y fichas** | | | |
 | M1-04 | [Texto de los cuestionarios y vínculo con las variables](M1-04-cuestionarios.md) | M1-00 | bloqueada en la parte en vivo: falta la clave de lotes (C-M1-04-1). Extracción, medición y lote con proveedor falso hechos ([cuestionarios](evidencia/m1-04_cuestionarios.md), [vínculos](evidencia/m1-04_vinculos.md), [lote](evidencia/m1-04_lote.md)) |
-| M1-05 | [Enriquecimiento del índice](M1-05-enriquecimiento.md) | M1-01, M1-04 | pendiente |
-| M1-06 | [Fichas de tabla, bloques y temas](M1-06-fichas-bloques.md) | M1-04; M1-05 (tarea 0) | pendiente |
+| M1-05 | [Enriquecimiento del índice](M1-05-enriquecimiento.md) | M1-01, M1-04 | tarea 0 hecha ([clases](evidencia/m1-05_clases.md)); el resto espera el lote en vivo de M1-04 (C-M1-04-1) |
+| M1-06 | [Fichas de tabla, bloques y temas](M1-06-fichas-bloques.md) | M1-04; M1-05 (tarea 0) | hecha ([evidencia](evidencia/m1-06.md), [revisión](evidencia/m1-06_revision.md): aprobado con observaciones); lote en `propuesto` para el visto del dueño; C-M1-06-1 |
 | M1-07 | [Diseño muestral y universos de niño, mujer y hogar; lote a `revisado`](M1-07-diseno-lote.md) | M1-05, M1-06 | pendiente |
 | **Etapa C. Motor** | | | |
 | M1-08 | [Intérprete en modo motor](M1-08-interprete.md) | M1-05 (sinónimos y cortes) | pendiente |

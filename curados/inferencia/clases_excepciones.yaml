@@ -1,0 +1,227 @@
+# Excepciones a la clase de cada variable del índice (M1-05, tarea 0; src/pap/inferencia/clases_indice.py).
+# La regla general es: llave de archivos_endes_2024.yaml → llave; texto → texto; categórica con dos o más categorías con sentido →
+# categoria; categórica con una sola o ninguna → medida; numérica → medida. Aquí van las variables en que la regla se equivoca,
+# cada una con su motivo. Las clases de `clases_columnas.yaml` (llaves, geo, pesos, diseño) mandan sobre esta lista y no se tocan.
+# 0.2.0 (ronda del auditor, 12/11/2026): se quitan las excepciones QS212*B/V y S476AN1–7 (son cantidades, no categorías); se agregan llaves (QSNUMERO, V003, HV002, HV002A, líneas de personas),
+# campos de la muestra y de la fecha de entrevista (`diseno`) y ubicación (`geo`); `reglas.min_valores_sin_etiqueta`: una categórica con 15 o más valores sin etiqueta es `medida`.
+# Regla de geografía: `diseno` = lo que define la muestra (región, dominio, conglomerado, unidad de muestreo); `geo` = tipo y lugar de residencia y códigos de ubicación.
+# Una excepción que ya no toca ninguna variable del índice es un error (`validar_excepciones`).
+# Estado: propuesto por el agente (M1-05-s2); lo revisa el auditor-agente en la revisión de M1-06 y el dueño en el lote de M1-07.
+# `archivos`: «*» (todas las tablas donde exista el nombre) o lista de tablas.
+version: 0.2.0
+estado: propuesto
+reglas:
+  min_valores_sin_etiqueta: 15
+excepciones:
+- variables: [BORD]
+  archivos: [REC21]
+  clase: llave
+  motivo: 'Documento n.º 11, fila 17: REC21 se identifica por CASEID + BIDX o CASEID + BORD (comprobado: única en las 60 693 filas). La tercera, CASEID + B16, no es única en los datos (B16 = 0 se repite): no se trata como llave.'
+- variables: [BORD]
+  archivos: [DIT]
+  clase: llave
+  motivo: 'Documento n.º 11, fila 32: DIT se identifica por CASEID + BIDX o CASEID + BORD (orden del hijo según el nacimiento).'
+- variables: [Q452]
+  archivos: [REC95]
+  clase: llave
+  motivo: 'Documento n.º 11, fila 31: REC95 se identifica por CASEID + IDX95 o CASEID + Q452 (BORD = Q1035NO = Q452).'
+- variables: [Q1035NO]
+  archivos: [REC93DVdisciplina]
+  clase: llave
+  motivo: 'Documento n.º 11, fila 29: REC93DVdisciplina se identifica por CASEID + QCOL93 o CASEID + Q1035NO.'
+- variables: [QS203U, QS204U, QS205U, QS207U, QS211U, QS214U, QS216U, QS218U]
+  archivos: [CSALUD01]
+  clase: categoria
+  motivo: 'Unidad en que se contesta la pregunta anterior (1 = años, número de veces…): la etiqueta nombra la unidad, el valor no se promedia.'
+- variables: [QS212Z]
+  archivos: [CSALUD01]
+  clase: categoria
+  motivo: 'Marca «no sabe/no recuerda» (1 = sí sabe o recuerda): respuesta de dos opciones con una sola etiqueta.'
+- variables: [V3A08Z]
+  archivos: [RE223132]
+  clase: categoria
+  motivo: Marca de una respuesta («No sabe») con una sola etiqueta.
+- variables: [V042, V043, V130]
+  archivos: [REC0111]
+  clase: categoria
+  motivo: 'V042 y V043: marcas de selección (1 = seleccionada); V130: religión, sus códigos son categorías aunque el archivo solo etiquete «Otra».'
+- variables: [V454, V468]
+  archivos: [REC42]
+  clase: categoria
+  motivo: 'V454: embarazada según el hogar (1 = sí); V468: marca de qué nacimientos entran (1 = solo el último).'
+- variables: [MM10]
+  archivos: [REC83]
+  clase: categoria
+  motivo: 'Si la muerte y el embarazo están relacionados (1 = sí, y otras dos respuestas): respuesta de opciones.'
+- variables: [ID1]
+  archivos: '*'
+  clase: diseno
+  motivo: 'Año de la encuesta (2024 en todas las filas): identifica la encuesta, no mide nada.'
+- variables: [V028, V029, V030, V031, V032, V033, V420, V421]
+  archivos: [REC0111, REC42]
+  clase: diseno
+  motivo: 'Códigos del equipo de campo (entrevistador, digitador, supervisor, editor, registrador) y selección final del área: operación de campo.'
+- variables: [SVER]
+  archivos: [REC91]
+  clase: diseno
+  motivo: Versión del cuestionario (0 en todas las filas).
+- variables: [NCONGLOME1]
+  archivos: [RECH0]
+  clase: diseno
+  motivo: Número de conglomerado del marco muestral.
+- variables: [HA62]
+  archivos: [RECH5]
+  clase: diseno
+  motivo: Número de identificación de la muestra de sangre (código del laboratorio).
+- variables: [QFIN, QS8INICIO]
+  archivos: [CSALUD01]
+  clase: diseno
+  motivo: 'Marcas de la entrevista (final del informante, indicación de inicio de capítulo): flujo del cuestionario.'
+- variables: [AWFACTE, AWFACTR, AWFACTT, AWFACTU, AWFACTW]
+  archivos: [REC0111]
+  clase: peso
+  motivo: 'Factores «todas las mujeres» (100 en todas las filas): factores de ponderación de la muestra.'
+- variables: [HV028]
+  archivos: [RECH0]
+  clase: peso
+  motivo: Peso de muestra masculino (factor de ponderación; vacío en la ENDES).
+- variables: [HA69]
+  archivos: [RECH5]
+  clase: peso
+  motivo: Peso del VIH (factor de ponderación con 6 decimales; vacío en la ENDES).
+- variables: [CODCCPP, NOMCCPP]
+  archivos: [RECH0]
+  clase: geo
+  motivo: Código y nombre del centro poblado.
+- variables: [V000, HV000]
+  archivos: [REC0111, RECH0]
+  clase: diseno
+  motivo: Código y fase del país (texto fijo).
+- variables: [QSNUMERO]
+  archivos: [CSALUD01]
+  clase: llave
+  motivo: 'Documento n.º 11, fila 33 y «Precisiones» (HVIDX = QSNUMERO); el diccionario de CSALUD01 lo marca como llave. Solo el índice: la llave declarada en archivos_endes_2024.yaml no se cambia (consulta C-M1-06-1).'
+- variables: [V003]
+  archivos: [REC0111]
+  clase: llave
+  motivo: Número de línea de la entrevistada en el hogar (une REC0111 con RECH1 por V003 = HVIDX).
+- variables: [HV002, HV002A]
+  archivos: [RECH0]
+  clase: llave
+  motivo: 'Número de vivienda y de hogar: forman HHID (documento n.º 11, «Precisiones»: HHID = HV001 + HV002 + HV002A).'
+- variables: [HV003]
+  archivos: [RECH0]
+  clase: llave
+  motivo: 'Número de línea de una persona del hogar (referencia a HVIDX; documento n.º 11, «Precisiones»: HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801): sirve para unir, no para medir (informante).'
+- variables: [HC60, HC51]
+  archivos: [RECH6]
+  clase: llave
+  motivo: 'Número de línea de una persona del hogar (referencia a HVIDX; documento n.º 11, «Precisiones»: HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801): sirve para unir, no para medir (madre y padre o responsable).'
+- variables: [HA51]
+  archivos: [RECH5]
+  clase: llave
+  motivo: 'Número de línea de una persona del hogar (referencia a HVIDX; documento n.º 11, «Precisiones»: HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801): sirve para unir, no para medir (padre o responsable).'
+- variables: [HW51]
+  archivos: [REC44]
+  clase: llave
+  motivo: 'Número de línea de una persona del hogar (referencia a HVIDX; documento n.º 11, «Precisiones»: HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801): sirve para unir, no para medir (padre o responsable).'
+- variables: [HV112, HV114]
+  archivos: [RECH1]
+  clase: llave
+  motivo: 'Número de línea de una persona del hogar (referencia a HVIDX; documento n.º 11, «Precisiones»: HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801): sirve para unir, no para medir (madre y padre).'
+- variables: [HV218]
+  archivos: [RECH23]
+  clase: llave
+  motivo: 'Número de línea de una persona del hogar (referencia a HVIDX; documento n.º 11, «Precisiones»: HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801): sirve para unir, no para medir (jefe del hogar).'
+- variables: [V034]
+  archivos: [REC0111]
+  clase: llave
+  motivo: 'Número de línea de una persona del hogar (referencia a HVIDX; documento n.º 11, «Precisiones»: HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801): sirve para unir, no para medir (esposo).'
+- variables: [V452B]
+  archivos: [REC42]
+  clase: llave
+  motivo: 'Número de línea de una persona del hogar (referencia a HVIDX; documento n.º 11, «Precisiones»: HVIDX = IDXH4 = B16 = HA0 = HC0 = QSNUMERO = QS801): sirve para unir, no para medir (padre o apoderado).'
+- variables: [QS800]
+  archivos: [CSALUD08]
+  clase: llave
+  motivo: Línea de la niña o el niño en el hogar (QS801 = HVIDX, documento n.º 11).
+- variables: [B16]
+  archivos: [REC21]
+  clase: llave
+  motivo: Línea del niño en el hogar (B16 = HVIDX; 0 = no listado). Sirve para unir; no es única (el documento n.º 11 la da como identificador alterno pero el 0 se repite).
+- variables: [PS1, PS2, PS3, PS4, PS5, PS6]
+  archivos: [PS_BECA18, PS_TRABAJA, PS_PENSION65, PS_VL, PS_COMEDOR, PS_WAWAWASI]
+  clase: llave
+  motivo: Número de orden de la persona beneficiaria en el listado del hogar (= HVIDX).
+- variables: [HV004]
+  archivos: [RECH0]
+  clase: diseno
+  motivo: 'Unidad última de muestreo: dato de la muestra.'
+- variables: [V004]
+  archivos: [REC0111]
+  clase: diseno
+  motivo: 'Unidad de área final: dato de la muestra.'
+- variables: [HV007, HV008]
+  archivos: [RECH0]
+  clase: diseno
+  motivo: 'Año y fecha de la entrevista: identifican la encuesta, no miden a las personas.'
+- variables: [V007, V008]
+  archivos: [REC0111]
+  clase: diseno
+  motivo: 'Año y fecha de la entrevista: identifican la encuesta, no miden a las personas.'
+- variables: [HC19]
+  archivos: [RECH6]
+  clase: diseno
+  motivo: Año de la medición (2024 en todas las filas).
+- variables: [HW19]
+  archivos: [REC44]
+  clase: diseno
+  motivo: Año de la medición (2024 en todas las filas).
+- variables: [BAA]
+  archivos: [REC21]
+  clase: diseno
+  motivo: Año de apertura de la historia de nacimientos (2024).
+- variables: [QSINTY]
+  archivos: [CSALUD01]
+  clase: diseno
+  motivo: Año de la visita final (2017 en todas las filas).
+- variables: [HV030, HV031, HV032, HV033]
+  archivos: [RECH0]
+  clase: diseno
+  motivo: 'Supervisor, editor de campo, editor de la oficina y probabilidad de selección del área: operación de campo y diseño (misma regla que V028–V033).'
+- variables: [QHHOME, QHNUMBER]
+  archivos: '*'
+  clase: diseno
+  motivo: 'Hogar y vivienda seleccionados (marcas de la muestra): misma clase en todas las tablas.'
+- variables: [HV023]
+  archivos: [RECH0]
+  clase: diseno
+  motivo: 'Dominio de la muestra. Regla de geografía: lo que define la muestra (región HV024, dominio, región de residencia) es `diseno`; el tipo y el lugar de residencia (urbano/rural, capital, ciudad, pueblo) son `geo`.'
+- variables: [V023, V101, V139]
+  archivos: [REC0111]
+  clase: diseno
+  motivo: 'Dominio y región de la muestra o de residencia (regla de geografía: lo que define la muestra es `diseno`).'
+- variables: [V102, V140, V141, V026]
+  archivos: [REC0111]
+  clase: geo
+  motivo: 'Tipo y lugar de residencia (regla de geografía: igual que V025, que es `geo`).'
+- variables: [HV026]
+  archivos: [RECH0]
+  clase: geo
+  motivo: 'Lugar de residencia (capital, ciudad, pueblo, campo): regla de geografía.'
+- variables: [LATITUDY, LONGITUDX]
+  archivos: [RECH0]
+  clase: geo
+  motivo: Coordenadas del conglomerado.
+- variables: [SHPROVIN, SHDISTRI]
+  archivos: [RECH23]
+  clase: geo
+  motivo: Provincia y distrito del hogar (códigos de ubicación).
+- variables: [SPROVIN, SDISTRI]
+  archivos: [REC91]
+  clase: geo
+  motivo: Provincia y distrito de la entrevistada (códigos de ubicación).
+- variables: [HV246B, HV246F]
+  archivos: [RECH23]
+  clase: medida
+  motivo: 'Cantidad de vacas/toros y de pollos: conteos como las demás cantidades de ganado HV246A–J (la regla de valores sin etiqueta no las alcanza por tener menos de 15 valores distintos).'

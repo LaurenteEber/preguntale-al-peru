@@ -1,0 +1,155 @@
+FFFFFFFFFFF                                                              [100%]
+=================================== FAILURES ===================================
+_______ test_los_conteos_y_cantidades_no_son_categoria[CSALUD01-QS212AB] _______
+
+a = 'CSALUD01', x = 'QS212AB'
+
+    @pytest.mark.parametrize("a,x", [("CSALUD01", "QS212AB"), ("CSALUD01", "QS212AV"), ("REC95", "S476AN1"), ("RECH23", "HV246A"),
+                                     ("RE516171", "V527"), ("REC41", "M4")])
+    def test_los_conteos_y_cantidades_no_son_categoria(a, x):
+>       assert _clase(a, x) == "medida"
+E       AssertionError: assert 'categoria' == 'medida'
+E         
+E         - medida
+E         + categoria
+
+tests/inferencia/test_m106_auditor.py:24: AssertionError
+_______ test_los_conteos_y_cantidades_no_son_categoria[CSALUD01-QS212AV] _______
+
+a = 'CSALUD01', x = 'QS212AV'
+
+    @pytest.mark.parametrize("a,x", [("CSALUD01", "QS212AB"), ("CSALUD01", "QS212AV"), ("REC95", "S476AN1"), ("RECH23", "HV246A"),
+                                     ("RE516171", "V527"), ("REC41", "M4")])
+    def test_los_conteos_y_cantidades_no_son_categoria(a, x):
+>       assert _clase(a, x) == "medida"
+E       AssertionError: assert 'categoria' == 'medida'
+E         
+E         - medida
+E         + categoria
+
+tests/inferencia/test_m106_auditor.py:24: AssertionError
+________ test_los_conteos_y_cantidades_no_son_categoria[REC95-S476AN1] _________
+
+a = 'REC95', x = 'S476AN1'
+
+    @pytest.mark.parametrize("a,x", [("CSALUD01", "QS212AB"), ("CSALUD01", "QS212AV"), ("REC95", "S476AN1"), ("RECH23", "HV246A"),
+                                     ("RE516171", "V527"), ("REC41", "M4")])
+    def test_los_conteos_y_cantidades_no_son_categoria(a, x):
+>       assert _clase(a, x) == "medida"
+E       AssertionError: assert 'categoria' == 'medida'
+E         
+E         - medida
+E         + categoria
+
+tests/inferencia/test_m106_auditor.py:24: AssertionError
+________ test_los_conteos_y_cantidades_no_son_categoria[RECH23-HV246A] _________
+
+a = 'RECH23', x = 'HV246A'
+
+    @pytest.mark.parametrize("a,x", [("CSALUD01", "QS212AB"), ("CSALUD01", "QS212AV"), ("REC95", "S476AN1"), ("RECH23", "HV246A"),
+                                     ("RE516171", "V527"), ("REC41", "M4")])
+    def test_los_conteos_y_cantidades_no_son_categoria(a, x):
+>       assert _clase(a, x) == "medida"
+E       AssertionError: assert 'categoria' == 'medida'
+E         
+E         - medida
+E         + categoria
+
+tests/inferencia/test_m106_auditor.py:24: AssertionError
+________ test_los_conteos_y_cantidades_no_son_categoria[RE516171-V527] _________
+
+a = 'RE516171', x = 'V527'
+
+    @pytest.mark.parametrize("a,x", [("CSALUD01", "QS212AB"), ("CSALUD01", "QS212AV"), ("REC95", "S476AN1"), ("RECH23", "HV246A"),
+                                     ("RE516171", "V527"), ("REC41", "M4")])
+    def test_los_conteos_y_cantidades_no_son_categoria(a, x):
+>       assert _clase(a, x) == "medida"
+E       AssertionError: assert 'categoria' == 'medida'
+E         
+E         - medida
+E         + categoria
+
+tests/inferencia/test_m106_auditor.py:24: AssertionError
+___________ test_los_conteos_y_cantidades_no_son_categoria[REC41-M4] ___________
+
+a = 'REC41', x = 'M4'
+
+    @pytest.mark.parametrize("a,x", [("CSALUD01", "QS212AB"), ("CSALUD01", "QS212AV"), ("REC95", "S476AN1"), ("RECH23", "HV246A"),
+                                     ("RE516171", "V527"), ("REC41", "M4")])
+    def test_los_conteos_y_cantidades_no_son_categoria(a, x):
+>       assert _clase(a, x) == "medida"
+E       AssertionError: assert 'categoria' == 'medida'
+E         
+E         - medida
+E         + categoria
+
+tests/inferencia/test_m106_auditor.py:24: AssertionError
+_____________________ test_llaves_y_geografia_del_auditor ______________________
+
+    def test_llaves_y_geografia_del_auditor():
+>       assert _clase("CSALUD01", "QSNUMERO") == "llave"
+E       AssertionError: assert 'medida' == 'llave'
+E         
+E         - llave
+E         + medida
+
+tests/inferencia/test_m106_auditor.py:28: AssertionError
+______________________ test_s489c_es_tuberculosis_no_vih _______________________
+
+    def test_s489c_es_tuberculosis_no_vih():
+        v, b = _v(), pl.read_parquet(IND / "bloques.parquet")
+        bid = v.filter((pl.col("archivo") == "REC91") & (pl.col("variable") == "S489C"))["bloque_id"][0]
+        fila = b.filter(pl.col("bloque_id") == bid).row(0, named=True)
+>       assert fila["subtema"] != "vih_its" and fila["subtema"] == "enfermedades_cronicas" and bid == "endes_rec91_tuberculosis"
+E       AssertionError: assert ('vih_its' != 'vih_its')
+
+tests/inferencia/test_m106_auditor.py:36: AssertionError
+____________________ test_los_modulos_dit_declaran_la_edad _____________________
+
+    def test_los_modulos_dit_declaran_la_edad():
+        b = pl.read_parquet(IND / "bloques.parquet").filter(pl.col("bloque_id").str.starts_with("endes_dit_modulo_"))
+        assert b.height == 6
+        for r in b.iter_rows(named=True):
+            p = json.loads(r["poblacion"] or "{}")
+>           assert p.get("edad_min") is not None and p.get("edad_unidad") == "meses", r["bloque_id"]
+E           AssertionError: endes_dit_modulo_e
+E           assert (None is not None)
+E            +  where None = <built-in method get of dict object at 0x10eb27ac0>('edad_min')
+E            +    where <built-in method get of dict object at 0x10eb27ac0> = {}.get
+
+tests/inferencia/test_m106_auditor.py:44: AssertionError
+____________________ test_paginas_de_violencia_y_calendario ____________________
+
+    def test_paginas_de_violencia_y_calendario():
+        f = pl.read_parquet(IND / "fichas_tabla.parquet")
+        def pag(t, rec="endes-2024-cuestionario-individual"):
+            d = json.loads(f.filter(pl.col("tabla") == t)["documentos"][0])
+            return next(x for x in d if x["recurso"] == rec)["paginas"]
+>       assert "72" in pag("REC84DV") and "72" in pag("REC93DVdisciplina") and "82" not in pag("REC84DV")
+E       AssertionError: assert ('72' in 'Sección 10: pp. 82–84')
+E        +  where 'Sección 10: pp. 82–84' = <function test_paginas_de_violencia_y_calendario.<locals>.pag at 0x1123ac7c0>('REC84DV')
+
+tests/inferencia/test_m106_auditor.py:52: AssertionError
+__________________ test_otras_correcciones_de_clase_y_bloque ___________________
+
+    def test_otras_correcciones_de_clase_y_bloque():
+>       assert _clase("RE223132", "V215") == "medida" and _clase("REC95", "S466DC1") == "medida" and _clase("RECH23", "SH79") == "medida"
+E       AssertionError: assert ('categoria' == 'medida'
+E         
+E         - medida
+E         + categoria)
+
+tests/inferencia/test_m106_auditor.py:57: AssertionError
+=========================== short test summary info ============================
+FAILED tests/inferencia/test_m106_auditor.py::test_los_conteos_y_cantidades_no_son_categoria[CSALUD01-QS212AB]
+FAILED tests/inferencia/test_m106_auditor.py::test_los_conteos_y_cantidades_no_son_categoria[CSALUD01-QS212AV]
+FAILED tests/inferencia/test_m106_auditor.py::test_los_conteos_y_cantidades_no_son_categoria[REC95-S476AN1]
+FAILED tests/inferencia/test_m106_auditor.py::test_los_conteos_y_cantidades_no_son_categoria[RECH23-HV246A]
+FAILED tests/inferencia/test_m106_auditor.py::test_los_conteos_y_cantidades_no_son_categoria[RE516171-V527]
+FAILED tests/inferencia/test_m106_auditor.py::test_los_conteos_y_cantidades_no_son_categoria[REC41-M4]
+FAILED tests/inferencia/test_m106_auditor.py::test_llaves_y_geografia_del_auditor
+FAILED tests/inferencia/test_m106_auditor.py::test_s489c_es_tuberculosis_no_vih
+FAILED tests/inferencia/test_m106_auditor.py::test_los_modulos_dit_declaran_la_edad
+FAILED tests/inferencia/test_m106_auditor.py::test_paginas_de_violencia_y_calendario
+FAILED tests/inferencia/test_m106_auditor.py::test_otras_correcciones_de_clase_y_bloque
+11 failed in 0.50s

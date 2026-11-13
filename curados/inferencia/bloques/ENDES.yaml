@@ -1,0 +1,3398 @@
+# Bloques temáticos de la ENDES 2024 (M1-06, tarea 3; docs/diseno/fichas.md §6).
+# Un bloque es un grupo de preguntas del mismo asunto dentro de una tabla. Lote: las 19 tablas de niño, mujer y hogar de M1 (README «Lote de tablas de M1»).
+# Las variables se declaran por prefijo, por rango de posición entre dos códigos (`rango`; `rangos` si son varios pares) o por lista; solo cuentan las de clase
+# categoria o medida (las llaves, pesos, diseño y geografía no llevan bloque). Cada una de ellas está en un solo bloque: `pap fichas validar` (regla 4) lo comprueba.
+# Punto de partida: las baterías del índice (`grupo`) y las secciones del cuestionario (M1-04); los nombres salen de las etiquetas de las variables.
+# Todo en `propuesto`; el auditor-agente los revisa contra el diccionario (evidencia/m1-06_revision.md) y el dueño da el visto por lote. Los temas son provisionales (temas.yaml).
+version: 0.1.0
+fecha: '2026-11-12'
+encuesta: ENDES
+bloques:
+- id: endes_rech0_composicion
+  tabla: RECH0
+  anios: [2024, 2024]
+  nombre: Tamaño y composición del hogar
+  descripcion: Total de personas, mujeres y hombres elegibles, miembros residentes y presentes, y niños menores de 5 años.
+  variables:
+    rango: [HV009, HV014]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech0_resultado_entrevista
+  tabla: RECH0
+  anios: [2024, 2024]
+  nombre: Resultado de la entrevista del hogar y visitas
+  descripcion: Si se completó la entrevista del hogar y cuántas visitas hicieron falta.
+  variables:
+    rango: [HV015, HV017]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech0_muestra_dominio
+  tabla: RECH0
+  anios: [2024, 2024]
+  nombre: Muestra, dominio y lugar de residencia
+  descripcion: 'Marcas de la muestra: alguna vez en unión, dominio, lugar de residencia y selección para hombres.'
+  variables:
+    rango: [HV020, HV027]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech0_selecciones
+  tabla: RECH0
+  anios: [2024, 2024]
+  nombre: Selección de niños y mujeres para mediciones y módulos, y altitud
+  descripcion: Cuántos niños y mujeres se miden, qué hogares tienen hemoglobina, módulo de mujeres y de violencia, y altitud del conglomerado.
+  variables:
+    rango: [HV035, HV044]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech1_parentesco_presencia
+  tabla: RECH1
+  anios: [2024, 2024]
+  nombre: Parentesco con el jefe del hogar y presencia en el hogar
+  descripcion: Parentesco, si vive habitualmente en el hogar y si durmió allí anoche.
+  variables:
+    rango: [HV101, HV103]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech1_sexo_edad
+  tabla: RECH1
+  anios: [2024, 2024]
+  nombre: Sexo y edad de las personas del hogar
+  descripcion: Sexo y edad en años de cada persona del listado.
+  variables:
+    rango: [HV104, HV105]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech1_educacion_alcanzada
+  tabla: RECH1
+  anios: [2024, 2024]
+  nombre: Educación alcanzada
+  descripcion: Nivel y año o grado más alto aprobado, años de estudio y nivel educativo alcanzado.
+  variables:
+    rango: [HV106, HV109]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech1_asistencia_escolar
+  tabla: RECH1
+  anios: [2024, 2024]
+  nombre: Asistencia a la escuela
+  descripcion: Si asiste ahora, a qué nivel y grado asiste o asistió el año pasado, y condición de asistencia.
+  variables:
+    lista: [HV110]
+    rango: [HV121, QH21A]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech1_padres
+  tabla: RECH1
+  anios: [2024, 2024]
+  nombre: 'Madre y padre: si viven y su número de orden'
+  descripcion: Si la madre y el padre naturales están vivos y su número de orden en el hogar.
+  variables:
+    rango: [HV111, HV114]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech1_estado_civil
+  tabla: RECH1
+  anios: [2024, 2024]
+  nombre: Estado civil o conyugal
+  descripcion: Estado civil actual y si estuvo unida anteriormente.
+  variables:
+    rango: [HV115, HV116]
+  tema: familia_pareja
+  subtema: union_convivencia
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech1_elegibilidad
+  tabla: RECH1
+  anios: [2024, 2024]
+  nombre: Elegibilidad para entrevistas y mediciones
+  descripcion: Si la persona es elegible para la entrevista de mujeres, de hombres o para peso y talla.
+  variables:
+    rango: [HV117, HV120]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech1_nacionalidad
+  tabla: RECH1
+  anios: [2024, 2024]
+  nombre: Nacionalidad y tiempo de residencia en el Perú
+  descripcion: Si vive permanentemente en el Perú y desde qué mes y año.
+  variables:
+    rango: [QH25B, QH25CA]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech4_seguro_salud
+  tabla: RECH4
+  anios: [2024, 2024]
+  nombre: Seguro de salud de las personas del hogar
+  descripcion: Qué seguros tiene cada persona (EsSalud, militar, SIS, privado, otros) y si alguno está a su nombre.
+  variables:
+    rango: [SH11A, SH12]
+  tema: acceso_salud
+  subtema: seguro_salud
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech4_actividad
+  tabla: RECH4
+  anios: [2024, 2024]
+  nombre: Actividad de la última semana
+  descripcion: A qué se dedicó la persona la última semana.
+  variables:
+    lista: [SH13]
+  tema: trabajo
+  subtema: actividad_ocupacion
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  ventana_referencia: última semana
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech4_educacion_aprobada
+  tabla: RECH4
+  anios: [2024, 2024]
+  nombre: Nivel de educación aprobado
+  descripcion: Nivel, años y grados de educación aprobados.
+  variables:
+    rango: [SH15N, SH15G]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech4_educacion_actual
+  tabla: RECH4
+  anios: [2024, 2024]
+  nombre: Nivel de educación al que asiste ahora
+  descripcion: Nivel, año y grado al que asiste o se matriculó este año.
+  variables:
+    rango: [SH18N, SH18G]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech4_educacion_anio_pasado
+  tabla: RECH4
+  anios: [2024, 2024]
+  nombre: Educación el año pasado
+  descripcion: Nivel, año y grado al que asistió el año pasado y resultado del año escolar.
+  variables:
+    rango: [SH20N, SH21]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Características de los miembros del hogar
+  estado: propuesto
+- id: endes_rech23_agua_acceso
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Fuente de agua, tiempo para obtenerla y pago
+  descripcion: Fuente principal de agua para beber y otros usos, tiempo para ir a buscarla, ubicación, quién recoge, disponibilidad y pago.
+  variables:
+    rango: [HV201, HV204]
+    lista:
+    - HV235
+    - HV236
+    - SH42
+    - SH43
+    - SH51
+    - SH52
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_agua_tratamiento
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Tratamiento y almacenamiento del agua para beber
+  descripcion: Qué hace el hogar para hacer segura el agua (hervir, lejía, filtro…) y cómo la guarda.
+  variables:
+    rango: [HV237, HV237Z]
+    lista: [SH48, SH49, SH50]
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_cloro_agua
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Prueba de cloro en el agua
+  descripcion: Quién tomó la muestra de agua, de dónde se extrajo y resultado de la prueba de cloro.
+  variables:
+    rango: [SH227, QH227B]
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_saneamiento
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Servicio higiénico
+  descripcion: Tipo de servicio higiénico, si se comparte, con cuántos hogares y cada cuánto se limpia.
+  variables:
+    lista:
+    - HV205
+    - HV225
+    - HV238
+    - SH56
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_basura
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Eliminación de la basura
+  descripcion: Dónde tira la basura, cada cuánto se recoge y dónde la guarda.
+  variables:
+    rango: [SH58, SH60]
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_electricidad_alumbrado
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Electricidad y alumbrado
+  descripcion: Si el hogar tiene electricidad y qué tipo de alumbrado usa.
+  variables:
+    lista: [HV206, SH70]
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_materiales_vivienda
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Materiales y espacios de la vivienda
+  descripcion: Material del piso, paredes y techo, habitaciones, ventanas y red.
+  variables:
+    rango: [HV213, HV216]
+    rangos:
+    - [SH71, SH72]
+    - [SH76A, SH76E]
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_combustible_cocina
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Combustible y cocina
+  descripcion: Combustible para cocinar, dónde se cocina, chimenea o campana y si el hogar compra combustible.
+  variables:
+    lista:
+    - HV226
+    - SH63
+    - SH64
+    - SH66
+    - SH69
+    rango: [HV239, HV242]
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_jefe_hogar
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Jefe del hogar y composición
+  descripcion: Número de orden, sexo y edad del jefe, y estructura de relaciones del hogar.
+  variables:
+    rango: [HV217, HV220]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_bienes
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Bienes del hogar
+  descripcion: Radio, televisor, refrigeradora, bicicleta, moto, carro, teléfono, celular, computadora, internet y otros bienes.
+  variables:
+    rangos:
+    - [HV207, HV212]
+    - [HV243A, HV243D]
+    - [SH61A, SH61S]
+    lista: [HV221, SH77F]
+  tema: hogar_vivienda
+  subtema: bienes_riqueza
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_tierras_ganado_cuenta
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Tierras, ganado y cuenta bancaria
+  descripcion: Tierras agrícolas, hectáreas, ganado por tipo y si alguien tiene cuenta bancaria.
+  variables:
+    rango: [HV244, HV247]
+    lista: [SH78, SH79]
+  tema: hogar_vivienda
+  subtema: bienes_riqueza
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_fallecidos
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Miembros del hogar fallecidos
+  descripcion: Si murió algún miembro del hogar en los últimos 12 meses y cuántos.
+  variables:
+    rango: [HV249, HV250]
+  tema: mortalidad
+  subtema: muertes_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  ventana_referencia: últimos 12 meses
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_enfermos_huerfanos
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Personas enfermas y huérfanos o niños vulnerables
+  descripcion: Número de personas enfermas de 18 a 59 años y de huérfanos o niños vulnerables.
+  variables:
+    lista: [HV248, HV251]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_mosquiteros
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Mosquiteros
+  descripcion: Mosquiteros del hogar y si los menores de 5 años durmieron bajo uno.
+  variables:
+    lista:
+    - HV227
+    - HV228
+    - HML1
+    - HML1A
+    - HML2
+    - SXH73
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_yodo_sal
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Yodo en la sal
+  descripcion: Prueba de yodo, marca de sal y cómo se vio la bolsa.
+  variables:
+    lista:
+    - HV234
+    - SH224
+    - SH225U
+    - SH225
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_ubicacion_version
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Región natural, semestre, provincia, distrito y versión
+  descripcion: Datos de ubicación y de la versión del cuestionario.
+  variables:
+    rango: [SHVER, SHTOTH]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech23_riqueza
+  tabla: RECH23
+  anios: [2024, 2024]
+  nombre: Índice de riqueza
+  descripcion: Índice de riqueza (quintil de bienestar) y su factor de puntuación.
+  variables:
+    rango: [HV270, HV271]
+  tema: hogar_vivienda
+  subtema: bienes_riqueza
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Características de la vivienda / Sección 6. Prueba de yodo en la sal y de cloro residual en el agua
+  estado: propuesto
+- id: endes_rech5_edad_nacimiento
+  tabla: RECH5
+  anios: [2024, 2024]
+  nombre: Edad, fecha de nacimiento y grupo de la mujer
+  descripcion: Edad en años, fecha de nacimiento y grupos de mujeres de 12 a 49 años.
+  variables:
+    lista:
+    - HA1
+    - HA32
+    - HA33
+    - HA50
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech5_peso_talla
+  tabla: RECH5
+  anios: [2024, 2024]
+  nombre: Peso, talla e indicadores nutricionales de la mujer
+  descripcion: Peso, talla, percentiles y desviaciones estándar, índice de masa corporal y resultado de la medición.
+  variables:
+    rango: [HA2, HA13]
+    lista: [HA40, HA41]
+  tema: salud_adultos
+  subtema: mujeres_peso_anemia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech5_tabaco
+  tabla: RECH5
+  anios: [2024, 2024]
+  nombre: Cigarrillos fumados en las últimas 24 horas
+  descripcion: Cuántos cigarrillos fumó la mujer en las últimas 24 horas.
+  variables:
+    lista: [HA35]
+  tema: salud_adultos
+  subtema: tabaco_alcohol
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: últimas 24 horas
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech5_hemoglobina
+  tabla: RECH5
+  anios: [2024, 2024]
+  nombre: Hemoglobina y anemia de la mujer
+  descripcion: Nivel de hemoglobina (ajustado por altitud), si estaba embarazada, resultado y nivel de anemia con las dos normas.
+  variables:
+    rango: [HA53, HA58]
+  tema: salud_adultos
+  subtema: mujeres_peso_anemia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech5_consentimientos
+  tabla: RECH5
+  anios: [2024, 2024]
+  nombre: Responsable, consentimientos y resultado de la entrevista individual
+  descripcion: Número de orden del padre o responsable, consentimientos y resultado de la entrevista.
+  variables:
+    lista:
+    - HA52
+    - HA61
+    - HA64
+    - HA65
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech5_vih
+  tabla: RECH5
+  anios: [2024, 2024]
+  nombre: Resultado de la prueba de VIH
+  descripcion: Resultado de la medición de VIH.
+  variables:
+    lista: [HA63]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech5_estado_civil
+  tabla: RECH5
+  anios: [2024, 2024]
+  nombre: Estado civil
+  descripcion: Estado civil de la mujer.
+  variables:
+    lista: [HA60]
+  tema: familia_pareja
+  subtema: union_convivencia
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech5_educacion
+  tabla: RECH5
+  anios: [2024, 2024]
+  nombre: Educación de la mujer
+  descripcion: Nivel educativo más alto, año más alto y nivel para informes.
+  variables:
+    rango: [HA66, HA68]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_edad_peso_talla
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: Edad, peso y talla de la niña o el niño
+  descripcion: Edad en meses, peso y altura medidos.
+  variables:
+    rango: [HC1, HC3]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_indicadores_referencia_anterior
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: Talla y peso para la edad (referencia anterior)
+  descripcion: Percentiles, desviaciones estándar y porcentaje de la mediana de talla/edad, peso/edad y peso/talla.
+  variables:
+    rango: [HC4, HC12]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_indicadores_oms
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: Talla y peso para la edad (patrón OMS 2006)
+  descripcion: Desviaciones estándar de talla/edad, peso/edad, peso/talla e IMC según la OMS (las que usan las recetas de desnutrición).
+  variables:
+    rango: [HC70, HC73]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_medicion_razon
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: Razón por la que no se midió y posición de la medición
+  descripcion: Por qué no se midió al niño y si se midió acostado o de pie.
+  variables:
+    rango: [HC13, HC15]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_fechas
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: Fecha de nacimiento y año de la medición
+  descripcion: Día, mes, año y fecha completa de nacimiento, y año de la medición.
+  variables:
+    rango: [HC16, HC19]
+    lista:
+    - HC30
+    - HC31
+    - HC32
+    - HC33
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_sexo
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: Sexo
+  descripcion: Sexo de la niña o el niño.
+  variables:
+    lista: [HC27]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_responsable_consentimiento
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: Responsable y consentimiento
+  descripcion: Número de orden del padre o responsable y lectura de la declaración de consentimiento.
+  variables:
+    rango: [HC51, HC52]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_hemoglobina
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: Hemoglobina y anemia
+  descripcion: Nivel de hemoglobina (ajustado por altitud), resultado de la medición, nivel de anemia con las dos normas y acuerdo para enviar datos a un especialista.
+  variables:
+    rango: [HC53, HC58]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rech6_madre
+  tabla: RECH6
+  anios: [2024, 2024]
+  nombre: 'Madre: orden, educación, intervalo y orden de nacimiento'
+  descripcion: Número de orden y nivel educativo de la madre, intervalo con el nacimiento anterior y orden de nacimiento.
+  variables:
+    rango: [HC60, HC68]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4. Peso y talla (formulario de tabla) / Sección 5. Prueba de hemoglobina
+  estado: propuesto
+- id: endes_rec44_edad_peso_talla
+  tabla: REC44
+  anios: [2024, 2024]
+  nombre: Edad, peso y talla del hijo
+  descripcion: Edad en meses, peso y talla medidos.
+  variables:
+    rango: [HW1, HW3]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec44_indicadores_referencia_anterior
+  tabla: REC44
+  anios: [2024, 2024]
+  nombre: Talla y peso para la edad (referencia anterior)
+  descripcion: Percentiles, desviaciones estándar y porcentaje de la mediana.
+  variables:
+    rango: [HW4, HW12]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec44_indicadores_oms
+  tabla: REC44
+  anios: [2024, 2024]
+  nombre: Talla y peso para la edad (patrón OMS 2006)
+  descripcion: Desviaciones estándar de talla/edad, peso/edad, peso/talla e IMC según la OMS.
+  variables:
+    rango: [HW70, HW73]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec44_medicion_razon
+  tabla: REC44
+  anios: [2024, 2024]
+  nombre: Razón por la que no se midió y posición
+  descripcion: Por qué no se midió al niño y si se midió acostado o de pie.
+  variables:
+    rango: [HW13, HW15]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec44_fechas
+  tabla: REC44
+  anios: [2024, 2024]
+  nombre: Fecha de nacimiento y de la medición
+  descripcion: Día de nacimiento y día, mes y año de la medición.
+  variables:
+    rango: [HW16, HW19]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec44_responsable_consentimiento
+  tabla: REC44
+  anios: [2024, 2024]
+  nombre: Responsable y consentimiento
+  descripcion: Número de orden del padre o responsable y consentimiento.
+  variables:
+    rango: [HW51, HW52]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec44_hemoglobina
+  tabla: REC44
+  anios: [2024, 2024]
+  nombre: Hemoglobina y anemia
+  descripcion: Nivel de hemoglobina (ajustado por altitud), resultado, nivel de anemia con las dos normas y acuerdo de envío a especialista.
+  variables:
+    rango: [HW53, HW58]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec21_nacimiento
+  tabla: REC21
+  anios: [2024, 2024]
+  nombre: 'Nacimiento: orden, tipo de parto, fecha y sexo'
+  descripcion: Orden del nacimiento, parto único o múltiple, día, mes, año y fecha del nacimiento, y sexo del niño.
+  variables:
+    rango: [BORD, B4]
+    lista: [BD]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción
+  estado: propuesto
+- id: endes_rec21_supervivencia
+  tabla: REC21
+  anios: [2024, 2024]
+  nombre: Si el niño vive, edad actual y edad a la muerte
+  descripcion: Si está vivo, edad a la muerte (y su corrección) y edad actual.
+  variables:
+    rango: [B5, B8]
+  tema: mortalidad
+  subtema: mortalidad_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción
+  estado: propuesto
+- id: endes_rec21_vive_con
+  tabla: REC21
+  anios: [2024, 2024]
+  nombre: Con quién vive
+  descripcion: Con quién vive el niño.
+  variables:
+    lista: [B9]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción
+  estado: propuesto
+- id: endes_rec21_intervalos
+  tabla: REC21
+  anios: [2024, 2024]
+  nombre: Intervalos entre nacimientos
+  descripcion: Intervalo con el nacimiento anterior, si es satisfactorio y nacimiento vivo entre nacimientos.
+  variables:
+    lista: [B11, B12, B15]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción
+  estado: propuesto
+- id: endes_rec21_calidad_informacion
+  tabla: REC21
+  anios: [2024, 2024]
+  nombre: Calidad de la información de la historia
+  descripcion: Exhaustividad de la información y marca de la edad a la muerte.
+  variables:
+    lista: [B10, B13]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción
+  estado: propuesto
+- id: endes_rec21_fecha_apertura
+  tabla: REC21
+  anios: [2024, 2024]
+  nombre: Fecha de apertura de la historia
+  descripcion: Día, mes, año y fecha de apertura de la historia de nacimientos, y meses desde el nacimiento.
+  variables:
+    rango: [BDD, BEDAD]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción
+  estado: propuesto
+- id: endes_rec21_discapacidad
+  tabla: REC21
+  anios: [2024, 2024]
+  nombre: Dificultades o limitaciones permanentes del niño
+  descripcion: Si el niño tiene alguna dificultad o limitación permanente (seis tipos).
+  variables:
+    rango: [QD333_1, QD333_6]
+  tema: salud_infantil
+  subtema: discapacidad_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción
+  estado: propuesto
+- id: endes_rec21_embarazo
+  tabla: REC21
+  anios: [2024, 2024]
+  nombre: Duración del embarazo y nacimiento reciente
+  descripcion: Duración del embarazo y marca de nacimiento en los últimos 5 años.
+  variables:
+    lista: [Q220A, QULT5]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción
+  estado: propuesto
+- id: endes_dit_datos
+  tabla: DIT
+  anios: [2024, 2024]
+  nombre: Orden, edad y condición para la entrevista
+  descripcion: Orden del nacimiento, edad en meses y si vive con la madre y no tiene discapacidad.
+  variables:
+    rango: [BORD, QI478A]
+  tema: salud_infantil
+  subtema: desarrollo_infantil_temprano
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_dit_modulo_e
+  tabla: DIT
+  anios: [2024, 2024]
+  nombre: 'Módulo E: cuidado, comprensión y trato'
+  descripcion: Figuras de cuidado, estimulación en el lugar donde pasa más tiempo, comprensión de órdenes y reacciones del niño.
+  variables:
+    rango: [QI478E1, QI478E10]
+  tema: salud_infantil
+  subtema: desarrollo_infantil_temprano
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 9
+    edad_max: 12
+    edad_unidad: meses
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_dit_modulo_f
+  tabla: DIT
+  anios: [2024, 2024]
+  nombre: 'Módulo F: juego, lenguaje y comprensión'
+  descripcion: Dónde juega, objetos a su alcance, cómo pide lo que quiere y qué órdenes cumple.
+  variables:
+    rango: [QI478F1, QI478F6]
+  tema: salud_infantil
+  subtema: desarrollo_infantil_temprano
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 13
+    edad_max: 18
+    edad_unidad: meses
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_dit_modulo_g
+  tabla: DIT
+  anios: [2024, 2024]
+  nombre: 'Módulo G: lenguaje'
+  descripcion: Nombra partes del cuerpo, usa palabras y frases, sigue pedidos y participa en conversaciones.
+  variables:
+    rango: [QI478G1, QI478G4]
+  tema: salud_infantil
+  subtema: desarrollo_infantil_temprano
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 19
+    edad_max: 23
+    edad_unidad: meses
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_dit_modulo_h
+  tabla: DIT
+  anios: [2024, 2024]
+  nombre: 'Módulo H: lenguaje, juego, materiales y comportamiento'
+  descripcion: Frases, imitación, juego con muñecos, materiales en casa y pataletas.
+  variables:
+    rango: [QI478H1, QI478H11]
+  tema: salud_infantil
+  subtema: desarrollo_infantil_temprano
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 24
+    edad_max: 36
+    edad_unidad: meses
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_dit_modulo_i
+  tabla: DIT
+  anios: [2024, 2024]
+  nombre: 'Módulo I: juego simbólico, materiales y comportamiento'
+  descripcion: Dibujo, juego con personajes, materiales en casa y pataletas.
+  variables:
+    rango: [QI478I1, QI478I7]
+  tema: salud_infantil
+  subtema: desarrollo_infantil_temprano
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 37
+    edad_max: 54
+    edad_unidad: meses
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_dit_castigo_15_dias
+  tabla: DIT
+  anios: [2024, 2024]
+  nombre: Castigo físico en los últimos 15 días
+  descripcion: 'Veces que la madre o el cuidador le dio un palmazo, le jaló de las orejas u otro castigo físico en los últimos 15 días (una pregunta por tramo de edad: 24–36, 37–54 y 55–71 meses).'
+  variables:
+    lista: [QI478H12, QI478I8, QI478J8]
+  tema: violencia
+  subtema: castigo_disciplina_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: últimos 15 días
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_dit_modulo_j
+  tabla: DIT
+  anios: [2024, 2024]
+  nombre: 'Módulo J: juego, materiales y comportamiento'
+  descripcion: Juego de mentirita, juego con otros niños, materiales en casa y pataletas.
+  variables:
+    rango: [QI478J1, QI478J7]
+  tema: salud_infantil
+  subtema: desarrollo_infantil_temprano
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 55
+    edad_max: 71
+    edad_unidad: meses
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_carne_vacunas
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Carné de atención integral y vacunas
+  descripcion: Si tiene carné, vacunas BCG, DPT, polio y sarampión con sus fechas, y si alguna vez tuvo vacunación.
+  variables:
+    rango: [H1, H10]
+  tema: salud_infantil
+  subtema: vacunas
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_diarrea
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Diarrea en los últimos 14 días
+  descripcion: Si tuvo diarrea en los últimos 14 días y si había sangre en las deposiciones.
+  variables:
+    rango: [H11, H11B]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: últimos 14 días
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_diarrea_donde_busco
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Dónde buscó tratamiento para la diarrea
+  descripcion: Lugar o persona donde buscó tratamiento (hospital, centro de salud, farmacia, casa…).
+  variables:
+    rango: [H12A, H12Z]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_diarrea_tratamiento
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Qué se le dio para tratar la diarrea
+  descripcion: Sales de rehidratación, suero casero y otros tratamientos, lugar buscado, si sigue con diarrea y veces que le dieron zinc.
+  variables:
+    rangos:
+    - [H13, H21]
+    - [H44A, H45]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_fiebre_tos
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Fiebre y tos en las dos últimas semanas
+  descripcion: Si tuvo fiebre o tos y cuánto se le dio de beber y comer.
+  variables:
+    lista: [H22]
+    rangos:
+    - [H31, H31E]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: últimas dos semanas
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_fiebre_tos_donde_busco
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Dónde buscó tratamiento para la fiebre o la tos
+  descripcion: Lugar donde buscó tratamiento y cuántos días después de que apareció.
+  variables:
+    rangos:
+    - [H32A, H32Z]
+    - [H46A, H46B]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_fiebre_tos_tratamiento
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Qué se le dio para la fiebre o la tos
+  descripcion: Medicamentos y remedios que tomó el niño para la fiebre o la tos.
+  variables:
+    rango: [H37A, H37Z]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_bebidas_comida_enfermedad
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Bebidas y comida durante la enfermedad
+  descripcion: Si se le dio la misma cantidad de bebidas y comida que antes.
+  variables:
+    rango: [H38, H39]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_vitamina_a
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Vitamina A
+  descripcion: Dosis de vitamina A (más reciente y anterior) con su fecha.
+  variables:
+    rangos:
+    - [H33, H33Y]
+    - [H40, H41B]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_vitamina_a_6_meses
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Vitamina A en los últimos 6 meses
+  descripcion: Si recibió vitamina A en los últimos 6 meses.
+  variables:
+    lista: [H34]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  ventana_referencia: últimos 6 meses
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_campanas
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Vacunas en campañas
+  descripcion: Cualquier vacuna en los últimos 2 años y vacunas recibidas en campañas.
+  variables:
+    rango: [H35, H36F]
+  tema: salud_infantil
+  subtema: vacunas
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec43_hierro_antiparasitarios
+  tabla: REC43
+  anios: [2024, 2024]
+  nombre: Hierro y antiparasitarios
+  descripcion: Si toma píldoras de hierro o jarabe y medicamentos para parásitos intestinales.
+  variables:
+    rango: [H42, H43]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_vacunas_refuerzos
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Refuerzos de DPT y polio
+  descripcion: Recibió el 1.er y 2.º refuerzo de DPT y de polio, con día, mes y año.
+  variables:
+    rango: [S45D4, S45P5Y]
+  tema: salud_infantil
+  subtema: vacunas
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_vacunas_hepatitis_b
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Vacuna contra la hepatitis B
+  descripcion: Dosis al nacer y 1.ª a 3.ª dosis, con fecha, y cuándo se dio la primera.
+  variables:
+    rango: [S45B0, S45B3Y]
+    lista: [S459B]
+  tema: salud_infantil
+  subtema: vacunas
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_vacunas_hib_penta_tetra
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Vacunas Hib, pentavalente y tetravalente
+  descripcion: Antihaemophilus, pentavalente y tetravalente, cada dosis con fecha.
+  variables:
+    rango: [S45F1, S45TTY]
+  tema: salud_infantil
+  subtema: vacunas
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_vacunas_amarilica_sarampion
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Vacunas antiamarílica, SPR y SR
+  descripcion: Antiamarílica, antisarampionosa/SPR (1.ª y 2.ª dosis) y SR, con fecha.
+  variables:
+    rango: [S45ML, S45SRY]
+  tema: salud_infantil
+  subtema: vacunas
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_vacunas_neumo_rota_influenza
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Vacunas contra neumococo, rotavirus e influenza
+  descripcion: Neumococo (3 dosis), rotavirus (2) e influenza (2), con fecha.
+  variables:
+    rango: [S45NM1, S45IF2Y]
+  tema: salud_infantil
+  subtema: vacunas
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_vitamina_a
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Vitamina A (tercera dosis) y número de vacunas con vitamina A
+  descripcion: Tercera dosis de vitamina A con fecha y número de vacunas con vitamina A.
+  variables:
+    rango: [S45VA3, S45VA3Y]
+    lista: [S462E]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_control_crecimiento
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: 'Control de crecimiento y desarrollo: si, dónde, cuántos y qué practicó'
+  descripcion: Si le hicieron control de crecimiento, dónde, cantidad de controles y consejería recibida.
+  variables:
+    rango: [S466, S466GC]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_cred_menor_un_mes
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Controles CRED del menor de un mes
+  descripcion: 'Hasta cuatro controles: día, mes, año, peso y talla.'
+  variables:
+    rango: [QI_CTRL_DIA_01, QI_CTRL_TALLA_04]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_controles_crecimiento_detalle
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: 'Controles de crecimiento: fecha, peso y talla'
+  descripcion: Día, mes, año, peso y talla de cada control de crecimiento.
+  variables:
+    rango: [S466DC1, S466HC12]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_fiebre_tos
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: 'Fiebre o tos: por qué no acudió y qué tenía en casa'
+  descripcion: Si sigue con fiebre o tos, por qué no acudió a un centro de salud y qué medicamentos tenía.
+  variables:
+    rango: [S470, S471CF]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_diarrea
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: 'Diarrea: síntomas, deposiciones y tratamiento'
+  descripcion: Síntomas durante la diarrea, cantidad de deposiciones, pastillas y tabletas de zinc, y por qué no acudió.
+  variables:
+    rango: [S472AA, S475]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_sintomas_diarios
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Síntomas día a día en la última semana
+  descripcion: Deposiciones líquidas, sangrado, tos y dificultad para respirar ayer y hasta hace siete días.
+  variables:
+    rango: [S476AN1, S476AR7]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: últimos 7 días
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_hierro_7_dias
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Hierro y micronutrientes en los últimos 7 días
+  descripcion: Si tomó hierro en jarabe, gotas, chispitas u otra presentación en los últimos 7 días.
+  variables:
+    rango: [S465EA, S465ED]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  ventana_referencia: últimos 7 días
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_hierro_12_meses
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Hierro y micronutrientes en los últimos 12 meses
+  descripcion: Frascos y sobres recibidos y consumidos en los últimos 12 meses por presentación.
+  variables:
+    rango: [S465DB_A, S465DD_DC]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  ventana_referencia: últimos 12 meses
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_micronutrientes
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: 'Micronutrientes: razones de no consumo y entregas'
+  descripcion: Razón por la que no recibió o no consumió hierro o micronutrientes, forma de consumo y fecha de cada entrega.
+  variables:
+    rango: [Q465DF, Q465EC_Y6]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec95_hemoglobina_tamizaje
+  tabla: REC95
+  anios: [2024, 2024]
+  nombre: Examen de hemoglobina, diagnóstico de anemia y tratamiento
+  descripcion: Si le hicieron examen de hemoglobina, resultado, si le diagnosticaron anemia, tratamiento indicado y consumo de hierro.
+  variables:
+    rango: [QI465ED_CC_A, QI465ED_CC_D]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec94_controles_prenatales
+  tabla: REC94
+  anios: [2024, 2024]
+  nombre: 'Controles prenatales: pruebas y meses de embarazo'
+  descripcion: Meses de embarazo en la última revisión y en cada prueba (presión, orina, sangre, sífilis, VIH, hepatitis B).
+  variables:
+    rangos:
+    - [S410B, S411EA]
+    - [QI411_M, QI411F]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec94_seguro
+  tabla: REC94
+  anios: [2024, 2024]
+  nombre: Seguro de salud de la madre y del niño
+  descripcion: Si estaba afiliada al SIS o a otro seguro durante el embarazo y si el niño está afiliado al SIS.
+  variables:
+    lista: [S413, S425A]
+    rango: [S432, S432AY]
+  tema: acceso_salud
+  subtema: seguro_salud
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec94_hierro_embarazo
+  tabla: REC94
+  anios: [2024, 2024]
+  nombre: Hierro durante el embarazo
+  descripcion: Inyecciones de hierro y consumo de hierro indicado durante el embarazo.
+  variables:
+    lista: [S422I]
+    rango: [QI422A_A, QI422A_D]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec94_complicaciones_parto
+  tabla: REC94
+  anios: [2024, 2024]
+  nombre: Complicaciones del parto y razones para no acudir
+  descripcion: Razón por la que no acudió a un establecimiento y complicaciones del parto.
+  variables:
+    rango: [S426B, S426GE]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec94_inscripcion_nino
+  tabla: REC94
+  anios: [2024, 2024]
+  nombre: Inscripción del niño
+  descripcion: Inscripción en la municipalidad y partida con código único.
+  variables:
+    rango: [S430C, S430D]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec94_complicaciones_posparto
+  tabla: REC94
+  anios: [2024, 2024]
+  nombre: Complicaciones después del parto
+  descripcion: Sangrado, fiebre y otras complicaciones después del parto y cuándo ocurrieron.
+  variables:
+    rango: [S427DA, S427F]
+  tema: salud_materna_reproductiva
+  subtema: lactancia_posparto
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec94_lactancia
+  tabla: REC94
+  anios: [2024, 2024]
+  nombre: 'Lactancia materna: biberón, contacto piel a piel, motivos y capacitación'
+  descripcion: Biberón en el establecimiento, contacto piel a piel, por qué no dio pecho o dejó de darlo, capacitación sobre lactancia y lactancia exclusiva.
+  variables:
+    rango: [S435, S442]
+    lista: [QI440B, S431A]
+  tema: salud_materna_reproductiva
+  subtema: lactancia_posparto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec94_preparacion_alimentos
+  tabla: REC94
+  anios: [2024, 2024]
+  nombre: Preparación y almacenamiento de alimentos del niño
+  descripcion: Anticipación con que se preparó, azúcar agregada, tiempo y lugar de almacenamiento.
+  variables:
+    rango: [S446AA, S448B]
+  tema: salud_infantil
+  subtema: alimentacion_infantil
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_antitetanica
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Vacuna antitetánica durante el embarazo
+  descripcion: Dosis contra el tétano durante el embarazo y la última antes del embarazo.
+  variables:
+    rango: [M1, M1E]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_quien_control_prenatal
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Quién hizo el control prenatal
+  descripcion: Médico, obstetra, enfermera, partera u otra persona que la chequeó.
+  variables:
+    rango: [M2A, M2N]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_quien_atendio_parto
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Quién atendió el parto
+  descripcion: Médico, obstetra, enfermera, partera, familiar u otra persona.
+  variables:
+    rango: [M3A, M3N]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_lactancia_duracion
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Duración de la lactancia, la amenorrea y la abstinencia
+  descripcion: Duración y meses de lactancia, amenorrea y abstinencia, y sus marcas.
+  variables:
+    rango: [M4, M9]
+    lista: [M27, M28, M29]
+  tema: salud_materna_reproductiva
+  subtema: lactancia_posparto
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_lactancia_inicio_tomas
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: 'Lactancia: inicio, tomas y biberón'
+  descripcion: Cuándo empezó a darle el pecho, veces que lo amamantó ayer y si usó biberón.
+  variables:
+    rango: [M34, M39]
+  tema: salud_materna_reproductiva
+  subtema: lactancia_posparto
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_embarazo_deseado
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Momento del embarazo y tiempo que hubiera querido esperar
+  descripcion: Si quería quedar embarazada entonces y cuánto hubiera querido esperar.
+  variables:
+    rango: [M10, M11]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_control_prenatal
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: 'Control prenatal: inicio, visitas y exámenes'
+  descripcion: Momento del primer control, número de visitas, exámenes, información sobre complicaciones y adónde acudir.
+  variables:
+    rangos:
+    - [M13, M14]
+    - [M42A, M42E]
+    - [M43, M44]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_hierro_medicamentos
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Hierro y medicamentos en el embarazo
+  descripcion: Tabletas de hierro, días que las tomó, fansidar y medicamentos contra parásitos.
+  variables:
+    rangos:
+    - [M45, M46]
+    - [M49A, M49Z]
+    lista: [M60]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_vision_nocturna
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Dificultad para ver de noche en el embarazo
+  descripcion: Si tuvo dificultad para ver de noche o con poca luz durante el embarazo.
+  variables:
+    rango: [M47, M48]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_parto_nacimiento
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: 'Parto y nacimiento: lugar, cesárea, tamaño y peso'
+  descripcion: Lugar del parto, cesárea, tamaño del niño al nacer y peso al nacer.
+  variables:
+    rango: [M15, M19A]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_control_posparto_vitamina_a
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Vitamina A y atención en los primeros días después del parto
+  descripcion: Vitamina A en los primeros días y atención de los tres primeros días.
+  variables:
+    rango: [M54, M55Z]
+  tema: salud_materna_reproductiva
+  subtema: lactancia_posparto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_lugar_cuidado_prenatal
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Lugar del cuidado prenatal
+  descripcion: Dónde recibió el cuidado prenatal (su hogar, hospital, centro de salud, otro).
+  variables:
+    rango: [M57A, M57X]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_parto_estadia_alta
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: 'Parto: estadía, chequeo antes del alta y razones de no ir'
+  descripcion: Cuánto tiempo estuvo en el lugar del parto, quién verificó su salud antes del alta y por qué no fue a un centro de salud.
+  variables:
+    rango: [M61, M65X]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec41_control_posparto_bebe
+  tabla: REC41
+  anios: [2024, 2024]
+  nombre: Chequeo posparto de la madre y control del bebé
+  descripcion: Tiempo hasta el primer control, chequeo después del parto, quién lo hizo, dónde y control posnatal del bebé.
+  variables:
+    rango: [M66, M73]
+    lista: [M51A]
+  tema: salud_materna_reproductiva
+  subtema: lactancia_posparto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia
+  estado: propuesto
+- id: endes_rec42_lactancia_actual
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Último parto y lactancia actual
+  descripcion: Cesárea en el último parto, si amamanta, está amenorreica o en abstinencia, veces que amamanta y cuándo empezó.
+  variables:
+    rango: [V401, V408]
+    lista: [V426]
+  tema: salud_materna_reproductiva
+  subtema: lactancia_posparto
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_alimentos_ayer
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Qué comió o bebió el niño ayer
+  descripcion: Agua, jugo, leche, otros líquidos y alimentos que recibió el último hijo ayer, y biberón.
+  variables:
+    rangos:
+    - [V409, V415]
+    - [V414H1, V414H2]
+  tema: salud_infantil
+  subtema: alimentacion_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: ayer (día y noche)
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_higiene_sro
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Higiene y sales de rehidratación
+  descripcion: Conocimiento de sales de rehidratación oral, lavado de manos antes de preparar comida y eliminación de heces del niño.
+  variables:
+    lista: [V416, V462, V465]
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_registro
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Datos administrativos de registro
+  descripcion: Ingreso en las tablas de maternidad, salud y altura/peso, y registradores.
+  variables:
+    rango: [V417, V421]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_peso_talla_mujer
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Peso, talla e indicadores de la mujer
+  descripcion: Peso, talla, percentiles, índice de masa corporal y resultado de la medición de la mujer.
+  variables:
+    rango: [V437, V447A]
+  tema: salud_adultos
+  subtema: mujeres_peso_anemia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_consentimiento
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Menores de 18, responsable y consentimiento
+  descripcion: Informe del hogar sobre menores de 18, número de orden del responsable y lectura del consentimiento.
+  variables:
+    rango: [V452A, V452C]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_hemoglobina
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Hemoglobina y anemia de la mujer
+  descripcion: Hemoglobina (ajustada por altitud), embarazo según el hogar, resultado y nivel de anemia con las dos normas.
+  variables:
+    rango: [V453, V458]
+  tema: salud_adultos
+  subtema: mujeres_peso_anemia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_mosquiteros
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Mosquiteros
+  descripcion: Mosquiteros del hogar y quiénes durmieron bajo uno.
+  variables:
+    rango: [V459, V461]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_tabaco
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Tabaco
+  descripcion: Si fuma cigarrillos u otros productos y cuántos fumó en las últimas 24 horas.
+  variables:
+    rango: [V463A, V464]
+  tema: salud_adultos
+  subtema: tabaco_alcohol
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_barreras_acceso
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Problemas para atenderse cuando se enferma
+  descripcion: Si podría llevar al niño enfermo y qué problemas tendría ella para atenderse (permiso, dinero, distancia…).
+  variables:
+    rango: [V466, V467M]
+  tema: acceso_salud
+  subtema: barreras_acceso
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_marca_ultimo_nacimiento
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Marca de variables del último nacimiento
+  descripcion: Columnas usadas solo para variables del último nacimiento.
+  variables:
+    lista: [V468]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_alimentos_en_casa
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Alimentos y líquidos que había en casa para el niño
+  descripcion: Leche enlatada, en polvo, líquidos y alimentos que tenía la madre.
+  variables:
+    rango: [V471A, V472U]
+  tema: salud_infantil
+  subtema: alimentacion_infantil
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_vih_prueba
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: 'VIH: consentimiento y resultado'
+  descripcion: Lectura del consentimiento y resultado de la prueba de VIH.
+  variables:
+    rango: [V473A, V473B]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_tuberculosis
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: 'Tuberculosis: conocimientos y actitudes'
+  descripcion: Si escuchó hablar de la tuberculosis, cómo se transmite, si se cura y si guardaría el secreto.
+  variables:
+    rango: [V474, V476]
+  tema: salud_adultos
+  subtema: enfermedades_cronicas
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_inyecciones
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: 'Inyecciones: número, quién las administró y seguridad'
+  descripcion: Inyecciones en los últimos 12 meses, si las puso un trabajador de salud, fuente y jeringa nueva.
+  variables:
+    rango: [V477, V480]
+  tema: acceso_salud
+  subtema: uso_servicios
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  ventana_referencia: últimos 12 meses
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_seguro_salud
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Seguro de salud de la mujer
+  descripcion: Cobertura de seguro de salud y tipo de seguro.
+  variables:
+    rango: [V481, V481X]
+  tema: acceso_salud
+  subtema: seguro_salud
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec42_cuidado_ninos
+  tabla: REC42
+  anios: [2024, 2024]
+  nombre: Quién cuida a los niños
+  descripcion: Quién organiza el cuidado de los niños pequeños.
+  variables:
+    rango: [V482A, V482C]
+  tema: familia_pareja
+  subtema: trabajo_mujer_pareja
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 4A. Embarazo, parto, puerperio y lactancia / Sección 4B. Inmunización y salud
+  estado: propuesto
+- id: endes_rec0111_identificacion
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Identificación de la vivienda y la entrevistada
+  descripcion: Número de vivienda, línea de la entrevistada, unidad de área final, año y fecha de la entrevista.
+  variables:
+    rango: [V002, V008]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_edad_nacimiento
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Edad y fecha de nacimiento
+  descripcion: Mes, año y fecha de nacimiento, edad actual, grupo de 5 años e integridad de la información.
+  variables:
+    rango: [V009, V014]
+    lista: [Q105DD]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_resultado_entrevista
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Resultado de la entrevista individual y calendario
+  descripcion: Resultado de la entrevista individual, inicio y duración del calendario.
+  variables:
+    rango: [V015, V019A]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_pareja
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Unión y esposo en el hogar
+  descripcion: Si estuvo casada o unida alguna vez y el número de orden del esposo en el hogar.
+  variables:
+    lista: [V020]
+  tema: familia_pareja
+  subtema: union_convivencia
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_selecciones
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Visitas, altitud y selección para módulos
+  descripcion: Número de visitas, altitud del conglomerado y selección para hemoglobina, módulo de mujeres y de violencia.
+  variables:
+    lista: [V027, V040]
+    rango: [V042, V044]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_residencia
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Dominio, residencia actual, en la infancia y viajes
+  descripcion: Dominio, lugar de residencia, de la infancia y anterior, tiempo viviendo allí y viajes en los últimos 12 meses.
+  variables:
+    lista: [V167, V168]
+    rango: [V101, V105]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_educacion
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Educación de la entrevistada
+  descripcion: Nivel más alto, año o grado, años simples y logro educativo.
+  variables:
+    lista:
+    - V106
+    - V107
+    - V133
+    - V149
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_vivienda_servicios
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Vivienda y servicios del hogar
+  descripcion: Agua, tiempo a la fuente, servicio higiénico, materiales de la vivienda, baño compartido, combustible, yodo en la sal y mosquitero.
+  variables:
+    rangos:
+    - [V113, V116]
+    - [V127, V129]
+    lista:
+    - V160
+    - V161
+    - V166
+    - ML101
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_bienes
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Bienes del hogar
+  descripcion: Electricidad, radio, televisión, refrigerador, bicicleta, motocicleta, coche y teléfono.
+  variables:
+    rango: [V119, V125]
+    lista: [V153]
+  tema: hogar_vivienda
+  subtema: bienes_riqueza
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_religion_etnia
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Religión y etnicidad
+  descripcion: Religión y autoidentificación étnica.
+  variables:
+    rango: [V130, V131]
+  tema: identidad_cultura
+  subtema: lengua_etnia
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_hogar_composicion
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Composición del hogar y jefe del hogar
+  descripcion: Lugar de la entrevista, residente habitual o visitante, número de miembros, niños y mujeres elegibles, y relación, sexo y edad del jefe.
+  variables:
+    rangos:
+    - [V134, V141]
+    - [V150, V152]
+  tema: hogar_vivienda
+  subtema: composicion_hogar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_alfabetizacion_medios
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Alfabetización y exposición a medios
+  descripcion: Si sabe leer, programa de alfabetización y frecuencia con que lee, oye radio o ve televisión.
+  variables:
+    rango: [V155, V159]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_discapacidad
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Dificultades o limitaciones permanentes
+  descripcion: Si tiene alguna dificultad o limitación permanente (seis tipos).
+  variables:
+    rango: [QD333_1, QD333_6]
+  tema: salud_adultos
+  subtema: discapacidad
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_riqueza
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Índice de riqueza
+  descripcion: Índice de riqueza (quintil de bienestar) y su factor de puntuación.
+  variables:
+    rango: [V190, V191]
+  tema: hogar_vivienda
+  subtema: bienes_riqueza
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_rec0111_elegibilidad
+  tabla: REC0111
+  anios: [2024, 2024]
+  nombre: Mujeres de 12 a 49 años
+  descripcion: Marca de elegibilidad de la mujer.
+  variables:
+    lista: [MUJERES12A49]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 1. Antecedentes de la entrevistada
+  estado: propuesto
+- id: endes_re223132_hijos_nacidos
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Hijos nacidos vivos, vivos y fallecidos
+  descripcion: Total de hijos e hijas nacidos, que viven con ella o no, fallecidos, nacimientos recientes y fecha y edad al primer nacimiento.
+  variables:
+    rango: [V201, V212]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_embarazo_actual
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Embarazo actual, ciclo menstrual y si es deseado
+  descripcion: Embarazo actual, su duración, tiempo desde la última menstruación, conocimiento del ciclo y si es deseado.
+  variables:
+    rangos:
+    - [V213, V217]
+    - [V225, V227]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_hijos_vivos_intervalos
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Hijos vivos e intervalos
+  descripcion: Número de hijos vivos, intervalos entre la unión y el primer nacimiento y desde el último nacimiento, e integridad de la fecha.
+  variables:
+    rango: [V218, V224]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_perdidas
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Pérdidas de embarazo
+  descripcion: Embarazos terminados en aborto, pérdida o nacido muerto, y cuándo ocurrió el último.
+  variables:
+    rango: [V228, V243]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_conocimiento_uso
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Conocimiento y uso de métodos anticonceptivos alguna vez
+  descripcion: Si conoce y alguna vez usó algún método, incluida la píldora y la inyección.
+  variables:
+    rangos:
+    - [V301, V302]
+    - [V305_01, V305_16]
+    - [QI302_05A, QI302_05B]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_uso_actual
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: 'Método actual: cuál, inicio y duración'
+  descripcion: Método anticonceptivo actual, tipo, mes y año de inicio, marca de píldora, meses de uso y píldoras por marca.
+  variables:
+    rango: [V310, V318]
+    lista: [V323, V337]
+    rangos:
+    - [V307_01, V307_16]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_esterilizacion
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Esterilización
+  descripcion: Años desde la esterilización, edad, duración conyugal y número de niños al esterilizarse.
+  variables:
+    rango: [V319, V322]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_costo_fuente
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Costo y fuente del método actual
+  descripcion: Costo del método actual y de dónde lo obtiene.
+  variables:
+    rango: [V325A, V327]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_dejo_de_usar
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Dejó de usar el método e intención de uso
+  descripcion: Última discontinuidad, motivo, patrón de uso, intención y método futuro preferido.
+  variables:
+    rango: [V359, V364]
+    lista: [V367]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_razones_no_uso
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Razones para no usar y fuentes conocidas
+  descripcion: Paquete mostrado, razón principal para no usar, si usaría un método y fuente conocida.
+  variables:
+    rango: [V372, V380]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_mensajes_consejeria
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Mensajes de planificación familiar y consejería
+  descripcion: Mensajes oídos o leídos, visita de un trabajador de salud, consulta y consejería en el centro de salud.
+  variables:
+    rango: [V384A, V395]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re223132_informacion_metodos
+  tabla: RE223132
+  anios: [2024, 2024]
+  nombre: Información recibida sobre métodos
+  descripcion: Información dada antes de la esterilización, uso de píldora y condón, y cuántos obtuvo la última vez.
+  variables:
+    rango: [V3A01, V3A09B]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 2. Reproducción / Sección 3. Anticoncepción
+  estado: propuesto
+- id: endes_re516171_estado_civil
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Estado civil y primera unión
+  descripcion: Estado civil actual, número de uniones, esposo en el hogar, otras esposas, fecha y edad al primer matrimonio, y si ha estado casada o conviviendo.
+  variables:
+    rango: [V501, V513]
+    lista: [V535]
+  tema: familia_pareja
+  subtema: union_convivencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_actividad_sexual
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Primera relación y actividad sexual reciente
+  descripcion: Edad en la primera relación, tiempo desde la última, actividad reciente, abstinencia y si piensa esperar hasta casarse.
+  variables:
+    rangos:
+    - [V525, V532]
+    - [V536, V537]
+    lista: [V541]
+  tema: familia_pareja
+  subtema: union_convivencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_fin_union
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Fin de la unión anterior y bienes
+  descripcion: Cómo terminó la unión anterior y quién recibió los bienes.
+  variables:
+    rango: [V538, V540]
+  tema: familia_pareja
+  subtema: union_convivencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_deseo_hijos
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Deseo de más hijos y tiempo de espera
+  descripcion: Si quiere otro hijo, cuánto esperar, deseo de tener más y tiempo para el futuro nacimiento.
+  variables:
+    rango: [V602, V605]
+    lista: [V616, V621]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_numero_ideal
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Número ideal de hijos
+  descripcion: Número ideal de niños, hijos, hijas o de cualquier sexo.
+  variables:
+    rango: [V613, V614]
+    rangos:
+    - [V627, V629]
+  tema: salud_materna_reproductiva
+  subtema: fecundidad_nacimientos
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_necesidad_insatisfecha
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Exposición y necesidad insatisfecha de planificación
+  descripcion: Exposición al embarazo y necesidad insatisfecha con dos definiciones.
+  variables:
+    rango: [V623, V626]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_decision_anticonceptivos
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Decisión sobre anticonceptivos y razones para no tener relaciones
+  descripcion: Quién tomó la decisión de usar anticonceptivos, si el esposo lo sabe y razones para no tener relaciones.
+  variables:
+    rango: [V631, V634]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_esposo_educacion
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Educación del esposo o compañero
+  descripcion: Nivel, año o grado y años de educación del esposo o compañero.
+  variables:
+    lista:
+    - V701
+    - V702
+    - V715
+    - V729
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_esposo_trabajo
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Edad y ocupación del esposo o compañero
+  descripcion: Edad, ocupación y grupo de ocupación del esposo o compañero.
+  variables:
+    lista: [V730, V704, V705]
+  tema: familia_pareja
+  subtema: trabajo_mujer_pareja
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_trabajo_mujer
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Trabajo de la entrevistada
+  descripcion: Si trabaja, para quién, dónde, todo el año o por temporada, tipo de ingresos, quién decide el gasto y cuánto gana frente a su esposo.
+  variables:
+    rango: [V714, V714A]
+    lista:
+    - V719
+    - V721
+    - V731
+    - V732
+    - V739
+    - V740
+    - V741
+    - V746
+    - V716
+    - V717
+  tema: familia_pareja
+  subtema: trabajo_mujer_pareja
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_decisiones_hogar
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Quién tiene la última palabra en el hogar
+  descripcion: Quién decide sobre cuidado de la salud, compras, visitas y gasto del dinero.
+  variables:
+    rango: [V743A, V743F]
+  tema: familia_pareja
+  subtema: trabajo_mujer_pareja
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re516171_actitudes_violencia
+  tabla: RE516171
+  anios: [2024, 2024]
+  nombre: Actitudes ante el maltrato de la esposa
+  descripcion: Si está de acuerdo con que el esposo golpee a su esposa en cada situación.
+  variables:
+    rango: [V744A, V744E]
+  tema: violencia
+  subtema: violencia_contra_mujer
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 5. Nupcialidad / Sección 6. Preferencias de fecundidad / Sección 7. Antecedentes del cónyuge y trabajo de la mujer
+  estado: propuesto
+- id: endes_re758081_conocimiento_vih
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: Conocimiento sobre el VIH/SIDA
+  descripcion: Si oyó hablar del VIH y del SIDA, formas de transmisión, mitos y si una persona saludable puede tener el virus.
+  variables:
+    rango: [V750, V756]
+    lista: [V823, V825]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_transmision_madre_hijo
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: Transmisión de madre a hijo y tratamiento
+  descripcion: En qué etapa la madre con SIDA puede infectar al hijo, medicamentos para evitarlo y charla en el control prenatal.
+  variables:
+    rango: [V774A, V774C]
+    lista: [V824, V837]
+    rangos:
+    - [V838A, V838C]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_condon
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: 'Condón: uso y dónde conseguirlo'
+  descripcion: Uso de condón en la última y en la primera relación, dónde se consigue, si podría conseguirlo y uso con cada pareja.
+  variables:
+    rangos:
+    - [V761, V762BZ]
+    - [V769, V769A]
+    - [V833A, V833C]
+    lista: [V820, V822]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_its
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: Otras infecciones de transmisión sexual
+  descripcion: Diagnóstico de ITS en los últimos 12 meses, dónde buscó atención y si oyó hablar de otras ITS.
+  variables:
+    rangos:
+    - [V763A, V763G]
+    - [V770, V770X]
+    lista: [V785]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: últimos 12 meses
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_parejas
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: Parejas sexuales
+  descripcion: Número de parejas, relación, tiempo de conocerlas, edad, última relación y condón con cada una.
+  variables:
+    rangos:
+    - [V766A, V768C]
+    - [V821A, V821C]
+    - [V832B, V832C]
+    - [V834A, V836]
+    lista: [V830, V831]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_prueba_vih
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: 'Prueba de VIH: si se la hizo, dónde y resultados'
+  descripcion: Si se hizo la prueba, dónde, cuándo, si la pidió ella y si obtuvo el resultado.
+  variables:
+    rangos:
+    - [V781, V784X]
+    - [V826, V829]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_prueba_prenatal
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: Prueba de VIH en el control prenatal
+  descripcion: Si le ofrecieron y le hicieron la prueba en el control prenatal, resultados y lugar.
+  variables:
+    rango: [V839, V843]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_estigma
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: Actitudes y estigma hacia las personas con VIH
+  descripcion: Si mantendría el secreto, cuidaría a familiares, y conocimiento de rechazo o abuso a personas con VIH.
+  variables:
+    rangos:
+    - [V775, V780]
+    - [V844, V848]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_normas_sexuales
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: Normas sobre relaciones sexuales y poder de decisión
+  descripcion: Edad para esperar, rechazar el sexo, pedir condón y normas sobre jóvenes y mujeres casadas.
+  variables:
+    rango: [V849, V851L]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_re758081_presencia_entrevista
+  tabla: RE758081
+  anios: [2024, 2024]
+  nombre: Presencia de otras personas durante la entrevista
+  descripcion: Presencia de niños, del marido, de otros hombres y de otras mujeres.
+  variables:
+    rango: [V811, V814]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Sección 8. SIDA y otras I.T.S.
+  estado: propuesto
+- id: endes_rec91_ubicacion
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Región natural, semestre, provincia y distrito
+  descripcion: Región natural, semestre, provincia y distrito de la entrevista.
+  variables:
+    rango: [SREGION, SDISTRI]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_educacion
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: 'Educación: nivel, asistencia y razón de abandono'
+  descripcion: Nivel y último grado aprobado, si asiste y por qué dejó de asistir.
+  variables:
+    rango: [S108N, S112]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_lengua
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Lengua materna y autoidentificación
+  descripcion: Idioma o lengua materna que aprendió a hablar y autoidentificación por antepasados y costumbres.
+  variables:
+    rango: [S119, S119D]
+  tema: identidad_cultura
+  subtema: lengua_etnia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_control_embarazo_lugar
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Dónde fue el control del embarazo
+  descripcion: Hospital, centro de salud, puesto, clínica, consultorio, casa u otro; o sin control.
+  variables:
+    rango: [S229A, S229Y]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_primer_control
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Meses de embarazo al primer control
+  descripcion: Meses de embarazo al primer control prenatal.
+  variables:
+    lista: [S229A1]
+  tema: salud_materna_reproductiva
+  subtema: embarazo_control_parto
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_afiliacion_seguro
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Afiliación a un seguro de salud
+  descripcion: Si está afiliada y la fecha de afiliación.
+  variables:
+    rango: [S229B1, S229CY]
+  tema: acceso_salud
+  subtema: seguro_salud
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_conocimiento_sis
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Conocimiento del Seguro Integral de Salud
+  descripcion: Cómo se enteró y qué conoce del SIS.
+  variables:
+    rango: [S229DA, S229DX]
+  tema: acceso_salud
+  subtema: seguro_salud
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_documentos_identidad
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Documentos de identificación
+  descripcion: Partida de nacimiento, DNI u otro documento.
+  variables:
+    rango: [S239A, S239X]
+  tema: identidad_cultura
+  subtema: documentos_identidad
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_esterilizacion_pago
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: 'Esterilización: pago y momento'
+  descripcion: Monto pagado y momento en que se esterilizó.
+  variables:
+    rango: [S314, S315B]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_metodos_naturales
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Métodos vaginales y determinación de días fértiles
+  descripcion: Marca de métodos vaginales y cómo determinar los días fértiles.
+  variables:
+    rango: [S317AC, S317C]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_metodo_actual
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: 'Método actual: fuente, decisión y opinión de la atención'
+  descripcion: Primera fuente, si es el método que quería, problemas para obtenerlo, quién decidió y opinión de la atención recibida.
+  variables:
+    rango: [S321A, S325GK]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_controles_diu
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Controles de DIU o implante
+  descripcion: Si fue a controles de DIU o implante y cuántos.
+  variables:
+    rango: [S327B, S327C]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_llevaria_nino
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Si llevaría al niño al centro de salud
+  descripcion: A qué síntomas del niño lo llevaría de inmediato al centro de salud.
+  variables:
+    rango: [S481AA, S481AZ]
+  tema: salud_infantil
+  subtema: enfermedades_suplementos
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_juntos
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Programa Juntos
+  descripcion: Si está afiliada o incorporada al programa Juntos y desde cuándo.
+  variables:
+    rango: [S484, S484Y]
+  tema: programas_sociales
+  subtema: juntos
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_papanicolau_mama
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Papanicolaou y examen de mama
+  descripcion: Si oyó hablar del Papanicolaou, si le hicieron la prueba y los exámenes de mama.
+  variables:
+    rango: [S485, S486B]
+  tema: salud_adultos
+  subtema: prevencion_cancer
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_tuberculosis
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Actitud ante familiares con tuberculosis
+  descripcion: Si cuidaría a parientes enfermos de tuberculosis y si mantendría en secreto la enfermedad de un familiar.
+  variables:
+    rango: [S489C, S489D]
+  tema: salud_adultos
+  subtema: enfermedades_cronicas
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_lavado_manos
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Lavado de manos
+  descripcion: Cuántas veces al día y en qué momentos se lava las manos, y con qué.
+  variables:
+    rango: [S490, S490BX]
+  tema: hogar_vivienda
+  subtema: vivienda_agua_saneamiento
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_liquidos_ayer
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Líquidos que tomó el niño ayer
+  descripcion: Qué bebió el niño durante el día o la noche de ayer.
+  variables:
+    rango: [S492A, S492G]
+  tema: salud_infantil
+  subtema: alimentacion_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: ayer (día y noche)
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_alimentos_ayer
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Alimentos que comió el niño ayer
+  descripcion: Qué alimentos comió el niño durante el día o la noche de ayer.
+  variables:
+    rango: [S493A, S493P]
+  tema: salud_infantil
+  subtema: alimentacion_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  ventana_referencia: ayer (día y noche)
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_papilla_programas
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Papilla de programas sociales
+  descripcion: Si recibe papilla de los programas sociales y si el niño la come.
+  variables:
+    rango: [S494, S494B]
+  tema: programas_sociales
+  subtema: hogar_programas
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_quien_alimenta
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Quién alimenta al niño
+  descripcion: Persona que normalmente alimenta al niño y si ayer no recibió líquidos o sólidos.
+  variables:
+    rango: [S495A, S496]
+  tema: salud_infantil
+  subtema: alimentacion_infantil
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_presencia_entrevista
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Presencia de otras personas durante la entrevista
+  descripcion: Presencia de niños menores de 10 años, del esposo y de otras personas en la entrevista.
+  variables:
+    rangos:
+    - [S500A, S500D]
+    - [S1034A, S1034B]
+  tema: identificacion_encuesta
+  subtema: campo_y_muestra
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_divorcio_primera_pareja
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Causa del divorcio y relación con la primera pareja sexual
+  descripcion: Principal causa del último divorcio y relación con la primera pareja sexual.
+  variables:
+    lista: [S508A, S512C]
+  tema: familia_pareja
+  subtema: union_convivencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_actitud_planificacion
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Actitud hacia la planificación familiar
+  descripcion: Si aprueba que las parejas usen métodos, si ha comentado sobre planificación y si su esposo aprueba.
+  variables:
+    rango: [S616, S621A]
+  tema: salud_materna_reproductiva
+  subtema: planificacion_familiar
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_esposo_educacion
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Educación del esposo o compañero
+  descripcion: Nivel educativo y último grado aprobado del esposo o compañero.
+  variables:
+    rango: [S704N, S704G]
+  tema: educacion
+  subtema: nivel_educativo_asistencia
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_ingresos_cuidado
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Ingresos de la entrevistada y quién cuida a los niños
+  descripcion: Uso de los ingresos de la entrevistada y quién cuida de los niños cuando sale.
+  variables:
+    rango: [S718, S720A]
+  tema: familia_pareja
+  subtema: trabajo_mujer_pareja
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_vih_conocimiento
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Conocimiento sobre el VIH/SIDA
+  descripcion: Qué se puede hacer para evitar el SIDA, cómo se transmite y actitudes hacia las personas con el virus.
+  variables:
+    rangos:
+    - [S802, S802I]
+    - [S806AX, S806AZ]
+    - [S807, S811]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_vih_prueba
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Prueba de VIH
+  descripcion: Dónde hacerse la prueba, si recibió asesoría y resultados.
+  variables:
+    rango: [S803AF, S804C]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_its
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Infecciones de transmisión sexual
+  descripcion: Qué ETS conoce, síntomas en hombres y mujeres, diagnóstico en los últimos 12 meses, tratamiento y relaciones sexuales por dinero.
+  variables:
+    rango: [S815AA, S818]
+  tema: salud_adultos
+  subtema: vih_its
+  tema_estado: provisional
+  papel: resultado
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_violencia_pareja
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Control y agresiones de la pareja
+  descripcion: Conductas de control y agresiones del esposo o compañero en la última relación.
+  variables:
+    rango: [S1002A, S1002E]
+  tema: violencia
+  subtema: violencia_contra_mujer
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 15
+    edad_max: 49
+    edad_unidad: anios
+    condicion: mujeres seleccionadas para el módulo de violencia familiar
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_violencia_consecuencias
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Consecuencias de la agresión y quién agredió
+  descripcion: Resultados de las agresiones en los últimos 12 meses y quién pegó con mayor frecuencia.
+  variables:
+    rango: [S1008AN, S1017]
+  tema: violencia
+  subtema: violencia_contra_mujer
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 15
+    edad_max: 49
+    edad_unidad: anios
+    condicion: mujeres seleccionadas para el módulo de violencia familiar
+  ventana_referencia: últimos 12 meses
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_violencia_ayuda
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Búsqueda de ayuda ante la violencia
+  descripcion: A quién acudió, si nunca buscó ayuda y si conoce casos.
+  variables:
+    rango: [S1023AA, S1026]
+  tema: violencia
+  subtema: violencia_contra_mujer
+  tema_estado: provisional
+  papel: servicio
+  poblacion:
+    edad_min: 15
+    edad_max: 49
+    edad_unidad: anios
+    condicion: mujeres seleccionadas para el módulo de violencia familiar
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_castigo_hijos
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Cómo castiga el padre y la madre a sus hijos
+  descripcion: Formas de castigo del padre biológico, la madre y otras personas, y si los hijos fueron castigados.
+  variables:
+    rango: [S1030AA, S1031]
+  tema: violencia
+  subtema: castigo_disciplina_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 15
+    edad_max: 49
+    edad_unidad: anios
+    condicion: mujeres seleccionadas para el módulo de violencia familiar
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_castigo_infancia
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Cómo la castigaban a ella y opinión sobre el castigo
+  descripcion: Formas de castigo que recibió de niña y si cree que es necesario castigar.
+  variables:
+    rango: [S1032A, S1033]
+  tema: violencia
+  subtema: castigo_disciplina_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 15
+    edad_max: 49
+    edad_unidad: anios
+    condicion: mujeres seleccionadas para el módulo de violencia familiar
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_castigo_quien
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Quién reprende o castiga a los hijos
+  descripcion: Quién reprende o castiga a sus hijas e hijos en el hogar.
+  variables:
+    rango: [S1028A, S1028Y]
+  tema: violencia
+  subtema: castigo_disciplina_infantil
+  tema_estado: provisional
+  papel: resultado
+  poblacion:
+    edad_min: 15
+    edad_max: 49
+    edad_unidad: anios
+    condicion: mujeres seleccionadas para el módulo de violencia familiar
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_anemia_conocimiento
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Qué síntomas y alimentos asocia con la anemia
+  descripcion: Síntomas que tendría su niño si tuviera anemia y alimentos que le ofrecería.
+  variables:
+    rango: [QI479E_A, QI479F_Y]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: contexto
+  poblacion: {}
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto
+- id: endes_rec91_reuniones_sesiones
+  tabla: REC91
+  anios: [2024, 2024]
+  nombre: Reuniones y sesiones en los últimos 12 meses
+  descripcion: Si participó en reuniones o sesiones, en cuántas y qué recibió.
+  variables:
+    rango: [Q479A, Q479D]
+  tema: salud_infantil
+  subtema: anemia_desnutricion
+  tema_estado: provisional
+  papel: servicio
+  poblacion: {}
+  ventana_referencia: últimos 12 meses
+  seccion_cuestionario: Varias secciones del cuestionario individual
+  estado: propuesto

@@ -1,0 +1,61 @@
+ENDES 2024 · RECH6 · Peso, talla y hemoglobina de niñas y niños
+========================================================================
+Mediciones de los menores del hogar: edad en meses, peso, talla, indicadores de talla y peso para la edad, hemoglobina (ajustada por altitud) y nivel de anemia.
+
+Qué es
+  Tipo de fuente: muestra · Tipo de tabla: medicion · Estado de la ficha: propuesto
+  Cuestionario: hogar · Secciones: Sección 4. Peso y talla (formulario de tabla); Sección 5. Prueba de hemoglobina
+  Quién tiene fila: todos los menores de 5 años listados, con o sin medición
+  Informante: personal de campo (medición) · Modo: medido
+
+A quién describe
+  niñas y niños menores de 5 años (0 a 59 meses)
+  Sujeto: nino · Edad: 0–59 meses · Sexo: ambos · Condición: listados en el hogar
+
+Dónde está
+  Módulo 1638 «Peso y talla - Anemia» (encuesta 968, periodo Unico) · recurso endes-2024-anemia · dta
+  20,290 filas · 43 variables · huella c2b11553f0808bed…
+  Unidad: persona_del_hogar · Llave: HHID, HC0 · Tabla de la que cuelga: RECH0
+  Unión → RECH0 por HHID = HHID (n:1)
+  Unión → RECH1 por HHID = HHID, HC0 = HVIDX (n:1)
+
+Si se puede estimar
+  Diseño declarado: peso HV005/1e6 · estrato printf('%02d-%d', HV024, HV022) · UPM HV021 · submuestra medicion
+  Permite totales: no · Alcance: hasta departamento: nacional; nacional urbana y rural; región natural (Costa, Sierra, Selva); 24 departamentos y Provincia Constitucional del Callao
+
+Variables
+  Por clase: categoria 11, diseno 2, llave 4, medida 26
+  Baterías: 2 (HC56 2, HC57 2)
+  Estado de las variables: 43 propuesto, 0 revisado
+  Cobertura de bloques: 37 de 37 categoria o medida (100.0 %) en 9 bloque(s)
+
+De qué trata
+  Temas (el principal primero): salud_infantil, hogar_vivienda, identificacion_encuesta
+  • endes_rech6_edad_peso_talla [salud_infantil/anemia_desnutricion, resultado, 3 variables]
+      Edad, peso y talla de la niña o el niño: Edad en meses, peso y altura medidos.
+  • endes_rech6_fechas [salud_infantil/anemia_desnutricion, contexto, 5 variables]
+      Fecha de nacimiento y año de la medición: Día, mes, año y fecha completa de nacimiento, y año de la medición.
+  • endes_rech6_hemoglobina [salud_infantil/anemia_desnutricion, resultado, 7 variables]
+      Hemoglobina y anemia: Nivel de hemoglobina (ajustado por altitud), resultado de la medición, nivel de anemia con las dos normas y acuerdo para enviar datos a un especialista.
+  • endes_rech6_indicadores_oms [salud_infantil/anemia_desnutricion, resultado, 4 variables]
+      Talla y peso para la edad (patrón OMS 2006): Desviaciones estándar de talla/edad, peso/edad, peso/talla e IMC según la OMS (las que usan las recetas de desnutrición).
+  • endes_rech6_indicadores_referencia_anterior [salud_infantil/anemia_desnutricion, resultado, 9 variables]
+      Talla y peso para la edad (referencia anterior): Percentiles, desviaciones estándar y porcentaje de la mediana de talla/edad, peso/edad y peso/talla.
+  • endes_rech6_madre [hogar_vivienda/composicion_hogar, contexto, 5 variables]
+      Madre: orden, educación, intervalo y orden de nacimiento: Número de orden y nivel educativo de la madre, intervalo con el nacimiento anterior y orden de nacimiento.
+  • endes_rech6_medicion_razon [salud_infantil/anemia_desnutricion, contexto, 2 variables]
+      Razón por la que no se midió y posición de la medición: Por qué no se midió al niño y si se midió acostado o de pie.
+  • endes_rech6_responsable_consentimiento [identificacion_encuesta/campo_y_muestra, contexto, 1 variables]
+      Responsable y consentimiento: Número de orden del padre o responsable y lectura de la declaración de consentimiento.
+  • endes_rech6_sexo [hogar_vivienda/composicion_hogar, contexto, 1 variables]
+      Sexo: Sexo de la niña o el niño.
+
+Avisos
+  • La ficha técnica (p. 9) describe el registro como «niños menores de 6 años»; en los datos de 2024 las edades van de 0 a 59 meses (menores de 5 años).
+
+Documentos
+  • recurso: endes-2024-anemia, miembro: Diccionario - RECH6.pdf
+  • recurso: endes-2024-cuestionario-hogar, paginas: Sección 5: p. 14
+  • recurso: endes-2024-identificadores-bd, paginas: fila 7 de la tabla de identificadores
+
+Recetas: endes_anemia_6_35m, endes_anemia_6_35m_oms2024, endes_dci_menores_5 · Conceptos: ninguno

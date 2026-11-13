@@ -22,10 +22,10 @@ Owner reviews (3 h/week) never block: anything waiting for a visto stays `propue
 | T2 | M1-00 rest | S1 S3 | inline + workers | done | 1f0532f, 3bd4995, 87a63b4, 69b8662, 6521fdc |
 | T3 | M1-01 decisiones, reglas y tablas curadas | S1 S3 S4 | workers + inline | done | 93aaf8f, 64e7d29, catálogo |
 | T4 | M1-02 rest of the debt | S1 S3 | worker | done | M1-02 commit |
-| T5 | M1-03 uniones, universo, cortes | S1 S3 | tbd | pending | |
-| T6 | M1-04 cuestionarios | S1 | tbd | pending | |
-| T7 | M1-05 enriquecimiento | S1 S3 | tbd | pending | |
-| T8 | M1-06 fichas, bloques, temas | S1 | tbd | pending | |
+| T5 | M1-03 uniones, universo, cortes | S1 S3 | worker + auditor | done | d5ba492 |
+| T6 | M1-04 cuestionarios | S1 | worker | blocked (live batch, C-M1-04-1) | 09da75b |
+| T7 | M1-05 enriquecimiento | S1 S3 | worker | t0 done; rest blocked (C-M1-04-1) | M1-05 t0 + M1-06 commit |
+| T8 | M1-06 fichas, bloques, temas | S1 | worker + auditor x2 | done (aprobado con observaciones) | M1-05 t0 + M1-06 commit |
 | T9 | M1-07 diseño muestral y lote | S1 S6 | tbd | pending | |
 | T10 | M1-08 … M1-18 motor (sombra), including M1-09b banco del recuperador (after M1-09) | S1 S3 S7 | tbd | pending | |
 | T11 | M1-19 evaluación y medición | S1 S2 | tbd | pending | |
@@ -41,3 +41,5 @@ Owner reviews (3 h/week) never block: anything waiting for a visto stays `propue
 - L6 (12/11/2026): owner: "por otro lado, estaré fuera por 2 horas, hazme todas las consultas que requieras. ya descargué los modelos por si acaso, están en la bandeja". Models verified: 26/26 SHA-256 OK in biblioteca/cruda/bandeja/hf-*. Answers: (1) C-M0-11-2 when only the publication state changes: "Medir, informar y aplicar"; (2) Docker: "Sí, con colima. Solo requiere start"; (3) live LLM while away: "Sí, dentro de los topes" (US$ 5/día, US$ 20/lote, K-05); (4) "Sí, push sin PR" to origin/slice-m1.
 - L7 (12/11/2026): M1-01 worker: tasks 1–4 and 6 done; C-M0-11-2 measured on 782 survey rows + 90 recipe rows: 0 state changes (min n 139), applied; reglas fingerprint 14b83c8814a7 → f4233fd56056 (238 recorded bases changed only that fingerprint, checked); recipes verificado (K-03) → shadow confidence of 85 publishable rows from baja to 21 alta / 64 media (design §15.2, shadow only). Parent: applied test_ejecutor patch (2024–2025 now conglomerados_repetidos), t7 AGENTS.md, t8 via worker + parent fixes (§29, date, §26.1, "desde 2021" sentence reworded to only decided 2024–2025). Full suite 1862 passed 1 skipped. Commit 93aaf8f + docs commit. Pending t5 catálogo.
 - L8 (12/11/2026): owner: "continua" after quota stop; workers resumed. M1-01 t5 catalog done (5d6b927; push failed with GitHub 500). M1-02 worker: tasks 1,2,4–9 + 4 minors; pool 20/20 Mac and 20/20 Linux (colima); cube, 34 Parquet, 90 recipe rows, SIEN tables unchanged. Consultas C-M1-02-1 (osv-scanner 3 days old), C-M1-02-2 (H06-4 QSSEXO unit), C-M1-02-3 (H04-4 huella v2). Full suite 1897 passed 1 skipped (2 expected socket-block warnings). Owner asked "cómo va el agente?".
+- L9 (12/11/2026): M1-03 done (d5ba492): 36 doradas por corte 0,0 pp, 90 rows diff 0, auditor-agent "aprobado con observaciones"; index regenerated (only archivos.parquet changed). M1-04 (09da75b): questionnaires/dictionaries extracted, no-LLM measurement (dictionaries carry no question numbers), resumable batch with fake provider; live batch blocked: no separate batch key/Workspace (C-M1-04-1). Full suite 2016 passed 1 skipped. New untracked supervisor file backlog/slice-m1/guia_dueno_clave_lotes.md not committed (ask owner).
+- L10 (12/11/2026): M1-05 t0 + M1-06 done (uncommitted at session end, full suite job-13 running): auditor 1st round «hallazgos abiertos», correction round (11 auditor tests red→green), 2nd round «aprobado con observaciones» (minor: V139/SHREGION → geo; SHSEMES/SSEMES/SHVER/V017/V019A → diseno; castigo_15_dias población). C-M1-06-1 (CSALUD01 llave HHID+QSNUMERO) waits owner. Owner: "ok, vayamos guardando todo en egram para continuar en la siguiente sesión".

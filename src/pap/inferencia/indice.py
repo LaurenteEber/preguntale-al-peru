@@ -14,8 +14,11 @@ Se importa con su ruta completa (`pap.inferencia.indice`).
   `posicion` (orden de la columna en el Parquet), `formato_origen`, `derivada_de`, `n_categorias` y `controles` (los
   controles del §7.3 que saltaron: la variable queda marcada para revisión). Hasta M1 quedan vacíos: `rango_valido`,
   `rol_faltante`, `texto_pregunta`, `universo_cuestionario`, `ventana_referencia`, `sujeto`, `informante`, `modo`,
-  `tipo_origen`, `universo_corto` y `concepto_id`. `clase` viene de `curados/inferencia/clases_columnas.yaml` (vacía si la
-  columna no está allí). `estado` es siempre `propuesto`.
+  `tipo_origen`, `universo_corto` y `concepto_id`. `clase` viene de `curados/inferencia/clases_columnas.yaml` y, para el resto,
+  de `clases_indice.clasificar` (M1-05 tarea 0: regla por tipo de valor y categorías + `clases_excepciones.yaml`). `estado` es siempre `propuesto`.
+- `bloque_id` (columna de `variables.parquet`) no la escribe este módulo: la agrega `pap fichas generar` (M1-06). Después de reindexar hay
+  que volver a correr `pap variables clasificar` (si cambió `clases_excepciones.yaml`; `construir` ya clasifica), `pap cuestionarios aplicar
+  --sobre-indice` y `pap fichas generar`.
 - `categorias.parquet`: `var_id`, `codigo`, `etiqueta_original`, `etiqueta_curada`, `es_especial` (`propuesto` o `no`),
   `rol_faltante` (vacío hasta M1) y, además, `origen_especial` (`declarado`, `etiqueta` o ambos), `frecuencia`,
   `proporcion_filas` y `controles`.
@@ -449,8 +452,20 @@ def construir(encuesta: str, anio: int, metas: dict[str, dict], manifiesto: dict
                 if cod not in vistos:              # declarado por el archivo y sin etiqueta de valor
                     filas_c.append(_fila_categoria(vid, cod, "", s, frecuencias.get((c["nombre"], cod)),
                                                    m["filas"], p, hallazgos, con_etiqueta=False))
-    return Indice(archivos=pl.DataFrame(filas_a, schema=esq_a), variables=pl.DataFrame(filas_v, schema=esq_v),
-                  categorias=pl.DataFrame(filas_c, schema=esq_c), hallazgos=hallazgos)
+    df_a, df_v, df_c = (pl.DataFrame(filas_a, schema=esq_a), pl.DataFrame(filas_v, schema=esq_v), pl.DataFrame(filas_c, schema=esq_c))
+    return Indice(archivos=df_a, variables=clasificar_variables(df_v, df_c, df_a, clases, parquet_dir=parquet_dir), categorias=df_c, hallazgos=hallazgos)
+
+
+def clasificar_variables(variables, categorias, archivos, clases: dict, ruta_excepciones: Path | None = None, parquet_dir: Path | None = None):
+    """`clase` de todas las variables (M1-05 tarea 0): ver `clases_indice`. Sin la lista de excepciones (pruebas con otra raíz)
+    queda solo la regla."""
+    from . import clases_indice
+
+    ruta = ruta_excepciones or clases_indice.RUTA_EXCEPCIONES
+    exc = clases_indice.cargar_excepciones(ruta) if Path(ruta).exists() else []
+    minimo = clases_indice.cargar_reglas(ruta).get("min_valores_sin_etiqueta") if Path(ruta).exists() else None
+    sin = clases_indice.contar_sin_etiqueta(parquet_dir, variables, categorias) if (parquet_dir and minimo) else None
+    return clases_indice.clasificar(variables, categorias, archivos, clases, exc, sin, minimo)
 
 
 def _controles_etiqueta(original, curada, hechas, p: ParametrosIndice, *, es_variable: bool, derivada: bool = False) -> list[str]:

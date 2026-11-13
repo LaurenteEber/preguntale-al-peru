@@ -1,0 +1,110 @@
+# Temas y subtemas provisionales (M1-06 tarea 1; docs/diseno/fichas.md §8).
+# Propuestos por el supervisor con las etiquetas de las variables, el 12/11/2026. Criterio: asuntos de la vida de las personas, no
+# sectores del Estado. `estado: provisional` hasta que el dueño apruebe la taxonomía; cambiar la taxonomía es editar este archivo y
+# reasignar los bloques (`curados/inferencia/bloques/`), no cambia ninguna cifra. Cada bloque nombra un tema y un subtema de aquí
+# (`pap fichas validar`, regla 3).
+# Agregados a lo que dice fichas.md §8 porque los bloques de las tablas del lote los necesitan (supuesto M1-06-s1; reversible, es editar
+# este archivo): el tema `identificacion_encuesta` y `trabajo`, y los subtemas `discapacidad_infantil`, `alimentacion_infantil`
+# (salud_infantil), `discapacidad` (salud_adultos), `barreras_acceso` y `uso_servicios` (acceso_salud), `juntos` (programas_sociales)
+# y `documentos_identidad` (identidad_cultura).
+version: 0.1.0
+fecha: "2026-11-12"
+estado: provisional
+temas:
+  - id: hogar_vivienda
+    nombre: "Hogar y vivienda"
+    estado: provisional
+    subtemas:
+      - {id: composicion_hogar, nombre: "Composición del hogar"}
+      - {id: vivienda_agua_saneamiento, nombre: "Vivienda, agua y saneamiento"}
+      - {id: bienes_riqueza, nombre: "Bienes y riqueza"}
+  - id: educacion
+    nombre: "Educación"
+    estado: provisional
+    subtemas:
+      - {id: nivel_educativo_asistencia, nombre: "Nivel educativo y asistencia"}
+  - id: salud_infantil
+    nombre: "Salud infantil"
+    estado: provisional
+    subtemas:
+      - {id: anemia_desnutricion, nombre: "Anemia y desnutrición"}
+      - {id: vacunas, nombre: "Vacunas"}
+      - {id: enfermedades_suplementos, nombre: "Enfermedades y suplementos"}
+      - {id: desarrollo_infantil_temprano, nombre: "Desarrollo infantil temprano"}
+      - {id: salud_bucal_ocular, nombre: "Salud bucal y ocular"}
+      - {id: discapacidad_infantil, nombre: "Discapacidad infantil"}
+      - {id: alimentacion_infantil, nombre: "Alimentación infantil"}
+  - id: salud_materna_reproductiva
+    nombre: "Salud materna y reproductiva"
+    estado: provisional
+    subtemas:
+      - {id: embarazo_control_parto, nombre: "Embarazo, control prenatal y parto"}
+      - {id: lactancia_posparto, nombre: "Lactancia y posparto"}
+      - {id: fecundidad_nacimientos, nombre: "Fecundidad y nacimientos"}
+      - {id: planificacion_familiar, nombre: "Planificación familiar"}
+  - id: salud_adultos
+    nombre: "Salud de las personas adultas"
+    estado: provisional
+    subtemas:
+      - {id: enfermedades_cronicas, nombre: "Enfermedades crónicas"}
+      - {id: tabaco_alcohol, nombre: "Tabaco y alcohol"}
+      - {id: salud_mental, nombre: "Salud mental"}
+      - {id: prevencion_cancer, nombre: "Prevención del cáncer"}
+      - {id: mujeres_peso_anemia, nombre: "Peso y anemia en mujeres"}
+      - {id: vih_its, nombre: "VIH e infecciones de transmisión sexual"}
+      - {id: discapacidad, nombre: "Discapacidad"}
+  - id: acceso_salud
+    nombre: "Acceso a la salud"
+    estado: provisional
+    subtemas:
+      - {id: seguro_salud, nombre: "Seguro de salud"}
+      - {id: barreras_acceso, nombre: "Barreras para atenderse"}
+      - {id: uso_servicios, nombre: "Uso de servicios de salud"}
+  - id: familia_pareja
+    nombre: "Familia y pareja"
+    estado: provisional
+    subtemas:
+      - {id: union_convivencia, nombre: "Unión y convivencia"}
+      - {id: trabajo_mujer_pareja, nombre: "Trabajo de la mujer y de la pareja"}
+  - id: violencia
+    nombre: "Violencia"
+    estado: provisional
+    subtemas:
+      - {id: violencia_contra_mujer, nombre: "Violencia contra la mujer"}
+      - {id: castigo_disciplina_infantil, nombre: "Castigo y disciplina infantil"}
+  - id: mortalidad
+    nombre: "Mortalidad"
+    estado: provisional
+    subtemas:
+      - {id: mortalidad_infantil, nombre: "Mortalidad infantil"}
+      - {id: mortalidad_materna, nombre: "Mortalidad materna"}
+      - {id: muertes_hogar, nombre: "Muertes en el hogar"}
+  - id: programas_sociales
+    nombre: "Programas sociales"
+    estado: provisional
+    subtemas:
+      - {id: beca_18, nombre: "Beca 18"}
+      - {id: comedores_populares, nombre: "Comedores populares"}
+      - {id: pension_65, nombre: "Pensión 65"}
+      - {id: qali_warma, nombre: "Qali Warma"}
+      - {id: wawa_wasi_cuna_mas, nombre: "Wawa Wasi / Cuna Más"}
+      - {id: vaso_de_leche, nombre: "Vaso de Leche"}
+      - {id: trabaja_peru, nombre: "Trabaja Perú"}
+      - {id: juntos, nombre: "Juntos"}
+      - {id: hogar_programas, nombre: "Programas sociales del hogar"}
+  - id: identidad_cultura
+    nombre: "Identidad y cultura"
+    estado: provisional
+    subtemas:
+      - {id: lengua_etnia, nombre: "Lengua materna y autoidentificación étnica"}
+      - {id: documentos_identidad, nombre: "Documentos de identidad"}
+  - id: trabajo
+    nombre: "Trabajo"
+    estado: provisional
+    subtemas:
+      - {id: actividad_ocupacion, nombre: "Actividad y ocupación"}
+  - id: identificacion_encuesta
+    nombre: "Identificación y operación de la encuesta"
+    estado: provisional
+    subtemas:
+      - {id: campo_y_muestra, nombre: "Datos de campo y de la muestra"}

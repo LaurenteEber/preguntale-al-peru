@@ -1,0 +1,12 @@
+✔ diseno_muestral.csv: 7 fila(s), todas con cita
+✔ universos_analiticos.yaml: 6 fila(s), todas con cita
+✔ territorios.yaml: 6 fila(s), todas con cita
+✔ perfil_anual.csv: 1 fila(s), todas con cita
+✔ relacion_entre_anios.csv: 2 fila(s), todas con cita
+✔ cortes_estandar.yaml: 5 fila(s), todas con cita
+✔ mediciones.yaml: 2 fila(s), todas con cita
+exit=0
+✔ endes_anemia_6_35m: estado verificado, 9 dorada(s)
+✔ endes_anemia_6_35m_oms2024: estado verificado, 9 dorada(s)
+✔ endes_dci_menores_5: estado verificado, 3 dorada(s)
+exit=0
