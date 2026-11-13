@@ -26,6 +26,7 @@ biblioteca/cruda/indice.duckdb*
 biblioteca/**/*.parquet
 biblioteca/**/historial/
 biblioteca/**/lote/
+biblioteca/**/lote_previos/
 biblioteca/**/.preparacion_*/
 biblioteca/_respaldo*/
 

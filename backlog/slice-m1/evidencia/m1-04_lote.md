@@ -16,7 +16,23 @@ Comando (la clave se carga solo en el comando, desde el Llavero; nunca se imprim
 - **Borrado confirmado en Anthropic:** después de la corrida, `GET /v1/messages/batches/<id>` devuelve **404 `not_found_error`** para los dos lotes, y el listado del Workspace devuelve **0 lotes**.
 - **El máximo estimado no fue un techo:** se midieron 0,58 tokens de entrada por carácter (1 038 426 tokens para 1 791 145 caracteres), no 0,45. El tope (US$ 20) no cambió; se subió `batch.tokens_por_caracter` a **0,65**, para que la revisión del tope antes de crear un lote vuelva a ser conservadora. Con 0,65, el máximo de todo lo pendiente sube a unos US$ 14, todavía bajo los US$ 20 por lote.
 - **Resultado: solo 25 de 271 variables vinculadas por el LLM** (REC43 16, REC0111 9, RECH6 0). La causa principal no es el modelo eligiendo mal: **207 respuestas (76 %) vinieron en prosa** («La variable H37A … corresponde a la opción C…») en vez del JSON pedido, se cortaron en los 60 tokens de `max_tokens_vincular` y el código las descartó como `respuesta_invalida` (como debe: nunca se adivina un vínculo). Otras: `no_encontrada` 22, `error_del_lote` 12 (respuesta de verificación ilegible), `rechazada_por_verificacion` 5.
-- **Qué falta para seguir:** que el modelo responda siempre en JSON. La salida estructurada (`batch.salida_estructurada`, hoy `false` por no estar probada en vivo) ya está implementada en el cliente y obliga al formato. Propuesta: activarla y repetir las tres tablas (≈ US$ 1,1 real) antes de correr todo lo pendiente. Los resultados de esta corrida quedan en `biblioteca/variables/cuestionarios/ENDES/2024/lote/` (fuera de git) y `vinculos_llm.parquet`; nada se aplicó al índice (todo en `propuesto`).
+- **Primera corrida (sin salida estructurada):** el modelo respondió en prosa en 207 de 271 casos; se apartó en `lote_previos/20261113_prosa/` (fuera de git, no se borró).
+
+### 0.1 Segunda corrida, con salida estructurada (13/11/2026, con el visto del dueño)
+
+`batch.salida_estructurada: true`; mismas 271 variables.
+
+| Pasada | Lote | Peticiones | Costo máximo estimado (0,65 tokens/carácter) | **Costo real** | Borrado |
+|---|---|---|---|---|---|
+| vincular | `msgbatch_01PeextaAcja6vgCmwMt1Kof` | 271 | US$ 1,246 | **US$ 1,104** | sí |
+| verificar | `msgbatch_01V8qnX77CyWtnNtFXYiVn4C` | 163 | US$ 0,222 | **US$ 0,145** | sí |
+| **Total** | | | | **US$ 1,249** | |
+
+- **Borrado confirmado en Anthropic:** `GET` de los dos lotes → 404 `not_found_error`; el Workspace lista 0 lotes. Gasto acumulado de las dos corridas: **US$ 2,39** (de los US$ 30 del mes).
+- **Las 271 respuestas vinieron en JSON** (163 eligieron una candidata, 108 dijeron «ninguna»). El máximo estimado ya fue un techo en las dos pasadas.
+- **59 vinculadas** (REC43 41, REC0111 15, RECH6 3); `no_encontrada` 108; **`rechazada_por_verificacion` 104** (REC43 91).
+- **Las rechazadas son, en buena parte, vínculos correctos:** en una muestra de 14, la mayoría eran respuestas de opción múltiple bien elegidas (H37M «Tomó ibuprofeno» → 471B «¿Qué le dieron para tratar la fiebre o la tos?»; H32T «curandero» → 469D «¿Dónde buscó consejo o tratamiento?»; H15J → 473D). Causa probable: la pasada de verificación muestra solo las primeras 8 opciones (`batch.opciones_en_prompt`) y su instrucción pide «mismo ítem»; si la opción de la variable (ibuprofeno, curandero) no está entre esas 8, el revisor dice que no. Es un error del lado seguro (nunca un vínculo falso), pero deja sin vincular casi todas las variables de opción múltiple.
+- **Propuesta antes del lote completo:** en la verificación, mostrar todas las opciones de la pregunta (hasta `cuestionarios.opciones_max`) y decir que una variable que es una opción de una pregunta de respuesta múltiple sí coincide con esa pregunta; repetir REC43 (≈ US$ 0,6) para medir. Nada se aplicó como `revisado`: todo sigue en `propuesto`.
 
 ## 1. Por qué no se llamó a la Batch API
 

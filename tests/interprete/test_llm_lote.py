@@ -113,12 +113,15 @@ def test_un_error_del_servicio_no_filtra_la_clave(monkeypatch):
     assert e2.value.motivo == "clave_rechazada"
 
 
-def test_por_defecto_no_se_pide_salida_estructurada(monkeypatch):
+def test_por_defecto_se_pide_salida_estructurada_con_el_esquema_de_la_peticion(monkeypatch):
+    """`batch.salida_estructurada` es true desde el 13/11/2026 (en el lote de prueba sin ella, 76 % de respuestas vino en prosa)."""
     visto = {}
 
     def handler(req: httpx.Request):
         visto["cuerpo"] = json.loads(req.content)
         return httpx.Response(200, json={"id": "m"})
 
-    _cliente(handler, monkeypatch).crear_lote([Peticion("vin-1", "S", "U", 60, ESQUEMA_VINCULAR)])
-    assert "format" not in visto["cuerpo"]["requests"][0]["params"]["output_config"]
+    _cliente(handler, monkeypatch).crear_lote([Peticion("vin-1", "S", "U", 60, ESQUEMA_VINCULAR), Peticion("vin-2", "S", "U", 60)])
+    salidas = [r["params"]["output_config"] for r in visto["cuerpo"]["requests"]]
+    assert salidas[0]["format"] == {"type": "json_schema", "schema": ESQUEMA_VINCULAR}
+    assert "format" not in salidas[1]                                    # sin esquema no se pide formato

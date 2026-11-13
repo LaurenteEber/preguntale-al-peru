@@ -182,7 +182,7 @@ batch:
   espera_max_s: {valor: 90000, supuesto: M1-04}          # un lote vence a las 24 h; pasado esto se deja de esperar (el estado queda guardado)
   max_tokens_vincular: {valor: 60, supuesto: M1-04}
   max_tokens_verificar: {valor: 120, supuesto: M1-04}
-  salida_estructurada: {valor: false, supuesto: M1-04, nota: "no probada en vivo con lotes (la del intérprete tampoco: interprete.salida_estructurada es false). Los esquemas de lote son de un solo campo; con false se pide el JSON en el texto y `leer_json` lo lee"}
+  salida_estructurada: {valor: true, supuesto: M1-04, nota: "activada el 13/11/2026 con el visto del dueño: en el lote de prueba sin ella, 207 de 271 respuestas (76 %) vinieron en prosa y se descartaron (evidencia/m1-04_lote.md §0). Con true, `output_config.format` (json_schema) obliga al formato de un solo campo"}
   opciones_en_prompt: {valor: 8, supuesto: M1-04}        # opciones de respuesta de cada pregunta candidata que se muestran al LLM
 
 inferencia:
